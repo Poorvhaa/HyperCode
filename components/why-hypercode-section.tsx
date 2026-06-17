@@ -1,103 +1,107 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { Award, Zap, Clock, Handshake } from 'lucide-react';
-
-const reasons = [
-  {
-    icon: Award,
-    title: 'Deep Industry Expertise',
-    description: 'Years of experience working with Fortune 500 companies and government agencies across diverse sectors.',
-  },
-  {
-    icon: Zap,
-    title: 'Enterprise Scalability',
-    description: 'Solutions designed to grow with your business, from initial implementation to enterprise-wide deployment.',
-  },
-  {
-    icon: Clock,
-    title: 'Rapid Deployment',
-    description: 'Accelerated timelines with agile methodologies ensuring quick time-to-value without sacrificing quality.',
-  },
-  {
-    icon: Handshake,
-    title: 'Long-Term Partnerships',
-    description: 'Dedicated support and continuous optimization to ensure sustained success and measurable ROI.',
-  },
-];
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.2,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, x: -20 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.6, ease: 'easeOut' },
-  },
-};
+import { Award, Users, TrendingUp, Zap, Handshake } from 'lucide-react';
 
 export function WhyHypercodeSection() {
+  const reasons = [
+    {
+      icon: Award,
+      title: 'Enterprise Expertise',
+      desc: 'Proven architecture blueprints deployed across Fortune 500 financial institutions, government departments, and healthcare providers.',
+    },
+    {
+      icon: Users,
+      title: 'Nationwide Talent Network',
+      desc: 'A mobilized network of over 12,000 pre-screened, certified data and software consultants ready to reinforce active engineering pipelines.',
+    },
+    {
+      icon: TrendingUp,
+      title: 'Data-Driven Strategy',
+      desc: 'We do not guess. Our advisory teams conduct strict data-readiness assessments and pipeline stress tests before recommending stacks.',
+    },
+    {
+      icon: Zap,
+      title: 'Rapid Deployment',
+      desc: 'Accelerated onboarding pipelines allow us to resource, vet, and place highly certified developers on-site within 10 to 14 business days.',
+    },
+    {
+      icon: Handshake,
+      title: 'Long-Term Partnerships',
+      desc: 'We guarantee continuous quality control, training support, and monthly performance checkouts, achieving a 98% client retention rate.',
+    },
+  ];
+
   return (
-    <section className="py-24 bg-muted/30 relative overflow-hidden">
-      <div className="absolute top-1/2 right-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl -z-10 -translate-y-1/2" />
+    <section className="py-24 bg-slate-50 border-t border-b border-slate-100 text-left">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          
+          {/* Left Column: Timeline Comparison */}
+          <div className="lg:col-span-5 space-y-6">
+            <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">WHY PARTNER WITH US</h2>
+            <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-none">
+              Redefining Project Timelines
+            </h3>
+            <p className="text-slate-600 text-sm sm:text-base leading-relaxed font-medium">
+              Traditional enterprise IT consulting models require months of audits, spec drafting, and bloated onboarding cycles. HyperCode merges strategic blueprints with a pre-vetted national staffing pool to cut deployment speed in half.
+            </p>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
-          <h2 className="text-4xl lg:text-5xl font-bold text-foreground mb-6">
-            Why Choose HyperCode?
-          </h2>
-          <p className="text-xl text-foreground/60 max-w-2xl mx-auto">
-            We&apos;re not just a vendor—we&apos;re a trusted partner committed to your success.
-          </p>
-        </motion.div>
+            {/* Comparison timelines */}
+            <div className="bg-white border border-slate-200 rounded-2xl p-6 space-y-4 shadow-sm">
+              <span className="text-[10px] font-bold text-slate-400 tracking-widest uppercase block">
+                AVERAGE DEPLOYMENT TIMELINE
+              </span>
+              
+              <div className="space-y-1.5">
+                <div className="flex justify-between items-center text-[11px] text-slate-500 font-bold uppercase">
+                  <span>Traditional Integrators</span>
+                  <span className="text-rose-600">18-24 Weeks</span>
+                </div>
+                <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                  <div className="h-full w-full bg-rose-500/30 rounded-full" />
+                </div>
+              </div>
 
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          {reasons.map((reason, index) => {
-            const Icon = reason.icon;
-            return (
-              <motion.div
-                key={index}
-                variants={itemVariants}
-                className="group relative p-8 rounded-xl border border-border/40 bg-card hover:border-primary/50 transition-all duration-300"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="space-y-1.5">
+                <div className="flex justify-between items-center text-[11px] text-slate-800 font-bold uppercase">
+                  <span>HyperCode Accelerated Engine</span>
+                  <span className="text-emerald-600 font-bold">4-6 Weeks</span>
+                </div>
+                <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                  <div className="h-full bg-[#0F4C81] rounded-full w-[25%]" />
+                </div>
+              </div>
+            </div>
+          </div>
 
-                <div className="relative z-10 space-y-4">
-                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center group-hover:from-primary/40 group-hover:to-accent/40 transition-all duration-300">
-                    <Icon size={24} className="text-primary" />
-                  </div>
-
+          {/* Right Column: Grid of Differentiators */}
+          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {reasons.map((reason, index) => {
+              const Icon = reason.icon;
+              return (
+                <div
+                  key={index}
+                  className={`p-6 rounded-2xl border border-slate-200 bg-white shadow-sm flex flex-col justify-between ${
+                    index === reasons.length - 1 ? 'sm:col-span-2' : ''
+                  }`}
+                >
                   <div>
-                    <h3 className="text-lg font-bold text-foreground mb-2">{reason.title}</h3>
-                    <p className="text-foreground/60 text-sm leading-relaxed">{reason.description}</p>
+                    <div className="w-10 h-10 rounded-lg bg-slate-50 border border-slate-100 text-[#0F4C81] flex items-center justify-center mb-4">
+                      <Icon size={18} />
+                    </div>
+                    <h4 className="text-sm font-bold text-slate-900 mb-1.5">
+                      {reason.title}
+                    </h4>
+                    <p className="text-xs text-slate-600 leading-relaxed font-medium">
+                      {reason.desc}
+                    </p>
                   </div>
                 </div>
-              </motion.div>
-            );
-          })}
-        </motion.div>
+              );
+            })}
+          </div>
+
+        </div>
       </div>
     </section>
   );

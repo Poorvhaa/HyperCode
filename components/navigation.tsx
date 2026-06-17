@@ -131,10 +131,8 @@ export function Navigation() {
   return (
     <>
       <motion.nav
-        className={`fixed top-0 left-0 right-0 z-50 h-20 transition-all duration-300 ease-in-out ${
-          isScrolled
-            ? 'bg-background/95 backdrop-blur-md border-b border-border/50 shadow-sm'
-            : 'bg-transparent border-b border-transparent shadow-none'
+        className={`fixed top-0 left-0 right-0 z-50 h-20 transition-all duration-300 ease-in-out bg-white border-b border-slate-100 ${
+          isScrolled ? 'shadow-sm' : 'shadow-none'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
@@ -142,21 +140,20 @@ export function Navigation() {
             {/* Left: Logo */}
             <div className="flex-1 flex justify-start">
               <Link href="/" className="flex items-center space-x-2 group">
-                <div className="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center flex-shrink-0">
-                  <span className="text-white font-bold text-lg">HC</span>
+                <div className="w-9 h-9 bg-[#0F4C81] rounded-xl flex items-center justify-center flex-shrink-0">
+                  <span className="text-white font-bold text-[15px]">HC</span>
                 </div>
-                <span className="font-bold text-lg text-foreground hidden sm:inline">HyperCode</span>
+                <span className="font-bold text-lg tracking-tight text-slate-900 hidden sm:inline">HyperCode</span>
               </Link>
             </div>
 
             {/* Center: Desktop Navigation */}
-            <div className="hidden lg:flex items-center space-x-10 h-full">
+            <div className="hidden lg:flex items-center space-x-8 h-full">
               <Link
                 href="/"
-                className="text-sm font-medium text-foreground/70 hover:text-primary transition-colors relative group py-2"
+                className="text-[15px] font-semibold text-slate-700 hover:text-[#0F4C81] transition-colors relative py-2"
               >
                 Home
-                <span className="absolute -bottom-1.5 left-0 right-0 h-0.5 bg-primary origin-center scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out" />
               </Link>
 
               {/* Solutions Mega Menu Trigger */}
@@ -165,13 +162,12 @@ export function Navigation() {
                 onMouseEnter={() => setIsMegaMenuOpen(true)}
                 onMouseLeave={() => setIsMegaMenuOpen(false)}
               >
-                <button className="flex items-center gap-1 text-sm font-medium text-foreground/70 hover:text-primary transition-colors relative group py-2 cursor-pointer bg-transparent border-none">
+                <button className="flex items-center gap-1.5 text-[15px] font-semibold text-slate-700 hover:text-[#0F4C81] transition-colors cursor-pointer bg-transparent border-none py-2">
                   <span>Solutions</span>
                   <ChevronDown
                     size={14}
-                    className={`transition-transform duration-300 ${isMegaMenuOpen ? 'rotate-180' : ''}`}
+                    className={`transition-transform duration-300 ${isMegaMenuOpen ? 'rotate-180' : ''} text-slate-500`}
                   />
-                  <span className="absolute -bottom-1.5 left-0 right-0 h-0.5 bg-primary origin-center scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out" />
                 </button>
 
                 <AnimatePresence>
@@ -180,13 +176,13 @@ export function Navigation() {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 8 }}
-                      transition={{ duration: 0.2, ease: 'easeOut' }}
+                      transition={{ duration: 0.15, ease: 'easeOut' }}
                       className="fixed top-20 left-1/2 -translate-x-1/2 w-full max-w-6xl px-4 sm:px-6 lg:px-8 z-50 pointer-events-auto"
                     >
-                      <div className="bg-background/98 backdrop-blur-xl border border-border/60 rounded-2xl shadow-xl p-8 grid grid-cols-3 gap-8 text-left">
+                      <div className="bg-white border border-slate-200 rounded-2xl shadow-xl p-8 grid grid-cols-3 gap-8 text-left">
                         {/* Column 1: Data & Analytics */}
                         <div>
-                          <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-4">
+                          <h3 className="text-[11px] font-extrabold text-slate-400 uppercase tracking-widest mb-4">
                             {megaMenuData.dataAnalytics.title}
                           </h3>
                           <div className="space-y-1">
@@ -196,16 +192,16 @@ export function Navigation() {
                                 <Link
                                   key={idx}
                                   href={item.href}
-                                  className="group flex items-start gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors"
+                                  className="group flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition-colors"
                                 >
-                                  <div className="p-2 bg-muted rounded-lg text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary transition-colors flex-shrink-0">
+                                  <div className="p-2 bg-slate-50 rounded-lg text-slate-500 group-hover:bg-[#0F4C81]/10 group-hover:text-[#0F4C81] transition-colors flex-shrink-0">
                                     <Icon size={16} />
                                   </div>
                                   <div>
-                                    <div className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
+                                    <div className="text-sm font-semibold text-slate-800 group-hover:text-[#0F4C81] transition-colors">
                                       {item.title}
                                     </div>
-                                    <div className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
+                                    <div className="text-[11px] text-slate-500 mt-0.5 leading-relaxed">
                                       {item.desc}
                                     </div>
                                   </div>
@@ -217,7 +213,7 @@ export function Navigation() {
 
                         {/* Column 2: Consulting Services */}
                         <div>
-                          <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-4">
+                          <h3 className="text-[11px] font-extrabold text-slate-400 uppercase tracking-widest mb-4">
                             {megaMenuData.consulting.title}
                           </h3>
                           <div className="space-y-1">
@@ -227,16 +223,16 @@ export function Navigation() {
                                 <Link
                                   key={idx}
                                   href={item.href}
-                                  className="group flex items-start gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors"
+                                  className="group flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition-colors"
                                 >
-                                  <div className="p-2 bg-muted rounded-lg text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary transition-colors flex-shrink-0">
+                                  <div className="p-2 bg-slate-50 rounded-lg text-slate-500 group-hover:bg-[#0F4C81]/10 group-hover:text-[#0F4C81] transition-colors flex-shrink-0">
                                     <Icon size={16} />
                                   </div>
                                   <div>
-                                    <div className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
+                                    <div className="text-sm font-semibold text-slate-800 group-hover:text-[#0F4C81] transition-colors">
                                       {item.title}
                                     </div>
-                                    <div className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
+                                    <div className="text-[11px] text-slate-500 mt-0.5 leading-relaxed">
                                       {item.desc}
                                     </div>
                                   </div>
@@ -248,7 +244,7 @@ export function Navigation() {
 
                         {/* Column 3: Staffing Solutions */}
                         <div>
-                          <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-4">
+                          <h3 className="text-[11px] font-extrabold text-slate-400 uppercase tracking-widest mb-4">
                             {megaMenuData.staffing.title}
                           </h3>
                           <div className="space-y-1">
@@ -258,16 +254,16 @@ export function Navigation() {
                                 <Link
                                   key={idx}
                                   href={item.href}
-                                  className="group flex items-start gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors"
+                                  className="group flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition-colors"
                                 >
-                                  <div className="p-2 bg-muted rounded-lg text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary transition-colors flex-shrink-0">
+                                  <div className="p-2 bg-slate-50 rounded-lg text-slate-500 group-hover:bg-[#0F4C81]/10 group-hover:text-[#0F4C81] transition-colors flex-shrink-0">
                                     <Icon size={16} />
                                   </div>
                                   <div>
-                                    <div className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
+                                    <div className="text-sm font-semibold text-slate-800 group-hover:text-[#0F4C81] transition-colors">
                                       {item.title}
                                     </div>
-                                    <div className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
+                                    <div className="text-[11px] text-slate-500 mt-0.5 leading-relaxed">
                                       {item.desc}
                                     </div>
                                   </div>
@@ -284,34 +280,30 @@ export function Navigation() {
 
               <Link
                 href="/industries"
-                className="text-sm font-medium text-foreground/70 hover:text-primary transition-colors relative group py-2"
+                className="text-[15px] font-semibold text-slate-700 hover:text-[#0F4C81] transition-colors relative py-2"
               >
                 Industries
-                <span className="absolute -bottom-1.5 left-0 right-0 h-0.5 bg-primary origin-center scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out" />
               </Link>
 
               <Link
                 href="/careers"
-                className="text-sm font-medium text-foreground/70 hover:text-primary transition-colors relative group py-2"
+                className="text-[15px] font-semibold text-slate-700 hover:text-[#0F4C81] transition-colors relative py-2"
               >
                 Careers
-                <span className="absolute -bottom-1.5 left-0 right-0 h-0.5 bg-primary origin-center scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out" />
               </Link>
 
               <Link
                 href="/about"
-                className="text-sm font-medium text-foreground/70 hover:text-primary transition-colors relative group py-2"
+                className="text-[15px] font-semibold text-slate-700 hover:text-[#0F4C81] transition-colors relative py-2"
               >
                 About
-                <span className="absolute -bottom-1.5 left-0 right-0 h-0.5 bg-primary origin-center scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out" />
               </Link>
 
               <Link
                 href="/contact"
-                className="text-sm font-medium text-foreground/70 hover:text-primary transition-colors relative group py-2"
+                className="text-[15px] font-semibold text-slate-700 hover:text-[#0F4C81] transition-colors relative py-2"
               >
                 Contact
-                <span className="absolute -bottom-1.5 left-0 right-0 h-0.5 bg-primary origin-center scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out" />
               </Link>
             </div>
 
@@ -319,7 +311,7 @@ export function Navigation() {
             <div className="hidden lg:flex flex-1 justify-end">
               <Link
                 href="/contact"
-                className="h-12 px-8 flex items-center justify-center bg-[#071A35] text-white font-semibold text-sm rounded-[14px] hover:bg-[#0f2d57] shadow-sm hover:shadow-md hover:shadow-[#071a35]/15 transition-all duration-250 hover:-translate-y-0.5 active:scale-98 tracking-wide"
+                className="h-11 px-5 flex items-center justify-center bg-[#0F4C81] text-white font-semibold text-[14px] rounded-xl hover:bg-[#0c3c66] transition-all duration-200 shadow-sm"
               >
                 Schedule Consultation
               </Link>
@@ -329,7 +321,7 @@ export function Navigation() {
             <div className="lg:hidden flex items-center">
               <button
                 onClick={() => setIsOpen(true)}
-                className="p-2 text-foreground/80 hover:bg-muted rounded-lg transition-colors cursor-pointer bg-transparent border-none"
+                className="p-2 text-slate-800 hover:bg-slate-50 rounded-lg transition-colors cursor-pointer bg-transparent border-none"
               >
                 <Menu size={24} />
               </button>
@@ -345,43 +337,43 @@ export function Navigation() {
             {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
-              animate={{ opacity: 0.4 }}
+              animate={{ opacity: 0.3 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="fixed inset-0 bg-black z-40 lg:hidden"
+              className="fixed inset-0 bg-slate-900 z-40 lg:hidden"
             />
             {/* Drawer */}
             <motion.div
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
-              transition={{ type: 'tween', duration: 0.3, ease: 'easeOut' }}
-              className="fixed top-0 right-0 bottom-0 w-[300px] sm:w-[350px] bg-background border-l border-border/40 shadow-2xl z-50 flex flex-col justify-between lg:hidden overflow-hidden"
+              transition={{ type: 'tween', duration: 0.25, ease: 'easeOut' }}
+              className="fixed top-0 right-0 bottom-0 w-[300px] sm:w-[350px] bg-white border-l border-slate-200 shadow-2xl z-50 flex flex-col justify-between lg:hidden overflow-hidden animate-none"
             >
               {/* Drawer Header */}
-              <div className="flex items-center justify-between p-6 border-b border-border/40 flex-shrink-0">
+              <div className="flex items-center justify-between p-6 border-b border-slate-100 flex-shrink-0">
                 <Link href="/" onClick={() => setIsOpen(false)} className="flex items-center space-x-2">
-                  <div className="w-9 h-9 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center text-white font-bold text-base flex-shrink-0">
+                  <div className="w-8 h-8 bg-[#0F4C81] rounded-lg flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
                     HC
                   </div>
-                  <span className="font-bold text-base text-foreground">HyperCode</span>
+                  <span className="font-bold text-base text-slate-900">HyperCode</span>
                 </Link>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="p-2 text-foreground/75 hover:bg-muted rounded-lg transition-colors cursor-pointer bg-transparent border-none"
+                  className="p-2 text-slate-500 hover:bg-slate-50 rounded-lg transition-colors cursor-pointer bg-transparent border-none"
                 >
                   <X size={20} />
                 </button>
               </div>
 
               {/* Scrollable Navigation Area */}
-              <div className="flex-1 overflow-y-auto p-6 space-y-4">
+              <div className="flex-1 overflow-y-auto p-6 space-y-3">
                 <Link
                   href="/"
                   onClick={() => setIsOpen(false)}
-                  className="flex items-center space-x-3 py-3 text-lg font-medium text-foreground/80 hover:text-primary transition-colors border-b border-border/10"
+                  className="flex items-center space-x-3 py-2.5 text-[16px] font-semibold text-slate-800 hover:text-[#0F4C81] transition-colors border-b border-slate-50"
                 >
-                  <Home size={18} className="text-muted-foreground" />
+                  <Home size={16} className="text-slate-400" />
                   <span>Home</span>
                 </Link>
 
@@ -389,17 +381,17 @@ export function Navigation() {
                 <div>
                   <button
                     onClick={() => setMobileSolutionsOpen(!mobileSolutionsOpen)}
-                    className="flex items-center justify-between w-full py-3 text-lg font-medium text-foreground/80 hover:text-primary transition-colors border-b border-border/10 cursor-pointer bg-transparent border-none"
+                    className="flex items-center justify-between w-full py-2.5 text-[16px] font-semibold text-slate-800 hover:text-[#0F4C81] transition-colors border-b border-slate-50 cursor-pointer bg-transparent border-none"
                   >
                     <div className="flex items-center space-x-3">
-                      <Database size={18} className="text-muted-foreground" />
+                      <Database size={16} className="text-slate-400" />
                       <span>Solutions</span>
                     </div>
                     <ChevronDown
-                      size={18}
+                      size={16}
                       className={`transition-transform duration-300 ${
                         mobileSolutionsOpen ? 'rotate-180' : ''
-                      } text-muted-foreground`}
+                      } text-slate-400`}
                     />
                   </button>
                   <motion.div
@@ -408,13 +400,13 @@ export function Navigation() {
                       height: mobileSolutionsOpen ? 'auto' : 0,
                       opacity: mobileSolutionsOpen ? 1 : 0,
                     }}
-                    transition={{ duration: 0.2 }}
-                    className="overflow-hidden bg-muted/20 rounded-xl mt-2 pl-4 pr-2"
+                    transition={{ duration: 0.15 }}
+                    className="overflow-hidden bg-slate-50 rounded-xl mt-1.5 pl-4 pr-2"
                   >
-                    <div className="py-3 space-y-4 text-left">
+                    <div className="py-2.5 space-y-3.5 text-left">
                       {/* Data & Analytics */}
-                      <div className="space-y-2">
-                        <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
+                      <div className="space-y-1.5">
+                        <div className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">
                           Data & Analytics
                         </div>
                         <div className="space-y-1 pl-1">
@@ -425,9 +417,9 @@ export function Navigation() {
                                 key={idx}
                                 href={item.href}
                                 onClick={() => setIsOpen(false)}
-                                className="flex items-center gap-2 py-2 text-sm text-foreground/70 hover:text-primary transition-colors"
+                                className="flex items-center gap-2 py-1.5 text-sm text-slate-600 hover:text-[#0F4C81] transition-colors"
                               >
-                                <Icon size={14} className="text-muted-foreground flex-shrink-0" />
+                                <Icon size={14} className="text-slate-400 flex-shrink-0" />
                                 <span>{item.title}</span>
                               </Link>
                             );
@@ -436,8 +428,8 @@ export function Navigation() {
                       </div>
 
                       {/* Consulting Services */}
-                      <div className="space-y-2">
-                        <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
+                      <div className="space-y-1.5">
+                        <div className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">
                           Consulting Services
                         </div>
                         <div className="space-y-1 pl-1">
@@ -448,9 +440,9 @@ export function Navigation() {
                                 key={idx}
                                 href={item.href}
                                 onClick={() => setIsOpen(false)}
-                                className="flex items-center gap-2 py-2 text-sm text-foreground/70 hover:text-primary transition-colors"
+                                className="flex items-center gap-2 py-1.5 text-sm text-slate-600 hover:text-[#0F4C81] transition-colors"
                               >
-                                <Icon size={14} className="text-muted-foreground flex-shrink-0" />
+                                <Icon size={14} className="text-slate-400 flex-shrink-0" />
                                 <span>{item.title}</span>
                               </Link>
                             );
@@ -459,8 +451,8 @@ export function Navigation() {
                       </div>
 
                       {/* Staffing Solutions */}
-                      <div className="space-y-2">
-                        <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
+                      <div className="space-y-1.5">
+                        <div className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">
                           Staffing Solutions
                         </div>
                         <div className="space-y-1 pl-1">
@@ -471,9 +463,9 @@ export function Navigation() {
                                 key={idx}
                                 href={item.href}
                                 onClick={() => setIsOpen(false)}
-                                className="flex items-center gap-2 py-2 text-sm text-foreground/70 hover:text-primary transition-colors"
+                                className="flex items-center gap-2 py-1.5 text-sm text-slate-600 hover:text-[#0F4C81] transition-colors"
                               >
-                                <Icon size={14} className="text-muted-foreground flex-shrink-0" />
+                                <Icon size={14} className="text-slate-400 flex-shrink-0" />
                                 <span>{item.title}</span>
                               </Link>
                             );
@@ -487,46 +479,46 @@ export function Navigation() {
                 <Link
                   href="/industries"
                   onClick={() => setIsOpen(false)}
-                  className="flex items-center space-x-3 py-3 text-lg font-medium text-foreground/80 hover:text-primary transition-colors border-b border-border/10"
+                  className="flex items-center space-x-3 py-2.5 text-[16px] font-semibold text-slate-800 hover:text-[#0F4C81] transition-colors border-b border-slate-50"
                 >
-                  <Globe size={18} className="text-muted-foreground" />
+                  <Globe size={16} className="text-slate-400" />
                   <span>Industries</span>
                 </Link>
 
                 <Link
                   href="/careers"
                   onClick={() => setIsOpen(false)}
-                  className="flex items-center space-x-3 py-3 text-lg font-medium text-foreground/80 hover:text-primary transition-colors border-b border-border/10"
+                  className="flex items-center space-x-3 py-2.5 text-[16px] font-semibold text-slate-800 hover:text-[#0F4C81] transition-colors border-b border-slate-50"
                 >
-                  <Users size={18} className="text-muted-foreground" />
+                  <Users size={16} className="text-slate-400" />
                   <span>Careers</span>
                 </Link>
 
                 <Link
                   href="/about"
                   onClick={() => setIsOpen(false)}
-                  className="flex items-center space-x-3 py-3 text-lg font-medium text-foreground/80 hover:text-primary transition-colors border-b border-border/10"
+                  className="flex items-center space-x-3 py-2.5 text-[16px] font-semibold text-slate-800 hover:text-[#0F4C81] transition-colors border-b border-slate-50"
                 >
-                  <FileText size={18} className="text-muted-foreground" />
+                  <FileText size={16} className="text-slate-400" />
                   <span>About</span>
                 </Link>
 
                 <Link
                   href="/contact"
                   onClick={() => setIsOpen(false)}
-                  className="flex items-center space-x-3 py-3 text-lg font-medium text-foreground/80 hover:text-primary transition-colors border-b border-border/10"
+                  className="flex items-center space-x-3 py-2.5 text-[16px] font-semibold text-slate-800 hover:text-[#0F4C81] transition-colors border-b border-slate-50"
                 >
-                  <Mail size={18} className="text-muted-foreground" />
+                  <Mail size={16} className="text-slate-400" />
                   <span>Contact</span>
                 </Link>
               </div>
 
-              {/* Drawer Footer sticky CTA button */}
-              <div className="p-6 border-t border-border/40 bg-background/95 backdrop-blur-md flex-shrink-0">
+              {/* Drawer Footer CTA */}
+              <div className="p-6 border-t border-slate-100 bg-white flex-shrink-0">
                 <Link
                   href="/contact"
                   onClick={() => setIsOpen(false)}
-                  className="w-full h-12 flex items-center justify-center bg-[#071A35] text-white font-semibold text-base rounded-[14px] hover:bg-[#0f2d57] shadow-sm hover:shadow-md hover:shadow-[#071a35]/15 transition-all duration-250 hover:-translate-y-0.5 active:scale-98 tracking-wide"
+                  className="w-full h-11 flex items-center justify-center bg-[#0F4C81] text-white font-semibold text-sm rounded-xl hover:bg-[#0c3c66] transition-colors duration-200"
                 >
                   Schedule Consultation
                 </Link>

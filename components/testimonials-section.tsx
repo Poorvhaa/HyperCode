@@ -1,111 +1,111 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { Star } from 'lucide-react';
+import { useState } from 'react';
+import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 
-const testimonials = [
-  {
-    name: 'Sarah Chen',
-    company: 'Global Financial Services',
-    role: 'VP of Analytics',
-    content: 'HyperCode transformed our data infrastructure. Their BI solutions reduced reporting time from weeks to hours.',
-    rating: 5,
-  },
-  {
-    name: 'Michael Rodriguez',
-    company: 'Healthcare Systems Inc',
-    role: 'CIO',
-    content: 'The staffing solutions provided exactly what we needed. Professional, reliable, and cost-effective.',
-    rating: 5,
-  },
-  {
-    name: 'Jennifer Thompson',
-    company: 'Retail & Logistics Corp',
-    role: 'Director of Operations',
-    content: 'Outstanding consulting team. They understood our challenges and delivered solutions that actually work.',
-    rating: 5,
-  },
-];
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-      delayChildren: 0.2,
-    },
-  },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: 'easeOut' },
-  },
-};
+interface Testimonial {
+  name: string;
+  role: string;
+  company: string;
+  content: string;
+}
 
 export function TestimonialsSection() {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const testimonials: Testimonial[] = [
+    {
+      name: 'Sarah Chen',
+      role: 'VP of Analytics',
+      company: 'Global Financial Services',
+      content: 'HyperCode transformed our entire data pipeline infrastructure. Their custom cloud data warehouse reduced our dashboard load times from weeks to real-time, allowing our executives to execute trade decisions instantly.',
+    },
+    {
+      name: 'Michael Rodriguez',
+      role: 'Chief Information Officer',
+      company: 'Healthcare Systems Inc',
+      content: 'The IT staffing squad deployed by HyperCode was stellar. We needed certified AWS and Snowflake developers with active security checks within 14 days, and they delivered exactly what we needed to meet our compliance deadline.',
+    },
+    {
+      name: 'Jennifer Thompson',
+      role: 'Director of Operations',
+      company: 'Retail & Logistics Corp',
+      content: 'HyperCode is not just another IT vendor—they are a trusted strategic partner. Their Agile consultants restructured our logistics sprints, increasing delivery performance and saving us millions in operational overhead.',
+    },
+  ];
+
+  const handleNext = () => {
+    setActiveIndex((prev) => (prev + 1) % testimonials.length);
+  };
+
+  const handlePrev = () => {
+    setActiveIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  };
+
   return (
-    <section className="py-24 bg-background relative overflow-hidden">
-      <div className="absolute top-0 left-1/2 w-96 h-96 bg-accent/5 rounded-full blur-3xl -z-10 -translate-x-1/2 -translate-y-1/2" />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
-          <h2 className="text-4xl lg:text-5xl font-bold text-foreground mb-6">
+    <section className="py-24 bg-white border-b border-slate-100 text-left">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-2xl mx-auto mb-12">
+          <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">TESTIMONIALS</h2>
+          <h3 className="text-3xl font-extrabold text-slate-900 tracking-tight leading-none">
             Trusted by Enterprise Leaders
-          </h2>
-          <p className="text-xl text-foreground/60 max-w-2xl mx-auto">
-            See how HyperCode has helped leading organizations achieve their goals.
-          </p>
-        </motion.div>
+          </h3>
+        </div>
 
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-3 gap-8"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          {testimonials.map((testimonial, index) => (
-            <motion.div
-              key={index}
-              variants={cardVariants}
-              className="group relative p-8 rounded-xl border border-border/40 bg-card hover:border-accent/50 transition-all duration-300"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        {/* Carousel Container */}
+        <div className="relative bg-slate-50 border border-slate-200 rounded-3xl p-8 sm:p-12 text-center shadow-sm">
+          {/* Quote Icon Overlay */}
+          <div className="absolute top-6 left-6 text-slate-200 pointer-events-none">
+            <Quote size={60} />
+          </div>
 
-              <div className="relative z-10 space-y-4">
-                {/* Stars */}
-                <div className="flex gap-1">
-                  {Array.from({ length: testimonial.rating }).map((_, i) => (
-                    <Star key={i} size={16} className="fill-accent text-accent" />
-                  ))}
-                </div>
+          <div className="relative min-h-[200px] flex flex-col justify-between items-center z-10 space-y-6">
+            <blockquote className="text-lg sm:text-xl text-slate-800 font-semibold leading-relaxed max-w-2xl italic">
+              "{testimonials[activeIndex].content}"
+            </blockquote>
 
-                {/* Quote */}
-                <p className="text-foreground text-base leading-relaxed italic">
-                  &quot;{testimonial.content}&quot;
-                </p>
+            <div className="space-y-1">
+              <cite className="not-italic text-sm font-extrabold text-slate-900 block">
+                {testimonials[activeIndex].name}
+              </cite>
+              <span className="text-xs text-slate-500 font-bold block uppercase tracking-wider">
+                {testimonials[activeIndex].role} — <span className="text-[#0F4C81]">{testimonials[activeIndex].company}</span>
+              </span>
+            </div>
 
-                {/* Author */}
-                <div className="pt-4 border-t border-border/40">
-                  <p className="font-semibold text-foreground">{testimonial.name}</p>
-                  <p className="text-sm text-foreground/60">{testimonial.role}</p>
-                  <p className="text-sm text-accent font-medium">{testimonial.company}</p>
-                </div>
+            {/* Navigation Controls */}
+            <div className="flex justify-between items-center w-full pt-4">
+              <div className="flex gap-2">
+                <button
+                  onClick={handlePrev}
+                  className="p-2 rounded-xl bg-white border border-slate-200 text-slate-500 hover:text-slate-800 transition-colors cursor-pointer"
+                >
+                  <ChevronLeft size={16} />
+                </button>
+                <button
+                  onClick={handleNext}
+                  className="p-2 rounded-xl bg-white border border-slate-200 text-slate-500 hover:text-slate-800 transition-colors cursor-pointer"
+                >
+                  <ChevronRight size={16} />
+                </button>
               </div>
-            </motion.div>
-          ))}
-        </motion.div>
+
+              {/* Indicator Dots */}
+              <div className="flex gap-1.5">
+                {testimonials.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setActiveIndex(idx)}
+                    className={`w-1.5 h-1.5 rounded-full transition-all duration-200 cursor-pointer border-none ${
+                      activeIndex === idx ? 'bg-[#0F4C81] w-4' : 'bg-slate-300'
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+
+          </div>
+        </div>
       </div>
     </section>
   );

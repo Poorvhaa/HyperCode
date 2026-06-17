@@ -5,29 +5,29 @@ import { Mail, Phone, MapPin } from 'lucide-react';
 
 export function Footer() {
   return (
-    <footer className="border-t border-border/40 bg-card">
+    <footer className="border-t border-slate-200 bg-slate-50 text-left">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
           {/* Company Info */}
-          <div className="lg:col-span-1">
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">HC</span>
+          <div className="lg:col-span-1 space-y-4">
+            <div className="flex items-center space-x-2">
+              <div className="w-9 h-9 bg-[#0F4C81] rounded-xl flex items-center justify-center">
+                <span className="text-white font-bold text-base">HC</span>
               </div>
-              <span className="font-bold text-lg text-foreground">HyperCode</span>
+              <span className="font-bold text-lg text-slate-900">HyperCode</span>
             </div>
-            <p className="text-sm text-foreground/60 mb-4">Transforming Data Into Strategic Intelligence</p>
-            <div className="space-y-2 text-sm">
-              <div className="flex items-center space-x-2 text-foreground/60">
-                <MapPin size={16} />
+            <p className="text-sm text-slate-600 font-medium">Transforming Data Into Strategic Intelligence</p>
+            <div className="space-y-2 text-sm font-medium text-slate-500">
+              <div className="flex items-center space-x-2">
+                <MapPin size={16} className="text-slate-400" />
                 <span>Schaumburg, Illinois</span>
               </div>
-              <div className="flex items-center space-x-2 text-foreground/60">
-                <Phone size={16} />
+              <div className="flex items-center space-x-2">
+                <Phone size={16} className="text-slate-400" />
                 <span>Coming Soon</span>
               </div>
-              <div className="flex items-center space-x-2 text-foreground/60">
-                <Mail size={16} />
+              <div className="flex items-center space-x-2">
+                <Mail size={16} className="text-slate-400" />
                 <span>Coming Soon</span>
               </div>
             </div>
@@ -35,25 +35,25 @@ export function Footer() {
 
           {/* Solutions */}
           <div>
-            <h3 className="font-semibold text-foreground mb-4">Solutions</h3>
-            <ul className="space-y-2">
+            <h3 className="font-semibold text-slate-900 text-[15px] mb-4">Solutions</h3>
+            <ul className="space-y-2.5">
               <li>
-                <Link href="/solutions" className="text-sm text-foreground/60 hover:text-primary transition-colors">
+                <Link href="/solutions" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
                   Business Intelligence
                 </Link>
               </li>
               <li>
-                <Link href="/solutions" className="text-sm text-foreground/60 hover:text-primary transition-colors">
+                <Link href="/solutions" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
                   Data Analytics
                 </Link>
               </li>
               <li>
-                <Link href="/solutions" className="text-sm text-foreground/60 hover:text-primary transition-colors">
+                <Link href="/solutions" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
                   Data Warehousing
                 </Link>
               </li>
               <li>
-                <Link href="/solutions" className="text-sm text-foreground/60 hover:text-primary transition-colors">
+                <Link href="/solutions" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
                   Big Data Solutions
                 </Link>
               </li>
@@ -62,25 +62,25 @@ export function Footer() {
 
           {/* Company */}
           <div>
-            <h3 className="font-semibold text-foreground mb-4">Company</h3>
-            <ul className="space-y-2">
+            <h3 className="font-semibold text-slate-900 text-[15px] mb-4">Company</h3>
+            <ul className="space-y-2.5">
               <li>
-                <Link href="/about" className="text-sm text-foreground/60 hover:text-primary transition-colors">
+                <Link href="/about" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link href="/careers" className="text-sm text-foreground/60 hover:text-primary transition-colors">
+                <Link href="/careers" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
                   Careers
                 </Link>
               </li>
               <li>
-                <Link href="/insights" className="text-sm text-foreground/60 hover:text-primary transition-colors">
+                <Link href="/insights" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
                   Insights
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="text-sm text-foreground/60 hover:text-primary transition-colors">
+                <Link href="/contact" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
                   Contact
                 </Link>
               </li>
@@ -89,25 +89,25 @@ export function Footer() {
 
           {/* Services */}
           <div>
-            <h3 className="font-semibold text-foreground mb-4">Services</h3>
-            <ul className="space-y-2">
+            <h3 className="font-semibold text-slate-900 text-[15px] mb-4">Services</h3>
+            <ul className="space-y-2.5">
               <li>
-                <Link href="/staffing" className="text-sm text-foreground/60 hover:text-primary transition-colors">
+                <Link href="/staffing" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
                   IT Staffing
                 </Link>
               </li>
               <li>
-                <Link href="/staffing" className="text-sm text-foreground/60 hover:text-primary transition-colors">
+                <Link href="/staffing" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
                   Agile Consulting
                 </Link>
               </li>
               <li>
-                <Link href="/staffing" className="text-sm text-foreground/60 hover:text-primary transition-colors">
+                <Link href="/staffing" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
                   Project Management
                 </Link>
               </li>
               <li>
-                <Link href="/staffing" className="text-sm text-foreground/60 hover:text-primary transition-colors">
+                <Link href="/staffing" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
                   Database Admin
                 </Link>
               </li>
@@ -116,25 +116,25 @@ export function Footer() {
 
           {/* Industries */}
           <div>
-            <h3 className="font-semibold text-foreground mb-4">Industries</h3>
-            <ul className="space-y-2">
+            <h3 className="font-semibold text-slate-900 text-[15px] mb-4">Industries</h3>
+            <ul className="space-y-2.5">
               <li>
-                <Link href="/industries" className="text-sm text-foreground/60 hover:text-primary transition-colors">
+                <Link href="/industries" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
                   Financial Services
                 </Link>
               </li>
               <li>
-                <Link href="/industries" className="text-sm text-foreground/60 hover:text-primary transition-colors">
+                <Link href="/industries" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
                   Healthcare
                 </Link>
               </li>
               <li>
-                <Link href="/industries" className="text-sm text-foreground/60 hover:text-primary transition-colors">
+                <Link href="/industries" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
                   Government
                 </Link>
               </li>
               <li>
-                <Link href="/industries" className="text-sm text-foreground/60 hover:text-primary transition-colors">
+                <Link href="/industries" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
                   Retail & Tech
                 </Link>
               </li>
@@ -142,9 +142,13 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Divider */}
-        <div className="border-t border-border/40 pt-8">
-          <p className="text-sm text-foreground/60 text-center">© 2024 HyperCode. All rights reserved.</p>
+        {/* Divider & Bottom Section */}
+        <div className="border-t border-slate-200 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+          <p>© 2026 HyperCode. All rights reserved.</p>
+          <div className="flex space-x-6">
+            <Link href="/contact" className="hover:text-[#0F4C81]">Privacy Policy</Link>
+            <Link href="/contact" className="hover:text-[#0F4C81]">Terms of Service</Link>
+          </div>
         </div>
       </div>
     </footer>

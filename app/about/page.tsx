@@ -1,153 +1,143 @@
 import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
-import { Target, Eye, Award, Users, Globe, Zap } from 'lucide-react';
+import { Target, Eye, ShieldCheck, HeartHandshake, Compass, Users } from 'lucide-react';
+import Link from 'next/link';
 
 export const metadata = {
   title: 'About HyperCode | Our Story & Mission',
-  description: 'Learn about HyperCode - a strategic consulting firm dedicated to transforming data into strategic intelligence.',
+  description: 'Learn about HyperCode\'s mission, values, approach, and nationwide presence as a premier strategic consulting firm.',
 };
 
-const coreValues = [
-  {
-    icon: Award,
-    title: 'Excellence',
-    description: 'We pursue the highest standards in every project and engagement.',
-  },
-  {
-    icon: Users,
-    title: 'Partnership',
-    description: 'Your success is our success. We act as true partners, not just vendors.',
-  },
-  {
-    icon: Zap,
-    title: 'Innovation',
-    description: 'We stay ahead of technology trends to deliver cutting-edge solutions.',
-  },
-  {
-    icon: Globe,
-    title: 'Integrity',
-    description: 'Transparency and honesty guide every decision we make.',
-  },
-];
-
-const teamAreas = [
-  'Business Intelligence & Analytics',
-  'Data Engineering & Architecture',
-  'IT Staffing & Talent Management',
-  'Cloud Solutions & Infrastructure',
-  'Project Management & Consulting',
-];
-
 export default function AboutPage() {
+  const coreValues = [
+    {
+      icon: HeartHandshake,
+      title: 'Empathy-First Partnership',
+      description: 'Your success is our success. We listen deeply to understand your business objectives and design systems that solve human problems.',
+    },
+    {
+      icon: ShieldCheck,
+      title: 'Enterprise Integrity',
+      description: 'Transparency guides every action. We maintain strict security compliance, code reviews, and honest communication.',
+    },
+    {
+      icon: Users,
+      title: 'Nationwide Delivery',
+      description: 'We leverage our network of over 12,000 pre-vetted consultants to deploy certified data architects and software engineers across all 50 states.',
+    },
+    {
+      icon: Compass,
+      title: 'Continuous Strategy',
+      description: 'We do not just hand over code. We audit tech stacks, run optimization reviews, and support your teams post-deployment.',
+    },
+  ];
+
   return (
-    <main className="relative w-full">
+    <main className="relative w-full bg-white text-left">
       <Navigation />
 
       {/* Hero Section */}
-      <section className="min-h-[50vh] bg-gradient-to-b from-background to-muted/30 pt-32 pb-20 flex items-center">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="text-center space-y-6">
-            <h1 className="text-5xl lg:text-6xl font-bold text-foreground leading-tight">
-              Transforming Data Into Strategic Intelligence
+      <section className="bg-slate-50 pt-36 pb-20 border-b border-slate-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl space-y-4">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
+              Transforming Data Into <span className="text-[#0F4C81]">Strategic Intelligence</span>
             </h1>
-            <p className="text-xl text-foreground/60 max-w-3xl mx-auto">
-              Learn about HyperCode&apos;s mission, values, and commitment to delivering exceptional results.
+            <p className="text-lg sm:text-xl text-slate-600 font-medium leading-relaxed">
+              We combine enterprise data engineering, cloud analytics strategy, and strategic IT staffing to accelerate growth.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Our Story */}
-      <section className="py-24 bg-background">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          <div>
-            <h2 className="text-4xl font-bold text-foreground mb-6">Our Story</h2>
-            <div className="space-y-4 text-lg text-foreground/70 leading-relaxed">
+      {/* Storytelling Section */}
+      <section className="py-24 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          <div className="space-y-6">
+            <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Our Story</h2>
+            <div className="space-y-4 text-base sm:text-lg text-slate-600 leading-relaxed font-medium">
               <p>
-                Founded with a vision to bridge the gap between raw data and strategic business intelligence, HyperCode has grown to become a trusted partner for Fortune 500 companies and government agencies across the United States.
+                HyperCode was founded with a clear objective: to bridge the gap between raw data pipelines and executive decision-making. Over the years, we have grown to become a trusted strategic partner for Fortune 500 enterprises and government agencies across the United States.
               </p>
               <p>
-                With over 15 years of combined expertise, our team has delivered more than 100 successful projects, ranging from enterprise business intelligence implementations to large-scale data migrations and specialized IT staffing solutions.
-              </p>
-              <p>
-                What sets us apart is our commitment to not just implementing technology, but truly understanding our clients&apos; business challenges and delivering solutions that drive measurable ROI.
+                What sets us apart is our commitment to combining technical execution with human-centered consulting. We believe modern dashboards and databases are only as effective as the teams utilizing them.
               </p>
             </div>
           </div>
 
-          {/* Key Metrics */}
-          <div className="grid grid-cols-3 gap-6 pt-8 border-t border-border/40">
+          {/* Simple Clean Metrics Grid */}
+          <div className="grid grid-cols-3 gap-6 pt-10 border-t border-slate-200">
             <div>
-              <div className="text-4xl font-bold text-primary mb-2">100+</div>
-              <p className="text-foreground/60">Projects Delivered</p>
+              <div className="text-3xl font-bold text-[#0F4C81]">250+</div>
+              <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider mt-1">Projects Completed</p>
             </div>
             <div>
-              <div className="text-4xl font-bold text-primary mb-2">95%</div>
-              <p className="text-foreground/60">Client Satisfaction Rate</p>
+              <div className="text-3xl font-bold text-[#0F4C81]">98%</div>
+              <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider mt-1">Client Satisfaction</p>
             </div>
             <div>
-              <div className="text-4xl font-bold text-primary mb-2">50+</div>
-              <p className="text-foreground/60">Expert Consultants</p>
+              <div className="text-3xl font-bold text-[#0F4C81]">1,200+</div>
+              <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider mt-1">Consultants Placed</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Mission & Vision */}
-      <section className="py-24 bg-muted/30">
+      {/* Mission & Vision Section */}
+      <section className="py-24 bg-slate-50 border-t border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {/* Mission */}
-            <div className="space-y-4">
-              <div className="flex items-center gap-3 mb-4">
-                <Target size={32} className="text-primary" />
-                <h2 className="text-3xl font-bold text-foreground">Our Mission</h2>
+            <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+              <div className="flex items-center space-x-3 mb-2">
+                <div className="w-9 h-9 bg-slate-50 border border-slate-100 rounded-lg text-[#0F4C81] flex items-center justify-center">
+                  <Target size={18} />
+                </div>
+                <h3 className="text-xl font-bold text-slate-900">Our Mission</h3>
               </div>
-              <p className="text-lg text-foreground/70 leading-relaxed">
-                To empower organizations by transforming their data into actionable intelligence, enabling informed decision-making and driving sustainable business growth through innovative technology solutions and strategic partnerships.
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-medium">
+                To empower organizations by transforming raw data into actionable intelligence, enabling fast, compliant decision-making and driving business growth through strategic cloud architectures and staffing.
               </p>
             </div>
 
             {/* Vision */}
-            <div className="space-y-4">
-              <div className="flex items-center gap-3 mb-4">
-                <Eye size={32} className="text-accent" />
-                <h2 className="text-3xl font-bold text-foreground">Our Vision</h2>
+            <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+              <div className="flex items-center space-x-3 mb-2">
+                <div className="w-9 h-9 bg-slate-50 border border-slate-100 rounded-lg text-[#0F4C81] flex items-center justify-center">
+                  <Eye size={18} />
+                </div>
+                <h3 className="text-xl font-bold text-slate-900">Our Vision</h3>
               </div>
-              <p className="text-lg text-foreground/70 leading-relaxed">
-                To be the trusted partner of choice for organizations seeking to leverage data and technology as competitive advantages, known for our expertise, integrity, and unwavering commitment to client success.
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-medium">
+                To serve as the premier consulting and talent partner of choice for organizations leveraging data and cloud technology as distinct competitive advantages, known for technical clarity and execution.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Core Values */}
-      <section className="py-24 bg-background">
+      {/* Core Values Section */}
+      <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 space-y-4">
-            <h2 className="text-4xl font-bold text-foreground">Our Core Values</h2>
-            <p className="text-xl text-foreground/60">
-              These values guide every decision and action we take
-            </p>
+          <div className="max-w-3xl mb-16">
+            <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">ORGANIZATIONAL PILLARS</h2>
+            <h3 className="text-3xl font-extrabold text-slate-900 tracking-tight leading-none">Our Core Values</h3>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {coreValues.map((value, i) => {
               const Icon = value.icon;
               return (
                 <div
                   key={i}
-                  className="p-8 rounded-xl border border-border/40 bg-card hover:border-accent/50 transition-all"
+                  className="p-6 rounded-2xl border border-slate-200 bg-white shadow-sm flex items-start gap-4"
                 >
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center flex-shrink-0">
-                      <Icon size={24} className="text-white" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-xl font-bold text-foreground mb-2">{value.title}</h3>
-                      <p className="text-foreground/60">{value.description}</p>
-                    </div>
+                  <div className="w-10 h-10 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center text-[#0F4C81] flex-shrink-0">
+                    <Icon size={20} />
+                  </div>
+                  <div className="space-y-1">
+                    <h4 className="text-base font-bold text-slate-900">{value.title}</h4>
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">{value.description}</p>
                   </div>
                 </div>
               );
@@ -156,63 +146,28 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Team Expertise */}
-      <section className="py-24 bg-muted/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 space-y-4">
-            <h2 className="text-4xl font-bold text-foreground">Our Expertise Areas</h2>
-            <p className="text-xl text-foreground/60">
-              Deep knowledge across key technology and consulting domains
+      {/* Approach & Nationwide Presence Section */}
+      <section className="py-24 bg-slate-50 border-t border-b border-slate-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          <div className="space-y-6">
+            <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Our Approach</h2>
+            <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-medium">
+              We operate with a sprint-based, transparent consulting approach. Every engagement begins with a strict data audit and ends with mentoring loops to guarantee that your internal team fully controls the modern cloud systems we deploy.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-            {teamAreas.map((area, i) => (
-              <div
-                key={i}
-                className="p-6 rounded-xl border border-border/40 bg-card hover:border-accent/50 transition-all text-center"
+          <div className="space-y-6 pt-10 border-t border-slate-200">
+            <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Nationwide Presence</h2>
+            <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-medium">
+              HyperCode supports corporate and public sector clients across the United States. With consulting resources distributed in all 50 states, we quickly mobilize Scrum teams, developers, and analysts to match your exact timeline.
+            </p>
+            <div className="pt-4">
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center h-11 px-6 bg-[#0F4C81] text-white font-semibold text-[13px] rounded-xl hover:bg-[#0c3c66] transition-colors duration-200"
               >
-                <p className="font-semibold text-foreground">{area}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Culture */}
-      <section className="py-24 bg-background">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          <div className="text-center space-y-4 mb-12">
-            <h2 className="text-4xl font-bold text-foreground">Our Culture</h2>
-            <p className="text-xl text-foreground/60">
-              We believe great work comes from great people
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="space-y-4">
-              <h3 className="text-2xl font-bold text-foreground">Innovation First</h3>
-              <p className="text-foreground/70 leading-relaxed">
-                We encourage our team to explore new technologies, methodologies, and approaches. Continuous learning is part of our DNA.
-              </p>
-            </div>
-            <div className="space-y-4">
-              <h3 className="text-2xl font-bold text-foreground">Collaborative</h3>
-              <p className="text-foreground/70 leading-relaxed">
-                We work together as one team, sharing knowledge and supporting each other to deliver exceptional results for our clients.
-              </p>
-            </div>
-            <div className="space-y-4">
-              <h3 className="text-2xl font-bold text-foreground">Client-Centric</h3>
-              <p className="text-foreground/70 leading-relaxed">
-                Everything we do is driven by a deep commitment to understanding and solving our clients&apos; most pressing challenges.
-              </p>
-            </div>
-            <div className="space-y-4">
-              <h3 className="text-2xl font-bold text-foreground">Excellence</h3>
-              <p className="text-foreground/70 leading-relaxed">
-                We set high standards for ourselves and maintain them across every project, interaction, and deliverable.
-              </p>
+                Schedule Consultation
+              </Link>
             </div>
           </div>
         </div>

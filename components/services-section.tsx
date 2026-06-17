@@ -1,139 +1,124 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { BarChart3, TrendingUp, Database, Zap, Users, Cog } from 'lucide-react';
-
-const services = [
-  {
-    icon: BarChart3,
-    title: 'Business Intelligence',
-    description: 'Power BI, Tableau, and advanced reporting solutions to drive data-informed decisions.',
-    features: ['Power BI', 'Tableau', 'Custom Reporting'],
-  },
-  {
-    icon: TrendingUp,
-    title: 'Data Analytics',
-    description: 'Predictive analytics and visualization insights to unlock hidden opportunities.',
-    features: ['Predictive Analytics', 'Data Visualization', 'Advanced Insights'],
-  },
-  {
-    icon: Database,
-    title: 'Data Warehousing',
-    description: 'Enterprise-grade ETL, data lakes, and scalable architecture solutions.',
-    features: ['ETL Pipelines', 'Data Lakes', 'Cloud Architecture'],
-  },
-  {
-    icon: Zap,
-    title: 'Big Data Solutions',
-    description: 'Hadoop, Spark, and cloud-native analytics for massive scale data processing.',
-    features: ['Hadoop', 'Apache Spark', 'Cloud Analytics'],
-  },
-  {
-    icon: Users,
-    title: 'IT Staffing',
-    description: 'Contract, contract-to-hire, and permanent placement for specialized tech talent.',
-    features: ['Contract Staffing', 'Direct Hire', 'Staff Augmentation'],
-  },
-  {
-    icon: Cog,
-    title: 'Agile Consulting',
-    description: 'Scrum, project management, and digital transformation expertise.',
-    features: ['Scrum Masters', 'Project Management', 'Transformation'],
-  },
-];
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2,
-    },
-  },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: 'easeOut' },
-  },
-  hover: {
-    y: -8,
-    transition: { duration: 0.3 },
-  },
-};
+import { BarChart3, Settings2, Users2, ArrowRight } from 'lucide-react';
 
 export function ServicesSection() {
+  const serviceGroups = [
+    {
+      title: 'Data & Analytics',
+      icon: BarChart3,
+      desc: 'Architecting modern cloud pipelines, database consolidations, and executive reporting dashboards.',
+      services: [
+        {
+          name: 'Business Intelligence',
+          desc: 'Power BI and Tableau enterprise setups with DAX reporting filters.',
+        },
+        {
+          name: 'Data Analytics',
+          desc: 'Predictive analytics modeling, behavioral trends, and statistical insights.',
+        },
+        {
+          name: 'Data Engineering',
+          desc: 'Automated ETL pipeline development with Apache Spark and Apache Airflow.',
+        },
+        {
+          name: 'Data Warehousing',
+          desc: 'Scalable data warehousing setups on Snowflake and Amazon Redshift.',
+        },
+      ],
+    },
+    {
+      title: 'Consulting Services',
+      icon: Settings2,
+      desc: 'Aligning technology stacks, database configurations, and sprints with core business revenue targets.',
+      services: [
+        {
+          name: 'Business Analysis',
+          desc: 'Documenting engineering needs and auditing compliance requirements.',
+        },
+        {
+          name: 'Agile Consulting',
+          desc: 'Agile scrum coaching, sprint management, and digital transformation.',
+        },
+        {
+          name: 'Technology Strategy',
+          desc: 'Expert guidance on stack selections, cloud hosting, and security layouts.',
+        },
+      ],
+    },
+    {
+      title: 'Staffing & Augmentation',
+      icon: Users2,
+      desc: 'Deploying highly vetted developers, cloud architects, and data leads to reinforce active project squads.',
+      services: [
+        {
+          name: 'IT Staffing',
+          desc: 'Sourcing and recruiting specialized data and software engineers.',
+        },
+        {
+          name: 'Staff Augmentation',
+          desc: 'Scaling internal development resources with flexible contractors.',
+        },
+        {
+          name: 'Direct Placement',
+          desc: 'Accessing our national pipeline to fill permanent technical leadership roles.',
+        },
+      ],
+    },
+  ];
+
   return (
-    <section className="py-24 bg-background relative overflow-hidden">
-      <div className="absolute top-0 left-1/2 w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-10 -translate-x-1/2" />
-
+    <section id="services" className="py-24 bg-white border-b border-slate-100 text-left">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
-          <h2 className="text-4xl lg:text-5xl font-bold text-foreground mb-6">
-            Comprehensive Solutions for Every Challenge
-          </h2>
-          <p className="text-xl text-foreground/60 max-w-2xl mx-auto">
-            From business intelligence to staffing, we deliver enterprise-grade solutions that drive measurable results.
+        <div className="max-w-3xl mb-20">
+          <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">SERVICES EXCHANGE</h2>
+          <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-none">
+            Enterprise Solutions & IT Staffing
+          </h3>
+          <p className="text-base sm:text-lg text-slate-600 mt-4 leading-relaxed font-medium">
+            We group our capabilities logically to support your digital transformations, data engineering, and project staffing needs.
           </p>
-        </motion.div>
+        </div>
 
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          {services.map((service, index) => {
-            const Icon = service.icon;
+        {/* Categories Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+          {serviceGroups.map((group, idx) => {
+            const GroupIcon = group.icon;
             return (
-              <motion.div
-                key={index}
-                variants={cardVariants}
-                whileHover="hover"
-                className="group relative p-8 rounded-2xl border border-border/40 bg-card hover:border-accent/50 transition-all duration-300"
-              >
-                {/* Glassmorphism Accent */}
-                <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                <div className="relative z-10 space-y-4">
-                  {/* Icon */}
-                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center group-hover:shadow-lg group-hover:shadow-primary/30 transition-all duration-300">
-                    <Icon size={28} className="text-white" />
+              <div key={idx} className="space-y-6">
+                {/* Category Header */}
+                <div className="p-6 rounded-2xl bg-slate-50 border border-slate-150">
+                  <div className="flex items-center space-x-3 mb-4">
+                    <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 text-[#0F4C81] flex items-center justify-center flex-shrink-0">
+                      <GroupIcon size={18} />
+                    </div>
+                    <h4 className="text-lg font-bold text-slate-900">{group.title}</h4>
                   </div>
-
-                  {/* Title & Description */}
-                  <div>
-                    <h3 className="text-xl font-bold text-foreground mb-2">{service.title}</h3>
-                    <p className="text-foreground/60 text-sm leading-relaxed">{service.description}</p>
-                  </div>
-
-                  {/* Features */}
-                  <div className="flex flex-wrap gap-2 pt-4">
-                    {service.features.map((feature, i) => (
-                      <span
-                        key={i}
-                        className="px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-medium"
-                      >
-                        {feature}
-                      </span>
-                    ))}
-                  </div>
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
+                    {group.desc}
+                  </p>
                 </div>
-              </motion.div>
+
+                {/* Sub-services Cards */}
+                <div className="space-y-4">
+                  {group.services.map((service, sIdx) => (
+                    <div
+                      key={sIdx}
+                      className="p-5 rounded-2xl border border-slate-200 bg-white hover:border-slate-300 transition-colors shadow-sm text-left"
+                    >
+                      <h5 className="text-[15px] font-bold text-slate-900 mb-1">
+                        {service.name}
+                      </h5>
+                      <p className="text-xs text-slate-600 leading-relaxed font-medium">
+                        {service.desc}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
             );
           })}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

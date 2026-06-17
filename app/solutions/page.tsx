@@ -1,12 +1,11 @@
 import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
-import { motion } from 'framer-motion';
-import { BarChart3, TrendingUp, Database, Zap, Users, Cog, Check, ArrowRight, Cpu } from 'lucide-react';
+import { BarChart3, TrendingUp, Database, Check, ArrowRight, Cpu, Binary } from 'lucide-react';
 import Link from 'next/link';
 
 export const metadata = {
   title: 'Solutions | HyperCode',
-  description: 'Explore HyperCode\'s comprehensive business solutions including Business Intelligence, Data Analytics, Data Warehousing, and IT Staffing.',
+  description: 'Explore HyperCode\'s comprehensive business solutions including Business Intelligence, Data Analytics, Data Warehousing, Data Engineering, and Big Data.',
 };
 
 const solutions = [
@@ -19,7 +18,7 @@ const solutions = [
       'Real-time dashboard creation',
       'Interactive data visualization',
       'Automated reporting workflows',
-      'Data-driven decision making',
+      'Data-informed decision making',
       'Executive scorecards',
       'Self-service analytics',
     ],
@@ -76,7 +75,7 @@ const solutions = [
   },
   {
     id: 5,
-    icon: Zap,
+    icon: Binary,
     title: 'Big Data Solutions',
     shortDesc: 'Hadoop, Spark & Cloud Analytics',
     benefits: [
@@ -94,63 +93,63 @@ const solutions = [
 
 export default function SolutionsPage() {
   return (
-    <main className="relative w-full">
+    <main className="relative w-full bg-white text-left">
       <Navigation />
 
       {/* Hero Section */}
-      <section className="min-h-[60vh] bg-gradient-to-b from-background to-muted/30 pt-32 pb-20 flex items-center">
+      <section className="bg-slate-50 pt-36 pb-20 border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="text-center space-y-6">
-            <h1 className="text-5xl lg:text-6xl font-bold text-foreground leading-tight">
-              Enterprise Solutions for Data Success
+          <div className="max-w-3xl space-y-4">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
+              Enterprise Solutions for <span className="text-[#0F4C81]">Data Success</span>
             </h1>
-            <p className="text-xl text-foreground/60 max-w-3xl mx-auto">
-              Comprehensive solutions designed to transform your data into strategic intelligence and drive business growth.
+            <p className="text-lg sm:text-xl text-slate-600 font-medium leading-relaxed">
+              Comprehensive database architectures and reporting tools designed to transform your operations and drive business growth.
             </p>
           </div>
         </div>
       </section>
 
       {/* Solutions Grid */}
-      <section className="py-24 bg-background">
+      <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="space-y-16">
+          <div className="space-y-20">
             {solutions.map((solution) => {
               const Icon = solution.icon;
               const id = solution.title === 'Big Data Solutions' ? 'big-data' : solution.title.toLowerCase().replace(/\s+/g, '-');
               return (
-                <div key={solution.id} id={id} className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center scroll-mt-24">
+                <div key={solution.id} id={id} className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch scroll-mt-24">
                   {/* Left: Content */}
-                  <div className="space-y-6">
-                    <div className="space-y-2">
+                  <div className="space-y-6 flex flex-col justify-between">
+                    <div className="space-y-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-                          <Icon size={24} className="text-white" />
+                        <div className="w-10 h-10 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center text-[#0F4C81] flex-shrink-0">
+                          <Icon size={20} />
                         </div>
-                        <h2 className="text-3xl font-bold text-foreground">{solution.title}</h2>
+                        <h2 className="text-2xl font-bold text-slate-900">{solution.title}</h2>
                       </div>
-                      <p className="text-lg text-accent font-medium">{solution.shortDesc}</p>
+                      <p className="text-sm font-bold text-[#0F4C81] uppercase tracking-wide">{solution.shortDesc}</p>
                     </div>
 
-                    <div className="space-y-4">
-                      <h3 className="font-bold text-foreground">Key Benefits</h3>
-                      <div className="grid grid-cols-2 gap-3">
+                    <div className="space-y-3">
+                      <h3 className="text-sm font-bold text-slate-900">Key Benefits</h3>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm font-semibold text-slate-600">
                         {solution.benefits.map((benefit, i) => (
-                          <div key={i} className="flex items-start gap-3">
-                            <Check size={20} className="text-accent flex-shrink-0 mt-0.5" />
-                            <span className="text-foreground/70">{benefit}</span>
+                          <div key={i} className="flex items-start gap-2.5">
+                            <Check size={16} className="text-emerald-600 flex-shrink-0 mt-0.5" />
+                            <span>{benefit}</span>
                           </div>
                         ))}
                       </div>
                     </div>
 
-                    <div className="space-y-4">
-                      <h3 className="font-bold text-foreground">Technologies</h3>
-                      <div className="flex flex-wrap gap-2">
+                    <div className="space-y-3">
+                      <h3 className="text-sm font-bold text-slate-900">Technologies</h3>
+                      <div className="flex flex-wrap gap-1.5">
                         {solution.technologies.map((tech, i) => (
                           <span
                             key={i}
-                            className="px-4 py-2 bg-accent/10 text-accent rounded-full text-sm font-medium"
+                            className="px-3 py-1 bg-slate-50 border border-slate-150 text-slate-500 rounded-lg text-xs font-bold uppercase tracking-wider"
                           >
                             {tech}
                           </span>
@@ -158,28 +157,30 @@ export default function SolutionsPage() {
                       </div>
                     </div>
 
-                    <Link
-                      href="/contact"
-                      className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:shadow-lg hover:shadow-primary/30 transition-all hover:-translate-y-1 group"
-                    >
-                      Learn More
-                      <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                    </Link>
+                    <div className="pt-2">
+                      <Link
+                        href="/contact"
+                        className="inline-flex items-center justify-center h-10 px-5 bg-[#0F4C81] text-white font-semibold text-xs rounded-xl hover:bg-[#0c3c66] transition-colors duration-200"
+                      >
+                        <span>Learn More</span>
+                        <ArrowRight size={14} className="ml-1.5" />
+                      </Link>
+                    </div>
                   </div>
 
-                  {/* Right: Process */}
-                  <div className="bg-card rounded-2xl border border-border/40 p-8 space-y-6">
-                    <h3 className="text-xl font-bold text-foreground">Our Process</h3>
+                  {/* Right: Process Card */}
+                  <div className="bg-slate-50 rounded-2xl border border-slate-200 p-6 sm:p-8 space-y-6">
+                    <h3 className="text-base font-bold text-slate-900 uppercase tracking-wide">Our Process</h3>
                     <div className="space-y-4">
                       {solution.process.map((step, i) => (
                         <div key={i} className="flex gap-4">
-                          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white font-bold text-sm">
+                          <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-700 font-bold text-xs">
                             {i + 1}
                           </div>
-                          <div className="flex-1 pt-1">
-                            <p className="font-medium text-foreground">{step}</p>
+                          <div className="flex-1 pt-1.5">
+                            <p className="text-sm font-bold text-slate-800">{step}</p>
                             {i < solution.process.length - 1 && (
-                              <div className="w-0.5 h-8 bg-border/40 ml-4 mt-2" />
+                              <div className="w-px h-8 bg-slate-200 ml-4 mt-2" />
                             )}
                           </div>
                         </div>
@@ -193,20 +194,21 @@ export default function SolutionsPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-24 bg-gradient-to-r from-primary/10 to-accent/10 border-y border-border/40">
+      {/* CTA Section */}
+      <section className="py-24 bg-slate-50 border-t border-b border-slate-100">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-          <h2 className="text-4xl font-bold text-foreground">Ready to Transform Your Data?</h2>
-          <p className="text-xl text-foreground/60">
-            Schedule a consultation with our experts to discuss your specific needs and opportunities.
+          <h3 className="text-3xl font-extrabold text-slate-900 tracking-tight">Ready to Transform Your Data?</h3>
+          <p className="text-base sm:text-lg text-slate-600 max-w-xl mx-auto font-medium">
+            Schedule a consultation with our principal consultants to analyze your databases and reporting tools.
           </p>
-          <Link
-            href="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-lg font-semibold text-lg hover:shadow-lg hover:shadow-primary/30 transition-all hover:-translate-y-1 group"
-          >
-            Get Started
-            <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-          </Link>
+          <div>
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center h-12 px-7 bg-[#0F4C81] text-white font-semibold text-[14px] rounded-xl hover:bg-[#0c3c66] transition-colors duration-200 shadow-sm"
+            >
+              Get Started
+            </Link>
+          </div>
         </div>
       </section>
 

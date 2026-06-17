@@ -2,53 +2,72 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, BarChart3, Users2 } from 'lucide-react';
 
 export function CTASection() {
   return (
-    <section className="py-24 bg-gradient-to-r from-primary/10 via-background to-accent/10 relative overflow-hidden">
-      {/* Background Decorative Elements */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-10" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl -z-10" />
-
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          className="text-center space-y-8"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
-          <h2 className="text-4xl lg:text-5xl font-bold text-foreground">
-            Ready to Accelerate Your Digital Transformation?
-          </h2>
-
-          <p className="text-xl text-foreground/60 max-w-2xl mx-auto">
-            Let our expert team show you how HyperCode can drive measurable results for your organization.
+    <section className="py-24 bg-slate-50 border-t border-b border-slate-100 text-left">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">GET IN TOUCH</h2>
+          <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-none">
+            Accelerate Your Enterprise Transformation
+          </h3>
+          <p className="text-base sm:text-lg text-slate-600 mt-4 leading-relaxed font-medium">
+            Whether you need to architect a new cloud platform, optimize Power BI models, or scale your engineering teams, HyperCode has the expertise to deliver.
           </p>
+        </div>
 
-          <motion.div
-            className="flex flex-col sm:flex-row gap-4 justify-center pt-4"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center px-8 py-4 bg-primary text-primary-foreground rounded-lg font-semibold text-lg hover:shadow-lg hover:shadow-primary/30 transition-all duration-300 hover:-translate-y-1 group"
-            >
-              Book Free Consultation
-              <ArrowRight size={20} className="ml-2 group-hover:translate-x-1 transition-transform" />
-            </Link>
-            <Link
-              href="/insights"
-              className="inline-flex items-center justify-center px-8 py-4 border-2 border-primary text-primary rounded-lg font-semibold text-lg hover:bg-primary/5 transition-all duration-300"
-            >
-              Explore Our Insights
-            </Link>
-          </motion.div>
-        </motion.div>
+        {/* Dual Path Conversion Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          
+          {/* Card 1: Enterprise Solutions */}
+          <div className="p-8 rounded-3xl border border-slate-200 bg-white flex flex-col justify-between h-[280px] shadow-sm">
+            <div>
+              <div className="w-10 h-10 rounded-lg bg-slate-50 border border-slate-100 text-[#0F4C81] flex items-center justify-center mb-6">
+                <BarChart3 size={20} />
+              </div>
+              <h4 className="text-xl font-bold text-slate-900 mb-2">Need a Data Solution?</h4>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
+                Talk to our principal consultants to analyze your data pipelines, set up clean dashboards, and deploy a secure data platform.
+              </p>
+            </div>
+
+            <div className="pt-4 border-t border-slate-100 mt-4">
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center w-full h-11 bg-[#0F4C81] text-white rounded-xl font-bold text-xs hover:bg-[#0c3c66] transition-colors duration-200"
+              >
+                <span>Schedule Consultation</span>
+                <ArrowRight size={14} className="ml-1.5" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Card 2: Strategic Staffing */}
+          <div className="p-8 rounded-3xl border border-slate-200 bg-white flex flex-col justify-between h-[280px] shadow-sm">
+            <div>
+              <div className="w-10 h-10 rounded-lg bg-slate-50 border border-slate-100 text-[#0F4C81] flex items-center justify-center mb-6">
+                <Users2 size={20} />
+              </div>
+              <h4 className="text-xl font-bold text-slate-900 mb-2">Need Technical Talent?</h4>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
+                Connect with our national recruiting coordinators to deploy certified contract developers, data engineers, or scrum teams.
+              </p>
+            </div>
+
+            <div className="pt-4 border-t border-slate-100 mt-4">
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center w-full h-11 bg-white border border-[#0F4C81] text-[#0F4C81] rounded-xl font-bold text-xs hover:bg-slate-50 transition-colors duration-200"
+              >
+                <span>Request Talent Now</span>
+                <ArrowRight size={14} className="ml-1.5" />
+              </Link>
+            </div>
+          </div>
+
+        </div>
       </div>
     </section>
   );

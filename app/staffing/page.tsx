@@ -55,25 +55,25 @@ const hiringProcess = [
 
 export default function StaffingPage() {
   return (
-    <main className="relative w-full">
+    <main className="relative w-full bg-white text-left">
       <Navigation />
 
       {/* Hero Section */}
-      <section className="min-h-[60vh] bg-gradient-to-b from-background to-muted/30 pt-32 pb-20 flex items-center">
+      <section className="bg-slate-50 pt-36 pb-20 border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="text-center space-y-6">
-            <h1 className="text-5xl lg:text-6xl font-bold text-foreground leading-tight">
-              Top-Tier IT Staffing Solutions
+          <div className="max-w-3xl space-y-4">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
+              IT Staffing <span className="text-[#0F4C81]">Solutions</span>
             </h1>
-            <p className="text-xl text-foreground/60 max-w-3xl mx-auto">
-              Access specialized talent for contract, contract-to-hire, direct hire, and staff augmentation needs.
+            <p className="text-lg sm:text-xl text-slate-600 font-medium leading-relaxed">
+              Access pre-screened, specialized technology professionals for contract, contract-to-hire, direct placement, and team augmentation.
             </p>
           </div>
         </div>
       </section>
 
       {/* Staffing Solutions */}
-      <section className="py-24 bg-background">
+      <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {staffingSolutions.map((solution, index) => {
@@ -82,33 +82,35 @@ export default function StaffingPage() {
                 <div
                   key={index}
                   id={id}
-                  className="group p-8 rounded-xl border border-border/40 bg-card hover:border-accent/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-2 scroll-mt-24"
+                  className="p-8 rounded-2xl border border-slate-200 bg-white shadow-sm flex flex-col justify-between scroll-mt-24"
                 >
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <h3 className="text-2xl font-bold text-foreground">{solution.title}</h3>
-                      <span className="inline-block px-3 py-1 rounded-full bg-accent/10 text-accent text-sm font-medium">
+                  <div className="space-y-6">
+                    <div className="flex items-center justify-between gap-4">
+                      <h3 className="text-2xl font-bold text-slate-900">{solution.title}</h3>
+                      <span className="px-3 py-1 rounded-lg bg-slate-50 border border-slate-200 text-slate-500 text-xs font-bold uppercase tracking-wider">
                         {solution.duration}
                       </span>
                     </div>
 
-                    <p className="text-foreground/60 text-lg">{solution.description}</p>
+                    <p className="text-sm text-slate-600 leading-relaxed font-medium">{solution.description}</p>
 
-                    <div className="pt-4 border-t border-border/40 space-y-3">
+                    <div className="pt-4 border-t border-slate-200 space-y-3">
                       {solution.benefits.map((benefit, i) => (
                         <div key={i} className="flex items-center gap-3">
-                          <CheckCircle size={18} className="text-accent flex-shrink-0" />
-                          <span className="text-foreground/70">{benefit}</span>
+                          <CheckCircle size={16} className="text-[#0F4C81] flex-shrink-0" />
+                          <span className="text-xs sm:text-sm font-semibold text-slate-600">{benefit}</span>
                         </div>
                       ))}
                     </div>
+                  </div>
 
+                  <div className="pt-6">
                     <Link
                       href="/contact"
-                      className="inline-flex items-center gap-2 text-accent font-medium pt-2 group-hover:gap-3 transition-all"
+                      className="inline-flex items-center justify-center h-10 px-5 bg-white border border-[#0F4C81] text-[#0F4C81] font-semibold text-xs rounded-xl hover:bg-slate-50 transition-colors duration-200"
                     >
-                      Learn More
-                      <ArrowRight size={16} />
+                      <span>Learn More</span>
+                      <ArrowRight size={14} className="ml-1.5" />
                     </Link>
                   </div>
                 </div>
@@ -119,22 +121,20 @@ export default function StaffingPage() {
       </section>
 
       {/* Talent Areas */}
-      <section className="py-24 bg-muted/30">
+      <section className="py-24 bg-slate-50 border-t border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 space-y-4">
-            <h2 className="text-4xl font-bold text-foreground">Specialized Talent Areas</h2>
-            <p className="text-xl text-foreground/60">
-              Access deep expertise across critical technology disciplines
-            </p>
+          <div className="max-w-2xl mb-12">
+            <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">EXPERTISE DEPLOYMENT</h2>
+            <h3 className="text-3xl font-extrabold text-slate-900 tracking-tight leading-none">Specialized Talent Areas</h3>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {talentAreas.map((area, i) => (
               <div
                 key={i}
-                className="p-6 rounded-xl border border-border/40 bg-card hover:border-accent/50 transition-all text-center"
+                className="p-5 rounded-xl border border-slate-200 bg-white shadow-sm text-center"
               >
-                <p className="font-semibold text-foreground">{area}</p>
+                <p className="text-sm font-semibold text-slate-800">{area}</p>
               </div>
             ))}
           </div>
@@ -142,30 +142,28 @@ export default function StaffingPage() {
       </section>
 
       {/* Hiring Process */}
-      <section className="py-24 bg-background">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 space-y-4">
-            <h2 className="text-4xl font-bold text-foreground">Our Hiring Process</h2>
-            <p className="text-xl text-foreground/60">
-              Streamlined, efficient, and focused on finding the perfect fit
-            </p>
+      <section className="py-24 bg-white">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-16">
+            <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">METHODOLOGY</h2>
+            <h3 className="text-3xl font-extrabold text-slate-900 tracking-tight leading-none">Our Hiring Process</h3>
           </div>
 
           <div className="relative">
-            <div className="space-y-8">
+            <div className="space-y-12">
               {hiringProcess.map((item, i) => (
-                <div key={i} className="flex gap-6 items-start">
-                  <div className="flex-shrink-0">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white font-bold">
+                <div key={i} className="flex gap-6 items-start relative">
+                  <div className="flex-shrink-0 z-10">
+                    <div className="w-10 h-10 rounded-xl bg-[#0F4C81] flex items-center justify-center text-white font-bold text-sm">
                       {i + 1}
                     </div>
                   </div>
-                  <div className="flex-1 pt-1">
-                    <h3 className="text-xl font-bold text-foreground mb-2">{item.step}</h3>
-                    <p className="text-foreground/60">{item.desc}</p>
+                  <div className="flex-1 pt-1.5">
+                    <h3 className="text-lg font-bold text-slate-900 mb-1">{item.step}</h3>
+                    <p className="text-sm text-slate-600 leading-relaxed font-medium">{item.desc}</p>
                   </div>
                   {i < hiringProcess.length - 1 && (
-                    <div className="absolute left-6 top-16 w-0.5 h-12 bg-border/40" />
+                    <div className="absolute left-[19px] top-10 w-px h-16 bg-slate-200 -z-0" />
                   )}
                 </div>
               ))}
@@ -175,28 +173,34 @@ export default function StaffingPage() {
       </section>
 
       {/* Why HyperCode */}
-      <section className="py-24 bg-muted/30">
+      <section className="py-24 bg-slate-50 border-t border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="space-y-3">
-              <Users size={32} className="text-accent" />
-              <h3 className="text-xl font-bold text-foreground">Pre-Screened Talent</h3>
-              <p className="text-foreground/60">
-                Only the most qualified and vetted professionals are presented to you.
+              <div className="w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-[#0F4C81]">
+                <Users size={20} />
+              </div>
+              <h3 className="text-lg font-bold text-slate-900">Pre-Screened Talent</h3>
+              <p className="text-sm text-slate-600 leading-relaxed font-medium">
+                Only the most qualified and technically vetted professionals are presented to your team.
               </p>
             </div>
             <div className="space-y-3">
-              <CheckCircle size={32} className="text-accent" />
-              <h3 className="text-xl font-bold text-foreground">Quick Deployment</h3>
-              <p className="text-foreground/60">
-                Average time-to-fill of 2-3 weeks with our efficient process.
+              <div className="w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-[#0F4C81]">
+                <CheckCircle size={20} />
+              </div>
+              <h3 className="text-lg font-bold text-slate-900">Quick Deployment</h3>
+              <p className="text-sm text-slate-600 leading-relaxed font-medium">
+                Our optimized sourcing workflow enables an average time-to-fill of 2-3 weeks.
               </p>
             </div>
             <div className="space-y-3">
-              <Users size={32} className="text-accent" />
-              <h3 className="text-xl font-bold text-foreground">Ongoing Support</h3>
-              <p className="text-foreground/60">
-                Dedicated support throughout the engagement period.
+              <div className="w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-[#0F4C81]">
+                <Users size={20} />
+              </div>
+              <h3 className="text-lg font-bold text-slate-900">Ongoing Support</h3>
+              <p className="text-sm text-slate-600 leading-relaxed font-medium">
+                Dedicated management and structured check-ins throughout the engagement period.
               </p>
             </div>
           </div>
@@ -204,19 +208,20 @@ export default function StaffingPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-24 bg-gradient-to-r from-primary/10 to-accent/10 border-y border-border/40">
+      <section className="py-24 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-          <h2 className="text-4xl font-bold text-foreground">Ready to Build Your Dream Team?</h2>
-          <p className="text-xl text-foreground/60">
-            Let us help you find the specialized talent you need to succeed.
+          <h3 className="text-3xl font-extrabold text-slate-900 tracking-tight">Ready to Build Your Dream Team?</h3>
+          <p className="text-base sm:text-lg text-slate-600 max-w-xl mx-auto font-medium">
+            Schedule a consultation with our recruitment managers to source specialized technical talent.
           </p>
-          <Link
-            href="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-lg font-semibold text-lg hover:shadow-lg hover:shadow-primary/30 transition-all hover:-translate-y-1 group"
-          >
-            Start Your Hiring Process
-            <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-          </Link>
+          <div>
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center h-12 px-7 bg-[#0F4C81] text-white font-semibold text-[14px] rounded-xl hover:bg-[#0c3c66] transition-colors duration-200 shadow-sm"
+            >
+              Start Your Hiring Process
+            </Link>
+          </div>
         </div>
       </section>
 

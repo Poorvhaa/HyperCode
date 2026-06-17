@@ -1,129 +1,112 @@
 import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
-import { Building2, TrendingUp, Shield, Zap, ArrowRight } from 'lucide-react';
+import { Building2, HeartPulse, Landmark, ShoppingBag, Factory, Laptop, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
 export const metadata = {
   title: 'Industries | HyperCode',
-  description: 'HyperCode serves Financial Services, Healthcare, Government, Retail, Manufacturing, Technology, Logistics, and Telecommunications.',
+  description: 'HyperCode serves Financial Services, Healthcare, Government, Retail, Manufacturing, and Technology.',
 };
 
 const industries = [
   {
-    icon: Building2,
+    icon: Landmark,
     title: 'Financial Services',
-    description: 'Drive compliance, reduce risk, and unlock insights from complex financial data.',
+    description: 'Drive compliance, reduce risk, and unlock insights from complex transaction records.',
     solutions: ['Risk Analytics', 'Fraud Detection', 'Customer Analytics', 'Regulatory Reporting'],
-    caseStudies: 2,
   },
   {
-    icon: Shield,
+    icon: HeartPulse,
     title: 'Healthcare',
-    description: 'Improve patient outcomes and operational efficiency with data-driven insights.',
-    solutions: ['Patient Analytics', 'Operational Efficiency', 'Clinical Analytics', 'Revenue Cycle'],
-    caseStudies: 2,
+    description: 'Improve patient outcomes and operational scheduling with data-driven insights.',
+    solutions: ['Patient Analytics', 'Operational Efficiency', 'Clinical Analytics', 'HIPAA Compliance'],
   },
   {
-    icon: Zap,
+    icon: Building2,
     title: 'Government',
-    description: 'Support mission-critical operations with secure, scalable data solutions.',
-    solutions: ['Data Governance', 'Security Compliance', 'Business Intelligence', 'Analytics'],
-    caseStudies: 2,
+    description: 'Support mission-critical operations with secure, FedRAMP-aligned data systems.',
+    solutions: ['Data Governance', 'Security Compliance', 'Business Intelligence', 'Auditing Solutions'],
   },
   {
-    icon: TrendingUp,
+    icon: ShoppingBag,
     title: 'Retail & E-commerce',
-    description: 'Optimize inventory, enhance customer experience, and maximize revenue.',
-    solutions: ['Customer Insights', 'Inventory Analytics', 'Sales Forecasting', 'Pricing Intelligence'],
-    caseStudies: 1,
+    description: 'Optimize inventory levels, enhance customer tracking, and increase basket value.',
+    solutions: ['Customer Insights', 'Inventory Analytics', 'Sales Forecasting', 'Customer Data Platforms'],
   },
   {
-    icon: Building2,
+    icon: Factory,
     title: 'Manufacturing',
-    description: 'Improve production efficiency and reduce costs with predictive analytics.',
+    description: 'Improve production metrics and cut downtime using IoT sensor telemetry analytics.',
     solutions: ['Production Analytics', 'Supply Chain', 'Predictive Maintenance', 'Quality Control'],
-    caseStudies: 1,
   },
   {
-    icon: Zap,
+    icon: Laptop,
     title: 'Technology',
-    description: 'Build scalable platforms and optimize operations with modern data architecture.',
-    solutions: ['Real-time Analytics', 'Data Pipelines', 'Cloud Architecture', 'AI/ML Integration'],
-    caseStudies: 2,
-  },
-  {
-    icon: Building2,
-    title: 'Logistics',
-    description: 'Optimize routes, predict demand, and streamline operations.',
-    solutions: ['Route Optimization', 'Demand Forecasting', 'Fleet Analytics', 'Supply Chain'],
-    caseStudies: 1,
-  },
-  {
-    icon: Zap,
-    title: 'Telecommunications',
-    description: 'Enhance network performance and customer retention with advanced analytics.',
-    solutions: ['Customer Churn', 'Network Analytics', 'Service Quality', 'Revenue Analytics'],
-    caseStudies: 1,
+    description: 'Build scalable pipelines and recruit certified cloud engineering squads.',
+    solutions: ['Real-time Analytics', 'Data Pipelines', 'Cloud Architecture', 'IT Placement'],
   },
 ];
 
 export default function IndustriesPage() {
   return (
-    <main className="relative w-full">
+    <main className="relative w-full bg-white text-left">
       <Navigation />
 
       {/* Hero Section */}
-      <section className="min-h-[60vh] bg-gradient-to-b from-background to-muted/30 pt-32 pb-20 flex items-center">
+      <section className="bg-slate-50 pt-36 pb-20 border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="text-center space-y-6">
-            <h1 className="text-5xl lg:text-6xl font-bold text-foreground leading-tight">
-              Industry-Specific Solutions
+          <div className="max-w-3xl space-y-4">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
+              Industry-Specific <span className="text-[#0F4C81]">Solutions</span>
             </h1>
-            <p className="text-xl text-foreground/60 max-w-3xl mx-auto">
-              Deep expertise across Financial Services, Healthcare, Government, Retail, Manufacturing, Technology, Logistics, and Telecommunications.
+            <p className="text-lg sm:text-xl text-slate-600 font-medium leading-relaxed">
+              Deep data engineering and recruitment expertise across Financial Services, Healthcare, Government, Retail, Manufacturing, and Technology.
             </p>
           </div>
         </div>
       </section>
 
       {/* Industries Grid */}
-      <section className="py-24 bg-background">
+      <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {industries.map((industry, index) => {
               const Icon = industry.icon;
               return (
                 <div
                   key={index}
-                  className="group relative p-8 rounded-xl border border-border/40 bg-card hover:border-accent/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-2"
+                  className="p-6 sm:p-8 rounded-2xl border border-slate-200 bg-white shadow-sm flex flex-col justify-between"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                  <div className="relative z-10 space-y-4">
-                    <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-                      <Icon size={24} className="text-white" />
+                  <div className="space-y-6">
+                    <div className="w-10 h-10 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center text-[#0F4C81]">
+                      <Icon size={20} />
                     </div>
 
                     <div>
-                      <h3 className="text-xl font-bold text-foreground mb-2">{industry.title}</h3>
-                      <p className="text-foreground/60 text-sm leading-relaxed">{industry.description}</p>
+                      <h3 className="text-lg font-bold text-slate-900 mb-2">{industry.title}</h3>
+                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">{industry.description}</p>
                     </div>
 
-                    <div className="pt-4 border-t border-border/40 space-y-3">
-                      <div className="text-xs font-semibold text-foreground/70 uppercase tracking-wide">Key Solutions</div>
-                      <div className="space-y-1">
+                    <div className="pt-4 border-t border-slate-100 space-y-3">
+                      <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Key Solutions</div>
+                      <div className="space-y-1.5 text-xs font-semibold text-slate-600">
                         {industry.solutions.map((solution, i) => (
-                          <div key={i} className="text-sm text-foreground/60">• {solution}</div>
+                          <div key={i} className="flex items-center space-x-2">
+                            <div className="w-1 h-1 rounded-full bg-[#0F4C81]" />
+                            <span>{solution}</span>
+                          </div>
                         ))}
                       </div>
                     </div>
+                  </div>
 
+                  <div className="pt-6 mt-6 border-t border-slate-100">
                     <Link
                       href="/contact"
-                      className="inline-flex items-center gap-1 text-accent font-medium text-sm group-hover:gap-2 transition-all"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C81] hover:text-[#0c3c66] transition-colors"
                     >
-                      Learn More
-                      <ArrowRight size={16} />
+                      <span>Inquire Industry Solutions</span>
+                      <ArrowRight size={14} />
                     </Link>
                   </div>
                 </div>
@@ -134,11 +117,11 @@ export default function IndustriesPage() {
       </section>
 
       {/* Case Studies Preview */}
-      <section className="py-24 bg-muted/30">
+      <section className="py-24 bg-slate-50 border-t border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 space-y-4">
-            <h2 className="text-4xl font-bold text-foreground">See How We Drive Results</h2>
-            <p className="text-xl text-foreground/60">Real examples of transformation across industries</p>
+          <div className="text-center mb-16 space-y-3">
+            <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase">CASE RESULTS</h2>
+            <h3 className="text-3xl font-extrabold text-slate-900 tracking-tight">Enterprise Results</h3>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -161,17 +144,15 @@ export default function IndustriesPage() {
             ].map((caseStudy, i) => (
               <div
                 key={i}
-                className="group p-8 rounded-xl border border-border/40 bg-card hover:border-accent/50 transition-all duration-300"
+                className="p-6 sm:p-8 rounded-2xl border border-slate-200 bg-white shadow-sm space-y-4"
               >
-                <div className="space-y-3">
-                  <span className="inline-block px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-medium">
-                    Case Study
-                  </span>
-                  <h3 className="text-lg font-bold text-foreground">{caseStudy.title}</h3>
-                  <p className="text-sm text-foreground/60">{caseStudy.industry}</p>
-                  <div className="pt-4 border-t border-border/40">
-                    <p className="font-semibold text-primary">{caseStudy.result}</p>
-                  </div>
+                <span className="inline-block px-2.5 py-0.5 rounded bg-slate-50 border border-slate-100 text-slate-500 text-[10px] font-bold uppercase tracking-wider">
+                  Case Brief
+                </span>
+                <h3 className="text-base font-bold text-slate-900">{caseStudy.title}</h3>
+                <p className="text-xs text-slate-500 font-bold uppercase tracking-wide">{caseStudy.industry}</p>
+                <div className="pt-4 border-t border-slate-100">
+                  <p className="font-bold text-[#0F4C81] text-sm">{caseStudy.result}</p>
                 </div>
               </div>
             ))}
@@ -180,19 +161,20 @@ export default function IndustriesPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-24 bg-gradient-to-r from-primary/10 to-accent/10 border-y border-border/40">
+      <section className="py-24 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-          <h2 className="text-4xl font-bold text-foreground">Industry Solutions, Enterprise Results</h2>
-          <p className="text-xl text-foreground/60">
-            Discover how HyperCode can solve your industry-specific challenges.
+          <h3 className="text-3xl font-extrabold text-slate-900 tracking-tight">Industry Solutions, Enterprise Results</h3>
+          <p className="text-base sm:text-lg text-slate-600 max-w-xl mx-auto font-medium">
+            Discover how HyperCode can resolve your industry-specific database, pipeline, or staffing needs.
           </p>
-          <Link
-            href="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-lg font-semibold text-lg hover:shadow-lg hover:shadow-primary/30 transition-all hover:-translate-y-1 group"
-          >
-            Schedule Consultation
-            <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-          </Link>
+          <div>
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center h-12 px-7 bg-[#0F4C81] text-white font-semibold text-[14px] rounded-xl hover:bg-[#0c3c66] transition-colors duration-200 shadow-sm"
+            >
+              Schedule Consultation
+            </Link>
+          </div>
         </div>
       </section>
 

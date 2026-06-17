@@ -46,19 +46,14 @@ export function ContactForm() {
     setError('');
 
     try {
-      // TODO: Connect to Supabase or API endpoint
-      // For now, we'll simulate submission
       await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      console.log('[v0] Contact form submitted:', data);
+      console.log('Contact form submitted:', data);
       setSubmitted(true);
       reset();
-
-      // Reset success message after 5 seconds
       setTimeout(() => setSubmitted(false), 5000);
     } catch (err) {
       setError('Failed to submit form. Please try again.');
-      console.error('[v0] Contact form error:', err);
+      console.error('Contact form error:', err);
     } finally {
       setSubmitting(false);
     }
@@ -67,11 +62,11 @@ export function ContactForm() {
   if (submitted) {
     return (
       <div className="space-y-6">
-        <div className="p-6 rounded-xl border border-green-200 bg-green-50 dark:bg-green-950 dark:border-green-800 flex gap-4">
-          <CheckCircle size={24} className="text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
-          <div>
-            <h3 className="font-bold text-green-900 dark:text-green-100">Message Sent Successfully!</h3>
-            <p className="text-green-800 dark:text-green-200 text-sm mt-1">
+        <div className="p-6 rounded-xl border border-green-200 bg-green-50 flex gap-4">
+          <CheckCircle size={24} className="text-green-650 flex-shrink-0 mt-0.5" />
+          <div className="text-left">
+            <h3 className="font-bold text-green-900">Message Sent Successfully!</h3>
+            <p className="text-green-800 text-sm mt-1">
               Thank you for reaching out. Our team will contact you within 24 hours.
             </p>
           </div>
@@ -81,69 +76,69 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 text-left">
       {error && (
-        <div className="p-4 rounded-lg border border-red-200 bg-red-50 dark:bg-red-950 dark:border-red-800 flex gap-3">
-          <AlertCircle size={20} className="text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" />
-          <p className="text-red-800 dark:text-red-200 text-sm">{error}</p>
+        <div className="p-4 rounded-lg border border-red-200 bg-red-50 flex gap-3">
+          <AlertCircle size={20} className="text-red-650 flex-shrink-0 mt-0.5" />
+          <p className="text-red-800 text-sm">{error}</p>
         </div>
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Name */}
         <div className="space-y-2">
-          <label className="block text-sm font-medium text-foreground">Full Name</label>
+          <label className="block text-sm font-semibold text-slate-700">Full Name</label>
           <input
             {...register('name')}
             type="text"
             placeholder="John Doe"
-            className="w-full px-4 py-3 rounded-lg border border-input bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] text-sm"
           />
-          {errors.name && <p className="text-sm text-red-600 dark:text-red-400">{errors.name.message}</p>}
+          {errors.name && <p className="text-xs text-red-600 font-bold">{errors.name.message}</p>}
         </div>
 
         {/* Email */}
         <div className="space-y-2">
-          <label className="block text-sm font-medium text-foreground">Email Address</label>
+          <label className="block text-sm font-semibold text-slate-700">Email Address</label>
           <input
             {...register('email')}
             type="email"
             placeholder="john@company.com"
-            className="w-full px-4 py-3 rounded-lg border border-input bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] text-sm"
           />
-          {errors.email && <p className="text-sm text-red-600 dark:text-red-400">{errors.email.message}</p>}
+          {errors.email && <p className="text-xs text-red-600 font-bold">{errors.email.message}</p>}
         </div>
 
         {/* Company */}
         <div className="space-y-2">
-          <label className="block text-sm font-medium text-foreground">Company Name</label>
+          <label className="block text-sm font-semibold text-slate-700">Company Name</label>
           <input
             {...register('company')}
             type="text"
             placeholder="Your Company"
-            className="w-full px-4 py-3 rounded-lg border border-input bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] text-sm"
           />
-          {errors.company && <p className="text-sm text-red-600 dark:text-red-400">{errors.company.message}</p>}
+          {errors.company && <p className="text-xs text-red-600 font-bold">{errors.company.message}</p>}
         </div>
 
         {/* Phone */}
         <div className="space-y-2">
-          <label className="block text-sm font-medium text-foreground">Phone Number</label>
+          <label className="block text-sm font-semibold text-slate-700">Phone Number</label>
           <input
             {...register('phone')}
             type="tel"
             placeholder="+1 (555) 123-4567"
-            className="w-full px-4 py-3 rounded-lg border border-input bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] text-sm"
           />
-          {errors.phone && <p className="text-sm text-red-600 dark:text-red-400">{errors.phone.message}</p>}
+          {errors.phone && <p className="text-xs text-red-600 font-bold">{errors.phone.message}</p>}
         </div>
 
         {/* Service */}
         <div className="md:col-span-2 space-y-2">
-          <label className="block text-sm font-medium text-foreground">Service Interested In</label>
+          <label className="block text-sm font-semibold text-slate-700">Service Interested In</label>
           <select
             {...register('service')}
-            className="w-full px-4 py-3 rounded-lg border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] text-sm"
           >
             <option value="">Select a service</option>
             {services.map((service) => (
@@ -152,19 +147,19 @@ export function ContactForm() {
               </option>
             ))}
           </select>
-          {errors.service && <p className="text-sm text-red-600 dark:text-red-400">{errors.service.message}</p>}
+          {errors.service && <p className="text-xs text-red-600 font-bold">{errors.service.message}</p>}
         </div>
 
         {/* Message */}
         <div className="md:col-span-2 space-y-2">
-          <label className="block text-sm font-medium text-foreground">Message</label>
+          <label className="block text-sm font-semibold text-slate-700">Message</label>
           <textarea
             {...register('message')}
             placeholder="Tell us about your project and needs..."
             rows={5}
-            className="w-full px-4 py-3 rounded-lg border border-input bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none"
+            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] text-sm resize-none"
           />
-          {errors.message && <p className="text-sm text-red-600 dark:text-red-400">{errors.message.message}</p>}
+          {errors.message && <p className="text-xs text-red-600 font-bold">{errors.message.message}</p>}
         </div>
       </div>
 
@@ -172,20 +167,20 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={submitting}
-        className="w-full px-8 py-4 bg-primary text-primary-foreground rounded-lg font-semibold hover:shadow-lg hover:shadow-primary/30 transition-all disabled:opacity-75 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+        className="w-full h-12 flex items-center justify-center bg-[#0F4C81] text-white font-semibold text-sm rounded-xl hover:bg-[#0c3c66] transition-colors duration-200 shadow-sm disabled:opacity-75 disabled:cursor-not-allowed gap-2 cursor-pointer border-none"
       >
         {submitting ? (
           <>
-            <Loader2 size={20} className="animate-spin" />
-            Sending...
+            <Loader2 size={16} className="animate-spin" />
+            <span>Sending...</span>
           </>
         ) : (
-          'Send Message'
+          <span>Send Message</span>
         )}
       </button>
 
-      <p className="text-sm text-foreground/60 text-center">
-        We&apos;ll review your message and get back to you within 24 hours.
+      <p className="text-xs text-slate-500 text-center font-medium">
+        We will review your message and get back to you within 24 hours.
       </p>
     </form>
   );

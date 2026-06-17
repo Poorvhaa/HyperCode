@@ -61,17 +61,17 @@ const articles = [
 
 export default function InsightsPage() {
   return (
-    <main className="relative w-full">
+    <main className="relative w-full bg-white text-left">
       <Navigation />
 
       {/* Hero Section */}
-      <section className="min-h-[50vh] bg-gradient-to-b from-background to-muted/30 pt-32 pb-20 flex items-center">
+      <section className="bg-slate-50 pt-36 pb-20 border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="text-center space-y-6">
-            <h1 className="text-5xl lg:text-6xl font-bold text-foreground leading-tight">
-              Latest Insights & Articles
+          <div className="max-w-3xl space-y-4">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
+              Latest Insights & <span className="text-[#0F4C81]">Articles</span>
             </h1>
-            <p className="text-xl text-foreground/60 max-w-3xl mx-auto">
+            <p className="text-lg sm:text-xl text-slate-600 font-medium leading-relaxed">
               Stay informed with our latest thoughts on business intelligence, data analytics, technology trends, and industry insights.
             </p>
           </div>
@@ -79,46 +79,52 @@ export default function InsightsPage() {
       </section>
 
       {/* Articles Grid */}
-      <section className="py-24 bg-background">
+      <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {articles.map((article) => (
               <article
                 key={article.id}
-                className="group flex flex-col p-6 rounded-xl border border-border/40 bg-card hover:border-accent/50 transition-all hover:shadow-lg hover:-translate-y-2"
+                className="flex flex-col p-6 rounded-2xl border border-slate-200 bg-white shadow-sm justify-between"
               >
-                {/* Category Badge */}
-                <span className="inline-block w-fit px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-semibold uppercase tracking-wide mb-4">
-                  {article.category}
-                </span>
+                <div>
+                  {/* Category Badge */}
+                  <span className="inline-block w-fit px-3 py-1 rounded-lg bg-slate-50 border border-slate-200 text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-4">
+                    {article.category}
+                  </span>
 
-                {/* Title */}
-                <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
-                  {article.title}
-                </h3>
+                  {/* Title */}
+                  <h3 className="text-lg font-bold text-slate-900 mb-2 leading-snug">
+                    {article.title}
+                  </h3>
 
-                {/* Excerpt */}
-                <p className="text-foreground/70 text-sm leading-relaxed mb-6 flex-1">
-                  {article.excerpt}
-                </p>
-
-                {/* Meta Information */}
-                <div className="flex items-center justify-between pt-6 border-t border-border/40 text-xs text-foreground/60">
-                  <div className="flex items-center gap-2">
-                    <Calendar size={14} />
-                    <span>{article.date}</span>
-                  </div>
-                  <span>{article.readTime}</span>
+                  {/* Excerpt */}
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium mb-6">
+                    {article.excerpt}
+                  </p>
                 </div>
 
-                {/* Read More */}
-                <Link
-                  href={`/insights/${article.id}`}
-                  className="inline-flex items-center gap-2 text-accent font-medium mt-6 group-hover:gap-3 transition-all"
-                >
-                  Read Article
-                  <ArrowRight size={16} />
-                </Link>
+                <div>
+                  {/* Meta Information */}
+                  <div className="flex items-center justify-between pt-4 border-t border-slate-200 text-[11px] font-semibold text-slate-500">
+                    <div className="flex items-center gap-1.5">
+                      <Calendar size={12} />
+                      <span>{article.date}</span>
+                    </div>
+                    <span>{article.readTime}</span>
+                  </div>
+
+                  {/* Read More Button */}
+                  <div className="pt-4">
+                    <Link
+                      href={`/insights/${article.id}`}
+                      className="inline-flex items-center justify-center h-9 px-4 bg-white border border-[#0F4C81] text-[#0F4C81] font-semibold text-xs rounded-xl hover:bg-slate-50 transition-colors duration-200"
+                    >
+                      <span>Read Article</span>
+                      <ArrowRight size={12} className="ml-1.5" />
+                    </Link>
+                  </div>
+                </div>
               </article>
             ))}
           </div>
@@ -126,30 +132,30 @@ export default function InsightsPage() {
       </section>
 
       {/* Newsletter Signup */}
-      <section className="py-24 bg-muted/30">
+      <section className="py-24 bg-slate-50 border-t border-b border-slate-100">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="p-12 rounded-2xl border border-border/40 bg-card space-y-6 text-center">
-            <h2 className="text-3xl font-bold text-foreground">Stay Updated</h2>
-            <p className="text-lg text-foreground/60">
+          <div className="p-8 sm:p-12 rounded-2xl border border-slate-200 bg-white shadow-sm space-y-6 text-center">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight leading-none">Stay Updated</h2>
+            <p className="text-sm sm:text-base text-slate-600 font-medium">
               Subscribe to our newsletter to receive the latest insights and updates directly in your inbox.
             </p>
 
-            <form className="flex flex-col sm:flex-row gap-3">
+            <form className="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
               <input
                 type="email"
                 placeholder="your.email@company.com"
                 required
-                className="flex-1 px-4 py-3 rounded-lg border border-input bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+                className="flex-1 px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] text-sm font-semibold"
               />
               <button
                 type="submit"
-                className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:shadow-lg hover:shadow-primary/30 transition-all"
+                className="h-11 px-6 bg-[#0F4C81] text-white rounded-xl font-semibold text-xs hover:bg-[#0c3c66] transition-colors duration-200"
               >
                 Subscribe
               </button>
             </form>
 
-            <p className="text-xs text-foreground/60">
+            <p className="text-[11px] font-semibold text-slate-400">
               We&apos;ll never share your email. Unsubscribe anytime.
             </p>
           </div>
@@ -157,9 +163,13 @@ export default function InsightsPage() {
       </section>
 
       {/* Categories */}
-      <section className="py-24 bg-background">
+      <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-foreground mb-8">Browse by Category</h2>
+          <div className="mb-12">
+            <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">TOPICS</h2>
+            <h3 className="text-3xl font-extrabold text-slate-900 tracking-tight leading-none">Browse by Category</h3>
+          </div>
+          
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
               'Business Intelligence',
@@ -174,7 +184,7 @@ export default function InsightsPage() {
               <Link
                 key={i}
                 href={`/insights?category=${category.toLowerCase()}`}
-                className="p-4 rounded-lg border border-border/40 bg-card hover:border-accent/50 hover:shadow-lg transition-all text-center font-medium text-foreground/70 hover:text-primary"
+                className="p-4 rounded-xl border border-slate-200 bg-white shadow-sm hover:border-[#0F4C81] transition-all text-center text-xs font-semibold text-slate-700 hover:text-[#0F4C81]"
               >
                 {category}
               </Link>
