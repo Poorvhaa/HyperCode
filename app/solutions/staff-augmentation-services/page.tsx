@@ -1,6 +1,6 @@
 import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
-import { Users, CheckCircle, ArrowRight } from 'lucide-react';
+import { CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 
 export const metadata = {
@@ -38,12 +38,7 @@ export default function StaffAugmentationServicesPage() {
     { name: 'Talent Pool Sourcing', role: 'Access to 12,000+ pre-vetted US-based professionals' },
   ];
 
-  const industries = [
-    { name: 'Financial Services', useCase: 'Augmented database developers for migration sprints.' },
-    { name: 'Healthcare', useCase: 'Clinical data analysts for custom scheduling reports.' },
-    { name: 'Government', useCase: 'Cleared Scrum Masters and developers for secure cloud portals.' },
-    { name: 'Technology', useCase: 'Full stack development support during core product releases.' },
-  ];
+
 
   return (
     <main className="relative w-full bg-white text-left">
@@ -54,7 +49,7 @@ export default function StaffAugmentationServicesPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="max-w-3xl space-y-4">
             <span className="text-[10px] font-bold text-[#0F4C81] tracking-widest uppercase bg-white border border-slate-150 px-2.5 py-1 rounded-md">
-              Staffing Solutions
+              Talent Solutions
             </span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
               Staff Augmentation <span className="text-[#0F4C81]">Services</span>
@@ -132,24 +127,7 @@ export default function StaffAugmentationServicesPage() {
         </div>
       </section>
 
-      {/* Industries Served Section */}
-      <section className="py-24 bg-slate-50 border-t border-b border-slate-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mb-16">
-            <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">Domain Experience</h2>
-            <h3 className="text-3xl font-extrabold text-slate-900 tracking-tight">Industries We Serve</h3>
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {industries.map((ind, i) => (
-              <div key={i} className="p-6 rounded-2xl border border-slate-200 bg-white shadow-sm space-y-2">
-                <h4 className="text-base font-bold text-slate-900">{ind.name}</h4>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">{ind.useCase}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Lead Gen Call-To-Action (Strategic Placement) */}
       <section className="py-24 bg-white">
@@ -162,14 +140,14 @@ export default function StaffAugmentationServicesPage() {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link
-              href="/contact?service=IT%20Staffing"
-              className="inline-flex items-center justify-center h-12 px-7 bg-[#0F4C81] text-white font-semibold text-[14px] rounded-xl hover:bg-[#0c3c66] transition-colors duration-200 shadow-sm"
+              href="/consultation?service=IT%20Staffing"
+              className="inline-flex items-center justify-center h-11 px-7 bg-[#0F4C81] hover:bg-[#0A365D] text-white font-bold text-xs uppercase tracking-wider rounded-md transition-colors duration-200 shadow-sm hover:shadow-md"
             >
-              Discuss Your Project
+              Schedule Consultation
             </Link>
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center h-12 px-7 bg-white border border-slate-200 text-slate-700 font-semibold text-[14px] rounded-xl hover:bg-slate-50 transition-colors duration-200"
+              className="inline-flex items-center justify-center h-11 px-7 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-xs uppercase tracking-wider rounded-md transition-colors duration-200 shadow-sm hover:shadow-md"
             >
               Talk to an Expert
             </Link>

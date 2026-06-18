@@ -4,8 +4,8 @@ import { Users, CheckCircle, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'IT Staffing & Staff Augmentation Services | HyperCode',
-  description: 'Access pre-screened technical talent, contract placements, direct hires, and staff augmentation solutions from HyperCode. Headquartered in Schaumburg, IL.',
+  title: 'Talent Solutions | IT Staffing & Augmentation | HyperCode',
+  description: 'Access pre-screened technical talent, contract placements, direct placements, and staff augmentation solutions from HyperCode. Headquartered in Schaumburg, IL.',
   alternates: {
     canonical: 'https://www.hypercode.com/staffing',
   },
@@ -27,7 +27,7 @@ const staffingSolutions = [
     benefits: ['Reduced risk', 'Evaluation period', 'Seamless transition', 'Team fit verification'],
   },
   {
-    title: 'Direct Hire',
+    title: 'Direct Placement',
     description: 'Permanent placement services with comprehensive vetting and support.',
     duration: 'Permanent',
     path: '/solutions/it-staffing-solutions',
@@ -70,7 +70,7 @@ export default function StaffingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="max-w-3xl space-y-4">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
-              IT Staffing <span className="text-[#0F4C81]">Solutions</span>
+              Talent <span className="text-[#0F4C81]">Solutions</span>
             </h1>
             <p className="text-lg sm:text-xl text-slate-600 font-medium leading-relaxed">
               Access pre-screened, specialized technology professionals for contract, contract-to-hire, direct placement, and team augmentation.
@@ -79,7 +79,7 @@ export default function StaffingPage() {
         </div>
       </section>
 
-      {/* Staffing Solutions */}
+      {/* Talent Solutions */}
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -114,7 +114,7 @@ export default function StaffingPage() {
                   <div className="pt-6">
                     <Link
                       href={solution.path}
-                      className="inline-flex items-center justify-center h-10 px-5 bg-white border border-[#0F4C81] text-[#0F4C81] font-semibold text-xs rounded-xl hover:bg-slate-50 transition-colors duration-200"
+                      className="inline-flex items-center justify-center h-10 px-5 bg-white border border-[#0F4C81] hover:bg-slate-50 text-[#0F4C81] font-bold text-xs uppercase tracking-wider rounded-md transition-colors duration-200 shadow-sm hover:shadow-md"
                     >
                       <span>Learn More</span>
                       <ArrowRight size={14} className="ml-1.5" />
@@ -223,8 +223,8 @@ export default function StaffingPage() {
           </p>
           <div>
             <Link
-              href="/contact"
-              className="inline-flex items-center justify-center h-12 px-7 bg-[#0F4C81] text-white font-semibold text-[14px] rounded-xl hover:bg-[#0c3c66] transition-colors duration-200 shadow-sm"
+              href="/consultation"
+              className="inline-flex items-center justify-center h-11 px-7 bg-[#0F4C81] hover:bg-[#0A365D] text-white font-bold text-xs uppercase tracking-wider rounded-md transition-colors duration-200 shadow-sm hover:shadow-md"
             >
               Start Your Hiring Process
             </Link>

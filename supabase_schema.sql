@@ -47,6 +47,8 @@ CREATE TABLE IF NOT EXISTS consultation_requests (
     email TEXT NOT NULL,
     phone TEXT,
     service_needed TEXT,
+    budget TEXT,
+    timeline TEXT,
     project_description TEXT,
     created_at TIMESTAMPTZ DEFAULT now()
 );
@@ -65,6 +67,18 @@ CREATE TABLE IF NOT EXISTS staffing_requests (
     created_at TIMESTAMPTZ DEFAULT now()
 );
 
+-- 6. Contact Inquiries Table
+CREATE TABLE IF NOT EXISTS contact_inquiries (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name TEXT NOT NULL,
+    company TEXT,
+    email TEXT NOT NULL,
+    phone TEXT,
+    subject TEXT NOT NULL,
+    message TEXT NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT now()
+);
+
 -- Set up Row Level Security (RLS) policies if desired
 -- By default, we keep public read/write enabled for simplicity unless standard policies are applied
 ALTER TABLE chat_conversations ENABLE ROW LEVEL SECURITY;
@@ -72,6 +86,7 @@ ALTER TABLE chat_messages ENABLE ROW LEVEL SECURITY;
 ALTER TABLE qualified_leads ENABLE ROW LEVEL SECURITY;
 ALTER TABLE consultation_requests ENABLE ROW LEVEL SECURITY;
 ALTER TABLE staffing_requests ENABLE ROW LEVEL SECURITY;
+ALTER TABLE contact_inquiries ENABLE ROW LEVEL SECURITY;
 
 -- Allow anonymous inserts and reads (for public chatbot client usage)
 CREATE POLICY "Allow public inserts on chat_conversations" ON chat_conversations FOR INSERT WITH CHECK (true);
@@ -89,3 +104,7 @@ CREATE POLICY "Allow public select on consultation_requests" ON consultation_req
 
 CREATE POLICY "Allow public inserts on staffing_requests" ON staffing_requests FOR INSERT WITH CHECK (true);
 CREATE POLICY "Allow public select on staffing_requests" ON staffing_requests FOR SELECT USING (true);
+
+CREATE POLICY "Allow public inserts on contact_inquiries" ON contact_inquiries FOR INSERT WITH CHECK (true);
+CREATE POLICY "Allow public select on contact_inquiries" ON contact_inquiries FOR SELECT USING (true);
+

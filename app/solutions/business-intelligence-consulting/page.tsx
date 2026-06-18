@@ -1,6 +1,6 @@
 import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
-import { BarChart3, CheckCircle, ArrowRight, Award, Compass, Shield } from 'lucide-react';
+import { CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 
 export const metadata = {
@@ -38,12 +38,7 @@ export default function BusinessIntelligenceConsultingPage() {
     { name: 'Qlik', role: 'Data discovery & associative engine analytics' },
   ];
 
-  const industries = [
-    { name: 'Financial Services', useCase: 'Asset tracking, regulatory audits, and client portfolio reporting.' },
-    { name: 'Healthcare', useCase: 'Patient check-in queues, clinic efficiency charts, and HIPAA data portals.' },
-    { name: 'Government', useCase: 'Secure project tracking, public dashboards, and resource allocation.' },
-    { name: 'Retail & E-commerce', useCase: 'Supply chain management, transaction volume tracking, and basket value.' },
-  ];
+
 
   return (
     <main className="relative w-full bg-white text-left">
@@ -132,24 +127,7 @@ export default function BusinessIntelligenceConsultingPage() {
         </div>
       </section>
 
-      {/* Industries Served Section */}
-      <section className="py-24 bg-slate-50 border-t border-b border-slate-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mb-16">
-            <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">Domain Experience</h2>
-            <h3 className="text-3xl font-extrabold text-slate-900 tracking-tight">Industries We Serve</h3>
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {industries.map((ind, i) => (
-              <div key={i} className="p-6 rounded-2xl border border-slate-200 bg-white shadow-sm space-y-2">
-                <h4 className="text-base font-bold text-slate-900">{ind.name}</h4>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">{ind.useCase}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Lead Gen Call-To-Action (Strategic Placement) */}
       <section className="py-24 bg-white">
@@ -162,14 +140,14 @@ export default function BusinessIntelligenceConsultingPage() {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link
-              href="/contact?service=Business%20Intelligence"
-              className="inline-flex items-center justify-center h-12 px-7 bg-[#0F4C81] text-white font-semibold text-[14px] rounded-xl hover:bg-[#0c3c66] transition-colors duration-200 shadow-sm"
+              href="/consultation?service=Business%20Intelligence"
+              className="inline-flex items-center justify-center h-11 px-7 bg-[#0F4C81] hover:bg-[#0A365D] text-white font-bold text-xs uppercase tracking-wider rounded-md transition-colors duration-200 shadow-sm hover:shadow-md"
             >
               Schedule Consultation
             </Link>
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center h-12 px-7 bg-white border border-slate-200 text-slate-700 font-semibold text-[14px] rounded-xl hover:bg-slate-50 transition-colors duration-200"
+              className="inline-flex items-center justify-center h-11 px-7 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-xs uppercase tracking-wider rounded-md transition-colors duration-200 shadow-sm hover:shadow-md"
             >
               Talk to an Expert
             </Link>

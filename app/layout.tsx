@@ -13,17 +13,17 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.hypercode.com'),
   title: {
-    default: 'HyperCode | Business Intelligence & Data Analytics Consulting',
+    default: 'HyperCode | Data Analytics, Web Development & IT Staffing Consulting',
     template: '%s | HyperCode',
   },
-  description: 'Transform your business with HyperCode. Enterprise-grade Business Intelligence, Data Analytics, Data Engineering, and IT Staffing solutions. Headquartered in Schaumburg, IL, serving clients nationwide.',
+  description: 'Transform your business with HyperCode. Enterprise-grade Web Development, Business Intelligence, Data Analytics, and IT Staffing solutions. Headquartered in Schaumburg, IL, serving clients nationwide.',
   generator: 'v0.app',
   alternates: {
     canonical: './',
   },
   openGraph: {
-    title: 'HyperCode | Business Intelligence, Data Analytics & IT Staffing Solutions',
-    description: 'Transform your business with HyperCode. Enterprise-grade BI, Data Analytics, Data Engineering, and IT Staffing solutions. Nationwide delivery.',
+    title: 'HyperCode | Data Analytics, Web Development & IT Staffing Solutions',
+    description: 'Transform your business with HyperCode. Enterprise-grade Web Development, BI, Data Analytics, and IT Staffing solutions. Nationwide delivery.',
     url: 'https://www.hypercode.com',
     siteName: 'HyperCode',
     locale: 'en_US',
@@ -31,8 +31,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'HyperCode | Business Intelligence, Data Analytics & IT Staffing',
-    description: 'Transform your business with HyperCode. Professional BI, Data Analytics, Data Engineering, and IT Staffing solutions.',
+    title: 'HyperCode | Data Analytics, Web Development & IT Staffing',
+    description: 'Transform your business with HyperCode. Professional Web Development, BI, Data Analytics, and IT Staffing solutions.',
   },
   icons: {
     icon: [
@@ -72,7 +72,7 @@ export default function RootLayout({
     'name': 'HyperCode',
     'url': 'https://www.hypercode.com',
     'logo': 'https://www.hypercode.com/icon.svg',
-    'description': 'Enterprise Business Intelligence, Data Analytics, Data Engineering, and IT Staffing consulting firm.',
+    'description': 'Enterprise Web Development, Business Intelligence, Data Analytics, and IT Staffing consulting firm.',
     'address': {
       '@type': 'PostalAddress',
       'addressLocality': 'Schaumburg',

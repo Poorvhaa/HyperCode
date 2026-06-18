@@ -20,7 +20,7 @@ import {
   Database,
   ArrowRight
 } from 'lucide-react';
-import { db, Conversation, Message, QualifiedLead, ConsultationRequest, StaffingRequest } from '@/lib/db';
+import { db, Conversation, Message, QualifiedLead, ConsultationRequest, StaffingRequest, ContactInquiry } from '@/lib/db';
 
 export default function AdminPage() {
   const [conversations, setConversations] = useState<Conversation[]>([]);
@@ -28,9 +28,10 @@ export default function AdminPage() {
   const [leads, setLeads] = useState<QualifiedLead[]>([]);
   const [consultations, setConsultations] = useState<ConsultationRequest[]>([]);
   const [staffing, setStaffing] = useState<StaffingRequest[]>([]);
+  const [inquiries, setInquiries] = useState<ContactInquiry[]>([]);
   
   // UI States
-  const [activeTab, setActiveTab] = useState<'conversations' | 'leads' | 'consultations' | 'staffing'>('conversations');
+  const [activeTab, setActiveTab] = useState<'conversations' | 'leads' | 'consultations' | 'staffing' | 'inquiries'>('conversations');
   const [selectedConversationId, setSelectedConversationId] = useState<string>('');
   const [searchQuery, setSearchQuery] = useState<string>('');
 
@@ -81,8 +82,8 @@ export default function AdminPage() {
 
         // Seed Consultations
         const dummyConsultations = [
-          { id: 'r1', name: 'Sarah Jenkins', company: 'Acme HealthCorp', email: 'sjenkins@healthcorp.com', phone: '312-555-0192', service_needed: 'Business Intelligence', project_description: 'Migrating legacy reports to Power BI and cloud Snowflake storage.', created_at: new Date(Date.now() - 3600000 * 12).toISOString() },
-          { id: 'r2', name: 'Michael Chen', company: 'Apex Retail', email: 'm.chen@apexretail.com', phone: '847-555-2283', service_needed: 'Data Engineering', project_description: 'Optimize dbt runs and Airflow pipeline scheduling latency.', created_at: new Date(Date.now() - 3600000 * 48).toISOString() },
+          { id: 'r1', name: 'Sarah Jenkins', company: 'Acme HealthCorp', email: 'sjenkins@healthcorp.com', phone: '312-555-0192', service_needed: 'Business Intelligence', budget: '$50K-$100K', timeline: 'Within 30 Days', project_description: 'Migrating legacy reports to Power BI and cloud Snowflake storage.', created_at: new Date(Date.now() - 3600000 * 12).toISOString() },
+          { id: 'r2', name: 'Michael Chen', company: 'Apex Retail', email: 'm.chen@apexretail.com', phone: '847-555-2283', service_needed: 'Data Engineering', budget: '$100K+', timeline: 'Immediately', project_description: 'Optimize dbt runs and Airflow pipeline scheduling latency.', created_at: new Date(Date.now() - 3600000 * 48).toISOString() },
         ];
         localStorage.setItem('hypercode_db_consultations', JSON.stringify(dummyConsultations));
 
@@ -91,6 +92,13 @@ export default function AdminPage() {
           { id: 's1', name: 'David Miller', company: 'Fintech Solutions', email: 'dmiller@fintechsol.com', phone: '630-555-8833', roles: 'Data Engineer, BI Developer', timeline: 'Immediately', team_size: '2-5 positions', location: 'Remote', created_at: new Date(Date.now() - 3600000 * 36).toISOString() },
         ];
         localStorage.setItem('hypercode_db_staffing', JSON.stringify(dummyStaffing));
+
+        // Seed Inquiries
+        const dummyInquiries = [
+          { id: 'i1', name: 'James Carter', company: 'Global Logistics', email: 'jcarter@globallogistics.com', phone: '206-555-0143', subject: 'Partnership Opportunity', message: 'We are looking to partner on sub-contracting our BI deployment services.', created_at: new Date(Date.now() - 3600000 * 6).toISOString() },
+          { id: 'i2', name: 'Emily Rose', company: 'Tech Talent Inc', email: 'emily@techtalent.com', phone: '415-555-9988', subject: 'Career Question', message: 'Do you accept applications for remote internships in your engineering squads?', created_at: new Date(Date.now() - 3600000 * 18).toISOString() }
+        ];
+        localStorage.setItem('hypercode_db_contact_inquiries', JSON.stringify(dummyInquiries));
       }
     };
 
@@ -104,12 +112,14 @@ export default function AdminPage() {
         const qLeads = await db.getAllLeads();
         const cons = await db.getAllConsultations();
         const staffs = await db.getAllStaffing();
+        const inqs = await db.getAllContactInquiries();
 
         setConversations(convs);
         setMessages(msgs);
         setLeads(qLeads);
         setConsultations(cons);
         setStaffing(staffs);
+        setInquiries(inqs);
 
         if (convs.length > 0) {
           setSelectedConversationId(convs[0].id);
@@ -412,6 +422,15 @@ export default function AdminPage() {
                     <span>Staffing Requests</span>
                     <span className="bg-white/15 px-1.5 py-0.5 rounded text-[10px]">{totalStaffing}</span>
                   </button>
+                  <button
+                    onClick={() => setActiveTab('inquiries')}
+                    className={`py-2 px-3 rounded-lg text-xs font-semibold text-left transition-colors cursor-pointer flex items-center justify-between ${
+                      activeTab === 'inquiries' ? 'bg-blue-600 text-white' : 'hover:bg-white/5 text-slate-300'
+                    }`}
+                  >
+                    <span>Contact Inquiries</span>
+                    <span className="bg-white/15 px-1.5 py-0.5 rounded text-[10px]">{inquiries.length}</span>
+                  </button>
                 </div>
               </div>
 
@@ -638,13 +657,15 @@ export default function AdminPage() {
                           <th className="px-6 py-3">Email</th>
                           <th className="px-6 py-3">Phone</th>
                           <th className="px-6 py-3">Service</th>
+                          <th className="px-6 py-3">Budget</th>
+                          <th className="px-6 py-3">Timeline</th>
                           <th className="px-6 py-3">Project Description</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-white/5">
                         {consultations.length === 0 ? (
                           <tr>
-                            <td colSpan={7} className="px-6 py-12 text-center text-slate-500 italic">No consultation bookings registered yet.</td>
+                            <td colSpan={9} className="px-6 py-12 text-center text-slate-500 italic">No consultation bookings registered yet.</td>
                           </tr>
                         ) : (
                           consultations.map((req) => (
@@ -655,6 +676,8 @@ export default function AdminPage() {
                               <td className="px-6 py-4 text-blue-400 font-semibold">{req.email}</td>
                               <td className="px-6 py-4 whitespace-nowrap">{req.phone}</td>
                               <td className="px-6 py-4 font-medium">{req.service_needed}</td>
+                              <td className="px-6 py-4 text-emerald-400 font-semibold">{req.budget || 'N/A'}</td>
+                              <td className="px-6 py-4 text-amber-400 font-semibold">{req.timeline || 'N/A'}</td>
                               <td className="px-6 py-4 max-w-[200px] truncate" title={req.project_description}>{req.project_description}</td>
                             </tr>
                           ))
@@ -710,6 +733,58 @@ export default function AdminPage() {
                               <td className="px-6 py-4 font-medium text-cyan-400">{req.roles}</td>
                               <td className="px-6 py-4">{req.timeline}</td>
                               <td className="px-6 py-4 whitespace-nowrap">{req.location}</td>
+                            </tr>
+                          ))
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+
+              {/* Tab Content 5: Contact Inquiries */}
+              {activeTab === 'inquiries' && (
+                <div className="flex-1 flex flex-col space-y-4">
+                  <div className="flex justify-between items-center">
+                    <h3 className="text-lg font-bold text-white text-left">Contact Inquiries</h3>
+                    <button
+                      onClick={() => exportToCSV(inquiries, 'contact_inquiries.csv')}
+                      className="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs py-2 px-4 rounded-lg flex items-center gap-1.5 cursor-pointer transition-colors active:scale-95"
+                    >
+                      <Download size={14} />
+                      Export CSV
+                    </button>
+                  </div>
+
+                  <div className="border border-white/10 rounded-xl overflow-hidden bg-slate-950/60 overflow-x-auto text-left">
+                    <table className="w-full text-xs text-slate-300 min-w-[700px]">
+                      <thead className="bg-slate-900/80 text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-white/10">
+                        <tr>
+                          <th className="px-6 py-3">Timestamp</th>
+                          <th className="px-6 py-3">Name</th>
+                          <th className="px-6 py-3">Company</th>
+                          <th className="px-6 py-3">Contact</th>
+                          <th className="px-6 py-3">Subject</th>
+                          <th className="px-6 py-3">Message</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-white/5">
+                        {inquiries.length === 0 ? (
+                          <tr>
+                            <td colSpan={6} className="px-6 py-12 text-center text-slate-500 italic">No general contact inquiries logged yet.</td>
+                          </tr>
+                        ) : (
+                          inquiries.map((inq) => (
+                            <tr key={inq.id} className="hover:bg-white/5 transition-colors">
+                              <td className="px-6 py-4 whitespace-nowrap text-slate-500">{new Date(inq.created_at).toLocaleString()}</td>
+                              <td className="px-6 py-4 font-bold text-white">{inq.name}</td>
+                              <td className="px-6 py-4">{inq.company}</td>
+                              <td className="px-6 py-4">
+                                <div className="font-semibold text-blue-400">{inq.email}</div>
+                                <div className="text-[10px] text-slate-500 mt-0.5">{inq.phone}</div>
+                              </td>
+                              <td className="px-6 py-4 font-medium text-emerald-400">{inq.subject}</td>
+                              <td className="px-6 py-4 max-w-[250px] truncate" title={inq.message}>{inq.message}</td>
                             </tr>
                           ))
                         )}

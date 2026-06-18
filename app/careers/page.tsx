@@ -2,6 +2,7 @@ import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
 import { HiringTimeline } from '@/components/hiring-timeline';
 import { CareersFAQ } from '@/components/careers-faq';
+import { TechnologyExpertise } from '@/components/technology-expertise';
 import {
   Briefcase,
   Users,
@@ -378,27 +379,10 @@ export default function CareersPage() {
             </div>
           </div>
 
-          {/* Technology Bar */}
-          <div className="mt-16 pt-12 border-t border-slate-200">
-            <div className="text-center space-y-6">
-              <h5 className="text-[10px] font-bold text-slate-400 tracking-widest uppercase">
-                Recruiting Technologies & Workforce Platforms
-              </h5>
-              <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-6">
-                {techPlatforms.map((platform, idx) => (
-                  <div
-                    key={idx}
-                    className="flex items-center gap-2 text-slate-400 hover:text-slate-600 transition-colors duration-200 cursor-default"
-                  >
-                    {platform.logo}
-                    <span className="text-xs font-bold uppercase tracking-wider">{platform.name}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
         </div>
       </section>
+
+      <TechnologyExpertise />
 
       {/* Candidate Benefits Subsection */}
       <section className="py-24 bg-white border-b border-slate-100">

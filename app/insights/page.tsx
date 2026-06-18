@@ -1,66 +1,158 @@
+'use client';
+
+import { useState, useEffect, Suspense } from 'react';
 import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
-import { ArrowRight, Calendar } from 'lucide-react';
+import { ArrowRight, Calendar, BookOpen, User } from 'lucide-react';
 import Link from 'next/link';
+import { useSearchParams, useRouter } from 'next/navigation';
+import { articles } from '@/lib/insights';
 
-export const metadata = {
-  title: 'Industry Insights, Case Briefs & Technology Trends | HyperCode',
-  description: 'Read the latest research from HyperCode on Business Intelligence, cloud warehousing migrations, and strategic tech staffing trends. Headquartered in Schaumburg, IL.',
-  alternates: {
-    canonical: 'https://www.hypercode.com/insights',
-  },
-};
-
-const articles = [
-  {
-    id: 1,
-    title: 'The Future of Business Intelligence in 2024',
-    excerpt: 'Explore emerging trends in BI, from AI-driven insights to real-time analytics, and how organizations can stay ahead.',
-    date: 'December 15, 2024',
-    category: 'Business Intelligence',
-    readTime: '8 min read',
-  },
-  {
-    id: 2,
-    title: 'Modernizing Your Data Warehouse: A Strategic Guide',
-    excerpt: 'Learn the key considerations for migrating to cloud-based data warehouses and maximizing ROI.',
-    date: 'December 10, 2024',
-    category: 'Data Warehousing',
-    readTime: '10 min read',
-  },
-  {
-    id: 3,
-    title: 'AI and Machine Learning in Data Analytics',
-    excerpt: 'Discover how AI and ML are transforming data analytics and creating new possibilities for organizations.',
-    date: 'December 5, 2024',
-    category: 'Data Analytics',
-    readTime: '7 min read',
-  },
-  {
-    id: 4,
-    title: 'Staffing Trends 2025: What to Expect',
-    excerpt: 'Insights into the changing IT staffing landscape and strategies for hiring top talent.',
-    date: 'November 28, 2024',
-    category: 'Staffing',
-    readTime: '6 min read',
-  },
-  {
-    id: 5,
-    title: 'Building a Data-Driven Organization',
-    excerpt: 'From culture to tools, learn the essential components of becoming truly data-driven.',
-    date: 'November 20, 2024',
-    category: 'Strategy',
-    readTime: '9 min read',
-  },
-  {
-    id: 6,
-    title: 'Cloud Data Platforms: Choosing the Right Solution',
-    excerpt: 'Compare leading cloud data platforms and understand how to choose the best fit for your organization.',
-    date: 'November 15, 2024',
-    category: 'Cloud',
-    readTime: '11 min read',
-  },
+const categories = [
+  'All',
+  'Business Intelligence',
+  'Data Analytics',
+  'Data Warehousing',
+  'Cloud Solutions',
+  'IT Staffing',
+  'Data Engineering',
+  'Web Development',
+  'Strategy',
 ];
+
+function InsightsContent() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const [selectedCategory, setSelectedCategory] = useState('All');
+
+  // Sync state with URL category parameter
+  useEffect(() => {
+    const categoryParam = searchParams.get('category');
+    if (categoryParam) {
+      // Find case-insensitive match
+      const matched = categories.find(
+        (cat) => cat.toLowerCase() === categoryParam.toLowerCase() ||
+                 cat.toLowerCase().replace(/\s+/g, '-') === categoryParam.toLowerCase()
+      );
+      if (matched) {
+        setSelectedCategory(matched);
+      }
+    } else {
+      setSelectedCategory('All');
+    }
+  }, [searchParams]);
+
+  const handleCategorySelect = (category: string) => {
+    setSelectedCategory(category);
+    if (category === 'All') {
+      router.push('/insights', { scroll: false });
+    } else {
+      const slugified = category.toLowerCase().replace(/\s+/g, '-');
+      router.push(`/insights?category=${slugified}`, { scroll: false });
+    }
+  };
+
+  const filteredArticles = selectedCategory === 'All'
+    ? articles
+    : articles.filter((art) => art.category === selectedCategory);
+
+  return (
+    <div className="space-y-16">
+      {/* Category Tabs Filter Bar */}
+      <div className="border-b border-slate-200 pb-2">
+        <div className="flex flex-wrap gap-2 md:justify-center">
+          {categories.map((category) => {
+            const isActive = selectedCategory === category;
+            return (
+              <button
+                key={category}
+                type="button"
+                onClick={() => handleCategorySelect(category)}
+                className={`px-4 py-2 rounded-xl text-xs font-semibold cursor-pointer transition-all border ${
+                  isActive
+                    ? 'border-[#0F4C81] bg-[#0F4C81] text-white shadow-sm'
+                    : 'border-slate-200 bg-white text-slate-655 hover:border-slate-300 hover:text-slate-900'
+                }`}
+              >
+                {category}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Articles Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {filteredArticles.length === 0 ? (
+          <div className="col-span-full py-16 text-center text-slate-500 italic">
+            No articles found in this category.
+          </div>
+        ) : (
+          filteredArticles.map((article) => (
+            <article
+              key={article.slug}
+              className="flex flex-col p-6 rounded-3xl border border-slate-200 bg-white shadow-sm hover:shadow-md transition-all duration-300 justify-between group"
+            >
+              <div>
+                {/* Category Badge */}
+                <div className="flex justify-between items-center mb-4">
+                  <span className="inline-block w-fit px-3 py-1 rounded-lg bg-slate-50 border border-slate-200 text-slate-500 text-[10px] font-bold uppercase tracking-wider">
+                    {article.category}
+                  </span>
+                  <span className="text-[10px] font-bold text-slate-400 flex items-center gap-1">
+                    <BookOpen size={10} />
+                    {article.readTime}
+                  </span>
+                </div>
+
+                {/* Title */}
+                <h3 className="text-lg font-bold text-slate-900 mb-2 leading-snug group-hover:text-[#0F4C81] transition-colors">
+                  <Link href={`/insights/${article.slug}`}>
+                    {article.title}
+                  </Link>
+                </h3>
+
+                {/* Excerpt */}
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium mb-6 line-clamp-3">
+                  {article.excerpt}
+                </p>
+              </div>
+
+              <div>
+                {/* Author Information */}
+                <div className="flex items-center gap-2.5 pb-4 border-b border-slate-100 mb-4">
+                  <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 border border-slate-200 flex-shrink-0">
+                    <User size={12} />
+                  </div>
+                  <div>
+                    <p className="text-[11px] font-bold text-slate-800 leading-none">{article.author.name}</p>
+                    <p className="text-[9px] font-semibold text-slate-400 mt-0.5 leading-none">{article.author.role}</p>
+                  </div>
+                </div>
+
+                {/* Meta Information & CTA */}
+                <div className="flex items-center justify-between text-[11px] font-semibold text-slate-500">
+                  <div className="flex items-center gap-1.5">
+                    <Calendar size={12} />
+                    <span>{article.date}</span>
+                  </div>
+                  
+                  <Link
+                    href={`/insights/${article.slug}`}
+                    className="inline-flex items-center text-[#0F4C81] hover:text-[#0c3c66] gap-1"
+                  >
+                    <span>Read Article</span>
+                    <ArrowRight size={12} />
+                  </Link>
+                </div>
+              </div>
+            </article>
+          ))
+        )}
+      </div>
+    </div>
+  );
+}
 
 export default function InsightsPage() {
   return (
@@ -72,78 +164,34 @@ export default function InsightsPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="max-w-3xl space-y-4">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
-              Latest Insights & <span className="text-[#0F4C81]">Articles</span>
+              Thought <span className="text-[#0F4C81]">Leadership</span>
             </h1>
             <p className="text-lg sm:text-xl text-slate-600 font-medium leading-relaxed">
-              Stay informed with our latest thoughts on business intelligence, data analytics, technology trends, and industry insights.
+              Perspectives, guides, and engineering patterns from HyperCode consulting directors and solutions architects.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Articles Grid */}
-      <section className="py-24 bg-white">
+      {/* Main Insights Panel */}
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {articles.map((article) => (
-              <article
-                key={article.id}
-                className="flex flex-col p-6 rounded-2xl border border-slate-200 bg-white shadow-sm justify-between"
-              >
-                <div>
-                  {/* Category Badge */}
-                  <span className="inline-block w-fit px-3 py-1 rounded-lg bg-slate-50 border border-slate-200 text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-4">
-                    {article.category}
-                  </span>
-
-                  {/* Title */}
-                  <h3 className="text-lg font-bold text-slate-900 mb-2 leading-snug">
-                    {article.title}
-                  </h3>
-
-                  {/* Excerpt */}
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium mb-6">
-                    {article.excerpt}
-                  </p>
-                </div>
-
-                <div>
-                  {/* Meta Information */}
-                  <div className="flex items-center justify-between pt-4 border-t border-slate-200 text-[11px] font-semibold text-slate-500">
-                    <div className="flex items-center gap-1.5">
-                      <Calendar size={12} />
-                      <span>{article.date}</span>
-                    </div>
-                    <span>{article.readTime}</span>
-                  </div>
-
-                  {/* Read More Button */}
-                  <div className="pt-4">
-                    <Link
-                      href={`/insights/${article.id}`}
-                      className="inline-flex items-center justify-center h-9 px-4 bg-white border border-[#0F4C81] text-[#0F4C81] font-semibold text-xs rounded-xl hover:bg-slate-50 transition-colors duration-200"
-                    >
-                      <span>Read Article</span>
-                      <ArrowRight size={12} className="ml-1.5" />
-                    </Link>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
+          <Suspense fallback={<div className="text-center py-12 text-slate-500">Loading articles...</div>}>
+            <InsightsContent />
+          </Suspense>
         </div>
       </section>
 
       {/* Newsletter Signup */}
       <section className="py-24 bg-slate-50 border-t border-b border-slate-100">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="p-8 sm:p-12 rounded-2xl border border-slate-200 bg-white shadow-sm space-y-6 text-center">
+          <div className="p-8 sm:p-12 rounded-3xl border border-slate-200 bg-white shadow-sm space-y-6 text-center">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight leading-none">Stay Updated</h2>
-            <p className="text-sm sm:text-base text-slate-600 font-medium">
+            <p className="text-sm sm:text-base text-slate-655 font-medium">
               Subscribe to our newsletter to receive the latest insights and updates directly in your inbox.
             </p>
 
-            <form className="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
+            <form onSubmit={(e) => { e.preventDefault(); alert('Subscribed successfully!'); }} className="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
               <input
                 type="email"
                 placeholder="your.email@company.com"
@@ -152,7 +200,7 @@ export default function InsightsPage() {
               />
               <button
                 type="submit"
-                className="h-11 px-6 bg-[#0F4C81] text-white rounded-xl font-semibold text-xs hover:bg-[#0c3c66] transition-colors duration-200"
+                className="h-11 px-6 bg-[#0F4C81] text-white rounded-xl font-semibold text-xs hover:bg-[#0c3c66] transition-colors duration-200 cursor-pointer border-none"
               >
                 Subscribe
               </button>
@@ -161,37 +209,6 @@ export default function InsightsPage() {
             <p className="text-[11px] font-semibold text-slate-400">
               We&apos;ll never share your email. Unsubscribe anytime.
             </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Categories */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-12">
-            <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">TOPICS</h2>
-            <h3 className="text-3xl font-extrabold text-slate-900 tracking-tight leading-none">Browse by Category</h3>
-          </div>
-          
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[
-              'Business Intelligence',
-              'Data Analytics',
-              'Data Warehousing',
-              'Cloud Solutions',
-              'IT Staffing',
-              'Case Studies',
-              'Industry Trends',
-              'Technology News',
-            ].map((category, i) => (
-              <Link
-                key={i}
-                href={`/insights?category=${category.toLowerCase()}`}
-                className="p-4 rounded-xl border border-slate-200 bg-white shadow-sm hover:border-[#0F4C81] transition-all text-center text-xs font-semibold text-slate-700 hover:text-[#0F4C81]"
-              >
-                {category}
-              </Link>
-            ))}
           </div>
         </div>
       </section>

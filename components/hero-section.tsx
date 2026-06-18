@@ -112,7 +112,7 @@ export function HeroSection() {
               </h1>
               
               <p className="text-lg sm:text-xl text-slate-600 leading-relaxed max-w-xl font-medium">
-                HyperCode helps organizations unlock growth through Business Intelligence, Data Analytics, Data Engineering, and Strategic IT Staffing.
+                HyperCode helps organizations unlock growth through Business Intelligence, Data Analytics, Data Engineering, Web Development, and Strategic IT Staffing.
               </p>
             </motion.div>
 
@@ -124,15 +124,15 @@ export function HeroSection() {
               className="flex flex-col sm:flex-row gap-4"
             >
               <Link
-                href="/contact"
-                className="inline-flex items-center justify-center h-12 px-7 bg-[#0F4C81] text-white font-semibold text-[15px] rounded-xl hover:bg-[#0c3c66] transition-colors duration-200 shadow-sm"
+                href="/consultation"
+                className="inline-flex items-center justify-center h-11 px-6 bg-[#0F4C81] hover:bg-[#0A365D] text-white font-bold text-xs uppercase tracking-wider rounded-md transition-colors duration-200 shadow-sm hover:shadow-md"
               >
                 <span>Schedule Consultation</span>
-                <ArrowRight size={16} className="ml-2" />
+                <ArrowRight size={14} className="ml-2" />
               </Link>
               <a
                 href="#services"
-                className="inline-flex items-center justify-center h-12 px-7 bg-white border border-[#0F4C81] text-[#0F4C81] font-semibold text-[15px] rounded-xl hover:bg-slate-50 transition-colors duration-200"
+                className="inline-flex items-center justify-center h-11 px-6 bg-white border border-[#0F4C81] hover:bg-slate-50 text-[#0F4C81] font-bold text-xs uppercase tracking-wider rounded-md transition-colors duration-200 shadow-sm hover:shadow-md"
               >
                 Explore Solutions
               </a>

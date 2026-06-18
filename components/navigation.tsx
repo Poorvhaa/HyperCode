@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from "next/image";
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Menu,
@@ -21,7 +22,8 @@ import {
   Clock,
   ShieldCheck,
   Home,
-  Mail
+  Mail,
+  Cloud
 } from 'lucide-react';
 
 export function Navigation() {
@@ -29,6 +31,14 @@ export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
   const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(false);
+  const pathname = usePathname();
+
+  const isActive = (href: string) => {
+    if (href === '/') {
+      return pathname === '/';
+    }
+    return pathname.startsWith(href);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -67,11 +77,34 @@ export function Navigation() {
           href: '/solutions/data-engineering-solutions',
           icon: Cpu,
         },
+      ],
+    },
+    digitalSolutions: {
+      title: 'Digital Solutions',
+      items: [
         {
-          title: 'Big Data',
-          desc: 'High-volume stream processing and distributed computing.',
-          href: '/solutions#big-data',
+          title: 'Web Development',
+          desc: 'Modern, high-performance React & Next.js applications.',
+          href: '/solutions/web-development-services',
           icon: Globe,
+        },
+        {
+          title: 'Custom Applications',
+          desc: 'Tailored SaaS systems and custom business tools.',
+          href: '/solutions/web-development-services#custom-applications',
+          icon: Layers,
+        },
+        {
+          title: 'API Integrations',
+          desc: 'Connecting internal ERPs and third-party systems.',
+          href: '/solutions/web-development-services#api-integrations',
+          icon: Cpu,
+        },
+        {
+          title: 'Cloud Applications',
+          desc: 'Deploying secure cloud applications to AWS and Azure.',
+          href: '/solutions/web-development-services#cloud-applications',
+          icon: Cloud,
         },
       ],
     },
@@ -81,20 +114,20 @@ export function Navigation() {
         {
           title: 'Business Analysis',
           desc: 'Aligning technology strategy with business objectives.',
-          href: '/solutions',
+          href: '/solutions#business-analysis',
           icon: FileText,
-        },
-        {
-          title: 'Agile Project Management',
-          desc: 'Efficient, iterative delivery of complex technical projects.',
-          href: '/solutions',
-          icon: Layers,
         },
         {
           title: 'Technology Consulting',
           desc: 'Strategic guidance on modern tech stack selection.',
-          href: '/solutions',
+          href: '/solutions#technology-consulting',
           icon: Lightbulb,
+        },
+        {
+          title: 'Agile Project Management',
+          desc: 'Efficient, iterative delivery of complex technical projects.',
+          href: '/solutions#agile-project-management',
+          icon: Layers,
         },
       ],
     },
@@ -122,7 +155,7 @@ export function Navigation() {
         {
           title: 'Direct Placement',
           desc: 'Permanent recruitment solutions for key technical roles.',
-          href: '/staffing#direct-hire',
+          href: '/staffing#direct-placement',
           icon: ShieldCheck,
         },
       ],
@@ -137,183 +170,209 @@ export function Navigation() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
-          <div className="flex items-center justify-between h-full">
-            <Link href="/" className="flex items-center">
-  <Image
-    src="/logo.jpg"
-    alt="HyperCode"
-    width={220}
-    height={60}
-    priority
-    className="h-12 w-auto"
-  />
-</Link>
-
-            {/* Center: Desktop Navigation */}
-            <div className="hidden lg:flex items-center space-x-8 h-full">
-              <Link
-                href="/"
-                className="text-[15px] font-semibold text-slate-700 hover:text-[#0F4C81] transition-colors relative py-2"
-              >
-                Home
+          <div className="flex items-center justify-between h-full w-full">
+            <div className="flex items-center h-full gap-16 xl:gap-20">
+              <Link href="/" className="flex items-center flex-shrink-0">
+                <Image
+                  src="/logo.jpg"
+                  alt="HyperCode"
+                  width={320}
+                  height={40}
+                  priority
+                  className="h-15 w-auto object-contain"
+                />
               </Link>
 
-              {/* Solutions Mega Menu Trigger */}
-              <div
-                className="h-full flex items-center"
-                onMouseEnter={() => setIsMegaMenuOpen(true)}
-                onMouseLeave={() => setIsMegaMenuOpen(false)}
-              >
-                <button className="flex items-center gap-1.5 text-[15px] font-semibold text-slate-700 hover:text-[#0F4C81] transition-colors cursor-pointer bg-transparent border-none py-2">
-                  <span>Solutions</span>
-                  <ChevronDown
-                    size={14}
-                    className={`transition-transform duration-300 ${isMegaMenuOpen ? 'rotate-180' : ''} text-slate-500`}
-                  />
-                </button>
+              {/* Center: Desktop Navigation */}
+              <div className="hidden lg:flex items-center space-x-8 h-full">
+                <Link
+                  href="/"
+                  className={`nav-link ${isActive('/') ? 'nav-link-active' : ''}`}
+                >
+                  Home
+                </Link>
 
-                <AnimatePresence>
-                  {isMegaMenuOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 8 }}
-                      transition={{ duration: 0.15, ease: 'easeOut' }}
-                      className="fixed top-20 left-1/2 -translate-x-1/2 w-full max-w-6xl px-4 sm:px-6 lg:px-8 z-50 pointer-events-auto"
-                    >
-                      <div className="bg-white border border-slate-200 rounded-2xl shadow-xl p-8 grid grid-cols-3 gap-8 text-left">
-                        {/* Column 1: Data & Analytics */}
-                        <div>
-                          <h3 className="text-[11px] font-extrabold text-slate-400 uppercase tracking-widest mb-4">
-                            {megaMenuData.dataAnalytics.title}
-                          </h3>
-                          <div className="space-y-1">
-                            {megaMenuData.dataAnalytics.items.map((item, idx) => {
-                              const Icon = item.icon;
-                              return (
-                                <Link
-                                  key={idx}
-                                  href={item.href}
-                                  className="group flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition-colors"
-                                >
-                                  <div className="p-2 bg-slate-50 rounded-lg text-slate-500 group-hover:bg-[#0F4C81]/10 group-hover:text-[#0F4C81] transition-colors flex-shrink-0">
-                                    <Icon size={16} />
-                                  </div>
-                                  <div>
-                                    <div className="text-sm font-semibold text-slate-800 group-hover:text-[#0F4C81] transition-colors">
-                                      {item.title}
+                {/* Solutions Mega Menu Trigger */}
+                <div
+                  className="h-full flex items-center"
+                  onMouseEnter={() => setIsMegaMenuOpen(true)}
+                  onMouseLeave={() => setIsMegaMenuOpen(false)}
+                >
+                  <button className={`flex items-center gap-1.5 nav-link ${isActive('/solutions') ? 'nav-link-active' : ''} cursor-pointer bg-transparent border-none`}>
+                    <span>Solutions</span>
+                    <ChevronDown
+                      size={14}
+                      className={`transition-transform duration-300 ${isMegaMenuOpen ? 'rotate-180' : ''} text-slate-500`}
+                    />
+                  </button>
+
+                  <AnimatePresence>
+                    {isMegaMenuOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 8 }}
+                        transition={{ duration: 0.15, ease: 'easeOut' }}
+                        className="fixed top-20 left-1/2 -translate-x-1/2 w-full max-w-6xl px-4 sm:px-6 lg:px-8 z-50 pointer-events-auto"
+                      >
+                        <div className="bg-white border border-slate-200 rounded-2xl shadow-xl p-8 grid grid-cols-4 gap-6 text-left">
+                          {/* Column 1: Data & Analytics */}
+                          <div>
+                            <h3 className="text-[11px] font-extrabold text-slate-400 uppercase tracking-widest mb-4">
+                              {megaMenuData.dataAnalytics.title}
+                            </h3>
+                            <div className="space-y-1">
+                              {megaMenuData.dataAnalytics.items.map((item, idx) => {
+                                const Icon = item.icon;
+                                return (
+                                  <Link
+                                    key={idx}
+                                    href={item.href}
+                                    className="group flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition-colors"
+                                  >
+                                    <div className="p-2 bg-slate-50 rounded-lg text-slate-500 group-hover:bg-[#0F4C81]/10 group-hover:text-[#0F4C81] transition-colors flex-shrink-0">
+                                      <Icon size={16} />
                                     </div>
-                                    <div className="text-[11px] text-slate-500 mt-0.5 leading-relaxed">
-                                      {item.desc}
+                                    <div>
+                                      <div className="text-sm font-semibold text-slate-800 group-hover:text-[#0F4C81] transition-colors">
+                                        {item.title}
+                                      </div>
+                                      <div className="text-[11px] text-slate-500 mt-0.5 leading-relaxed">
+                                        {item.desc}
+                                      </div>
                                     </div>
-                                  </div>
-                                </Link>
-                              );
-                            })}
+                                  </Link>
+                                );
+                              })}
+                            </div>
+                          </div>
+
+                          {/* Column 2: Digital Solutions */}
+                          <div>
+                            <h3 className="text-[11px] font-extrabold text-slate-400 uppercase tracking-widest mb-4">
+                              {megaMenuData.digitalSolutions.title}
+                            </h3>
+                            <div className="space-y-1">
+                              {megaMenuData.digitalSolutions.items.map((item, idx) => {
+                                const Icon = item.icon;
+                                return (
+                                  <Link
+                                    key={idx}
+                                    href={item.href}
+                                    className="group flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition-colors"
+                                  >
+                                    <div className="p-2 bg-slate-50 rounded-lg text-slate-500 group-hover:bg-[#0F4C81]/10 group-hover:text-[#0F4C81] transition-colors flex-shrink-0">
+                                      <Icon size={16} />
+                                    </div>
+                                    <div>
+                                      <div className="text-sm font-semibold text-slate-800 group-hover:text-[#0F4C81] transition-colors">
+                                        {item.title}
+                                      </div>
+                                      <div className="text-[11px] text-slate-500 mt-0.5 leading-relaxed">
+                                        {item.desc}
+                                      </div>
+                                    </div>
+                                  </Link>
+                                );
+                              })}
+                            </div>
+                          </div>
+
+                          {/* Column 3: Consulting Services */}
+                          <div>
+                            <h3 className="text-[11px] font-extrabold text-slate-400 uppercase tracking-widest mb-4">
+                              {megaMenuData.consulting.title}
+                            </h3>
+                            <div className="space-y-1">
+                              {megaMenuData.consulting.items.map((item, idx) => {
+                                const Icon = item.icon;
+                                return (
+                                  <Link
+                                    key={idx}
+                                    href={item.href}
+                                    className="group flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition-colors"
+                                  >
+                                    <div className="p-2 bg-slate-50 rounded-lg text-slate-500 group-hover:bg-[#0F4C81]/10 group-hover:text-[#0F4C81] transition-colors flex-shrink-0">
+                                      <Icon size={16} />
+                                    </div>
+                                    <div>
+                                      <div className="text-sm font-semibold text-slate-800 group-hover:text-[#0F4C81] transition-colors">
+                                        {item.title}
+                                      </div>
+                                      <div className="text-[11px] text-slate-500 mt-0.5 leading-relaxed">
+                                        {item.desc}
+                                      </div>
+                                    </div>
+                                  </Link>
+                                );
+                              })}
+                            </div>
+                          </div>
+
+                          {/* Column 4: Staffing Solutions */}
+                          <div>
+                            <h3 className="text-[11px] font-extrabold text-slate-400 uppercase tracking-widest mb-4">
+                              {megaMenuData.staffing.title}
+                            </h3>
+                            <div className="space-y-1">
+                              {megaMenuData.staffing.items.map((item, idx) => {
+                                const Icon = item.icon;
+                                return (
+                                  <Link
+                                    key={idx}
+                                    href={item.href}
+                                    className="group flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition-colors"
+                                  >
+                                    <div className="p-2 bg-slate-50 rounded-lg text-slate-500 group-hover:bg-[#0F4C81]/10 group-hover:text-[#0F4C81] transition-colors flex-shrink-0">
+                                      <Icon size={16} />
+                                    </div>
+                                    <div>
+                                      <div className="text-sm font-semibold text-slate-800 group-hover:text-[#0F4C81] transition-colors">
+                                        {item.title}
+                                      </div>
+                                      <div className="text-[11px] text-slate-500 mt-0.5 leading-relaxed">
+                                        {item.desc}
+                                      </div>
+                                    </div>
+                                  </Link>
+                                );
+                              })}
+                            </div>
                           </div>
                         </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
 
-                        {/* Column 2: Consulting Services */}
-                        <div>
-                          <h3 className="text-[11px] font-extrabold text-slate-400 uppercase tracking-widest mb-4">
-                            {megaMenuData.consulting.title}
-                          </h3>
-                          <div className="space-y-1">
-                            {megaMenuData.consulting.items.map((item, idx) => {
-                              const Icon = item.icon;
-                              return (
-                                <Link
-                                  key={idx}
-                                  href={item.href}
-                                  className="group flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition-colors"
-                                >
-                                  <div className="p-2 bg-slate-50 rounded-lg text-slate-500 group-hover:bg-[#0F4C81]/10 group-hover:text-[#0F4C81] transition-colors flex-shrink-0">
-                                    <Icon size={16} />
-                                  </div>
-                                  <div>
-                                    <div className="text-sm font-semibold text-slate-800 group-hover:text-[#0F4C81] transition-colors">
-                                      {item.title}
-                                    </div>
-                                    <div className="text-[11px] text-slate-500 mt-0.5 leading-relaxed">
-                                      {item.desc}
-                                    </div>
-                                  </div>
-                                </Link>
-                              );
-                            })}
-                          </div>
-                        </div>
+                <Link
+                  href="/careers"
+                  className={`nav-link ${isActive('/careers') ? 'nav-link-active' : ''}`}
+                >
+                  Careers
+                </Link>
 
-                        {/* Column 3: Staffing Solutions */}
-                        <div>
-                          <h3 className="text-[11px] font-extrabold text-slate-400 uppercase tracking-widest mb-4">
-                            {megaMenuData.staffing.title}
-                          </h3>
-                          <div className="space-y-1">
-                            {megaMenuData.staffing.items.map((item, idx) => {
-                              const Icon = item.icon;
-                              return (
-                                <Link
-                                  key={idx}
-                                  href={item.href}
-                                  className="group flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition-colors"
-                                >
-                                  <div className="p-2 bg-slate-50 rounded-lg text-slate-500 group-hover:bg-[#0F4C81]/10 group-hover:text-[#0F4C81] transition-colors flex-shrink-0">
-                                    <Icon size={16} />
-                                  </div>
-                                  <div>
-                                    <div className="text-sm font-semibold text-slate-800 group-hover:text-[#0F4C81] transition-colors">
-                                      {item.title}
-                                    </div>
-                                    <div className="text-[11px] text-slate-500 mt-0.5 leading-relaxed">
-                                      {item.desc}
-                                    </div>
-                                  </div>
-                                </Link>
-                              );
-                            })}
-                          </div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                <Link
+                  href="/about"
+                  className={`nav-link ${isActive('/about') ? 'nav-link-active' : ''}`}
+                >
+                  About
+                </Link>
+
+                <Link
+                  href="/contact"
+                  className={`nav-link ${isActive('/contact') ? 'nav-link-active' : ''}`}
+                >
+                  Contact
+                </Link>
               </div>
-
-              <Link
-                href="/industries"
-                className="text-[15px] font-semibold text-slate-700 hover:text-[#0F4C81] transition-colors relative py-2"
-              >
-                Industries
-              </Link>
-
-              <Link
-                href="/careers"
-                className="text-[15px] font-semibold text-slate-700 hover:text-[#0F4C81] transition-colors relative py-2"
-              >
-                Careers
-              </Link>
-
-              <Link
-                href="/about"
-                className="text-[15px] font-semibold text-slate-700 hover:text-[#0F4C81] transition-colors relative py-2"
-              >
-                About
-              </Link>
-
-              <Link
-                href="/contact"
-                className="text-[15px] font-semibold text-slate-700 hover:text-[#0F4C81] transition-colors relative py-2"
-              >
-                Contact
-              </Link>
             </div>
 
             {/* Right: Desktop CTA */}
-            <div className="hidden lg:flex flex-1 justify-end">
+            <div className="hidden lg:flex justify-end">
               <Link
-                href="/contact"
-                className="h-11 px-5 flex items-center justify-center bg-[#0F4C81] text-white font-semibold text-[14px] rounded-xl hover:bg-[#0c3c66] transition-all duration-200 shadow-sm"
+                href="/consultation"
+                className="h-10 px-6 flex items-center justify-center bg-[#0F4C81] hover:bg-[#0A365D] text-white font-bold text-xs uppercase tracking-wider rounded-md transition-colors duration-200 shadow-sm hover:shadow-md"
               >
                 Schedule Consultation
               </Link>
@@ -373,9 +432,9 @@ export function Navigation() {
                 <Link
                   href="/"
                   onClick={() => setIsOpen(false)}
-                  className="flex items-center space-x-3 py-2.5 text-[16px] font-semibold text-slate-800 hover:text-[#0F4C81] transition-colors border-b border-slate-50"
+                  className={`flex items-center space-x-3 py-2.5 text-[16px] font-semibold transition-colors border-b border-slate-50 ${isActive('/') ? 'text-[#0F4C81] border-l-2 border-[#0F4C81] pl-2' : 'text-slate-800 hover:text-[#0F4C81]'}`}
                 >
-                  <Home size={16} className="text-slate-400" />
+                  <Home size={16} className={isActive('/') ? 'text-[#0F4C81]' : 'text-slate-400'} />
                   <span>Home</span>
                 </Link>
 
@@ -383,17 +442,17 @@ export function Navigation() {
                 <div>
                   <button
                     onClick={() => setMobileSolutionsOpen(!mobileSolutionsOpen)}
-                    className="flex items-center justify-between w-full py-2.5 text-[16px] font-semibold text-slate-800 hover:text-[#0F4C81] transition-colors border-b border-slate-50 cursor-pointer bg-transparent border-none"
+                    className={`flex items-center justify-between w-full py-2.5 text-[16px] font-semibold transition-colors border-b border-slate-50 cursor-pointer bg-transparent border-none ${isActive('/solutions') ? 'text-[#0F4C81] border-l-2 border-[#0F4C81] pl-2' : 'text-slate-800 hover:text-[#0F4C81]'}`}
                   >
                     <div className="flex items-center space-x-3">
-                      <Database size={16} className="text-slate-400" />
+                      <Database size={16} className={isActive('/solutions') ? 'text-[#0F4C81]' : 'text-slate-400'} />
                       <span>Solutions</span>
                     </div>
                     <ChevronDown
                       size={16}
                       className={`transition-transform duration-300 ${
                         mobileSolutionsOpen ? 'rotate-180' : ''
-                      } text-slate-400`}
+                      } ${isActive('/solutions') ? 'text-[#0F4C81]' : 'text-slate-400'}`}
                     />
                   </button>
                   <motion.div
@@ -419,9 +478,32 @@ export function Navigation() {
                                 key={idx}
                                 href={item.href}
                                 onClick={() => setIsOpen(false)}
-                                className="flex items-center gap-2 py-1.5 text-sm text-slate-600 hover:text-[#0F4C81] transition-colors"
+                                className={`flex items-center gap-2 py-1.5 text-sm transition-colors ${isActive(item.href) ? 'text-[#0F4C81] font-semibold' : 'text-slate-600 hover:text-[#0F4C81]'}`}
                               >
-                                <Icon size={14} className="text-slate-400 flex-shrink-0" />
+                                <Icon size={14} className={isActive(item.href) ? 'text-[#0F4C81]' : 'text-slate-400 flex-shrink-0'} />
+                                <span>{item.title}</span>
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      </div>
+
+                      {/* Digital Solutions */}
+                      <div className="space-y-1.5">
+                        <div className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">
+                          Digital Solutions
+                        </div>
+                        <div className="space-y-1 pl-1">
+                          {megaMenuData.digitalSolutions.items.map((item, idx) => {
+                            const Icon = item.icon;
+                            return (
+                              <Link
+                                key={idx}
+                                href={item.href}
+                                onClick={() => setIsOpen(false)}
+                                className={`flex items-center gap-2 py-1.5 text-sm transition-colors ${isActive(item.href) ? 'text-[#0F4C81] font-semibold' : 'text-slate-600 hover:text-[#0F4C81]'}`}
+                              >
+                                <Icon size={14} className={isActive(item.href) ? 'text-[#0F4C81]' : 'text-slate-400 flex-shrink-0'} />
                                 <span>{item.title}</span>
                               </Link>
                             );
@@ -442,9 +524,9 @@ export function Navigation() {
                                 key={idx}
                                 href={item.href}
                                 onClick={() => setIsOpen(false)}
-                                className="flex items-center gap-2 py-1.5 text-sm text-slate-600 hover:text-[#0F4C81] transition-colors"
+                                className={`flex items-center gap-2 py-1.5 text-sm transition-colors ${isActive(item.href) ? 'text-[#0F4C81] font-semibold' : 'text-slate-600 hover:text-[#0F4C81]'}`}
                               >
-                                <Icon size={14} className="text-slate-400 flex-shrink-0" />
+                                <Icon size={14} className={isActive(item.href) ? 'text-[#0F4C81]' : 'text-slate-400 flex-shrink-0'} />
                                 <span>{item.title}</span>
                               </Link>
                             );
@@ -465,9 +547,9 @@ export function Navigation() {
                                 key={idx}
                                 href={item.href}
                                 onClick={() => setIsOpen(false)}
-                                className="flex items-center gap-2 py-1.5 text-sm text-slate-600 hover:text-[#0F4C81] transition-colors"
+                                className={`flex items-center gap-2 py-1.5 text-sm transition-colors ${isActive(item.href) ? 'text-[#0F4C81] font-semibold' : 'text-slate-600 hover:text-[#0F4C81]'}`}
                               >
-                                <Icon size={14} className="text-slate-400 flex-shrink-0" />
+                                <Icon size={14} className={isActive(item.href) ? 'text-[#0F4C81]' : 'text-slate-400 flex-shrink-0'} />
                                 <span>{item.title}</span>
                               </Link>
                             );
@@ -479,38 +561,29 @@ export function Navigation() {
                 </div>
 
                 <Link
-                  href="/industries"
-                  onClick={() => setIsOpen(false)}
-                  className="flex items-center space-x-3 py-2.5 text-[16px] font-semibold text-slate-800 hover:text-[#0F4C81] transition-colors border-b border-slate-50"
-                >
-                  <Globe size={16} className="text-slate-400" />
-                  <span>Industries</span>
-                </Link>
-
-                <Link
                   href="/careers"
                   onClick={() => setIsOpen(false)}
-                  className="flex items-center space-x-3 py-2.5 text-[16px] font-semibold text-slate-800 hover:text-[#0F4C81] transition-colors border-b border-slate-50"
+                  className={`flex items-center space-x-3 py-2.5 text-[16px] font-semibold transition-colors border-b border-slate-50 ${isActive('/careers') ? 'text-[#0F4C81] border-l-2 border-[#0F4C81] pl-2' : 'text-slate-800 hover:text-[#0F4C81]'}`}
                 >
-                  <Users size={16} className="text-slate-400" />
-                  <span>Careers</span>
+                  <Users size={16} className={isActive('/careers') ? 'text-[#0F4C81]' : 'text-slate-400'} />
+                  <span><span>Careers</span></span>
                 </Link>
 
                 <Link
                   href="/about"
                   onClick={() => setIsOpen(false)}
-                  className="flex items-center space-x-3 py-2.5 text-[16px] font-semibold text-slate-800 hover:text-[#0F4C81] transition-colors border-b border-slate-50"
+                  className={`flex items-center space-x-3 py-2.5 text-[16px] font-semibold transition-colors border-b border-slate-50 ${isActive('/about') ? 'text-[#0F4C81] border-l-2 border-[#0F4C81] pl-2' : 'text-slate-800 hover:text-[#0F4C81]'}`}
                 >
-                  <FileText size={16} className="text-slate-400" />
+                  <FileText size={16} className={isActive('/about') ? 'text-[#0F4C81]' : 'text-slate-400'} />
                   <span>About</span>
                 </Link>
 
                 <Link
                   href="/contact"
                   onClick={() => setIsOpen(false)}
-                  className="flex items-center space-x-3 py-2.5 text-[16px] font-semibold text-slate-800 hover:text-[#0F4C81] transition-colors border-b border-slate-50"
+                  className={`flex items-center space-x-3 py-2.5 text-[16px] font-semibold transition-colors border-b border-slate-50 ${isActive('/contact') ? 'text-[#0F4C81] border-l-2 border-[#0F4C81] pl-2' : 'text-slate-800 hover:text-[#0F4C81]'}`}
                 >
-                  <Mail size={16} className="text-slate-400" />
+                  <Mail size={16} className={isActive('/contact') ? 'text-[#0F4C81]' : 'text-slate-400'} />
                   <span>Contact</span>
                 </Link>
               </div>
@@ -518,9 +591,9 @@ export function Navigation() {
               {/* Drawer Footer CTA */}
               <div className="p-6 border-t border-slate-100 bg-white flex-shrink-0">
                 <Link
-                  href="/contact"
+                  href="/consultation"
                   onClick={() => setIsOpen(false)}
-                  className="w-full h-11 flex items-center justify-center bg-[#0F4C81] text-white font-semibold text-sm rounded-xl hover:bg-[#0c3c66] transition-colors duration-200"
+                  className="w-full h-10 flex items-center justify-center bg-[#0F4C81] hover:bg-[#0A365D] text-white font-bold text-xs uppercase tracking-wider rounded-md transition-colors duration-200 shadow-sm hover:shadow-md"
                 >
                   Schedule Consultation
                 </Link>

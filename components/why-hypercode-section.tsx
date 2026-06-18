@@ -7,7 +7,7 @@ export function WhyHypercodeSection() {
     {
       icon: Award,
       title: 'Enterprise Expertise',
-      desc: 'Deep experience in analytics, data platforms, and enterprise technology solutions.',
+      desc: 'Deep experience in web applications, analytics, cloud databases, and enterprise systems.',
     },
     {
       icon: Users,

@@ -1,6 +1,6 @@
 'use client';
 
-import { BarChart3, Database, Users, ArrowRight } from 'lucide-react';
+import { BarChart3, Database, Users, ArrowRight, Code } from 'lucide-react';
 import Link from 'next/link';
 
 export function ServicesSection() {
@@ -18,6 +18,13 @@ export function ServicesSection() {
       desc: 'Consolidating database structures into scalable cloud lakehouses and orchestrating secure ETL pipelines.',
       bullets: ['Data Warehousing', 'ETL Pipelines', 'Big Data', 'Cloud Data Platforms'],
       href: '/solutions',
+    },
+    {
+      title: 'Web Development',
+      icon: Code,
+      desc: 'Designing and developing modern, scalable, secure, and high-performance custom web applications.',
+      bullets: ['Custom Applications', 'Next.js & React', 'API Integrations', 'Cloud Deployments'],
+      href: '/solutions/web-development-services',
     },
     {
       title: 'Talent Solutions',
@@ -40,13 +47,13 @@ export function ServicesSection() {
           <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
             Our Core Consulting Stacks
           </h3>
-          <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-medium">
-            We deliver enterprise data solutions and technology placement services through three strategic departments.
+          <p className="text-base sm:text-lg text-[#5a718c] leading-relaxed font-medium">
+            We deliver enterprise software development, cloud data solutions, and technology placement services through four strategic departments.
           </p>
         </div>
 
         {/* Pillars Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {pillars.map((pillar, idx) => {
             const Icon = pillar.icon;
             return (

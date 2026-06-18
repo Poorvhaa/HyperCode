@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { ClipboardList, Users, Search, UserCheck, ShieldCheck, GraduationCap, CalendarDays, ArrowRight, UserPlus } from 'lucide-react';
+import Link from 'next/link';
 
 interface StaffingOffer {
   title: string;
@@ -116,13 +117,13 @@ export function StaffingExperience() {
               })}
             </div>
             <div className="pt-2">
-              <a
-                href="/contact"
+              <Link
+                href="/consultation?service=IT%20Staffing"
                 className="inline-flex items-center text-xs font-bold text-[#0F4C81] hover:text-[#0c3c66] transition-colors group"
               >
                 <span>Request talent from our coordinators</span>
                 <ArrowRight size={14} className="ml-1.5" />
-              </a>
+              </Link>
             </div>
           </div>
 

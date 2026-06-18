@@ -50,6 +50,10 @@ const FAQ_KNOWLEDGE_BASE = [
     answer: "Data Engineering involves constructing robust pipelines to ingest and transform data. HyperCode designs reliable ETL/ELT pipelines using tools like Apache Airflow, dbt, Fivetran, and Kafka to support real-time data streaming."
   },
   {
+    keywords: ['web development', 'web dev', 'next.js', 'react', 'typescript', 'frontend', 'backend', 'full stack', 'custom application', 'api integration'],
+    answer: "Web Development is a core service at HyperCode. We design and build modern, scalable, secure, and high-performance custom web applications using React, Next.js, TypeScript, Node.js, and cloud platforms like AWS and Azure."
+  },
+  {
     keywords: ['big data', 'spark', 'hadoop', 'kafka', 'flink'],
     answer: "Big Data solutions handle high-volume, high-velocity data. HyperCode implements distributed computing architectures using Hadoop, Apache Spark, and Kafka to process streaming analytics at massive scale."
   },
@@ -117,8 +121,9 @@ export function AIAssistant() {
             {
               id: 'welcome',
               sender: 'assistant',
-              message: "Hello 👋\n\nI'm HyperCode AI.\n\nI can help you learn about our Business Intelligence, Data Analytics, Data Engineering, and IT Staffing services.\n\nHow can I assist you today?",
+              message: "Hello 👋\n\nI'm HyperCode AI.\n\nI can help you learn about our Web Development, Business Intelligence, Data Analytics, Data Engineering, and IT Staffing services.\n\nHow can I assist you today?",
               quickActions: [
+                '🌐 Web Development',
                 '📊 Business Intelligence',
                 '📈 Data Analytics',
                 '🏢 IT Staffing',
@@ -164,7 +169,7 @@ export function AIAssistant() {
         return {
           found: true,
           reply: faq.answer,
-          followUps: ['📊 Business Intelligence', '🏢 IT Staffing', '📅 Schedule Consultation']
+          followUps: ['🌐 Web Development', '📊 Business Intelligence', '🏢 IT Staffing', '📅 Schedule Consultation']
         };
       }
     }
@@ -199,6 +204,7 @@ export function AIAssistant() {
           setFlowData(data);
           setFlowStep(1);
           await addMessage('assistant', "Which service are you most interested in?", [
+            '🌐 Web Development',
             '📊 Business Intelligence',
             '📈 Data Analytics',
             '☁ Data Engineering',
@@ -279,6 +285,7 @@ export function AIAssistant() {
           setFlowData(data);
           setFlowStep(4);
           await addMessage('assistant', "Which service area do you need help with?", [
+            'Web Development',
             'Business Intelligence',
             'Data Analytics',
             'Data Engineering',
@@ -423,6 +430,12 @@ export function AIAssistant() {
           "Data Engineering involves constructing robust pipelines to ingest and transform data. HyperCode designs reliable ETL/ELT pipelines using tools like Apache Airflow, dbt, Fivetran, and Kafka to support real-time data streaming.",
           ['📅 Schedule Consultation', '📊 Business Intelligence']
         );
+      } else if (query.includes('web development') || query === '🌐 web development') {
+        await addMessage(
+          'assistant',
+          "Web Development is a core service at HyperCode. We design and build modern, scalable, secure, and high-performance custom web applications using React, Next.js, TypeScript, Node.js, and cloud platforms like AWS and Azure.",
+          ['📅 Schedule Consultation', '📊 Business Intelligence']
+        );
       } else if (query.includes('schedule consultation') || query === '📅 schedule consultation' || query.includes('book')) {
         setActiveFlow('consultation');
         setFlowStep(0);
@@ -464,6 +477,7 @@ export function AIAssistant() {
     setFlowStep(0);
     setFlowData({});
     addMessage('assistant', "Intake process cancelled. How else can I assist you?", [
+      '🌐 Web Development',
       '📊 Business Intelligence',
       '📈 Data Analytics',
       '🏢 IT Staffing',

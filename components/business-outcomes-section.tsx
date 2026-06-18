@@ -90,8 +90,8 @@ export function BusinessOutcomesSection() {
           </div>
           <div className="flex gap-4">
             <Link
-              href="/contact"
-              className="inline-flex items-center justify-center h-11 px-6 bg-[#0F4C81] text-white font-semibold text-[13px] rounded-xl hover:bg-[#0c3c66] transition-colors duration-200"
+              href="/consultation"
+              className="inline-flex items-center justify-center h-10 px-5 bg-[#0F4C81] hover:bg-[#0A365D] text-white font-bold text-xs uppercase tracking-wider rounded-md transition-colors duration-200 shadow-sm hover:shadow-md"
             >
               <span>Schedule Consultation</span>
               <ArrowRight size={14} className="ml-1.5" />

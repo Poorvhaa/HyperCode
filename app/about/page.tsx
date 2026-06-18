@@ -4,8 +4,8 @@ import { Target, Eye, ShieldCheck, Award, Lightbulb, Users, Compass } from 'luci
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'About HyperCode | Enterprise Data Strategy & Trust',
-  description: 'Learn about HyperCode\'s mission, vision, values, approach, and nationwide presence as a premier strategic consulting firm.',
+  title: 'About HyperCode | Enterprise Technology & Data Strategy',
+  description: 'Learn about HyperCode\'s mission, vision, values, approach, and nationwide presence as a premier strategic technology consulting and web development firm.',
   alternates: {
     canonical: 'https://www.hypercode.com/about',
   },
@@ -52,7 +52,7 @@ export default function AboutPage() {
               Transforming Data Into <span className="text-[#0F4C81]">Strategic Intelligence</span>
             </h1>
             <p className="text-lg sm:text-xl text-slate-600 font-medium leading-relaxed">
-              We combine enterprise data engineering, cloud analytics strategy, and strategic IT staffing to accelerate growth.
+              We combine custom web development, cloud data engineering, advanced analytics, and strategic IT staffing to accelerate growth.
             </p>
           </div>
         </div>
@@ -65,7 +65,7 @@ export default function AboutPage() {
             <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Our Story</h2>
             <div className="space-y-4 text-base sm:text-lg text-slate-600 leading-relaxed font-medium">
               <p>
-                HyperCode was founded with a clear objective: to bridge the gap between raw data pipelines and executive decision-making. Over the years, we have grown to become a trusted strategic partner for Fortune 500 enterprises and government agencies across the United States.
+                HyperCode was founded with a clear objective: to bridge the gap between custom software engineering, raw data pipelines, and executive decision-making. Over the years, we have grown to become a trusted strategic partner for Fortune 500 enterprises and government agencies across the United States.
               </p>
               <p>
                 What sets us apart is our commitment to combining technical execution with human-centered consulting. We believe modern dashboards and databases are only as effective as the teams utilizing them.
@@ -171,8 +171,8 @@ export default function AboutPage() {
             </p>
             <div className="pt-4">
               <Link
-                href="/contact"
-                className="inline-flex items-center justify-center h-11 px-6 bg-[#0F4C81] text-white font-semibold text-[13px] rounded-xl hover:bg-[#0c3c66] transition-colors duration-200"
+                href="/consultation"
+                className="inline-flex items-center justify-center h-10 px-5 bg-[#0F4C81] hover:bg-[#0A365D] text-white font-bold text-xs uppercase tracking-wider rounded-md transition-colors duration-200 shadow-sm hover:shadow-md"
               >
                 Schedule Consultation
               </Link>

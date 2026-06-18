@@ -41,7 +41,20 @@ export interface ConsultationRequest {
   email: string;
   phone: string;
   service_needed: string;
+  budget: string;
+  timeline: string;
   project_description: string;
+  created_at: string;
+}
+
+export interface ContactInquiry {
+  id: string;
+  name: string;
+  company: string;
+  email: string;
+  phone: string;
+  subject: string;
+  message: string;
   created_at: string;
 }
 
@@ -186,6 +199,8 @@ export const db = {
     email: string,
     phone: string,
     serviceNeeded: string,
+    budget: string,
+    timeline: string,
     projectDescription: string
   ): Promise<ConsultationRequest> {
     if (supabase) {
@@ -197,6 +212,8 @@ export const db = {
           email,
           phone,
           service_needed: serviceNeeded,
+          budget,
+          timeline,
           project_description: projectDescription
         }])
         .select()
@@ -213,12 +230,57 @@ export const db = {
         email,
         phone,
         service_needed: serviceNeeded,
+        budget,
+        timeline,
         project_description: projectDescription,
         created_at: new Date().toISOString()
       };
       consultations.push(newReq);
       saveLocal('hypercode_db_consultations', consultations);
       return newReq;
+    }
+  },
+
+  // 4b. Save Contact Inquiry
+  async saveContactInquiry(
+    name: string,
+    company: string,
+    email: string,
+    phone: string,
+    subject: string,
+    message: string
+  ): Promise<ContactInquiry> {
+    if (supabase) {
+      const { data, error } = await supabase
+        .from('contact_inquiries')
+        .insert([{
+          name,
+          company,
+          email,
+          phone,
+          subject,
+          message
+        }])
+        .select()
+        .single();
+
+      if (error) throw error;
+      return data;
+    } else {
+      const inquiries = getLocal('hypercode_db_contact_inquiries');
+      const newInq: ContactInquiry = {
+        id: uuid(),
+        name,
+        company,
+        email,
+        phone,
+        subject,
+        message,
+        created_at: new Date().toISOString()
+      };
+      inquiries.push(newInq);
+      saveLocal('hypercode_db_contact_inquiries', inquiries);
+      return newInq;
     }
   },
 
@@ -319,6 +381,16 @@ export const db = {
       return data || [];
     } else {
       return getLocal('hypercode_db_staffing').sort((a, b) => b.created_at.localeCompare(a.created_at));
+    }
+  },
+
+  async getAllContactInquiries(): Promise<ContactInquiry[]> {
+    if (supabase) {
+      const { data, error } = await supabase.from('contact_inquiries').select('*').order('created_at', { ascending: false });
+      if (error) throw error;
+      return data || [];
+    } else {
+      return getLocal('hypercode_db_contact_inquiries').sort((a, b) => b.created_at.localeCompare(a.created_at));
     }
   }
 };

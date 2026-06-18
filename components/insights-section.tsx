@@ -18,7 +18,7 @@ export function InsightsSection() {
     desc: 'How enterprise CIOs are structuring modern Lakehouses to balance interactive Power BI dashboards with real-time Databricks machine learning workloads without doubling storage costs.',
     date: 'June 14, 2026',
     readTime: '8 min read',
-    href: '/insights',
+    href: '/insights/microsoft-fabric-and-snowflake-coexistence',
   };
 
   const supportingArticles: Article[] = [
@@ -27,21 +27,21 @@ export function InsightsSection() {
       title: 'Designing Executive Power BI Dashboards: Beyond the Metrics',
       date: 'June 8, 2026',
       readTime: '5 min read',
-      href: '/insights',
+      href: '/insights/designing-executive-power-bi-dashboards',
     },
     {
       category: 'DATA ENGINEERING',
       title: 'Optimizing dbt Incremental Models on Enterprise Snowflake Warehouses',
       date: 'June 3, 2026',
       readTime: '6 min read',
-      href: '/insights',
+      href: '/insights/optimizing-dbt-incremental-models-snowflake',
     },
     {
       category: 'IT STAFFING & LEADERSHIP',
       title: 'Vetting Senior Data Engineers: The Technical Rubric Apex Teams Use',
       date: 'May 28, 2026',
       readTime: '7 min read',
-      href: '/insights',
+      href: '/insights/vetting-senior-data-engineers-rubric',
     },
   ];
 

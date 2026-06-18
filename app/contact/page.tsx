@@ -1,11 +1,12 @@
 import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
 import { ContactForm } from '@/components/contact-form';
-import { Phone, Mail, MapPin, Clock } from 'lucide-react';
+import { Mail, MapPin, Clock, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 
 export const metadata = {
-  title: 'Contact HyperCode | Consulting & Staffing Solutions',
-  description: 'Get in touch with HyperCode for enterprise Business Intelligence, Data Analytics, and IT Staffing solutions. Headquartered in Schaumburg, IL.',
+  title: 'Contact HyperCode | General Inquiries & Partnerships',
+  description: 'Get in touch with HyperCode for general business inquiries, career questions, partnership proposals, and media requests.',
   alternates: {
     canonical: 'https://www.hypercode.com/contact',
   },
@@ -21,10 +22,10 @@ export default function ContactPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="max-w-3xl space-y-4">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
-              Get in <span className="text-[#0F4C81]">Touch</span>
+              Contact <span className="text-[#0F4C81]">HyperCode</span>
             </h1>
             <p className="text-lg sm:text-xl text-slate-600 font-medium leading-relaxed">
-              Have a question or ready to get started? We would love to hear from you.
+              Have a general question, career inquiry, or partnership opportunity? We would love to hear from you.
             </p>
           </div>
         </div>
@@ -70,7 +71,7 @@ export default function ContactPage() {
                 <p className="text-xs font-bold tracking-wider text-slate-400 uppercase">Response SLA</p>
                 <p className="text-2xl font-bold text-[#0F4C81]">Within 24 Hours</p>
                 <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
-                  We prioritize every inquiry and get back to you promptly.
+                  We review every inquiry and route it to the appropriate department promptly.
                 </p>
               </div>
             </div>
@@ -78,7 +79,7 @@ export default function ContactPage() {
             {/* Contact Form */}
             <div className="lg:col-span-2">
               <div className="p-6 sm:p-10 rounded-3xl border border-slate-200 bg-white shadow-sm">
-                <h2 className="text-2xl font-bold text-slate-900 mb-8">Contact Our Team</h2>
+                <h2 className="text-2xl font-bold text-slate-900 mb-8">Send a Message</h2>
                 <ContactForm />
               </div>
             </div>
@@ -92,45 +93,54 @@ export default function ContactPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Box 1 */}
-            <div className="p-6 sm:p-8 rounded-2xl border border-slate-200 bg-white shadow-sm space-y-4">
-              <h3 className="text-lg font-bold text-slate-900">For Consulting</h3>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
-                Learn how HyperCode can transform your data structures and deliver business results.
-              </p>
-              <ul className="space-y-2 text-xs font-semibold text-slate-500 uppercase tracking-wide">
-                <li>• Solution assessments</li>
-                <li>• Project proposals</li>
-                <li>• Technical reviews</li>
-                <li>• ROI analysis</li>
-              </ul>
+            <div className="p-6 sm:p-8 rounded-2xl border border-slate-200 bg-white shadow-sm space-y-4 flex flex-col justify-between">
+              <div className="space-y-4">
+                <h3 className="text-lg font-bold text-slate-900">For Consulting</h3>
+                <p className="text-xs sm:text-sm text-slate-655 leading-relaxed font-medium">
+                  Looking to architect a new cloud solution, optimize analytics, or scope an enterprise data project?
+                </p>
+              </div>
+              <div className="pt-2">
+                <Link
+                  href="/consultation"
+                  className="inline-flex items-center text-xs font-bold text-[#0F4C81] hover:text-[#0c3c66] transition-colors gap-1"
+                >
+                  <span>Request Consultation</span>
+                  <ArrowRight size={14} />
+                </Link>
+              </div>
             </div>
 
             {/* Box 2 */}
-            <div className="p-6 sm:p-8 rounded-2xl border border-slate-200 bg-white shadow-sm space-y-4">
-              <h3 className="text-lg font-bold text-slate-900">For Staffing</h3>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
-                Access our national pipeline of certified consultants and engineering squads.
-              </p>
-              <ul className="space-y-2 text-xs font-semibold text-slate-500 uppercase tracking-wide">
-                <li>• Contract positions</li>
-                <li>• Direct placements</li>
-                <li>• Team augmentation</li>
-                <li>• Project engineering</li>
-              </ul>
+            <div className="p-6 sm:p-8 rounded-2xl border border-slate-200 bg-white shadow-sm space-y-4 flex flex-col justify-between">
+              <div className="space-y-4">
+                <h3 className="text-lg font-bold text-slate-900">For Staffing</h3>
+                <p className="text-xs sm:text-sm text-slate-655 leading-relaxed font-medium">
+                  Need contract talent, team augmentation, or permanent placements for your engineering squads?
+                </p>
+              </div>
+              <div className="pt-2">
+                <Link
+                  href="/consultation?service=IT%20Staffing"
+                  className="inline-flex items-center text-xs font-bold text-[#0F4C81] hover:text-[#0c3c66] transition-colors gap-1"
+                >
+                  <span>Request Staffing</span>
+                  <ArrowRight size={14} />
+                </Link>
+              </div>
             </div>
 
             {/* Box 3 */}
-            <div className="p-6 sm:p-8 rounded-2xl border border-slate-200 bg-white shadow-sm space-y-4">
-              <h3 className="text-lg font-bold text-slate-900">For Partnerships</h3>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
-                Join our partner ecosystem and expand your system integration offerings.
+            <div className="p-6 sm:p-8 rounded-2xl border border-slate-200 bg-white shadow-sm space-y-4 flex flex-col justify-between">
+              <div className="space-y-4">
+                <h3 className="text-lg font-bold text-slate-900">For Partnerships</h3>
+                <p className="text-xs sm:text-sm text-slate-655 leading-relaxed font-medium">
+                  Interested in joint technology offerings, reseller options, or strategic system integration alliances?
+                </p>
+              </div>
+              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
+                Select "Partnership Opportunity" above
               </p>
-              <ul className="space-y-2 text-xs font-semibold text-slate-500 uppercase tracking-wide">
-                <li>• Technology partnerships</li>
-                <li>• Reseller options</li>
-                <li>• Strategic alliances</li>
-                <li>• System integration</li>
-              </ul>
             </div>
           </div>
         </div>

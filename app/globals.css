@@ -154,3 +154,45 @@
     @apply font-sans;
   }
 }
+
+/* Premium Navigation Links */
+.nav-link {
+  color: #0F2744;
+  font-weight: 600;
+  font-size: 15px;
+  position: relative;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  transition: color 0.2s ease-in-out;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #0F4C81;
+  transform: scaleX(0);
+  transform-origin: bottom left;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-link:hover {
+  color: #0F4C81;
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+.nav-link-active {
+  color: #0F4C81 !important;
+  font-weight: 700;
+}
+
+.nav-link-active::after {
+  transform: scaleX(1) !important;
+}
+

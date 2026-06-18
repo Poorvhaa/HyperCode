@@ -4,40 +4,39 @@ import { CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'IT Staffing Solutions | HyperCode',
-  description: 'Enterprise IT Staffing Solutions, contract placement, contract-to-hire, direct placements, and recruiting technologies. Headquartered in Schaumburg, IL.',
+  title: 'Enterprise Web Development Services | HyperCode',
+  description: 'Designing and developing modern, scalable, secure, and high-performance web applications using React, Next.js, and Node.js. Headquartered in Schaumburg, IL.',
   alternates: {
-    canonical: 'https://www.hypercode.com/solutions/it-staffing-solutions',
+    canonical: 'https://www.hypercode.com/solutions/web-development-services',
   },
 };
 
-export default function ITStaffingSolutionsPage() {
+export default function WebDevelopmentServicesPage() {
   const benefits = [
     {
-      title: 'Vetted Technology Talent',
-      desc: 'Access pre-screened developers, cloud engineers, database administrators, and BI experts with validated credentials.',
+      title: 'Modern Front-End Architectures',
+      desc: 'Deliver blazing-fast user interfaces using React, Next.js, and TypeScript, optimized for Core Web Vitals.',
     },
     {
-      title: 'Flexible Contract Placements',
-      desc: 'Quickly resource temporary engineering tasks or fill core skills gaps with developers contracted for 3 to 12 months.',
+      title: 'Scalable Full-Stack Engineering',
+      desc: 'Build secure, robust backend systems with Node.js, .NET, or Python, backed by relational and cloud databases.',
     },
     {
-      title: 'Direct Placement Vetting',
-      desc: 'Source key permanent technology managers, directors, and developers, leveraging our database of over 12,000 specialists.',
+      title: 'Secure API & ERP Integrations',
+      desc: 'Seamlessly connect your custom web portal or SaaS platform to internal databases, CRM systems, and enterprise ERPs.',
     },
     {
-      title: 'VMS & ATS Compliance',
-      desc: 'Integrate seamlessly with your internal Vendor Management Systems (VMS) and Applicant Tracking Systems (ATS) for easy billing.',
+      title: 'Responsive Cross-Device Layouts',
+      desc: 'Ensure consistency across desktops, tablets, and mobile devices using modern Tailwind CSS frameworks.',
     },
   ];
 
   const technologies = [
-    { name: 'ATS Integrations', role: 'Sourcing compliance via Bullhorn & JobDiva' },
-    { name: 'VMS Coordination', role: 'Enterprise workforce tracking via SAP Fieldglass & Beeline' },
-    { name: 'HRIS Alignment', role: 'Onboarding coordination via Workday & iCIMS' },
-    { name: 'Vetting Engine', role: 'Internal code evaluation & technical screens' },
+    { name: 'React / Next.js', role: 'Component architectures & SSR speed' },
+    { name: 'TypeScript', role: 'Type-safe, robust code execution' },
+    { name: 'Node.js / .NET', role: 'Enterprise scalability & API structures' },
+    { name: 'AWS / Azure', role: 'Secure, high-availability cloud hosting' },
   ];
-
 
   return (
     <main className="relative w-full bg-white text-left">
@@ -48,13 +47,13 @@ export default function ITStaffingSolutionsPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="max-w-3xl space-y-4">
             <span className="text-[10px] font-bold text-[#0F4C81] tracking-widest uppercase bg-white border border-slate-150 px-2.5 py-1 rounded-md">
-              Talent Solutions
+              Digital Solutions
             </span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
-              IT Staffing <span className="text-[#0F4C81]">Solutions</span>
+              Enterprise Web <span className="text-[#0F4C81]">Development</span>
             </h1>
             <p className="text-lg sm:text-xl text-slate-600 font-medium leading-relaxed">
-              Source and place pre-screened, certified data, software, and management experts to hit project timelines.
+              Designing and developing modern, scalable, secure, and high-performance web applications that drive growth.
             </p>
           </div>
         </div>
@@ -64,14 +63,14 @@ export default function ITStaffingSolutionsPage() {
       <section className="py-24 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">
-            Deploy Highly-Certified Technology Talent in Days, Not Months
+            Build Future-Proof Digital Platforms
           </h2>
           <div className="text-base sm:text-lg text-slate-600 leading-relaxed font-medium space-y-4">
             <p>
-              In a competitive technology landscape, finding qualified software developers, data modelers, and systems architects is slow and expensive. Hiring errors drag down project timelines and waste internal engineering management bandwidth.
+              In a digital-first economy, your web presence is the center of your operations. Static, legacy architectures create performance bottlenecks, security vulnerabilities, and scaling challenges. HyperCode's web development practice builds modern, custom web applications that scale seamlessly.
             </p>
             <p>
-              HyperCode simplifies technology staffing. We run rigorous screening filters, checking coding standards, security records, and database architecture proficiency. Whether you require a single developer to assist a short-term migration, or a permanent database administrator to manage infrastructure, we deliver pre-vetted specialists quickly.
+              Our software engineering teams build on top of React, Next.js, and TypeScript to deliver responsive corporate websites, high-speed SaaS platforms, client portals, and custom dashboard interfaces. We combine solid frontend patterns with secure API integrations and reliable cloud hosting on AWS and Azure.
             </p>
           </div>
         </div>
@@ -81,8 +80,8 @@ export default function ITStaffingSolutionsPage() {
       <section className="py-24 bg-slate-50 border-t border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-16">
-            <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">Key Solutions</h2>
-            <h3 className="text-3xl font-extrabold text-slate-900 tracking-tight">Measurable Staffing Benefits</h3>
+            <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">Core Capabilities</h2>
+            <h3 className="text-3xl font-extrabold text-slate-900 tracking-tight">Web Engineering Differentiators</h3>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -105,8 +104,8 @@ export default function ITStaffingSolutionsPage() {
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-16">
-            <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">Workforce Platforms</h2>
-            <h3 className="text-3xl font-extrabold text-slate-900 tracking-tight">Our Sourcing & Vendor Ecosystem</h3>
+            <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">Platform Stack</h2>
+            <h3 className="text-3xl font-extrabold text-slate-900 tracking-tight">Our Web Technology Expertise</h3>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -116,7 +115,7 @@ export default function ITStaffingSolutionsPage() {
                   <span className="px-3 py-1 bg-slate-50 border border-slate-150 text-[#0F4C81] rounded-lg text-xs font-bold uppercase tracking-wider inline-block">
                     {tech.name}
                   </span>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium pt-2">
                     {tech.role}
                   </p>
                 </div>
@@ -126,22 +125,21 @@ export default function ITStaffingSolutionsPage() {
         </div>
       </section>
 
-
       {/* Lead Gen Call-To-Action (Strategic Placement) */}
       <section className="py-24 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
           <h3 className="text-3xl font-extrabold text-slate-900 tracking-tight">
-            Ready to Build Your Engineering Squad?
+            Ready to Scope Your Custom Application?
           </h3>
           <p className="text-base sm:text-lg text-slate-600 max-w-xl mx-auto font-medium">
-            Schedule a consultation with our recruitment managers to source pre-screened technical professionals.
+            Schedule a consultation with our technology practice directors to design custom web architectures for your organization.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link
-              href="/consultation?service=IT%20Staffing"
+              href="/consultation?service=Web%20Development"
               className="inline-flex items-center justify-center h-11 px-7 bg-[#0F4C81] hover:bg-[#0A365D] text-white font-bold text-xs uppercase tracking-wider rounded-md transition-colors duration-200 shadow-sm hover:shadow-md"
             >
-              Request Talent
+              Schedule Consultation
             </Link>
             <Link
               href="/contact"
