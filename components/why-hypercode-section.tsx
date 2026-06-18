@@ -1,33 +1,28 @@
 'use client';
 
-import { Award, Users, TrendingUp, Zap, Handshake } from 'lucide-react';
+import { Award, Users, Globe, Handshake } from 'lucide-react';
 
 export function WhyHypercodeSection() {
   const reasons = [
     {
       icon: Award,
       title: 'Enterprise Expertise',
-      desc: 'Proven architecture blueprints deployed across Fortune 500 financial institutions, government departments, and healthcare providers.',
+      desc: 'Deep experience in analytics, data platforms, and enterprise technology solutions.',
     },
     {
       icon: Users,
-      title: 'Nationwide Talent Network',
-      desc: 'A mobilized network of over 12,000 pre-screened, certified data and software consultants ready to reinforce active engineering pipelines.',
+      title: 'Flexible Talent Solutions',
+      desc: 'Contract, contract-to-hire, and direct placement services.',
     },
     {
-      icon: TrendingUp,
-      title: 'Data-Driven Strategy',
-      desc: 'We do not guess. Our advisory teams conduct strict data-readiness assessments and pipeline stress tests before recommending stacks.',
-    },
-    {
-      icon: Zap,
-      title: 'Rapid Deployment',
-      desc: 'Accelerated onboarding pipelines allow us to resource, vet, and place highly certified developers on-site within 10 to 14 business days.',
+      icon: Globe,
+      title: 'Nationwide Delivery',
+      desc: 'Supporting commercial and government organizations across the United States.',
     },
     {
       icon: Handshake,
       title: 'Long-Term Partnerships',
-      desc: 'We guarantee continuous quality control, training support, and monthly performance checkouts, achieving a 98% client retention rate.',
+      desc: 'Focused on trust, accountability, and measurable business outcomes.',
     },
   ];
 
@@ -39,8 +34,8 @@ export function WhyHypercodeSection() {
           {/* Left Column: Timeline Comparison */}
           <div className="lg:col-span-5 space-y-6">
             <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">WHY PARTNER WITH US</h2>
-            <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-none">
-              Redefining Project Timelines
+            <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-[1.1]">
+              Why Organizations Choose HyperCode
             </h3>
             <p className="text-slate-600 text-sm sm:text-base leading-relaxed font-medium">
               Traditional enterprise IT consulting models require months of audits, spec drafting, and bloated onboarding cycles. HyperCode merges strategic blueprints with a pre-vetted national staffing pool to cut deployment speed in half.
@@ -81,9 +76,7 @@ export function WhyHypercodeSection() {
               return (
                 <div
                   key={index}
-                  className={`p-6 rounded-2xl border border-slate-200 bg-white shadow-sm flex flex-col justify-between ${
-                    index === reasons.length - 1 ? 'sm:col-span-2' : ''
-                  }`}
+                  className="p-6 rounded-2xl border border-slate-200 bg-white shadow-sm flex flex-col justify-between"
                 >
                   <div>
                     <div className="w-10 h-10 rounded-lg bg-slate-50 border border-slate-100 text-[#0F4C81] flex items-center justify-center mb-4">

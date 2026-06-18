@@ -4,8 +4,11 @@ import { Building2, HeartPulse, Landmark, ShoppingBag, Factory, Laptop, ArrowRig
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Industries | HyperCode',
-  description: 'HyperCode serves Financial Services, Healthcare, Government, Retail, Manufacturing, and Technology.',
+  title: 'Industries Served | Enterprise Data & Staffing Solutions | HyperCode',
+  description: 'HyperCode provides tailored Business Intelligence, cloud warehousing, data engineering, and staffing solutions for Financial Services, Healthcare, Government, Retail, and Technology.',
+  alternates: {
+    canonical: 'https://www.hypercode.com/industries',
+  },
 };
 
 const industries = [

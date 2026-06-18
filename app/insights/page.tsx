@@ -4,8 +4,11 @@ import { ArrowRight, Calendar } from 'lucide-react';
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Insights | HyperCode Blog',
-  description: 'Read our latest insights on business intelligence, data analytics, and technology trends.',
+  title: 'Industry Insights, Case Briefs & Technology Trends | HyperCode',
+  description: 'Read the latest research from HyperCode on Business Intelligence, cloud warehousing migrations, and strategic tech staffing trends. Headquartered in Schaumburg, IL.',
+  alternates: {
+    canonical: 'https://www.hypercode.com/insights',
+  },
 };
 
 const articles = [

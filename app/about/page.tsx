@@ -1,34 +1,42 @@
 import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
-import { Target, Eye, ShieldCheck, HeartHandshake, Compass, Users } from 'lucide-react';
+import { Target, Eye, ShieldCheck, Award, Lightbulb, Users, Compass } from 'lucide-react';
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'About HyperCode | Our Story & Mission',
-  description: 'Learn about HyperCode\'s mission, values, approach, and nationwide presence as a premier strategic consulting firm.',
+  title: 'About HyperCode | Enterprise Data Strategy & Trust',
+  description: 'Learn about HyperCode\'s mission, vision, values, approach, and nationwide presence as a premier strategic consulting firm.',
+  alternates: {
+    canonical: 'https://www.hypercode.com/about',
+  },
 };
 
 export default function AboutPage() {
   const coreValues = [
     {
-      icon: HeartHandshake,
-      title: 'Empathy-First Partnership',
-      description: 'Your success is our success. We listen deeply to understand your business objectives and design systems that solve human problems.',
+      icon: ShieldCheck,
+      title: 'Integrity',
+      description: 'Honesty, compliance, and absolute transparency in all systems we architect and teams we deploy.',
     },
     {
-      icon: ShieldCheck,
-      title: 'Enterprise Integrity',
-      description: 'Transparency guides every action. We maintain strict security compliance, code reviews, and honest communication.',
+      icon: Award,
+      title: 'Accountability',
+      description: 'Taking full ownership of project timelines, code quality, and technical deliverables.',
+    },
+    {
+      icon: Lightbulb,
+      title: 'Innovation',
+      description: 'Continuously researching modern cloud databases and analytical tools to keep clients ahead.',
     },
     {
       icon: Users,
-      title: 'Nationwide Delivery',
-      description: 'We leverage our network of over 12,000 pre-vetted consultants to deploy certified data architects and software engineers across all 50 states.',
+      title: 'Partnership',
+      description: 'Treating client teams as our own, offering direct mentoring loops and post-deployment reviews.',
     },
     {
       icon: Compass,
-      title: 'Continuous Strategy',
-      description: 'We do not just hand over code. We audit tech stacks, run optimization reviews, and support your teams post-deployment.',
+      title: 'Excellence',
+      description: 'Delivering high-performance, secure, and compliance-vetted systems that pass strict audits.',
     },
   ];
 

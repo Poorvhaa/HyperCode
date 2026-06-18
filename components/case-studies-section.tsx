@@ -1,6 +1,7 @@
 'use client';
 
 import { HeartPulse, Truck, Building2 } from 'lucide-react';
+import Link from 'next/link';
 
 interface CaseStudy {
   category: string;
@@ -17,7 +18,7 @@ export function CaseStudiesSection() {
   const cases: CaseStudy[] = [
     {
       category: 'DATA WAREHOUSING',
-      title: 'Enterprise HIPAA Cloud Consolidations',
+      title: 'Data Warehouse Modernization',
       icon: HeartPulse,
       result: '$3.2M Saved',
       resultLabel: 'Annual Database Overhead',
@@ -27,7 +28,7 @@ export function CaseStudiesSection() {
     },
     {
       category: 'BUSINESS INTELLIGENCE',
-      title: 'Sub-Second Logistics Analytics Engine',
+      title: 'Business Intelligence Transformation',
       icon: Truck,
       result: '22% Reduced',
       resultLabel: 'Transit Fleet Delays',
@@ -37,7 +38,7 @@ export function CaseStudiesSection() {
     },
     {
       category: 'STRATEGIC IT STAFFING',
-      title: 'Engineering Squad Mobilization',
+      title: 'Enterprise Staffing Initiative',
       icon: Building2,
       result: '45+ Engineers',
       resultLabel: 'Placed in 6 Weeks',
@@ -61,13 +62,13 @@ export function CaseStudiesSection() {
         </div>
 
         {/* Clean Static List */}
-        <div className="space-y-6">
+        <div className="space-y-6 animate-fade-in-up">
           {cases.map((cs, idx) => {
             const Icon = cs.icon;
             return (
               <div
                 key={idx}
-                className="p-6 sm:p-8 rounded-2xl border border-slate-200 bg-slate-50 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 shadow-sm"
+                className="p-6 sm:p-8 rounded-2xl border border-slate-200 bg-slate-50 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 shadow-sm hover:border-slate-300 transition-colors duration-200"
               >
                 {/* Left Description Column */}
                 <div className="flex-1 space-y-4">
@@ -113,6 +114,16 @@ export function CaseStudiesSection() {
               </div>
             );
           })}
+        </div>
+
+        {/* View All Case Studies CTA */}
+        <div className="text-center mt-12">
+          <Link
+            href="/insights"
+            className="inline-flex items-center justify-center h-12 px-7 bg-[#0F4C81] text-white font-semibold text-[14px] rounded-xl hover:bg-[#0c3c66] transition-colors duration-200 shadow-sm"
+          >
+            View All Case Studies
+          </Link>
         </div>
       </div>
     </section>

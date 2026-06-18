@@ -4,8 +4,11 @@ import { BarChart3, TrendingUp, Database, Check, ArrowRight, Cpu, Binary } from 
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Solutions | HyperCode',
-  description: 'Explore HyperCode\'s comprehensive business solutions including Business Intelligence, Data Analytics, Data Warehousing, Data Engineering, and Big Data.',
+  title: 'Data Analytics, BI & Data Engineering Services | HyperCode',
+  description: 'Explore HyperCode\'s comprehensive enterprise business services including Business Intelligence, Data Analytics, Data Warehousing, and Data Engineering. Headquartered in Schaumburg, IL.',
+  alternates: {
+    canonical: 'https://www.hypercode.com/solutions',
+  },
 };
 
 const solutions = [
@@ -14,6 +17,7 @@ const solutions = [
     icon: BarChart3,
     title: 'Business Intelligence',
     shortDesc: 'Power BI, Tableau, and Advanced Reporting',
+    path: '/solutions/business-intelligence-consulting',
     benefits: [
       'Real-time dashboard creation',
       'Interactive data visualization',
@@ -30,6 +34,7 @@ const solutions = [
     icon: TrendingUp,
     title: 'Data Analytics',
     shortDesc: 'Predictive Analytics & Insights',
+    path: '/solutions/data-analytics-services',
     benefits: [
       'Predictive modeling',
       'Statistical analysis',
@@ -46,6 +51,7 @@ const solutions = [
     icon: Database,
     title: 'Data Warehousing',
     shortDesc: 'ETL, Data Lakes & Cloud Architecture',
+    path: '/solutions/data-warehousing-services',
     benefits: [
       'Enterprise data integration',
       'Cloud-native architecture',
@@ -62,6 +68,7 @@ const solutions = [
     icon: Cpu,
     title: 'Data Engineering',
     shortDesc: 'Data Integration, Pipelines & Automation',
+    path: '/solutions/data-engineering-solutions',
     benefits: [
       'Robust ETL/ELT pipelines',
       'Real-time data ingestion',
@@ -78,6 +85,7 @@ const solutions = [
     icon: Binary,
     title: 'Big Data Solutions',
     shortDesc: 'Hadoop, Spark & Cloud Analytics',
+    path: '/contact',
     benefits: [
       'Large-scale data processing',
       'Real-time streaming analytics',
@@ -159,7 +167,7 @@ export default function SolutionsPage() {
 
                     <div className="pt-2">
                       <Link
-                        href="/contact"
+                        href={solution.path}
                         className="inline-flex items-center justify-center h-10 px-5 bg-[#0F4C81] text-white font-semibold text-xs rounded-xl hover:bg-[#0c3c66] transition-colors duration-200"
                       >
                         <span>Learn More</span>

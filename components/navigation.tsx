@@ -45,25 +45,25 @@ export function Navigation() {
         {
           title: 'Business Intelligence',
           desc: 'Interactive dashboards and executive reporting systems.',
-          href: '/solutions#business-intelligence',
+          href: '/solutions/business-intelligence-consulting',
           icon: BarChart3,
         },
         {
           title: 'Data Analytics',
           desc: 'Predictive modeling and statistical insights.',
-          href: '/solutions#data-analytics',
+          href: '/solutions/data-analytics-services',
           icon: TrendingUp,
         },
         {
           title: 'Data Warehousing',
           desc: 'Scalable cloud architecture and ETL pipelines.',
-          href: '/solutions#data-warehousing',
+          href: '/solutions/data-warehousing-services',
           icon: Database,
         },
         {
           title: 'Data Engineering',
           desc: 'Robust data pipeline development and integration.',
-          href: '/solutions#data-engineering',
+          href: '/solutions/data-engineering-solutions',
           icon: Cpu,
         },
         {
@@ -103,13 +103,13 @@ export function Navigation() {
         {
           title: 'IT Staffing',
           desc: 'Sourcing and placing specialized technical talent.',
-          href: '/staffing#it-staffing',
+          href: '/solutions/it-staffing-solutions',
           icon: Users,
         },
         {
           title: 'Staff Augmentation',
           desc: 'Seamlessly scaling your existing tech team.',
-          href: '/staffing#staff-augmentation',
+          href: '/solutions/staff-augmentation-services',
           icon: UserCheck,
         },
         {

@@ -4,8 +4,11 @@ import { ContactForm } from '@/components/contact-form';
 import { Phone, Mail, MapPin, Clock } from 'lucide-react';
 
 export const metadata = {
-  title: 'Contact HyperCode | Get in Touch',
-  description: 'Contact HyperCode for consulting, staffing, or business intelligence solutions. Headquartered in Schaumburg, Illinois.',
+  title: 'Contact HyperCode | Consulting & Staffing Solutions',
+  description: 'Get in touch with HyperCode for enterprise Business Intelligence, Data Analytics, and IT Staffing solutions. Headquartered in Schaumburg, IL.',
+  alternates: {
+    canonical: 'https://www.hypercode.com/contact',
+  },
 };
 
 export default function ContactPage() {
@@ -75,7 +78,7 @@ export default function ContactPage() {
             {/* Contact Form */}
             <div className="lg:col-span-2">
               <div className="p-6 sm:p-10 rounded-3xl border border-slate-200 bg-white shadow-sm">
-                <h2 className="text-2xl font-bold text-slate-900 mb-8">Send us a Message</h2>
+                <h2 className="text-2xl font-bold text-slate-900 mb-8">Contact Our Team</h2>
                 <ContactForm />
               </div>
             </div>

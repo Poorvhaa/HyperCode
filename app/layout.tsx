@@ -11,9 +11,29 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'HyperCode | Data-Driven Solutions for Modern Enterprises',
-  description: 'Transform your business with HyperCode - Business Intelligence, Data Analytics, and IT Staffing Solutions. Trusted by Fortune 500 companies and government agencies.',
+  metadataBase: new URL('https://www.hypercode.com'),
+  title: {
+    default: 'HyperCode | Business Intelligence & Data Analytics Consulting',
+    template: '%s | HyperCode',
+  },
+  description: 'Transform your business with HyperCode. Enterprise-grade Business Intelligence, Data Analytics, Data Engineering, and IT Staffing solutions. Headquartered in Schaumburg, IL, serving clients nationwide.',
   generator: 'v0.app',
+  alternates: {
+    canonical: './',
+  },
+  openGraph: {
+    title: 'HyperCode | Business Intelligence, Data Analytics & IT Staffing Solutions',
+    description: 'Transform your business with HyperCode. Enterprise-grade BI, Data Analytics, Data Engineering, and IT Staffing solutions. Nationwide delivery.',
+    url: 'https://www.hypercode.com',
+    siteName: 'HyperCode',
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'HyperCode | Business Intelligence, Data Analytics & IT Staffing',
+    description: 'Transform your business with HyperCode. Professional BI, Data Analytics, Data Engineering, and IT Staffing solutions.',
+  },
   icons: {
     icon: [
       {
@@ -46,9 +66,39 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Corporation',
+    'name': 'HyperCode',
+    'url': 'https://www.hypercode.com',
+    'logo': 'https://www.hypercode.com/icon.svg',
+    'description': 'Enterprise Business Intelligence, Data Analytics, Data Engineering, and IT Staffing consulting firm.',
+    'address': {
+      '@type': 'PostalAddress',
+      'addressLocality': 'Schaumburg',
+      'addressRegion': 'IL',
+      'postalCode': '60173',
+      'addressCountry': 'US'
+    },
+    'contactPoint': {
+      '@type': 'ContactPoint',
+      'telephone': '+1-800-555-0199',
+      'contactType': 'customer service',
+      'areaServed': 'US',
+      'availableLanguage': 'en'
+    },
+    'sameAs': [
+      'https://www.linkedin.com/company/hypercode'
+    ]
+  };
+
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} bg-background`}>
       <body className="font-sans antialiased bg-background">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         {children}
         <AIAssistant />
         {process.env.NODE_ENV === 'production' && <Analytics />}

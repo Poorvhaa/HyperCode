@@ -19,18 +19,21 @@ export function Footer() {
             <p className="text-sm text-slate-600 font-medium">Transforming Data Into Strategic Intelligence</p>
             <div className="space-y-2 text-sm font-medium text-slate-500">
               <div className="flex items-center space-x-2">
-                <MapPin size={16} className="text-slate-400" />
+                <MapPin size={16} className="text-slate-400 flex-shrink-0" />
                 <span>Schaumburg, Illinois</span>
               </div>
               <div className="flex items-center space-x-2">
-                <Phone size={16} className="text-slate-400" />
-                <span>Coming Soon</span>
+                <Phone size={16} className="text-slate-400 flex-shrink-0" />
+                <span>+1 (800) 555-0199</span>
               </div>
               <div className="flex items-center space-x-2">
-                <Mail size={16} className="text-slate-400" />
-                <span>Coming Soon</span>
+                <Mail size={16} className="text-slate-400 flex-shrink-0" />
+                <span>info@hypercode.com</span>
               </div>
             </div>
+            <p className="text-[11px] text-slate-450 font-bold uppercase tracking-wider leading-relaxed pt-2">
+              Headquartered in Schaumburg, Illinois. Serving clients nationwide.
+            </p>
           </div>
 
           {/* Solutions */}
@@ -38,23 +41,23 @@ export function Footer() {
             <h3 className="font-semibold text-slate-900 text-[15px] mb-4">Solutions</h3>
             <ul className="space-y-2.5">
               <li>
-                <Link href="/solutions" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
+                <Link href="/solutions/business-intelligence-consulting" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
                   Business Intelligence
                 </Link>
               </li>
               <li>
-                <Link href="/solutions" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
+                <Link href="/solutions/data-analytics-services" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
                   Data Analytics
                 </Link>
               </li>
               <li>
-                <Link href="/solutions" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
+                <Link href="/solutions/data-warehousing-services" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
                   Data Warehousing
                 </Link>
               </li>
               <li>
-                <Link href="/solutions" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
-                  Big Data Solutions
+                <Link href="/solutions/data-engineering-solutions" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
+                  Data Engineering
                 </Link>
               </li>
             </ul>
@@ -92,24 +95,24 @@ export function Footer() {
             <h3 className="font-semibold text-slate-900 text-[15px] mb-4">Services</h3>
             <ul className="space-y-2.5">
               <li>
-                <Link href="/staffing" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
+                <Link href="/solutions/it-staffing-solutions" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
                   IT Staffing
                 </Link>
               </li>
               <li>
-                <Link href="/staffing" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
-                  Agile Consulting
+                <Link href="/solutions/staff-augmentation-services" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
+                  Staff Augmentation
                 </Link>
               </li>
               <li>
-                <Link href="/staffing" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
-                  Project Management
-                </Link>
-              </li>
-              <li>
-                <Link href="/staffing" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
-                  Database Admin
-                </Link>
+                <a
+                  href="https://www.linkedin.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors"
+                >
+                  LinkedIn
+                </a>
               </li>
             </ul>
           </div>
@@ -147,7 +150,7 @@ export function Footer() {
           <p>© 2026 HyperCode. All rights reserved.</p>
           <div className="flex space-x-6">
             <Link href="/contact" className="hover:text-[#0F4C81]">Privacy Policy</Link>
-            <Link href="/contact" className="hover:text-[#0F4C81]">Terms of Service</Link>
+            <Link href="/contact" className="hover:text-[#0F4C81]">Terms of Use</Link>
           </div>
         </div>
       </div>

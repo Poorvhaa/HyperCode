@@ -4,8 +4,11 @@ import { Users, CheckCircle, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'IT Staffing Solutions | HyperCode',
-  description: 'Contract, contract-to-hire, permanent placement, and staff augmentation solutions from HyperCode.',
+  title: 'IT Staffing & Staff Augmentation Services | HyperCode',
+  description: 'Access pre-screened technical talent, contract placements, direct hires, and staff augmentation solutions from HyperCode. Headquartered in Schaumburg, IL.',
+  alternates: {
+    canonical: 'https://www.hypercode.com/staffing',
+  },
 };
 
 const staffingSolutions = [
@@ -13,24 +16,28 @@ const staffingSolutions = [
     title: 'Contract Staffing',
     description: 'Flexible staffing solutions for short-term projects and specialized needs.',
     duration: '3-12 months',
+    path: '/solutions/it-staffing-solutions',
     benefits: ['Quick deployment', 'Flexible terms', 'Cost-effective', 'Specialized skills'],
   },
   {
     title: 'Contract-to-Hire',
     description: 'Trial period before permanent commitment with reduced hiring risk.',
     duration: '3-6 months trial',
+    path: '/solutions/it-staffing-solutions',
     benefits: ['Reduced risk', 'Evaluation period', 'Seamless transition', 'Team fit verification'],
   },
   {
     title: 'Direct Hire',
     description: 'Permanent placement services with comprehensive vetting and support.',
     duration: 'Permanent',
+    path: '/solutions/it-staffing-solutions',
     benefits: ['Permanent placement', 'Full benefits', 'Dedicated support', 'Retention focus'],
   },
   {
     title: 'Staff Augmentation',
     description: 'Extend your team with specialized resources for ongoing needs.',
     duration: 'Ongoing',
+    path: '/solutions/staff-augmentation-services',
     benefits: ['Team expansion', 'Scalable resources', 'Full integration', 'Long-term partnership'],
   },
 ];
@@ -106,7 +113,7 @@ export default function StaffingPage() {
 
                   <div className="pt-6">
                     <Link
-                      href="/contact"
+                      href={solution.path}
                       className="inline-flex items-center justify-center h-10 px-5 bg-white border border-[#0F4C81] text-[#0F4C81] font-semibold text-xs rounded-xl hover:bg-slate-50 transition-colors duration-200"
                     >
                       <span>Learn More</span>

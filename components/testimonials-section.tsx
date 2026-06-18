@@ -7,6 +7,7 @@ interface Testimonial {
   name: string;
   role: string;
   company: string;
+  industry: string;
   content: string;
 }
 
@@ -18,18 +19,21 @@ export function TestimonialsSection() {
       name: 'Sarah Chen',
       role: 'VP of Analytics',
       company: 'Global Financial Services',
+      industry: 'Financial Services',
       content: 'HyperCode transformed our entire data pipeline infrastructure. Their custom cloud data warehouse reduced our dashboard load times from weeks to real-time, allowing our executives to execute trade decisions instantly.',
     },
     {
       name: 'Michael Rodriguez',
       role: 'Chief Information Officer',
       company: 'Healthcare Systems Inc',
+      industry: 'Healthcare Systems',
       content: 'The IT staffing squad deployed by HyperCode was stellar. We needed certified AWS and Snowflake developers with active security checks within 14 days, and they delivered exactly what we needed to meet our compliance deadline.',
     },
     {
       name: 'Jennifer Thompson',
       role: 'Director of Operations',
       company: 'Retail & Logistics Corp',
+      industry: 'Retail & Supply Chain',
       content: 'HyperCode is not just another IT vendor—they are a trusted strategic partner. Their Agile consultants restructured our logistics sprints, increasing delivery performance and saving us millions in operational overhead.',
     },
   ];
@@ -70,6 +74,9 @@ export function TestimonialsSection() {
               </cite>
               <span className="text-xs text-slate-500 font-bold block uppercase tracking-wider">
                 {testimonials[activeIndex].role} — <span className="text-[#0F4C81]">{testimonials[activeIndex].company}</span>
+              </span>
+              <span className="text-[10px] text-slate-400 font-bold block uppercase tracking-widest pt-0.5">
+                Industry: {testimonials[activeIndex].industry}
               </span>
             </div>
 
