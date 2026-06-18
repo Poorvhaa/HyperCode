@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from "next/image";
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -137,15 +138,16 @@ export function Navigation() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
           <div className="flex items-center justify-between h-full">
-            {/* Left: Logo */}
-            <div className="flex-1 flex justify-start">
-              <Link href="/" className="flex items-center space-x-2 group">
-                <div className="w-9 h-9 bg-[#0F4C81] rounded-xl flex items-center justify-center flex-shrink-0">
-                  <span className="text-white font-bold text-[15px]">HC</span>
-                </div>
-                <span className="font-bold text-lg tracking-tight text-slate-900 hidden sm:inline">HyperCode</span>
-              </Link>
-            </div>
+            <Link href="/" className="flex items-center">
+  <Image
+    src="/logo.jpg"
+    alt="HyperCode"
+    width={220}
+    height={60}
+    priority
+    className="h-12 w-auto"
+  />
+</Link>
 
             {/* Center: Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-8 h-full">

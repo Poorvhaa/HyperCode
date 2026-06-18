@@ -1,124 +1,99 @@
 'use client';
 
-import { BarChart3, Settings2, Users2, ArrowRight } from 'lucide-react';
+import { BarChart3, Database, Users, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 
 export function ServicesSection() {
-  const serviceGroups = [
+  const pillars = [
     {
       title: 'Data & Analytics',
       icon: BarChart3,
-      desc: 'Architecting modern cloud pipelines, database consolidations, and executive reporting dashboards.',
-      services: [
-        {
-          name: 'Business Intelligence',
-          desc: 'Power BI and Tableau enterprise setups with DAX reporting filters.',
-        },
-        {
-          name: 'Data Analytics',
-          desc: 'Predictive analytics modeling, behavioral trends, and statistical insights.',
-        },
-        {
-          name: 'Data Engineering',
-          desc: 'Automated ETL pipeline development with Apache Spark and Apache Airflow.',
-        },
-        {
-          name: 'Data Warehousing',
-          desc: 'Scalable data warehousing setups on Snowflake and Amazon Redshift.',
-        },
-      ],
+      desc: 'Architecting executive BI environments, automated operational dashboards, and predictive forecasting systems.',
+      bullets: ['Business Intelligence', 'Data Analytics', 'Reporting', 'Visualization'],
+      href: '/solutions',
     },
     {
-      title: 'Consulting Services',
-      icon: Settings2,
-      desc: 'Aligning technology stacks, database configurations, and sprints with core business revenue targets.',
-      services: [
-        {
-          name: 'Business Analysis',
-          desc: 'Documenting engineering needs and auditing compliance requirements.',
-        },
-        {
-          name: 'Agile Consulting',
-          desc: 'Agile scrum coaching, sprint management, and digital transformation.',
-        },
-        {
-          name: 'Technology Strategy',
-          desc: 'Expert guidance on stack selections, cloud hosting, and security layouts.',
-        },
-      ],
+      title: 'Data Engineering',
+      icon: Database,
+      desc: 'Consolidating database structures into scalable cloud lakehouses and orchestrating secure ETL pipelines.',
+      bullets: ['Data Warehousing', 'ETL Pipelines', 'Big Data', 'Cloud Data Platforms'],
+      href: '/solutions',
     },
     {
-      title: 'Staffing & Augmentation',
-      icon: Users2,
-      desc: 'Deploying highly vetted developers, cloud architects, and data leads to reinforce active project squads.',
-      services: [
-        {
-          name: 'IT Staffing',
-          desc: 'Sourcing and recruiting specialized data and software engineers.',
-        },
-        {
-          name: 'Staff Augmentation',
-          desc: 'Scaling internal development resources with flexible contractors.',
-        },
-        {
-          name: 'Direct Placement',
-          desc: 'Accessing our national pipeline to fill permanent technical leadership roles.',
-        },
-      ],
+      title: 'Talent Solutions',
+      icon: Users,
+      desc: 'Deploying pre-screened technology consultants and engineering teams to accelerate project deliveries.',
+      bullets: ['IT Staffing', 'Staff Augmentation', 'Direct Placement'],
+      href: '/staffing',
     },
   ];
 
   return (
-    <section id="services" className="py-24 bg-white border-b border-slate-100 text-left">
+    <section id="services" className="py-32 bg-white border-b border-slate-100 text-left">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mb-20">
-          <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">SERVICES EXCHANGE</h2>
-          <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-none">
-            Enterprise Solutions & IT Staffing
+        
+        {/* Title Block */}
+        <div className="max-w-3xl mb-20 space-y-4">
+          <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase">
+            SOLUTIONS PILLARS
+          </h2>
+          <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+            Our Core Consulting Stacks
           </h3>
-          <p className="text-base sm:text-lg text-slate-600 mt-4 leading-relaxed font-medium">
-            We group our capabilities logically to support your digital transformations, data engineering, and project staffing needs.
+          <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-medium">
+            We deliver enterprise data solutions and technology placement services through three strategic departments.
           </p>
         </div>
 
-        {/* Categories Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-          {serviceGroups.map((group, idx) => {
-            const GroupIcon = group.icon;
+        {/* Pillars Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {pillars.map((pillar, idx) => {
+            const Icon = pillar.icon;
             return (
-              <div key={idx} className="space-y-6">
-                {/* Category Header */}
-                <div className="p-6 rounded-2xl bg-slate-50 border border-slate-150">
-                  <div className="flex items-center space-x-3 mb-4">
-                    <div className="w-9 h-9 rounded-lg bg-white border border-slate-200 text-[#0F4C81] flex items-center justify-center flex-shrink-0">
-                      <GroupIcon size={18} />
-                    </div>
-                    <h4 className="text-lg font-bold text-slate-900">{group.title}</h4>
+              <div
+                key={idx}
+                className="p-8 rounded-3xl border border-slate-200 bg-white hover:border-slate-300 transition-all duration-300 shadow-sm flex flex-col justify-between"
+              >
+                <div className="space-y-6">
+                  {/* Icon */}
+                  <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 text-[#0F4C81] flex items-center justify-center">
+                    <Icon size={20} />
                   </div>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
-                    {group.desc}
-                  </p>
+
+                  {/* Header & Description */}
+                  <div className="space-y-2">
+                    <h4 className="text-xl font-bold text-slate-900 tracking-tight">{pillar.title}</h4>
+                    <p className="text-sm text-slate-600 leading-relaxed font-medium">
+                      {pillar.desc}
+                    </p>
+                  </div>
+
+                  {/* Bullets */}
+                  <ul className="space-y-2 pt-2 border-t border-slate-100">
+                    {pillar.bullets.map((bullet, bIdx) => (
+                      <li key={bIdx} className="flex items-center space-x-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#0F4C81]" />
+                        <span>{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
 
-                {/* Sub-services Cards */}
-                <div className="space-y-4">
-                  {group.services.map((service, sIdx) => (
-                    <div
-                      key={sIdx}
-                      className="p-5 rounded-2xl border border-slate-200 bg-white hover:border-slate-300 transition-colors shadow-sm text-left"
-                    >
-                      <h5 className="text-[15px] font-bold text-slate-900 mb-1">
-                        {service.name}
-                      </h5>
-                      <p className="text-xs text-slate-600 leading-relaxed font-medium">
-                        {service.desc}
-                      </p>
-                    </div>
-                  ))}
+                {/* Learn More Link */}
+                <div className="pt-8 mt-6">
+                  <Link
+                    href={pillar.href}
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C81] hover:text-[#0c3c66] transition-colors"
+                  >
+                    <span>Learn More Solutions</span>
+                    <ArrowRight size={14} />
+                  </Link>
                 </div>
               </div>
             );
           })}
         </div>
+
       </div>
     </section>
   );

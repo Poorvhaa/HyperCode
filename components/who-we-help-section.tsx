@@ -6,8 +6,6 @@ interface Industry {
   title: string;
   icon: any;
   desc: string;
-  challenge: string;
-  solution: string;
 }
 
 export function WhoWeHelpSection() {
@@ -15,57 +13,49 @@ export function WhoWeHelpSection() {
     {
       title: 'Government',
       icon: Building2,
-      desc: 'Approved IT consultant delivering secure, compliant data structures and staffing solutions for public sector agencies.',
-      challenge: 'Migrating siloed legacy databases under strict FISMA/FedRAMP regulatory frameworks.',
-      solution: 'Secure cloud data migration, automated compliance auditing, and cleared tech teams.',
+      desc: 'Delivering secure, FedRAMP-aligned cloud databases and cleared engineering squads.',
     },
     {
       title: 'Healthcare',
       icon: HeartPulse,
-      desc: 'Improving patient coordination and clinical tracking with HIPAA-compliant analytical dashboards.',
-      challenge: 'Patient data fragmentation and strict HIPAA privacy mandates across EHR systems.',
-      solution: 'Interoperable FHIR pipelines, HIPAA-compliant storage, and clinical BI dashboards.',
+      desc: 'Building interoperable FHIR pipelines and HIPAA-compliant analytical dashboards.',
     },
     {
       title: 'Financial Services',
       icon: Landmark,
-      desc: 'Accelerating transaction streams, predictive risk analysis, and real-time fraud dashboards.',
-      challenge: 'Slow batch processing preventing real-time fraud detection and risk modeling.',
-      solution: 'Sub-second streaming pipelines with Databricks and real-time risk dashboards.',
+      desc: 'Integrating sub-second streaming ledgers, risk analysis, and transaction dashboards.',
     },
     {
-      title: 'Retail',
+      title: 'Retail & E-commerce',
       icon: ShoppingBag,
-      desc: 'Optimizing supply chain visibility, inventory flow, and omnichannel customer telemetry.',
-      challenge: 'Inconsistent omnichannel customer tracking and disconnected inventory visibility.',
-      solution: 'Unified Customer Data Platforms (CDP) and real-time supply chain analytics.',
+      desc: 'Optimizing supply chain visibility and omnichannel customer telemetry datasets.',
     },
     {
       title: 'Manufacturing',
       icon: Factory,
-      desc: 'Implementing IoT telemetry streaming to enable predictive maintenance and operational checks.',
-      challenge: 'Unplanned equipment downtime and high defect rates in manual quality checks.',
-      solution: 'IoT sensor telemetry integration and predictive maintenance analytics models.',
+      desc: 'Deploying IoT sensor integration and predictive analytics maintenance modules.',
     },
     {
       title: 'Technology',
       icon: Laptop,
-      desc: 'Designing scalable cloud data architectures, pipelines, and direct hiring for tech squads.',
-      challenge: 'Scaling distributed computing nodes and recruiting highly certified engineers.',
-      solution: 'Lakehouse setups, automatic pipeline orchestration, and direct talent sourcing.',
+      desc: 'Architecting modern cloud lakehouses and augmenting database engineering pipelines.',
     },
   ];
 
   return (
-    <section className="py-24 bg-white border-b border-slate-100 text-left">
+    <section className="py-32 bg-slate-50 border-b border-slate-100 text-left">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mb-16">
-          <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">INDUSTRIES WE SERVE</h2>
-          <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-none">
-            Strategic Industry Solutions
+        
+        {/* Title Block */}
+        <div className="max-w-3xl mb-20 space-y-4">
+          <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase">
+            INDUSTRIES WE SERVE
+          </h2>
+          <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+            Strategic Domain Experience
           </h3>
-          <p className="text-base sm:text-lg text-slate-600 mt-4 leading-relaxed font-medium">
-            We understand the regulatory requirements, compliance guardrails, and data architectures unique to your industry.
+          <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-medium">
+            We adapt our data frameworks and tech placement services to match your specific industry compliance standards.
           </p>
         </div>
 
@@ -76,34 +66,26 @@ export function WhoWeHelpSection() {
             return (
               <div
                 key={index}
-                className="p-6 sm:p-8 rounded-2xl border border-slate-200 bg-white shadow-sm flex flex-col justify-between"
+                className="p-6 rounded-2xl border border-slate-200 bg-white shadow-sm flex flex-col justify-between hover:border-slate-350 transition-colors duration-200"
               >
-                <div>
-                  <div className="w-10 h-10 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center text-[#0F4C81] mb-6">
-                    <Icon size={20} />
+                <div className="flex items-center space-x-4">
+                  <div className="w-10 h-10 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center text-[#0F4C81] flex-shrink-0">
+                    <Icon size={18} />
                   </div>
-                  <h4 className="text-lg font-bold text-slate-900 mb-3">
-                    {ind.title}
-                  </h4>
-                  <p className="text-sm text-slate-600 leading-relaxed font-medium mb-6">
-                    {ind.desc}
-                  </p>
-                </div>
-                
-                <div className="pt-4 border-t border-slate-100 space-y-3.5 text-xs">
-                  <div>
-                    <span className="font-bold text-rose-600 tracking-wider uppercase block mb-0.5">Challenge</span>
-                    <span className="text-slate-600 leading-relaxed font-medium">{ind.challenge}</span>
-                  </div>
-                  <div>
-                    <span className="font-bold text-emerald-600 tracking-wider uppercase block mb-0.5">Solution</span>
-                    <span className="text-slate-600 leading-relaxed font-medium">{ind.solution}</span>
+                  <div className="space-y-0.5">
+                    <h4 className="text-sm font-bold text-slate-900 leading-snug">
+                      {ind.title}
+                    </h4>
+                    <p className="text-xs text-slate-500 font-medium leading-relaxed">
+                      {ind.desc}
+                    </p>
                   </div>
                 </div>
               </div>
             );
           })}
         </div>
+
       </div>
     </section>
   );

@@ -83,32 +83,9 @@ export function HeroSection() {
   const activeFlowPath = getActiveFlowPath();
 
   return (
-    <section className="relative min-h-[90vh] bg-white pt-36 pb-24 flex items-center overflow-hidden text-left">
-      {/* Self-contained styling for flow animations */}
-      <style>{`
-        @keyframes ecosystem-flow {
-          from { stroke-dashoffset: 24; }
-          to { stroke-dashoffset: 0; }
-        }
-        .animate-ecosystem-flow {
-          stroke-dasharray: 6, 12;
-          animation: ecosystem-flow 2s linear infinite;
-        }
-        .animate-ecosystem-flow-fast {
-          stroke-dasharray: 6, 6;
-          animation: ecosystem-flow 0.8s linear infinite;
-        }
-        @keyframes ecosystem-flow-vertical {
-          0% { transform: translateY(-100%); }
-          100% { transform: translateY(300%); }
-        }
-        .animate-ecosystem-flow-vertical {
-          animation: ecosystem-flow-vertical 3s linear infinite;
-        }
-      `}</style>
-
+    <section className="relative min-h-[85vh] bg-white pt-36 pb-24 flex items-center overflow-hidden text-left">
       {/* Subtle light background decoration */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-slate-50 rounded-full blur-3xl -z-10 pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-slate-50/50 rounded-full blur-3xl -z-10 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
@@ -160,31 +137,10 @@ export function HeroSection() {
                 Explore Solutions
               </a>
             </motion.div>
-
-            {/* Simple Stats Callout */}
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="grid grid-cols-3 gap-6 pt-8 border-t border-slate-100 max-w-md"
-            >
-              <div>
-                <div className="text-2xl font-bold text-slate-900">250+</div>
-                <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider mt-0.5">Delivered</p>
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-slate-900">98%</div>
-                <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider mt-0.5">Satisfaction</p>
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-slate-900">1.2K+</div>
-                <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider mt-0.5">Placed</p>
-              </div>
-            </motion.div>
           </div>
 
           {/* Right Visual Column - Ecosystem Visualization (45% space) */}
-          <div className="lg:col-span-5 w-full flex items-center justify-center min-h-[550px] relative z-10">
+          <div className="lg:col-span-5 w-full flex items-center justify-center min-h-[500px] relative z-10">
             
             {/* Desktop / Tablet Grid flow layout */}
             <div className="hidden md:block w-full h-[520px] relative">
@@ -194,27 +150,18 @@ export function HeroSection() {
                 <path
                   d="M 25 12 L 75 12 L 75 48 L 25 48 L 25 84 L 75 84"
                   fill="none"
-                  stroke="rgba(15, 76, 129, 0.08)"
+                  stroke="rgba(15, 76, 129, 0.15)"
                   strokeWidth="1.5"
-                />
-                
-                {/* Continuous flowing signals */}
-                <path
-                  d="M 25 12 L 75 12 L 75 48 L 25 48 L 25 84 L 75 84"
-                  fill="none"
-                  stroke="rgba(15, 76, 129, 0.25)"
-                  strokeWidth="1.5"
-                  className="animate-ecosystem-flow"
+                  strokeDasharray="4 6"
                 />
 
-                {/* Hover active path acceleration */}
+                {/* Hover active path */}
                 {activeFlowPath && (
                   <path
                     d={activeFlowPath}
                     fill="none"
                     stroke="#0F4C81"
                     strokeWidth="2.5"
-                    className="animate-ecosystem-flow-fast"
                   />
                 )}
               </svg>
@@ -233,10 +180,10 @@ export function HeroSection() {
                     onMouseLeave={() => setHoveredNode(null)}
                   >
                     <div
-                      className={`flex items-center gap-3 p-3 lg:p-4 rounded-xl border bg-white/85 backdrop-blur-md transition-all duration-300 ${
+                      className={`flex items-center gap-3 p-3 lg:p-4 rounded-xl border bg-white/90 backdrop-blur-sm transition-all duration-350 ${
                         isHovered
-                          ? 'border-[#0F4C81] shadow-md -translate-y-1 scale-[1.02]'
-                          : 'border-slate-200/80 shadow-sm'
+                          ? 'border-[#0F4C81] shadow-md -translate-y-0.5 scale-[1.01]'
+                          : 'border-slate-200 shadow-sm'
                       }`}
                     >
                       <div
@@ -261,11 +208,11 @@ export function HeroSection() {
                     <AnimatePresence>
                       {isHovered && (
                         <motion.div
-                          initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                          initial={{ opacity: 0, y: 5, scale: 0.98 }}
                           animate={{ opacity: 1, y: 0, scale: 1 }}
-                          exit={{ opacity: 0, y: 5, scale: 0.95 }}
+                          exit={{ opacity: 0, y: 3, scale: 0.98 }}
                           transition={{ duration: 0.15 }}
-                          className="absolute z-30 top-[115%] left-1/2 -translate-x-1/2 w-[220px] bg-white border border-slate-200 shadow-lg p-3 rounded-xl text-left pointer-events-none backdrop-blur-md"
+                          className="absolute z-30 top-[115%] left-1/2 -translate-x-1/2 w-[220px] bg-white border border-slate-200 shadow-lg p-3 rounded-xl text-left pointer-events-none backdrop-blur-sm"
                         >
                           <div className="absolute -top-1 left-1/2 -translate-x-1/2 rotate-45 w-2 h-2 bg-white border-t border-l border-slate-200" />
                           <p className="text-[11px] font-semibold text-slate-600 leading-relaxed">
@@ -282,9 +229,7 @@ export function HeroSection() {
             {/* Mobile Stacked flow layout */}
             <div className="block md:hidden w-full space-y-4 pl-6 relative py-2">
               {/* Vertical flow path */}
-              <div className="absolute left-[17px] top-4 bottom-4 w-[2px] bg-slate-100 overflow-hidden">
-                <div className="w-full h-1/3 bg-[#0F4C81] rounded-full animate-ecosystem-flow-vertical" />
-              </div>
+              <div className="absolute left-[17px] top-4 bottom-4 w-[2px] bg-slate-100" />
 
               {nodes.map((node) => {
                 const Icon = node.icon;
@@ -293,7 +238,7 @@ export function HeroSection() {
                     <div className="w-8 h-8 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-center text-[#0F4C81] z-10 flex-shrink-0">
                       <Icon size={16} />
                     </div>
-                    <div className="bg-white border border-slate-200/80 p-4 rounded-xl shadow-sm text-left flex-1">
+                    <div className="bg-white border border-slate-200/85 p-4 rounded-xl shadow-sm text-left flex-1">
                       <div className="flex justify-between items-center mb-1">
                         <h4 className="text-xs font-bold text-slate-800">{node.label}</h4>
                         <span className="text-[9px] text-slate-400 font-bold uppercase tracking-wider">0{node.id + 1}</span>
