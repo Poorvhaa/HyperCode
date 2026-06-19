@@ -2,46 +2,10 @@
 
 import { useState } from 'react';
 import { FileText, Search, Phone, Users, Award, ChevronDown, ChevronUp } from 'lucide-react';
-
-const steps = [
-  {
-    number: '01',
-    title: 'Apply',
-    shortDesc: 'Submit your application online.',
-    longDesc: 'Submit your resume and background details through our simplified online portal. Our recruiting technologies instantly route your profile to the practice teams matching your core technical background.',
-    icon: FileText,
-  },
-  {
-    number: '02',
-    title: 'Review',
-    shortDesc: 'Recruiters evaluate qualifications and experience.',
-    longDesc: 'Our technical sourcing experts evaluate your background, credentials, and project experience against active consulting needs, checking for alignment with our engineering standards.',
-    icon: Search,
-  },
-  {
-    number: '03',
-    title: 'Connect',
-    shortDesc: 'Initial discussion regarding career goals and opportunities.',
-    longDesc: 'Engage in a professional, consultative discussion about your career goals, technological focus, compensation parameters, and client environment preferences to ensure mutual long-term alignment.',
-    icon: Phone,
-  },
-  {
-    number: '04',
-    title: 'Interview',
-    shortDesc: 'Meet hiring managers and project teams.',
-    longDesc: 'Participate in structured, human-centered assessments. Discuss technical architectures, walk through past project outcomes, and interface directly with the project delivery leaders you will support.',
-    icon: Users,
-  },
-  {
-    number: '05',
-    title: 'Offer',
-    shortDesc: 'Receive offer and onboarding support.',
-    longDesc: 'Upon approval, receive a transparent, competitive offer outlining salary, comprehensive health plans, and retirement matching. Our team provides dedicated onboarding coordinators to guide you through project integration.',
-    icon: Award,
-  },
-];
+import { useLocale } from 'next-intl';
 
 export function HiringTimeline() {
+  const locale = useLocale();
   const [activeStep, setActiveStep] = useState(0);
   const [openAccordions, setOpenAccordions] = useState<Record<number, boolean>>({ 0: true });
 
@@ -51,6 +15,95 @@ export function HiringTimeline() {
       [index]: !prev[index],
     }));
   };
+
+  // Local translations for the hiring timeline steps
+  const translations: Record<string, {
+    stepLabel: string;
+    steps: Array<{
+      number: string;
+      title: string;
+      shortDesc: string;
+      longDesc: string;
+    }>;
+  }> = {
+    en: {
+      stepLabel: "Step",
+      steps: [
+        {
+          number: '01',
+          title: 'Apply',
+          shortDesc: 'Submit your application online.',
+          longDesc: 'Submit your resume and background details through our simplified online portal. Our recruiting technologies instantly route your profile to the practice teams matching your core technical background.',
+        },
+        {
+          number: '02',
+          title: 'Review',
+          shortDesc: 'Recruiters evaluate qualifications and experience.',
+          longDesc: 'Our technical sourcing experts evaluate your background, credentials, and project experience against active consulting needs, checking for alignment with our engineering standards.',
+        },
+        {
+          number: '03',
+          title: 'Connect',
+          shortDesc: 'Initial discussion regarding career goals and opportunities.',
+          longDesc: 'Engage in a professional, consultative discussion about your career goals, technological focus, compensation parameters, and client environment preferences to ensure mutual long-term alignment.',
+        },
+        {
+          number: '04',
+          title: 'Interview',
+          shortDesc: 'Meet hiring managers and project teams.',
+          longDesc: 'Participate in structured, human-centered assessments. Discuss technical architectures, walk through past project outcomes, and interface directly with the project delivery leaders you will support.',
+        },
+        {
+          number: '05',
+          title: 'Offer',
+          shortDesc: 'Receive offer and onboarding support.',
+          longDesc: 'Upon approval, receive a transparent, competitive offer outlining salary, comprehensive health plans, and retirement matching. Our team provides dedicated onboarding coordinators to guide you through project integration.',
+        },
+      ]
+    },
+    es: {
+      stepLabel: "Paso",
+      steps: [
+        {
+          number: '01',
+          title: 'Aplicar',
+          shortDesc: 'Presente su solicitud en línea.',
+          longDesc: 'Envíe su currículum y detalles de antecedentes a través de nuestro portal simplificado en línea. Nuestras tecnologías de reclutamiento dirigen instantáneamente su perfil a los equipos de práctica que coinciden con su formación técnica principal.',
+        },
+        {
+          number: '02',
+          title: 'Revisión',
+          shortDesc: 'Los reclutadores evalúan las cualificaciones y la experiencia.',
+          longDesc: 'Nuestros expertos en abastecimiento técnico evalúan sus antecedentes, credenciales y experiencia en proyectos en relación con las necesidades de consultoría activas, verificando la alíneación con nuestros estándares de ingeniería.',
+        },
+        {
+          number: '03',
+          title: 'Conectar',
+          shortDesc: 'Discusión inicial sobre metas profesionales y oportunidades.',
+          longDesc: 'Participe en una discusión profesional y consultiva sobre sus metas profesionales, enfoque tecnológico, parámetros de compensación y preferencias de entorno del cliente para garantizar una alineación mutua a largo plazo.',
+        },
+        {
+          number: '04',
+          title: 'Entrevista',
+          shortDesc: 'Reúnase con los gerentes de contratación y los equipos de proyecto.',
+          longDesc: 'Participe en evaluaciones estructuradas y centradas en el ser humano. Discuta las arquitecturas técnicas, repase los resultados de proyectos anteriores e interactúe directamente con los líderes de entrega de proyectos a los que apoyará.',
+        },
+        {
+          number: '05',
+          title: 'Oferta',
+          shortDesc: 'Reciba la oferta y apoyo para la incorporación.',
+          longDesc: 'Tras la aprobación, reciba una oferta transparente y competitiva que detalla el salario, los planes de salud integrales y el emparejamiento de jubilación. Nuestro equipo proporciona coordinadores de incorporación dedicados para guiarlo a través de la integración del proyecto.',
+        },
+      ]
+    }
+  };
+
+  const activeTranslation = translations[locale] || translations.en;
+  const steps = activeTranslation.steps;
+  const stepLabel = activeTranslation.stepLabel;
+
+  // Render matching icons dynamically
+  const icons = [FileText, Search, Phone, Users, Award];
 
   return (
     <div className="w-full">
@@ -67,7 +120,7 @@ export function HiringTimeline() {
           </div>
 
           {steps.map((step, idx) => {
-            const Icon = step.icon;
+            const Icon = icons[idx] || FileText;
             const isActive = idx === activeStep;
             const isCompleted = idx < activeStep;
 
@@ -96,7 +149,7 @@ export function HiringTimeline() {
                   {step.title}
                 </span>
                 <span className="text-[10px] text-slate-400 font-bold mt-0.5">
-                  Step {step.number}
+                  {stepLabel} {step.number}
                 </span>
               </button>
             );
@@ -108,7 +161,7 @@ export function HiringTimeline() {
           <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm flex items-start gap-6 transition-all duration-300 hover:border-slate-300">
             <div className="w-14 h-14 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-[#0F4C81] flex-shrink-0">
               {(() => {
-                const ActiveIcon = steps[activeStep].icon;
+                const ActiveIcon = icons[activeStep] || FileText;
                 return <ActiveIcon size={24} />;
               })()}
             </div>
@@ -116,7 +169,7 @@ export function HiringTimeline() {
             <div className="space-y-2 text-left">
               <div className="flex items-center gap-2.5">
                 <span className="text-[10px] font-bold text-[#0F4C81] tracking-widest uppercase bg-slate-50 border border-slate-100 px-2.5 py-1 rounded-md">
-                  Step {steps[activeStep].number}
+                  {stepLabel} {steps[activeStep].number}
                 </span>
                 <h4 className="text-lg font-bold text-slate-900">
                   {steps[activeStep].title}
@@ -136,7 +189,7 @@ export function HiringTimeline() {
       {/* Mobile Accordion */}
       <div className="md:hidden space-y-4">
         {steps.map((step, idx) => {
-          const Icon = step.icon;
+          const Icon = icons[idx] || FileText;
           const isOpen = !!openAccordions[idx];
 
           return (
@@ -156,7 +209,7 @@ export function HiringTimeline() {
                   </div>
                   <div>
                     <span className="text-[9px] font-bold text-[#0F4C81] tracking-widest uppercase block">
-                      Step {step.number}
+                      {stepLabel} {step.number}
                     </span>
                     <span className="text-sm font-bold text-slate-900">{step.title}</span>
                   </div>
@@ -187,3 +240,4 @@ export function HiringTimeline() {
     </div>
   );
 }
+

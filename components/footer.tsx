@@ -1,10 +1,15 @@
 'use client';
 
-import Link from 'next/link';
-import Image from "next/image"
+import { Link } from '@/i18n/routing';
+import Image from "next/image";
 import { Mail, Phone, MapPin } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export function Footer() {
+  const t = useTranslations('Navigation');
+  const tf = useTranslations('Footer');
+  const tc = useTranslations('Common');
+
   return (
     <footer className="border-t border-slate-200 bg-slate-50 text-left">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -21,47 +26,41 @@ export function Footer() {
                 className="h-15 w-auto object-contain"
               />
             </Link>
-            <p className="text-sm text-slate-600 font-medium">Transforming Data Into Strategic Intelligence</p>
             <div className="space-y-2 text-sm font-medium text-slate-500">
               <a
-  href="https://maps.google.com/?q=2095+Hammond+Dr+Suite+B+Schaumburg+IL+60173"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="group flex items-start space-x-2"
->
-  <MapPin
-    size={16}
-    className="text-slate-400 mt-0.5 flex-shrink-0 group-hover:text-[#0F4C81] transition-colors"
-  />
-
-  <span className="text-slate-500 group-hover:text-[#0F4C81] transition-colors">
-    2095 Hammond Dr Suite B<br />
-    Schaumburg, IL 60173
-  </span>
-</a>
+                href="https://maps.google.com/?q=2095+Hammond+Dr+Suite+B+Schaumburg+IL+60173"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-start space-x-2"
+              >
+                <MapPin
+                  size={16}
+                  className="text-slate-400 mt-0.5 flex-shrink-0 group-hover:text-[#0F4C81] transition-colors"
+                />
+                <span className="text-slate-500 group-hover:text-[#0F4C81] transition-colors">
+                  2095 Hammond Dr Suite B<br />
+                  Schaumburg, IL 60173
+                </span>
+              </a>
               <div className="flex items-center space-x-2">
                 <Phone size={16} className="text-slate-400 flex-shrink-0" />
                 <span>+1 (800) 555-0199</span>
               </div>
               <a
-  href="mailto:Info@hypercodeus.com"
-  className="group flex items-center space-x-2"
->
-  <Mail
-    size={16}
-    className="text-slate-400 flex-shrink-0 group-hover:text-[#0F4C81] transition-colors"
-  />
-
-  <span className="text-slate-500 group-hover:text-[#0F4C81] transition-colors">
-    Info@hypercodeus.com
-  </span>
-</a>
+                href="mailto:Info@hypercodeus.com"
+                className="group flex items-center space-x-2"
+              >
+                <Mail
+                  size={16}
+                  className="text-slate-400 flex-shrink-0 group-hover:text-[#0F4C81] transition-colors"
+                />
+                <span className="text-slate-500 group-hover:text-[#0F4C81] transition-colors">
+                  Info@hypercodeus.com
+                </span>
+              </a>
             </div>
-            <p className="text-[11px] text-slate-450 font-bold uppercase tracking-wider leading-relaxed pt-2">
-              Headquartered in Schaumburg, Illinois. Serving clients nationwide.
-            </p>
             <div className="pt-4 space-y-2">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-900">Connect With Us</h4>
+              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-900">{tf('connect')}</h4>
               <div className="flex items-center space-x-3">
                 <div className="group relative inline-block">
                   <a
@@ -86,31 +85,26 @@ export function Footer() {
 
           {/* Data & Analytics */}
           <div>
-            <h3 className="font-semibold text-slate-900 text-[15px] mb-4">Data & Analytics</h3>
+            <h3 className="font-semibold text-slate-900 text-[15px] mb-4">{t('dataAnalytics')}</h3>
             <ul className="space-y-2.5">
               <li>
                 <Link href="/solutions/business-intelligence-consulting" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
-                  Business Intelligence
+                  {t('businessIntelligence')}
                 </Link>
               </li>
               <li>
                 <Link href="/solutions/data-analytics-services" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
-                  Data Analytics
+                  {t('predictiveAnalytics')}
                 </Link>
               </li>
               <li>
                 <Link href="/solutions/data-warehousing-services" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
-                  Data Warehousing
+                  {t('dataWarehousing')}
                 </Link>
               </li>
               <li>
                 <Link href="/solutions/data-engineering-solutions" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
-                  Data Engineering
-                </Link>
-              </li>
-              <li>
-                <Link href="/solutions#big-data" className="text-sm font-medium text-slate-650 hover:text-[#0F4C81] transition-colors">
-                  Big Data
+                  {t('dataEngineering')}
                 </Link>
               </li>
             </ul>
@@ -118,26 +112,26 @@ export function Footer() {
 
           {/* Digital Solutions */}
           <div>
-            <h3 className="font-semibold text-slate-900 text-[15px] mb-4">Digital Solutions</h3>
+            <h3 className="font-semibold text-slate-900 text-[15px] mb-4">{t('digitalSolutions')}</h3>
             <ul className="space-y-2.5">
               <li>
                 <Link href="/solutions/web-development-services" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
-                  Web Development
+                  {t('webDevelopment')}
                 </Link>
               </li>
               <li>
                 <Link href="/solutions/web-development-services#custom-applications" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
-                  Custom Applications
+                  {t('customApplications')}
                 </Link>
               </li>
               <li>
                 <Link href="/solutions/web-development-services#api-integrations" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
-                  API Integrations
+                  {t('apiIntegrations')}
                 </Link>
               </li>
               <li>
                 <Link href="/solutions/web-development-services#cloud-applications" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
-                  Cloud Applications
+                  {t('cloudApplications')}
                 </Link>
               </li>
             </ul>
@@ -145,21 +139,21 @@ export function Footer() {
 
           {/* Consulting Services */}
           <div>
-            <h3 className="font-semibold text-slate-900 text-[15px] mb-4">Consulting Services</h3>
+            <h3 className="font-semibold text-slate-900 text-[15px] mb-4">{t('consultingServices')}</h3>
             <ul className="space-y-2.5">
               <li>
                 <Link href="/solutions#business-analysis" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
-                  Business Analysis
+                  {t('businessAnalysis')}
                 </Link>
               </li>
               <li>
                 <Link href="/solutions#technology-consulting" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
-                  Technology Consulting
+                  {t('technologyConsulting')}
                 </Link>
               </li>
               <li>
                 <Link href="/solutions#agile-project-management" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
-                  Agile Project Management
+                  {t('agileProject')}
                 </Link>
               </li>
             </ul>
@@ -167,26 +161,26 @@ export function Footer() {
 
           {/* Talent Solutions */}
           <div>
-            <h3 className="font-semibold text-slate-900 text-[15px] mb-4">Talent Solutions</h3>
+            <h3 className="font-semibold text-slate-900 text-[15px] mb-4">{t('staffingSolutions')}</h3>
             <ul className="space-y-2.5">
               <li>
                 <Link href="/solutions/it-staffing-solutions" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
-                  IT Staffing
+                  {t('itStaffing')}
                 </Link>
               </li>
               <li>
                 <Link href="/solutions/staff-augmentation-services" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
-                  Staff Augmentation
+                  {t('staffAugmentation')}
                 </Link>
               </li>
               <li>
                 <Link href="/staffing#contract-staffing" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
-                  Contract Staffing
+                  {t('contractStaffing')}
                 </Link>
               </li>
               <li>
                 <Link href="/staffing#direct-placement" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
-                  Direct Placement
+                  {t('directPlacement')}
                 </Link>
               </li>
             </ul>
@@ -194,26 +188,26 @@ export function Footer() {
 
           {/* Company */}
           <div>
-            <h3 className="font-semibold text-slate-900 text-[15px] mb-4">Company</h3>
+            <h3 className="font-semibold text-slate-900 text-[15px] mb-4">{tc('about')}</h3>
             <ul className="space-y-2.5">
               <li>
                 <Link href="/about" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
-                  About Us
+                  {t('about')}
                 </Link>
               </li>
               <li>
                 <Link href="/careers" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
-                  Careers
+                  {t('careers')}
                 </Link>
               </li>
               <li>
                 <Link href="/insights" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
-                  Insights
+                  {tc('solutions')}
                 </Link>
               </li>
               <li>
                 <Link href="/contact" className="text-sm font-medium text-slate-600 hover:text-[#0F4C81] transition-colors">
-                  Contact
+                  {t('contact')}
                 </Link>
               </li>
             </ul>
@@ -222,10 +216,10 @@ export function Footer() {
 
         {/* Divider & Bottom Section */}
         <div className="border-t border-slate-200 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
-          <p>© 2026 HyperCode. All rights reserved.</p>
+          <p>{tf('copyright')}</p>
           <div className="flex space-x-6">
-            <Link href="/contact" className="hover:text-[#0F4C81]">Privacy Policy</Link>
-            <Link href="/contact" className="hover:text-[#0F4C81]">Terms of Use</Link>
+            <Link href="/contact" className="hover:text-[#0F4C81]">{tf('privacy')}</Link>
+            <Link href="/contact" className="hover:text-[#0F4C81]">{tf('terms')}</Link>
           </div>
         </div>
       </div>

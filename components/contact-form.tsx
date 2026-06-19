@@ -6,34 +6,40 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useSearchParams } from 'next/navigation';
 import { Loader2, AlertCircle, CheckCircle } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { db } from '@/lib/db';
-
-const contactSchema = z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters'),
-  email: z.string().email('Invalid email address'),
-  company: z.string().min(2, 'Company name required'),
-  phone: z.string().min(10, 'Valid phone number required'),
-  subject: z.string().min(1, 'Please select a subject'),
-  message: z.string().min(10, 'Message must be at least 10 characters'),
-});
-
-type ContactFormData = z.infer<typeof contactSchema>;
-
-const subjectOptions = [
-  { id: 'General Inquiry', label: 'General Inquiry' },
-  { id: 'Web Development Inquiry', label: 'Web Development Inquiry' },
-  { id: 'Partnership Opportunity', label: 'Partnership Opportunity' },
-  { id: 'Vendor Inquiry', label: 'Vendor Inquiry' },
-  { id: 'Career Question', label: 'Career Question' },
-  { id: 'Media Request', label: 'Media Request' },
-  { id: 'Other', label: 'Other' },
-];
 
 function ContactFormContent() {
   const searchParams = useSearchParams();
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
+
+  const t = useTranslations('Contact.form');
+  const tSubjects = useTranslations('Contact.subjects');
+
+  // Define subject options dynamically using translated labels
+  const subjectOptions = [
+    { id: 'General Inquiry', label: tSubjects('general') },
+    { id: 'Web Development Inquiry', label: tSubjects('web') },
+    { id: 'Partnership Opportunity', label: tSubjects('partnership') },
+    { id: 'Vendor Inquiry', label: tSubjects('vendor') },
+    { id: 'Career Question', label: tSubjects('career') },
+    { id: 'Media Request', label: tSubjects('media') },
+    { id: 'Other', label: tSubjects('other') },
+  ];
+
+  // Schema defined inside the component to use next-intl translation hooks
+  const contactSchema = z.object({
+    name: z.string().min(2, t('nameError')),
+    email: z.string().email(t('emailError')),
+    company: z.string().min(2, t('companyError')),
+    phone: z.string().min(10, t('phoneError')),
+    subject: z.string().min(1, t('subjectError')),
+    message: z.string().min(10, t('messageError')),
+  });
+
+  type ContactFormData = z.infer<typeof contactSchema>;
 
   const {
     register,
@@ -49,7 +55,7 @@ function ContactFormContent() {
     },
   });
 
-  // Handle URL search params on mount to support prefilling (e.g. Careers page redirection)
+  // Handle URL search params on mount to support prefilling
   useEffect(() => {
     const subjectParam = searchParams.get('subject');
     const positionParam = searchParams.get('position');
@@ -84,7 +90,7 @@ function ContactFormContent() {
       reset();
       setTimeout(() => setSubmitted(false), 5000);
     } catch (err) {
-      setError('Failed to submit form. Please try again.');
+      setError(t('errorSubmit'));
       console.error('Contact form error:', err);
     } finally {
       setSubmitting(false);
@@ -97,10 +103,8 @@ function ContactFormContent() {
         <div className="p-6 rounded-2xl border border-green-200 bg-green-50 flex gap-4">
           <CheckCircle size={24} className="text-green-650 flex-shrink-0 mt-0.5" />
           <div className="text-left">
-            <h3 className="font-bold text-green-900">Message Sent Successfully!</h3>
-            <p className="text-green-800 text-sm mt-1">
-              Thank you for reaching out. Our team will review your inquiry and get back to you within 24 hours.
-            </p>
+            <h3 className="font-bold text-green-900">{t('successTitle')}</h3>
+            <p className="text-green-800 text-sm mt-1">{t('successText')}</p>
           </div>
         </div>
       </div>
@@ -112,7 +116,7 @@ function ContactFormContent() {
       <form onSubmit={handleSubmit(onSubmit)} id="contact-form-inputs" className="space-y-6">
         {error && (
           <div className="p-4 rounded-xl border border-red-200 bg-red-50 flex gap-3">
-            <AlertCircle size={20} className="text-red-650 flex-shrink-0 mt-0.5" />
+            <AlertCircle size={20} className="text-red-655 flex-shrink-0 mt-0.5" />
             <p className="text-red-800 text-sm">{error}</p>
           </div>
         )}
@@ -120,19 +124,19 @@ function ContactFormContent() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Name */}
           <div className="space-y-2">
-            <label className="block text-sm font-semibold text-slate-700">Full Name</label>
+            <label className="block text-sm font-semibold text-slate-700">{t('fullName')}</label>
             <input
               {...register('name')}
               type="text"
               placeholder="John Doe"
               className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] text-sm"
             />
-            {errors.name && <p className="text-xs text-red-650 font-semibold">{errors.name.message}</p>}
+            {errors.name && <p className="text-xs text-red-655 font-semibold">{errors.name.message}</p>}
           </div>
 
           {/* Email */}
           <div className="space-y-2">
-            <label className="block text-sm font-semibold text-slate-700">Email Address</label>
+            <label className="block text-sm font-semibold text-slate-700">{t('emailAddress')}</label>
             <input
               {...register('email')}
               type="email"
@@ -144,7 +148,7 @@ function ContactFormContent() {
 
           {/* Company */}
           <div className="space-y-2">
-            <label className="block text-sm font-semibold text-slate-700">Company Name</label>
+            <label className="block text-sm font-semibold text-slate-700">{t('companyName')}</label>
             <input
               {...register('company')}
               type="text"
@@ -156,7 +160,7 @@ function ContactFormContent() {
 
           {/* Phone */}
           <div className="space-y-2">
-            <label className="block text-sm font-semibold text-slate-700">Phone Number</label>
+            <label className="block text-sm font-semibold text-slate-700">{t('phoneNumber')}</label>
             <input
               {...register('phone')}
               type="tel"
@@ -168,12 +172,12 @@ function ContactFormContent() {
 
           {/* Subject Options select dropdown */}
           <div className="md:col-span-2 space-y-2">
-            <label className="block text-sm font-semibold text-slate-700">Subject</label>
+            <label className="block text-sm font-semibold text-slate-700">{t('subject')}</label>
             <select
               {...register('subject')}
               className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] text-sm"
             >
-              <option value="">Select an inquiry subject</option>
+              <option value="">{t('selectSubject')}</option>
               {subjectOptions.map((opt) => (
                 <option key={opt.id} value={opt.id}>
                   {opt.label}
@@ -185,7 +189,7 @@ function ContactFormContent() {
 
           {/* Message */}
           <div className="md:col-span-2 space-y-2">
-            <label className="block text-sm font-semibold text-slate-700">Message</label>
+            <label className="block text-sm font-semibold text-slate-700">{t('message')}</label>
             <textarea
               {...register('message')}
               placeholder="How can we help you?"
@@ -205,10 +209,10 @@ function ContactFormContent() {
           {submitting ? (
             <>
               <Loader2 size={16} className="animate-spin" />
-              <span>Sending...</span>
+              <span>{t('sendMessage')}</span>
             </>
           ) : (
-            <span>Send Message</span>
+            <span>{t('sendMessage')}</span>
           )}
         </button>
 

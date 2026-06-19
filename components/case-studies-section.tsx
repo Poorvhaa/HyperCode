@@ -1,16 +1,20 @@
 'use client';
 
 import { ShieldAlert, Cpu, CheckCircle2, ArrowRight } from 'lucide-react';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
+import { useTranslations } from 'next-intl';
 
 export function CaseStudiesSection() {
+  const t = useTranslations('CaseStudies');
+  const tc = useTranslations('Common');
+
   const featured = {
-    category: 'FEATURED SUCCESS STORY',
-    title: 'Data Warehouse Modernization',
-    subtitle: 'HIPAA Cloud Consolidation',
-    challenge: 'Patient records across 15 separate locations were fragmented in legacy databases, creating analysis delays and HIPAA audit concerns.',
-    solution: 'Consolidated all databases into a secure, HIPAA-compliant Snowflake data lakehouse using Azure data integration pipelines.',
-    outcome: 'Reduced data ingestion times by 200%, saved $3.2M in annual database overhead, and secured 100% compliance audit marks.',
+    category: t('story.category'),
+    title: t('story.title'),
+    subtitle: t('story.subtitle'),
+    challenge: t('story.challengeText'),
+    solution: t('story.solutionText'),
+    outcome: t('story.outcomeText'),
   };
 
   return (
@@ -20,13 +24,13 @@ export function CaseStudiesSection() {
         {/* Title Block */}
         <div className="max-w-3xl mb-20 space-y-4">
           <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase">
-            CASE STUDY
+            {t('badge')}
           </h2>
           <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
-            Featured Success Story
+            {t('title')}
           </h3>
           <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-medium">
-            Learn how we help enterprise organizations resolve data blockages and configure scalable architectures.
+            {t('subtitle')}
           </p>
         </div>
 
@@ -55,7 +59,7 @@ export function CaseStudiesSection() {
                 <ShieldAlert size={18} />
               </div>
               <div className="space-y-1">
-                <h5 className="text-sm font-bold text-slate-900 uppercase tracking-wider">Challenge</h5>
+                <h5 className="text-sm font-bold text-slate-900 uppercase tracking-wider">{t('challenge')}</h5>
                 <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-medium">
                   {featured.challenge}
                 </p>
@@ -73,7 +77,7 @@ export function CaseStudiesSection() {
                 <Cpu size={18} />
               </div>
               <div className="space-y-1">
-                <h5 className="text-sm font-bold text-slate-900 uppercase tracking-wider">Solution</h5>
+                <h5 className="text-sm font-bold text-slate-900 uppercase tracking-wider">{t('solution')}</h5>
                 <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-medium">
                   {featured.solution}
                 </p>
@@ -91,7 +95,7 @@ export function CaseStudiesSection() {
                 <CheckCircle2 size={18} />
               </div>
               <div className="space-y-1">
-                <h5 className="text-sm font-bold text-slate-900 uppercase tracking-wider">Outcome</h5>
+                <h5 className="text-sm font-bold text-slate-900 uppercase tracking-wider">{t('outcome')}</h5>
                 <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-medium">
                   {featured.outcome}
                 </p>
@@ -105,9 +109,9 @@ export function CaseStudiesSection() {
         <div className="text-center mt-12">
           <Link
             href="/insights"
-            className="inline-flex items-center justify-center h-12 px-7 bg-[#0F4C81] text-white font-semibold text-[14px] rounded-xl hover:bg-[#0c3c66] transition-colors duration-200 shadow-sm gap-2"
+            className="inline-flex items-center justify-center h-12 px-7 bg-[#0F4C81] text-white font-semibold text-[14px] rounded-xl hover:bg-[#0c3c66] transition-colors duration-200 shadow-sm gap-2 cursor-pointer border-none"
           >
-            <span>View Case Studies</span>
+            <span>{tc('viewCaseStudies')}</span>
             <ArrowRight size={16} />
           </Link>
         </div>

@@ -1,36 +1,41 @@
 'use client';
 
 import { BarChart3, Database, Users, ArrowRight, Code } from 'lucide-react';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
+import { useTranslations } from 'next-intl';
 
 export function ServicesSection() {
+  const t = useTranslations('Services');
+  const tNav = useTranslations('Navigation');
+  const tc = useTranslations('Common');
+
   const pillars = [
     {
-      title: 'Data & Analytics',
+      title: tNav('dataAnalytics'),
       icon: BarChart3,
-      desc: 'Architecting executive BI environments, automated operational dashboards, and predictive forecasting systems.',
-      bullets: ['Business Intelligence', 'Data Analytics', 'Reporting', 'Visualization'],
+      desc: t('items.bi.desc'),
+      bullets: [tNav('businessIntelligence'), tNav('predictiveAnalytics'), 'Reporting', 'Visualization'],
       href: '/solutions',
     },
     {
-      title: 'Data Engineering',
+      title: tNav('dataEngineering'),
       icon: Database,
-      desc: 'Consolidating database structures into scalable cloud lakehouses and orchestrating secure ETL pipelines.',
-      bullets: ['Data Warehousing', 'ETL Pipelines', 'Big Data', 'Cloud Data Platforms'],
+      desc: t('items.de.desc'),
+      bullets: [tNav('dataWarehousing'), 'ETL Pipelines', 'Big Data', 'Cloud Data Platforms'],
       href: '/solutions',
     },
     {
-      title: 'Web Development',
+      title: tNav('webDevelopment'),
       icon: Code,
-      desc: 'Designing and developing modern, scalable, secure, and high-performance custom web applications.',
-      bullets: ['Custom Applications', 'Next.js & React', 'API Integrations', 'Cloud Deployments'],
+      desc: t('items.web.desc'),
+      bullets: [tNav('customApplications'), 'Next.js & React', tNav('apiIntegrations'), tNav('cloudApplications')],
       href: '/solutions/web-development-services',
     },
     {
-      title: 'Talent Solutions',
+      title: tNav('staffingSolutions'),
       icon: Users,
-      desc: 'Deploying pre-screened technology consultants and engineering teams to accelerate project deliveries.',
-      bullets: ['IT Staffing', 'Staff Augmentation', 'Direct Placement'],
+      desc: t('items.staffing.desc'),
+      bullets: [tNav('itStaffing'), tNav('staffAugmentation'), tNav('directPlacement')],
       href: '/staffing',
     },
   ];
@@ -42,13 +47,13 @@ export function ServicesSection() {
         {/* Title Block */}
         <div className="max-w-3xl mb-20 space-y-4">
           <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase">
-            SOLUTIONS PILLARS
+            {t('badge')}
           </h2>
           <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
-            Our Core Consulting Stacks
+            {t('title')}
           </h3>
           <p className="text-base sm:text-lg text-[#5a718c] leading-relaxed font-medium">
-            We deliver enterprise software development, cloud data solutions, and technology placement services through four strategic departments.
+            {t('subtitle')}
           </p>
         </div>
 
@@ -92,7 +97,7 @@ export function ServicesSection() {
                     href={pillar.href}
                     className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C81] hover:text-[#0c3c66] transition-colors"
                   >
-                    <span>Learn More Solutions</span>
+                    <span>{tc('readMore') === 'Read Article' ? 'Learn More Solutions' : (tc('readMore') === 'Leer Artículo' ? 'Conocer Más Soluciones' : 'Learn More')}</span>
                     <ArrowRight size={14} />
                   </Link>
                 </div>

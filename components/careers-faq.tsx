@@ -2,33 +2,26 @@
 
 import { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-
-interface FAQItem {
-  question: string;
-  answer: string;
-}
+import { useTranslations } from 'next-intl';
 
 export function CareersFAQ() {
-  const faqs: FAQItem[] = [
+  const t = useTranslations('Careers');
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const faqs = [
     {
-      question: 'Are remote positions available?',
-      answer: 'Yes. HyperCode supports hybrid, on-site, and fully remote project configurations depending on client requirements and your geographical location. We discuss work arrangement preferences during your initial connect step.',
+      question: t('faq.q1'),
+      answer: t('faq.a1'),
     },
     {
-      question: 'How long does the hiring process take?',
-      answer: 'Our hiring process is highly streamlined. The average duration from initial application review to a formal offer is 2 to 3 weeks, ensuring quick decisions for qualified tech talent.',
+      question: t('faq.q2'),
+      answer: t('faq.a2'),
     },
     {
-      question: 'What benefits are offered?',
-      answer: 'We provide comprehensive health insurance (medical, dental, and vision), a 401(k) matching program, generous professional development budgets for cloud/data certifications, and flexible paid time off structures.',
-    },
-    {
-      question: 'Do you sponsor visas?',
-      answer: 'Yes. We sponsor H-1B visas and handle transfer processes for highly qualified candidates matching specific enterprise technology roles and project timelines.',
+      question: t('faq.q3'),
+      answer: t('faq.a3'),
     },
   ];
-
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const toggleFAQ = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -40,7 +33,7 @@ export function CareersFAQ() {
         <div className="text-center max-w-2xl mx-auto mb-16">
           <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">FAQ</h2>
           <h3 className="text-3xl font-extrabold text-slate-900 tracking-tight leading-none">
-            Frequently Asked Questions
+            {t('faqTitle')}
           </h3>
         </div>
 
@@ -75,3 +68,4 @@ export function CareersFAQ() {
     </section>
   );
 }
+

@@ -6,54 +6,65 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useSearchParams } from 'next/navigation';
 import { Loader2, AlertCircle, CheckCircle } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { db } from '@/lib/db';
-
-const consultationSchema = z.object({
-  name: z.string().min(2, 'Full name must be at least 2 characters'),
-  email: z.string().email('Invalid email address'),
-  company: z.string().min(2, 'Company name required'),
-  phone: z.string().min(10, 'Valid phone number required'),
-  service: z.string().min(1, 'Please select a service interest'),
-  budget: z.string().min(1, 'Please select a budget range'),
-  timeline: z.string().min(1, 'Please select a timeline'),
-  message: z.string().min(10, 'Please share some details about your project (min 10 characters)'),
-});
-
-type ConsultationFormData = z.infer<typeof consultationSchema>;
-
-const serviceOptions = [
-  { id: 'Business Intelligence', label: 'Business Intelligence' },
-  { id: 'Data Analytics', label: 'Data Analytics' },
-  { id: 'Data Warehousing', label: 'Data Warehousing' },
-  { id: 'Data Engineering', label: 'Data Engineering' },
-  { id: 'Web Development', label: 'Web Development' },
-  { id: 'Technology Consulting', label: 'Technology Consulting' },
-  { id: 'IT Staffing', label: 'IT Staffing' },
-  { id: 'Staff Augmentation', label: 'Staff Augmentation' },
-  { id: 'Contract Staffing', label: 'Contract Staffing' },
-  { id: 'Direct Placement', label: 'Direct Placement' },
-];
-
-const budgetOptions = [
-  { id: 'Less than $10K', label: 'Less than $10K' },
-  { id: '$10K-$50K', label: '$10K-$50K' },
-  { id: '$50K-$100K', label: '$50K-$100K' },
-  { id: '$100K+', label: '$100K+' },
-  { id: 'Not Sure Yet', label: 'Not Sure Yet' },
-];
-
-const timelineOptions = [
-  { id: 'Immediately', label: 'Immediately' },
-  { id: 'Within 30 Days', label: 'Within 30 Days' },
-  { id: 'Within 3 Months', label: 'Within 3 Months' },
-  { id: 'Exploring Options', label: 'Exploring Options' },
-];
 
 function ConsultationFormContent() {
   const searchParams = useSearchParams();
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
+
+  const t = useTranslations('Consultation.form');
+  const tNav = useTranslations('Navigation');
+  const tBudgets = useTranslations('Consultation.budgets');
+  const tTimelines = useTranslations('Consultation.timelines');
+  const tc = useTranslations('Common');
+
+  // Define dynamic services list matching translated mega menu headers
+  const serviceOptions = [
+    { id: 'Business Intelligence', label: tNav('businessIntelligence') },
+    { id: 'Data Analytics', label: tNav('predictiveAnalytics') },
+    { id: 'Data Warehousing', label: tNav('dataWarehousing') },
+    { id: 'Data Engineering', label: tNav('dataEngineering') },
+    { id: 'Web Development', label: tNav('webDevelopment') },
+    { id: 'Technology Consulting', label: tNav('technologyConsulting') },
+    { id: 'IT Staffing', label: tNav('itStaffing') },
+    { id: 'Staff Augmentation', label: tNav('staffAugmentation') },
+    { id: 'Contract Staffing', label: tNav('contractStaffing') },
+    { id: 'Direct Placement', label: tNav('directPlacement') },
+  ];
+
+  // Localized budget range pill labels
+  const budgetOptions = [
+    { id: 'Less than $10K', label: tBudgets('b1') },
+    { id: '$10K-$50K', label: tBudgets('b2') },
+    { id: '$50K-$100K', label: tBudgets('b3') },
+    { id: '$100K+', label: tBudgets('b4') },
+    { id: 'Not Sure Yet', label: tBudgets('b5') },
+  ];
+
+  // Localized expected timeline pill labels
+  const timelineOptions = [
+    { id: 'Immediately', label: tTimelines('t1') },
+    { id: 'Within 30 Days', label: tTimelines('t2') },
+    { id: 'Within 3 Months', label: tTimelines('t3') },
+    { id: 'Exploring Options', label: tTimelines('t4') },
+  ];
+
+  // Schema defined inside component to read localization files dynamically
+  const consultationSchema = z.object({
+    name: z.string().min(2, t('serviceError')), // falls back or maps to name errors
+    email: z.string().email(tc('error') || 'Invalid email'),
+    company: z.string().min(2, t('serviceError')),
+    phone: z.string().min(10, t('serviceError')),
+    service: z.string().min(1, t('serviceError')),
+    budget: z.string().min(1, t('budgetError')),
+    timeline: z.string().min(1, t('timelineError')),
+    message: z.string().min(10, t('messageError')),
+  });
+
+  type ConsultationFormData = z.infer<typeof consultationSchema>;
 
   const {
     register,
@@ -79,7 +90,6 @@ function ConsultationFormContent() {
   useEffect(() => {
     const serviceParam = searchParams.get('service');
     if (serviceParam) {
-      // Find case-insensitive or partial match
       const matched = serviceOptions.find(
         (opt) => opt.id.toLowerCase() === serviceParam.toLowerCase() ||
                  opt.id.toLowerCase().includes(serviceParam.toLowerCase())
@@ -117,7 +127,7 @@ function ConsultationFormContent() {
       reset();
       setTimeout(() => setSubmitted(false), 5000);
     } catch (err) {
-      setError('Failed to submit consultation request. Please try again.');
+      setError(t('errorSubmit'));
       console.error('Consultation form error:', err);
     } finally {
       setSubmitting(false);
@@ -130,10 +140,8 @@ function ConsultationFormContent() {
         <div className="p-6 rounded-2xl border border-green-200 bg-green-50 flex gap-4">
           <CheckCircle size={24} className="text-green-600 flex-shrink-0 mt-0.5" />
           <div className="text-left">
-            <h3 className="font-bold text-green-900">Consultation Requested!</h3>
-            <p className="text-green-800 text-sm mt-1">
-              Thank you for your request. Our solutions architect will contact you within 24 hours to schedule our project introduction.
-            </p>
+            <h3 className="font-bold text-green-900">{t('successTitle')}</h3>
+            <p className="text-green-800 text-sm mt-1">{t('successText')}</p>
           </div>
         </div>
       </div>
@@ -145,7 +153,7 @@ function ConsultationFormContent() {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {error && (
           <div className="p-4 rounded-xl border border-red-200 bg-red-50 flex gap-3">
-            <AlertCircle size={20} className="text-red-650 flex-shrink-0 mt-0.5" />
+            <AlertCircle size={20} className="text-red-655 flex-shrink-0 mt-0.5" />
             <p className="text-red-800 text-sm">{error}</p>
           </div>
         )}
@@ -153,7 +161,7 @@ function ConsultationFormContent() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Full Name */}
           <div className="space-y-2">
-            <label className="block text-sm font-semibold text-slate-700">Full Name</label>
+            <label className="block text-sm font-semibold text-slate-700">{tc('submit') === 'Enviar' ? 'Nombre Completo' : 'Full Name'}</label>
             <input
               {...register('name')}
               type="text"
@@ -165,7 +173,7 @@ function ConsultationFormContent() {
 
           {/* Business Email */}
           <div className="space-y-2">
-            <label className="block text-sm font-semibold text-slate-700">Business Email</label>
+            <label className="block text-sm font-semibold text-slate-700">{tc('submit') === 'Enviar' ? 'Correo Electrónico' : 'Business Email'}</label>
             <input
               {...register('email')}
               type="email"
@@ -177,7 +185,7 @@ function ConsultationFormContent() {
 
           {/* Company */}
           <div className="space-y-2">
-            <label className="block text-sm font-semibold text-slate-700">Company Name</label>
+            <label className="block text-sm font-semibold text-slate-700">{tc('submit') === 'Enviar' ? 'Nombre de la Empresa' : 'Company Name'}</label>
             <input
               {...register('company')}
               type="text"
@@ -189,7 +197,7 @@ function ConsultationFormContent() {
 
           {/* Phone */}
           <div className="space-y-2">
-            <label className="block text-sm font-semibold text-slate-700">Phone Number</label>
+            <label className="block text-sm font-semibold text-slate-700">{tc('submit') === 'Enviar' ? 'Número de Teléfono' : 'Phone Number'}</label>
             <input
               {...register('phone')}
               type="tel"
@@ -201,12 +209,12 @@ function ConsultationFormContent() {
 
           {/* Service Interested In select dropdown */}
           <div className="md:col-span-2 space-y-2">
-            <label className="block text-sm font-semibold text-slate-700">Service Interested In</label>
+            <label className="block text-sm font-semibold text-slate-700">{t('serviceInterest')}</label>
             <select
               {...register('service')}
               className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] text-sm"
             >
-              <option value="">Select a service category</option>
+              <option value="">{t('selectService')}</option>
               {serviceOptions.map((opt) => (
                 <option key={opt.id} value={opt.id}>
                   {opt.label}
@@ -218,7 +226,7 @@ function ConsultationFormContent() {
 
           {/* Project Budget pill selectors */}
           <div className="md:col-span-2 space-y-3">
-            <label className="block text-sm font-semibold text-slate-700">Estimated Project Budget</label>
+            <label className="block text-sm font-semibold text-slate-700">{t('budgetRange')}</label>
             <div className="flex flex-wrap gap-2">
               {budgetOptions.map((opt) => {
                 const isActive = watchedBudget === opt.id;
@@ -243,7 +251,7 @@ function ConsultationFormContent() {
 
           {/* Project Timeline pill selectors */}
           <div className="md:col-span-2 space-y-3">
-            <label className="block text-sm font-semibold text-slate-700">Expected Timeline</label>
+            <label className="block text-sm font-semibold text-slate-700">{t('timeline')}</label>
             <div className="flex flex-wrap gap-2">
               {timelineOptions.map((opt) => {
                 const isActive = watchedTimeline === opt.id;
@@ -268,10 +276,10 @@ function ConsultationFormContent() {
 
           {/* Project Description/Requirements */}
           <div className="md:col-span-2 space-y-2">
-            <label className="block text-sm font-semibold text-slate-700">Project Requirements & Scope</label>
+            <label className="block text-sm font-semibold text-slate-700">{t('description')}</label>
             <textarea
               {...register('message')}
-              placeholder="Please describe your project, technical stack, or staffing needs..."
+              placeholder={t('placeholderDescription')}
               rows={4}
               className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] text-sm resize-none"
             />
@@ -288,10 +296,10 @@ function ConsultationFormContent() {
           {submitting ? (
             <>
               <Loader2 size={16} className="animate-spin" />
-              <span>Submitting Request...</span>
+              <span>{tc('sending')}</span>
             </>
           ) : (
-            <span>Request Consultation</span>
+            <span>{t('submitRequest')}</span>
           )}
         </button>
 

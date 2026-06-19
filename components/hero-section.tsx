@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
+import { useTranslations } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   ArrowRight,
@@ -13,59 +14,62 @@ import {
   Award
 } from 'lucide-react';
 
-const nodes = [
-  {
-    id: 0,
-    label: 'Data Sources',
-    icon: Database,
-    description: 'Ingests raw database feeds, APIs, cloud files, and streaming events.',
-    x: '25%',
-    y: '12%',
-  },
-  {
-    id: 1,
-    label: 'Data Engineering',
-    icon: Cpu,
-    description: 'Builds robust ETL/ELT pipelines and automates schema integration.',
-    x: '75%',
-    y: '12%',
-  },
-  {
-    id: 2,
-    label: 'Data Platform',
-    icon: Server,
-    description: 'Consolidates storage lakes and secure cloud data warehouses.',
-    x: '75%',
-    y: '48%',
-  },
-  {
-    id: 3,
-    label: 'Analytics',
-    icon: TrendingUp,
-    description: 'Deploys advanced forecasting models and tracks statistical trends.',
-    x: '25%',
-    y: '48%',
-  },
-  {
-    id: 4,
-    label: 'Business Intelligence',
-    icon: BarChart3,
-    description: 'Translates clean data assets into visual reports and dashboards.',
-    x: '25%',
-    y: '84%',
-  },
-  {
-    id: 5,
-    label: 'Strategic Outcomes',
-    icon: Award,
-    description: 'Empowers executive stakeholders to drive operational growth and ROI.',
-    x: '75%',
-    y: '84%',
-  },
-];
-
 export function HeroSection() {
   const [hoveredNode, setHoveredNode] = useState<number | null>(null);
+  
+  const t = useTranslations('Hero');
+  const tc = useTranslations('Common');
+
+  const nodes = [
+    {
+      id: 0,
+      label: t('nodes.sources'),
+      icon: Database,
+      description: t('nodes.sourcesDesc'),
+      x: '25%',
+      y: '12%',
+    },
+    {
+      id: 1,
+      label: t('nodes.engineering'),
+      icon: Cpu,
+      description: t('nodes.engineeringDesc'),
+      x: '75%',
+      y: '12%',
+    },
+    {
+      id: 2,
+      label: t('nodes.platform'),
+      icon: Server,
+      description: t('nodes.platformDesc'),
+      x: '75%',
+      y: '48%',
+    },
+    {
+      id: 3,
+      label: t('nodes.analytics'),
+      icon: TrendingUp,
+      description: t('nodes.analyticsDesc'),
+      x: '25%',
+      y: '48%',
+    },
+    {
+      id: 4,
+      label: t('nodes.bi'),
+      icon: BarChart3,
+      description: t('nodes.biDesc'),
+      x: '25%',
+      y: '84%',
+    },
+    {
+      id: 5,
+      label: t('nodes.outcomes'),
+      icon: Award,
+      description: t('nodes.outcomesDesc'),
+      x: '75%',
+      y: '84%',
+    },
+  ];
 
   // Determine active flow path segment based on hovered node
   const getActiveFlowPath = () => {
@@ -100,19 +104,19 @@ export function HeroSection() {
               <div className="inline-flex items-center space-x-2 px-3 py-1.5 bg-slate-50 border border-slate-100 rounded-full">
                 <TrendingUp size={14} className="text-[#0F4C81]" />
                 <span className="text-[11px] font-extrabold text-[#0F4C81] uppercase tracking-widest">
-                  Enterprise Strategy & Talent
+                  {t('badge')}
                 </span>
               </div>
               
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
-                Transforming Data Into{' '}
+                {t('title')}{' '}
                 <span className="text-[#0F4C81]">
-                  Strategic Intelligence
+                  {t('titleHighlight')}
                 </span>
               </h1>
               
               <p className="text-lg sm:text-xl text-slate-600 leading-relaxed max-w-xl font-medium">
-                HyperCode helps organizations unlock growth through Business Intelligence, Data Analytics, Data Engineering, Web Development, and Strategic IT Staffing.
+                {t('subtitle')}
               </p>
             </motion.div>
 
@@ -125,16 +129,16 @@ export function HeroSection() {
             >
               <Link
                 href="/consultation"
-                className="inline-flex items-center justify-center h-11 px-6 bg-[#0F4C81] hover:bg-[#0A365D] text-white font-bold text-xs uppercase tracking-wider rounded-md transition-colors duration-200 shadow-sm hover:shadow-md"
+                className="inline-flex items-center justify-center h-11 px-6 bg-[#0F4C81] hover:bg-[#0A365D] text-white font-bold text-xs uppercase tracking-wider rounded-md transition-colors duration-200 shadow-sm hover:shadow-md gap-2"
               >
-                <span>Schedule Consultation</span>
-                <ArrowRight size={14} className="ml-2" />
+                <span>{t('talkToConsultant')}</span>
+                <ArrowRight size={14} />
               </Link>
               <a
                 href="#services"
                 className="inline-flex items-center justify-center h-11 px-6 bg-white border border-[#0F4C81] hover:bg-slate-50 text-[#0F4C81] font-bold text-xs uppercase tracking-wider rounded-md transition-colors duration-200 shadow-sm hover:shadow-md"
               >
-                Explore Solutions
+                {tc('solutions')}
               </a>
             </motion.div>
           </div>

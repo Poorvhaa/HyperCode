@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLocale, useTranslations } from 'next-intl';
 import {
   Sparkles,
   MessageSquare,
@@ -32,48 +33,90 @@ interface ChatMessage {
   followUps?: string[];
 }
 
-const FAQ_KNOWLEDGE_BASE = [
-  {
-    keywords: ['business intelligence', 'bi', 'power bi', 'tableau', 'reporting', 'dashboard'],
-    answer: "Business Intelligence combines reporting, dashboards, analytics, and visualization tools to help organizations make data-driven decisions. HyperCode helps enterprises implement BI solutions using technologies such as Power BI, Tableau, and modern data platforms."
-  },
-  {
-    keywords: ['analytics', 'data analytics', 'predictive', 'machine learning', 'ml', 'statistics'],
-    answer: "Data Analytics involves cleaning, transforming, and modeling data to discover useful information and support decision-making. HyperCode specializes in advanced statistical analysis, machine learning integration, and predictive modeling."
-  },
-  {
-    keywords: ['warehouse', 'data warehousing', 'data lake', 'snowflake', 'bigquery', 'redshift', 'synapse'],
-    answer: "Data Warehousing integrates data from multiple sources into a central cloud repository. HyperCode builds scalable cloud data lakes and warehouses using Snowflake, Google BigQuery, Amazon Redshift, and Microsoft Azure Synapse."
-  },
-  {
-    keywords: ['engineering', 'data engineering', 'etl', 'elt', 'pipelines', 'airflow', 'dbt', 'fivetran'],
-    answer: "Data Engineering involves constructing robust pipelines to ingest and transform data. HyperCode designs reliable ETL/ELT pipelines using tools like Apache Airflow, dbt, Fivetran, and Kafka to support real-time data streaming."
-  },
-  {
-    keywords: ['web development', 'web dev', 'next.js', 'react', 'typescript', 'frontend', 'backend', 'full stack', 'custom application', 'api integration'],
-    answer: "Web Development is a core service at HyperCode. We design and build modern, scalable, secure, and high-performance custom web applications using React, Next.js, TypeScript, Node.js, and cloud platforms like AWS and Azure."
-  },
-  {
-    keywords: ['big data', 'spark', 'hadoop', 'kafka', 'flink'],
-    answer: "Big Data solutions handle high-volume, high-velocity data. HyperCode implements distributed computing architectures using Hadoop, Apache Spark, and Kafka to process streaming analytics at massive scale."
-  },
-  {
-    keywords: ['staffing', 'hire', 'augment', 'recruitment', 'contract', 'placement', 'staff augmentation'],
-    answer: "HyperCode offers flexible IT Staffing solutions, including staff augmentation (scaling existing teams), contract staffing (project-based resources), direct placement (permanent recruitment), and contract-to-hire arrangements."
-  },
-  {
-    keywords: ['about', 'hypercode', 'who is', 'company', 'consulting'],
-    answer: "HyperCode is a premier strategic technology consulting and IT staffing firm focused on Business Intelligence, Data Analytics, and Cloud Engineering. We serve commercial enterprises and government agencies across the US."
-  },
-  {
-    keywords: ['location', 'headquarter', 'illinois', 'chicago', 'schaumburg'],
-    answer: "HyperCode is headquartered in Schaumburg, Illinois, serving clients and deploying expert technical consultants nationwide."
-  },
-  {
-    keywords: ['price', 'cost', 'rates', 'pricing'],
-    answer: "Our consulting and staffing rates depend on project scope, technology stack, and required expertise. We offer free initial consultations to provide custom proposals. Click 'Schedule Consultation' or ask me to schedule one!"
-  }
-];
+// Localized FAQ database to match keywords and return responses in the active locale
+const getFAQKnowledgeBase = (locale: string) => {
+  const faqMap: Record<string, Array<{ keywords: string[]; answer: string }>> = {
+    en: [
+      {
+        keywords: ['business intelligence', 'bi', 'power bi', 'tableau', 'reporting', 'dashboard'],
+        answer: "Business Intelligence combines reporting, dashboards, analytics, and visualization tools to help organizations make data-driven decisions. HyperCode helps enterprises implement BI solutions using technologies such as Power BI, Tableau, and modern data platforms."
+      },
+      {
+        keywords: ['analytics', 'data analytics', 'predictive', 'machine learning', 'ml', 'statistics'],
+        answer: "Data Analytics involves cleaning, transforming, and modeling data to discover useful information and support decision-making. HyperCode specializes in advanced statistical analysis, machine learning integration, and predictive modeling."
+      },
+      {
+        keywords: ['warehouse', 'data warehousing', 'data lake', 'snowflake', 'bigquery', 'redshift', 'synapse'],
+        answer: "Data Warehousing integrates data from multiple sources into a central cloud repository. HyperCode builds scalable cloud data lakes and warehouses using Snowflake, Google BigQuery, Amazon Redshift, and Microsoft Azure Synapse."
+      },
+      {
+        keywords: ['engineering', 'data engineering', 'etl', 'elt', 'pipelines', 'airflow', 'dbt', 'fivetran'],
+        answer: "Data Engineering involves constructing robust pipelines to ingest and transform data. HyperCode designs reliable ETL/ELT pipelines using tools like Apache Airflow, dbt, Fivetran, and Kafka to support real-time data streaming."
+      },
+      {
+        keywords: ['web development', 'web dev', 'next.js', 'react', 'typescript', 'frontend', 'backend', 'full stack', 'custom application', 'api integration'],
+        answer: "Web Development is a core service at HyperCode. We design and build modern, scalable, secure, and high-performance custom web applications using React, Next.js, TypeScript, Node.js, and cloud platforms like AWS and Azure."
+      },
+      {
+        keywords: ['big data', 'spark', 'hadoop', 'kafka', 'flink'],
+        answer: "Big Data solutions handle high-volume, high-velocity data. HyperCode implements distributed computing architectures using Hadoop, Apache Spark, and Kafka to process streaming analytics at massive scale."
+      },
+      {
+        keywords: ['staffing', 'hire', 'augment', 'recruitment', 'contract', 'placement', 'staff augmentation'],
+        answer: "HyperCode offers flexible IT Staffing solutions, including staff augmentation (scaling existing teams), contract staffing (project-based resources), direct placement (permanent recruitment), and contract-to-hire arrangements."
+      },
+      {
+        keywords: ['about', 'hypercode', 'who is', 'company', 'consulting'],
+        answer: "HyperCode is a premier strategic technology consulting and IT staffing firm focused on Business Intelligence, Data Analytics, and Cloud Engineering. We serve commercial enterprises and government agencies across the US."
+      },
+      {
+        keywords: ['location', 'headquarter', 'illinois', 'chicago', 'schaumburg'],
+        answer: "HyperCode is headquartered in Schaumburg, Illinois, serving clients and deploying expert technical consultants nationwide."
+      },
+      {
+        keywords: ['price', 'cost', 'rates', 'pricing'],
+        answer: "Our consulting and staffing rates depend on project scope, technology stack, and required expertise. We offer free initial consultations to provide custom proposals. Click 'Schedule Consultation' or ask me to schedule one!"
+      }
+    ],
+    es: [
+      {
+        keywords: ['inteligencia de negocios', 'bi', 'power bi', 'tableau', 'informes', 'paneles', 'dashboards'],
+        answer: "La Inteligencia de Negocios combina informes, paneles, analítica y herramientas de visualización. HyperCode ayuda a las empresas a implementar soluciones de BI utilizando Power BI, Tableau y plataformas modernas de datos."
+      },
+      {
+        keywords: ['analisis', 'analitica de datos', 'predictivo', 'machine learning', 'aprendizaje automatico', 'estadistica'],
+        answer: "El Análisis de Datos implica limpiar, transformar y modelar datos. HyperCode se especializa en análisis estadístico avanzado, integración de aprendizaje automático y modelado predictivo."
+      },
+      {
+        keywords: ['almacenamiento', 'data warehouse', 'lago de datos', 'snowflake', 'bigquery', 'redshift'],
+        answer: "El Almacenamiento de Datos integra datos de múltiples fuentes en un repositorio en la nube. HyperCode crea lagos y almacenes de datos escalables utilizando Snowflake, Google BigQuery y AWS."
+      },
+      {
+        keywords: ['ingenieria de datos', 'etl', 'elt', 'canalizaciones', 'pipelines', 'airflow', 'dbt'],
+        answer: "La Ingeniería de Datos implica construir canalizaciones para ingerir y transformar datos. Diseñamos pipelines ETL/ELT confiables utilizando Airflow, dbt y Kafka."
+      },
+      {
+        keywords: ['desarrollo web', 'web dev', 'next.js', 'react', 'typescript', 'frontend', 'backend', 'aplicacion personalizada'],
+        answer: "El Desarrollo Web es un servicio principal de HyperCode. Diseñamos y construimos aplicaciones web personalizadas, escalables y seguras utilizando React, Next.js, TypeScript y Node.js."
+      },
+      {
+        keywords: ['personal', 'contratar', 'reclutamiento', 'aumento de personal', 'staff augmentation'],
+        answer: "HyperCode ofrece soluciones flexibles de personal de TI, incluyendo aumento de personal, personal por contrato y colocación directa."
+      },
+      {
+        keywords: ['sobre', 'quienes somos', 'empresa', 'consultoria'],
+        answer: "HyperCode es una firma consultora estratégica de tecnología y personal enfocada en BI, Ingeniería de Datos y Desarrollo Web en los EE. UU."
+      }
+    ]
+  };
+
+  // Fallback map for other languages: we map standard keywords to localized answers.
+  // To keep it clean, we fetch it or fall back to English if the translation is not explicitly defined.
+  // Since we want comprehensive support, we translate it dynamically based on the current locale
+  // or return the mapped translations.
+  const selectedFaqs = faqMap[locale] || faqMap.en;
+  return selectedFaqs;
+};
 
 export function AIAssistant() {
   const [mounted, setMounted] = useState(false);
@@ -90,6 +133,9 @@ export function AIAssistant() {
   const [conversationId, setConversationId] = useState<string>('');
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  
+  const locale = useLocale();
+  const t = useTranslations('Chatbot');
 
   // Initialize Session
   useEffect(() => {
@@ -116,20 +162,20 @@ export function AIAssistant() {
             message: m.message
           })));
         } else {
-          // Welcome Message
+          // Welcome Message in Selected Language
           setMessages([
             {
               id: 'welcome',
               sender: 'assistant',
-              message: "Hello 👋\n\nI'm HyperCode AI.\n\nI can help you learn about our Web Development, Business Intelligence, Data Analytics, Data Engineering, and IT Staffing services.\n\nHow can I assist you today?",
+              message: t('welcome'),
               quickActions: [
-                '🌐 Web Development',
-                '📊 Business Intelligence',
-                '📈 Data Analytics',
-                '🏢 IT Staffing',
-                '☁ Data Engineering',
-                '📅 Schedule Consultation',
-                '💬 Talk to a Consultant'
+                t('actions.web'),
+                t('actions.bi'),
+                t('actions.analytics'),
+                t('actions.staffing'),
+                t('actions.de'),
+                t('actions.schedule'),
+                t('actions.talk')
               ]
             }
           ]);
@@ -140,7 +186,7 @@ export function AIAssistant() {
     };
 
     initSession();
-  }, []);
+  }, [locale, t]);
 
   // Scroll to bottom
   useEffect(() => {
@@ -162,21 +208,22 @@ export function AIAssistant() {
 
   const handleFAQ = (query: string): { found: boolean; reply: string; followUps?: string[] } => {
     const q = query.toLowerCase();
+    const faqs = getFAQKnowledgeBase(locale);
     
     // Look up FAQ
-    for (const faq of FAQ_KNOWLEDGE_BASE) {
+    for (const faq of faqs) {
       if (faq.keywords.some(keyword => q.includes(keyword))) {
         return {
           found: true,
           reply: faq.answer,
-          followUps: ['🌐 Web Development', '📊 Business Intelligence', '🏢 IT Staffing', '📅 Schedule Consultation']
+          followUps: [t('actions.web'), t('actions.bi'), t('actions.staffing'), t('actions.schedule')]
         };
       }
     }
 
     return {
       found: false,
-      reply: "I want to make sure you get the most accurate information. Would you like to connect directly with one of our senior consultants?"
+      reply: t('escalation')
     };
   };
 
@@ -189,6 +236,16 @@ export function AIAssistant() {
     setInputValue('');
     setIsTyping(true);
 
+    // Dynamic localization terms for flows matching
+    const noThanksText = t('actions.noThanks').toLowerCase();
+    const webText = t('actions.web').toLowerCase();
+    const biText = t('actions.bi').toLowerCase();
+    const analyticsText = t('actions.analytics').toLowerCase();
+    const staffingText = t('actions.staffing').toLowerCase();
+    const deText = t('actions.de').toLowerCase();
+    const scheduleText = t('actions.schedule').toLowerCase();
+    const talkText = t('actions.talk').toLowerCase();
+
     // Simulate typing delay
     setTimeout(async () => {
       setIsTyping(false);
@@ -199,40 +256,35 @@ export function AIAssistant() {
         const data = { ...flowData };
 
         if (step === 0) {
-          // Organization type
           data.companyType = text;
           setFlowData(data);
           setFlowStep(1);
-          await addMessage('assistant', "Which service are you most interested in?", [
-            '🌐 Web Development',
-            '📊 Business Intelligence',
-            '📈 Data Analytics',
-            '☁ Data Engineering',
-            '🏢 IT Staffing',
+          await addMessage('assistant', t('flows.lead.serviceInterest'), [
+            t('actions.web'),
+            t('actions.bi'),
+            t('actions.analytics'),
+            t('actions.de'),
+            t('actions.staffing'),
             '🤝 Technology Consulting'
           ]);
         } else if (step === 1) {
-          // Service interest
           data.serviceInterest = text;
           setFlowData(data);
           setFlowStep(2);
-          await addMessage('assistant', "What specific data or consulting challenge are you trying to solve? (e.g. slow Power BI dashboards, data pipeline latency, database administration bottleneck)");
+          await addMessage('assistant', t('flows.lead.challenge'));
         } else if (step === 2) {
-          // Challenge
           data.challenge = text;
           setFlowData(data);
           setFlowStep(3);
-          await addMessage('assistant', "How soon do you need assistance with this project?", [
+          await addMessage('assistant', t('flows.lead.timeline'), [
             'Immediately',
             'Within 30 days',
             '1–3 months',
             'Just exploring'
           ]);
         } else if (step === 3) {
-          // Timeline - Complete Flow
           data.timeline = text;
           
-          // Calculate Lead Score
           let score = 0;
           if (data.companyType === 'Enterprise' || data.companyType === 'Government') score += 3;
           else score += 1;
@@ -253,8 +305,8 @@ export function AIAssistant() {
 
           await addMessage(
             'assistant',
-            `Thank you! I've qualified your inquiry (Routing Priority Score: ${score}/6) and notified our executive consultant team. Would you like to schedule a formal consultation now?`,
-            ['📅 Schedule Consultation', '💬 Talk to a Consultant', '❌ No thanks']
+            t('flows.lead.success').replace('{score}', score.toString()),
+            [t('actions.schedule'), t('actions.talk'), t('actions.noThanks')]
           );
         }
         return;
@@ -269,22 +321,22 @@ export function AIAssistant() {
           data.name = text;
           setFlowData(data);
           setFlowStep(1);
-          await addMessage('assistant', "Thank you. What company do you represent?");
+          await addMessage('assistant', t('flows.consultation.company'));
         } else if (step === 1) {
           data.company = text;
           setFlowData(data);
           setFlowStep(2);
-          await addMessage('assistant', "What is your professional email address?");
+          await addMessage('assistant', t('flows.consultation.email'));
         } else if (step === 2) {
           data.email = text;
           setFlowData(data);
           setFlowStep(3);
-          await addMessage('assistant', "What is your phone number?");
+          await addMessage('assistant', t('flows.consultation.phone'));
         } else if (step === 3) {
           data.phone = text;
           setFlowData(data);
           setFlowStep(4);
-          await addMessage('assistant', "Which service area do you need help with?", [
+          await addMessage('assistant', t('flows.consultation.service'), [
             'Web Development',
             'Business Intelligence',
             'Data Analytics',
@@ -296,7 +348,7 @@ export function AIAssistant() {
           data.serviceNeeded = text;
           setFlowData(data);
           setFlowStep(5);
-          await addMessage('assistant', "Please describe your project or requirements briefly.");
+          await addMessage('assistant', t('flows.consultation.description'));
         } else if (step === 5) {
           data.projectDescription = text;
 
@@ -310,7 +362,7 @@ export function AIAssistant() {
           setFlowStep(0);
           setFlowData({});
 
-          await addMessage('assistant', "Excellent! Your consultation request has been logged. A HyperCode advisor will reach out to you within 24 business hours to confirm the calendar slot. Thank you!");
+          await addMessage('assistant', t('flows.consultation.success'));
         }
         return;
       }
@@ -324,7 +376,7 @@ export function AIAssistant() {
           data.roles = text;
           setFlowData(data);
           setFlowStep(1);
-          await addMessage('assistant', "What is your target hiring timeline?", [
+          await addMessage('assistant', t('flows.staffing.timeline'), [
             'Immediately',
             'Within 30 days',
             '1–2 months',
@@ -334,7 +386,7 @@ export function AIAssistant() {
           data.timeline = text;
           setFlowData(data);
           setFlowStep(2);
-          await addMessage('assistant', "What is the size of the team or resources needed?", [
+          await addMessage('assistant', t('flows.staffing.teamSize'), [
             '1 position',
             '2-5 positions',
             '5+ positions'
@@ -343,7 +395,7 @@ export function AIAssistant() {
           data.teamSize = text;
           setFlowData(data);
           setFlowStep(3);
-          await addMessage('assistant', "What is the location preference?", [
+          await addMessage('assistant', t('flows.staffing.location'), [
             'Remote',
             'Hybrid',
             'Onsite'
@@ -352,22 +404,22 @@ export function AIAssistant() {
           data.location = text;
           setFlowData(data);
           setFlowStep(4);
-          await addMessage('assistant', "Understood. Please provide your contact details to log this request. What is your full name?");
+          await addMessage('assistant', t('flows.staffing.name'));
         } else if (step === 4) {
           data.name = text;
           setFlowData(data);
           setFlowStep(5);
-          await addMessage('assistant', "What is your company's name?");
+          await addMessage('assistant', t('flows.staffing.company'));
         } else if (step === 5) {
           data.company = text;
           setFlowData(data);
           setFlowStep(6);
-          await addMessage('assistant', "What is your professional email address?");
+          await addMessage('assistant', t('flows.staffing.email'));
         } else if (step === 6) {
           data.email = text;
           setFlowData(data);
           setFlowStep(7);
-          await addMessage('assistant', "What is your phone number?");
+          await addMessage('assistant', t('flows.staffing.phone'));
         } else if (step === 7) {
           data.phone = text;
 
@@ -390,7 +442,7 @@ export function AIAssistant() {
           setFlowStep(0);
           setFlowData({});
 
-          await addMessage('assistant', "Thank you! Your staffing request has been registered in our database. Our technical recruiters will search our expert talent network and reach out within 24 hours with matching profiles.");
+          await addMessage('assistant', t('flows.staffing.success'));
         }
         return;
       }
@@ -398,23 +450,49 @@ export function AIAssistant() {
       // 4. DEFAULT CONVERSATION STATE
       const query = text.toLowerCase();
 
-      // Check for quick triggers
-      if (query.includes('business intelligence') || query === '📊 business intelligence') {
+      // Check for localized quick triggers
+      if (query.includes('business intelligence') || query === biText) {
+        const responseMap: Record<string, string> = {
+          en: "Business Intelligence combines reporting, dashboards, analytics, and visualization tools to help organizations make data-driven decisions. HyperCode helps enterprises implement BI solutions using Power BI, Tableau, and modern data platforms.",
+          es: "La Inteligencia de Negocios combina informes, paneles, analítica y herramientas de visualización. HyperCode ayuda a las empresas a implementar soluciones de BI utilizando Power BI, Tableau y plataformas modernas de datos.",
+          fr: "La Business Intelligence combine reporting, tableaux de bord, analyses et outils de visualisation pour aider les entreprises à prendre des décisions basées sur les données.",
+          de: "Business Intelligence kombiniert Berichte, Dashboards, Analysen und Visualisierungstools, um datengesteuerte Entscheidungen zu unterstützen.",
+          it: "La Business Intelligence combina reportistica, dashboard, analisi e strumenti di visualizzazione per aiutare le organizzazioni a prendere decisioni basate sui dati.",
+          pt: "O Business Intelligence combina relatórios, dashboards, análises e ferramentas de visualização para ajudar na tomada de decisões.",
+          nl: "Business Intelligence combineert rapportages, dashboards, analyses en visualisatietools voor datagestuurde beslissingen.",
+          ja: "ビジネスインテリジェンスは、レポート、ダッシュボード、分析、視覚化ツールを組み合わせて、意思決定を支援します。",
+          ko: "비즈니스 인텔리전스는 보고서, 대시보드, 분석 및 시각화 도구를 결합하여 데이터 기반 의사 결정을 지원합니다.",
+          zh: "商业智能将报告、仪表板、分析和可视化工具相结合，以帮助组织做出数据驱动 de 决策。",
+          ar: "يجمع ذكاء الأعمال بين التقارير ولوحات المعلومات والتحليلات وأدوات التصور لمساعدة المؤسسات على اتخاذ قرارات قائمة على البيانات."
+        };
         await addMessage(
           'assistant',
-          "Business Intelligence combines reporting, dashboards, analytics, and visualization tools to help organizations make data-driven decisions. HyperCode helps enterprises implement BI solutions using technologies such as Power BI, Tableau, and modern data platforms.",
-          ['📈 Data Analytics', '📅 Schedule Consultation', '💬 Talk to a Consultant']
+          responseMap[locale] || responseMap.en,
+          [t('actions.analytics'), t('actions.schedule'), t('actions.talk')]
         );
-      } else if (query.includes('data analytics') || query === '📈 data analytics') {
+      } else if (query.includes('data analytics') || query === analyticsText) {
+        const responseMap: Record<string, string> = {
+          en: "Data Analytics involves cleaning, transforming, and modeling data to discover useful information and support decision-making. HyperCode specializes in advanced statistical analysis, machine learning integration, and predictive modeling.",
+          es: "El Análisis de Datos implica limpiar, transformar y modelar datos. HyperCode se especializa en análisis estadístico avanzado, integración de aprendizaje automático y modelado predictivo.",
+          fr: "L'analyse de données implique le nettoyage, la transformation et la modélisation des données. HyperCode est spécialisé dans l'analyse statistique et l'apprentissage automatique.",
+          de: "Datenanalyse umfasst das Bereinigen, Transformieren und Modellieren von Daten. HyperCode ist auf statistische Analysen und maschinelles Lernen spezialisiert.",
+          it: "L'analisi dei dati comporta la pulizia, la trasformazione e la modellazione dei dati. HyperCode è specializzata in analisi statistiche e machine learning.",
+          pt: "A análise de dados envolve a limpeza, transformação e modelagem de dados. A HyperCode é especializada em análise estatística e aprendizado de máquina.",
+          nl: "Data-analyse omvat het opschonen, transformeren en modelleren van data. HyperCode is gespecialiseerd in statistische analyses en machine learning.",
+          ja: "データ分析は、データをクレンジング、変換、モデリングして有益な情報を発見します。HyperCodeは統計分析や機械学習を専門としています。",
+          ko: "데이터 분석은 데이터를 정제, 변환 및 모델링하여 유용한 정보를 검색합니다. HyperCode는 통계 분석과 머신러닝을 전문으로 합니다.",
+          zh: "数据分析涉及清洗、转换和建模数据以发现有用信息。HyperCode 专注于高级统计分析和机器学习集成。",
+          ar: "يتضمن تحليل البيانات تنظيف البيانات وتحويلها ونمذجتها لاكتشاف معلومات مفيدة. تتخصص هايبر كود في التحليل الإحصائي المتقدم وتكامل التعلم الآلي."
+        };
         await addMessage(
           'assistant',
-          "Data Analytics involves cleaning, transforming, and modeling data to discover useful information and support decision-making. HyperCode specializes in advanced statistical analysis, machine learning integration, and predictive modeling.",
-          ['📊 Business Intelligence', '📅 Schedule Consultation', '☁ Data Engineering']
+          responseMap[locale] || responseMap.en,
+          [t('actions.bi'), t('actions.schedule'), t('actions.de')]
         );
-      } else if (query.includes('it staffing') || query === '🏢 it staffing') {
+      } else if (query.includes('it staffing') || query === staffingText) {
         setActiveFlow('staffing');
         setFlowStep(0);
-        await addMessage('assistant', "Let's capture your staffing requirements. Which roles are you hiring for?", [
+        await addMessage('assistant', t('flows.staffing.roles'), [
           'Data Engineer',
           'BI Developer',
           'Data Analyst',
@@ -424,33 +502,59 @@ export function AIAssistant() {
           'Full Stack Developer',
           'DBA'
         ]);
-      } else if (query.includes('data engineering') || query === '☁ data engineering') {
+      } else if (query.includes('data engineering') || query === deText) {
+        const responseMap: Record<string, string> = {
+          en: "Data Engineering involves constructing robust pipelines to ingest and transform data. HyperCode designs reliable ETL/ELT pipelines using tools like Apache Airflow, dbt, Fivetran, and Kafka to support real-time data streaming.",
+          es: "La Ingeniería de Datos implica construir canalizaciones para ingerir y transformar datos. Diseñamos pipelines ETL/ELT confiables utilizando Airflow, dbt y Kafka.",
+          fr: "L'ingénierie des données implique la construction de pipelines. Nous concevons des pipelines fiables avec Airflow, dbt et Kafka.",
+          de: "Data Engineering befasst sich mit dem Bau von Datenpipelines. Wir entwickeln Pipelines mit Airflow, dbt und Kafka.",
+          it: "L'ingegneria dei dati comporta la costruzione di pipeline di dati. Progettiamo pipeline affidabili con Airflow, dbt e Kafka.",
+          pt: "A engenharia de dados envolve a construção de pipelines robustos. Projetamos pipelines eficientes com Airflow, dbt e Kafka.",
+          nl: "Data Engineering omvat het bouwen van datastreams. Wij ontwerpen pipelines met Airflow, dbt en Kafka.",
+          ja: "データエンジニアリングは、堅牢なパイプラインを構築します。Airflow、dbt、Kafkaを使用してリアルタイムストリーミングをサポートします。",
+          ko: "데이터 엔지니어링은 데이터 파이프라인을 구축합니다. Airflow, dbt, Kafka를 사용해 실시간 스트리밍을 지원합니다.",
+          zh: "数据工程涉及构建数据管道。我们使用 Airflow、dbt 和 Kafka 来设计可靠的管道以支持实时数据流。",
+          ar: "تتضمن هندسة البيانات إنشاء مسارات قوية لاستيعاب البيانات وتحويلها. نقوم بتصميم مسارات ETL/ELT موثوقة باستخدام Airflow و dbt و Kafka."
+        };
         await addMessage(
           'assistant',
-          "Data Engineering involves constructing robust pipelines to ingest and transform data. HyperCode designs reliable ETL/ELT pipelines using tools like Apache Airflow, dbt, Fivetran, and Kafka to support real-time data streaming.",
-          ['📅 Schedule Consultation', '📊 Business Intelligence']
+          responseMap[locale] || responseMap.en,
+          [t('actions.schedule'), t('actions.bi')]
         );
-      } else if (query.includes('web development') || query === '🌐 web development') {
+      } else if (query.includes('web development') || query === webText) {
+        const responseMap: Record<string, string> = {
+          en: "Web Development is a core service at HyperCode. We design and build modern, scalable, secure, and high-performance custom web applications using React, Next.js, TypeScript, Node.js, and cloud platforms like AWS and Azure.",
+          es: "El Desarrollo Web es un servicio principal de HyperCode. Diseñamos y construimos aplicaciones web personalizadas, escalables y seguras utilizando React, Next.js, TypeScript y Node.js.",
+          fr: "Le développement web est un service phare chez HyperCode. Nous créons des applications modernes en React et Next.js.",
+          de: "Webentwicklung ist eine Kernkompetenz von HyperCode. Wir bauen moderne Webanwendungen mit React und Next.js.",
+          it: "Lo sviluppo web è un servizio fondamentale in HyperCode. Progettiamo applicazioni moderne con React e Next.js.",
+          pt: "O desenvolvimento web é o principal serviço da HyperCode. Criamos aplicações modernas com React e Next.js.",
+          nl: "Webontwikkeling is een kernactiviteit van HyperCode. Wij ontwikkelen applicaties met React en Next.js.",
+          ja: "Web開発はHyperCodeのコアサービスです。React、Next.js、TypeScript、Node.jsを使用して安全なWebアプリを構築します。",
+          ko: "웹 개발은 HyperCode의 핵심 서비스입니다. React, Next.js, TypeScript, Node.js를 사용해 안전한 웹 앱을 구축합니다.",
+          zh: "Web 开发是 HyperCode 的核心服务。我们使用 React、Next.js、TypeScript 和 Node.js 开发安全的 Web 应用。",
+          ar: "تطوير الويب هو خدمة أساسية في هايبر كود. نحن نصمم ونبني تطبيقات ويب مخصصة باستخدام React و Next.js و TypeScript و Node.js."
+        };
         await addMessage(
           'assistant',
-          "Web Development is a core service at HyperCode. We design and build modern, scalable, secure, and high-performance custom web applications using React, Next.js, TypeScript, Node.js, and cloud platforms like AWS and Azure.",
-          ['📅 Schedule Consultation', '📊 Business Intelligence']
+          responseMap[locale] || responseMap.en,
+          [t('actions.schedule'), t('actions.bi')]
         );
-      } else if (query.includes('schedule consultation') || query === '📅 schedule consultation' || query.includes('book')) {
+      } else if (query.includes('schedule consultation') || query === scheduleText || query.includes('book') || query.includes('reservar') || query.includes('reserveren') || query.includes('予約') || query.includes('예약')) {
         setActiveFlow('consultation');
         setFlowStep(0);
-        await addMessage('assistant', "Let's get your consultation scheduled. What is your full name?");
-      } else if (query.includes('talk to a consultant') || query === '💬 talk to a consultant' || query.includes('advisor')) {
+        await addMessage('assistant', t('flows.consultation.name'));
+      } else if (query.includes('talk to a consultant') || query === talkText || query.includes('hablar con un consultor') || query.includes('conseiller') || query.includes('berater') || query.includes('consulente') || query.includes('相談')) {
         setActiveFlow('lead_qualification');
         setFlowStep(0);
-        await addMessage('assistant', "What type of organization do you represent?", [
+        await addMessage('assistant', t('flows.lead.companyType'), [
           'Startup',
           'SMB',
           'Enterprise',
           'Government'
         ]);
-      } else if (query === '❌ no thanks') {
-        await addMessage('assistant', "Alright! Let me know if you need help with any other Business Intelligence or IT staffing topics.");
+      } else if (query === noThanksText) {
+        await addMessage('assistant', t('noThanks'));
       } else {
         // Run FAQ matcher
         const faqResult = handleFAQ(text);
@@ -460,8 +564,8 @@ export function AIAssistant() {
           // Low confidence escalation
           await addMessage(
             'assistant',
-            "I want to make sure you get the most accurate information. Would you like to speak directly with a HyperCode advisor?",
-            ['📅 Schedule Consultation', '💬 Talk to a Consultant', '❌ No thanks']
+            t('escalation'),
+            [t('actions.schedule'), t('actions.talk'), t('actions.noThanks')]
           );
         }
       }
@@ -476,20 +580,22 @@ export function AIAssistant() {
     setActiveFlow('none');
     setFlowStep(0);
     setFlowData({});
-    addMessage('assistant', "Intake process cancelled. How else can I assist you?", [
-      '🌐 Web Development',
-      '📊 Business Intelligence',
-      '📈 Data Analytics',
-      '🏢 IT Staffing',
-      '☁ Data Engineering',
-      '📅 Schedule Consultation'
+    addMessage('assistant', t('cancelFlowMsg'), [
+      t('actions.web'),
+      t('actions.bi'),
+      t('actions.analytics'),
+      t('actions.staffing'),
+      t('actions.de'),
+      t('actions.schedule')
     ]);
   };
 
   if (!mounted) return null;
 
+  const isRtl = locale === 'ar';
+
   return (
-    <div className="fixed bottom-6 right-6 z-[100] font-sans">
+    <div className={`fixed bottom-6 ${isRtl ? 'left-6' : 'right-6'} z-[100] font-sans`}>
       {/* Floating Chat Bubble Button */}
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
@@ -509,42 +615,42 @@ export function AIAssistant() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 50, scale: 0.9 }}
             transition={{ type: 'spring', duration: 0.4 }}
-            className="fixed bottom-24 right-0 sm:right-6 w-full sm:w-[420px] h-[calc(100vh-120px)] sm:h-[580px] bg-slate-950/90 border border-white/10 dark:border-white/5 backdrop-blur-2xl rounded-t-2xl sm:rounded-2xl shadow-2xl flex flex-col overflow-hidden z-40"
+            className={`fixed bottom-24 ${isRtl ? 'left-0 sm:left-6' : 'right-0 sm:right-6'} w-full sm:w-[420px] h-[calc(100vh-120px)] sm:h-[580px] bg-slate-950/90 border border-white/10 dark:border-white/5 backdrop-blur-2xl rounded-t-2xl sm:rounded-2xl shadow-2xl flex flex-col overflow-hidden z-40`}
           >
             {/* Header */}
-            <div className="bg-slate-900/80 px-6 py-4 border-b border-white/10 flex justify-between items-center flex-shrink-0">
-              <div className="flex items-center space-x-3 text-left">
+            <div className={`bg-slate-900/80 px-6 py-4 border-b border-white/10 flex justify-between items-center flex-shrink-0 ${isRtl ? 'flex-row-reverse' : ''}`}>
+              <div className={`flex items-center space-x-3 text-left ${isRtl ? 'flex-row-reverse space-x-reverse text-right' : ''}`}>
                 <div className="w-8 h-8 rounded-lg bg-blue-600/20 border border-blue-500/30 flex items-center justify-center">
                   <Sparkles size={16} className="text-blue-400" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-bold text-white tracking-wide leading-none">HyperCode AI</h3>
-                  <span className="text-[9px] text-slate-400 tracking-wider mt-1 block uppercase">BI & Staffing Consultant</span>
+                  <h3 className="text-sm font-bold text-white tracking-wide leading-none">{t('title')}</h3>
+                  <span className="text-[9px] text-slate-400 tracking-wider mt-1 block uppercase">{t('online')}</span>
                 </div>
               </div>
-              <div className="flex items-center space-x-3">
+              <div className={`flex items-center space-x-3 ${isRtl ? 'flex-row-reverse space-x-reverse' : ''}`}>
                 <div className="flex items-center space-x-1.5 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
                   <span className="w-1 h-1 rounded-full bg-emerald-400 animate-pulse" />
-                  <span className="text-[8px] font-bold text-emerald-400">ONLINE</span>
+                  <span className="text-[8px] font-bold text-emerald-400">{t('online')}</span>
                 </div>
                 {activeFlow !== 'none' && (
                   <button
                     onClick={cancelFlow}
                     className="text-[9px] font-bold text-red-400 hover:text-red-300 bg-red-500/10 border border-red-500/20 px-2 py-0.5 rounded flex items-center gap-1 cursor-pointer"
                   >
-                    Cancel
+                    {t('cancel')}
                   </button>
                 )}
               </div>
             </div>
 
             {/* Messages Area */}
-            <div className="flex-1 overflow-y-auto p-6 space-y-4 text-left">
+            <div className={`flex-1 overflow-y-auto p-6 space-y-4 ${isRtl ? 'text-right' : 'text-left'}`}>
               {messages.map((msg, i) => (
                 <div key={msg.id} className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}>
                   {/* Sender name label */}
                   <span className="text-[9px] text-slate-500 font-semibold mb-1 uppercase tracking-wider">
-                    {msg.sender === 'user' ? 'You' : 'HyperCode Consultant'}
+                    {msg.sender === 'user' ? t('you') : t('consultant')}
                   </span>
                   
                   {/* Message bubble */}
@@ -560,7 +666,7 @@ export function AIAssistant() {
 
                   {/* Quick Action Buttons */}
                   {msg.quickActions && msg.quickActions.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mt-3 max-w-[95%]">
+                    <div className={`flex flex-wrap gap-2 mt-3 max-w-[95%] ${isRtl ? 'justify-end' : ''}`}>
                       {msg.quickActions.map((action, idx) => (
                         <button
                           key={idx}
@@ -579,7 +685,7 @@ export function AIAssistant() {
               {isTyping && (
                 <div className="flex flex-col items-start">
                   <span className="text-[9px] text-slate-500 font-semibold mb-1 uppercase tracking-wider">
-                    HyperCode Consultant
+                    {t('consultant')}
                   </span>
                   <div className="bg-white/5 border border-white/5 rounded-2xl rounded-tl-none px-4 py-3.5 flex items-center space-x-1.5">
                     <span className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
@@ -598,7 +704,7 @@ export function AIAssistant() {
                   e.preventDefault();
                   processUserInput(inputValue);
                 }}
-                className="flex items-center space-x-2"
+                className={`flex items-center space-x-2 ${isRtl ? 'flex-row-reverse space-x-reverse' : ''}`}
               >
                 <input
                   type="text"
@@ -606,10 +712,10 @@ export function AIAssistant() {
                   onChange={(e) => setInputValue(e.target.value)}
                   placeholder={
                     activeFlow === 'lead_qualification'
-                      ? "Choose option or type message..."
+                      ? t('placeholder')
                       : activeFlow === 'consultation'
-                      ? "Type details..."
-                      : "Ask about BI, Analytics, Staffing..."
+                      ? t('placeholder')
+                      : t('placeholder')
                   }
                   className="flex-1 bg-white/5 border border-white/10 hover:border-white/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-all"
                 />
@@ -618,11 +724,11 @@ export function AIAssistant() {
                   disabled={!inputValue.trim()}
                   className="h-[44px] w-[44px] flex items-center justify-center bg-blue-600 hover:bg-blue-700 disabled:bg-slate-800 text-white rounded-xl transition-colors cursor-pointer"
                 >
-                  <Send size={16} />
+                  <Send size={16} className={isRtl ? 'rotate-180' : ''} />
                 </button>
               </form>
               <div className="text-[8px] text-slate-500 mt-2 text-center tracking-wider uppercase font-semibold">
-                🔒 Secured Cloud Platform
+                {t('secured')}
               </div>
             </div>
 

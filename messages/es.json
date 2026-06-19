@@ -1,0 +1,462 @@
+{
+  "Common": {
+    "home": "Inicio",
+    "about": "Nosotros",
+    "solutions": "Soluciones",
+    "careers": "Carreras",
+    "contact": "Contacto",
+    "consultation": "Programar Consulta",
+    "submit": "Enviar",
+    "sending": "Enviando...",
+    "readMore": "Leer Artículo",
+    "back": "Atrás",
+    "success": "Éxito",
+    "error": "Error",
+    "all": "Todo",
+    "viewCaseStudies": "Ver Casos de Éxito",
+    "loading": "Cargando...",
+    "cancel": "Cancelar"
+  },
+  "Navigation": {
+    "home": "Inicio",
+    "solutions": "Soluciones",
+    "about": "Nosotros",
+    "careers": "Carreras",
+    "contact": "Contacto",
+    "schedule": "Programar Consulta",
+    "dataAnalytics": "Datos y Analítica",
+    "businessIntelligence": "Inteligencia de Negocios",
+    "dataAnalyticsDesc": "Paneles interactivos y sistemas de informes ejecutivos.",
+    "predictiveAnalytics": "Análisis de Datos",
+    "predictiveAnalyticsDesc": "Modelado predictivo y conocimientos estadísticos.",
+    "dataWarehousing": "Almacenamiento de Datos",
+    "dataWarehousingDesc": "Arquitectura de nube escalable y canalizaciones ETL.",
+    "dataEngineering": "Ingeniería de Datos",
+    "dataEngineeringDesc": "Desarrollo e integración de canalizaciones de datos sólidas.",
+    "digitalSolutions": "Soluciones Digitales",
+    "webDevelopment": "Desarrollo Web",
+    "webDevelopmentDesc": "Aplicaciones React y Next.js modernas y de alto rendimiento.",
+    "customApplications": "Aplicaciones Personalizadas",
+    "customApplicationsDesc": "Sistemas SaaS a medida y herramientas comerciales personalizadas.",
+    "apiIntegrations": "Integraciones de API",
+    "apiIntegrationsDesc": "Conexión de ERP internos y sistemas de terceros.",
+    "cloudApplications": "Aplicaciones en la Nube",
+    "cloudApplicationsDesc": "Implementación de aplicaciones seguras en AWS y Azure.",
+    "consultingServices": "Servicios de Consultoría",
+    "businessAnalysis": "Análisis de Negocios",
+    "businessAnalysisDesc": "Alineación de la estrategia tecnológica con los objetivos de negocio.",
+    "technologyConsulting": "Consultoría Tecnológica",
+    "technologyConsultingDesc": "Orientación estratégica sobre la selección de pilas tecnológicas modernas.",
+    "agileProject": "Gestión de Proyectos Ágiles",
+    "agileProjectDesc": "Entrega eficiente e iterativa de proyectos técnicos complejos.",
+    "staffingSolutions": "Soluciones de Personal",
+    "itStaffing": "Personal de TI",
+    "itStaffingDesc": "Búsqueda y colocación de talento técnico especializado.",
+    "staffAugmentation": "Aumento de Personal",
+    "staffAugmentationDesc": "Escalamiento fluido de su equipo técnico existente.",
+    "contractStaffing": "Personal por Contrato",
+    "contractStaffingDesc": "Recursos contractuales flexibles para necesidades basadas en proyectos.",
+    "directPlacement": "Colocación Directa",
+    "directPlacementDesc": "Soluciones de contratación permanente para funciones técnicas clave."
+  },
+  "Footer": {
+    "tagline": "Empoderando a las empresas a través de soluciones de datos, tecnología y talento",
+    "connect": "Conéctese Con Nosotros",
+    "copyright": "© 2026 HyperCode. Todos los derechos reservados.",
+    "privacy": "Política de Privacidad",
+    "terms": "Términos de Servicio"
+  },
+  "Hero": {
+    "badge": "Socio de Transformación Digital Empresarial",
+    "title": "Empoderando a las empresas a través de soluciones de ",
+    "titleHighlight": "datos, tecnología y talento",
+    "subtitle": "Combinamos desarrollo web personalizado, ingeniería de datos en la nube, análisis avanzado y personal de TI estratégico para acelerar el crecimiento corporativo.",
+    "talkToConsultant": "Hablar con un Consultor",
+    "nodes": {
+      "sources": "Fuentes de Datos",
+      "sourcesDesc": "Ingiere bases de datos directas, API, archivos en la nube y eventos de transmisión.",
+      "engineering": "Ingeniería de Datos",
+      "engineeringDesc": "Crea canalizaciones sólidas de ETL/ELT y automatiza la integración de esquemas.",
+      "platform": "Plataforma de Datos",
+      "platformDesc": "Consolida lagos de almacenamiento y almacenes de datos seguros en la nube.",
+      "analytics": "Analítica",
+      "analyticsDesc": "Implementa modelos de pronóstico avanzados y rastrea tendencias estadísticas.",
+      "bi": "Inteligencia de Negocios",
+      "biDesc": "Traduce activos de datos limpios en informes visuales y paneles.",
+      "outcomes": "Resultados Estratégicos",
+      "outcomesDesc": "Empodera a las partes interesadas ejecutivas para impulsar el crecimiento operativo y el ROI."
+    }
+  },
+  "Services": {
+    "badge": "Competencias Clave",
+    "title": "Servicios y Soluciones Empresariales",
+    "subtitle": "Desplegando equipos integrados para diseñar canalizaciones de datos en la nube, aplicaciones web personalizadas y plataformas analíticas ágiles.",
+    "items": {
+      "bi": {
+        "title": "Inteligencia de Negocios",
+        "desc": "Conexión de depósitos de datos sin procesar a paneles interactivos (Power BI, Tableau) para el seguimiento del rendimiento ejecutivo."
+      },
+      "de": {
+        "title": "Ingeniería de Datos",
+        "desc": "Estructuración de almacenes en la nube (Snowflake, Databricks) y scripting de canalizaciones de alto volumen utilizando dbt y Airflow."
+      },
+      "web": {
+        "title": "Desarrollo Web",
+        "desc": "Codificación de plataformas React y Next.js personalizadas optimizadas para alta disponibilidad, velocidad de API y seguridad empresarial."
+      },
+      "staffing": {
+        "title": "Aumento de Personal de TI",
+        "desc": "Colocación de ingenieros de nube, desarrolladores de BI y Scrum Masters verificados para acelerar sus plazos de integración."
+      }
+    }
+  },
+  "WhyHypercode": {
+    "badge": "Por qué HyperCode",
+    "title": "Excelencia en Ingeniería, Asociación Estratégica",
+    "desc": "Nos diferenciamos de las agencias de desarrollo y personal estándar. Tratamos las arquitecturas de los clientes como propias, incorporando rigurosos controles de seguridad y bucles de tutoría para garantizar la transferencia operativa completa.",
+    "stats": {
+      "projects": "Proyectos Completados",
+      "satisfaction": "Satisfacción del Cliente",
+      "consultants": "Consultores Colocados"
+    }
+  },
+  "CaseStudies": {
+    "badge": "CASO DE ESTUDIO",
+    "title": "Historia de Éxito Destacada",
+    "subtitle": "Conozca cómo ayudamos a las organizaciones empresariales a resolver bloqueos de datos y configurar arquitecturas escalables.",
+    "featuredLabel": "HISTORIA DE ÉXITO DESTACADA",
+    "challenge": "Desafío",
+    "solution": "Solución",
+    "outcome": "Resultado",
+    "story": {
+      "category": "HISTORIA DE ÉXITO DESTACADA",
+      "title": "Modernización del Almacén de Datos",
+      "subtitle": "Consolidación de Nube HIPAA",
+      "challengeText": "Los registros de pacientes en 15 ubicaciones separadas estaban fragmentados en bases de datos heredadas, creando demoras en los análisis e inquietudes sobre auditorías HIPAA.",
+      "solutionText": "Consolidó todas las bases de datos en un almacén de datos Snowflake seguro y conforme a HIPAA utilizando canalizaciones de integración de datos de Azure.",
+      "outcomeText": "Redujo los tiempos de ingesta de datos en un 200%, ahorró $3.2 millones en gastos generales anuales de bases de datos y obtuvo calificaciones de auditoría de cumplimiento del 100%."
+    }
+  },
+  "CTA": {
+    "title": "¿Listo para Transformar su Pila Tecnológica?",
+    "subtitle": "Programe una sesión directa con un arquitecto de soluciones de HyperCode para revisar sus esquemas de base de datos o requisitos de canalización de aplicaciones.",
+    "button": "Programar Consulta"
+  },
+  "About": {
+    "title": "Construyendo asociaciones a largo plazo a través de la",
+    "titleHighlight": "experiencia, la innovación y la confianza",
+    "subtitle": "HyperCode es una firma de consultoría y tecnología dedicada a ayudar a las organizaciones a resolver desafíos comerciales complejos a través de soluciones basadas en datos, tecnología moderna y talento especializado.",
+    "storyTitle": "Nuestra Historia",
+    "storyP1": "HyperCode se fundó con un objetivo claro: cerrar la brecha entre la ingeniería de software personalizada, las canalizaciones de datos sin procesar y la toma de decisiones ejecutivas. Con los años, nos hemos convertido en un socio estratégico de confianza para empresas de Fortune 500 y agencias gubernamentales en todo Estados Unidos.",
+    "storyP2": "Lo que nos diferencia es nuestro compromiso de combinar la ejecución técnica con la consultoría centrada en el ser humano. Creemos que los paneles y las bases de datos modernos son solo tan efectivos como los equipos que los utilizan.",
+    "mission": "Nuestra Misión",
+    "missionDesc": "Empoderar a las organizaciones para resolver desafíos complejos mediante la entrega de arquitecturas de datos sólidas, software moderno y talento técnico de alto rendimiento que impulsen el crecimiento sostenible.",
+    "vision": "Nuestra Visión",
+    "visionDesc": "Servir como el socio preferido de consultoría y talento para las organizaciones que aprovechan los datos y la tecnología en la nube como ventajas competitivas distintivas, conocido por su claridad técnica y ejecución.",
+    "pillars": "PILares ORGANIZACIONALES",
+    "valuesTitle": "Nuestros Valores Fundamentales",
+    "approachTitle": "Nuestro Enfoque",
+    "approachDesc": "Operamos con un enfoque de consultoría transparente basado en sprints. Cada compromiso comienza con una auditoría estricta de datos y termina con bucles de tutoría para garantizar que su equipo interno controle por completo los sistemas modernos en la nube que implementamos.",
+    "presenceTitle": "Presencia Nacional",
+    "presenceDesc": "HyperCode respalda a clientes corporativos y del sector público en todo Estados Unidos. Con recursos de consultoría distribuidos en los 50 estados, movilizamos rápidamente equipos Scrum, desarrolladores y analistas para adaptarnos a sus plazos exactos.",
+    "whyChooseTitle": "Por Qué los Clientes Eligen HyperCode",
+    "whyChooseSubtitle": "Ofrecemos precisión de ingeniería, cumplimiento empresarial y despliegue rápido de talento diseñado para la confiabilidad a largo plazo.",
+    "whyChoose": {
+      "leadership": {
+        "title": "Liderazgo Técnico Comprobado",
+        "desc": "Nuestros arquitectos e ingenieros aportan décadas de experiencia colectiva diseñando sistemas para la escala empresarial y la seguridad del sector público."
+      },
+      "custom": {
+        "title": "Soluciones Agnósticas y Escalables",
+        "desc": "Construimos arquitecturas adaptadas a sus requisitos específicos de sistema, garantizando una integración de datos fluida y sin dependencia de un solo proveedor."
+      },
+      "talent": {
+        "title": "Movilización Rápida de Talento",
+        "desc": "Le conectamos con un grupo nacional preseleccionado de desarrolladores senior, ingenieros de datos y Scrum masters listo para implementarse en semanas."
+      },
+      "handover": {
+        "title": "Mentoría y Transferencia Completa",
+        "desc": "No le dejamos dependiente de nosotros. Cada compromiso incluye documentación estructurada y bucles de capacitación para una transferencia completa del equipo."
+      }
+    },
+    "stats": {
+      "projects": "250+",
+      "projectsLabel": "Proyectos Completados",
+      "satisfaction": "98%",
+      "satisfactionLabel": "Satisfacción del Cliente",
+      "consultants": "1.200+",
+      "consultantsLabel": "Consultores Colocados",
+      "experience": "15+",
+      "experienceLabel": "Años de Experiencia Combinada"
+    },
+    "values": {
+      "integrity": {
+        "title": "Integridad",
+        "desc": "Honestidad, cumplimiento y transparencia absoluta en todos los sistemas que diseñamos y equipos que implementamos."
+      },
+      "innovation": {
+        "title": "Innovación",
+        "desc": "Investigar continuamente bases de datos en la nube modernas y herramientas analíticas para mantener a los clientes a la vanguardia."
+      },
+      "partnership": {
+        "title": "Asociación",
+        "desc": "Tratar a los equipos de los clientes como si fueran nuestros, ofreciendo bucles de tutoría directa y revisiones posteriores a la implementación."
+      },
+      "excellence": {
+        "title": "Excelencia",
+        "desc": "Entregar sistemas de alto rendimiento, seguros y verificados para el cumplimiento que superen auditorías estrictas."
+      }
+    }
+  },
+  "Careers": {
+    "title": "Construya el Futuro de la Ingeniería de Datos y la Web",
+    "subtitle": "Únase a un equipo de ingenieros de software expertos, arquitectos de soluciones y directores de analítica que crean sistemas modernos.",
+    "benefitsTitle": "¿Por qué trabajar en HyperCode?",
+    "benefits": {
+      "projects": {
+        "title": "Proyectos de Alto Impacto",
+        "desc": "Trabaje directamente con empresas Fortune 500 y agencias gubernamentales en migraciones a la nube e implementaciones de software críticas para el negocio."
+      },
+      "growth": {
+        "title": "Aprendizaje Continuo",
+        "desc": "Acceda a certificaciones pagadas, campamentos de ingeniería y vías de tutoría estructuradas para avanzar en sus habilidades técnicas."
+      },
+      "flexibility": {
+        "title": "Entorno Primero en Remoto",
+        "desc": "Adoptamos la colaboración distribuida, proporcionando configuraciones de hardware de primer nivel y configuraciones de trabajo flexibles."
+      },
+      "compensation": {
+        "title": "Compensación Competitiva",
+        "desc": "Disfrute de atención médica de primera calidad, plan 401(k) con aportación de la empresa, tiempo libre pagado y bonificaciones anuales basadas en el rendimiento."
+      }
+    },
+    "openPositions": "VACANTES ACTUALES",
+    "positionsTitle": "Únase a Nuestras Divisiones Técnicas",
+    "positions": {
+      "de": {
+        "title": "Ingeniero de Datos Senior",
+        "desc": "Diseñar y construir infraestructura de canalización empresarial en Snowflake o Databricks utilizando dbt, SQL y Python."
+      },
+      "bi": {
+        "title": "Arquitecto de BI (Power BI)",
+        "desc": "Diseñar estructuras semánticas unificadas y desarrollar modelos DAX de alta velocidad para paneles ejecutivos."
+      },
+      "web": {
+        "title": "Desarrollador React / Next.js Senior",
+        "desc": "Desarrollar aplicaciones web seguras y de alto rendimiento. Se requiere experiencia con TypeScript, API y Tailwind."
+      },
+      "pm": {
+        "title": "Scrum Master Técnico",
+        "desc": "Liderar equipos de ingeniería distribuidos, ejecutar sprints, eliminar bloqueos y coordinar los entregables de los clientes."
+      }
+    },
+    "applyNow": "Aplicar Ahora",
+    "faqTitle": "Preguntas Frecuentes",
+    "faq": {
+      "q1": "¿Cómo es el proceso típico de entrevista?",
+      "a1": "Nuestra tubería de entrevistas está estructurada para verificar habilidades técnicas y adecuación al proyecto. Comienza con una llamada inicial del reclutador, seguida de una discusión de arquitectura del sistema en vivo con un líder de ingeniería, y concluye con una revisión de alineación del equipo.",
+      "q2": "¿Ofrecen patrocinio de visa?",
+      "a2": "Sí, para funciones técnicas senior específicas, apoyamos transferencias H-1B y patrocinio de tarjeta verde según los requisitos del proyecto y los niveles de habilidad técnica.",
+      "q3": "¿Qué recursos de capacitación ofrecen?",
+      "a3": "Ofrecemos patrocinio financiero completo para certificaciones en la nube (AWS, Azure, Snowflake, Databricks), acceso a plataformas de aprendizaje empresarial y sesiones de capacitación interna estructuradas dirigidas por nuestros Directores de Práctica."
+    }
+  },
+  "Contact": {
+    "title": "Conéctese con Nosotros",
+    "subtitle": "Póngase en contacto con nuestros asesores de soluciones para discutir aplicaciones web, implementación de inteligencia de negocios o necesidades de personal.",
+    "headquarters": "Sede Corporativa",
+    "email": "Consultas por Correo",
+    "phone": "Soporte Telefónico",
+    "formTitle": "Envíenos un Mensaje",
+    "formSubtitle": "Complete el formulario a continuación y nuestros directores de práctica se comunicarán con usted en un plazo de 24 horas.",
+    "form": {
+      "fullName": "Nombre Completo",
+      "emailAddress": "Dirección de Correo Electrónico",
+      "companyName": "Nombre de la Empresa",
+      "phoneNumber": "Número de Teléfono",
+      "subject": "Asunto",
+      "selectSubject": "Seleccione un asunto",
+      "message": "Mensaje",
+      "sendMessage": "Enviar Mensaje",
+      "nameError": "El nombre debe tener al menos 2 caracteres",
+      "emailError": "Dirección de correo electrónico no válida",
+      "companyError": "Nombre de la empresa requerido",
+      "phoneError": "Número de teléfono válido requerido",
+      "subjectError": "Por favor seleccione un asunto",
+      "messageError": "El mensaje debe tener al menos 10 caracteres",
+      "successTitle": "¡Mensaje Enviado con Éxito!",
+      "successText": "Gracias por contactarnos. Nuestro equipo revisará su consulta y se comunicará con usted en un plazo de 24 horas.",
+      "errorSubmit": "No se pudo enviar el formulario. Por favor, inténtelo de nuevo."
+    },
+    "subjects": {
+      "general": "Consulta General",
+      "web": "Consulta sobre Desarrollo Web",
+      "partnership": "Oportunidad de Asociación",
+      "vendor": "Consulta de Proveedores",
+      "career": "Pregunta sobre Carreras",
+      "media": "Solicitud de Medios",
+      "other": "Otro"
+    }
+  },
+  "Consultation": {
+    "title": "Programar una Consulta",
+    "subtitle": "Reserve una sesión de análisis técnico con nuestros directores de ingeniería para auditar sus sistemas existentes o trazar canalizaciones de desarrollo.",
+    "formTitle": "Solicitar Sesión de Admisión del Proyecto",
+    "formSubtitle": "Comparta los requisitos de su proyecto y lo asignaremos con el arquitecto de soluciones adecuado.",
+    "form": {
+      "serviceInterest": "Servicio de Interés",
+      "selectService": "Seleccione un servicio de interés",
+      "budgetRange": "Rango de Presupuesto del Proyecto",
+      "selectBudget": "Seleccione un rango de presupuesto",
+      "timeline": "Plazo del Proyecto",
+      "selectTimeline": "Seleccione un plazo",
+      "description": "Descripción del Proyecto",
+      "placeholderDescription": "Describa brevemente sus objetivos, la tecnología requerida y los desafíos técnicos actuales...",
+      "submitRequest": "Solicitar Consulta",
+      "serviceError": "Por favor seleccione un servicio de interés",
+      "budgetError": "Por favor seleccione un rango de presupuesto",
+      "timelineError": "Por favor seleccione un plazo",
+      "messageError": "Por favor comparta algunos detalles sobre su proyecto (mín. 10 caracteres)",
+      "successTitle": "¡Consulta Solicitada!",
+      "successText": "Gracias por su solicitud. Nuestro arquitecto de soluciones se comunicará con usted dentro de las 24 horas para programar nuestra presentación del proyecto.",
+      "errorSubmit": "No se pudo enviar la solicitud de consulta. Por favor, inténtelo de nuevo."
+    },
+    "budgets": {
+      "b1": "Menos de $10K",
+      "b2": "$10K-$50K",
+      "b3": "$50K-$100K",
+      "b4": "$100K+",
+      "b5": "No Estoy Seguro Aún"
+    },
+    "timelines": {
+      "t1": "Inmediatamente",
+      "t2": "Dentro de 30 Días",
+      "t3": "Dentro de 3 Meses",
+      "t4": "Explorando Opciones"
+    }
+  },
+  "Chatbot": {
+    "title": "HyperCode AI",
+    "online": "EN LÍNEA",
+    "cancel": "Cancelar",
+    "you": "Tú",
+    "consultant": "Consultor de HyperCode",
+    "placeholder": "Pregunte sobre BI, analítica, personal...",
+    "welcome": "Hola 👋\n\nSoy HyperCode AI.\n\nPuedo ayudarlo a conocer nuestros servicios de Desarrollo Web, Inteligencia de Negocios, Análisis de Datos, Ingeniería de Datos y Personal de TI.\n\n¿Cómo puedo ayudarlo hoy?",
+    "escalation": "Quiero asegurarme de que obtenga la información más precisa. ¿Le gustaría hablar directamente con un asesor de HyperCode?",
+    "cancelFlowMsg": "Proceso de admisión cancelado. ¿De qué otra manera puedo asistirlo?",
+    "noThanks": "¡Entendido! Avíseme si necesita ayuda con cualquier otro tema de Inteligencia de Negocios o personal de TI.",
+    "secured": "🔒 Plataforma de Nube Asegurada",
+    "actions": {
+      "web": "🌐 Desarrollo Web",
+      "bi": "📊 Inteligencia de Negocios",
+      "analytics": "📈 Análisis de Datos",
+      "staffing": "🏢 Personal de TI",
+      "de": "☁ Ingeniería de Datos",
+      "schedule": "📅 Programar Consulta",
+      "talk": "💬 Hablar con un Consultor",
+      "noThanks": "❌ No, gracias"
+    },
+    "flows": {
+      "lead": {
+        "companyType": "¿Qué tipo de organización representa?",
+        "serviceInterest": "¿En qué servicio está más interesado?",
+        "challenge": "¿Qué desafío específico de datos o consultoría está intentando resolver? (por ejemplo, paneles de Power BI lentos, latencia en la canalización de datos, cuello de botella en la administración de bases de datos)",
+        "timeline": "¿Qué tan pronto necesita asistencia con este proyecto?",
+        "success": "¡Gracias! He calificado su consulta (Puntuación de Prioridad de Enrutamiento: {score}/6) y notificado a nuestro equipo de consultores ejecutivos. ¿Le gustaría programar una consulta formal ahora?"
+      },
+      "consultation": {
+        "name": "Comencemos a programar su consulta. ¿Cuál es su nombre completo?",
+        "company": "Gracias. ¿Qué empresa representa?",
+        "email": "¿Cuál es su dirección de correo electrónico profesional?",
+        "phone": "¿Cuál es su número de teléfono?",
+        "service": "¿Con qué área de servicio necesita ayuda?",
+        "description": "Por favor, describa brevemente su proyecto o requisitos.",
+        "success": "¡Excelente! Su solicitud de consulta ha sido registrada. Un asesor de HyperCode se comunicará con usted dentro de las 24 horas hábiles para confirmar el horario. ¡Gracias!"
+      },
+      "staffing": {
+        "roles": "Registremos sus requisitos de personal. ¿Para qué puestos está contratando?",
+        "timeline": "¿Cuál es su plazo de contratación objetivo?",
+        "teamSize": "¿Cuál es el tamaño del equipo o los recursos necesarios?",
+        "location": "¿Cuál es la preferencia de ubicación?",
+        "name": "Entendido. Proporcione sus datos de contacto para registrar esta solicitud. ¿Cuál es su nombre completo?",
+        "company": "¿Cuál es el nombre de su empresa?",
+        "email": "¿Cuál es su dirección de correo electrónico profesional?",
+        "phone": "¿Cuál es su número de teléfono?",
+        "success": "¡Gracias! Su solicitud de personal ha sido registrada en nuestra base de datos. Nuestros reclutadores técnicos buscarán en nuestra red de talentos expertos y se comunicarán en un plazo de 24 horas con perfiles coincidentes."
+      }
+    }
+  },
+  "Solutions": {
+    "title": "Nuestras Soluciones",
+    "subtitle": "Consultoría tecnológica de nivel empresarial y sistemas analíticos diseñados para alta disponibilidad y crecimiento.",
+    "tabOverview": "Resumen",
+    "tabServices": "Servicios Detallados",
+    "businessAnalysis": {
+      "title": "Análisis de Negocios",
+      "subtitle": "Traducir los Objetivos Empresariales en Estrategia Tecnológica",
+      "p1": "Colaboramos con el liderazgo para mapear los flujos de trabajo corporativos, definir métricas de bases de datos y planificar hojas de ruta de aplicaciones.",
+      "p2": "Nuestros analistas proporcionan el enlace lógico entre el desarrollo de software y el valor comercial central."
+    },
+    "technologyConsulting": {
+      "title": "Consultoría Tecnológica",
+      "subtitle": "Auditorías de Arquitectura de Pilas Tecnológicas Estratégicas",
+      "p1": "Revisamos las estructuras de seguridad en la nube, evaluamos los costos de licencia de bases de datos y comparamos soluciones de nube como Snowflake frente a Fabric.",
+      "p2": "Ayudamos a los CIO a seleccionar pilas tecnológicas que equilibren la velocidad del desarrollador, los costos de licencia y el escalamiento del cómputo."
+    },
+    "agileProject": {
+      "title": "Gestión de Proyectos Ágiles",
+      "subtitle": "Ejecución Iterativa de Sprints",
+      "p1": "Desplegamos Scrum Masters certificados para ejecutar canalizaciones ágiles, eliminar bloqueos de desarrolladores y mantener las migraciones en marcha.",
+      "p2": "Combinamos una gestión de proyectos rigurosa con total transparencia para entregas de proyectos predecibles y a tiempo."
+    }
+  },
+  "Staffing": {
+    "title": "Personal de TI y Aumento de Equipos",
+    "subtitle": "Acelere el desarrollo y las migraciones de bases de datos con ingenieros en la nube, desarrolladores de software y Scrum Masters verificados.",
+    "whyStaffingTitle": "Escala tu Equipo de Ingeniería al Instante",
+    "whyStaffingDesc": "HyperCode proporciona acuerdos de contratación flexibles para adaptarse a los plazos de su proyecto y los límites de su presupuesto. Nuestra base de datos activa contiene más de 10,000 especialistas en tecnología preseleccionados y certificados en todo Estados Unidos.",
+    "contract": {
+      "title": "Personal por Contrato",
+      "subtitle": "Asignación Flexible de Recursos",
+      "p1": "Despliegue ingenieros especializados para proyectos de 6 a 18 meses para ejecutar migraciones de bases de datos o reconstrucciones de frontend sin gastos generales a largo plazo.",
+      "p2": "Nosotros administramos la nómina, el cumplimiento y los beneficios, mientras usted se concentra en la ejecución del proyecto."
+    },
+    "directPlacement": {
+      "title": "Colocación Directa",
+      "subtitle": "Búsqueda Estratégica de Talento",
+      "p1": "Deje que nuestros reclutadores técnicos ubiquen, evalúen previamente y coloquen líderes o directores de ingeniería permanentes en su división.",
+      "p2": "Verificamos las habilidades técnicas y la alineación del equipo, reduciendo el riesgo de contratación."
+    },
+    "augmentedTitle": "Capacidades de Desarrolladores Aumentados",
+    "augmentedSubtitle": "Nuestro grupo de talentos contiene expertos certificados en plataformas en la nube modernas, modelado analítico y marcos web personalizados.",
+    "timelineTitle": "Plazo de Contratación",
+    "timelineSubtitle": "Nuestra canalización estructurada de colocación de talento garantiza que despleguemos recursos coincidentes en días, no meses."
+  },
+  "Insights": {
+    "title": "Pensamiento de Liderazgo",
+    "subtitle": "Perspectivas, guías y patrones de ingeniería de los directores de consultoría y arquitectos de soluciones de HyperCode.",
+    "allCategories": "Todas las Categorías",
+    "readArticle": "Leer Artículo",
+    "noArticles": "No se encontraron artículos en esta categoría.",
+    "relatedArticles": "Artículos Relacionados",
+    "share": "Compartir Artículo",
+    "newsletterTitle": "Manténgase Actualizado",
+    "newsletterSubtitle": "Suscríbase a nuestro boletín para recibir las últimas ideas y actualizaciones directamente en su bandeja de entrada.",
+    "newsletterPlaceholder": "tu.correo@empresa.com",
+    "newsletterButton": "Suscribirse",
+    "newsletterSuccess": "¡Suscripción exitosa!"
+  },
+  "NotFound": {
+    "title": "Página No Encontrada",
+    "subtitle": "La página que busca no existe o ha sido movida.",
+    "button": "Ir al Inicio"
+  },
+  "cta": {
+    "badge": "PÓNGASE EN CONTACTO",
+    "heading": "¿Listo para impulsar su empresa con soluciones de datos, tecnología y talento?",
+    "description": "Ya sea que necesite desarrollar aplicaciones web de alto rendimiento, optimizar paneles de inteligencia empresarial o ampliar sus equipos de ingeniería, HyperCode tiene la experiencia necesaria para ayudarle.",
+    "primaryButton": "PROGRAMAR CONSULTA",
+    "secondaryButton": "CONTACTAR A HYPERCODE"
+  }
+}
