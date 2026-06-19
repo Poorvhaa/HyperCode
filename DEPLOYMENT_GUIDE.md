@@ -191,9 +191,11 @@ CREATE INDEX idx_newsletter_email ON newsletter_subscribers(email);
 2. Add the following:
 
 ```
-NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+NEXT_PUBLIC_SUPABASE_URL=https://jkobajpxpozalkyeytwb.supabase.co
+
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imprb2JhanB4cG96YWxreWV5dHdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE4ODU0ODgsImV4cCI6MjA5NzQ2MTQ4OH0.55RBYz7X6ODhlzJ7uaT-zR67mOSoN_Mk9-BGngs8rr0
+
+SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imprb2JhanB4cG96YWxreWV5dHdiIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4MTg4NTQ4OCwiZXhwIjoyMDk3NDYxNDg4fQ.mypNqzR-x-oqfmmitSqVv7f1yQLyY9v7NSE2IjOKu0Q
 ```
 
 3. Click "Save"

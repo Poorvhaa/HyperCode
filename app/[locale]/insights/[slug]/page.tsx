@@ -8,6 +8,33 @@ import { getLocalizedArticle, getLocalizedArticles } from '@/lib/insights-locali
 import { routing } from '@/i18n/routing';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Metadata } from 'next';
+import { db } from '@/lib/db';
+
+async function fetchArticle(slug: string, locale: string) {
+  try {
+    const dbArt = await db.getArticleBySlug(slug);
+    if (dbArt && dbArt.published && dbArt.language === locale) {
+      return {
+        slug: dbArt.slug,
+        title: dbArt.title,
+        excerpt: dbArt.excerpt,
+        content: dbArt.content,
+        date: new Date(dbArt.created_at).toLocaleDateString(locale === 'es' ? 'es-ES' : 'en-US', { day: 'numeric', month: 'long', year: 'numeric' }),
+        category: dbArt.category,
+        readTime: `${Math.ceil(dbArt.content.split(/\s+/).length / 200)} min read`,
+        author: {
+          name: 'HyperCode Consultant',
+          role: 'Technical Advisor',
+          avatar: '/placeholder-user.jpg'
+        },
+        related: []
+      };
+    }
+  } catch (err) {
+    console.error('Failed to load DB article by slug:', err);
+  }
+  return getLocalizedArticle(slug, locale);
+}
 
 interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
@@ -31,7 +58,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const resolvedParams = await params;
   const { locale, slug } = resolvedParams;
-  const article = getLocalizedArticle(slug, locale);
+  const article = await fetchArticle(slug, locale);
   
   if (!article) {
     return {
@@ -56,7 +83,7 @@ export default async function ArticlePage({ params }: PageProps) {
   const tc = await getTranslations('Common');
   const tInsights = await getTranslations('Insights');
 
-  const article = getLocalizedArticle(slug, locale);
+  const article = await fetchArticle(slug, locale);
 
   if (!article) {
     notFound();

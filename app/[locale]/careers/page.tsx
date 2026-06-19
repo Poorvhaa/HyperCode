@@ -3,7 +3,6 @@ import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
 import { HiringTimeline } from '@/components/hiring-timeline';
 import { CareersFAQ } from '@/components/careers-faq';
-import { TechnologyExpertise } from '@/components/technology-expertise';
 import {
   Briefcase,
   Users,
@@ -638,8 +637,6 @@ export default async function CareersPage({ params }: Props) {
         </div>
       </section>
 
-      <TechnologyExpertise />
-
       {/* Candidate Benefits Subsection */}
       <section className="py-24 bg-white border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -721,7 +718,7 @@ export default async function CareersPage({ params }: Props) {
                   </div>
                   
                   <Link
-                    href={`/${locale}/contact?position=${encodeURIComponent(position.title)}`}
+                    href={`/${locale}/careers/apply?position=${encodeURIComponent(position.title)}`}
                     className="inline-flex items-center justify-center h-10 px-5 bg-[#0F4C81] text-white font-semibold text-xs rounded-xl hover:bg-[#0c3c66] transition-colors duration-200 flex-shrink-0"
                   >
                     {t('applyNow')}

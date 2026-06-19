@@ -4,6 +4,7 @@ import { Footer } from '@/components/footer';
 import { getLocalizedArticles, getLocalizedCategories } from '@/lib/insights-localizer';
 import { InsightsList } from '@/components/insights-list';
 import { NewsletterForm } from '@/components/newsletter-form';
+import { db } from '@/lib/db';
 import { Suspense } from 'react';
 
 interface Props {
@@ -28,9 +29,43 @@ export default async function InsightsPage({ params }: Props) {
 
   const t = await getTranslations('Insights');
 
-  // Fetch localized articles & categories
-  const localizedArticles = getLocalizedArticles(locale);
+  // Fetch published articles from Supabase
+  let dbArticlesFormatted: any[] = [];
+  try {
+    const dbArticles = await db.getAllArticles();
+    const publishedDbArticles = dbArticles.filter(a => a.published && a.language === locale);
+    dbArticlesFormatted = publishedDbArticles.map(a => ({
+      slug: a.slug,
+      title: a.title,
+      excerpt: a.excerpt,
+      content: a.content,
+      date: new Date(a.created_at).toLocaleDateString(locale === 'es' ? 'es-ES' : 'en-US', { day: 'numeric', month: 'long', year: 'numeric' }),
+      category: a.category,
+      readTime: `${Math.ceil(a.content.split(/\s+/).length / 200)} min read`,
+      author: {
+        name: 'HyperCode Consultant',
+        role: 'Technical Advisor',
+        avatar: '/placeholder-user.jpg'
+      },
+      related: []
+    }));
+  } catch (err) {
+    console.error('Failed to load DB articles for index page:', err);
+  }
+
+  // Fetch localized articles & categories and merge uniquely by slug
+  const staticArticles = getLocalizedArticles(locale);
   const localizedCategories = getLocalizedCategories(locale);
+
+  const seenSlugs = new Set();
+  const mergedArticles = [];
+
+  for (const art of [...dbArticlesFormatted, ...staticArticles]) {
+    if (!seenSlugs.has(art.slug)) {
+      seenSlugs.add(art.slug);
+      mergedArticles.push(art);
+    }
+  }
 
   return (
     <main className="relative w-full bg-white text-left">
@@ -57,7 +92,7 @@ export default async function InsightsPage({ params }: Props) {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Suspense fallback={<div className="text-center py-12 text-slate-500">Loading articles...</div>}>
-            <InsightsList initialArticles={localizedArticles} translatedCategories={localizedCategories} />
+            <InsightsList initialArticles={mergedArticles} translatedCategories={localizedCategories} />
           </Suspense>
         </div>
       </section>

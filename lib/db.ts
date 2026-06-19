@@ -36,25 +36,28 @@ export interface QualifiedLead {
 
 export interface ConsultationRequest {
   id: string;
-  name: string;
+  full_name: string;
   company: string;
   email: string;
   phone: string;
-  service_needed: string;
+  service_interest: string;
+  project_description: string;
   budget: string;
   timeline: string;
-  project_description: string;
+  status: 'new' | 'scheduled' | 'archived';
   created_at: string;
 }
 
 export interface ContactInquiry {
   id: string;
-  name: string;
+  full_name: string;
   company: string;
   email: string;
   phone: string;
   subject: string;
   message: string;
+  status: 'new' | 'read' | 'archived';
+  source: string;
   created_at: string;
 }
 
@@ -68,6 +71,85 @@ export interface StaffingRequest {
   timeline: string;
   team_size: string;
   location: string;
+  created_at: string;
+}
+
+export interface JobApplication {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  linkedin: string;
+  resume_url: string;
+  position: string;
+  years_experience: number;
+  skills: string;
+  message: string;
+  status: 'New' | 'Reviewing' | 'Shortlisted' | 'Interview' | 'Offered' | 'Hired' | 'Rejected';
+  created_at: string;
+}
+
+export interface Candidate {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  linkedin: string;
+  resume_url: string;
+  skills: string;
+  experience: string;
+  availability: string;
+  location: string;
+  status: 'Available' | 'Reviewing' | 'Interviewing' | 'Placed' | 'Inactive';
+  created_at: string;
+}
+
+export interface ChatLead {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  interest: string;
+  conversation_summary: string;
+  created_at: string;
+}
+
+export interface NewsletterSubscriber {
+  id: string;
+  email: string;
+  status: 'subscribed' | 'unsubscribed';
+  created_at: string;
+}
+
+export interface Article {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  category: string;
+  language: 'en' | 'es';
+  published: boolean;
+  created_at: string;
+}
+
+export interface CaseStudy {
+  id: string;
+  slug: string;
+  title: string;
+  client_industry: string;
+  challenge: string;
+  solution: string;
+  results: string;
+  language: 'en' | 'es';
+  published: boolean;
+  created_at: string;
+}
+
+export interface UserProfile {
+  id: string;
+  email: string;
+  role: 'Admin' | 'Recruiter' | 'Consultant';
   created_at: string;
 }
 
@@ -194,11 +276,11 @@ export const db = {
 
   // 4. Save Consultation Request
   async saveConsultationRequest(
-    name: string,
+    fullName: string,
     company: string,
     email: string,
     phone: string,
-    serviceNeeded: string,
+    serviceInterest: string,
     budget: string,
     timeline: string,
     projectDescription: string
@@ -207,14 +289,15 @@ export const db = {
       const { data, error } = await supabase
         .from('consultation_requests')
         .insert([{
-          name,
+          full_name: fullName,
           company,
           email,
           phone,
-          service_needed: serviceNeeded,
+          service_interest: serviceInterest,
+          project_description: projectDescription,
           budget,
           timeline,
-          project_description: projectDescription
+          status: 'new'
         }])
         .select()
         .single();
@@ -225,14 +308,15 @@ export const db = {
       const consultations = getLocal('hypercode_db_consultations');
       const newReq: ConsultationRequest = {
         id: uuid(),
-        name,
+        full_name: fullName,
         company,
         email,
         phone,
-        service_needed: serviceNeeded,
+        service_interest: serviceInterest,
+        project_description: projectDescription,
         budget,
         timeline,
-        project_description: projectDescription,
+        status: 'new',
         created_at: new Date().toISOString()
       };
       consultations.push(newReq);
@@ -243,23 +327,26 @@ export const db = {
 
   // 4b. Save Contact Inquiry
   async saveContactInquiry(
-    name: string,
+    fullName: string,
     company: string,
     email: string,
     phone: string,
     subject: string,
-    message: string
+    message: string,
+    source: string = 'website'
   ): Promise<ContactInquiry> {
     if (supabase) {
       const { data, error } = await supabase
         .from('contact_inquiries')
         .insert([{
-          name,
+          full_name: fullName,
           company,
           email,
           phone,
           subject,
-          message
+          message,
+          status: 'new',
+          source
         }])
         .select()
         .single();
@@ -270,12 +357,14 @@ export const db = {
       const inquiries = getLocal('hypercode_db_contact_inquiries');
       const newInq: ContactInquiry = {
         id: uuid(),
-        name,
+        full_name: fullName,
         company,
         email,
         phone,
         subject,
         message,
+        status: 'new',
+        source,
         created_at: new Date().toISOString()
       };
       inquiries.push(newInq);
@@ -284,7 +373,7 @@ export const db = {
     }
   },
 
-  // 5. Save Staffing Request
+  // 5. Save Staffing Request (Legacy/Fallback method, mapped to consultation or kept for compat)
   async saveStaffingRequest(
     name: string,
     company: string,
@@ -333,7 +422,321 @@ export const db = {
     }
   },
 
-  // Admin dashboard methods
+  // 6. Careers - Save Job Application
+  async saveJobApplication(app: Omit<JobApplication, 'id' | 'created_at' | 'status'>): Promise<JobApplication> {
+    if (supabase) {
+      const { data, error } = await supabase
+        .from('job_applications')
+        .insert([{ ...app, status: 'New' }])
+        .select()
+        .single();
+
+      if (error) throw error;
+      return data;
+    } else {
+      const applications = getLocal('hypercode_db_job_applications');
+      const newApp: JobApplication = {
+        ...app,
+        id: uuid(),
+        status: 'New',
+        created_at: new Date().toISOString()
+      };
+      applications.push(newApp);
+      saveLocal('hypercode_db_job_applications', applications);
+      return newApp;
+    }
+  },
+
+  // 7. Careers - Update Job Application Status
+  async updateJobApplicationStatus(id: string, status: JobApplication['status']): Promise<void> {
+    if (supabase) {
+      const { error } = await supabase
+        .from('job_applications')
+        .update({ status })
+        .eq('id', id);
+      if (error) throw error;
+    } else {
+      const applications = getLocal('hypercode_db_job_applications');
+      const index = applications.findIndex(a => a.id === id);
+      if (index !== -1) {
+        applications[index].status = status;
+        saveLocal('hypercode_db_job_applications', applications);
+      }
+    }
+  },
+
+  // 8. Candidates - Save Candidate
+  async saveCandidate(cand: Omit<Candidate, 'id' | 'created_at'>): Promise<Candidate> {
+    if (supabase) {
+      const { data, error } = await supabase
+        .from('candidates')
+        .insert([cand])
+        .select()
+        .single();
+
+      if (error) throw error;
+      return data;
+    } else {
+      const candidates = getLocal('hypercode_db_candidates');
+      const newCand: Candidate = {
+        ...cand,
+        id: uuid(),
+        created_at: new Date().toISOString()
+      };
+      candidates.push(newCand);
+      saveLocal('hypercode_db_candidates', candidates);
+      return newCand;
+    }
+  },
+
+  // 9. Candidates - Delete Candidate
+  async deleteCandidate(id: string): Promise<void> {
+    if (supabase) {
+      const { error } = await supabase.from('candidates').delete().eq('id', id);
+      if (error) throw error;
+    } else {
+      const candidates = getLocal('hypercode_db_candidates');
+      const filtered = candidates.filter(c => c.id !== id);
+      saveLocal('hypercode_db_candidates', filtered);
+    }
+  },
+
+  // 10. Chatbot - Save Chat Lead
+  async saveChatLead(lead: Omit<ChatLead, 'id' | 'created_at'>): Promise<ChatLead> {
+    if (supabase) {
+      const { data, error } = await supabase
+        .from('chat_leads')
+        .insert([lead])
+        .select()
+        .single();
+
+      if (error) throw error;
+      return data;
+    } else {
+      const leads = getLocal('hypercode_db_chat_leads');
+      const newLead: ChatLead = {
+        ...lead,
+        id: uuid(),
+        created_at: new Date().toISOString()
+      };
+      leads.push(newLead);
+      saveLocal('hypercode_db_chat_leads', leads);
+      return newLead;
+    }
+  },
+
+  // 11. Newsletter - Save Subscriber
+  async saveNewsletterSubscriber(email: string): Promise<void> {
+    if (supabase) {
+      const { error } = await supabase
+        .from('newsletter_subscribers')
+        .insert([{ email, status: 'subscribed' }]);
+      // Ignore unique violations in case of double subscribe
+      if (error && error.code !== '23505') throw error;
+    } else {
+      const subs = getLocal('hypercode_db_newsletter_subscribers');
+      if (!subs.some(s => s.email === email)) {
+        subs.push({
+          id: uuid(),
+          email,
+          status: 'subscribed',
+          created_at: new Date().toISOString()
+        });
+        saveLocal('hypercode_db_newsletter_subscribers', subs);
+      }
+    }
+  },
+
+  // 12. CMS Articles - CRUD
+  async getAllArticles(): Promise<Article[]> {
+    if (supabase) {
+      const { data, error } = await supabase.from('articles').select('*').order('created_at', { ascending: false });
+      if (error) throw error;
+      return data || [];
+    } else {
+      return getLocal('hypercode_db_articles').sort((a, b) => b.created_at.localeCompare(a.created_at));
+    }
+  },
+
+  async getArticleBySlug(slug: string): Promise<Article | null> {
+    if (supabase) {
+      const { data, error } = await supabase.from('articles').select('*').eq('slug', slug).maybeSingle();
+      if (error) throw error;
+      return data;
+    } else {
+      const list = getLocal('hypercode_db_articles');
+      return list.find(a => a.slug === slug) || null;
+    }
+  },
+
+  async saveArticle(article: Omit<Article, 'id' | 'created_at'> & { id?: string }): Promise<Article> {
+    if (supabase) {
+      if (article.id) {
+        const { data, error } = await supabase
+          .from('articles')
+          .update(article)
+          .eq('id', article.id)
+          .select()
+          .single();
+        if (error) throw error;
+        return data;
+      } else {
+        const { data, error } = await supabase
+          .from('articles')
+          .insert([article])
+          .select()
+          .single();
+        if (error) throw error;
+        return data;
+      }
+    } else {
+      const list = getLocal('hypercode_db_articles');
+      if (article.id) {
+        const index = list.findIndex(a => a.id === article.id);
+        if (index !== -1) {
+          const updated = { ...list[index], ...article };
+          list[index] = updated;
+          saveLocal('hypercode_db_articles', list);
+          return updated;
+        }
+        throw new Error('Article not found for update');
+      } else {
+        const created: Article = {
+          ...article,
+          id: uuid(),
+          created_at: new Date().toISOString()
+        };
+        list.push(created);
+        saveLocal('hypercode_db_articles', list);
+        return created;
+      }
+    }
+  },
+
+  async deleteArticle(id: string): Promise<void> {
+    if (supabase) {
+      const { error } = await supabase.from('articles').delete().eq('id', id);
+      if (error) throw error;
+    } else {
+      const list = getLocal('hypercode_db_articles');
+      const filtered = list.filter(a => a.id !== id);
+      saveLocal('hypercode_db_articles', filtered);
+    }
+  },
+
+  // 13. CMS Case Studies - CRUD
+  async getAllCaseStudies(): Promise<CaseStudy[]> {
+    if (supabase) {
+      const { data, error } = await supabase.from('case_studies').select('*').order('created_at', { ascending: false });
+      if (error) throw error;
+      return data || [];
+    } else {
+      return getLocal('hypercode_db_case_studies').sort((a, b) => b.created_at.localeCompare(a.created_at));
+    }
+  },
+
+  async getCaseStudyBySlug(slug: string): Promise<CaseStudy | null> {
+    if (supabase) {
+      const { data, error } = await supabase.from('case_studies').select('*').eq('slug', slug).maybeSingle();
+      if (error) throw error;
+      return data;
+    } else {
+      const list = getLocal('hypercode_db_case_studies');
+      return list.find(c => c.slug === slug) || null;
+    }
+  },
+
+  async saveCaseStudy(cs: Omit<CaseStudy, 'id' | 'created_at'> & { id?: string }): Promise<CaseStudy> {
+    if (supabase) {
+      if (cs.id) {
+        const { data, error } = await supabase
+          .from('case_studies')
+          .update(cs)
+          .eq('id', cs.id)
+          .select()
+          .single();
+        if (error) throw error;
+        return data;
+      } else {
+        const { data, error } = await supabase
+          .from('case_studies')
+          .insert([cs])
+          .select()
+          .single();
+        if (error) throw error;
+        return data;
+      }
+    } else {
+      const list = getLocal('hypercode_db_case_studies');
+      if (cs.id) {
+        const index = list.findIndex(c => c.id === cs.id);
+        if (index !== -1) {
+          const updated = { ...list[index], ...cs };
+          list[index] = updated;
+          saveLocal('hypercode_db_case_studies', list);
+          return updated;
+        }
+        throw new Error('Case study not found for update');
+      } else {
+        const created: CaseStudy = {
+          ...cs,
+          id: uuid(),
+          created_at: new Date().toISOString()
+        };
+        list.push(created);
+        saveLocal('hypercode_db_case_studies', list);
+        return created;
+      }
+    }
+  },
+
+  async deleteCaseStudy(id: string): Promise<void> {
+    if (supabase) {
+      const { error } = await supabase.from('case_studies').delete().eq('id', id);
+      if (error) throw error;
+    } else {
+      const list = getLocal('hypercode_db_case_studies');
+      const filtered = list.filter(c => c.id !== id);
+      saveLocal('hypercode_db_case_studies', filtered);
+    }
+  },
+
+  // 14. RBAC User Profiles
+  async getUserProfile(id: string): Promise<UserProfile | null> {
+    if (supabase) {
+      const { data, error } = await supabase.from('user_profiles').select('*').eq('id', id).maybeSingle();
+      if (error) throw error;
+      return data;
+    } else {
+      const list = getLocal('hypercode_db_user_profiles');
+      return list.find(u => u.id === id) || null;
+    }
+  },
+
+  async saveUserProfile(id: string, email: string, role: UserProfile['role']): Promise<UserProfile> {
+    if (supabase) {
+      const { data, error } = await supabase
+        .from('user_profiles')
+        .insert([{ id, email, role }])
+        .select()
+        .single();
+      if (error) throw error;
+      return data;
+    } else {
+      const list = getLocal('hypercode_db_user_profiles');
+      const existingIndex = list.findIndex(u => u.id === id);
+      const profile: UserProfile = { id, email, role, created_at: new Date().toISOString() };
+      if (existingIndex !== -1) {
+        list[existingIndex] = profile;
+      } else {
+        list.push(profile);
+      }
+      saveLocal('hypercode_db_user_profiles', list);
+      return profile;
+    }
+  },
+
+  // Admin dashboard get methods
   async getAllConversations(): Promise<Conversation[]> {
     if (supabase) {
       const { data, error } = await supabase.from('chat_conversations').select('*').order('created_at', { ascending: false });
@@ -391,6 +794,46 @@ export const db = {
       return data || [];
     } else {
       return getLocal('hypercode_db_contact_inquiries').sort((a, b) => b.created_at.localeCompare(a.created_at));
+    }
+  },
+
+  async getAllJobApplications(): Promise<JobApplication[]> {
+    if (supabase) {
+      const { data, error } = await supabase.from('job_applications').select('*').order('created_at', { ascending: false });
+      if (error) throw error;
+      return data || [];
+    } else {
+      return getLocal('hypercode_db_job_applications').sort((a, b) => b.created_at.localeCompare(a.created_at));
+    }
+  },
+
+  async getAllCandidates(): Promise<Candidate[]> {
+    if (supabase) {
+      const { data, error } = await supabase.from('candidates').select('*').order('created_at', { ascending: false });
+      if (error) throw error;
+      return data || [];
+    } else {
+      return getLocal('hypercode_db_candidates').sort((a, b) => b.created_at.localeCompare(a.created_at));
+    }
+  },
+
+  async getAllChatLeads(): Promise<ChatLead[]> {
+    if (supabase) {
+      const { data, error } = await supabase.from('chat_leads').select('*').order('created_at', { ascending: false });
+      if (error) throw error;
+      return data || [];
+    } else {
+      return getLocal('hypercode_db_chat_leads').sort((a, b) => b.created_at.localeCompare(a.created_at));
+    }
+  },
+
+  async getNewsletterSubscribers(): Promise<NewsletterSubscriber[]> {
+    if (supabase) {
+      const { data, error } = await supabase.from('newsletter_subscribers').select('*').order('created_at', { ascending: false });
+      if (error) throw error;
+      return data || [];
+    } else {
+      return getLocal('hypercode_db_newsletter_subscribers').sort((a, b) => b.created_at.localeCompare(a.created_at));
     }
   }
 };

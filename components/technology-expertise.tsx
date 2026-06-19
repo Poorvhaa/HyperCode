@@ -1,5 +1,8 @@
 'use client';
 
+import { useState } from 'react';
+import { useLocale } from 'next-intl';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Database, 
   Cloud, 
@@ -10,232 +13,197 @@ import {
   UserCheck, 
   Users, 
   Briefcase, 
-  TrendingUp, 
   FileCheck2,
   Code,
-  Server
+  Server,
+  TrendingUp
 } from 'lucide-react';
-import { useLocale } from 'next-intl';
+
+type TabKey = 'analytics' | 'webdev' | 'staffing';
 
 export function TechnologyExpertise() {
-  const locale = useLocale();
+  const locale = useLocale() as 'en' | 'es';
+  const [activeTab, setActiveTab] = useState<TabKey>('analytics');
 
-  const translations: Record<string, {
-    badge: string;
-    title: string;
-    description: string;
-    col1Title: string;
-    col2Title: string;
-    col3Title: string;
-    roles: Record<string, string>;
-  }> = {
+  const translations = {
     en: {
       badge: "Certified Competency & Systems",
       title: "Technology & Platform Expertise",
-      description: "Our consultant network maintains gold-standard certifications and deep integration expertise across enterprise data architectures and talent ecosystems.",
-      col1Title: "Data & Analytics Platforms",
-      col2Title: "Web Development Stack",
-      col3Title: "Workforce & Staffing Ecosystems",
-      roles: {
-        goldPartner: "Gold Partner",
-        cloudPlatform: "Cloud Platform",
-        partnerNetwork: "Partner Network",
-        selectPartner: "Select Partner",
-        consultingPartner: "Consulting Partner",
-        partner: "Partner",
-        frontendFrameworks: "Frontend Frameworks",
-        typeSafeScripting: "Type-Safe Scripting",
-        backendRuntime: "Backend Runtime",
-        backendEnvironments: "Backend Environments",
-        relationalDatabases: "Relational Databases",
-        cloudInfrastructure: "Cloud Infrastructure",
-        atsIntegration: "ATS Integration",
-        talentSourcing: "Talent Sourcing",
-        vmsProgram: "VMS Program",
-        workforcePlatform: "Workforce Platform",
-        hrisEcosystem: "HRIS Ecosystem",
-        enterpriseAts: "Enterprise ATS"
+      subtitle: "Leveraging industry-leading technologies, cloud platforms, and workforce ecosystems to deliver scalable digital solutions and high-performing talent strategies.",
+      tabs: {
+        analytics: "Data & Analytics",
+        webdev: "Web Development",
+        staffing: "Staffing Ecosystems"
       }
     },
     es: {
       badge: "Competencia y Sistemas Certificados",
       title: "Experiencia en Tecnología y Plataformas",
-      description: "Nuestra red de consultores mantiene certificaciones estándar de oro y una profunda experiencia en integración en arquitecturas de datos empresariales y ecosistemas de talento.",
-      col1Title: "Plataformas de Datos y Analítica",
-      col2Title: "Pila de Desarrollo Web",
-      col3Title: "Ecosistemas de Personal y Fuerza de Trabajo",
-      roles: {
-        goldPartner: "Socio de Oro",
-        cloudPlatform: "Plataforma en la Nube",
-        partnerNetwork: "Red de Socios",
-        selectPartner: "Socio Selecto",
-        consultingPartner: "Socio de Consultoría",
-        partner: "Socio",
-        frontendFrameworks: "Marcos de Frontend",
-        typeSafeScripting: "Scripting Seguro de Tipos",
-        backendRuntime: "Tiempo de Ejecución Backend",
-        backendEnvironments: "Entornos Backend",
-        relationalDatabases: "Bases de Datos Relacionales",
-        cloudInfrastructure: "Infraestructura en la Nube",
-        atsIntegration: "Integración de ATS",
-        talentSourcing: "Búsqueda de Talento",
-        vmsProgram: "Programa VMS",
-        workforcePlatform: "Plataforma de Personal",
-        hrisEcosystem: "Ecosistema HRIS",
-        enterpriseAts: "ATS Empresarial"
+      subtitle: "Aprovechando tecnologías líderes en la industria, plataformas en la nube y ecosistemas de fuerza laboral para ofrecer soluciones digitales escalables y estrategias de talento de alto rendimiento.",
+      tabs: {
+        analytics: "Datos y Analítica",
+        webdev: "Desarrollo Web",
+        staffing: "Ecosistemas de Personal"
       }
     }
   };
 
   const activeTranslation = translations[locale] || translations.en;
 
-  const dataAnalytics = [
-    { name: 'Microsoft', role: activeTranslation.roles.goldPartner, icon: Database },
-    { name: 'Azure', role: activeTranslation.roles.cloudPlatform, icon: Cloud },
-    { name: 'AWS', role: activeTranslation.roles.partnerNetwork, icon: Network },
-    { name: 'Snowflake', role: activeTranslation.roles.selectPartner, icon: Cpu },
-    { name: 'Databricks', role: activeTranslation.roles.consultingPartner, icon: Layers },
-    { name: 'Tableau', role: activeTranslation.roles.partner, icon: BarChart3 },
-  ];
+  const categories = {
+    analytics: {
+      badges: {
+        en: ['Cloud Architecture', 'Data Engineering', 'Business Intelligence'],
+        es: ['Arquitectura en la Nube', 'Ingeniería de Datos', 'Inteligencia de Negocios']
+      },
+      items: [
+        { name: 'Microsoft', icon: Database, desc: { en: 'Enterprise Data & Systems', es: 'Sistemas y Datos Empresariales' } },
+        { name: 'Azure', icon: Cloud, desc: { en: 'Cloud Infrastructure & Services', es: 'Infraestructura y Servicios en la Nube' } },
+        { name: 'AWS', icon: Network, desc: { en: 'Cloud Computing & Architecture', es: 'Computación y Arquitectura en la Nube' } },
+        { name: 'Snowflake', icon: Cpu, desc: { en: 'Cloud Data Warehousing & Analytics', es: 'Almacenamiento de Datos y Analítica en la Nube' } },
+        { name: 'Databricks', icon: Layers, desc: { en: 'Unified Data Lakehouse & AI', es: 'Lago de Datos Unificado e IA' } },
+        { name: 'Tableau', icon: BarChart3, desc: { en: 'Business Intelligence & Visualization', es: 'Inteligencia de Negocios y Visualización' } },
+      ]
+    },
+    webdev: {
+      badges: {
+        en: ['Web Applications', 'API Integration', 'Scalable Systems'],
+        es: ['Aplicaciones Web', 'Integración de API', 'Sistemas Escalables']
+      },
+      items: [
+        { name: 'React / Next.js', icon: Code, desc: { en: 'Modern enterprise frontend applications', es: 'Aplicaciones frontend empresariales modernas' } },
+        { name: 'TypeScript', icon: Layers, desc: { en: 'Type-safe systems development', es: 'Desarrollo de sistemas con seguridad de tipos' } },
+        { name: 'Node.js', icon: Cpu, desc: { en: 'Scalable backend services', es: 'Servicios backend escalables' } },
+        { name: '.NET', icon: Server, desc: { en: 'Enterprise server applications', es: 'Aplicaciones de servidor empresariales' } },
+        { name: 'Python', icon: Briefcase, desc: { en: 'Automation, AI, and data solutions', es: 'Soluciones de automatización, IA y datos' } },
+        { name: 'SQL / PostgreSQL', icon: Database, desc: { en: 'Relational database engineering', es: 'Ingeniería de bases de datos relacionales' } },
+      ]
+    },
+    staffing: {
+      badges: {
+        en: ['IT Staffing', 'Talent Acquisition', 'Vendor Management'],
+        es: ['Personal de TI', 'Adquisición de Talento', 'Gestión de Proveedores']
+      },
+      items: [
+        { name: 'Bullhorn', icon: Users, desc: { en: 'ATS & Recruitment Operations', es: 'Operaciones de ATS y Reclutamiento' } },
+        { name: 'JobDiva', icon: UserCheck, desc: { en: 'Talent Sourcing & Recruiting', es: 'Búsqueda y Reclutamiento de Talento' } },
+        { name: 'SAP Fieldglass', icon: FileCheck2, desc: { en: 'Vendor Management System', es: 'Sistema de Gestión de Proveedores' } },
+        { name: 'Beeline', icon: Network, desc: { en: 'VMS & Contingent Workforce', es: 'Fuerza de Trabajo Contingente y VMS' } },
+        { name: 'Workday', icon: Briefcase, desc: { en: 'Enterprise HRIS & Workforce Planning', es: 'Planificación de Personal y HRIS Empresarial' } },
+        { name: 'iCIMS', icon: TrendingUp, desc: { en: 'Enterprise Talent Acquisition', es: 'Adquisición de Talento Empresarial' } },
+      ]
+    }
+  };
 
-  const webDevStack = [
-    { name: 'React / Next.js', role: activeTranslation.roles.frontendFrameworks, icon: Code },
-    { name: 'TypeScript', role: activeTranslation.roles.typeSafeScripting, icon: Layers },
-    { name: 'Node.js', role: activeTranslation.roles.backendRuntime, icon: Cpu },
-    { name: '.NET / Python', role: activeTranslation.roles.backendEnvironments, icon: Briefcase },
-    { name: 'SQL / PostgreSQL', role: activeTranslation.roles.relationalDatabases, icon: Server },
-    { name: 'AWS / Azure', role: activeTranslation.roles.cloudInfrastructure, icon: Cloud },
-  ];
-
-  const workforcePlatforms = [
-    { name: 'Bullhorn', role: activeTranslation.roles.atsIntegration, icon: Users },
-    { name: 'JobDiva', role: activeTranslation.roles.talentSourcing, icon: UserCheck },
-    { name: 'SAP Fieldglass', role: activeTranslation.roles.vmsProgram, icon: FileCheck2 },
-    { name: 'Beeline', role: activeTranslation.roles.workforcePlatform, icon: Network },
-    { name: 'Workday', role: activeTranslation.roles.hrisEcosystem, icon: Briefcase },
-    { name: 'iCIMS', role: activeTranslation.roles.enterpriseAts, icon: TrendingUp },
-  ];
+  const activeCategory = categories[activeTab];
+  const activeBadges = activeCategory.badges[locale] || activeCategory.badges.en;
+  const tabIcons = {
+    analytics: Database,
+    webdev: Code,
+    staffing: Briefcase
+  };
 
   return (
-    <section className="bg-slate-50 border-t border-b border-slate-200/60 py-16 select-none text-left">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="space-y-4 mb-10 text-center md:text-left">
-          <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-1">
+    <section className="relative bg-gradient-to-b from-white to-slate-50 border-t border-b border-slate-200/60 py-24 select-none text-left overflow-hidden">
+      {/* Decorative Dot Matrix Pattern */}
+      <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-70 pointer-events-none" />
+      
+      {/* Ambient Glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-gradient-to-b from-[#0F4C81]/5 to-transparent rounded-full blur-3xl pointer-events-none" />
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto mb-12">
+          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#0F4C81]" />
             {activeTranslation.badge}
-          </h2>
-          <h3 className="text-3xl font-extrabold text-[#0F2744] tracking-tight">
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0F2744] tracking-tight leading-tight">
             {activeTranslation.title}
-          </h3>
-          <p className="text-slate-600 text-sm max-w-2xl font-medium leading-relaxed">
-            {activeTranslation.description}
+          </h2>
+          <p className="text-slate-600 text-sm sm:text-base font-medium leading-relaxed mt-3">
+            {activeTranslation.subtitle}
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-          {/* Column 1: Data & Analytics */}
-          <div className="p-6 sm:p-8 bg-white border border-slate-200/80 rounded-2xl shadow-sm space-y-6">
-            <div className="flex items-center gap-3 border-b border-slate-100 pb-4">
-              <div className="w-8 h-8 rounded-lg bg-[#0F4C81]/10 flex items-center justify-center text-[#0F4C81]">
-                <Database size={18} />
-              </div>
-              <h4 className="text-base font-bold text-[#0F2744] tracking-tight">{activeTranslation.col1Title}</h4>
-            </div>
+        {/* Tab Selectors */}
+        <div className="flex flex-col sm:flex-row justify-center gap-2 p-1.5 bg-slate-100/70 border border-slate-200/60 rounded-2xl max-w-2xl mx-auto mb-8 shadow-inner">
+          {(Object.keys(categories) as TabKey[]).map((tabKey) => {
+            const TabIcon = tabIcons[tabKey];
+            const isActive = activeTab === tabKey;
+            return (
+              <button
+                key={tabKey}
+                onClick={() => setActiveTab(tabKey)}
+                className={`flex-1 flex items-center justify-center gap-2 px-5 py-3 text-xs sm:text-sm rounded-xl font-bold transition-all duration-200 cursor-pointer ${
+                  isActive
+                    ? "bg-white text-[#0F4C81] border border-slate-200/60 shadow-sm"
+                    : "text-slate-600 hover:text-[#0F2744] hover:bg-white/40"
+                }`}
+              >
+                <TabIcon size={16} className={isActive ? "text-[#0F4C81]" : "text-slate-400"} />
+                {activeTranslation.tabs[tabKey]}
+              </button>
+            );
+          })}
+        </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-              {dataAnalytics.map((tech, idx) => {
-                const IconComponent = tech.icon;
+        {/* Capability Badges */}
+        <div className="flex flex-wrap justify-center gap-2.5 mb-10">
+          {activeBadges.map((badgeText, idx) => (
+            <span
+              key={idx}
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-[#0F4C81]/5 text-[#0F4C81] border border-[#0F4C81]/10"
+            >
+              <span className="w-1 h-1 rounded-full bg-[#0F4C81]" />
+              {badgeText}
+            </span>
+          ))}
+        </div>
+
+        {/* Cards Grid with Framer Motion Transition */}
+        <div className="min-h-[240px]">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.25, ease: 'easeOut' }}
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+            >
+              {activeCategory.items.map((item, idx) => {
+                const IconComponent = item.icon;
+                const description = item.desc[locale] || item.desc.en;
                 return (
                   <div
                     key={idx}
-                    className="flex items-center gap-3 p-2.5 rounded-xl border border-slate-150 bg-slate-50 hover:bg-white hover:border-[#0F4C81]/30 hover:shadow-sm transition-all duration-200 group h-20"
+                    className="flex items-center gap-4 p-5 bg-white border border-slate-200/80 rounded-2xl transition-all duration-300 shadow-sm hover:-translate-y-1 hover:border-[#0F4C81]/80 hover:shadow-md group relative overflow-hidden min-h-[96px]"
                   >
-                    <div className="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-500 group-hover:text-[#0F4C81] group-hover:bg-[#0F4C81]/5 transition-colors flex-shrink-0">
-                      <IconComponent size={16} />
+                    {/* Hover border glow highlight */}
+                    <div className="absolute inset-x-0 bottom-0 h-[2px] bg-[#0F4C81] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    
+                    {/* Icon Container */}
+                    <div className="w-12 h-12 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-500 group-hover:text-[#0F4C81] group-hover:bg-[#0F4C81]/5 group-hover:border-[#0F4C81]/15 transition-all duration-300 flex-shrink-0">
+                      <IconComponent size={20} className="group-hover:scale-110 transition-transform duration-300" />
                     </div>
-                    <div>
-                      <div className="text-xs font-bold text-[#0F2744] group-hover:text-[#0F4C81] transition-colors">
-                        {tech.name}
-                      </div>
-                      <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mt-0.5">
-                        {tech.role}
-                      </div>
+                    
+                    {/* Content */}
+                    <div className="space-y-0.5">
+                      <h4 className="text-sm font-bold text-[#0F2744] group-hover:text-[#0F4C81] transition-colors duration-300">
+                        {item.name}
+                      </h4>
+                      <p className="text-xs text-slate-500 font-semibold leading-normal">
+                        {description}
+                      </p>
                     </div>
                   </div>
                 );
               })}
-            </div>
-          </div>
-
-          {/* Column 2: Web Development Stack */}
-          <div className="p-6 sm:p-8 bg-white border border-slate-200/80 rounded-2xl shadow-sm space-y-6">
-            <div className="flex items-center gap-3 border-b border-slate-100 pb-4">
-              <div className="w-8 h-8 rounded-lg bg-[#0F4C81]/10 flex items-center justify-center text-[#0F4C81]">
-                <Code size={18} />
-              </div>
-              <h4 className="text-base font-bold text-[#0F2744] tracking-tight">{activeTranslation.col2Title}</h4>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-              {webDevStack.map((tech, idx) => {
-                const IconComponent = tech.icon;
-                return (
-                  <div
-                    key={idx}
-                    className="flex items-center gap-3 p-2.5 rounded-xl border border-slate-150 bg-slate-50 hover:bg-white hover:border-[#0F4C81]/30 hover:shadow-sm transition-all duration-200 group h-20"
-                  >
-                    <div className="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-500 group-hover:text-[#0F4C81] group-hover:bg-[#0F4C81]/5 transition-colors flex-shrink-0">
-                      <IconComponent size={16} />
-                    </div>
-                    <div>
-                      <div className="text-xs font-bold text-[#0F2744] group-hover:text-[#0F4C81] transition-colors">
-                        {tech.name}
-                      </div>
-                      <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mt-0.5">
-                        {tech.role}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Column 3: Workforce & Staffing Platforms */}
-          <div className="p-6 sm:p-8 bg-white border border-slate-200/80 rounded-2xl shadow-sm space-y-6">
-            <div className="flex items-center gap-3 border-b border-slate-100 pb-4">
-              <div className="w-8 h-8 rounded-lg bg-[#0F4C81]/10 flex items-center justify-center text-[#0F4C81]">
-                <Briefcase size={18} />
-              </div>
-              <h4 className="text-base font-bold text-[#0F2744] tracking-tight">{activeTranslation.col3Title}</h4>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-              {workforcePlatforms.map((platform, idx) => {
-                const IconComponent = platform.icon;
-                return (
-                  <div
-                    key={idx}
-                    className="flex items-center gap-3 p-2.5 rounded-xl border border-slate-150 bg-slate-50 hover:bg-white hover:border-[#0F4C81]/30 hover:shadow-sm transition-all duration-200 group h-20"
-                  >
-                    <div className="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-500 group-hover:text-[#0F4C81] group-hover:bg-[#0F4C81]/5 transition-colors flex-shrink-0">
-                      <IconComponent size={16} />
-                    </div>
-                    <div>
-                      <div className="text-xs font-bold text-[#0F2744] group-hover:text-[#0F4C81] transition-colors">
-                        {platform.name}
-                      </div>
-                      <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mt-0.5">
-                        {platform.role}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
     </section>
   );
 }
-

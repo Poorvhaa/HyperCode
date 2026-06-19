@@ -353,7 +353,17 @@ export function AIAssistant() {
           data.projectDescription = text;
 
           try {
-            await db.saveConsultationRequest(data.name, data.company, data.email, data.phone, data.serviceNeeded, data.projectDescription);
+            await db.saveConsultationRequest(data.name, data.company, data.email, data.phone, data.serviceNeeded, "", "", data.projectDescription);
+            
+            // Auto-capture chat lead in chat_leads table
+            const summary = [...messages, { id: 'temp', sender: 'user', message: text }].map(m => `${m.sender === 'user' ? 'User' : 'Assistant'}: ${m.message}`).join('\n');
+            await db.saveChatLead({
+              name: data.name,
+              email: data.email,
+              phone: data.phone,
+              interest: data.serviceNeeded,
+              conversation_summary: summary
+            });
           } catch (err) {
             console.error('Failed to save consultation request:', err);
           }
@@ -434,6 +444,16 @@ export function AIAssistant() {
               data.teamSize,
               data.location
             );
+
+            // Auto-capture chat lead in chat_leads table
+            const summary = [...messages, { id: 'temp', sender: 'user', message: text }].map(m => `${m.sender === 'user' ? 'User' : 'Assistant'}: ${m.message}`).join('\n');
+            await db.saveChatLead({
+              name: data.name,
+              email: data.email,
+              phone: data.phone,
+              interest: 'IT Staffing: ' + data.roles,
+              conversation_summary: summary
+            });
           } catch (err) {
             console.error('Failed to save staffing request:', err);
           }
@@ -450,8 +470,16 @@ export function AIAssistant() {
       // 4. DEFAULT CONVERSATION STATE
       const query = text.toLowerCase();
 
-      // Check for localized quick triggers
-      if (query.includes('business intelligence') || query === biText) {
+      // Check for lead intent triggers first
+      if (query.includes('need bi consultant') || query.includes('need bi consulting') || query.includes('need database consultants') || query.includes('need bi developer') || query === 'i need bi consultants') {
+        await addMessage(
+          'assistant',
+          locale === 'es'
+            ? "¿Le gustaría programar una consulta técnica gratuita para hablar sobre sus necesidades de consultores en BI?"
+            : "I can certainly help you with that! Would you like to schedule a free technical consultation with one of our BI solutions directors?",
+          [t('actions.schedule'), t('actions.noThanks')]
+        );
+      } else if (query.includes('business intelligence') || query === biText) {
         const responseMap: Record<string, string> = {
           en: "Business Intelligence combines reporting, dashboards, analytics, and visualization tools to help organizations make data-driven decisions. HyperCode helps enterprises implement BI solutions using Power BI, Tableau, and modern data platforms.",
           es: "La Inteligencia de Negocios combina informes, paneles, analítica y herramientas de visualización. HyperCode ayuda a las empresas a implementar soluciones de BI utilizando Power BI, Tableau y plataformas modernas de datos.",

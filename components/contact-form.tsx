@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useSearchParams } from 'next/navigation';
 import { Loader2, AlertCircle, CheckCircle } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { db } from '@/lib/db';
 
 function ContactFormContent() {
@@ -73,25 +73,53 @@ function ContactFormContent() {
     }
   }, [searchParams, setValue]);
 
+  const locale = useLocale();
+
   const onSubmit = async (data: ContactFormData) => {
     setSubmitting(true);
     setError('');
 
     try {
-      await db.saveContactInquiry(
-        data.name,
-        data.company,
-        data.email,
-        data.phone,
-        data.subject,
-        data.message
-      );
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: data.name,
+          company: data.company,
+          email: data.email,
+          phone: data.phone,
+          subject: data.subject,
+          message: data.message,
+          source: 'website',
+          locale
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error('Contact submission API returned an error');
+      }
+
       setSubmitted(true);
       reset();
       setTimeout(() => setSubmitted(false), 5000);
     } catch (err) {
       setError(t('errorSubmit'));
       console.error('Contact form error:', err);
+      // Fallback save to local storage in offline mode
+      try {
+        await db.saveContactInquiry(
+          data.name,
+          data.company,
+          data.email,
+          data.phone,
+          data.subject,
+          data.message
+        );
+      } catch (localErr) {
+        console.error('Local fallback contact save failed:', localErr);
+      }
     } finally {
       setSubmitting(false);
     }

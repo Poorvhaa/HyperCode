@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useSearchParams } from 'next/navigation';
 import { Loader2, AlertCircle, CheckCircle } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { db } from '@/lib/db';
 
 function ConsultationFormContent() {
@@ -108,27 +108,56 @@ function ConsultationFormContent() {
     setValue('timeline', val, { shouldValidate: true });
   };
 
+  const locale = useLocale();
+
   const onSubmit = async (data: ConsultationFormData) => {
     setSubmitting(true);
     setError('');
 
     try {
-      await db.saveConsultationRequest(
-        data.name,
-        data.company,
-        data.email,
-        data.phone,
-        data.service,
-        data.budget,
-        data.timeline,
-        data.message
-      );
+      const res = await fetch('/api/consultation', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: data.name,
+          company: data.company,
+          email: data.email,
+          phone: data.phone,
+          service: data.service,
+          budget: data.budget,
+          timeline: data.timeline,
+          message: data.message,
+          locale
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error('Consultation submission API returned an error');
+      }
+
       setSubmitted(true);
       reset();
       setTimeout(() => setSubmitted(false), 5000);
     } catch (err) {
       setError(t('errorSubmit'));
       console.error('Consultation form error:', err);
+      // Fallback save to local storage in offline mode
+      try {
+        await db.saveConsultationRequest(
+          data.name,
+          data.company,
+          data.email,
+          data.phone,
+          data.service,
+          data.budget,
+          data.timeline,
+          data.message
+        );
+      } catch (localErr) {
+        console.error('Local fallback consultation save failed:', localErr);
+      }
     } finally {
       setSubmitting(false);
     }
