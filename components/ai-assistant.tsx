@@ -131,6 +131,7 @@ export function AIAssistant() {
   const [flowData, setFlowData] = useState<any>({});
   
   const [conversationId, setConversationId] = useState<string>('');
+  const [sessionId, setSessionId] = useState<string>('');
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
   
@@ -142,13 +143,14 @@ export function AIAssistant() {
     setMounted(true);
     const initSession = async () => {
       try {
-        let sessionId = localStorage.getItem('hypercode_ai_session_id');
-        if (!sessionId) {
-          sessionId = 'sess_' + Math.random().toString(36).substring(2, 11);
-          localStorage.setItem('hypercode_ai_session_id', sessionId);
+        let sid = localStorage.getItem('hypercode_ai_session_id');
+        if (!sid) {
+          sid = 'sess_' + Math.random().toString(36).substring(2, 11);
+          localStorage.setItem('hypercode_ai_session_id', sid);
         }
+        setSessionId(sid);
 
-        const conv = await db.getConversation(sessionId);
+        const conv = await db.getConversation(sid);
         setConversationId(conv.id);
 
         // Load History
@@ -199,7 +201,7 @@ export function AIAssistant() {
     
     if (conversationId) {
       try {
-        await db.saveMessage(conversationId, sender, text);
+        await db.saveMessage(conversationId, sender, text, sessionId, locale === 'es' ? 'es' : 'en');
       } catch (err) {
         console.error('Failed to save message in database:', err);
       }
@@ -362,7 +364,9 @@ export function AIAssistant() {
               email: data.email,
               phone: data.phone,
               interest: data.serviceNeeded,
-              conversation_summary: summary
+              conversation_summary: summary,
+              company: data.company || null,
+              source: 'chatbot'
             });
           } catch (err) {
             console.error('Failed to save consultation request:', err);
@@ -452,7 +456,9 @@ export function AIAssistant() {
               email: data.email,
               phone: data.phone,
               interest: 'IT Staffing: ' + data.roles,
-              conversation_summary: summary
+              conversation_summary: summary,
+              company: data.company || null,
+              source: 'chatbot'
             });
           } catch (err) {
             console.error('Failed to save staffing request:', err);

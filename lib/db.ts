@@ -20,6 +20,8 @@ export interface Message {
   conversation_id: string;
   sender: 'user' | 'assistant';
   message: string;
+  session_id?: string | null;
+  language?: 'en' | 'es';
   created_at: string;
 }
 
@@ -111,6 +113,9 @@ export interface ChatLead {
   phone: string;
   interest: string;
   conversation_summary: string;
+  company: string | null;
+  source: string | null;
+  status: 'New' | 'Contacted' | 'Qualified' | 'Proposal Sent' | 'Won' | 'Lost';
   created_at: string;
 }
 
@@ -118,6 +123,8 @@ export interface NewsletterSubscriber {
   id: string;
   email: string;
   status: 'subscribed' | 'unsubscribed';
+  language: 'en' | 'es';
+  source_page: string | null;
   created_at: string;
 }
 
@@ -128,8 +135,16 @@ export interface Article {
   excerpt: string;
   content: string;
   category: string;
+  featured_image: string | null;
+  author: {
+    name: string;
+    role: string;
+    avatar: string;
+  } | null;
+  reading_time: string | null;
+  published_date: string;
   language: 'en' | 'es';
-  published: boolean;
+  is_published: boolean;
   created_at: string;
 }
 
@@ -137,12 +152,16 @@ export interface CaseStudy {
   id: string;
   slug: string;
   title: string;
-  client_industry: string;
+  industry: string;
+  client_type: string | null;
   challenge: string;
   solution: string;
   results: string;
+  technologies: string | null;
+  featured_image: string | null;
   language: 'en' | 'es';
-  published: boolean;
+  published_date: string;
+  is_published: boolean;
   created_at: string;
 }
 
@@ -150,7 +169,31 @@ export interface UserProfile {
   id: string;
   email: string;
   role: 'Admin' | 'Recruiter' | 'Consultant';
+  name: string | null;
+  avatar: string | null;
+  is_active: boolean;
   created_at: string;
+}
+
+export interface CompanySettings {
+  id: string;
+  company_name: string;
+  email: string;
+  phone: string | null;
+  address: string | null;
+  social_links: {
+    linkedin?: string;
+    twitter?: string;
+    github?: string;
+  };
+  updated_at: string;
+}
+
+export interface EmailTemplate {
+  id: string;
+  subject: string;
+  body: string;
+  updated_at: string;
 }
 
 // LocalStorage helpers for mock DB fallback
@@ -206,11 +249,23 @@ export const db = {
   },
 
   // 2. Save Chat Message
-  async saveMessage(conversationId: string, sender: 'user' | 'assistant', message: string): Promise<Message> {
+  async saveMessage(
+    conversationId: string,
+    sender: 'user' | 'assistant',
+    message: string,
+    sessionId?: string | null,
+    language?: 'en' | 'es'
+  ): Promise<Message> {
     if (supabase) {
       const { data, error } = await supabase
         .from('chat_messages')
-        .insert([{ conversation_id: conversationId, sender, message }])
+        .insert([{
+          conversation_id: conversationId,
+          sender,
+          message,
+          session_id: sessionId,
+          language: language || 'en'
+        }])
         .select()
         .single();
 
@@ -223,6 +278,8 @@ export const db = {
         conversation_id: conversationId,
         sender,
         message,
+        session_id: sessionId || null,
+        language: language || 'en',
         created_at: new Date().toISOString()
       };
       messages.push(newMsg);
@@ -517,6 +574,8 @@ export const db = {
       const newLead: ChatLead = {
         ...lead,
         id: uuid(),
+        company: lead.company || null,
+        source: lead.source || null,
         created_at: new Date().toISOString()
       };
       leads.push(newLead);
@@ -526,11 +585,11 @@ export const db = {
   },
 
   // 11. Newsletter - Save Subscriber
-  async saveNewsletterSubscriber(email: string): Promise<void> {
+  async saveNewsletterSubscriber(email: string, language: 'en' | 'es' = 'en', sourcePage?: string | null): Promise<void> {
     if (supabase) {
       const { error } = await supabase
         .from('newsletter_subscribers')
-        .insert([{ email, status: 'subscribed' }]);
+        .insert([{ email, status: 'subscribed', language, source_page: sourcePage }]);
       // Ignore unique violations in case of double subscribe
       if (error && error.code !== '23505') throw error;
     } else {
@@ -540,6 +599,8 @@ export const db = {
           id: uuid(),
           email,
           status: 'subscribed',
+          language,
+          source_page: sourcePage || null,
           created_at: new Date().toISOString()
         });
         saveLocal('hypercode_db_newsletter_subscribers', subs);
@@ -713,11 +774,20 @@ export const db = {
     }
   },
 
-  async saveUserProfile(id: string, email: string, role: UserProfile['role']): Promise<UserProfile> {
+  async saveUserProfile(
+    id: string,
+    email: string,
+    role: UserProfile['role'],
+    name?: string | null,
+    avatar?: string | null,
+    is_active?: boolean
+  ): Promise<UserProfile> {
     if (supabase) {
+      const payload: any = { id, email, role, name, avatar };
+      if (is_active !== undefined) payload.is_active = is_active;
       const { data, error } = await supabase
         .from('user_profiles')
-        .insert([{ id, email, role }])
+        .upsert([payload])
         .select()
         .single();
       if (error) throw error;
@@ -725,7 +795,15 @@ export const db = {
     } else {
       const list = getLocal('hypercode_db_user_profiles');
       const existingIndex = list.findIndex(u => u.id === id);
-      const profile: UserProfile = { id, email, role, created_at: new Date().toISOString() };
+      const profile: UserProfile = {
+        id,
+        email,
+        role,
+        name: name || null,
+        avatar: avatar || null,
+        is_active: is_active !== undefined ? is_active : true,
+        created_at: new Date().toISOString()
+      };
       if (existingIndex !== -1) {
         list[existingIndex] = profile;
       } else {
@@ -834,6 +912,166 @@ export const db = {
       return data || [];
     } else {
       return getLocal('hypercode_db_newsletter_subscribers').sort((a, b) => b.created_at.localeCompare(a.created_at));
+    }
+  },
+
+  async deleteNewsletterSubscriber(id: string): Promise<void> {
+    if (supabase) {
+      const { error } = await supabase.from('newsletter_subscribers').delete().eq('id', id);
+      if (error) throw error;
+    } else {
+      const list = getLocal('hypercode_db_newsletter_subscribers');
+      const filtered = list.filter(s => s.id !== id);
+      saveLocal('hypercode_db_newsletter_subscribers', filtered);
+    }
+  },
+
+  async getAllUserProfiles(): Promise<UserProfile[]> {
+    if (supabase) {
+      const { data, error } = await supabase.from('user_profiles').select('*').order('created_at', { ascending: false });
+      if (error) throw error;
+      return data || [];
+    } else {
+      return getLocal('hypercode_db_user_profiles');
+    }
+  },
+
+  async getCompanySettings(): Promise<CompanySettings> {
+    if (supabase) {
+      const { data, error } = await supabase.from('company_settings').select('*').eq('id', 'default').maybeSingle();
+      if (error) throw error;
+      if (data) return data;
+      return {
+        id: 'default',
+        company_name: 'HyperCode',
+        email: 'info@hypercode.com',
+        phone: '+1 (555) 019-2834',
+        address: '100 Pine St, Suite 2400, San Francisco, CA 94111',
+        social_links: { linkedin: 'https://linkedin.com/company/hypercode', twitter: 'https://twitter.com/hypercode', github: 'https://github.com/hypercode' },
+        updated_at: new Date().toISOString()
+      };
+    } else {
+      const list = getLocal('hypercode_db_company_settings');
+      let settings = list.find(s => s.id === 'default');
+      if (!settings) {
+        settings = {
+          id: 'default',
+          company_name: 'HyperCode',
+          email: 'info@hypercode.com',
+          phone: '+1 (555) 019-2834',
+          address: '100 Pine St, Suite 2400, San Francisco, CA 94111',
+          social_links: { linkedin: 'https://linkedin.com/company/hypercode', twitter: 'https://twitter.com/hypercode', github: 'https://github.com/hypercode' },
+          updated_at: new Date().toISOString()
+        };
+        list.push(settings);
+        saveLocal('hypercode_db_company_settings', list);
+      }
+      return settings;
+    }
+  },
+
+  async saveCompanySettings(settings: Partial<CompanySettings>): Promise<CompanySettings> {
+    if (supabase) {
+      const { data, error } = await supabase
+        .from('company_settings')
+        .upsert([{ id: 'default', ...settings, updated_at: new Date().toISOString() }])
+        .select()
+        .single();
+      if (error) throw error;
+      return data;
+    } else {
+      const list = getLocal('hypercode_db_company_settings');
+      const index = list.findIndex(s => s.id === 'default');
+      const updated = {
+        id: 'default',
+        company_name: settings.company_name || 'HyperCode',
+        email: settings.email || 'info@hypercode.com',
+        phone: settings.phone || null,
+        address: settings.address || null,
+        social_links: settings.social_links || {},
+        updated_at: new Date().toISOString()
+      };
+      if (index !== -1) {
+        list[index] = updated;
+      } else {
+        list.push(updated);
+      }
+      saveLocal('hypercode_db_company_settings', list);
+      return updated;
+    }
+  },
+
+  async getEmailTemplates(): Promise<EmailTemplate[]> {
+    if (supabase) {
+      const { data, error } = await supabase.from('email_templates').select('*');
+      if (error) throw error;
+      return data || [];
+    } else {
+      const list = getLocal('hypercode_db_email_templates');
+      if (list.length === 0) {
+        const defaults = [
+          { id: 'contact', subject: 'Thank you for contacting HyperCode', body: 'Hi {{name}},\n\nThank you for reaching out to us. We have received your message regarding "{{subject}}" and a consultant will respond to you within 24 hours.\n\nBest regards,\nHyperCode Team', updated_at: new Date().toISOString() },
+          { id: 'consultation', subject: 'Consultation Request Received', body: 'Hi {{name}},\n\nThank you for requesting a technology consultation for "{{service_interest}}". Our team is reviewing your project description and budget of "{{budget}}" to assign the best specialist.\n\nWe will get back to you shortly to schedule our meeting.\n\nBest regards,\nHyperCode Consulting', updated_at: new Date().toISOString() },
+          { id: 'application', subject: 'Application Received: {{position}}', body: 'Hi {{name}},\n\nThank you for applying for the {{position}} position at HyperCode. We have received your resume and application details.\n\nOur recruiting team is reviewing candidates and will update you on the next steps.\n\nBest regards,\nHyperCode Careers', updated_at: new Date().toISOString() },
+          { id: 'newsletter', subject: 'Welcome to HyperCode Insights', body: 'Hi Subscriber,\n\nThank you for subscribing to our newsletter! You will now receive monthly technology insights, case studies, and engineering updates in {{language}}.\n\nBest regards,\nHyperCode Editorial', updated_at: new Date().toISOString() }
+        ];
+        saveLocal('hypercode_db_email_templates', defaults);
+        return defaults;
+      }
+      return list;
+    }
+  },
+
+  async saveEmailTemplate(id: string, subject: string, body: string): Promise<EmailTemplate> {
+    if (supabase) {
+      const { data, error } = await supabase
+        .from('email_templates')
+        .upsert([{ id, subject, body, updated_at: new Date().toISOString() }])
+        .select()
+        .single();
+      if (error) throw error;
+      return data;
+    } else {
+      const list = getLocal('hypercode_db_email_templates');
+      const index = list.findIndex(t => t.id === id);
+      const updated = { id, subject, body, updated_at: new Date().toISOString() };
+      if (index !== -1) {
+        list[index] = updated;
+      } else {
+        list.push(updated);
+      }
+      saveLocal('hypercode_db_email_templates', list);
+      return updated;
+    }
+  },
+
+  async updateLeadStatus(
+    type: 'contact' | 'consultation' | 'chat',
+    id: string,
+    status: 'New' | 'Contacted' | 'Qualified' | 'Proposal Sent' | 'Won' | 'Lost'
+  ): Promise<void> {
+    const tableMap = {
+      contact: 'contact_inquiries',
+      consultation: 'consultation_requests',
+      chat: 'chat_leads'
+    };
+    const table = tableMap[type];
+    if (supabase) {
+      const { error } = await supabase.from(table).update({ status }).eq('id', id);
+      if (error) throw error;
+    } else {
+      const localKeyMap = {
+        contact: 'hypercode_db_contact_inquiries',
+        consultation: 'hypercode_db_consultations',
+        chat: 'hypercode_db_chat_leads'
+      };
+      const key = localKeyMap[type];
+      const list = getLocal(key);
+      const index = list.findIndex(item => item.id === id);
+      if (index !== -1) {
+        list[index].status = status;
+        saveLocal(key, list);
+      }
     }
   }
 };

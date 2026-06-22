@@ -3,8 +3,7 @@ import { Footer } from '@/components/footer';
 import { ArrowLeft, Calendar, Clock, User, Share2, Mail } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { articles } from '@/lib/insights';
-import { getLocalizedArticle, getLocalizedArticles } from '@/lib/insights-localizer';
+import { getLocalizedArticle } from '@/lib/insights-localizer';
 import { routing } from '@/i18n/routing';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Metadata } from 'next';
@@ -12,8 +11,9 @@ import { db } from '@/lib/db';
 
 async function fetchArticle(slug: string, locale: string) {
   try {
+    // 1. Look for Article in DB
     const dbArt = await db.getArticleBySlug(slug);
-    if (dbArt && dbArt.published && dbArt.language === locale) {
+    if (dbArt && dbArt.is_published && dbArt.language === locale) {
       return {
         slug: dbArt.slug,
         title: dbArt.title,
@@ -21,8 +21,12 @@ async function fetchArticle(slug: string, locale: string) {
         content: dbArt.content,
         date: new Date(dbArt.created_at).toLocaleDateString(locale === 'es' ? 'es-ES' : 'en-US', { day: 'numeric', month: 'long', year: 'numeric' }),
         category: dbArt.category,
-        readTime: `${Math.ceil(dbArt.content.split(/\s+/).length / 200)} min read`,
-        author: {
+        readTime: dbArt.reading_time || `${Math.ceil(dbArt.content.split(/\s+/).length / 200)} min read`,
+        author: dbArt.author ? {
+          name: dbArt.author.name,
+          role: dbArt.author.role,
+          avatar: dbArt.author.avatar || '/placeholder-user.jpg'
+        } : {
           name: 'HyperCode Consultant',
           role: 'Technical Advisor',
           avatar: '/placeholder-user.jpg'
@@ -33,6 +37,57 @@ async function fetchArticle(slug: string, locale: string) {
   } catch (err) {
     console.error('Failed to load DB article by slug:', err);
   }
+
+  try {
+    // 2. Look for Case Study in DB
+    const dbCS = await db.getCaseStudyBySlug(slug);
+    if (dbCS && dbCS.is_published && dbCS.language === locale) {
+      const isSpanish = locale === 'es';
+      const challengeTitle = isSpanish ? 'El Desafío' : 'The Challenge';
+      const solutionTitle = isSpanish ? 'La Solución Arquitectada' : 'The Solution Architected';
+      const resultsTitle = isSpanish ? 'Resultados y Entregables' : 'Results & Deliverables';
+      const techTitle = isSpanish ? 'Tecnologías Utilizadas' : 'Technologies Deployed';
+
+      const techHtml = dbCS.technologies 
+        ? `<h2 class="mt-8">${techTitle}</h2><p>${dbCS.technologies.split(',').map(t => `<span style="background-color: #f1f5f9; color: #0f4c81; font-weight: bold; font-size: 11px; padding: 4px 8px; margin-right: 6px; border-radius: 6px; display: inline-block;">${t.trim()}</span>`).join('')}</p>`
+        : '';
+
+      const contentHtml = `
+        <p class="lead" style="font-size: 1.15em; line-height: 1.6; color: #1e293b; font-weight: 550; margin-bottom: 24px;">
+          ${dbCS.challenge.split('.')[0]}.
+        </p>
+        <h2>1. ${challengeTitle}</h2>
+        <p>${dbCS.challenge}</p>
+        
+        <h2>2. ${solutionTitle}</h2>
+        <p>${dbCS.solution}</p>
+        
+        <h2>3. ${resultsTitle}</h2>
+        <p>${dbCS.results}</p>
+        
+        ${techHtml}
+      `;
+
+      return {
+        slug: dbCS.slug,
+        title: dbCS.title,
+        excerpt: dbCS.challenge,
+        content: contentHtml,
+        date: new Date(dbCS.created_at).toLocaleDateString(locale === 'es' ? 'es-ES' : 'en-US', { day: 'numeric', month: 'long', year: 'numeric' }),
+        category: isSpanish ? 'Casos de Éxito' : 'Case Studies',
+        readTime: isSpanish ? 'Lectura de 5 min' : '5 min read',
+        author: {
+          name: 'HyperCode Solutions',
+          role: dbCS.client_type || 'Case Study',
+          avatar: '/placeholder-user.jpg'
+        },
+        related: []
+      };
+    }
+  } catch (err) {
+    console.error('Failed to load DB case study by slug:', err);
+  }
+
   return getLocalizedArticle(slug, locale);
 }
 
@@ -40,18 +95,9 @@ interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
 }
 
-// Generate static params for prerendering during build for all locale and slug combinations
+// Generate static params dynamically at runtime instead of build time (forces dynamic rendering)
 export async function generateStaticParams() {
-  const paramsList: Array<{ locale: string; slug: string }> = [];
-  routing.locales.forEach((locale) => {
-    articles.forEach((article) => {
-      paramsList.push({
-        locale,
-        slug: article.slug,
-      });
-    });
-  });
-  return paramsList;
+  return [];
 }
 
 // Generate dynamic metadata for SEO
@@ -121,24 +167,41 @@ export default async function ArticlePage({ params }: PageProps) {
 
   const activeTrans = localTrans[locale] || localTrans.en;
 
-  // Fetch all localized articles
-  const allLocalizedArticles = getLocalizedArticles(locale);
+  // Fetch related database items
+  let allArticles: any[] = [];
+  try {
+    const dbArticles = await db.getAllArticles();
+    const dbCaseStudies = await db.getAllCaseStudies();
+    
+    const formattedArts = dbArticles.filter(a => a.is_published && a.language === locale).map(a => ({
+      slug: a.slug,
+      title: a.title,
+      excerpt: a.excerpt,
+      category: a.category,
+      date: new Date(a.created_at).toLocaleDateString(locale === 'es' ? 'es-ES' : 'en-US', { day: 'numeric', month: 'long', year: 'numeric' })
+    }));
+    
+    const formattedCS = dbCaseStudies.filter(c => c.is_published && c.language === locale).map(c => ({
+      slug: c.slug,
+      title: c.title,
+      excerpt: c.challenge,
+      category: locale === 'es' ? 'Casos de Éxito' : 'Case Studies',
+      date: new Date(c.created_at).toLocaleDateString(locale === 'es' ? 'es-ES' : 'en-US', { day: 'numeric', month: 'long', year: 'numeric' })
+    }));
+    
+    allArticles = [...formattedArts, ...formattedCS];
+  } catch (err) {
+    console.error('Failed to load related articles:', err);
+  }
 
   // Find related articles objects
-  const relatedArticles = allLocalizedArticles
-    .filter((art) => article.related.includes(art.slug))
+  const relatedArticles = allArticles
+    .filter((art) => art.slug !== article.slug && art.category === article.category)
     .slice(0, 3);
 
   // Fill in related list if needed
   if (relatedArticles.length < 3) {
-    const extra = allLocalizedArticles
-      .filter((art) => art.category === article.category && art.slug !== article.slug && !relatedArticles.some(r => r.slug === art.slug))
-      .slice(0, 3 - relatedArticles.length);
-    relatedArticles.push(...extra);
-  }
-
-  if (relatedArticles.length < 3) {
-    const extra = allLocalizedArticles
+    const extra = allArticles
       .filter((art) => art.slug !== article.slug && !relatedArticles.some(r => r.slug === art.slug))
       .slice(0, 3 - relatedArticles.length);
     relatedArticles.push(...extra);

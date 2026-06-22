@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { supabaseServer } from '@/lib/supabase-server';
+import { getSupabaseServer } from '@/lib/supabase-server';
 import { Resend } from 'resend';
 
 // Initialize Resend
@@ -13,34 +13,13 @@ export async function POST(req: Request) {
   console.log('========================================');
 
   try {
-    // 1. Check Environment Variables
-    if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
-      console.error('[Careers API] ERROR: NEXT_PUBLIC_SUPABASE_URL environment variable is missing.');
-      return NextResponse.json({ error: 'Missing NEXT_PUBLIC_SUPABASE_URL' }, { status: 500 });
-    }
-    if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
-      console.error('[Careers API] ERROR: SUPABASE_SERVICE_ROLE_KEY environment variable is missing.');
-      return NextResponse.json({ error: 'Missing SUPABASE_SERVICE_ROLE_KEY' }, { status: 500 });
-    }
-
-    // 2. Check Supabase client initialization
+    // 1. Check Supabase client initialization
+    const supabaseServer = getSupabaseServer();
     if (!supabaseServer) {
       console.error('[Careers API] ERROR: Supabase server client could not be initialized.');
       return NextResponse.json({ error: 'Supabase client initialization failed' }, { status: 500 });
     }
-    console.log('[Careers API] Supabase server client initialized successfully with service role key.');
-
-    // 3. Verify Bucket "resumes" exists
-    console.log('[Careers API] Verifying storage bucket "resumes" exists...');
-    const { data: bucket, error: bucketError } = await supabaseServer.storage.getBucket('resumes');
-    if (bucketError) {
-      console.error('[Careers API] ERROR: Bucket "resumes" check failed:', bucketError);
-      if (bucketError.message === 'Bucket not found' || (bucketError as any).statusCode === '404' || (bucketError as any).status === 404) {
-        return NextResponse.json({ error: "Supabase bucket 'resumes' not found" }, { status: 400 });
-      }
-      return NextResponse.json({ error: `Supabase bucket 'resumes' error: ${bucketError.message}` }, { status: 500 });
-    }
-    console.log('[Careers API] SUCCESS: Bucket "resumes" exists and is active:', bucket);
+    console.log('[Careers API] Supabase server client initialized successfully.');
 
     // 4. Parse Form Data
     console.log('[Careers API] Parsing request form data...');
@@ -217,14 +196,6 @@ export async function POST(req: Request) {
           </div>
         `;
 
-        await resend.emails.send({
-          from: 'HyperCode Careers <onboarding@resend.dev>',
-          to: contactRecipient,
-          subject: `[Applicant Alert] New Application: ${name} - ${position}`,
-          html: adminEmailHtml,
-        });
-        console.log('[Careers API] Recruiter alert email sent to:', contactRecipient);
-
         // B. Candidate Confirmation Email
         const isSpanish = locale === 'es';
         const userSubject = isSpanish
@@ -279,12 +250,22 @@ export async function POST(req: Request) {
           </div>
         `;
 
-        await resend.emails.send({
-          from: 'HyperCode Careers <onboarding@resend.dev>',
-          to: email,
-          subject: userSubject,
-          html: userEmailHtml,
-        });
+        console.log('[Careers API] Sending recruiter and candidate notification emails in parallel...');
+        await Promise.all([
+          resend.emails.send({
+            from: 'HyperCode Careers <onboarding@resend.dev>',
+            to: contactRecipient,
+            subject: `[Applicant Alert] New Application: ${name} - ${position}`,
+            html: adminEmailHtml,
+          }),
+          resend.emails.send({
+            from: 'HyperCode Careers <onboarding@resend.dev>',
+            to: email,
+            subject: userSubject,
+            html: userEmailHtml,
+          })
+        ]);
+        console.log('[Careers API] Recruiter alert email sent to:', contactRecipient);
         console.log('[Careers API] Candidate confirmation email sent to:', email);
       } catch (emailErr) {
         console.error('[Careers API] ERROR: Resend careers email failed:', emailErr);

@@ -1,7 +1,7 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
-import { getLocalizedArticles, getLocalizedCategories } from '@/lib/insights-localizer';
+import { getLocalizedCategories } from '@/lib/insights-localizer';
 import { InsightsList } from '@/components/insights-list';
 import { NewsletterForm } from '@/components/newsletter-form';
 import { db } from '@/lib/db';
@@ -33,7 +33,7 @@ export default async function InsightsPage({ params }: Props) {
   let dbArticlesFormatted: any[] = [];
   try {
     const dbArticles = await db.getAllArticles();
-    const publishedDbArticles = dbArticles.filter(a => a.published && a.language === locale);
+    const publishedDbArticles = dbArticles.filter(a => a.is_published && a.language === locale);
     dbArticlesFormatted = publishedDbArticles.map(a => ({
       slug: a.slug,
       title: a.title,
@@ -41,8 +41,12 @@ export default async function InsightsPage({ params }: Props) {
       content: a.content,
       date: new Date(a.created_at).toLocaleDateString(locale === 'es' ? 'es-ES' : 'en-US', { day: 'numeric', month: 'long', year: 'numeric' }),
       category: a.category,
-      readTime: `${Math.ceil(a.content.split(/\s+/).length / 200)} min read`,
-      author: {
+      readTime: a.reading_time || `${Math.ceil(a.content.split(/\s+/).length / 200)} min read`,
+      author: a.author ? {
+        name: a.author.name,
+        role: a.author.role,
+        avatar: a.author.avatar || '/placeholder-user.jpg'
+      } : {
         name: 'HyperCode Consultant',
         role: 'Technical Advisor',
         avatar: '/placeholder-user.jpg'
@@ -53,19 +57,38 @@ export default async function InsightsPage({ params }: Props) {
     console.error('Failed to load DB articles for index page:', err);
   }
 
-  // Fetch localized articles & categories and merge uniquely by slug
-  const staticArticles = getLocalizedArticles(locale);
-  const localizedCategories = getLocalizedCategories(locale);
-
-  const seenSlugs = new Set();
-  const mergedArticles = [];
-
-  for (const art of [...dbArticlesFormatted, ...staticArticles]) {
-    if (!seenSlugs.has(art.slug)) {
-      seenSlugs.add(art.slug);
-      mergedArticles.push(art);
-    }
+  // Fetch published case studies from Supabase
+  let dbCaseStudiesFormatted: any[] = [];
+  try {
+    const dbCaseStudies = await db.getAllCaseStudies();
+    const publishedDbCaseStudies = dbCaseStudies.filter(c => c.is_published && c.language === locale);
+    dbCaseStudiesFormatted = publishedDbCaseStudies.map(c => ({
+      slug: c.slug,
+      title: c.title,
+      excerpt: c.challenge,
+      content: `<h2>Challenge</h2><p>${c.challenge}</p><h2>Solution</h2><p>${c.solution}</p><h2>Results</h2><p>${c.results}</p>`,
+      date: new Date(c.created_at).toLocaleDateString(locale === 'es' ? 'es-ES' : 'en-US', { day: 'numeric', month: 'long', year: 'numeric' }),
+      category: locale === 'es' ? 'Casos de Éxito' : 'Case Studies',
+      readTime: locale === 'es' ? 'Lectura de 5 min' : '5 min read',
+      author: {
+        name: 'HyperCode Solutions',
+        role: c.client_type || 'Case Study',
+        avatar: '/placeholder-user.jpg'
+      },
+      isCaseStudy: true,
+      related: []
+    }));
+  } catch (err) {
+    console.error('Failed to load DB case studies for index page:', err);
   }
+
+  // 100% database-driven content: merge articles and case studies
+  const mergedArticles = [...dbArticlesFormatted, ...dbCaseStudiesFormatted];
+
+  const rawCategories = getLocalizedCategories(locale);
+  const localizedCategories = [...rawCategories];
+  const caseStudiesCat = locale === 'es' ? 'Casos de Éxito' : 'Case Studies';
+  localizedCategories.splice(1, 0, caseStudiesCat);
 
   return (
     <main className="relative w-full bg-white text-left">

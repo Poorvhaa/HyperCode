@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ArrowRight, Calendar, BookOpen, User } from 'lucide-react';
+import { ArrowRight, Calendar, BookOpen, User, Search } from 'lucide-react';
 import Link from 'next/link';
 import { useSearchParams, useRouter, useParams } from 'next/navigation';
 import { Article } from '@/lib/insights';
@@ -20,6 +20,7 @@ export function InsightsList({ initialArticles, translatedCategories }: Insights
   
   const t = useTranslations('Insights');
   const [selectedCategory, setSelectedCategory] = useState(translatedCategories[0]);
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Sync state with URL category parameter
   useEffect(() => {
@@ -49,12 +50,34 @@ export function InsightsList({ initialArticles, translatedCategories }: Insights
     }
   };
 
-  const filteredArticles = selectedCategory === translatedCategories[0]
+  // Filter by category first
+  let filteredArticles = selectedCategory === translatedCategories[0]
     ? initialArticles
     : initialArticles.filter((art) => art.category === selectedCategory);
 
+  // Then filter by search query keywords
+  if (searchQuery.trim() !== '') {
+    const q = searchQuery.toLowerCase();
+    filteredArticles = filteredArticles.filter((art) => 
+      art.title.toLowerCase().includes(q) || 
+      art.excerpt.toLowerCase().includes(q)
+    );
+  }
+
   return (
-    <div className="space-y-16">
+    <div className="space-y-10">
+      {/* Search Bar */}
+      <div className="max-w-md mx-auto flex items-center bg-slate-50 border border-slate-200 px-4 py-3 rounded-2xl gap-2.5 shadow-sm focus-within:ring-2 focus-within:ring-[#0F4C81]/20 focus-within:border-[#0F4C81] transition-all">
+        <Search size={16} className="text-slate-400 flex-shrink-0" />
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder={locale === 'es' ? 'Buscar artículos o casos de éxito...' : 'Search articles or case studies...'}
+          className="bg-transparent border-none text-slate-800 text-xs placeholder:text-slate-400 w-full focus:outline-none font-semibold"
+        />
+      </div>
+
       {/* Category Tabs Filter Bar */}
       <div className="border-b border-slate-200 pb-2">
         <div className="flex flex-wrap gap-2 md:justify-center">

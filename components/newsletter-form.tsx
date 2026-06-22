@@ -1,13 +1,15 @@
 'use client';
 
 import { useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { Loader2, CheckCircle } from 'lucide-react';
 import { db } from '@/lib/db';
 
 export function NewsletterForm() {
   const t = useTranslations('Insights');
+  const locale = useLocale();
   const [email, setEmail] = useState('');
+  const [honeypot, setHoneypot] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
@@ -25,26 +27,56 @@ export function NewsletterForm() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({
+          email,
+          language: locale === 'es' ? 'es' : 'en',
+          sourcePage: typeof window !== 'undefined' ? window.location.pathname : '',
+          honeypot,
+        }),
       });
 
       if (!res.ok) {
-        throw new Error('Newsletter subscription failed');
+        const errorBody = await res.json();
+        throw new Error(
+          errorBody?.error ||
+          errorBody?.message ||
+          `Newsletter subscription failed (${res.status})`
+        );
       }
 
       setSuccess(true);
       setEmail('');
+      setHoneypot('');
     } catch (err: any) {
       console.error(err);
-      setError('Subscription failed. Please check your email or try again.');
       
-      // Local fallback in offline mode
-      try {
-        await db.saveNewsletterSubscriber(email);
-        setSuccess(true);
-        setEmail('');
-      } catch (localErr) {
-        console.error('Local fallback subscriber save failed:', localErr);
+      const isDuplicate = err.message === 'You are already subscribed';
+      setError(isDuplicate ? t('newsletterAlreadySubscribed') : t('newsletterError'));
+      
+      // Local fallback in offline/error mode (only if it is not a duplicate error)
+      if (!isDuplicate) {
+        try {
+          if (!honeypot) {
+            await db.saveNewsletterSubscriber(
+              email,
+              locale === 'es' ? 'es' : 'en',
+              typeof window !== 'undefined' ? window.location.pathname : ''
+            );
+          }
+          setSuccess(true);
+          setEmail('');
+          setHoneypot('');
+          setError('');
+        } catch (localErr: any) {
+          console.error('Newsletter subscription error', {
+            error: localErr,
+            message: localErr?.message,
+            code: localErr?.code,
+            details: localErr?.details,
+            hint: localErr?.hint,
+            stack: localErr?.stack
+          });
+        }
       }
     } finally {
       setSubmitting(false);
@@ -63,6 +95,17 @@ export function NewsletterForm() {
   return (
     <div className="space-y-2 max-w-lg mx-auto">
       <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
+        {/* Honeypot field for spam prevention */}
+        <div style={{ display: 'none' }} aria-hidden="true">
+          <input
+            type="text"
+            name="website"
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
+            tabIndex={-1}
+            autoComplete="off"
+          />
+        </div>
         <input
           type="email"
           value={email}
@@ -81,7 +124,7 @@ export function NewsletterForm() {
           <span>{t('newsletterButton')}</span>
         </button>
       </form>
-      {error && <p className="text-xs text-red-655 font-semibold text-center">{error}</p>}
+      {error && <p className="text-xs text-red-600 font-semibold text-center">{error}</p>}
     </div>
   );
 }

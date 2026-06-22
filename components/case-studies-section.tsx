@@ -18,7 +18,7 @@ export function CaseStudiesSection() {
     const fetchStudies = async () => {
       try {
         const list = await db.getAllCaseStudies();
-        const published = list.filter(c => c.published && c.language === locale);
+        const published = list.filter(c => c.is_published && c.language === locale);
         setDbCaseStudies(published);
       } catch (err) {
         console.error('Failed to fetch case studies:', err);
@@ -68,7 +68,7 @@ export function CaseStudiesSection() {
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-200 pb-6">
                   <div className="space-y-1">
                     <span className="text-[10px] font-bold text-[#0F4C81] uppercase tracking-widest block">
-                      {study.client_industry}
+                      {study.industry}
                     </span>
                     <h4 className="text-2xl font-bold text-slate-900 tracking-tight">
                       {study.title}

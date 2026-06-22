@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
-import { supabaseServer } from '@/lib/supabase-server';
+import { getSupabaseServer } from '@/lib/supabase-server';
 import { Resend } from 'resend';
 
 // Initialize Resend
@@ -48,6 +48,7 @@ export async function POST(req: Request) {
     const classification = classifyService(validated.service);
 
     let savedData = null;
+    const supabaseServer = getSupabaseServer();
 
     // 1. Save to Supabase
     if (supabaseServer) {
@@ -72,6 +73,23 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: 'Database save failed' }, { status: 500 });
       }
       savedData = data;
+
+      // Automatically capture consultation request as a chat lead
+      const { error: leadError } = await supabaseServer
+        .from('chat_leads')
+        .insert([{
+          name: validated.name,
+          email: validated.email,
+          phone: validated.phone,
+          interest: classification,
+          company: validated.company,
+          source: 'consultation_request',
+          conversation_summary: `[Consultation Booking Request]\nService Interest: ${validated.service}\nBudget: ${validated.budget}\nTimeline: ${validated.timeline}\nDescription: ${validated.message}`
+        }]);
+
+      if (leadError) {
+        console.error('Supabase consultation lead insert error:', leadError);
+      }
     } else {
       console.warn('Supabase is not configured. Running in mock offline mode.');
       savedData = {

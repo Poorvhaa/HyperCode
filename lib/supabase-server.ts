@@ -1,18 +1,19 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
+export function getSupabaseServer() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+  const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 
-// Use service role key on the server if available to bypass RLS for administrative/secure tasks,
-// otherwise fall back to anon key.
-const serverKey = supabaseServiceKey || supabaseAnonKey;
+  const serverKey = supabaseServiceKey || supabaseAnonKey;
 
-export const supabaseServer = (supabaseUrl && serverKey)
-  ? createClient(supabaseUrl, serverKey, {
-      auth: {
-        persistSession: false,
-        autoRefreshToken: false,
-      },
-    })
-  : null;
+  if (!supabaseUrl || !serverKey) return null;
+
+  return createClient(supabaseUrl, serverKey, {
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false,
+    },
+  });
+}
+

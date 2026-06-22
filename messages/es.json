@@ -445,7 +445,9 @@
     "newsletterSubtitle": "Suscríbase a nuestro boletín para recibir las últimas ideas y actualizaciones directamente en su bandeja de entrada.",
     "newsletterPlaceholder": "tu.correo@empresa.com",
     "newsletterButton": "Suscribirse",
-    "newsletterSuccess": "¡Suscripción exitosa!"
+    "newsletterSuccess": "Gracias por suscribirse a las ideas de HyperCode.",
+    "newsletterAlreadySubscribed": "Ya se encuentra suscrito.",
+    "newsletterError": "No es posible suscribirse en este momento. Por favor, inténtelo de nuevo más tarde."
   },
   "NotFound": {
     "title": "Página No Encontrada",

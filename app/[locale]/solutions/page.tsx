@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Navigation } from '@/components/navigation';
+import { CaseStudiesSection } from '@/components/case-studies-section';
 import { Footer } from '@/components/footer';
 import { 
   BarChart3, 
@@ -685,6 +686,8 @@ export default async function SolutionsPage({ params }: Props) {
           </div>
         </div>
       </section>
+
+      <CaseStudiesSection />
 
       <Footer />
     </main>

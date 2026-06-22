@@ -444,7 +444,9 @@
     "newsletterSubtitle": "Subscribe to our newsletter to receive the latest insights and updates directly in your inbox.",
     "newsletterPlaceholder": "your.email@company.com",
     "newsletterButton": "Subscribe",
-    "newsletterSuccess": "Subscribed successfully!"
+    "newsletterSuccess": "Thank you for subscribing to HyperCode insights.",
+    "newsletterAlreadySubscribed": "You are already subscribed.",
+    "newsletterError": "Unable to subscribe right now. Please try again later."
   },
   "NotFound": {
     "title": "Page Not Found",
