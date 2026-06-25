@@ -218,8 +218,8 @@ export function Footer() {
         <div className="border-t border-slate-200 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
           <p>{tf('copyright')}</p>
           <div className="flex space-x-6">
-            <Link href="/contact" className="hover:text-[#0F4C81]">{tf('privacy')}</Link>
-            <Link href="/contact" className="hover:text-[#0F4C81]">{tf('terms')}</Link>
+            <Link href="/privacy-policy" className="hover:text-[#0F4C81]">{tf('privacy')}</Link>
+            <Link href="/terms-and-conditions" className="hover:text-[#0F4C81]">{tf('terms')}</Link>
           </div>
         </div>
       </div>

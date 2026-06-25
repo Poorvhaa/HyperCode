@@ -64,7 +64,7 @@
     "connect": "Conéctese Con Nosotros",
     "copyright": "© 2026 HyperCode. Todos los derechos reservados.",
     "privacy": "Política de Privacidad",
-    "terms": "Términos de Servicio"
+    "terms": "Términos y Condiciones"
   },
   "Hero": {
     "badge": "Socio de Transformación Digital Empresarial",
@@ -579,6 +579,96 @@
           "Háblame de sus servicios",
           "Quiero una consulta"
         ]
+      }
+    }
+  },
+  "PrivacyPolicy": {
+    "title": "Política de Privacidad",
+    "subtitle": "Valoramos su privacidad y estamos comprometidos a proteger sus datos personales.",
+    "lastUpdated": "Última actualización: 26 de junio de 2026",
+    "downloadPdf": "Descargar versión PDF",
+    "toc": "Tabla de Contenidos",
+    "sections": {
+      "introduction": {
+        "title": "1. Introducción",
+        "content": "Bienvenido a HyperCode. Esta Política de Privacidad describe cómo HyperCode LLC (\"nosotros\", \"nos\" o \"nuestro\") recopila, utiliza, comparte y protege sus datos personales cuando visita nuestro sitio web (https://www.hypercode.com), utiliza nuestro chatbot de Consultor de IA, envía solicitudes de contacto o consulta, o solicita puestos de trabajo. Al acceder a nuestros servicios, acepta las prácticas descritas en esta política."
+      },
+      "collect": {
+        "title": "2. Información que Recopilamos",
+        "content": "Recopilamos información que usted nos proporciona voluntariamente e información que se recopila automáticamente cuando utiliza nuestro sitio web. Esto incluye:\n\n• Información de identificación personal: Nombre, dirección de correo electrónico, número de teléfono, nombre de la empresa, puesto de trabajo y detalles del currículum cuando envía formularios, solicita puestos o califica clientes potenciales.\n\n• Datos de comunicación: Transcripciones de texto de sus conversaciones con nuestro chatbot de Consultor de IA y mensajes enviados a través de formularios de contacto.\n\n• Datos de uso y dispositivo: Dirección IP, tipo de navegador, sistema operativo, URL de referencia, páginas vistas y tiempos de acceso recopilados a través de cookies y tecnologías de seguimiento."
+      },
+      "use": {
+        "title": "3. Cómo Utilizamos su Información",
+        "content": "Procesamos su información para fines comerciales legítimos, que incluyen:\n\n• Proporcionar, mantener y optimizar nuestro sitio web y servicios.\n\n• Responder a sus formularios de contacto, solicitudes de consulta y consultas de chatbot.\n\n• Evaluar solicitudes de empleo y gestionar canales de contratación.\n\n• Enviar actualizaciones de boletines informativos, contenido promocional o alertas (donde haya dado su consentimiento).\n\n• Detectar, prevenir y abordar incidentes de seguridad, fraude o problemas técnicos."
+      },
+      "cookies": {
+        "title": "4. Cookies y Seguimiento",
+        "content": "Utilizamos cookies, balizas web y tecnologías de seguimiento similares para mejorar la experiencia del usuario, analizar el rendimiento del sitio y realizar un seguimiento de los patrones de tráfico. Puede configurar su navegador para rechazar todas las cookies o para indicar cuándo se envía una cookie. Sin embargo, si no acepta las cookies, es posible que algunas partes de nuestro sitio web no funcionen correctamente."
+      },
+      "sharing": {
+        "title": "5. Intercambio y Divulgación de Datos",
+        "content": "No vendemos, alquilamos ni comercializamos sus datos personales. Podemos compartir su información con proveedores externos de confianza que nos ayudan a operar nuestro sitio web, administrar correos electrónicos o analizar el tráfico (por ejemplo, Supabase, Vercel, Resend, Google Analytics), siempre que acepten mantener esta información confidencial y segura."
+      },
+      "security": {
+        "title": "6. Seguridad de sus Datos",
+        "content": "Implementamos medidas de seguridad administrativas, técnicas y físicas estándar de la industria para salvaguardar sus datos personales. Sin embargo, tenga en cuenta que ninguna transmisión por Internet o sistema de almacenamiento electrónico es 100% seguro y no podemos garantizar la seguridad absoluta de los datos."
+      },
+      "rights": {
+        "title": "7. Sus Derechos y Opciones",
+        "content": "Según su ubicación (como la UE bajo el GDPR o California bajo la CCPA), es posible que posea derechos específicos con respecto a su información personal, incluido el derecho de acceder, corregir, eliminar o limitar el uso de sus datos. Para ejercer cualquiera de estos derechos, contáctenos en privacy@hypercodeus.com."
+      },
+      "changes": {
+        "title": "8. Cambios a esta Política",
+        "content": "Nos reservamos el derecho de modificar esta Política de Privacidad en cualquier momento. Cualquier cambio se publicará en esta página con una fecha de revisión actualizada. Le recomendamos que revise esta política periódicamente para mantenerse informado sobre cómo protegemos su información."
+      },
+      "contact": {
+        "title": "9. Contáctenos",
+        "content": "Si tiene alguna pregunta o inquietud con respecto a esta Política de Privacidad, contáctenos:\n\n• Por correo electrónico: privacy@hypercodeus.com\n\n• Por correo postal: 2095 Hammond Dr Suite B, Schaumburg, IL 60173"
+      }
+    }
+  },
+  "TermsAndConditions": {
+    "title": "Términos y Condiciones",
+    "subtitle": "Lea atentamente estos términos y condiciones antes de utilizar nuestro sitio web y servicios.",
+    "lastUpdated": "Última actualización: 26 de junio de 2026",
+    "downloadPdf": "Descargar versión PDF",
+    "toc": "Tabla de Contenidos",
+    "sections": {
+      "agreement": {
+        "title": "1. Aceptación de los Términos",
+        "content": "Al acceder o utilizar el sitio web de HyperCode (https://www.hypercode.com) y nuestros servicios profesionales, usted acepta estar sujeto a estos Términos y Condiciones. Si no está de acuerdo con todos estos términos, se le prohíbe expresamente utilizar nuestro sitio y servicios y debe interrumpir su uso de inmediato."
+      },
+      "intellectual": {
+        "title": "2. Derechos de Propiedad Intelectual",
+        "content": "A menos que se indique lo contrario, el sitio web, incluido su código fuente, bases de datos, funcionalidad, software, diseños, audio, video, texto, fotografías y gráficos, son de nuestra propiedad y están protegidos por leyes de derechos de autor y marcas registradas. El contenido se proporciona en el sitio 'TAL CUAL' para su información y uso personal únicamente."
+      },
+      "user": {
+        "title": "3. Representaciones del Usuario",
+        "content": "Al usar el sitio web, usted declara y garantiza que: (1) toda la información de registro y envío que proporcione es verdadera, precisa y completa; (2) mantendrá la precisión de dicha información; (3) tiene la capacidad legal y acepta cumplir con estos Términos y Condiciones; y (4) su uso del sitio web no violará ninguna ley o regulación aplicable."
+      },
+      "prohibited": {
+        "title": "4. Actividades Prohibidas",
+        "content": "No puede acceder ni utilizar el sitio web para ningún otro propósito que no sea aquel para el cual lo ponemos a disposición. Las actividades prohibidas incluyen: la recopilación sistemática de datos para crear colecciones de bases de datos; el encuadre o enlace no autorizado; intentar eludir los filtros de seguridad del sitio web; y utilizar sistemas automatizados (como arañas o robots) para extraer datos."
+      },
+      "services": {
+        "title": "5. Servicios y Contratos",
+        "content": "HyperCode proporciona consultoría de desarrollo web empresarial, ingeniería de datos, inteligencia de negocios y selección de personal de TI. Cualquier contrato específico para servicios de consultoría, entregables de proyectos o colocación de candidatos se regirá por un Acuerdo Maestro de Servicios (MSA) o Declaración de Trabajo (SOW) por escrito por separado."
+      },
+      "termination": {
+        "title": "6. Gestión del Sitio y Rescisión",
+        "content": "Nos reservamos el derecho, pero no la obligación, de monitorear el sitio web para detectar violaciones de estos Términos y Condiciones. Podemos bloquear, suspender o rescindir el acceso al sitio para los usuarios que violen nuestros términos o participen en comportamientos disruptivos, sin previo aviso ni responsabilidad."
+      },
+      "liability": {
+        "title": "7. Limitación de Responsabilidad",
+        "content": "En ningún caso HyperCode, sus directores, empleados o socios serán responsables ante usted o cualquier tercero por daños directos, indirectos, consecuentes, ejemplares, incidentales, especiales o punitivos, incluida la pérdida de ganancias, pérdida de ingresos o pérdida de datos que surjan de su uso del sitio web."
+      },
+      "governing": {
+        "title": "8. Ley Aplicable",
+        "content": "Estos Términos y Condiciones y su uso del sitio web se rigen y analizan de acuerdo con las leyes del Estado de Illinois, Estados Unidos, sin tener en cuenta sus principios de conflicto de leyes."
+      },
+      "contact": {
+        "title": "9. Contáctenos",
+        "content": "Para resolver una queja sobre el sitio o recibir más información sobre el uso del mismo, contáctenos:\n\n• Por correo electrónico: legal@hypercodeus.com\n\n• Por correo postal: 2095 Hammond Dr Suite B, Schaumburg, IL 60173"
       }
     }
   }
