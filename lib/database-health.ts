@@ -41,12 +41,15 @@ export async function runDbHealthCheck(): Promise<HealthCheckReport> {
     };
   }
 
-  // The 7 ACTUAL tables currently present in Supabase
+  // The ACTUAL tables currently checked in Supabase
   const actualTables = [
     'articles',
     'candidates',
     'case_studies',
-    'consultation_requests'
+    'consultation_requests',
+    'chat_conversations',
+    'chat_messages',
+    'chat_leads'
   ];
 
   // The expected columns for each table based on ACTUAL Supabase schema
@@ -107,7 +110,46 @@ export async function runDbHealthCheck(): Promise<HealthCheckReport> {
       'project_description',
       'budget',
       'timeline',
-      'status'
+      'status',
+      'name',
+      'service',
+      'message',
+      'preferred_date',
+      'language'
+    ],
+    chat_conversations: [
+      'id',
+      'session_id',
+      'language',
+      'visitor_name',
+      'visitor_email',
+      'created_at',
+      'updated_at'
+    ],
+    chat_messages: [
+      'id',
+      'conversation_id',
+      'sender',
+      'message',
+      'language',
+      'created_at'
+    ],
+    chat_leads: [
+      'id',
+      'conversation_id',
+      'name',
+      'email',
+      'phone',
+      'company',
+      'industry',
+      'service_interest',
+      'budget_range',
+      'timeline',
+      'message',
+      'lead_score',
+      'status',
+      'language',
+      'created_at'
     ]
   };
 

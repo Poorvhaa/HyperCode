@@ -27,6 +27,43 @@ export interface ContactInquiry {
   source: string;
   created_at: string;
 }
+export interface ChatConversation {
+  id: string;
+  session_id: string;
+  language: 'en' | 'es';
+  visitor_name: string | null;
+  visitor_email: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ChatMessage {
+  id: string;
+  conversation_id: string;
+  sender: 'user' | 'assistant';
+  message: string;
+  language: 'en' | 'es';
+  created_at: string;
+}
+
+export interface ChatLead {
+  id: string;
+  conversation_id: string;
+  name: string;
+  email: string;
+  phone: string;
+  company: string;
+  industry: string;
+  service_interest: string;
+  budget_range: string;
+  timeline: string;
+  message: string | null;
+  lead_score: number;
+  status: 'New' | 'Contacted' | 'Qualified' | 'Proposal Sent' | 'Won' | 'Lost';
+  language: 'en' | 'es';
+  created_at: string;
+}
+
 export interface JobApplication {
   id: string;
   name: string;
@@ -764,5 +801,266 @@ export const db = {
       console.error(`[DB Error] Supabase updateLeadStatus failed for table ${table}:`, error.message || error);
       throw error;
     }
+  },
+
+  async createChatConversation(
+    sessionId: string,
+    language: 'en' | 'es',
+    visitorName?: string,
+    visitorEmail?: string
+  ): Promise<ChatConversation> {
+    if (!supabase) {
+      throw new Error('Database service unavailable: Supabase client is not configured.');
+    }
+
+    const { data, error } = await supabase
+      .from('chat_conversations')
+      .upsert(
+        [
+          {
+            session_id: sessionId,
+            language,
+            visitor_name: visitorName || null,
+            visitor_email: visitorEmail || null,
+            updated_at: new Date().toISOString()
+          }
+        ],
+        { onConflict: 'session_id' }
+      )
+      .select()
+      .single();
+
+    if (error) {
+      console.error('[DB Error] createChatConversation failed:', error.message || error);
+      throw error;
+    }
+    return data;
+  },
+
+  async updateChatConversationLanguage(
+    conversationId: string,
+    language: 'en' | 'es'
+  ): Promise<void> {
+    if (!supabase) {
+      throw new Error('Database service unavailable: Supabase client is not configured.');
+    }
+
+    const { error } = await supabase
+      .from('chat_conversations')
+      .update({ language, updated_at: new Date().toISOString() })
+      .eq('id', conversationId);
+
+    if (error) {
+      console.error('[DB Error] updateChatConversationLanguage failed:', error.message || error);
+      throw error;
+    }
+  },
+
+  async addChatMessage(
+    conversationId: string,
+    sender: 'user' | 'assistant',
+    message: string,
+    language: 'en' | 'es'
+  ): Promise<ChatMessage> {
+    if (!supabase) {
+      throw new Error('Database service unavailable: Supabase client is not configured.');
+    }
+
+    const { data, error } = await supabase
+      .from('chat_messages')
+      .insert([
+        {
+          conversation_id: conversationId,
+          sender,
+          message,
+          language
+        }
+      ])
+      .select()
+      .single();
+
+    if (error) {
+      console.error('[DB Error] addChatMessage failed:', error.message || error);
+      throw error;
+    }
+
+    await supabase
+      .from('chat_conversations')
+      .update({ updated_at: new Date().toISOString() })
+      .eq('id', conversationId);
+
+    return data;
+  },
+
+  async saveChatLead(lead: Omit<ChatLead, 'id' | 'created_at' | 'status'> & { id?: string }): Promise<ChatLead> {
+    if (!supabase) {
+      throw new Error('Database service unavailable: Supabase client is not configured.');
+    }
+
+    const { data, error } = await supabase
+      .from('chat_leads')
+      .insert([lead])
+      .select()
+      .single();
+
+    if (error) {
+      console.error('[DB Error] saveChatLead failed:', error.message || error);
+      throw error;
+    }
+
+    await supabase
+      .from('chat_conversations')
+      .update({
+        visitor_name: lead.name,
+        visitor_email: lead.email,
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', lead.conversation_id);
+
+    return data;
+  },
+
+  async saveChatConsultation(
+    name: string,
+    email: string,
+    phone: string,
+    company: string,
+    service: string,
+    message: string,
+    preferredDate: string,
+    language: 'en' | 'es'
+  ): Promise<any> {
+    if (!supabase) {
+      throw new Error('Database service unavailable: Supabase client is not configured.');
+    }
+
+    const { data, error } = await supabase
+      .from('consultation_requests')
+      .insert([
+        {
+          full_name: name,
+          company: company || null,
+          email,
+          phone: phone || null,
+          service_interest: service,
+          project_description: message,
+          budget: 'Chat Consultant',
+          timeline: 'Chat',
+          status: 'new',
+          name,
+          service,
+          message,
+          preferred_date: preferredDate || null,
+          language
+        }
+      ])
+      .select()
+      .single();
+
+    if (error) {
+      console.error('[DB Error] saveChatConsultation failed:', error.message || error);
+      throw error;
+    }
+    return data;
+  },
+
+  async getAllChatConversations(): Promise<any[]> {
+    if (!supabase) {
+      throw new Error('Database service unavailable.');
+    }
+
+    const { data, error } = await supabase
+      .from('chat_conversations')
+      .select('*, chat_messages(count)')
+      .order('updated_at', { ascending: false });
+
+    if (error) {
+      console.error('[DB Error] getAllChatConversations failed:', error.message || error);
+      throw error;
+    }
+    return data || [];
+  },
+
+  async getChatMessages(conversationId: string): Promise<ChatMessage[]> {
+    if (!supabase) {
+      throw new Error('Database service unavailable.');
+    }
+
+    const { data, error } = await supabase
+      .from('chat_messages')
+      .select('*')
+      .eq('conversation_id', conversationId)
+      .order('created_at', { ascending: true });
+
+    if (error) {
+      console.error('[DB Error] getChatMessages failed:', error.message || error);
+      throw error;
+    }
+    return data || [];
+  },
+
+  async getAllChatLeads(): Promise<ChatLead[]> {
+    if (!supabase) {
+      throw new Error('Database service unavailable.');
+    }
+
+    const { data, error } = await supabase
+      .from('chat_leads')
+      .select('*')
+      .order('lead_score', { ascending: false });
+
+    if (error) {
+      console.error('[DB Error] getAllChatLeads failed:', error.message || error);
+      throw error;
+    }
+    return data || [];
+  },
+
+  async deleteChatConversation(id: string): Promise<void> {
+    if (!supabase) {
+      throw new Error('Database service unavailable: Supabase client is not configured.');
+    }
+    const { error } = await supabase.from('chat_conversations').delete().eq('id', id);
+    if (error) {
+      console.error('[DB Error] deleteChatConversation failed:', error.message || error);
+      throw error;
+    }
+  },
+
+  async deleteChatLead(id: string): Promise<void> {
+    if (!supabase) {
+      throw new Error('Database service unavailable: Supabase client is not configured.');
+    }
+    const { error } = await supabase.from('chat_leads').delete().eq('id', id);
+    if (error) {
+      console.error('[DB Error] deleteChatLead failed:', error.message || error);
+      throw error;
+    }
+  },
+
+  async deleteConsultationRequest(id: string): Promise<void> {
+    if (!supabase) {
+      throw new Error('Database service unavailable: Supabase client is not configured.');
+    }
+    const { error } = await supabase.from('consultation_requests').delete().eq('id', id);
+    if (error) {
+      console.error('[DB Error] deleteConsultationRequest failed:', error.message || error);
+      throw error;
+    }
+  },
+
+  async getAllChatMessages(): Promise<ChatMessage[]> {
+    if (!supabase) {
+      throw new Error('Database service unavailable: Supabase client is not configured.');
+    }
+    const { data, error } = await supabase
+      .from('chat_messages')
+      .select('*')
+      .order('created_at', { ascending: false });
+    if (error) {
+      console.error('[DB Error] getAllChatMessages failed:', error.message || error);
+      throw error;
+    }
+    return data || [];
   }
 };

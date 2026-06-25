@@ -107,6 +107,18 @@ export default function AdminSidebar({ userProfile, activeTab, onTabChange }: Si
               <span>{locale === 'es' ? 'Prospectos (Leads)' : 'Leads'}</span>
             </button>
 
+            <button
+              onClick={() => handleNav('ai-consultant', '/admin/ai-consultant')}
+              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
+                pathname.includes('/admin/ai-consultant')
+                  ? 'bg-blue-50 text-[#0F4C81]'
+                  : 'text-slate-600 hover:bg-slate-50'
+              }`}
+            >
+              <MessageSquare className="w-4 h-4" />
+              <span>{locale === 'es' ? 'Consultor de IA' : 'AI Consultant'}</span>
+            </button>
+
 
             <button
               onClick={() => handleNav('health', '/admin/system-health')}

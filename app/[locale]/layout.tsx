@@ -6,6 +6,7 @@ import { routing } from '@/i18n/routing'
 import { notFound } from 'next/navigation'
 import { getMessages, setRequestLocale, getTranslations } from 'next-intl/server'
 import { NextIntlClientProvider } from 'next-intl'
+import AIConsultant from '@/components/ai-consultant'
 
 const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })
 const geistMono = Geist_Mono({
@@ -154,6 +155,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
         />
         <NextIntlClientProvider messages={messages} locale={locale}>
           {children}
+          <AIConsultant />
         </NextIntlClientProvider>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
