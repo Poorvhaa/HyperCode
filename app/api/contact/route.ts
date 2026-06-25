@@ -49,23 +49,6 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: 'Database save failed' }, { status: 500 });
       }
       savedData = data;
-
-      // Automatically capture contact inquiry as a chat lead
-      const { error: leadError } = await supabaseServer
-        .from('chat_leads')
-        .insert([{
-          name: validated.name,
-          email: validated.email,
-          phone: validated.phone,
-          interest: validated.subject,
-          company: validated.company,
-          source: 'contact_form',
-          conversation_summary: `[Contact Form Submission]\nSubject: ${validated.subject}\nMessage: ${validated.message}`
-        }]);
-
-      if (leadError) {
-        console.error('Supabase contact lead insert error:', leadError);
-      }
     } else {
       console.warn('Supabase is not configured. Running in mock offline mode.');
       savedData = {

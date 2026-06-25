@@ -17,7 +17,7 @@ const formTranslations = {
     emailAddress: "Email Address",
     phoneNumber: "Phone Number",
     linkedinUrl: "LinkedIn Profile URL (Optional)",
-    positionApplied: "Position Applied For",
+    positionApplied: "Applying For",
     yearsExp: "Years of Professional Experience",
     skills: "Primary Technical Skills (comma separated)",
     skillsPlaceholder: "e.g. SQL, Python, Snowflake, Power BI",
@@ -47,7 +47,7 @@ const formTranslations = {
     emailAddress: "Correo Electrónico",
     phoneNumber: "Número de Teléfono",
     linkedinUrl: "URL del Perfil de LinkedIn (Opcional)",
-    positionApplied: "Puesto al que Postula",
+    positionApplied: "Postulando para",
     yearsExp: "Años de Experiencia Profesional",
     skills: "Habilidades Técnicas Principales (separadas por comas)",
     skillsPlaceholder: "ej. SQL, Python, Snowflake, Power BI",
@@ -75,14 +75,7 @@ const formTranslations = {
 };
 
 const jobPositions = [
-  'Data Engineer',
-  'BI Developer',
-  'Web Developer',
-  'Technical Product Manager',
-  'Data Analyst',
-  'Cloud Solutions Architect',
-  'Scrum Master',
-  'Other / General Application'
+  'Business Development Manager'
 ];
 
 export function CareersForm({ initialPosition }: CareersFormProps) {
@@ -121,7 +114,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
   } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: {
-      position: initialPosition || '',
+      position: 'Business Development Manager',
       yearsExperience: 0,
       skills: '',
       message: '',
@@ -352,18 +345,10 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
           {/* Position Applied For */}
           <div className="space-y-2">
             <label className="block text-sm font-semibold text-slate-700">{t.positionApplied}</label>
-            <select
-              {...register('position')}
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] text-sm"
-            >
-              <option value="">Select a position</option>
-              {jobPositions.map((pos) => (
-                <option key={pos} value={pos}>
-                  {pos}
-                </option>
-              ))}
-            </select>
-            {errors.position && <p className="text-xs text-red-655 font-semibold">{errors.position.message}</p>}
+            <div className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 text-sm font-bold shadow-sm select-none">
+              Business Development Manager
+            </div>
+            <input type="hidden" {...register('position')} value="Business Development Manager" />
           </div>
 
           {/* Years of Experience */}

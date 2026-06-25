@@ -229,24 +229,12 @@
         "desc": "Enjoy premium healthcare, employer matched 401(k), paid time off, and annual performance-driven bonuses."
       }
     },
-    "openPositions": "CURRENT OPENINGS",
-    "positionsTitle": "Join Our Technical Divisions",
+    "openPositions": "CURRENT OPENING",
+    "positionsTitle": "Join Our Team",
     "positions": {
-      "de": {
-        "title": "Senior Data Engineer",
-        "desc": "Design and build enterprise pipeline infrastructure on Snowflake or Databricks using dbt, SQL, and Python."
-      },
-      "bi": {
-        "title": "BI Architect (Power BI)",
-        "desc": "Architect unified semantic structures and develop high-speed DAX models for executive dashboards."
-      },
-      "web": {
-        "title": "Senior React / Next.js Developer",
-        "desc": "Develop high-performance, secure web applications. Experience with TypeScript, APIs, and Tailwind required."
-      },
-      "pm": {
-        "title": "Technical Scrum Master",
-        "desc": "Lead distributed engineering squads, run sprints, clear roadblocks, and coordinate client deliverables."
+      "bdm": {
+        "title": "Business Development Manager",
+        "desc": "Drive growth and expand our client base by identifying new business opportunities and building strategic partnerships."
       }
     },
     "applyNow": "Apply Now",
@@ -332,58 +320,6 @@
       "t2": "Within 30 Days",
       "t3": "Within 3 Months",
       "t4": "Exploring Options"
-    }
-  },
-  "Chatbot": {
-    "title": "HyperCode AI",
-    "online": "ONLINE",
-    "cancel": "Cancel",
-    "you": "You",
-    "consultant": "HyperCode Consultant",
-    "placeholder": "Ask about BI, Analytics, Staffing...",
-    "welcome": "Hello 👋\n\nI'm HyperCode AI.\n\nI can help you learn about our Web Development, Business Intelligence, Data Analytics, Data Engineering, and IT Staffing services.\n\nHow can I assist you today?",
-    "escalation": "I want to make sure you get the most accurate information. Would you like to speak directly with a HyperCode advisor?",
-    "cancelFlowMsg": "Intake process cancelled. How else can I assist you?",
-    "noThanks": "Alright! Let me know if you need help with any other Business Intelligence or IT staffing topics.",
-    "secured": "🔒 Secured Cloud Platform",
-    "actions": {
-      "web": "🌐 Web Development",
-      "bi": "📊 Business Intelligence",
-      "analytics": "📈 Data Analytics",
-      "staffing": "🏢 IT Staffing",
-      "de": "☁ Data Engineering",
-      "schedule": "📅 Schedule Consultation",
-      "talk": "💬 Talk to a Consultant",
-      "noThanks": "❌ No thanks"
-    },
-    "flows": {
-      "lead": {
-        "companyType": "What type of organization do you represent?",
-        "serviceInterest": "Which service are you most interested in?",
-        "challenge": "What specific data or consulting challenge are you trying to solve? (e.g. slow Power BI dashboards, data pipeline latency, database administration bottleneck)",
-        "timeline": "How soon do you need assistance with this project?",
-        "success": "Thank you! I've qualified your inquiry (Routing Priority Score: {score}/6) and notified our executive consultant team. Would you like to schedule a formal consultation now?"
-      },
-      "consultation": {
-        "name": "Let's get your consultation scheduled. What is your full name?",
-        "company": "Thank you. What company do you represent?",
-        "email": "What is your professional email address?",
-        "phone": "What is your phone number?",
-        "service": "Which service area do you need help with?",
-        "description": "Please describe your project or requirements briefly.",
-        "success": "Excellent! Your consultation request has been logged. A HyperCode advisor will reach out to you within 24 business hours to confirm the calendar slot. Thank you!"
-      },
-      "staffing": {
-        "roles": "Let's capture your staffing requirements. Which roles are you hiring for?",
-        "timeline": "What is your target hiring timeline?",
-        "teamSize": "What is the size of the team or resources needed?",
-        "location": "What is the location preference?",
-        "name": "Understood. Please provide your contact details to log this request. What is your full name?",
-        "company": "What is your company's name?",
-        "email": "What is your professional email address?",
-        "phone": "What is your phone number?",
-        "success": "Thank you! Your staffing request has been registered in our database. Our technical recruiters will search our expert talent network and reach out within 24 hours with matching profiles."
-      }
     }
   },
   "Solutions": {

@@ -12,7 +12,10 @@ import {
   Settings,
   LogOut,
   User,
-  Shield
+  Shield,
+  MessageSquare,
+  Users,
+  Activity
 } from 'lucide-react';
 import { supabase } from '@/lib/db';
 
@@ -46,7 +49,8 @@ export default function AdminSidebar({ userProfile, activeTab, onTabChange }: Si
   };
 
   const handleNav = (tab: string, path: string) => {
-    if (onTabChange && pathname.endsWith('/admin')) {
+    const localTabs = ['dashboard', 'applications', 'cms', 'subscribers', 'settings'];
+    if (onTabChange && pathname.endsWith('/admin') && localTabs.includes(tab)) {
       onTabChange(tab);
     } else {
       router.push(`/${locale}${path}`);
@@ -82,7 +86,7 @@ export default function AdminSidebar({ userProfile, activeTab, onTabChange }: Si
             <button
               onClick={() => handleNav('dashboard', '/admin')}
               className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
-                isTabActive('dashboard', '/admin/dashboard') && !pathname.includes('/analytics')
+                pathname.endsWith('/admin') && (!activeTab || activeTab === 'dashboard')
                   ? 'bg-blue-50 text-[#0F4C81]'
                   : 'text-slate-600 hover:bg-slate-50'
               }`}
@@ -92,15 +96,28 @@ export default function AdminSidebar({ userProfile, activeTab, onTabChange }: Si
             </button>
 
             <button
-              onClick={() => handleNav('leads', '/admin?tab=leads')}
+              onClick={() => handleNav('leads', '/admin/leads')}
               className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
-                pathname.endsWith('/admin') && ['leads', 'consultations', 'inquiries', 'chatLeads'].includes(activeTab || '')
+                pathname.includes('/admin/leads')
                   ? 'bg-blue-50 text-[#0F4C81]'
                   : 'text-slate-600 hover:bg-slate-50'
               }`}
             >
               <FileText className="w-4 h-4" />
               <span>{locale === 'es' ? 'Prospectos (Leads)' : 'Leads'}</span>
+            </button>
+
+
+            <button
+              onClick={() => handleNav('health', '/admin/system-health')}
+              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
+                pathname.includes('/admin/system-health')
+                  ? 'bg-blue-50 text-[#0F4C81]'
+                  : 'text-slate-600 hover:bg-slate-50'
+              }`}
+            >
+              <Activity className="w-4 h-4" />
+              <span>{locale === 'es' ? 'Salud del Sistema' : 'System Health'}</span>
             </button>
           </>
         )}
@@ -150,7 +167,7 @@ export default function AdminSidebar({ userProfile, activeTab, onTabChange }: Si
             <button
               onClick={() => handleNav('analytics', '/admin/analytics')}
               className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
-                pathname.includes('/analytics')
+                pathname.includes('/admin/analytics')
                   ? 'bg-blue-50 text-[#0F4C81]'
                   : 'text-slate-600 hover:bg-slate-50'
               }`}

@@ -230,24 +230,12 @@
         "desc": "Disfrute de atención médica de primera calidad, plan 401(k) con aportación de la empresa, tiempo libre pagado y bonificaciones anuales basadas en el rendimiento."
       }
     },
-    "openPositions": "VACANTES ACTUALES",
-    "positionsTitle": "Únase a Nuestras Divisiones Técnicas",
+    "openPositions": "VACANTE ACTUAL",
+    "positionsTitle": "Únase a Nuestro Equipo",
     "positions": {
-      "de": {
-        "title": "Ingeniero de Datos Senior",
-        "desc": "Diseñar y construir infraestructura de canalización empresarial en Snowflake o Databricks utilizando dbt, SQL y Python."
-      },
-      "bi": {
-        "title": "Arquitecto de BI (Power BI)",
-        "desc": "Diseñar estructuras semánticas unificadas y desarrollar modelos DAX de alta velocidad para paneles ejecutivos."
-      },
-      "web": {
-        "title": "Desarrollador React / Next.js Senior",
-        "desc": "Desarrollar aplicaciones web seguras y de alto rendimiento. Se requiere experiencia con TypeScript, API y Tailwind."
-      },
-      "pm": {
-        "title": "Scrum Master Técnico",
-        "desc": "Liderar equipos de ingeniería distribuidos, ejecutar sprints, eliminar bloqueos y coordinar los entregables de los clientes."
+      "bdm": {
+        "title": "Gerente de Desarrollo de Negocios",
+        "desc": "Impulsar el crecimiento y expandir nuestra base de clientes identificando nuevas oportunidades comerciales y construyendo asociaciones estratégicas."
       }
     },
     "applyNow": "Aplicar Ahora",
@@ -333,58 +321,6 @@
       "t2": "Dentro de 30 Días",
       "t3": "Dentro de 3 Meses",
       "t4": "Explorando Opciones"
-    }
-  },
-  "Chatbot": {
-    "title": "HyperCode AI",
-    "online": "EN LÍNEA",
-    "cancel": "Cancelar",
-    "you": "Tú",
-    "consultant": "Consultor de HyperCode",
-    "placeholder": "Pregunte sobre BI, analítica, personal...",
-    "welcome": "Hola 👋\n\nSoy HyperCode AI.\n\nPuedo ayudarlo a conocer nuestros servicios de Desarrollo Web, Inteligencia de Negocios, Análisis de Datos, Ingeniería de Datos y Personal de TI.\n\n¿Cómo puedo ayudarlo hoy?",
-    "escalation": "Quiero asegurarme de que obtenga la información más precisa. ¿Le gustaría hablar directamente con un asesor de HyperCode?",
-    "cancelFlowMsg": "Proceso de admisión cancelado. ¿De qué otra manera puedo asistirlo?",
-    "noThanks": "¡Entendido! Avíseme si necesita ayuda con cualquier otro tema de Inteligencia de Negocios o personal de TI.",
-    "secured": "🔒 Plataforma de Nube Asegurada",
-    "actions": {
-      "web": "🌐 Desarrollo Web",
-      "bi": "📊 Inteligencia de Negocios",
-      "analytics": "📈 Análisis de Datos",
-      "staffing": "🏢 Personal de TI",
-      "de": "☁ Ingeniería de Datos",
-      "schedule": "📅 Programar Consulta",
-      "talk": "💬 Hablar con un Consultor",
-      "noThanks": "❌ No, gracias"
-    },
-    "flows": {
-      "lead": {
-        "companyType": "¿Qué tipo de organización representa?",
-        "serviceInterest": "¿En qué servicio está más interesado?",
-        "challenge": "¿Qué desafío específico de datos o consultoría está intentando resolver? (por ejemplo, paneles de Power BI lentos, latencia en la canalización de datos, cuello de botella en la administración de bases de datos)",
-        "timeline": "¿Qué tan pronto necesita asistencia con este proyecto?",
-        "success": "¡Gracias! He calificado su consulta (Puntuación de Prioridad de Enrutamiento: {score}/6) y notificado a nuestro equipo de consultores ejecutivos. ¿Le gustaría programar una consulta formal ahora?"
-      },
-      "consultation": {
-        "name": "Comencemos a programar su consulta. ¿Cuál es su nombre completo?",
-        "company": "Gracias. ¿Qué empresa representa?",
-        "email": "¿Cuál es su dirección de correo electrónico profesional?",
-        "phone": "¿Cuál es su número de teléfono?",
-        "service": "¿Con qué área de servicio necesita ayuda?",
-        "description": "Por favor, describa brevemente su proyecto o requisitos.",
-        "success": "¡Excelente! Su solicitud de consulta ha sido registrada. Un asesor de HyperCode se comunicará con usted dentro de las 24 horas hábiles para confirmar el horario. ¡Gracias!"
-      },
-      "staffing": {
-        "roles": "Registremos sus requisitos de personal. ¿Para qué puestos está contratando?",
-        "timeline": "¿Cuál es su plazo de contratación objetivo?",
-        "teamSize": "¿Cuál es el tamaño del equipo o los recursos necesarios?",
-        "location": "¿Cuál es la preferencia de ubicación?",
-        "name": "Entendido. Proporcione sus datos de contacto para registrar esta solicitud. ¿Cuál es su nombre completo?",
-        "company": "¿Cuál es el nombre de su empresa?",
-        "email": "¿Cuál es su dirección de correo electrónico profesional?",
-        "phone": "¿Cuál es su número de teléfono?",
-        "success": "¡Gracias! Su solicitud de personal ha sido registrada en nuestra base de datos. Nuestros reclutadores técnicos buscarán en nuestra red de talentos expertos y se comunicarán en un plazo de 24 horas con perfiles coincidentes."
-      }
     }
   },
   "Solutions": {

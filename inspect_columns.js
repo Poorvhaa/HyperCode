@@ -26,7 +26,7 @@ const supabase = createClient(supabaseUrl, supabaseServiceKey, {
 });
 
 async function run() {
-  const tables = ['articles', 'case_studies', 'newsletter_subscribers', 'chat_leads', 'chat_messages', 'user_profiles'];
+  const tables = ['articles', 'case_studies', 'newsletter_subscribers', 'user_profiles'];
   for (const table of tables) {
     try {
       console.log(`Querying ${table} columns...`);

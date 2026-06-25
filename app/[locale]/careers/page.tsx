@@ -79,6 +79,11 @@ export default async function CareersPage({ params }: Props) {
     titlePositions: string;
     locationLabel: string;
     jobTypeLabel: string;
+    bdmTitle: string;
+    bdmDescription: string;
+    bdmResponsibilities: string[];
+    bdmQualifications: string[];
+    bdmBenefits: string[];
     readyTitle: string;
     readyDesc: string;
     getInTouchBtn: string;
@@ -187,9 +192,32 @@ export default async function CareersPage({ params }: Props) {
       titleTimeline: "Hiring Process Timeline",
       descTimeline: "Our structured timeline ensures clarity, prompt communication, and complete alignment at every stage of your candidacy.",
       badgePositions: "JOIN OUR TEAM",
-      titlePositions: "Open Positions",
+      titlePositions: "Open Position",
       locationLabel: "Schaumburg, IL / Remote",
       jobTypeLabel: "Full-time",
+      bdmTitle: "Business Development Manager",
+      bdmDescription: "We are seeking a high-performing Business Development Manager to drive growth and expand our client base. In this role, you will identify new business opportunities, build strategic partnerships, and present our custom web application and data engineering solutions to enterprise clients.",
+      bdmResponsibilities: [
+        "Identify and target potential enterprise clients for web development and data engineering services.",
+        "Build and maintain strong, long-lasting relationships with key decision-makers and stakeholders.",
+        "Develop and execute strategic sales plans to achieve growth targets and expand market share.",
+        "Collaborate with technical teams to draft tailored proposals and conduct high-impact presentations.",
+        "Negotiate contracts and close business agreements to maximize company revenue."
+      ],
+      bdmQualifications: [
+        "Bachelor's degree in Business, Marketing, Computer Science, or related field.",
+        "3+ years of experience in business development or sales within the software consulting / IT service industry.",
+        "Proven track record of closing enterprise-level deals and meeting or exceeding sales targets.",
+        "Strong understanding of modern web technologies, custom applications, and cloud data ecosystems.",
+        "Excellent communication, presentation, negotiation, and relationship-building skills."
+      ],
+      bdmBenefits: [
+        "Highly competitive base salary with uncapped commission structure.",
+        "Comprehensive health, dental, and vision insurance packages.",
+        "Flexible work hours and remote/hybrid work options.",
+        "401(k) matching program.",
+        "Paid time off and annual performance bonuses."
+      ],
       readyTitle: "Ready to Work with Us?",
       readyDesc: "Send us your credentials to start exploring technical opportunities at HyperCode.",
       getInTouchBtn: "Get in Touch"
@@ -298,9 +326,32 @@ export default async function CareersPage({ params }: Props) {
       titleTimeline: "Cronograma del Proceso de Contratación",
       descTimeline: "Nuestro cronograma estructurado garantiza claridad, comunicación rápida y alineación completa en cada etapa de su candidatura.",
       badgePositions: "ÚNASE A NUESTRO EQUIPO",
-      titlePositions: "Posiciones Abiertas",
+      titlePositions: "Vacante Actual",
       locationLabel: "Schaumburg, IL / Remoto",
       jobTypeLabel: "Tiempo completo",
+      bdmTitle: "Gerente de Desarrollo de Negocios",
+      bdmDescription: "Buscamos un Gerente de Desarrollo de Negocios de alto rendimiento para impulsar el crecimiento y expandir nuestra base de clientes. En esta función, identificará nuevas oportunidades comerciales, construirá asociaciones estratégicas y presentará nuestras soluciones de desarrollo web personalizado e ingeniería de datos a clientes empresariales.",
+      bdmResponsibilities: [
+        "Identificar y dirigirse a clientes empresariales potenciales para servicios de desarrollo web e ingeniería de datos.",
+        "Construir y mantener relaciones sólidas y duraderas con tomadores de decisiones clave.",
+        "Desarrollar y ejecutar planes de ventas estratégicos para lograr objetivos de crecimiento y expandir la cuota de mercado.",
+        "Colaborar con equipos técnicos para redactar propuestas personalizadas y realizar presentaciones de alto impacto.",
+        "Negociar contratos y cerrar acuerdos comerciales para maximizar los ingresos de la empresa."
+      ],
+      bdmQualifications: [
+        "Licenciatura en Negocios, Marketing, Ciencias de la Computación o campo relacionado.",
+        "Más de 3 años de experiencia en desarrollo de negocios o ventas dentro del sector de consultoría de software / servicios de TI.",
+        "Historial comprobado de cierre de acuerdos a nivel empresarial y cumplimiento o superación de objetivos de ventas.",
+        "Comprensión sólida de tecnologías de desarrollo web moderno, aplicaciones personalizadas y ecosistemas de datos en la nube.",
+        "Excelentes habilidades de comunicación, presentación, negociación y construcción de relaciones."
+      ],
+      bdmBenefits: [
+        "Salario base altamente competitivo con estructura de comisiones sin límite.",
+        "Paquetes completos de seguro médico, dental y de la vista.",
+        "Horarios de trabajo flexibles y opciones de trabajo remoto/híbrido.",
+        "Programa de emparejamiento 401(k).",
+        "Tiempo libre remunerado y bonos anuales por rendimiento."
+      ],
       readyTitle: "¿Listo para Trabajar con Nosotros?",
       readyDesc: "Envíenos sus credenciales para comenzar a explorar oportunidades técnicas en HyperCode.",
       getInTouchBtn: "Ponerse en Contacto"
@@ -410,9 +461,32 @@ export default async function CareersPage({ params }: Props) {
       titleTimeline: "Étapes de recrutement",
       descTimeline: "Notre processus de recrutement clair et structuré garantit un suivi fluide et transparent de votre candidature.",
       badgePositions: "REJOINDRE L'ÉQUIPE",
-      titlePositions: "Postes à pourvoir",
+      titlePositions: "Poste à Pourvoir",
       locationLabel: "Schaumburg, IL / Télétravail",
       jobTypeLabel: "Temps plein",
+      bdmTitle: "Responsable du Développement Commercial",
+      bdmDescription: "Nous recherchons un Responsable du Développement Commercial performant pour stimuler la croissance et élargir notre clientèle. À ce poste, vous identifierez de nouvelles opportunités commerciales, établirez des partenariats stratégiques et présenterez nos solutions de développement web sur mesure et d'ingénierie de données à des clients de niveau entreprise.",
+      bdmResponsibilities: [
+        "Identifier et cibler les clients potentiels pour les services de développement web et d'ingénierie de données.",
+        "Établir et maintenir des relations solides et durables avec les principaux décideurs et parties prenantes.",
+        "Développer et exécuter des plans de vente stratégiques pour atteindre les objectifs de croissance et accroître la part de marché.",
+        "Collaborer avec les équipes techniques pour rédiger des propositions personnalisées et réaliser des présentations à fort impact.",
+        "Négocier les contrats et conclure des accords commerciaux pour maximiser les revenus de l'entreprise."
+      ],
+      bdmQualifications: [
+        "Licence en commerce, marketing, informatique ou domaine connexe.",
+        "Plus de 3 ans d'expérience dans le développement commercial ou la vente au sein de l'industrie du conseil en logiciels / services informatiques.",
+        "Antécédents éprouvés de conclusion de transactions d'entreprise et d'atteinte ou de dépassement des objectifs de vente.",
+        "Solide compréhension des technologies web modernes, des applications personnalisées et des écosystèmes de données cloud.",
+        "Excellentes compétences en communication, présentation, négociation et établissement de relations."
+      ],
+      bdmBenefits: [
+        "Salaire de base hautement compétitif avec structure de commissions non plafonnée.",
+        "Forfaits complets d'assurance maladie, dentaire et visuelle.",
+        "Horaires de travail flexibles et options de travail à distance/hybride.",
+        "Programme de jumelage 401(k).",
+        "Congés payés et primes de performance annuelles."
+      ],
       readyTitle: "Prêt à nous rejoindre ?",
       readyDesc: "Envoyez-nous votre profil pour commencer à explorer les opportunités technologiques chez HyperCode.",
       getInTouchBtn: "Contactez-nous"
@@ -435,31 +509,13 @@ export default async function CareersPage({ params }: Props) {
   }));
 
   // Read translated jobs from dictionary files dynamically
-  // If the dictionary has de/bi/web/pm positions, use them
+  // Since we only have the Business Development Manager role active:
   const openPositions = [
     {
-      title: t('positions.de.title'),
+      title: activeTrans.bdmTitle,
       location: activeTrans.locationLabel,
       type: activeTrans.jobTypeLabel,
-      description: t('positions.de.desc')
-    },
-    {
-      title: t('positions.bi.title'),
-      location: activeTrans.locationLabel,
-      type: activeTrans.jobTypeLabel,
-      description: t('positions.bi.desc')
-    },
-    {
-      title: t('positions.web.title'),
-      location: activeTrans.locationLabel,
-      type: activeTrans.jobTypeLabel,
-      description: t('positions.web.desc')
-    },
-    {
-      title: t('positions.pm.title'),
-      location: activeTrans.locationLabel,
-      type: activeTrans.jobTypeLabel,
-      description: t('positions.pm.desc')
+      description: activeTrans.bdmDescription
     }
   ];
 
@@ -695,37 +751,92 @@ export default async function CareersPage({ params }: Props) {
       {/* Open Positions */}
       <section className="py-24 bg-white border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-16">
+          <div className="text-center max-w-2xl mx-auto mb-16">
             <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">{activeTrans.badgePositions}</h2>
             <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-none">{activeTrans.titlePositions}</h3>
           </div>
 
-          <div className="space-y-4 max-w-5xl">
-            {openPositions.map((position, i) => (
-              <div
-                key={i}
-                className="p-6 rounded-2xl border border-slate-200 bg-white shadow-sm hover:border-slate-300 transition-colors"
-              >
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-                  <div className="flex-1 space-y-2">
-                    <h3 className="text-lg font-bold text-slate-900">{position.title}</h3>
-                    <div className="flex flex-wrap items-center gap-3 text-slate-500 text-xs font-bold uppercase tracking-wider">
-                      <span>{position.location}</span>
-                      <span>•</span>
-                      <span className="text-[#0F4C81]">{position.type}</span>
-                    </div>
-                    <p className="text-sm text-slate-600 leading-relaxed font-medium">{position.description}</p>
-                  </div>
-                  
-                  <Link
-                    href={`/${locale}/careers/apply?position=${encodeURIComponent(position.title)}`}
-                    className="inline-flex items-center justify-center h-10 px-5 bg-[#0F4C81] text-white font-semibold text-xs rounded-xl hover:bg-[#0c3c66] transition-colors duration-200 flex-shrink-0"
-                  >
-                    {t('applyNow')}
-                  </Link>
-                </div>
+          <div className="max-w-4xl mx-auto bg-white border border-slate-200 rounded-3xl p-8 sm:p-12 shadow-sm hover:shadow-md transition-all duration-350">
+            {/* Header: Title, Location, Type */}
+            <div className="text-center space-y-4 pb-8 border-b border-slate-100">
+              <span className="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold bg-[#0F4C81]/10 text-[#0F4C81] uppercase tracking-wider">
+                {activeTrans.jobTypeLabel}
+              </span>
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                {activeTrans.bdmTitle}
+              </h3>
+              <p className="text-slate-500 text-xs sm:text-sm font-bold uppercase tracking-wider">
+                {activeTrans.locationLabel}
+              </p>
+            </div>
+
+            {/* Overview / Description */}
+            <div className="py-8 space-y-4">
+              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+                {locale === 'es' ? 'Resumen del Puesto' : locale === 'fr' ? 'Aperçu du Poste' : 'Role Overview'}
+              </h4>
+              <p className="text-slate-600 text-sm sm:text-base leading-relaxed font-medium">
+                {activeTrans.bdmDescription}
+              </p>
+            </div>
+
+            {/* Grid for Responsibilities and Requirements */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-8 border-t border-b border-slate-100">
+              {/* Responsibilities */}
+              <div className="space-y-4">
+                <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+                  {locale === 'es' ? 'Responsabilidades Clave' : locale === 'fr' ? 'Responsabilités Clés' : 'Key Responsibilities'}
+                </h4>
+                <ul className="space-y-3">
+                  {activeTrans.bdmResponsibilities.map((resp, idx) => (
+                    <li key={idx} className="flex items-start gap-3">
+                      <Check className="text-[#0F4C81] w-4 h-4 mt-0.5 flex-shrink-0" />
+                      <span className="text-slate-600 text-xs sm:text-sm font-medium leading-relaxed">{resp}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-            ))}
+
+              {/* Requirements */}
+              <div className="space-y-4">
+                <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+                  {locale === 'es' ? 'Requisitos' : locale === 'fr' ? 'Exigences' : 'Requirements'}
+                </h4>
+                <ul className="space-y-3">
+                  {activeTrans.bdmQualifications.map((qual, idx) => (
+                    <li key={idx} className="flex items-start gap-3">
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#0F4C81] mt-2 flex-shrink-0" />
+                      <span className="text-slate-600 text-xs sm:text-sm font-medium leading-relaxed">{qual}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            {/* Benefits */}
+            <div className="py-8 space-y-4">
+              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+                {locale === 'es' ? 'Beneficios del Puesto' : locale === 'fr' ? 'Avantages' : 'Role Benefits'}
+              </h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {activeTrans.bdmBenefits.map((benefit, idx) => (
+                  <div key={idx} className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200/50 shadow-sm">
+                    <span className="text-sm flex-shrink-0">💼</span>
+                    <span className="text-slate-700 text-xs sm:text-sm font-bold leading-none">{benefit}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* CTA button */}
+            <div className="pt-8 text-center">
+              <Link
+                href={`/${locale}/careers/apply?position=${encodeURIComponent('Business Development Manager')}`}
+                className="inline-flex items-center justify-center h-12 px-10 bg-[#0F4C81] text-white font-bold text-xs uppercase tracking-wider rounded-xl hover:bg-[#0c3c66] transition-colors duration-200 shadow-sm"
+              >
+                {t('applyNow')}
+              </Link>
+            </div>
           </div>
         </div>
       </section>

@@ -29,7 +29,7 @@ async function run() {
     });
 
     const definitions = res.data.definitions;
-    const tables = ['articles', 'case_studies', 'newsletter_subscribers', 'chat_leads', 'chat_messages', 'user_profiles'];
+    const tables = ['articles', 'case_studies', 'newsletter_subscribers', 'user_profiles'];
     
     for (const table of tables) {
       if (definitions[table]) {

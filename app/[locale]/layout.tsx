@@ -2,7 +2,6 @@ import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import '../globals.css'
-import { AIAssistant } from '@/components/ai-assistant'
 import { routing } from '@/i18n/routing'
 import { notFound } from 'next/navigation'
 import { getMessages, setRequestLocale, getTranslations } from 'next-intl/server'
@@ -155,7 +154,6 @@ export default async function RootLayout({ children, params }: LayoutProps) {
         />
         <NextIntlClientProvider messages={messages} locale={locale}>
           {children}
-          <AIAssistant />
         </NextIntlClientProvider>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

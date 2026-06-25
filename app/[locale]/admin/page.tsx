@@ -28,13 +28,10 @@ import {
 } from 'lucide-react';
 import {
   db,
-  Conversation,
-  Message,
   ContactInquiry,
   ConsultationRequest,
   JobApplication,
   Candidate,
-  ChatLead,
   NewsletterSubscriber,
   Article,
   CaseStudy,
@@ -57,13 +54,10 @@ export default function AdminDashboardPage() {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
 
   // Database Data States
-  const [conversations, setConversations] = useState<Conversation[]>([]);
-  const [messages, setMessages] = useState<Message[]>([]);
   const [inquiries, setInquiries] = useState<ContactInquiry[]>([]);
   const [consultations, setConsultations] = useState<ConsultationRequest[]>([]);
   const [applications, setApplications] = useState<JobApplication[]>([]);
   const [candidates, setCandidates] = useState<Candidate[]>([]);
-  const [chatLeads, setChatLeads] = useState<ChatLead[]>([]);
   const [subscribers, setSubscribers] = useState<NewsletterSubscriber[]>([]);
   const [articles, setArticles] = useState<Article[]>([]);
   const [caseStudies, setCaseStudies] = useState<CaseStudy[]>([]);
@@ -75,16 +69,13 @@ export default function AdminDashboardPage() {
 
   // UI Navigation States
   const [activeTab, setActiveTab] = useState<'dashboard' | 'leads' | 'applications' | 'candidates' | 'cms' | 'subscribers' | 'settings'>('dashboard');
-  const [leadsSubTab, setLeadsSubTab] = useState<'inquiries' | 'consultations' | 'chatLeads'>('inquiries');
+  const [leadsSubTab, setLeadsSubTab] = useState<'inquiries' | 'consultations'>('inquiries');
   const [careersSubTab, setCareersSubTab] = useState<'applications' | 'pipeline' | 'candidates'>('applications');
   const [cmsSubTab, setCmsSubTab] = useState<'articles' | 'case_studies'>('articles');
   const [settingsSubTab, setSettingsSubTab] = useState<'profile' | 'templates' | 'users'>('profile');
 
   // Selected Lead Drawer State
-  const [selectedLead, setSelectedLead] = useState<{ type: 'contact' | 'consultation' | 'chat'; data: any } | null>(null);
-
-  // Selected Chat Log State (Chatbot Conversation Viewer)
-  const [activeConversationId, setActiveConversationId] = useState<string | null>(null);
+  const [selectedLead, setSelectedLead] = useState<{ type: 'contact' | 'consultation'; data: any } | null>(null);
 
   // Search & Filter state
   const [searchQuery, setSearchQuery] = useState('');
@@ -156,6 +147,8 @@ export default function AdminDashboardPage() {
     setTimeout(() => setNotification(null), 5000);
   };
 
+  const [healthReport, setHealthReport] = useState<any>(null);
+
   const isSupabaseConfigured = !!supabase;
 
   // 1. Check Authentication & Load Profile on Mount
@@ -214,39 +207,46 @@ export default function AdminDashboardPage() {
     const loadDashboardData = async () => {
       try {
         const [
-          convs,
-          msgs,
           inqs,
           cons,
           apps,
           cands,
-          chLeads,
           subs,
           arts,
           studies
         ] = await Promise.all([
-          db.getAllConversations(),
-          db.getAllMessages(),
           db.getAllContactInquiries(),
           db.getAllConsultations(),
           db.getAllJobApplications(),
           db.getAllCandidates(),
-          db.getAllChatLeads(),
           db.getNewsletterSubscribers(),
           db.getAllArticles(),
           db.getAllCaseStudies()
         ]);
 
-        setConversations(convs);
-        setMessages(msgs);
         setInquiries(inqs);
         setConsultations(cons);
         setApplications(apps);
         setCandidates(cands);
-        setChatLeads(chLeads);
         setSubscribers(subs);
         setArticles(arts);
         setCaseStudies(studies);
+
+        // Fetch DB health status
+        try {
+          const token = session?.access_token || '';
+          const headers: any = {};
+          if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+          }
+          const healthRes = await fetch('/api/admin/health', { headers });
+          if (healthRes.ok) {
+            const healthData = await healthRes.json();
+            setHealthReport(healthData);
+          }
+        } catch (healthErr) {
+          console.error('Failed to load database health report:', healthErr);
+        }
 
         // Fetch company profile settings
         const settings = await db.getCompanySettings();
@@ -307,7 +307,7 @@ export default function AdminDashboardPage() {
   // --- ACTIONS & MUTATIONS ---
 
   // Unified Lead Status Changer
-  const handleLeadStatusChange = async (type: 'contact' | 'consultation' | 'chat', id: string, status: any) => {
+  const handleLeadStatusChange = async (type: 'contact' | 'consultation', id: string, status: any) => {
     try {
       await db.updateLeadStatus(type, id, status);
       showNotification('success', 'Lead status updated.');
@@ -324,12 +324,6 @@ export default function AdminDashboardPage() {
         setConsultations(cons);
         if (selectedLead && selectedLead.data.id === id) {
           setSelectedLead({ type, data: cons.find(x => x.id === id) });
-        }
-      } else if (type === 'chat') {
-        const chat = await db.getAllChatLeads();
-        setChatLeads(chat);
-        if (selectedLead && selectedLead.data.id === id) {
-          setSelectedLead({ type, data: chat.find(x => x.id === id) });
         }
       }
     } catch (err) {
@@ -823,6 +817,29 @@ export default function AdminDashboardPage() {
           </div>
         )}
 
+        {/* DB Sync Mismatch Warning Banner */}
+        {healthReport && !healthReport.success && (
+          <div className="mb-6 p-5 bg-amber-50 border border-amber-200 rounded-2xl shadow-sm text-left flex flex-col sm:flex-row items-start gap-4 animate-slideIn">
+            <div className="p-2 bg-amber-100 text-amber-800 rounded-xl mt-0.5 shrink-0">
+              <AlertCircle className="w-5 h-5" />
+            </div>
+            <div className="flex-1 space-y-1.5">
+              <h4 className="text-sm font-bold text-amber-900">Database Schema Out of Sync</h4>
+              <p className="text-xs text-amber-700 leading-relaxed font-medium">
+                The application code expects database elements that do not exist or differ in type within your remote Supabase schema. Writes are currently falling back to LocalStorage.
+              </p>
+              <div className="text-[10px] bg-white/50 border border-amber-100 rounded-lg p-3 space-y-1 max-h-28 overflow-y-auto">
+                {healthReport.missingObjects.map((obj: string, idx: number) => (
+                  <div key={idx} className="font-mono text-amber-800 font-semibold">{obj}</div>
+                ))}
+              </div>
+              <p className="text-[10px] text-amber-600 font-medium">
+                Please run the migration SQL file in <code className="font-mono bg-amber-100/50 px-1 py-0.5 rounded">supabase/migrations/</code> in your Supabase SQL Editor.
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* =========================================================================
             OVERVIEW DASHBOARD TAB
             ========================================================================= */}
@@ -839,7 +856,7 @@ export default function AdminDashboardPage() {
 
             {/* KPI Counts Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-              <div onClick={() => { setActiveTab('leads'); setLeadsSubTab('inquiries'); }} className="bg-white p-5 border border-slate-200 rounded-2xl shadow-sm hover:shadow-md hover:border-slate-300 transition-all text-left flex flex-col justify-between h-28 cursor-pointer group">
+              <div onClick={() => router.push(`/${activeLocale}/admin/leads`)} className="bg-white p-5 border border-slate-200 rounded-2xl shadow-sm hover:shadow-md hover:border-slate-300 transition-all text-left flex flex-col justify-between h-28 cursor-pointer group">
                 <div className="flex justify-between items-center">
                   <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Leads</span>
                   <div className="p-1.5 rounded-lg bg-blue-50 text-[#0F4C81]">
@@ -847,7 +864,7 @@ export default function AdminDashboardPage() {
                   </div>
                 </div>
                 <div className="flex items-baseline gap-2 mt-2">
-                  <span className="text-2xl font-bold text-slate-900">{inquiries.length + consultations.length + chatLeads.length}</span>
+                  <span className="text-2xl font-bold text-slate-900">{inquiries.length + consultations.length}</span>
                   <span className="text-[10px] text-slate-400 group-hover:text-[#0F4C81] flex items-center font-semibold">
                     {activeLocale === 'es' ? 'Ver todos' : 'View all'} <ChevronRight className="w-3 h-3 ml-0.5" />
                   </span>
@@ -931,7 +948,7 @@ export default function AdminDashboardPage() {
               <div className="bg-white p-6 border border-slate-200 rounded-2xl shadow-sm">
                 <div className="flex justify-between items-center mb-4">
                   <h3 className="text-sm font-bold text-slate-800 tracking-tight">{activeLocale === 'es' ? 'Prospectos Recientes' : 'Recent Inquiries'}</h3>
-                  <button onClick={() => setActiveTab('leads')} className="text-xs font-bold text-[#0F4C81] hover:underline flex items-center gap-1 cursor-pointer">
+                  <button onClick={() => router.push(`/${activeLocale}/admin/leads`)} className="text-xs font-bold text-[#0F4C81] hover:underline flex items-center gap-1 cursor-pointer">
                     {activeLocale === 'es' ? 'Ver todos' : 'View all'} <ChevronRight className="w-3.5 h-3.5" />
                   </button>
                 </div>
@@ -990,7 +1007,7 @@ export default function AdminDashboardPage() {
                 {activeLocale === 'es' ? 'Gestión de Prospectos' : 'Leads Dashboard'}
               </h1>
               <p className="text-sm text-slate-500 mt-1">
-                {activeLocale === 'es' ? 'Gestione formularios de contacto, consultas técnicas y leads del chatbot' : 'Manage contact inquiries, technical consultation requests, and chatbot leads'}
+                {activeLocale === 'es' ? 'Gestione formularios de contacto y consultas técnicas' : 'Manage contact inquiries and technical consultation requests'}
               </p>
             </div>
 
@@ -1011,14 +1028,6 @@ export default function AdminDashboardPage() {
                 }`}
               >
                 {activeLocale === 'es' ? 'Solicitudes de Consulta' : 'Consultations'} ({consultations.length})
-              </button>
-              <button
-                onClick={() => { setLeadsSubTab('chatLeads'); setSelectedLead(null); }}
-                className={`pb-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-all cursor-pointer ${
-                  leadsSubTab === 'chatLeads' ? 'border-[#0F4C81] text-[#0F4C81]' : 'border-transparent text-slate-400'
-                }`}
-              >
-                {activeLocale === 'es' ? 'Leads de Chatbot' : 'AI Chatbot Leads'} ({chatLeads.length})
               </button>
             </div>
 
@@ -1060,9 +1069,8 @@ export default function AdminDashboardPage() {
                     <tr className="bg-slate-50 border-b border-slate-200 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
                       <th className="py-4 px-6">{activeLocale === 'es' ? 'Nombre' : 'Name'}</th>
                       <th className="py-4 px-6">Email</th>
-                      {leadsSubTab !== 'chatLeads' && <th className="py-4 px-6">{activeLocale === 'es' ? 'Compañía' : 'Company'}</th>}
+                      <th className="py-4 px-6">{activeLocale === 'es' ? 'Compañía' : 'Company'}</th>
                       {leadsSubTab === 'consultations' && <th className="py-4 px-6">{activeLocale === 'es' ? 'Servicio Interés' : 'Service Interest'}</th>}
-                      {leadsSubTab === 'chatLeads' && <th className="py-4 px-6">{activeLocale === 'es' ? 'Interés' : 'Interest'}</th>}
                       <th className="py-4 px-6">Date</th>
                       <th className="py-4 px-6">Status</th>
                     </tr>
@@ -1115,28 +1123,7 @@ export default function AdminDashboardPage() {
                         </tr>
                       ))}
 
-                    {leadsSubTab === 'chatLeads' &&
-                      processSearch(chatLeads, ['name', 'email', 'interest', 'conversation_summary']).map(row => (
-                        <tr
-                          key={row.id}
-                          onClick={() => setSelectedLead({ type: 'chat', data: row })}
-                          className="hover:bg-slate-50/80 cursor-pointer transition-colors"
-                        >
-                          <td className="py-4 px-6 font-bold text-slate-800">{row.name || 'Anonymous User'}</td>
-                          <td className="py-4 px-6 text-slate-500">{row.email || '—'}</td>
-                          <td className="py-4 px-6 font-semibold text-[#0F4C81]">{row.interest || '—'}</td>
-                          <td className="py-4 px-6 text-slate-400">{new Date(row.created_at).toLocaleDateString()}</td>
-                          <td className="py-4 px-6">
-                            <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
-                              row.status === 'New' ? 'bg-blue-100 text-blue-800' :
-                              row.status === 'Won' ? 'bg-emerald-100 text-emerald-800' :
-                              row.status === 'Lost' ? 'bg-red-100 text-red-800' : 'bg-amber-100 text-amber-800'
-                            }`}>
-                              {row.status || 'New'}
-                            </span>
-                          </td>
-                        </tr>
-                      ))}
+
                   </tbody>
                 </table>
               </div>
@@ -1149,7 +1136,7 @@ export default function AdminDashboardPage() {
                 <div className="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50">
                   <div>
                     <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                      {selectedLead.type === 'contact' ? 'Contact Inquiry' : selectedLead.type === 'consultation' ? 'Consultation Request' : 'Chatbot Capture'}
+                      {selectedLead.type === 'contact' ? 'Contact Inquiry' : 'Consultation Request'}
                     </span>
                     <h3 className="text-base font-bold text-slate-800 mt-1">
                       {selectedLead.data.full_name || selectedLead.data.name || 'Anonymous Lead'}
@@ -1220,44 +1207,13 @@ export default function AdminDashboardPage() {
 
                     <div>
                       <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">
-                        {selectedLead.type === 'contact' ? 'Message' : selectedLead.type === 'consultation' ? 'Project Description' : 'Conversation Summary'}
+                        {selectedLead.type === 'contact' ? 'Message' : 'Project Description'}
                       </p>
                       <p className="mt-1.5 text-slate-600 bg-slate-50 p-4 rounded-xl border border-slate-100 leading-relaxed">
-                        {selectedLead.data.message || selectedLead.data.project_description || selectedLead.data.conversation_summary || 'No summary registered.'}
+                        {selectedLead.data.message || selectedLead.data.project_description || 'No description registered.'}
                       </p>
                     </div>
                   </div>
-
-                  {/* Chat logs viewer (for chatbot leads) */}
-                  {selectedLead.type === 'chat' && (
-                    <div className="pt-4 border-t border-slate-100 space-y-3">
-                      <h4 className="text-xs font-bold text-slate-800 tracking-tight flex items-center gap-1.5">
-                        <MessageSquare className="w-4 h-4 text-[#0F4C81]" />
-                        <span>Chat Log History</span>
-                      </h4>
-
-                      {/* Conversation thread */}
-                      <div className="border border-slate-200 rounded-2xl overflow-hidden bg-slate-50 max-h-60 overflow-y-auto p-4 space-y-3 flex flex-col">
-                        {messages
-                          .filter(msg => msg.conversation_id === selectedLead.data.id || msg.session_id === selectedLead.data.session_id)
-                          .map((msg, idx) => (
-                            <div
-                              key={idx}
-                              className={`max-w-[80%] p-3 rounded-2xl text-[11px] leading-relaxed text-left ${
-                                msg.sender === 'user'
-                                  ? 'bg-[#0F4C81] text-white self-end rounded-tr-none'
-                                  : 'bg-white text-slate-800 border border-slate-200 self-start rounded-tl-none'
-                              }`}
-                            >
-                              {msg.message}
-                            </div>
-                          ))}
-                        {messages.filter(msg => msg.conversation_id === selectedLead.data.id || msg.session_id === selectedLead.data.session_id).length === 0 && (
-                          <p className="text-[10px] text-slate-400 italic text-center py-4">No logged messages matched this lead session.</p>
-                        )}
-                      </div>
-                    </div>
-                  )}
                 </div>
               </div>
             )}
@@ -2112,6 +2068,8 @@ export default function AdminDashboardPage() {
             </div>
           </div>
         )}
+
+
 
         {/* =========================================================================
             SETTINGS MODULE TAB (Users, Company settings, Resend Email templates)

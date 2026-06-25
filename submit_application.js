@@ -14,7 +14,7 @@ async function test() {
     form.append('email', 'test@example.com');
     form.append('phone', '1234567890');
     form.append('linkedin', 'https://linkedin.com/in/test-candidate');
-    form.append('position', 'Data Engineer');
+    form.append('position', 'Business Development Manager');
     form.append('yearsExperience', '3');
     form.append('skills', 'SQL, Python');
     form.append('message', 'This is a test candidate cover letter message of at least ten characters.');
