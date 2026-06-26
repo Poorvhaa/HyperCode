@@ -18,6 +18,8 @@ import {
   User,
   ChevronRight
 } from 'lucide-react';
+import { trackGAEvent } from '@/lib/analytics';
+
 
 interface Message {
   id: string;
@@ -161,8 +163,11 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
 
   // Trigger initialization when opening the chat
   useEffect(() => {
-    if (windowState === 'open' && sessionId && !conversationId) {
-      initializeConversation(sessionId, locale);
+    if (windowState === 'open') {
+      trackGAEvent({ action: 'chatbot_opened', category: 'Chatbot' });
+      if (sessionId && !conversationId) {
+        initializeConversation(sessionId, locale);
+      }
     }
   }, [windowState, sessionId]);
 
@@ -191,6 +196,12 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
   // Send Message Handler
   const handleSendMessage = async (textToSend: string) => {
     if (!textToSend.trim() || isSending || isTyping) return;
+    
+    trackGAEvent({
+      action: 'chatbot_message_sent',
+      category: 'Chatbot',
+      label: textToSend
+    });
     
     const userMsgId = 'user_' + Date.now();
     const newUserMessage: Message = {
@@ -305,6 +316,11 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
       if (res.ok) {
         const data = await res.json();
         if (data.success) {
+          trackGAEvent({
+            action: 'chatbot_lead_submitted',
+            category: 'Chatbot',
+            label: selectedService || 'AI & Data Solutions'
+          });
           setActiveFlow('lead_success');
           setMessages(prev => [...prev, {
             id: 'lead_confirm_' + Date.now(),
@@ -359,6 +375,11 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
       if (res.ok) {
         const data = await res.json();
         if (data.success) {
+          trackGAEvent({
+            action: 'chatbot_consultation_booked',
+            category: 'Chatbot',
+            label: selectedService || 'Technology Consulting'
+          });
           setActiveFlow('consultation_success');
           setMessages(prev => [...prev, {
             id: 'consult_confirm_' + Date.now(),

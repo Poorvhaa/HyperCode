@@ -122,25 +122,25 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.hypercode.com/en/privacy-policy</loc>
+    <loc>https://www.hypercode.com/en/PP</loc>
     <lastmod>2026-06-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://www.hypercode.com/es/privacy-policy</loc>
+    <loc>https://www.hypercode.com/es/PP</loc>
     <lastmod>2026-06-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://www.hypercode.com/en/terms-and-conditions</loc>
+    <loc>https://www.hypercode.com/en/TnC</loc>
     <lastmod>2026-06-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://www.hypercode.com/es/terms-and-conditions</loc>
+    <loc>https://www.hypercode.com/es/TnC</loc>
     <lastmod>2026-06-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>

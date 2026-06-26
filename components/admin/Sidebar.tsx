@@ -14,7 +14,8 @@ import {
   User,
   Shield,
   MessageSquare,
-  Users,
+  MessageCircle,
+  Calendar,
   Activity
 } from 'lucide-react';
 import { supabase } from '@/lib/db';
@@ -26,11 +27,10 @@ interface SidebarProps {
     role: 'Admin' | 'Recruiter' | 'Consultant';
     avatar: string | null;
   } | null;
-  activeTab?: string;
-  onTabChange?: (tab: any) => void;
+  activeTab?: string; // Kept for backward compatibility
 }
 
-export default function AdminSidebar({ userProfile, activeTab, onTabChange }: SidebarProps) {
+export default function AdminSidebar({ userProfile, activeTab }: SidebarProps) {
   const router = useRouter();
   const params = useParams();
   const pathname = usePathname();
@@ -48,21 +48,18 @@ export default function AdminSidebar({ userProfile, activeTab, onTabChange }: Si
     }
   };
 
-  const handleNav = (tab: string, path: string) => {
-    const localTabs = ['dashboard', 'applications', 'cms', 'subscribers', 'settings'];
-    if (onTabChange && pathname.endsWith('/admin') && localTabs.includes(tab)) {
-      onTabChange(tab);
-    } else {
-      router.push(`/${locale}${path}`);
-    }
+  const handleNav = (path: string) => {
+    router.push(`/${locale}${path}`);
   };
 
   const role = userProfile?.role || 'Consultant';
 
-  const isTabActive = (tabName: string, pathName: string) => {
-    if (pathname.includes(pathName)) return true;
-    if (pathname.endsWith('/admin') && activeTab === tabName) return true;
-    return false;
+  const isRouteActive = (routePath: string) => {
+    // If routePath is '/admin', it should only match exactly '/admin' (or /en/admin, /es/admin)
+    if (routePath === '/admin') {
+      return pathname === `/${locale}/admin` || pathname === `/admin`;
+    }
+    return pathname.includes(routePath);
   };
 
   return (
@@ -79,14 +76,14 @@ export default function AdminSidebar({ userProfile, activeTab, onTabChange }: Si
       </div>
 
       {/* Navigation List */}
-      <nav className="flex-1 p-4 space-y-1.5">
+      <nav className="flex-1 p-4 space-y-1.5 overflow-y-auto">
         {/* Admin and Consultant Access */}
         {(role === 'Admin' || role === 'Consultant') && (
           <>
             <button
-              onClick={() => handleNav('dashboard', '/admin')}
+              onClick={() => handleNav('/admin')}
               className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
-                pathname.endsWith('/admin') && (!activeTab || activeTab === 'dashboard')
+                isRouteActive('/admin')
                   ? 'bg-blue-50 text-[#0F4C81]'
                   : 'text-slate-600 hover:bg-slate-50'
               }`}
@@ -96,9 +93,9 @@ export default function AdminSidebar({ userProfile, activeTab, onTabChange }: Si
             </button>
 
             <button
-              onClick={() => handleNav('leads', '/admin/leads')}
+              onClick={() => handleNav('/admin/leads')}
               className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
-                pathname.includes('/admin/leads')
+                isRouteActive('/admin/leads')
                   ? 'bg-blue-50 text-[#0F4C81]'
                   : 'text-slate-600 hover:bg-slate-50'
               }`}
@@ -108,22 +105,45 @@ export default function AdminSidebar({ userProfile, activeTab, onTabChange }: Si
             </button>
 
             <button
-              onClick={() => handleNav('ai-consultant', '/admin/ai-consultant')}
+              onClick={() => handleNav('/admin/consultations')}
               className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
-                pathname.includes('/admin/ai-consultant')
+                isRouteActive('/admin/consultations')
+                  ? 'bg-blue-50 text-[#0F4C81]'
+                  : 'text-slate-600 hover:bg-slate-50'
+              }`}
+            >
+              <Calendar className="w-4 h-4" />
+              <span>{locale === 'es' ? 'Consultas' : 'Consultations'}</span>
+            </button>
+
+            <button
+              onClick={() => handleNav('/admin/conversations')}
+              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
+                isRouteActive('/admin/conversations')
                   ? 'bg-blue-50 text-[#0F4C81]'
                   : 'text-slate-600 hover:bg-slate-50'
               }`}
             >
               <MessageSquare className="w-4 h-4" />
-              <span>{locale === 'es' ? 'Consultor de IA' : 'AI Consultant'}</span>
+              <span>{locale === 'es' ? 'Conversaciones' : 'Chat Conversations'}</span>
             </button>
 
+            <button
+              onClick={() => handleNav('/admin/messages')}
+              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
+                isRouteActive('/admin/messages')
+                  ? 'bg-blue-50 text-[#0F4C81]'
+                  : 'text-slate-600 hover:bg-slate-50'
+              }`}
+            >
+              <MessageCircle className="w-4 h-4" />
+              <span>{locale === 'es' ? 'Mensajes de Chat' : 'Chat Messages'}</span>
+            </button>
 
             <button
-              onClick={() => handleNav('health', '/admin/system-health')}
+              onClick={() => handleNav('/admin/system-health')}
               className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
-                pathname.includes('/admin/system-health')
+                isRouteActive('/admin/system-health')
                   ? 'bg-blue-50 text-[#0F4C81]'
                   : 'text-slate-600 hover:bg-slate-50'
               }`}
@@ -137,9 +157,9 @@ export default function AdminSidebar({ userProfile, activeTab, onTabChange }: Si
         {/* Admin and Recruiter Access */}
         {(role === 'Admin' || role === 'Recruiter') && (
           <button
-            onClick={() => handleNav('applications', '/admin?tab=applications')}
+            onClick={() => handleNav('/admin/careers')}
             className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
-              pathname.endsWith('/admin') && ['applications', 'candidates'].includes(activeTab || '')
+              isRouteActive('/admin/careers')
                 ? 'bg-blue-50 text-[#0F4C81]'
                 : 'text-slate-600 hover:bg-slate-50'
             }`}
@@ -153,9 +173,9 @@ export default function AdminSidebar({ userProfile, activeTab, onTabChange }: Si
         {role === 'Admin' && (
           <>
             <button
-              onClick={() => handleNav('cms', '/admin?tab=cms')}
+              onClick={() => handleNav('/admin/cms')}
               className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
-                pathname.endsWith('/admin') && activeTab === 'cms'
+                isRouteActive('/admin/cms')
                   ? 'bg-blue-50 text-[#0F4C81]'
                   : 'text-slate-600 hover:bg-slate-50'
               }`}
@@ -165,9 +185,9 @@ export default function AdminSidebar({ userProfile, activeTab, onTabChange }: Si
             </button>
 
             <button
-              onClick={() => handleNav('subscribers', '/admin?tab=subscribers')}
+              onClick={() => handleNav('/admin/newsletter')}
               className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
-                pathname.endsWith('/admin') && activeTab === 'subscribers'
+                isRouteActive('/admin/newsletter')
                   ? 'bg-blue-50 text-[#0F4C81]'
                   : 'text-slate-600 hover:bg-slate-50'
               }`}
@@ -177,9 +197,9 @@ export default function AdminSidebar({ userProfile, activeTab, onTabChange }: Si
             </button>
 
             <button
-              onClick={() => handleNav('analytics', '/admin/analytics')}
+              onClick={() => handleNav('/admin/analytics')}
               className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
-                pathname.includes('/admin/analytics')
+                isRouteActive('/admin/analytics')
                   ? 'bg-blue-50 text-[#0F4C81]'
                   : 'text-slate-600 hover:bg-slate-50'
               }`}
@@ -189,9 +209,9 @@ export default function AdminSidebar({ userProfile, activeTab, onTabChange }: Si
             </button>
 
             <button
-              onClick={() => handleNav('settings', '/admin?tab=settings')}
+              onClick={() => handleNav('/admin/settings')}
               className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
-                pathname.endsWith('/admin') && activeTab === 'settings'
+                isRouteActive('/admin/settings')
                   ? 'bg-blue-50 text-[#0F4C81]'
                   : 'text-slate-600 hover:bg-slate-50'
               }`}

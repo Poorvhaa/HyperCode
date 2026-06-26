@@ -3,12 +3,16 @@
 import { Link } from '@/i18n/routing';
 import Image from "next/image";
 import { Mail, Phone, MapPin } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 
 export function Footer() {
   const t = useTranslations('Navigation');
   const tf = useTranslations('Footer');
   const tc = useTranslations('Common');
+  const locale = useLocale();
+
+  const privacyPdfUrl = locale === 'es' ? '/legal/es/PP.pdf' : '/legal/en/PP.pdf';
+  const termsPdfUrl = locale === 'es' ? '/legal/es/TnC.pdf' : '/legal/en/TnC.pdf';
 
   return (
     <footer className="border-t border-slate-200 bg-slate-50 text-left">
@@ -38,7 +42,7 @@ export function Footer() {
                   className="text-slate-400 mt-0.5 flex-shrink-0 group-hover:text-[#0F4C81] transition-colors"
                 />
                 <span className="text-slate-500 group-hover:text-[#0F4C81] transition-colors">
-                  2095 Hammond Dr Suite B<br />
+                  2095 Hammond Dr Suite C<br />
                   Schaumburg, IL 60173
                 </span>
               </a>
@@ -218,8 +222,22 @@ export function Footer() {
         <div className="border-t border-slate-200 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
           <p>{tf('copyright')}</p>
           <div className="flex space-x-6">
-            <Link href="/privacy-policy" className="hover:text-[#0F4C81]">{tf('privacy')}</Link>
-            <Link href="/terms-and-conditions" className="hover:text-[#0F4C81]">{tf('terms')}</Link>
+            <a
+              href={privacyPdfUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[#0F4C81]"
+            >
+              {tf('privacy')}
+            </a>
+            <a
+              href={termsPdfUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[#0F4C81]"
+            >
+              {tf('terms')}
+            </a>
           </div>
         </div>
       </div>

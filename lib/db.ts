@@ -3,10 +3,13 @@ import * as DBTypes from '@/types/database';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 
 const isSupabaseConfigured = !!(supabaseUrl && supabaseAnonKey);
 
-export const supabase = isSupabaseConfigured ? createClient(supabaseUrl, supabaseAnonKey) : null;
+const activeKey = (typeof window === 'undefined' && supabaseServiceKey) ? supabaseServiceKey : supabaseAnonKey;
+
+export const supabase = isSupabaseConfigured ? createClient(supabaseUrl, activeKey) : null;
 
 // Re-export database interfaces from types/database
 export type ConsultationRequest = DBTypes.ConsultationRequest;
@@ -777,12 +780,24 @@ export const db = {
   },
 
   async updateLeadStatus(
-    type: 'contact' | 'consultation',
+    type: 'contact' | 'consultation' | 'chat_lead',
     id: string,
     status: 'New' | 'Contacted' | 'Qualified' | 'Proposal Sent' | 'Won' | 'Lost'
   ): Promise<void> {
     if (!supabase) {
       throw new Error('Database service unavailable: Supabase client is not configured.');
+    }
+
+    if (type === 'chat_lead') {
+      const { error } = await supabase
+        .from('chat_leads')
+        .update({ status })
+        .eq('id', id);
+      if (error) {
+        console.error('[DB Error] Supabase updateLeadStatus failed for chat_leads:', error.message || error);
+        throw error;
+      }
+      return;
     }
 
     const table = 'consultation_requests';

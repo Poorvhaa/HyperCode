@@ -7,6 +7,8 @@ import { notFound } from 'next/navigation'
 import { getMessages, setRequestLocale, getTranslations } from 'next-intl/server'
 import { NextIntlClientProvider } from 'next-intl'
 import AIConsultant from '@/components/ai-consultant'
+import GoogleAnalytics from '@/components/google-analytics'
+
 
 const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })
 const geistMono = Geist_Mono({
@@ -149,6 +151,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
   return (
     <html lang={locale} dir="ltr" className={`${geistSans.variable} ${geistMono.variable} bg-background`}>
       <body className="font-sans antialiased bg-background">
+        <GoogleAnalytics />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

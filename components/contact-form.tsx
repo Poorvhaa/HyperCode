@@ -8,6 +8,8 @@ import { useSearchParams } from 'next/navigation';
 import { Loader2, AlertCircle, CheckCircle } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 import { db } from '@/lib/db';
+import { trackGAEvent } from '@/lib/analytics';
+
 
 function ContactFormContent() {
   const searchParams = useSearchParams();
@@ -100,6 +102,12 @@ function ContactFormContent() {
       if (!res.ok) {
         throw new Error('Contact submission API returned an error');
       }
+
+      trackGAEvent({
+        action: 'contact_form_submission',
+        category: 'Leads',
+        label: data.subject
+      });
 
       setSubmitted(true);
       reset();

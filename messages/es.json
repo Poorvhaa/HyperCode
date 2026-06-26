@@ -583,6 +583,7 @@
     }
   },
   "PrivacyPolicy": {
+    "legal": "Sección Legal de HyperCode",
     "title": "Política de Privacidad",
     "subtitle": "Valoramos su privacidad y estamos comprometidos a proteger sus datos personales.",
     "lastUpdated": "Última actualización: 26 de junio de 2026",
@@ -628,6 +629,7 @@
     }
   },
   "TermsAndConditions": {
+    "legal": "Sección Legal de HyperCode",
     "title": "Términos y Condiciones",
     "subtitle": "Lea atentamente estos términos y condiciones antes de utilizar nuestro sitio web y servicios.",
     "lastUpdated": "Última actualización: 26 de junio de 2026",

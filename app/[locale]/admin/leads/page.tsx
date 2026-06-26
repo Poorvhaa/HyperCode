@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { Search, Download, MessageSquare, X, ArrowLeft, AlertCircle } from 'lucide-react';
-import { supabase, db, ContactInquiry, ConsultationRequest, UserProfile } from '@/lib/db';
+import { Search, Download, X, ArrowLeft, AlertCircle, Sparkles, User, Mail, Calendar, Phone, Award } from 'lucide-react';
+import { supabase, db, ContactInquiry, ChatLead, UserProfile } from '@/lib/db';
 import AdminSidebar from '@/components/admin/Sidebar';
 
 export default function AdminLeadsPage() {
@@ -18,13 +18,13 @@ export default function AdminLeadsPage() {
 
   // Data States
   const [inquiries, setInquiries] = useState<ContactInquiry[]>([]);
-  const [consultations, setConsultations] = useState<ConsultationRequest[]>([]);
+  const [chatLeads, setChatLeads] = useState<ChatLead[]>([]);
   const [loading, setLoading] = useState(true);
   const [healthReport, setHealthReport] = useState<any>(null);
 
   // Sub-navigation and Drawer States
-  const [leadsSubTab, setLeadsSubTab] = useState<'inquiries' | 'consultations'>('inquiries');
-  const [selectedLead, setSelectedLead] = useState<{ type: 'contact' | 'consultation'; data: any } | null>(null);
+  const [leadsSubTab, setLeadsSubTab] = useState<'inquiries' | 'chat_leads'>('inquiries');
+  const [selectedLead, setSelectedLead] = useState<{ type: 'contact' | 'chat_lead'; data: any } | null>(null);
 
   // Search & Filter State
   const [searchQuery, setSearchQuery] = useState('');
@@ -55,7 +55,6 @@ export default function AdminLeadsPage() {
           router.push(`/${locale}/admin/login`);
         }
       }
-      setAuthLoading(true);
       setAuthLoading(false);
     };
 
@@ -66,12 +65,12 @@ export default function AdminLeadsPage() {
   const loadData = async () => {
     setLoading(true);
     try {
-      const [inqs, cons] = await Promise.all([
+      const [inqs, cLeads] = await Promise.all([
         db.getAllContactInquiries(),
-        db.getAllConsultations()
+        db.getAllChatLeads().catch(() => []) // Catch in case table is missing columns before migration
       ]);
       setInquiries(inqs);
-      setConsultations(cons);
+      setChatLeads(cLeads);
 
       // Fetch DB health status
       try {
@@ -100,7 +99,7 @@ export default function AdminLeadsPage() {
     loadData();
   }, [session]);
 
-  const handleLeadStatusChange = async (type: 'contact' | 'consultation', id: string, newStatus: any) => {
+  const handleLeadStatusChange = async (type: 'contact' | 'chat_lead', id: string, newStatus: any) => {
     try {
       await db.updateLeadStatus(type, id, newStatus);
       if (selectedLead && selectedLead.data.id === id) {
@@ -132,7 +131,7 @@ export default function AdminLeadsPage() {
       // 2. Status Filter Match
       let matchesStatus = true;
       if (statusFilter !== 'All') {
-        matchesStatus = item.status === statusFilter;
+        matchesStatus = (item.status || 'New') === statusFilter;
       }
 
       return matchesSearch && matchesStatus;
@@ -149,9 +148,9 @@ export default function AdminLeadsPage() {
       headers = ['ID', 'Created At', 'Full Name', 'Email', 'Phone', 'Company', 'Subject', 'Message', 'Status', 'Source'];
       fileName = 'contact_requests_export.csv';
     } else {
-      dataToExport = consultations;
-      headers = ['ID', 'Created At', 'Full Name', 'Company', 'Email', 'Phone', 'Service Interest', 'Project Description', 'Budget', 'Timeline', 'Status'];
-      fileName = 'consultation_requests_export.csv';
+      dataToExport = chatLeads;
+      headers = ['ID', 'Created At', 'Full Name', 'Email', 'Phone', 'Company', 'Industry', 'Service Interest', 'Timeline', 'Budget', 'Lead Score', 'Status'];
+      fileName = 'chat_leads_export.csv';
     }
 
     const csvRows = [headers.join(',')];
@@ -168,22 +167,23 @@ export default function AdminLeadsPage() {
           `"${(row.company || '').replace(/"/g, '""')}"`,
           `"${(row.subject || '').replace(/"/g, '""')}"`,
           `"${(row.message || '').replace(/"/g, '""')}"`,
-          row.status,
+          row.status || 'New',
           row.source
         ];
       } else {
         values = [
           row.id,
           row.created_at,
-          `"${(row.full_name || '').replace(/"/g, '""')}"`,
-          `"${(row.company || '').replace(/"/g, '""')}"`,
-          row.email,
+          `"${(row.name || '').replace(/"/g, '""')}"`,
+          row.email || '',
           row.phone || '',
-          row.service_interest,
-          `"${(row.project_description || '').replace(/"/g, '""')}"`,
-          row.budget || '',
+          `"${(row.company || '').replace(/"/g, '""')}"`,
+          row.industry || '',
+          row.service_interest || row.interest || '',
           row.timeline || '',
-          row.status
+          row.budget_range || '',
+          String(row.lead_score || 0),
+          row.status || 'New'
         ];
       }
       csvRows.push(values.join(','));
@@ -222,7 +222,7 @@ export default function AdminLeadsPage() {
               : 'You do not have permission to view the leads dashboard.'}
           </p>
           <button 
-            onClick={() => router.push(`/${locale}/admin`)}
+            onClick={() => router.push(`/admin`)}
             className="px-5 py-2.5 bg-[#0F4C81] hover:bg-[#0c3e6b] text-white font-semibold rounded-xl text-sm transition-all flex items-center justify-center gap-2 mx-auto cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -234,8 +234,8 @@ export default function AdminLeadsPage() {
   }
 
   return (
-    <div className="flex bg-slate-50 min-h-screen text-slate-600">
-      <AdminSidebar userProfile={userProfile} activeTab="leads" />
+    <div className="flex bg-slate-50 min-h-screen text-slate-600 font-sans">
+      <AdminSidebar userProfile={userProfile} />
 
       <main className="flex-1 p-8 space-y-6 overflow-x-hidden relative">
         <div className="text-left">
@@ -243,7 +243,7 @@ export default function AdminLeadsPage() {
             {locale === 'es' ? 'Gestión de Prospectos' : 'Leads Dashboard'}
           </h1>
           <p className="text-sm text-slate-500 mt-1">
-            {locale === 'es' ? 'Gestione formularios de contacto y consultas técnicas' : 'Manage contact inquiries and technical consultation requests'}
+            {locale === 'es' ? 'Gestione formularios de contacto y prospectos de chat' : 'Manage contact inquiries and chat lead captures'}
           </p>
         </div>
 
@@ -284,15 +284,15 @@ export default function AdminLeadsPage() {
                   leadsSubTab === 'inquiries' ? 'border-[#0F4C81] text-[#0F4C81]' : 'border-transparent text-slate-400'
                 }`}
               >
-                {locale === 'es' ? 'Consultas Generales' : 'Contact Requests'} ({inquiries.length})
+                {locale === 'es' ? 'Consultas de Contacto' : 'Contact form submissions'} ({inquiries.length})
               </button>
               <button
-                onClick={() => { setLeadsSubTab('consultations'); setSelectedLead(null); }}
+                onClick={() => { setLeadsSubTab('chat_leads'); setSelectedLead(null); }}
                 className={`pb-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-all cursor-pointer ${
-                  leadsSubTab === 'consultations' ? 'border-[#0F4C81] text-[#0F4C81]' : 'border-transparent text-slate-400'
+                  leadsSubTab === 'chat_leads' ? 'border-[#0F4C81] text-[#0F4C81]' : 'border-transparent text-slate-400'
                 }`}
               >
-                {locale === 'es' ? 'Solicitudes de Consulta' : 'Consultations'} ({consultations.length})
+                {locale === 'es' ? 'Prospectos de Chat' : 'Chatbot Leads'} ({chatLeads.length})
               </button>
             </div>
 
@@ -343,7 +343,7 @@ export default function AdminLeadsPage() {
                       <th className="py-4 px-6">{locale === 'es' ? 'Nombre' : 'Name'}</th>
                       <th className="py-4 px-6">Email</th>
                       <th className="py-4 px-6">{locale === 'es' ? 'Compañía' : 'Company'}</th>
-                      {leadsSubTab === 'consultations' && <th className="py-4 px-6">{locale === 'es' ? 'Servicio Interés' : 'Service Interest'}</th>}
+                      {leadsSubTab === 'chat_leads' && <th className="py-4 px-6">{locale === 'es' ? 'Puntaje' : 'Score'}</th>}
                       <th className="py-4 px-6">Date</th>
                       <th className="py-4 px-6">Status</th>
                     </tr>
@@ -372,17 +372,20 @@ export default function AdminLeadsPage() {
                         </tr>
                       ))}
 
-                    {leadsSubTab === 'consultations' &&
-                      processSearch(consultations, ['full_name', 'email', 'company', 'service_interest', 'project_description']).map(row => (
+                    {leadsSubTab === 'chat_leads' &&
+                      processSearch(chatLeads, ['name', 'email', 'company', 'industry', 'service_interest', 'interest']).map(row => (
                         <tr
                           key={row.id}
-                          onClick={() => setSelectedLead({ type: 'consultation', data: row })}
+                          onClick={() => setSelectedLead({ type: 'chat_lead', data: row })}
                           className="hover:bg-slate-50/80 cursor-pointer transition-colors"
                         >
-                          <td className="py-4 px-6 font-bold text-slate-800">{row.full_name}</td>
-                          <td className="py-4 px-6 text-slate-500">{row.email}</td>
+                          <td className="py-4 px-6 font-bold text-slate-800 flex items-center gap-1.5">
+                            <Sparkles className="w-3.5 h-3.5 text-blue-500" />
+                            {row.name}
+                          </td>
+                          <td className="py-4 px-6 text-slate-500">{row.email || '—'}</td>
                           <td className="py-4 px-6 text-slate-500">{row.company || '—'}</td>
-                          <td className="py-4 px-6 text-slate-500">{row.service_interest}</td>
+                          <td className="py-4 px-6 text-slate-500 font-bold text-blue-600">{row.lead_score || 0}</td>
                           <td className="py-4 px-6 text-slate-400">{new Date(row.created_at).toLocaleDateString()}</td>
                           <td className="py-4 px-6">
                             <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
@@ -395,11 +398,14 @@ export default function AdminLeadsPage() {
                           </td>
                         </tr>
                       ))}
-
-
                   </tbody>
                 </table>
               </div>
+              {((leadsSubTab === 'inquiries' && inquiries.length === 0) || (leadsSubTab === 'chat_leads' && chatLeads.length === 0)) && (
+                <div className="py-12 text-center text-slate-400 text-xs font-semibold">
+                  No records found in this category.
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -410,8 +416,9 @@ export default function AdminLeadsPage() {
             {/* Header */}
             <div className="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50">
               <div>
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                  {selectedLead.type === 'contact' ? 'Contact Inquiry' : 'Consultation Request'}
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1">
+                  {selectedLead.type === 'contact' ? <User className="w-3 h-3" /> : <Sparkles className="w-3 h-3 text-blue-500" />}
+                  {selectedLead.type === 'contact' ? 'Contact Inquiry' : 'Chatbot Lead'}
                 </span>
                 <h3 className="text-base font-bold text-slate-800 mt-1">
                   {selectedLead.data.full_name || selectedLead.data.name || 'Anonymous Lead'}
@@ -451,19 +458,34 @@ export default function AdminLeadsPage() {
                   <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Phone</p>
                   <p className="mt-1 font-semibold text-slate-800">{selectedLead.data.phone || '—'}</p>
                 </div>
-                <div className="col-span-2">
+                <div>
                   <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Company</p>
                   <p className="mt-1 font-semibold text-slate-800">{selectedLead.data.company || '—'}</p>
                 </div>
-                {selectedLead.type === 'consultation' && (
+                {selectedLead.type === 'chat_lead' && (
                   <>
                     <div>
-                      <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Budget</p>
-                      <p className="mt-1 font-semibold text-indigo-700">{selectedLead.data.budget || '—'}</p>
+                      <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Industry</p>
+                      <p className="mt-1 font-semibold text-slate-800">{selectedLead.data.industry || '—'}</p>
+                    </div>
+                    <div>
+                      <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Budget Range</p>
+                      <p className="mt-1 font-semibold text-indigo-700">{selectedLead.data.budget_range || '—'}</p>
                     </div>
                     <div>
                       <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Timeline</p>
                       <p className="mt-1 font-semibold text-slate-800">{selectedLead.data.timeline || '—'}</p>
+                    </div>
+                    <div>
+                      <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Lead Score</p>
+                      <p className="mt-1 font-semibold text-blue-600 flex items-center gap-1 font-bold">
+                        <Award className="w-3.5 h-3.5 text-blue-500" />
+                        {selectedLead.data.lead_score || 0}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Language</p>
+                      <p className="mt-1 font-semibold text-slate-800 uppercase">{selectedLead.data.language || 'en'}</p>
                     </div>
                   </>
                 )}
@@ -480,17 +502,24 @@ export default function AdminLeadsPage() {
                   </div>
                 )}
 
+                {selectedLead.type === 'chat_lead' && (
+                  <div>
+                    <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Service Interest</p>
+                    <p className="mt-1.5 font-semibold text-slate-800 bg-slate-50 p-3 rounded-xl border border-slate-100">
+                      {selectedLead.data.service_interest || selectedLead.data.interest || '—'}
+                    </p>
+                  </div>
+                )}
+
                 <div>
                   <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">
-                    {selectedLead.type === 'contact' ? 'Message' : 'Project Description'}
+                    {selectedLead.type === 'contact' ? 'Message' : 'Message / Chat Summary'}
                   </p>
-                  <p className="mt-1.5 text-slate-600 bg-slate-50 p-4 rounded-xl border border-slate-100 leading-relaxed">
-                    {selectedLead.data.message || selectedLead.data.project_description || 'No description registered.'}
+                  <p className="mt-1.5 text-slate-600 bg-slate-50 p-4 rounded-xl border border-slate-100 leading-relaxed text-xs">
+                    {selectedLead.data.message || selectedLead.data.conversation_summary || 'No details registered.'}
                   </p>
                 </div>
               </div>
-
-
             </div>
           </div>
         )}

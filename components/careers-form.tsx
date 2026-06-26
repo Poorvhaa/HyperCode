@@ -6,6 +6,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useLocale } from 'next-intl';
 import { Loader2, Upload, FileText, CheckCircle, AlertCircle, Trash2 } from 'lucide-react';
+import { trackGAEvent } from '@/lib/analytics';
+
 
 interface CareersFormProps {
   initialPosition?: string;
@@ -208,6 +210,12 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
         const errJson = await res.json();
         throw new Error(errJson.error || t.errorSubmit);
       }
+
+      trackGAEvent({
+        action: 'career_application_submission',
+        category: 'Careers',
+        label: data.position
+      });
 
       setSubmitted(true);
       reset();

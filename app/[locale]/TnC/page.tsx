@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: Props) {
     title: `${t('title')} | HyperCode`,
     description: t('subtitle'),
     alternates: {
-      canonical: `https://www.hypercode.com/${locale}/terms-and-conditions`,
+      canonical: `https://www.hypercodeus.com/${locale}/TnC`,
     },
   };
 }
@@ -25,6 +25,11 @@ export default async function TermsAndConditionsPage({ params }: Props) {
   setRequestLocale(locale);
 
   const t = await getTranslations('TermsAndConditions');
+
+  const pdfUrl =
+    locale === 'es'
+      ? '/legal/es/TnC.pdf'
+      : '/legal/en/TnC.pdf';
 
   const sectionKeys = [
     'agreement',
@@ -49,7 +54,7 @@ export default async function TermsAndConditionsPage({ params }: Props) {
             <div className="max-w-3xl space-y-4">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-[#0F4C81] text-xs font-bold uppercase tracking-wider">
                 <FileText className="w-3.5 h-3.5" />
-                <span>HyperCode Legal</span>
+                <span>{t('legal')}</span>
               </div>
               <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">
                 {t('title')}
@@ -62,10 +67,9 @@ export default async function TermsAndConditionsPage({ params }: Props) {
                 <span>{t('lastUpdated')}</span>
               </div>
             </div>
-            
             <div className="flex-shrink-0">
               <a
-                href="/legal/terms-and-conditions.pdf"
+                href={pdfUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-[#0F4C81] hover:bg-[#0c3c66] text-white font-bold rounded-xl text-sm transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 cursor-pointer"

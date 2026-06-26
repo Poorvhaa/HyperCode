@@ -582,6 +582,7 @@
     }
   },
   "PrivacyPolicy": {
+    "legal": "HyperCode Legal",
     "title": "Privacy Policy",
     "subtitle": "We value your privacy and are committed to protecting your personal data.",
     "lastUpdated": "Last Updated: June 26, 2026",
@@ -627,6 +628,7 @@
     }
   },
   "TermsAndConditions": {
+    "legal": "HyperCode Legal",
     "title": "Terms & Conditions",
     "subtitle": "Please read these terms and conditions carefully before using our website and services.",
     "lastUpdated": "Last Updated: June 26, 2026",

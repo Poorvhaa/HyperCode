@@ -8,6 +8,8 @@ import { useSearchParams } from 'next/navigation';
 import { Loader2, AlertCircle, CheckCircle } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 import { db } from '@/lib/db';
+import { trackGAEvent } from '@/lib/analytics';
+
 
 function ConsultationFormContent() {
   const searchParams = useSearchParams();
@@ -136,6 +138,12 @@ function ConsultationFormContent() {
       if (!res.ok) {
         throw new Error('Consultation submission API returned an error');
       }
+
+      trackGAEvent({
+        action: 'consultation_request_submission',
+        category: 'Consultations',
+        label: data.service
+      });
 
       setSubmitted(true);
       reset();
