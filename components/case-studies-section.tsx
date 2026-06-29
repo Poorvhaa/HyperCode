@@ -5,6 +5,7 @@ import { ShieldAlert, Cpu, CheckCircle2, ArrowRight, Loader2 } from 'lucide-reac
 import { Link } from '@/i18n/routing';
 import { useTranslations, useLocale } from 'next-intl';
 import { db, CaseStudy } from '@/lib/db';
+import { motion } from 'framer-motion';
 
 export function CaseStudiesSection() {
   const t = useTranslations('CaseStudies');
@@ -64,7 +65,7 @@ export function CaseStudiesSection() {
         ) : dbCaseStudies.length > 0 ? (
           <div className="space-y-12">
             {dbCaseStudies.map((study) => (
-              <div key={study.id} className="p-8 sm:p-10 rounded-3xl border border-slate-200 bg-slate-50 shadow-sm space-y-8">
+              <div key={study.id} className="p-8 sm:p-10 rounded-3xl border border-slate-200 bg-slate-50 shadow-sm space-y-8 overflow-visible">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-200 pb-6">
                   <div className="space-y-1">
                     <span className="text-[10px] font-bold text-[#0F4C81] uppercase tracking-widest block">
@@ -79,52 +80,95 @@ export function CaseStudiesSection() {
                   </span>
                 </div>
 
-                <div className="space-y-8 relative">
+                <div className="relative space-y-10 overflow-visible pl-1 md:pl-2">
+                  {/* Continuous Vertical Timeline Connector */}
+                  <motion.div
+                    className="absolute left-[28px] top-[28px] bottom-[28px] w-[2.5px] bg-gradient-to-b from-[#1E5AA8] to-[#4FA3FF] z-[1] origin-top"
+                    initial={{ scaleY: 0 }}
+                    whileInView={{ scaleY: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                  />
+
                   {/* Challenge */}
-                  <div className="flex gap-4 items-start relative">
-                    <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 text-[#0F4C81] flex items-center justify-center flex-shrink-0 shadow-sm">
-                      <ShieldAlert size={18} />
-                    </div>
-                    <div className="space-y-1">
-                      <h5 className="text-sm font-bold text-slate-900 uppercase tracking-wider">{t('challenge')}</h5>
-                      <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-medium">
+                  <div className="flex gap-6 items-start relative overflow-visible">
+                    <motion.div
+                      className="w-14 h-14 rounded-full bg-white border-2 border-slate-200 flex items-center justify-center flex-shrink-0 shadow-[0_6px_18px_rgba(0,0,0,0.08)] relative z-[2] text-red-600 dark:text-red-500"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
+                    >
+                      <ShieldAlert className="w-6 h-6" />
+                    </motion.div>
+                    <motion.div
+                      className="space-y-1.5 pt-1.5 flex-1"
+                      initial={{ opacity: 0, x: 20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
+                    >
+                      <h5 className="text-xs font-extrabold text-red-600 uppercase tracking-widest">
+                        {t('challenge')}
+                      </h5>
+                      <p className="text-sm sm:text-base text-slate-650 leading-relaxed font-medium">
                         {study.challenge}
                       </p>
-                    </div>
-                  </div>
-
-                  <div className="pl-5 -my-4 text-slate-350 select-none">
-                    <span className="text-xl">↓</span>
+                    </motion.div>
                   </div>
 
                   {/* Solution */}
-                  <div className="flex gap-4 items-start relative">
-                    <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 text-[#0F4C81] flex items-center justify-center flex-shrink-0 shadow-sm">
-                      <Cpu size={18} />
-                    </div>
-                    <div className="space-y-1">
-                      <h5 className="text-sm font-bold text-slate-900 uppercase tracking-wider">{t('solution')}</h5>
-                      <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-medium">
+                  <div className="flex gap-6 items-start relative overflow-visible">
+                    <motion.div
+                      className="w-14 h-14 rounded-full bg-white border-2 border-slate-200 flex items-center justify-center flex-shrink-0 shadow-[0_6px_18px_rgba(0,0,0,0.08)] relative z-[2] text-blue-600 dark:text-blue-400"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
+                    >
+                      <Cpu className="w-6 h-6" />
+                    </motion.div>
+                    <motion.div
+                      className="space-y-1.5 pt-1.5 flex-1"
+                      initial={{ opacity: 0, x: 20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
+                    >
+                      <h5 className="text-xs font-extrabold text-blue-600 uppercase tracking-widest">
+                        {t('solution')}
+                      </h5>
+                      <p className="text-sm sm:text-base text-slate-650 leading-relaxed font-medium">
                         {study.solution}
                       </p>
-                    </div>
-                  </div>
-
-                  <div className="pl-5 -my-4 text-slate-350 select-none">
-                    <span className="text-xl">↓</span>
+                    </motion.div>
                   </div>
 
                   {/* Outcome */}
-                  <div className="flex gap-4 items-start relative">
-                    <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 text-[#0F4C81] flex items-center justify-center flex-shrink-0 shadow-sm">
-                      <CheckCircle2 size={18} />
-                    </div>
-                    <div className="space-y-1">
-                      <h5 className="text-sm font-bold text-slate-900 uppercase tracking-wider">{t('outcome')}</h5>
-                      <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-medium">
+                  <div className="flex gap-6 items-start relative overflow-visible">
+                    <motion.div
+                      className="w-14 h-14 rounded-full bg-white border-2 border-slate-200 flex items-center justify-center flex-shrink-0 shadow-[0_6px_18px_rgba(0,0,0,0.08)] relative z-[2] text-emerald-600 dark:text-emerald-500"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
+                    >
+                      <CheckCircle2 className="w-6 h-6" />
+                    </motion.div>
+                    <motion.div
+                      className="space-y-1.5 pt-1.5 flex-1"
+                      initial={{ opacity: 0, x: 20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: 0.4, ease: "easeOut" }}
+                    >
+                      <h5 className="text-xs font-extrabold text-emerald-600 uppercase tracking-widest">
+                        {t('outcome')}
+                      </h5>
+                      <p className="text-sm sm:text-base text-slate-650 leading-relaxed font-medium">
                         {study.results}
                       </p>
-                    </div>
+                    </motion.div>
                   </div>
                 </div>
               </div>
@@ -132,7 +176,7 @@ export function CaseStudiesSection() {
           </div>
         ) : (
           /* Static Fallback */
-          <div className="p-8 sm:p-10 rounded-3xl border border-slate-200 bg-slate-50 shadow-sm space-y-8">
+          <div className="p-8 sm:p-10 rounded-3xl border border-slate-200 bg-slate-50 shadow-sm space-y-8 overflow-visible">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-200 pb-6">
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-[#0F4C81] uppercase tracking-widest block">
@@ -147,52 +191,95 @@ export function CaseStudiesSection() {
               </span>
             </div>
 
-            <div className="space-y-8 relative">
+            <div className="relative space-y-10 overflow-visible pl-1 md:pl-2">
+              {/* Continuous Vertical Timeline Connector */}
+              <motion.div
+                className="absolute left-[28px] top-[28px] bottom-[28px] w-[2.5px] bg-gradient-to-b from-[#1E5AA8] to-[#4FA3FF] z-[1] origin-top"
+                initial={{ scaleY: 0 }}
+                whileInView={{ scaleY: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+              />
+
               {/* Challenge */}
-              <div className="flex gap-4 items-start relative">
-                <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 text-[#0F4C81] flex items-center justify-center flex-shrink-0 shadow-sm">
-                  <ShieldAlert size={18} />
-                </div>
-                <div className="space-y-1">
-                  <h5 className="text-sm font-bold text-slate-900 uppercase tracking-wider">{t('challenge')}</h5>
-                  <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-medium">
+              <div className="flex gap-6 items-start relative overflow-visible">
+                <motion.div
+                  className="w-14 h-14 rounded-full bg-white border-2 border-slate-200 flex items-center justify-center flex-shrink-0 shadow-[0_6px_18px_rgba(0,0,0,0.08)] relative z-[2] text-red-600 dark:text-red-500"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
+                >
+                  <ShieldAlert className="w-6 h-6" />
+                </motion.div>
+                <motion.div
+                  className="space-y-1.5 pt-1.5 flex-1"
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
+                >
+                  <h5 className="text-xs font-extrabold text-red-600 uppercase tracking-widest">
+                    {t('challenge')}
+                  </h5>
+                  <p className="text-sm sm:text-base text-slate-655 leading-relaxed font-medium">
                     {staticFeatured.challenge}
                   </p>
-                </div>
-              </div>
-
-              <div className="pl-5 -my-4 text-slate-350 select-none">
-                <span className="text-xl">↓</span>
+                </motion.div>
               </div>
 
               {/* Solution */}
-              <div className="flex gap-4 items-start relative">
-                <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 text-[#0F4C81] flex items-center justify-center flex-shrink-0 shadow-sm">
-                  <Cpu size={18} />
-                </div>
-                <div className="space-y-1">
-                  <h5 className="text-sm font-bold text-slate-900 uppercase tracking-wider">{t('solution')}</h5>
-                  <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-medium">
+              <div className="flex gap-6 items-start relative overflow-visible">
+                <motion.div
+                  className="w-14 h-14 rounded-full bg-white border-2 border-slate-200 flex items-center justify-center flex-shrink-0 shadow-[0_6px_18px_rgba(0,0,0,0.08)] relative z-[2] text-blue-600 dark:text-blue-400"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
+                >
+                  <Cpu className="w-6 h-6" />
+                </motion.div>
+                <motion.div
+                  className="space-y-1.5 pt-1.5 flex-1"
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
+                >
+                  <h5 className="text-xs font-extrabold text-blue-600 uppercase tracking-widest">
+                    {t('solution')}
+                  </h5>
+                  <p className="text-sm sm:text-base text-slate-655 leading-relaxed font-medium">
                     {staticFeatured.solution}
                   </p>
-                </div>
-              </div>
-
-              <div className="pl-5 -my-4 text-slate-350 select-none">
-                <span className="text-xl">↓</span>
+                </motion.div>
               </div>
 
               {/* Outcome */}
-              <div className="flex gap-4 items-start relative">
-                <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 text-[#0F4C81] flex items-center justify-center flex-shrink-0 shadow-sm">
-                  <CheckCircle2 size={18} />
-                </div>
-                <div className="space-y-1">
-                  <h5 className="text-sm font-bold text-slate-900 uppercase tracking-wider">{t('outcome')}</h5>
-                  <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-medium">
+              <div className="flex gap-6 items-start relative overflow-visible">
+                <motion.div
+                  className="w-14 h-14 rounded-full bg-white border-2 border-slate-200 flex items-center justify-center flex-shrink-0 shadow-[0_6px_18px_rgba(0,0,0,0.08)] relative z-[2] text-emerald-600 dark:text-emerald-500"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
+                >
+                  <CheckCircle2 className="w-6 h-6" />
+                </motion.div>
+                <motion.div
+                  className="space-y-1.5 pt-1.5 flex-1"
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.4, ease: "easeOut" }}
+                >
+                  <h5 className="text-xs font-extrabold text-emerald-600 uppercase tracking-widest">
+                    {t('outcome')}
+                  </h5>
+                  <p className="text-sm sm:text-base text-slate-655 leading-relaxed font-medium">
                     {staticFeatured.outcome}
                   </p>
-                </div>
+                </motion.div>
               </div>
             </div>
           </div>

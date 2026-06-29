@@ -48,7 +48,7 @@ export function Footer() {
               </a>
               <div className="flex items-center space-x-2">
                 <Phone size={16} className="text-slate-400 flex-shrink-0" />
-                <span>+1 (800) 555-0199</span>
+                <span>(510) 203-9270</span>
               </div>
               <a
                 href="mailto:Info@hypercodeus.com"

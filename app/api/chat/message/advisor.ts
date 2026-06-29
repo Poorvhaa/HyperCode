@@ -38,7 +38,6 @@ export function generateAdvisorResponse(userMessage: string, language: 'en' | 'e
     aiSolutions: {
       message: rawAdvisor.aiSolutions.message,
       suggestedPrompts: rawAdvisor.aiSolutions.suggestedPrompts,
-      flowTrigger: "lead_form"
     },
     dataAnalytics: {
       message: rawAdvisor.dataAnalytics.message,
@@ -53,12 +52,10 @@ export function generateAdvisorResponse(userMessage: string, language: 'en' | 'e
     staffing: {
       message: rawAdvisor.staffing.message,
       suggestedPrompts: rawAdvisor.staffing.suggestedPrompts,
-      flowTrigger: "lead_form"
     },
     webDev: {
       message: rawAdvisor.webDev.message,
       suggestedPrompts: rawAdvisor.webDev.suggestedPrompts,
-      flowTrigger: "lead_form"
     },
     consultation: {
       message: rawAdvisor.consultation.message,

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { useTranslations, useLocale } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -32,9 +33,46 @@ interface AIConsultantProps {
   outsideClickAction?: 'minimize' | 'close' | 'none';
 }
 
+const getCompactChipLabel = (prompt: string, locale: string): string => {
+  const p = prompt.toLowerCase();
+  const isEs = locale === 'es';
+
+  if (p.includes('ai solutions') || p.includes('inteligencia artificial') || p.includes('soluciones de ia')) {
+    return isEs ? 'Soluciones de IA' : 'AI Solutions';
+  }
+  if (p.includes('hire talent') || p.includes('staffing') || p.includes('talento') || p.includes('contratar')) {
+    return isEs ? 'Contratar Talento' : 'Hire Talent';
+  }
+  if (p.includes('web development') || p.includes('website') || p.includes('desarrollo web') || p.includes('sitio web') || p.includes('web dev')) {
+    return isEs ? 'Desarrollo Web' : 'Website Development';
+  }
+  if (p.includes('consultation') || p.includes('consulta') || p.includes('schedule') || p.includes('programar') || p.includes('book')) {
+    return isEs ? 'Consulta' : 'Consultation';
+  }
+  if (p.includes('services') || p.includes('servicios') || p.includes('explore')) {
+    return isEs ? 'Servicios' : 'Services';
+  }
+  if (p.includes('how do we start') || p.includes('cómo empezamos') || p.includes('como empezamos')) {
+    return isEs ? 'Comenzar' : 'Get Started';
+  }
+  if (p.includes('qualify') || p.includes('calificar')) {
+    return isEs ? 'Calificar Proyecto' : 'Qualify Project';
+  }
+
+  if (prompt.length > 20) {
+    return prompt.substring(0, 18) + '...';
+  }
+  return prompt;
+};
+
 export default function AIConsultant({ outsideClickAction = 'minimize' }: AIConsultantProps) {
   const t = useTranslations('AIConsultant');
   const locale = useLocale();
+
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Widget Window States: 'closed' | 'minimized' | 'open'
   const [windowState, setWindowState] = useState<'closed' | 'minimized' | 'open'>('closed');
@@ -51,6 +89,29 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
   // Interactive Flow States: 'chat' | 'lead_form' | 'consultation_form' | 'lead_success' | 'consultation_success'
   const [activeFlow, setActiveFlow] = useState<'chat' | 'lead_form' | 'consultation_form' | 'lead_success' | 'consultation_success'>('chat');
   const [selectedService, setSelectedService] = useState('');
+
+  // Custom Flow States
+  const [chatState, setChatState] = useState<'DEFAULT' | 'AI_SOLUTIONS' | 'STAFFING' | 'WEB_DEVELOPMENT' | 'CONSULTATION'>('DEFAULT');
+  const [staffingStep, setStaffingStep] = useState<number>(0);
+  const [staffingData, setStaffingData] = useState({
+    role: '',
+    type: '',
+    location: '',
+    experience: '',
+    timeline: '',
+    contactName: '',
+    contactEmail: '',
+    contactPhone: ''
+  });
+
+  const [webDevStep, setWebDevStep] = useState<number>(0);
+  const [webDevData, setWebDevData] = useState({
+    businessType: '',
+    goals: '',
+    redesign: '',
+    features: '',
+    timeline: ''
+  });
 
   // Form Inputs
   const [formName, setFormName] = useState('');
@@ -192,6 +253,474 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
       setSuggestedPrompts(getDefaultPrompts());
     }
   }, [locale, conversationId, t]);
+
+  // Helper to add user message and simulate typing assistant responses with database sync fallback
+  const simulateAssistantResponse = (userMsg: string, assistantMsg: string, nextPrompts: string[], delay = 800) => {
+    const userMsgId = 'user_' + Date.now();
+    const newUserMessage: Message = {
+      id: userMsgId,
+      sender: 'user',
+      message: userMsg,
+      created_at: new Date().toISOString()
+    };
+    setMessages(prev => [...prev, newUserMessage]);
+    setIsTyping(true);
+
+    // Async sync user message to backend database
+    fetch('/api/chat/message', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        conversation_id: conversationId || sessionId,
+        sender: 'user',
+        message: userMsg,
+        language: locale
+      })
+    }).then(res => {
+      if (res.ok) {
+        res.json().then(data => {
+          if (data.success && !conversationId && data.userMessage?.conversation_id) {
+            setConversationId(data.userMessage.conversation_id);
+          }
+        });
+      }
+    }).catch(err => console.warn('User message sync failed:', err));
+
+    setTimeout(() => {
+      setIsTyping(false);
+      const assistantMsgId = 'assistant_' + Date.now();
+      setMessages(prev => [...prev, {
+        id: assistantMsgId,
+        sender: 'assistant',
+        message: assistantMsg,
+        created_at: new Date().toISOString()
+      }]);
+      setSuggestedPrompts(nextPrompts);
+
+      // Async sync assistant message to backend database
+      if (conversationId || sessionId) {
+        fetch('/api/chat/message', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            conversation_id: conversationId || sessionId,
+            sender: 'assistant',
+            message: assistantMsg,
+            language: locale
+          })
+        }).catch(err => console.warn('Assistant message sync failed:', err));
+      }
+    }, delay);
+  };
+
+  // 1. AI Solutions Flow
+  const startAISolutionsFlow = () => {
+    setChatState('AI_SOLUTIONS');
+    const isEs = locale === 'es';
+    const userMsg = isEs ? 'Soluciones de IA' : 'AI Solutions';
+    const assistantMsg = isEs
+      ? "En HyperCode, creamos capacidades avanzadas de IA para transformar empresas:\n\n• **Automatización de IA**: Automatice flujos de trabajo y tareas repetitivas.\n• **Agentes de IA**: Agentes autónomos que pueden ejecutar tareas complejas.\n• **Chatbots de IA**: Interfaces conversacionales inteligentes.\n• **Soluciones de IA personalizadas**: Modelos de aprendizaje automático a medida.\n• **IA generativa y LLM**: Integración de modelos de lenguaje grandes.\n• **Procesamiento inteligente de documentos**: Extraiga datos de documentos automáticamente.\n• **Integración de IA y ML**: Incorpore IA de manera transparente en sistemas existentes.\n\n¿Le gustaría explorar alguna de estas soluciones en más detalle?"
+      : "At HyperCode, we build advanced AI capabilities to transform businesses:\n\n• **AI Automation**: Automate repetitive workflows and tasks.\n• **AI Agents**: Autonomous agents that can execute complex tasks.\n• **AI Chatbots**: Intelligent conversational interfaces.\n• **Custom AI Solutions**: Tailored machine learning models.\n• **Generative AI & LLMs**: Large language model integration.\n• **Intelligent Document Processing**: Automatically extract data from documents.\n• **AI Integration & ML**: Seamlessly embed AI into existing systems.\n\nWould you like to explore one of these solutions in more detail?";
+    
+    const prompts = isEs
+      ? ['Chatbots de IA', 'Automatización de IA', 'Agentes de IA', 'Análisis de Datos', 'Reservar Consulta']
+      : ['AI Chatbots', 'AI Automation', 'AI Agents', 'Data Analytics', 'Book Consultation'];
+
+    simulateAssistantResponse(userMsg, assistantMsg, prompts);
+  };
+
+  const handleAISolutionsInput = (text: string) => {
+    const p = text.toLowerCase().trim();
+    const isEs = locale === 'es';
+
+    if (p.includes('book consultation') || p.includes('reservar consulta')) {
+      startConsultationFlow();
+      return;
+    }
+    if (p.includes('back to start') || p.includes('volver al inicio')) {
+      handleStartOver();
+      return;
+    }
+
+    let answer = '';
+    if (p.includes('chatbot')) {
+      answer = isEs
+        ? "Nuestros Chatbots de IA están construidos utilizando LLM avanzados e instrucciones de sistema sensibles al contexto para automatizar el servicio al cliente, calificar clientes potenciales y brindar asistencia instantánea las 24 horas, los 7 días de la semana."
+        : "Our AI Chatbots are built using advanced LLMs and context-aware system instructions to automate customer service, qualify leads, and provide 24/7 instant assistance.";
+    } else if (p.includes('automation') || p.includes('automatización') || p.includes('automatizacion')) {
+      answer = isEs
+        ? "Automatizamos flujos de trabajo empresariales complejos conectando bases de datos, API en la nube y componentes de aprendizaje automático para mejorar la productividad y eliminar los gastos generales manuales."
+        : "We automate complex business workflows by connecting databases, cloud APIs, and machine learning components to improve productivity and eliminate manual overhead.";
+    } else if (p.includes('agent') || p.includes('agente')) {
+      answer = isEs
+        ? "HyperCode diseña Agentes de IA autónomos que planifican, ejecutan y verifican flujos de trabajo de varios pasos. Pueden llamar a herramientas personalizadas, buscar en bases de datos de conocimiento internas y tomar decisiones dentro de límites establecidos."
+        : "HyperCode designs autonomous AI Agents that plan, execute, and verify multi-step workflows. They can call custom tools, search internal knowledge bases, and make decisions within set boundaries.";
+    } else if (p.includes('data') || p.includes('datos') || p.includes('analytics') || p.includes('análisis') || p.includes('analisis')) {
+      answer = isEs
+        ? "Nuestros servicios de Análisis de Datos le ayudan a crear modelos predictivos, ejecutar detección de anomalías en transacciones y compilar tableros interactivos usando Power BI y Tableau."
+        : "Our Data Analytics services help you build predictive models, run anomaly detection on transactions, and compile interactive dashboards using Power BI and Tableau.";
+    } else {
+      handleSendMessage(text);
+      return;
+    }
+
+    const followUp = isEs
+      ? "\n\n¿Le gustaría explorar otra solución o reservar una consulta?"
+      : "\n\nWould you like to explore another solution, or book a consultation?";
+
+    const prompts = isEs
+      ? ['Chatbots de IA', 'Automatización de IA', 'Agentes de IA', 'Análisis de Datos', 'Reservar Consulta', 'Volver al Inicio']
+      : ['AI Chatbots', 'AI Automation', 'AI Agents', 'Data Analytics', 'Book Consultation', 'Back to Start'];
+
+    simulateAssistantResponse(text, answer + followUp, prompts);
+  };
+
+  // 2. Staffing Flow
+  const startStaffingFlow = () => {
+    setChatState('STAFFING');
+    setStaffingStep(1);
+    setStaffingData({
+      role: '',
+      type: '',
+      location: '',
+      experience: '',
+      timeline: '',
+      contactName: '',
+      contactEmail: '',
+      contactPhone: ''
+    });
+
+    const isEs = locale === 'es';
+    const userMsg = isEs ? 'Contratar Talento' : 'Hire Talent';
+    const assistantMsg = isEs
+      ? "¿Para qué puesto o tecnología está buscando contratar? (ej. Desarrollador React, Ingeniero de Datos, DevOps)"
+      : "What role or technology are you looking to hire for? (e.g., React Developer, Data Engineer, DevOps)";
+
+    const prompts = isEs
+      ? ['Desarrollador React', 'Ingeniero de Datos', 'Ingeniero DevOps', 'Volver al Inicio']
+      : ['React Developer', 'Data Engineer', 'DevOps Engineer', 'Back to Start'];
+
+    simulateAssistantResponse(userMsg, assistantMsg, prompts);
+  };
+
+  const handleStaffingInput = (text: string) => {
+    const isEs = locale === 'es';
+    if (text.toLowerCase().includes('back to start') || text.toLowerCase().includes('volver al inicio')) {
+      handleStartOver();
+      return;
+    }
+
+    if (staffingStep === 1) {
+      setStaffingData(prev => ({ ...prev, role: text }));
+      setStaffingStep(2);
+      const question = isEs
+        ? "¿Este puesto es por Contrato, de Tiempo Completo o Contrato a Término?"
+        : "Is this position Contract, Full-Time, or Contract-to-Hire?";
+      const prompts = isEs
+        ? ['Contrato', 'Tiempo Completo', 'Contrato a Término']
+        : ['Contract', 'Full-Time', 'Contract-to-Hire'];
+      simulateAssistantResponse(text, question, prompts);
+    } else if (staffingStep === 2) {
+      setStaffingData(prev => ({ ...prev, type: text }));
+      setStaffingStep(3);
+      const question = isEs
+        ? "¿Cuál es la ubicación preferida del candidato? (ej. Remoto, Presencial, Híbrido)"
+        : "What is the preferred location for the candidate? (e.g., Remote, On-site, Hybrid)";
+      const prompts = isEs
+        ? ['Remoto', 'Presencial', 'Híbrido']
+        : ['Remote', 'On-site', 'Hybrid'];
+      simulateAssistantResponse(text, question, prompts);
+    } else if (staffingStep === 3) {
+      setStaffingData(prev => ({ ...prev, location: text }));
+      setStaffingStep(4);
+      const question = isEs
+        ? "¿Qué nivel de experiencia se requiere para este puesto?"
+        : "What level of experience is required for this position?";
+      const prompts = isEs
+        ? ['Junior', 'Mid-Level', 'Senior']
+        : ['Junior', 'Mid-Level', 'Senior'];
+      simulateAssistantResponse(text, question, prompts);
+    } else if (staffingStep === 4) {
+      setStaffingData(prev => ({ ...prev, experience: text }));
+      setStaffingStep(5);
+      const question = isEs
+        ? "¿Cuál es su plazo para realizar esta contratación?"
+        : "What is your timeline for making this hire?";
+      const prompts = isEs
+        ? ['Inmediato', '1-3 Meses', 'Flexible']
+        : ['Immediate', '1-3 Months', 'Flexible'];
+      simulateAssistantResponse(text, question, prompts);
+    } else if (staffingStep === 5) {
+      setStaffingData(prev => ({ ...prev, timeline: text }));
+      setStaffingStep(6);
+      const question = isEs
+        ? "Para coordinar, por favor díganos su Nombre Completo:"
+        : "To coordinate, please tell us your Full Name:";
+      simulateAssistantResponse(text, question, []);
+    } else if (staffingStep === 6) {
+      setStaffingData(prev => ({ ...prev, contactName: text }));
+      setStaffingStep(7);
+      const question = isEs
+        ? "¿Cuál es su Dirección de Correo Electrónico?"
+        : "What is your Email Address?";
+      simulateAssistantResponse(text, question, []);
+    } else if (staffingStep === 7) {
+      if (!text.includes('@') || !text.includes('.')) {
+        const errorMsg = isEs
+          ? "Por favor, introduzca una dirección de correo electrónico válida (ej. nombre@empresa.com):"
+          : "Please enter a valid email address (e.g., name@company.com):";
+        const userMsgId = 'user_' + Date.now();
+        setMessages(prev => [...prev, { id: userMsgId, sender: 'user', message: text, created_at: new Date().toISOString() }]);
+        setIsTyping(true);
+        setTimeout(() => {
+          setIsTyping(false);
+          setMessages(prev => [...prev, { id: 'assistant_err_' + Date.now(), sender: 'assistant', message: errorMsg, created_at: new Date().toISOString() }]);
+        }, 500);
+        return;
+      }
+      setStaffingData(prev => ({ ...prev, contactEmail: text }));
+      setStaffingStep(8);
+      const question = isEs
+        ? "¿Cuál es su Número de Teléfono?"
+        : "What is your Phone Number?";
+      simulateAssistantResponse(text, question, []);
+    } else if (staffingStep === 8) {
+      const finalPhone = text;
+      setStaffingData(prev => {
+        const updated = { ...prev, contactPhone: finalPhone };
+        
+        // Submit the lead to DB via API
+        fetch('/api/chat/lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            conversation_id: conversationId,
+            name: updated.contactName,
+            email: updated.contactEmail,
+            phone: updated.contactPhone,
+            company: 'Staffing Client',
+            industry: 'technology',
+            service_interest: `Staffing: ${updated.role}`,
+            budget_range: 'Flexible',
+            timeline: updated.timeline,
+            message: `Role: ${updated.role}\nType: ${updated.type}\nLocation: ${updated.location}\nExperience: ${updated.experience}\nTimeline: ${updated.timeline}`,
+            language: locale
+          })
+        }).catch(err => console.warn('Submit staffing lead failed:', err));
+
+        return updated;
+      });
+
+      setChatState('DEFAULT');
+      setStaffingStep(0);
+      const confirmation = isEs
+        ? "¡Gracias! Su solicitud de personal ha sido registrada con éxito. Un especialista de talento de HyperCode se pondrá en contacto con usted en breve."
+        : "Thank you! Your staffing request has been successfully registered. A HyperCode talent specialist will contact you shortly.";
+      simulateAssistantResponse(text, confirmation, getDefaultPrompts());
+    }
+  };
+
+  // 3. Web Development Flow
+  const startWebDevelopmentFlow = () => {
+    setChatState('WEB_DEVELOPMENT');
+    setWebDevStep(1);
+    setWebDevData({
+      businessType: '',
+      goals: '',
+      redesign: '',
+      features: '',
+      timeline: ''
+    });
+
+    const isEs = locale === 'es';
+    const userMsg = isEs ? 'Desarrollo Web' : 'Website Development';
+    const assistantMsg = isEs
+      ? "¿Para qué tipo de negocio es este sitio web? (ej. Comercio Electrónico, Blog, Plataforma SaaS, Sitio Corporativo)"
+      : "What type of business is this website for? (e.g., E-commerce, Blog, SaaS Platform, Corporate Site)";
+
+    const prompts = isEs
+      ? ['Comercio Electrónico', 'Sitio Corporativo', 'Plataforma SaaS', 'Volver al Inicio']
+      : ['E-commerce', 'Corporate Site', 'SaaS Platform', 'Back to Start'];
+
+    simulateAssistantResponse(userMsg, assistantMsg, prompts);
+  };
+
+  const handleWebDevInput = (text: string) => {
+    const isEs = locale === 'es';
+    if (text.toLowerCase().includes('back to start') || text.toLowerCase().includes('volver al inicio')) {
+      handleStartOver();
+      return;
+    }
+
+    if (webDevStep === 1) {
+      setWebDevData(prev => ({ ...prev, businessType: text }));
+      setWebDevStep(2);
+      const question = isEs
+        ? "¿Cuáles son los objetivos principales del sitio web? (ej. Generación de prospectos, ventas en línea, presencia de marca)"
+        : "What are your primary website goals? (e.g., Lead generation, online sales, brand awareness)";
+      const prompts = isEs
+        ? ['Generación de Prospectos', 'Ventas en Línea', 'Presencia de Marca']
+        : ['Lead Generation', 'Online Sales', 'Brand Awareness'];
+      simulateAssistantResponse(text, question, prompts);
+    } else if (webDevStep === 2) {
+      setWebDevData(prev => ({ ...prev, goals: text }));
+      setWebDevStep(3);
+      const question = isEs
+        ? "¿Es este un proyecto de sitio web nuevo o un rediseño de un sitio existente?"
+        : "Is this a new website project or a redesign of an existing site?";
+      const prompts = isEs
+        ? ['Sitio Web Nuevo', 'Rediseño de Sitio Existente']
+        : ['New Website', 'Redesign Existing Site'];
+      simulateAssistantResponse(text, question, prompts);
+    } else if (webDevStep === 3) {
+      setWebDevData(prev => ({ ...prev, redesign: text }));
+      setWebDevStep(4);
+      const question = isEs
+        ? "¿Qué características específicas necesita? (ej. CMS/Blog, pasarela de pago, área de miembros)"
+        : "What specific features do you need? (e.g., CMS/Blog, payment gateway, members area)";
+      const prompts = isEs
+        ? ['CMS / Blog', 'Integración de Pagos', 'Aplicación Web Personalizada']
+        : ['CMS / Blog', 'Payment Integration', 'Custom Web Application'];
+      simulateAssistantResponse(text, question, prompts);
+    } else if (webDevStep === 4) {
+      setWebDevData(prev => ({ ...prev, features: text }));
+      setWebDevStep(5);
+      const question = isEs
+        ? "¿Cuál es su plazo estimado para lanzar este proyecto?"
+        : "What is your estimated timeline to launch this project?";
+      const prompts = isEs
+        ? ['1 Mes', '1-3 Meses', 'Flexible']
+        : ['1 Month', '1-3 Months', 'Flexible'];
+      simulateAssistantResponse(text, question, prompts);
+    } else if (webDevStep === 5) {
+      setWebDevData(prev => ({ ...prev, timeline: text }));
+      setWebDevStep(6);
+      const question = isEs
+        ? "¿Le gustaría programar una consulta con nuestro equipo de desarrollo web para calificar los detalles?"
+        : "Would you like to schedule a consultation with our web development team to review the details?";
+      const prompts = isEs
+        ? ['Sí, programar consulta', 'No, gracias']
+        : ['Yes, schedule consultation', 'No, thanks'];
+      simulateAssistantResponse(text, question, prompts);
+    } else if (webDevStep === 6) {
+      const p = text.toLowerCase().trim();
+      const isYes = p.includes('yes') || p.includes('sí') || p.includes('si') || p.includes('schedule');
+      
+      if (isYes) {
+        setSelectedService(isEs ? 'Desarrollo Web' : 'Website Development');
+        setFormMessage(
+          isEs
+            ? `Tipo de negocio: ${webDevData.businessType}\nObjetivos: ${webDevData.goals}\nTipo: ${webDevData.redesign}\nFunciones: ${webDevData.features}\nPlazo: ${webDevData.timeline}`
+            : `Business Type: ${webDevData.businessType}\nGoals: ${webDevData.goals}\nProject: ${webDevData.redesign}\nFeatures: ${webDevData.features}\nTimeline: ${webDevData.timeline}`
+        );
+        setActiveFlow('lead_form');
+        setChatState('DEFAULT');
+        setWebDevStep(0);
+        
+        // Add user response to messages list
+        setMessages(prev => [...prev, {
+          id: 'user_opt_yes_' + Date.now(),
+          sender: 'user',
+          message: text,
+          created_at: new Date().toISOString()
+        }]);
+      } else {
+        setChatState('DEFAULT');
+        setWebDevStep(0);
+        const finalMsg = isEs
+          ? "¡Entendido! Si cambia de opinión, siempre puede programar una llamada. ¿Hay algo más en lo que pueda ayudarle?"
+          : "Understood! If you change your mind, you can always schedule a call later. Is there anything else I can help you with?";
+        simulateAssistantResponse(text, finalMsg, getDefaultPrompts());
+      }
+    }
+  };
+
+  // 4. Consultation Flow
+  const startConsultationFlow = () => {
+    setChatState('CONSULTATION');
+    setSelectedService(locale === 'es' ? 'Consulta de Tecnología' : 'Technology Consulting');
+    setActiveFlow('consultation_form');
+  };
+
+  // Central Router Function
+  const routeSuggestedPrompt = (prompt: string) => {
+    const p = prompt.toLowerCase().trim();
+
+    // Map AI Solutions
+    if (
+      p.includes('ai solutions') || 
+      p.includes('soluciones de ia') || 
+      p.includes('artificial intelligence') || 
+      p.includes('inteligencia artificial') ||
+      p === 'ai solutions' ||
+      p === 'soluciones de ia'
+    ) {
+      startAISolutionsFlow();
+      return;
+    }
+
+    // Map Hire Talent
+    if (
+      p.includes('hire talent') || 
+      p.includes('contratar talento') || 
+      p.includes('staffing') || 
+      p.includes('personal') ||
+      p === 'hire talent' ||
+      p === 'contratar' ||
+      p.includes('hire developers') ||
+      p.includes('hire a developer')
+    ) {
+      startStaffingFlow();
+      return;
+    }
+
+    // Map Website Development
+    if (
+      p.includes('website development') || 
+      p.includes('desarrollo web') || 
+      p.includes('web development') || 
+      p === 'website development' ||
+      p === 'desarrollo web' ||
+      p.includes('web development team') ||
+      p.includes('web dev')
+    ) {
+      startWebDevelopmentFlow();
+      return;
+    }
+
+    // Map Consultation
+    if (
+      p.includes('consultation') || 
+      p.includes('consulta') || 
+      p.includes('schedule') || 
+      p.includes('programar') ||
+      p === 'consultation' ||
+      p === 'consulta' ||
+      p.includes('book') ||
+      p.includes('schedule')
+    ) {
+      startConsultationFlow();
+      return;
+    }
+
+    // Fallback: send as regular chat message
+    handleSendMessage(prompt);
+  };
+
+  // Central User Submit Interceptor
+  const handleUserSubmit = (text: string) => {
+    if (!text.trim()) return;
+
+    if (chatState === 'STAFFING') {
+      handleStaffingInput(text);
+    } else if (chatState === 'WEB_DEVELOPMENT') {
+      handleWebDevInput(text);
+    } else if (chatState === 'AI_SOLUTIONS') {
+      handleAISolutionsInput(text);
+    } else {
+      routeSuggestedPrompt(text);
+    }
+  };
 
   // Send Message Handler
   const handleSendMessage = async (textToSend: string) => {
@@ -400,6 +929,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
 
   const handleStartOver = () => {
     setActiveFlow('chat');
+    setChatState('DEFAULT');
     setMessages([
       {
         id: 'greeting',
@@ -416,12 +946,29 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
     setFormMessage('');
     setFormDate('');
   };
-
   // Check if suggested queries should be shown (hide after first user message)
   const showChips = activeFlow === 'chat' && messages.filter(m => m.sender === 'user').length === 0;
+  const isChatEmpty = activeFlow === 'chat' && messages.length <= 1;
 
-  return (
-    <div className="fixed z-50 bottom-3 right-3 left-3 sm:bottom-6 sm:right-6 sm:left-auto pointer-events-none flex flex-col items-end">
+  // Localized greeting parts
+  const isEs = locale === 'es';
+  const greetingText = isEs ? '¡Hola! 👋' : 'Hello 👋';
+  const introText = isEs ? 'Soy el Consultor de IA de HyperCode.' : "I'm HyperCode AI Consultant.";
+  const questionText = isEs ? '¿Cómo puedo ayudarle con sus objetivos comerciales hoy?' : 'How can I help your business today?';
+  
+  // Localized placeholder
+  const placeholderText = isEs
+    ? 'Pregunte sobre IA, contratación, automatización o transformación digital...'
+    : 'Ask anything about AI, hiring, automation or digital transformation...';
+
+  if (!mounted) return null;
+
+  return createPortal(
+    <div className={`fixed z-[999999] pointer-events-none flex flex-col items-center sm:items-end justify-end ${
+      windowState === 'open' 
+        ? 'bottom-2.5 left-2.5 right-2.5 sm:bottom-6 sm:right-6 sm:left-auto' 
+        : 'bottom-3 right-3 left-3 sm:bottom-6 sm:right-6 sm:left-auto'
+    }`}>
       
       {/* 1. Chat Widget Window */}
       <AnimatePresence>
@@ -434,27 +981,27 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
             transition={{ duration: 0.25, ease: 'easeOut' }}
             role="dialog"
             aria-label="AI Consultant Chat Window"
-            className="w-full sm:w-[420px] md:w-[500px] h-[80vh] sm:h-[650px] max-h-[80vh] bg-slate-900/95 backdrop-blur-xl border border-slate-800 rounded-3xl shadow-2xl overflow-hidden flex flex-col pointer-events-auto mb-4"
+            className="w-full sm:w-[380px] lg:w-[400px] xl:w-[420px] xl:max-w-[450px] xl:min-w-[390px] h-[min(80vh,calc(100vh-20px))] sm:h-[min(75vh,calc(100vh-40px))] lg:h-[min(620px,calc(100vh-48px))] xl:h-[min(650px,calc(100vh-48px))] bg-slate-900/95 backdrop-blur-xl border border-slate-800/80 rounded-[24px] shadow-[0_20px_50px_rgba(0,0,0,0.4)] overflow-hidden flex flex-col pointer-events-auto mb-0"
           >
             {/* Header bar (shrink-0 prevents squash) */}
-            <div className="px-5 py-4 border-b border-slate-800 flex justify-between items-center bg-gradient-to-r from-slate-900 to-slate-950 shrink-0">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#0F4C81] to-[#38BDF8] flex items-center justify-center text-white shadow-md shadow-blue-500/25">
-                  <Bot className="w-5.5 h-5.5" />
+            <div className="h-[72px] px-4 border-b border-slate-800/80 flex justify-between items-center bg-gradient-to-r from-slate-900 to-slate-950 shrink-0">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-[#0F4C81] to-[#38BDF8] flex items-center justify-center text-white shadow-md shadow-blue-500/20">
+                  <Bot className="w-4.5 h-4.5" />
                 </div>
                 <div className="text-left">
-                  <h3 className="text-xs font-extrabold text-white tracking-wide uppercase leading-none">{t('title')}</h3>
-                  <span className="text-[10px] text-blue-400 font-bold tracking-tight">{t('subtitle')}</span>
+                  <h3 className="text-xs font-extrabold text-white tracking-wider uppercase leading-none">{t('title')}</h3>
+                  <p className="text-[9px] text-slate-400 font-medium tracking-tight mt-0.5 leading-none">{t('subtitle')}</p>
                 </div>
               </div>
               
               {/* Header Action Buttons */}
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1">
                 <button
                   onClick={() => setWindowState('minimized')}
                   title={t('actions.minimize')}
                   aria-label="Minimize AI Consultant"
-                  className="p-2 hover:bg-slate-800 text-slate-400 hover:text-white rounded-xl transition-colors cursor-pointer focus:ring-2 focus:ring-[#38BDF8] focus:ring-offset-2 focus:ring-offset-slate-900 outline-none flex items-center justify-center shrink-0"
+                  className="w-8 h-8 hover:bg-slate-800 text-slate-400 hover:text-white rounded-lg transition-colors cursor-pointer focus:ring-1 focus:ring-[#38BDF8] outline-none flex items-center justify-center shrink-0"
                 >
                   <Minus className="w-4 h-4" />
                 </button>
@@ -462,405 +1009,482 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                   onClick={() => setWindowState('closed')}
                   title={t('actions.close')}
                   aria-label="Close AI Consultant"
-                  className="bg-[#0F4C81] hover:bg-blue-600 active:bg-blue-700 text-white p-2 rounded-xl transition-colors cursor-pointer focus:ring-2 focus:ring-[#38BDF8] focus:ring-offset-2 focus:ring-offset-slate-900 outline-none z-50 flex items-center justify-center shrink-0"
+                  className="w-8 h-8 bg-slate-800 hover:bg-red-900/60 text-slate-400 hover:text-white rounded-lg transition-colors cursor-pointer focus:ring-1 focus:ring-red-500 outline-none flex items-center justify-center shrink-0"
                 >
                   <X className="w-4 h-4" />
                 </button>
               </div>
             </div>
 
-            {/* Scrollable Message Container (flex-1 fills available space) */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 flex flex-col custom-scrollbar bg-slate-900/40">
-              
-              {/* CHAT LOG TRANSCRIPT */}
-              {activeFlow === 'chat' && (
-                <>
-                  {/* Spacer pushes messages to bottom naturally when short, shrinks to 0 when overflowing */}
+            {/* Scrollable Content or Forms */}
+            {activeFlow === 'chat' ? (
+              isChatEmpty ? (
+                /* Empty state: vertically centered welcome and suggested queries */
+                <div className="flex-1 flex flex-col justify-center items-center p-4 bg-slate-900/40 min-h-0 overflow-y-auto">
+                  <motion.div
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="flex flex-col items-center max-w-[90%] text-center my-auto py-4"
+                  >
+                    <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#0F4C81] to-[#38BDF8] flex items-center justify-center text-white shadow-lg shadow-blue-500/20 mb-3 animate-pulse">
+                      <Bot className="w-5.5 h-5.5" />
+                    </div>
+                    {messages.length > 0 && (
+                      <div className="bg-slate-850/80 border border-slate-800/80 px-4 py-3 rounded-2xl rounded-tl-none text-xs leading-relaxed text-slate-200 text-left shadow-md max-w-[95%]">
+                        <div className="space-y-1">
+                          <p className="font-semibold text-sm text-white flex items-center gap-1">{greetingText}</p>
+                          <p className="text-slate-350">{introText}</p>
+                          <p className="text-blue-400 font-medium pt-1 border-t border-slate-800/60 mt-1">{questionText}</p>
+                        </div>
+                      </div>
+                    )}
+                    
+                    {/* Suggested Queries right underneath */}
+                    {showChips && suggestedPrompts.length > 0 && (
+                      <div className="flex flex-col gap-2.5 mt-[20px] items-center w-full animate-fadeIn">
+                        <span className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">
+                          {t('suggestedTitle')}
+                        </span>
+                        <div className="flex flex-wrap gap-2 justify-center max-w-full">
+                          {suggestedPrompts.slice(0, 4).map((prompt, idx) => (
+                            <button
+                              key={idx}
+                              onClick={() => routeSuggestedPrompt(prompt)}
+                              disabled={isSending || isTyping}
+                              className="px-3 py-1.5 bg-slate-800/60 hover:bg-[#0F4C81] hover:text-white text-slate-300 rounded-full text-[11px] font-semibold border border-slate-700/50 transition-all duration-200 cursor-pointer shadow-sm hover:shadow hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center shrink-0"
+                            >
+                              {getCompactChipLabel(prompt, locale)}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </motion.div>
+                </div>
+              ) : (
+                /* Active chat state: scrollable messages list */
+                <div className="flex-1 overflow-y-auto p-4 space-y-3 flex flex-col custom-scrollbar bg-slate-900/40 min-h-0">
                   <div className="flex-grow min-h-[0px]" />
-                  
                   {messages.map((msg) => (
-                    <div
+                    <motion.div
                       key={msg.id}
-                      className={`flex gap-2.5 max-w-[85%] ${
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className={`flex gap-2 max-w-[85%] ${
                         msg.sender === 'user' ? 'self-end flex-row-reverse' : 'self-start'
                       }`}
                     >
                       <div
-                        className={`w-7 h-7 rounded-lg shrink-0 flex items-center justify-center text-xs font-bold ${
+                        className={`w-6 h-6 rounded-lg shrink-0 flex items-center justify-center text-[10px] font-bold ${
                           msg.sender === 'user' ? 'bg-slate-800 text-slate-300' : 'bg-gradient-to-tr from-[#0F4C81] to-[#38BDF8] text-white'
                         }`}
                       >
-                        {msg.sender === 'user' ? <User className="w-3.5 h-3.5" /> : <Bot className="w-3.5 h-3.5" />}
+                        {msg.sender === 'user' ? <User className="w-3 h-3" /> : <Bot className="w-3 h-3" />}
                       </div>
                       <div className="flex flex-col text-left">
                         <div
-                          className={`px-4 py-2.5 rounded-2xl text-xs leading-relaxed whitespace-pre-wrap ${
+                          className={`px-3.5 py-2 rounded-xl text-xs leading-relaxed whitespace-pre-wrap ${
                             msg.sender === 'user'
-                              ? 'bg-[#0F4C81] text-white rounded-tr-none shadow-md shadow-blue-500/10'
-                              : 'bg-slate-800 text-slate-200 border border-slate-750 rounded-tl-none shadow-sm'
+                              ? 'bg-[#0F4C81] text-white rounded-tr-none shadow-sm'
+                              : 'bg-slate-850 border border-slate-800/80 text-slate-200 rounded-tl-none'
                           }`}
                         >
                           {msg.message}
                         </div>
-                        <span className="text-[8px] text-slate-500 font-bold mt-1 px-1">
+                        <span className="text-[8px] text-slate-500 font-medium mt-0.5 px-1">
                           {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                         </span>
                       </div>
-                    </div>
+                    </motion.div>
                   ))}
-
-                  {/* Compact chips suggested prompts inline (maximum 2 rows, automatically wraps) */}
-                  {showChips && suggestedPrompts.length > 0 && (
-                    <div className="flex flex-col gap-1.5 mt-2 self-start w-full animate-fadeIn">
-                      <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider text-left block px-1">
-                        {t('suggestedTitle')}
-                      </span>
-                      <div className="flex flex-wrap gap-1.5 max-h-[64px] overflow-hidden py-0.5 w-full">
-                        {suggestedPrompts.slice(0, 4).map((prompt, idx) => (
-                          <button
-                            key={idx}
-                            onClick={() => handleSendMessage(prompt)}
-                            disabled={isSending || isTyping}
-                            className="px-3 py-1.5 bg-slate-850 hover:bg-slate-800 active:bg-slate-750 text-slate-300 hover:text-white rounded-full text-[11px] font-semibold transition-all border border-slate-750 cursor-pointer max-w-full truncate outline-none focus:ring-2 focus:ring-[#38BDF8]"
-                          >
-                            {prompt}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Typing Indicator */}
+                  
                   {isTyping && (
-                    <div className="flex gap-2.5 self-start items-center">
-                      <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-[#0F4C81] to-[#38BDF8] flex items-center justify-center text-white shrink-0">
-                        <Bot className="w-3.5 h-3.5 animate-pulse" />
+                    <div className="flex gap-2 self-start items-center">
+                      <div className="w-6 h-6 rounded-lg bg-gradient-to-tr from-[#0F4C81] to-[#38BDF8] flex items-center justify-center text-white shrink-0">
+                        <Bot className="w-3 h-3 animate-pulse" />
                       </div>
-                      <div className="bg-slate-800 border border-slate-750 px-4 py-3 rounded-2xl rounded-tl-none flex items-center gap-1">
-                        <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                        <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                        <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                      <div className="bg-slate-850 border border-slate-800/80 px-3.5 py-2 rounded-xl rounded-tl-none flex items-center gap-1">
+                        <div className="w-1 h-1 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                        <div className="w-1 h-1 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                        <div className="w-1 h-1 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
                       </div>
                     </div>
                   )}
-                </>
-              )}
-
-              {/* FLOW: LEAD FORM (QUALIFICATION) */}
-              {activeFlow === 'lead_form' && (
-                <motion.form
-                  initial={{ opacity: 0, x: 15 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  onSubmit={handleLeadSubmit}
-                  className="space-y-4 text-left p-4 bg-slate-850/80 border border-slate-800 rounded-2xl"
-                >
-                  <div className="flex justify-between items-center pb-2 border-b border-slate-800">
-                    <h4 className="text-xs font-extrabold text-blue-400 uppercase tracking-wider flex items-center gap-1.5">
-                      <Sparkles className="w-3.5 h-3.5" />
-                      {t('leadQualification.title')}
-                    </h4>
-                    <button
-                      type="button"
-                      onClick={() => setActiveFlow('chat')}
-                      className="text-[10px] text-slate-500 hover:text-slate-350 font-bold flex items-center gap-1 cursor-pointer"
-                    >
-                      <ArrowLeft className="w-3 h-3" />
-                      {t('actions.back')}
-                    </button>
-                  </div>
-                  
-                  <p className="text-[10px] text-slate-400 leading-relaxed font-semibold">
-                    {t('leadQualification.subtitle')}
-                  </p>
-
-                  {formError && (
-                    <div className="p-2.5 bg-red-950/50 border border-red-800 rounded-xl text-[10px] font-bold text-red-400">
-                      {formError}
-                    </div>
-                  )}
-
-                  <div className="space-y-3 text-xs">
-                    <div>
-                      <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.name')}</label>
-                      <input
-                        type="text"
-                        required
-                        value={formName}
-                        onChange={(e) => setFormName(e.target.value)}
-                        className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#0F4C81] transition-all"
-                      />
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-3">
-                      <div>
-                        <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.email')}</label>
-                        <input
-                          type="email"
-                          required
-                          value={formEmail}
-                          onChange={(e) => setFormEmail(e.target.value)}
-                          className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#0F4C81] transition-all"
-                        />
-                      </div>
-                      <div>
-                        <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.phone')}</label>
-                        <input
-                          type="tel"
-                          required
-                          value={formPhone}
-                          onChange={(e) => setFormPhone(e.target.value)}
-                          className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#0F4C81] transition-all"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-3">
-                      <div>
-                        <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.company')}</label>
-                        <input
-                          type="text"
-                          required
-                          value={formCompany}
-                          onChange={(e) => setFormCompany(e.target.value)}
-                          className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#0F4C81] transition-all"
-                        />
-                      </div>
-                      <div>
-                        <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.industry')}</label>
-                        <select
-                          value={formIndustry}
-                          onChange={(e) => setFormIndustry(e.target.value)}
-                          className="w-full bg-slate-950 border border-slate-800 rounded-xl px-2 py-2 text-slate-300 focus:outline-none focus:border-[#0F4C81] cursor-pointer"
-                        >
-                          <option value="technology">{t('industries.technology')}</option>
-                          <option value="enterprise">{t('industries.enterprise')}</option>
-                          <option value="healthcare">{t('industries.healthcare')}</option>
-                          <option value="finance">{t('industries.finance')}</option>
-                          <option value="retail">{t('industries.retail')}</option>
-                          <option value="other">{t('industries.other')}</option>
-                        </select>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-3">
-                      <div>
-                        <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.budget')}</label>
-                        <select
-                          value={formBudget}
-                          onChange={(e) => setFormBudget(e.target.value)}
-                          className="w-full bg-slate-950 border border-slate-800 rounded-xl px-2 py-2 text-slate-300 focus:outline-none focus:border-[#0F4C81] cursor-pointer"
-                        >
-                          <option value="under5k">{t('budgets.under5k')}</option>
-                          <option value="between5k10k">{t('budgets.between5k10k')}</option>
-                          <option value="between10k25k">{t('budgets.between10k25k')}</option>
-                          <option value="between25k50k">{t('budgets.between25k50k')}</option>
-                          <option value="over50k">{t('budgets.over50k')}</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.timeline')}</label>
-                        <select
-                          value={formTimeline}
-                          onChange={(e) => setFormTimeline(e.target.value)}
-                          className="w-full bg-slate-950 border border-slate-800 rounded-xl px-2 py-2 text-slate-300 focus:outline-none focus:border-[#0F4C81] cursor-pointer"
-                        >
-                          <option value="immediate">{t('timelines.immediate')}</option>
-                          <option value="medium">{t('timelines.medium')}</option>
-                          <option value="long">{t('timelines.long')}</option>
-                          <option value="norush">{t('timelines.norush')}</option>
-                        </select>
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.message')}</label>
-                      <textarea
-                        value={formMessage}
-                        onChange={(e) => setFormMessage(e.target.value)}
-                        rows={2}
-                        className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#0F4C81] transition-all resize-none"
-                      />
-                    </div>
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={isFormSubmitting}
-                    className="w-full py-2.5 bg-gradient-to-tr from-[#0F4C81] to-[#38BDF8] hover:from-[#0d3f6b] hover:to-[#22aae6] text-white font-extrabold rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-blue-500/10 transition-all"
+                  <div ref={messagesEndRef} className="pb-4" />
+                </div>
+              )
+            ) : (
+              /* Non-chat active flows: forms & success screens (scrollable) */
+              <div className="flex-1 overflow-y-auto p-4 space-y-4 flex flex-col custom-scrollbar bg-slate-900/40 min-h-0">
+                {activeFlow === 'lead_form' && (
+                  <motion.form
+                    initial={{ opacity: 0, x: 15 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    onSubmit={handleLeadSubmit}
+                    className="space-y-4 text-left p-4 bg-slate-850/80 border border-slate-800 rounded-2xl animate-fadeIn"
                   >
-                    {isFormSubmitting ? <Loader2 className="w-4.5 h-4.5 animate-spin" /> : <Sparkles className="w-4.5 h-4.5" />}
-                    <span>{t('leadQualification.submit')}</span>
-                  </button>
-                </motion.form>
-              )}
+                    <div className="flex justify-between items-center pb-2 border-b border-slate-800">
+                      <h4 className="text-xs font-extrabold text-blue-400 uppercase tracking-wider flex items-center gap-1.5">
+                        <Sparkles className="w-3.5 h-3.5" />
+                        {t('leadQualification.title')}
+                      </h4>
+                      <button
+                        type="button"
+                        onClick={() => setActiveFlow('chat')}
+                        className="text-[10px] text-slate-500 hover:text-slate-350 font-bold flex items-center gap-1 cursor-pointer py-1 px-2 hover:bg-slate-800 rounded-lg transition-colors"
+                      >
+                        <ArrowLeft className="w-3 h-3" />
+                        {t('actions.back')}
+                      </button>
+                    </div>
+                    
+                    <p className="text-[10px] text-slate-400 leading-relaxed font-semibold">
+                      {t('leadQualification.subtitle')}
+                    </p>
 
-              {/* FLOW: CONSULTATION FORM */}
-              {activeFlow === 'consultation_form' && (
-                <motion.form
-                  initial={{ opacity: 0, x: 15 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  onSubmit={handleConsultationSubmit}
-                  className="space-y-4 text-left p-4 bg-slate-850/80 border border-slate-800 rounded-2xl"
-                >
-                  <div className="flex justify-between items-center pb-2 border-b border-slate-800">
-                    <h4 className="text-xs font-extrabold text-blue-400 uppercase tracking-wider flex items-center gap-1.5">
-                      <Calendar className="w-3.5 h-3.5" />
-                      {t('consultationFlow.title')}
-                    </h4>
+                    {formError && (
+                      <div className="p-2.5 bg-red-950/50 border border-red-800 rounded-xl text-[10px] font-bold text-red-400">
+                        {formError}
+                      </div>
+                    )}
+
+                    <div className="space-y-3 text-xs">
+                      <div>
+                        <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.name')}</label>
+                        <input
+                          type="text"
+                          required
+                          value={formName}
+                          onChange={(e) => setFormName(e.target.value)}
+                          className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#38BDF8] transition-all outline-none"
+                        />
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.email')}</label>
+                          <input
+                            type="email"
+                            required
+                            value={formEmail}
+                            onChange={(e) => setFormEmail(e.target.value)}
+                            className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#38BDF8] transition-all outline-none"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.phone')}</label>
+                          <input
+                            type="tel"
+                            required
+                            value={formPhone}
+                            onChange={(e) => setFormPhone(e.target.value)}
+                            className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#38BDF8] transition-all outline-none"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.company')}</label>
+                          <input
+                            type="text"
+                            required
+                            value={formCompany}
+                            onChange={(e) => setFormCompany(e.target.value)}
+                            className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#38BDF8] transition-all outline-none"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.industry')}</label>
+                          <select
+                            value={formIndustry}
+                            onChange={(e) => setFormIndustry(e.target.value)}
+                            className="w-full bg-slate-950 border border-slate-800 rounded-xl px-2 py-2 text-slate-300 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#38BDF8] cursor-pointer outline-none"
+                          >
+                            <option value="technology">{t('industries.technology')}</option>
+                            <option value="enterprise">{t('industries.enterprise')}</option>
+                            <option value="healthcare">{t('industries.healthcare')}</option>
+                            <option value="finance">{t('industries.finance')}</option>
+                            <option value="retail">{t('industries.retail')}</option>
+                            <option value="other">{t('industries.other')}</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.budget')}</label>
+                          <select
+                            value={formBudget}
+                            onChange={(e) => setFormBudget(e.target.value)}
+                            className="w-full bg-slate-950 border border-slate-800 rounded-xl px-2 py-2 text-slate-300 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#38BDF8] cursor-pointer outline-none"
+                          >
+                            <option value="under5k">{t('budgets.under5k')}</option>
+                            <option value="between5k10k">{t('budgets.between5k10k')}</option>
+                            <option value="between10k25k">{t('budgets.between10k25k')}</option>
+                            <option value="between25k50k">{t('budgets.between25k50k')}</option>
+                            <option value="over50k">{t('budgets.over50k')}</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.timeline')}</label>
+                          <select
+                            value={formTimeline}
+                            onChange={(e) => setFormTimeline(e.target.value)}
+                            className="w-full bg-slate-950 border border-slate-800 rounded-xl px-2 py-2 text-slate-300 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#38BDF8] cursor-pointer outline-none"
+                          >
+                            <option value="immediate">{t('timelines.immediate')}</option>
+                            <option value="medium">{t('timelines.medium')}</option>
+                            <option value="long">{t('timelines.long')}</option>
+                            <option value="norush">{t('timelines.norush')}</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.message')}</label>
+                        <textarea
+                          value={formMessage}
+                          onChange={(e) => setFormMessage(e.target.value)}
+                          rows={2}
+                          className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#38BDF8] transition-all resize-none outline-none"
+                        />
+                      </div>
+                    </div>
+
                     <button
-                      type="button"
-                      onClick={() => setActiveFlow('chat')}
-                      className="text-[10px] text-slate-500 hover:text-slate-350 font-bold flex items-center gap-1 cursor-pointer"
+                      type="submit"
+                      disabled={isFormSubmitting}
+                      className="w-full h-11 bg-gradient-to-tr from-[#0F4C81] to-[#38BDF8] hover:from-[#0d3f6b] hover:to-[#22aae6] hover:-translate-y-0.5 active:translate-y-0 transition-all text-white font-extrabold rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-blue-500/10 outline-none focus:ring-2 focus:ring-[#38BDF8]"
                     >
-                      <ArrowLeft className="w-3 h-3" />
-                      {t('actions.back')}
+                      {isFormSubmitting ? <Loader2 className="w-4.5 h-4.5 animate-spin" /> : <Sparkles className="w-4.5 h-4.5" />}
+                      <span>{t('leadQualification.submit')}</span>
                     </button>
-                  </div>
-                  
-                  <p className="text-[10px] text-slate-400 leading-relaxed font-semibold">
-                    {t('consultationFlow.subtitle')}
-                  </p>
-
-                  {formError && (
-                    <div className="p-2.5 bg-red-950/50 border border-red-800 rounded-xl text-[10px] font-bold text-red-400">
-                      {formError}
-                    </div>
-                  )}
-
-                  <div className="space-y-3 text-xs">
-                    <div>
-                      <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.name')}</label>
-                      <input
-                        type="text"
-                        required
-                        value={formName}
-                        onChange={(e) => setFormName(e.target.value)}
-                        className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#0F4C81] transition-all"
-                      />
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-3">
-                      <div>
-                        <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.email')}</label>
-                        <input
-                          type="email"
-                          required
-                          value={formEmail}
-                          onChange={(e) => setFormEmail(e.target.value)}
-                          className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#0F4C81] transition-all"
-                        />
-                      </div>
-                      <div>
-                        <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.phone')}</label>
-                        <input
-                          type="tel"
-                          required
-                          value={formPhone}
-                          onChange={(e) => setFormPhone(e.target.value)}
-                          className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#0F4C81] transition-all"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-3">
-                      <div>
-                        <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.company')}</label>
-                        <input
-                          type="text"
-                          required
-                          value={formCompany}
-                          onChange={(e) => setFormCompany(e.target.value)}
-                          className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#0F4C81] transition-all"
-                        />
-                      </div>
-                      <div>
-                        <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('consultationFlow.date')}</label>
-                        <input
-                          type="text"
-                          placeholder="e.g. Next Monday 10am EST"
-                          required
-                          value={formDate}
-                          onChange={(e) => setFormDate(e.target.value)}
-                          className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#0F4C81] transition-all"
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.message')}</label>
-                      <textarea
-                        required
-                        value={formMessage}
-                        onChange={(e) => setFormMessage(e.target.value)}
-                        rows={3}
-                        className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#0F4C81] transition-all resize-none"
-                      />
-                    </div>
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={isFormSubmitting}
-                    className="w-full py-2.5 bg-gradient-to-tr from-[#0F4C81] to-[#38BDF8] hover:from-[#0d3f6b] hover:to-[#22aae6] text-white font-extrabold rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-blue-500/10 transition-all"
+                  </motion.form>
+                )}
+                {activeFlow === 'consultation_form' && (
+                  <motion.form
+                    initial={{ opacity: 0, x: 15 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    onSubmit={handleConsultationSubmit}
+                    className="space-y-4 text-left p-4 bg-slate-850/80 border border-slate-800 rounded-2xl animate-fadeIn"
                   >
-                    {isFormSubmitting ? <Loader2 className="w-4.5 h-4.5 animate-spin" /> : <Calendar className="w-4.5 h-4.5" />}
-                    <span>{t('consultationFlow.submit')}</span>
-                  </button>
-                </motion.form>
-              )}
+                    <div className="flex justify-between items-center pb-2 border-b border-slate-800">
+                      <h4 className="text-xs font-extrabold text-blue-400 uppercase tracking-wider flex items-center gap-1.5">
+                        <Calendar className="w-3.5 h-3.5" />
+                        {t('consultationFlow.title')}
+                      </h4>
+                      <button
+                        type="button"
+                        onClick={() => setActiveFlow('chat')}
+                        className="text-[10px] text-slate-500 hover:text-slate-350 font-bold flex items-center gap-1 cursor-pointer py-1 px-2 hover:bg-slate-800 rounded-lg transition-colors"
+                      >
+                        <ArrowLeft className="w-3 h-3" />
+                        {t('actions.back')}
+                      </button>
+                    </div>
+                    
+                    <p className="text-[10px] text-slate-400 leading-relaxed font-semibold">
+                      {t('consultationFlow.subtitle')}
+                    </p>
 
-              {/* FLOWS SUCCESS SCREENS */}
-              {(activeFlow === 'lead_success' || activeFlow === 'consultation_success') && (
+                    {formError && (
+                      <div className="p-2.5 bg-red-950/50 border border-red-800 rounded-xl text-[10px] font-bold text-red-400">
+                        {formError}
+                      </div>
+                    )}
+
+                    <div className="space-y-3 text-xs">
+                      <div>
+                        <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.name')}</label>
+                        <input
+                          type="text"
+                          required
+                          value={formName}
+                          onChange={(e) => setFormName(e.target.value)}
+                          className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#38BDF8] transition-all outline-none"
+                        />
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.email')}</label>
+                          <input
+                            type="email"
+                            required
+                            value={formEmail}
+                            onChange={(e) => setFormEmail(e.target.value)}
+                            className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#38BDF8] transition-all outline-none"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.phone')}</label>
+                          <input
+                            type="tel"
+                            required
+                            value={formPhone}
+                            onChange={(e) => setFormPhone(e.target.value)}
+                            className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#38BDF8] transition-all outline-none"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.company')}</label>
+                          <input
+                            type="text"
+                            required
+                            value={formCompany}
+                            onChange={(e) => setFormCompany(e.target.value)}
+                            className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#38BDF8] transition-all outline-none"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('consultationFlow.date')}</label>
+                          <input
+                            type="text"
+                            placeholder="e.g. Next Monday 10am EST"
+                            required
+                            value={formDate}
+                            onChange={(e) => setFormDate(e.target.value)}
+                            className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#38BDF8] transition-all outline-none"
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.message')}</label>
+                        <textarea
+                          required
+                          value={formMessage}
+                          onChange={(e) => setFormMessage(e.target.value)}
+                          rows={3}
+                          className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#38BDF8] transition-all resize-none outline-none"
+                        />
+                      </div>
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={isFormSubmitting}
+                      className="w-full h-11 bg-gradient-to-tr from-[#0F4C81] to-[#38BDF8] hover:from-[#0d3f6b] hover:to-[#22aae6] hover:-translate-y-0.5 active:translate-y-0 transition-all text-white font-extrabold rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-blue-500/10 outline-none focus:ring-2 focus:ring-[#38BDF8]"
+                    >
+                      {isFormSubmitting ? <Loader2 className="w-4.5 h-4.5 animate-spin" /> : <Calendar className="w-4.5 h-4.5" />}
+                      <span>{t('consultationFlow.submit')}</span>
+                    </button>
+                  </motion.form>
+                )}
+                {(activeFlow === 'lead_success' || activeFlow === 'consultation_success') && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.97 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="bg-slate-850/40 border border-slate-800/80 p-5 rounded-2xl text-center space-y-4 flex-1 flex flex-col justify-center max-w-[90%] mx-auto my-auto"
+                  >
+                    <div className="w-12 h-12 bg-emerald-950/80 border border-emerald-800 text-emerald-400 rounded-full flex items-center justify-center mx-auto text-xl shadow-lg shadow-emerald-500/10">
+                      <CheckCircle className="w-6 h-6" />
+                    </div>
+                    
+                    <div className="space-y-1.5">
+                      <h3 className="text-sm font-extrabold text-white uppercase tracking-wider">
+                        {activeFlow === 'lead_success' ? t('leadQualification.successTitle') : t('consultationFlow.successTitle')}
+                      </h3>
+                      <p className="text-xs text-slate-350 leading-relaxed font-semibold">
+                        {isEs 
+                          ? '¡Gracias! Nuestro consultor se pondrá en contacto con usted en breve.' 
+                          : 'Thank you! Our consultant will contact you shortly.'}
+                      </p>
+                    </div>
+
+                    <div className="flex flex-col gap-2 pt-2 w-full max-w-xs mx-auto">
+                      <button
+                        onClick={handleStartOver}
+                        className="w-full h-10 bg-gradient-to-tr from-[#0F4C81] to-[#38BDF8] hover:from-[#0d3f6b] hover:to-[#22aae6] hover:-translate-y-0.5 active:translate-y-0 text-white font-bold rounded-xl text-xs uppercase tracking-wider transition-all cursor-pointer shadow-md shadow-blue-500/10 outline-none focus:ring-2 focus:ring-[#38BDF8]"
+                      >
+                        {isEs ? 'Iniciar nueva conversación' : 'Start New Conversation'}
+                      </button>
+                      
+                      <button
+                        onClick={() => {
+                          setWindowState('minimized');
+                          window.location.href = '/' + locale;
+                        }}
+                        className="w-full h-10 border border-slate-700 hover:bg-slate-800/80 text-slate-350 font-bold rounded-xl text-xs uppercase tracking-wider transition-all cursor-pointer outline-none"
+                      >
+                        {isEs ? 'Volver al inicio' : 'Back to Home'}
+                      </button>
+
+                      {activeFlow !== 'consultation_success' && (
+                        <button
+                          onClick={() => setActiveFlow('consultation_form')}
+                          className="w-full h-10 border border-slate-700 bg-slate-900/30 hover:bg-slate-800/60 text-blue-400 font-bold rounded-xl text-xs uppercase tracking-wider transition-all cursor-pointer outline-none"
+                        >
+                          {isEs ? 'Reservar consulta' : 'Book Consultation'}
+                        </button>
+                      )}
+                    </div>
+                  </motion.div>
+                )}
+                <div ref={messagesEndRef} />
+              </div>
+            )}
+
+            {/* Suggested Queries Container (placed outside scrollable message area for active chat) */}
+            <AnimatePresence>
+              {activeFlow === 'chat' && !isChatEmpty && showChips && suggestedPrompts.length > 0 && (
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.97 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="bg-slate-850/80 border border-slate-800 p-6 rounded-3xl text-center space-y-4 flex-1 flex flex-col justify-center"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  transition={{ duration: 0.25 }}
+                  className="px-4 mt-[20px] mb-[16px] flex flex-col gap-2 bg-slate-900/40 border-t border-slate-800/50 shrink-0 animate-fadeIn pt-[20px]"
                 >
-                  <div className="w-14 h-14 bg-emerald-950 border border-emerald-800 text-emerald-400 rounded-full flex items-center justify-center mx-auto text-2xl shadow-lg shadow-emerald-500/10">
-                    <CheckCircle className="w-7 h-7" />
+                  <span className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider text-left block px-1">
+                    {t('suggestedTitle')}
+                  </span>
+                  <div className="flex flex-wrap gap-2 items-start justify-start">
+                    {suggestedPrompts.slice(0, 4).map((prompt, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => routeSuggestedPrompt(prompt)}
+                        disabled={isSending || isTyping}
+                        className="px-3 py-1.5 bg-slate-850 hover:bg-[#0F4C81] active:bg-[#0d3f6b] text-slate-300 hover:text-white rounded-full text-[11px] font-semibold border border-slate-750 cursor-pointer max-w-full truncate outline-none focus:ring-2 focus:ring-[#38BDF8] min-h-[44px] flex items-center justify-center"
+                      >
+                        {getCompactChipLabel(prompt, locale)}
+                      </button>
+                    ))}
                   </div>
-                  <h3 className="text-sm font-extrabold text-white uppercase tracking-wider">
-                    {activeFlow === 'lead_success' ? t('leadQualification.successTitle') : t('consultationFlow.successTitle')}
-                  </h3>
-                  <p className="text-xs text-slate-400 leading-relaxed font-semibold">
-                    {activeFlow === 'lead_success' ? t('leadQualification.successDesc') : t('consultationFlow.successDesc')}
-                  </p>
-
-                  <button
-                    onClick={handleStartOver}
-                    className="px-5 py-2.5 border border-slate-750 hover:bg-slate-850 text-slate-300 font-bold rounded-xl text-xs tracking-wider uppercase transition-all cursor-pointer inline-flex items-center gap-1.5 justify-center mx-auto"
-                  >
-                    {t('actions.startOver')}
-                  </button>
                 </motion.div>
               )}
-
-              <div ref={messagesEndRef} />
-            </div>
+            </AnimatePresence>
 
             {/* Sticky Input Bar (shrink-0, sticky, always visible at bottom) */}
             {activeFlow === 'chat' && (
-              <div className="p-4 border-t border-slate-800 bg-slate-950 flex items-center gap-2 shrink-0 sticky bottom-0 z-10 w-full">
-                <input
-                  type="text"
-                  placeholder={t('placeholder')}
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') handleSendMessage(inputValue);
-                  }}
-                  disabled={isSending || isTyping}
-                  aria-label="Chat input message"
-                  className="flex-1 bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#38BDF8] transition-all placeholder-slate-500 outline-none"
-                />
-                <button
-                  onClick={() => handleSendMessage(inputValue)}
-                  disabled={!inputValue.trim() || isSending || isTyping}
-                  aria-label="Send Message"
-                  className="w-8 h-8 rounded-xl bg-gradient-to-tr from-[#0F4C81] to-[#38BDF8] disabled:from-slate-800 disabled:to-slate-800 hover:from-[#0d3f6b] hover:to-[#22aae6] text-white flex items-center justify-center shadow-md shadow-blue-500/10 cursor-pointer focus:ring-2 focus:ring-[#38BDF8] outline-none transition-all shrink-0"
-                >
-                  {isSending ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Send className="w-3.5 h-3.5" />}
-                </button>
+              <div className="h-[70px] border-t border-slate-800/60 bg-slate-950 flex items-center px-4 shrink-0 w-full relative">
+                <div className="relative flex items-center w-full h-[56px] bg-slate-900 border border-slate-800 rounded-full pl-4 pr-1.5 focus-within:border-[#0F4C81] focus-within:ring-1 focus-within:ring-[#38BDF8]/40 transition-all">
+                  <input
+                    type="text"
+                    placeholder={placeholderText}
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && inputValue.trim()) handleUserSubmit(inputValue);
+                    }}
+                    disabled={isSending || isTyping}
+                    aria-label="Chat input message"
+                    className="flex-1 bg-transparent text-xs text-white placeholder-slate-500 focus:outline-none py-1.5 outline-none"
+                  />
+                  <button
+                    onClick={() => handleUserSubmit(inputValue)}
+                    disabled={!inputValue.trim() || isSending || isTyping}
+                    aria-label="Send Message"
+                    className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#0F4C81] to-[#38BDF8] disabled:from-slate-800 disabled:to-slate-800 disabled:text-slate-500 hover:from-[#0d3f6b] hover:to-[#22aae6] text-white flex items-center justify-center shadow-md shadow-blue-500/10 cursor-pointer transition-all shrink-0 hover:scale-105 active:scale-95"
+                  >
+                    {isSending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
+                  </button>
+                </div>
               </div>
             )}
 
@@ -893,6 +1517,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
         )}
       </AnimatePresence>
 
-    </div>
+    </div>,
+    document.body
   );
 }
