@@ -8,9 +8,23 @@ interface Props {
 export async function generateMetadata({ params }: Props) {
   const { locale } = await params;
   const tc = await getTranslations({ locale, namespace: 'Common' });
+
+  const metadataMap = {
+    en: {
+      title: `IT & Non-IT Staffing Solutions | ${tc('solutions')} | HyperCode`,
+      description: "Enterprise IT & Non-IT Staffing Solutions, contract placement, contract-to-hire, direct placements, executive search, bulk hiring, and recruitment process outsourcing (RPO). Headquartered in Schaumburg, IL.",
+    },
+    es: {
+      title: `Contratación de Personal de TI y No TI | ${tc('solutions')} | HyperCode`,
+      description: "Soluciones de contratación de personal de TI y no TI, colocación por contrato, contrato con opción a compra, colocaciones directas, búsqueda ejecutiva, contratación masiva y externalización de procesos de reclutamiento (RPO). Con sede en Schaumburg, IL.",
+    }
+  };
+
+  const currentSeo = metadataMap[locale as 'en' | 'es'] || metadataMap.en;
+
   return {
-    title: `IT Staffing Solutions | ${tc('solutions')} | HyperCode`,
-    description: "Enterprise IT Staffing Solutions, contract placement, contract-to-hire, direct placements, and recruiting technologies. Headquartered in Schaumburg, IL.",
+    title: currentSeo.title,
+    description: currentSeo.description,
     alternates: {
       canonical: `https://www.hypercode.com/${locale}/solutions/it-staffing-solutions`,
     },

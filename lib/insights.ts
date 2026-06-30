@@ -92,10 +92,10 @@ export const articles: Article[] = [
   },
   {
     slug: 'staffing-trends-2025',
-    title: 'IT Staffing Trends in 2025: Navigating the Hybrid Tech Landscape',
-    excerpt: 'Insights into the changing IT staffing landscape and strategies for hiring top talent.',
+    title: 'IT & Non-IT Staffing Trends in 2025: Navigating the Hybrid Tech Landscape',
+    excerpt: 'Insights into the changing IT & Non-IT staffing landscape and strategies for hiring top talent.',
     date: 'February 2, 2026',
-    category: 'IT Staffing',
+    category: 'IT & Non-IT Staffing',
     readTime: '5 min read',
     author: {
       name: 'Marcus Brodie',
@@ -199,10 +199,10 @@ export const articles: Article[] = [
   },
   {
     slug: 'it-staff-augmentation-for-digital-transformation',
-    title: 'IT Staff Augmentation: Accelerating Digital Transformation',
-    excerpt: 'How modern enterprises use staffing models to scale tech squads and execute core cloud migrations.',
+    title: 'IT & Non-IT Staff Augmentation: Accelerating Digital Transformation',
+    excerpt: 'How modern enterprises use staffing models to scale IT & Non-IT squads and execute core migrations.',
     date: 'April 4, 2026',
-    category: 'IT Staffing',
+    category: 'IT & Non-IT Staffing',
     readTime: '6 min read',
     author: {
       name: 'Marcus Brodie',
@@ -282,7 +282,7 @@ export const articles: Article[] = [
     title: 'ATS and VMS Explained: Optimizing Your Vendor Management and Talent Sourcing',
     excerpt: 'Understanding how Applicant Tracking Systems and Vendor Management Systems work together in enterprise recruiting.',
     date: 'May 29, 2026',
-    category: 'IT Staffing',
+    category: 'IT & Non-IT Staffing',
     readTime: '5 min read',
     author: {
       name: 'Marcus Brodie',
@@ -378,7 +378,7 @@ export const articles: Article[] = [
     title: 'Vetting Senior Data Engineers: The Technical Rubric Apex Teams Use',
     excerpt: 'A detailed review of standard interview pipelines, technical test rubrics, and soft skills screening for top data engineering talent.',
     date: 'May 28, 2026',
-    category: 'IT Staffing',
+    category: 'IT & Non-IT Staffing',
     readTime: '7 min read',
     author: {
       name: 'Marcus Brodie',

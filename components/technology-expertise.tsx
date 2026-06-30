@@ -81,8 +81,8 @@ export function TechnologyExpertise() {
     },
     staffing: {
       badges: {
-        en: ['IT Staffing', 'Talent Acquisition', 'Vendor Management'],
-        es: ['Personal de TI', 'Adquisición de Talento', 'Gestión de Proveedores']
+        en: ['IT & Non-IT Staffing', 'Talent Acquisition', 'Vendor Management'],
+        es: ['Contratación de Personal de TI y No TI', 'Adquisición de Talento', 'Gestión de Proveedores']
       },
       items: [
         { name: 'Bullhorn', icon: Users, desc: { en: 'ATS & Recruitment Operations', es: 'Operaciones de ATS y Reclutamiento' } },

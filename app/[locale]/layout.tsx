@@ -31,14 +31,60 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   // Custom SEO titles and descriptions mapped for 2 languages
   const seoMap: Record<string, { title: string; desc: string; keywords: string[] }> = {
     en: {
-      title: "HyperCode | Data Analytics, Web Development & IT Staffing Consulting",
-      desc: "Transform your business with HyperCode. Enterprise-grade Web Development, Business Intelligence, Data Analytics, and IT Staffing solutions.",
-      keywords: ["Business Intelligence", "Data Analytics", "IT & Non-IT Staffing", "Data Engineering", "Web Development"]
+      title: "AI Solutions | IT & Non-IT Staffing | Web Development | HyperCode",
+      desc: "HyperCode provides AI Solutions, IT & Non-IT Staffing, Custom Software Development, Web Development, Digital Transformation, AI Automation, Enterprise Consulting, and Business Process Automation.",
+      keywords: [
+        "AI Solutions",
+        "IT & Non-IT Staffing",
+        "Permanent Staffing",
+        "Contract Staffing",
+        "Executive Search",
+        "Talent Acquisition",
+        "Recruitment Services",
+        "Staff Augmentation",
+        "Business Staffing",
+        "AI Consulting",
+        "Digital Transformation",
+        "Software Development",
+        "Web Development",
+        "Cloud Solutions",
+        "Automation Services",
+        "Enterprise AI",
+        "Artificial Intelligence",
+        "Machine Learning",
+        "Business Intelligence",
+        "Technology Consulting",
+        "Hiring Solutions",
+        "Workforce Solutions"
+      ]
     },
     es: {
-      title: "HyperCode | Consultoría de Análisis de Datos, Desarrollo Web y Personal de TI",
-      desc: "Transforme su negocio con HyperCode. Soluciones de desarrollo web empresarial, inteligencia de negocios, análisis de datos y personal de TI.",
-      keywords: ["Inteligencia de Negocios", "Análisis de Datos", "Personal de TI y no relacionado con TI", "Ingeniería de Datos", "Desarrollo Web"]
+      title: "Soluciones de IA | Contratación de Personal de TI y No TI | Desarrollo Web | HyperCode",
+      desc: "HyperCode ofrece Soluciones de IA, Contratación de Personal de TI y No TI, Desarrollo de Software Personalizado, Desarrollo Web, Transformación Digital, Automatización de IA, Consultoría Empresarial y Automatización de Procesos de Negocio.",
+      keywords: [
+        "Soluciones de IA",
+        "Contratación de Personal de TI y No TI",
+        "Personal Permanente",
+        "Personal por Contrato",
+        "Búsqueda Ejecutiva",
+        "Adquisición de Talento",
+        "Servicios de Reclutamiento",
+        "Aumento de Personal",
+        "Personal de Negocios",
+        "Consultoría de IA",
+        "Transformación Digital",
+        "Desarrollo de Software",
+        "Desarrollo Web",
+        "Soluciones en la Nube",
+        "Servicios de Automatización",
+        "IA Empresarial",
+        "Inteligencia Artificial",
+        "Aprendizaje Automático",
+        "Inteligencia de Negocios",
+        "Consultoría Tecnológica",
+        "Soluciones de Contratación",
+        "Soluciones de Fuerza Laboral"
+      ]
     }
   };
 
@@ -116,8 +162,8 @@ export default async function RootLayout({ children, params }: LayoutProps) {
 
   // Localized JSON-LD description matching the locale
   const descriptionMap: Record<string, string> = {
-    en: 'Enterprise Web Development, Business Intelligence, Data Analytics, and IT Staffing consulting firm.',
-    es: 'Firma de consultoría de desarrollo web empresarial, inteligencia de negocios, análisis de datos y personal de TI.'
+    en: 'Enterprise Web Development, Business Intelligence, Data Analytics, and IT & Non-IT Staffing consulting firm.',
+    es: 'Firma de consultoría de desarrollo web empresarial, inteligencia de negocios, análisis de datos y contratación de personal de TI y no TI.'
   };
 
   const jsonLdDescription = descriptionMap[locale] || descriptionMap.en;
@@ -145,6 +191,16 @@ export default async function RootLayout({ children, params }: LayoutProps) {
     },
     'sameAs': [
       'https://www.linkedin.com/company/hypercode'
+    ],
+    'knowsAbout': [
+      'AI Solutions',
+      'IT & Non-IT Staffing',
+      'Web Development',
+      'Custom Software Development',
+      'Digital Transformation',
+      'Enterprise AI',
+      'Technology Consulting',
+      'Recruitment Services'
     ]
   };
 

@@ -116,8 +116,8 @@ const articles = [
   },
   {
     slug: 'staffing-trends-2025',
-    title: 'IT Staffing Trends in 2025: Navigating the Hybrid Tech Landscape',
-    excerpt: 'Insights into the changing IT staffing landscape and strategies for hiring top talent.',
+    title: 'IT & Non-IT Staffing Trends in 2025: Navigating the Hybrid Tech Landscape',
+    excerpt: 'Insights into the changing IT & Non-IT staffing landscape and strategies for hiring top talent.',
     content: `
       <p class="lead" style="font-size: 1.15em; line-height: 1.6; color: #1e293b; font-weight: 550; margin-bottom: 24px;">The market for high-end technology talent has entered a new phase. In 2025 and 2026, companies are prioritizing specialized competencies in cloud architecture, AI engineering, and scalable data pipelines.</p>
       
@@ -130,7 +130,7 @@ const articles = [
       <h2>3. Technical Verification is Key</h2>
       <p>With the influx of resume builders, organizations are deploying rigorous, custom-tailored coding challenges and architecture reviews to verify candidates' hands-on skills before making offers.</p>
     `,
-    category: 'IT Staffing',
+    category: 'IT & Non-IT Staffing',
     featured_image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80',
     author: {
       name: 'Marcus Brodie',
@@ -227,8 +227,8 @@ const articles = [
   },
   {
     slug: 'it-staff-augmentation-for-digital-transformation',
-    title: 'IT Staff Augmentation: Accelerating Digital Transformation',
-    excerpt: 'How modern enterprises use staffing models to scale tech squads and execute core cloud migrations.',
+    title: 'IT & Non-IT Staff Augmentation: Accelerating Digital Transformation',
+    excerpt: 'How modern enterprises use staffing models to scale IT & Non-IT squads and execute core migrations.',
     content: `
       <p class="lead" style="font-size: 1.15em; line-height: 1.6; color: #1e293b; font-weight: 550; margin-bottom: 24px;">Executing a digital transformation—such as migrating a legacy warehouse to the cloud or deploying a new BI platform—requires specialized engineering talent that is often difficult to hire permanently.</p>
       
@@ -243,7 +243,7 @@ const articles = [
         <li>Ensure clear knowledge transfer loops at project completion.</li>
       </ul>
     `,
-    category: 'IT Staffing',
+    category: 'IT & Non-IT Staffing',
     featured_image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80',
     author: {
       name: 'Marcus Brodie',
@@ -416,7 +416,7 @@ const articles = [
       <h2>2. Aumento ágil de personal</h2>
       <p>En lugar de contratar divisiones permanentes para proyectos de migración temporales, los directores de TI utilizan modelos de aumento de personal para desplegar rápidamente escuadrones Scrum especializados por sprints de 6 a 18 meses.</p>
     `,
-    category: 'IT Staffing',
+    category: 'IT & Non-IT Staffing',
     featured_image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80',
     author: {
       name: 'Marcus Brodie',
@@ -507,15 +507,15 @@ const articles = [
   },
   {
     slug: 'aumento-de-personal-de-ti',
-    title: 'Aumento de personal de TI: acelerando la transformación digital',
-    excerpt: 'Cómo las empresas modernas utilizan el staffing para escalar sus equipos tecnológicos y ejecutar migraciones críticas.',
+    title: 'Aumento de personal de TI y no TI: acelerando la transformación digital',
+    excerpt: 'Cómo las empresas modernas utilizan la contratación de personal de TI y no TI para escalar sus equipos y ejecutar migraciones críticas.',
     content: `
       <p class="lead" style="font-size: 1.15em; line-height: 1.6; color: #1e293b; font-weight: 550; margin-bottom: 24px;">Ejecutar una transformación digital requiere habilidades especializadas que a menudo son difíciles de contratar de manera permanente e inmediata.</p>
       
       <h2>El valor del aumento de personal</h2>
       <p>Permite omitir meses de reclutamiento al incorporar desarrolladores ya validados. Esto otorga la flexibilidad de ampliar los equipos durante picos de trabajo y reducirlos cuando termina el proyecto.</p>
     `,
-    category: 'IT Staffing',
+    category: 'IT & Non-IT Staffing',
     featured_image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80',
     author: {
       name: 'Marcus Brodie',

@@ -27,7 +27,7 @@ export function TestimonialsSection() {
       role: 'Chief Information Officer',
       company: 'Healthcare Systems Inc',
       industry: 'Healthcare Systems',
-      content: 'The IT staffing squad deployed by HyperCode was stellar. We needed certified AWS and Snowflake developers with active security checks within 14 days, and they delivered exactly what we needed to meet our compliance deadline.',
+      content: 'The IT & Non-IT staffing squad deployed by HyperCode was stellar. We needed certified AWS and Snowflake developers with active security checks within 14 days, and they delivered exactly what we needed to meet our compliance deadline.',
     },
     {
       name: 'Jennifer Thompson',

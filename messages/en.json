@@ -50,8 +50,8 @@
     "agileProject": "Agile Project Management",
     "agileProjectDesc": "Efficient, iterative delivery of complex technical projects.",
     "staffingSolutions": "Staffing Solutions",
-    "itStaffing": "IT Staffing",
-    "itStaffingDesc": "Sourcing and placing specialized technical talent.",
+    "itStaffing": "IT & Non-IT Staffing",
+    "itStaffingDesc": "Sourcing and placing specialized IT and Non-IT professionals.",
     "staffAugmentation": "Staff Augmentation",
     "staffAugmentationDesc": "Seamlessly scaling your existing tech team.",
     "contractStaffing": "Contract Staffing",
@@ -69,7 +69,7 @@
     "badge": "Enterprise Digital Transformation Partner",
     "title": "Empowering Businesses Through ",
     "titleHighlight": "Data, Technology, and Talent Solutions",
-    "subtitle": "We combine custom web development, cloud data engineering, advanced analytics, and strategic IT staffing to accelerate corporate growth.",
+    "subtitle": "We combine custom web development, cloud data engineering, advanced analytics, and strategic IT & Non-IT staffing to accelerate corporate growth.",
     "talkToConsultant": "Talk to a Consultant",
     "nodes": {
       "sources": "Data Sources",
@@ -104,7 +104,7 @@
         "desc": "Coding custom React and Next.js platforms optimized for high availability, API speed, and enterprise security."
       },
       "staffing": {
-        "title": "IT Staff Augmentation",
+        "title": "IT & Non-IT Staff Augmentation",
         "desc": "Placing verified cloud engineers, BI developers, and Scrum masters to accelerate your integration timelines."
       }
     }
@@ -112,7 +112,7 @@
   "WhyHypercode": {
     "badge": "Why HyperCode",
     "title": "Engineering Excellence, Strategic Partnership",
-    "desc": "We differ from standard staffing and development shops. We treat client architectures as our own, incorporating rigorous security checks and mentoring loops to ensure total operational handover.",
+    "desc": "We differ from standard IT & Non-IT staffing and development shops. We treat client architectures as our own, incorporating rigorous security checks and mentoring loops to ensure total operational handover.",
     "stats": {
       "projects": "Projects Completed",
       "satisfaction": "Client Satisfaction",
@@ -250,7 +250,7 @@
   },
   "Contact": {
     "title": "Let's Connect",
-    "subtitle": "Get in touch with our solutions advisors to discuss web applications, business intelligence implementation, or staffing needs.",
+    "subtitle": "Get in touch with our solutions advisors to discuss web applications, business intelligence implementation, or IT & Non-IT staffing needs.",
     "headquarters": "Corporate Headquarters",
     "email": "Email Inquiries",
     "phone": "Phone Support",
@@ -347,7 +347,7 @@
     }
   },
   "Staffing": {
-    "title": "IT Staffing & Augmentation",
+    "title": "IT & Non-IT Staffing & Augmentation",
     "subtitle": "Accelerate development and database migrations with verified cloud engineering, software, and Scrum talent.",
     "whyStaffingTitle": "Scale Your Engineering Team Instantly",
     "whyStaffingDesc": "HyperCode provides flexible hiring arrangements to match your project timelines and budget limits. Our active database contains over 10,000 pre-screened, certified technology specialists across the US.",
@@ -446,7 +446,7 @@
       "priorityLow": "Low Priority"
     },
     "staffingFlow": {
-      "title": "IT Staffing Request",
+      "title": "IT & Non-IT Staffing Request",
       "subtitle": "Describe your staffing requirements below.",
       "roles": "Required Technical Roles",
       "teamSize": "Target Team Size",
@@ -497,7 +497,7 @@
         ]
       },
       "about": {
-        "message": "HyperCode is an enterprise-grade digital transformation partner. We specialize in engineering cloud data warehouses, custom web applications, advanced AI/ML algorithms, business intelligence systems, and IT staffing solutions. We help mid-market and enterprise organizations accelerate development cycles and drive ROI.",
+        "message": "HyperCode is an enterprise-grade digital transformation partner. We specialize in engineering cloud data warehouses, custom web applications, advanced AI/ML algorithms, business intelligence systems, and IT & Non-IT staffing solutions. We help mid-market and enterprise organizations accelerate development cycles and drive ROI.",
         "suggestedPrompts": [
           "Tell me about your services",
           "I want a consultation"
@@ -550,7 +550,7 @@
         ]
       },
       "staffing": {
-        "message": "HyperCode Sourcing and Talent Solutions connects your organization with the top 1% of technical talent. We offer IT staffing, staff augmentation, and contract-to-hire options to scale your teams with pre-screened React/Next.js developers, cloud architects, or data engineers.\n\nWhat kind of roles are you looking to fill?",
+        "message": "HyperCode Sourcing and Talent Solutions connects your organization with the top 1% of technical and business talent. We offer IT & Non-IT staffing, staff augmentation, and contract-to-hire options to scale your teams with pre-screened React/Next.js developers, cloud architects, or data engineers.\n\nWhat kind of roles are you looking to fill?",
         "suggestedPrompts": [
           "Get a staffing quote",
           "Schedule a consultation",
@@ -573,7 +573,7 @@
         ]
       },
       "redirect": {
-        "message": "I can only assist you with inquiries related to HyperCode's professional services (Technology Consulting, Data Analytics, BI, AI Solutions, Web Development, Cloud Solutions, and Staffing). Let me know how I can help you with your digital transformation or team scaling.",
+        "message": "I can only assist you with inquiries related to HyperCode's professional services (Technology Consulting, Data Analytics, BI, AI Solutions, Web Development, Cloud Solutions, and IT & Non-IT Staffing). Let me know how I can help you with your digital transformation or team scaling.",
         "suggestedPrompts": [
           "Tell me about your services",
           "I want a consultation"
@@ -653,7 +653,7 @@
       },
       "services": {
         "title": "5. Services and Engagements",
-        "content": "HyperCode provides enterprise web development, data engineering, business intelligence, and IT staffing consulting. Any specific engagement for consulting services, project deliverables, or candidate placements will be governed by a separate written Master Services Agreement (MSA) or Statement of Work (SOW)."
+        "content": "HyperCode provides enterprise web development, data engineering, business intelligence, and IT & Non-IT staffing consulting. Any specific engagement for consulting services, project deliverables, or candidate placements will be governed by a separate written Master Services Agreement (MSA) or Statement of Work (SOW)."
       },
       "termination": {
         "title": "6. Site Management and Termination",

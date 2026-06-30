@@ -37,7 +37,7 @@ export function InsightsSection() {
       href: '/insights/optimizing-dbt-incremental-models-snowflake',
     },
     {
-      category: 'IT STAFFING & LEADERSHIP',
+      category: 'IT & NON-IT STAFFING & LEADERSHIP',
       title: 'Vetting Senior Data Engineers: The Technical Rubric Apex Teams Use',
       date: 'May 28, 2026',
       readTime: '7 min read',

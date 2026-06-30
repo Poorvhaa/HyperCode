@@ -50,8 +50,8 @@
     "agileProject": "Gestión de Proyectos Ágiles",
     "agileProjectDesc": "Entrega eficiente e iterativa de proyectos técnicos complejos.",
     "staffingSolutions": "Soluciones de Personal",
-    "itStaffing": "Personal de TI",
-    "itStaffingDesc": "Búsqueda y colocación de talento técnico especializado.",
+    "itStaffing": "Contratación de Personal de TI y No TI",
+    "itStaffingDesc": "Búsqueda y colocación de profesionales especializados de TI y No TI.",
     "staffAugmentation": "Aumento de Personal",
     "staffAugmentationDesc": "Escalamiento fluido de su equipo técnico existente.",
     "contractStaffing": "Personal por Contrato",
@@ -70,7 +70,7 @@
     "badge": "Socio de Transformación Digital Empresarial",
     "title": "Empoderando a las empresas a través de soluciones de ",
     "titleHighlight": "datos, tecnología y talento",
-    "subtitle": "Combinamos desarrollo web personalizado, ingeniería de datos en la nube, análisis avanzado y personal de TI estratégico para acelerar el crecimiento corporativo.",
+    "subtitle": "Combinamos desarrollo web personalizado, ingeniería de datos en la nube, análisis avanzado y personal estratégico de TI y no TI para acelerar el crecimiento corporativo.",
     "talkToConsultant": "Hablar con un Consultor",
     "nodes": {
       "sources": "Fuentes de Datos",
@@ -105,7 +105,7 @@
         "desc": "Codificación de plataformas React y Next.js personalizadas optimizadas para alta disponibilidad, velocidad de API y seguridad empresarial."
       },
       "staffing": {
-        "title": "Aumento de Personal de TI",
+        "title": "Contratación de Personal de TI y No TI",
         "desc": "Colocación de ingenieros de nube, desarrolladores de BI y Scrum Masters verificados para acelerar sus plazos de integración."
       }
     }
@@ -113,7 +113,7 @@
   "WhyHypercode": {
     "badge": "Por qué HyperCode",
     "title": "Excelencia en Ingeniería, Asociación Estratégica",
-    "desc": "Nos diferenciamos de las agencias de desarrollo y personal estándar. Tratamos las arquitecturas de los clientes como propias, incorporando rigurosos controles de seguridad y bucles de tutoría para garantizar la transferencia operativa completa.",
+    "desc": "Nos diferenciamos de las agencias de desarrollo y contratación de personal de TI y no TI estándar. Tratamos las arquitecturas de los clientes como propias, incorporando rigurosos controles de seguridad y bucles de tutoría para garantizar la transferencia operativa completa.",
     "stats": {
       "projects": "Proyectos Completados",
       "satisfaction": "Satisfacción del Cliente",
@@ -251,7 +251,7 @@
   },
   "Contact": {
     "title": "Conéctese con Nosotros",
-    "subtitle": "Póngase en contacto con nuestros asesores de soluciones para discutir aplicaciones web, implementación de inteligencia de negocios o necesidades de personal.",
+    "subtitle": "Póngase en contacto con nuestros asesores de soluciones para discutir aplicaciones web, implementación de inteligencia de negocios o necesidades de contratación de personal de TI y no TI.",
     "headquarters": "Sede Corporativa",
     "email": "Consultas por Correo",
     "phone": "Soporte Telefónico",
@@ -348,7 +348,7 @@
     }
   },
   "Staffing": {
-    "title": "Personal de TI y Aumento de Equipos",
+    "title": "Contratación de Personal de TI y No TI y Aumento de Equipos",
     "subtitle": "Acelere el desarrollo y las migraciones de bases de datos con ingenieros en la nube, desarrolladores de software y Scrum Masters verificados.",
     "whyStaffingTitle": "Escala tu Equipo de Ingeniería al Instante",
     "whyStaffingDesc": "HyperCode proporciona acuerdos de contratación flexibles para adaptarse a los plazos de su proyecto y los límites de su presupuesto. Nuestra base de datos activa contiene más de 10,000 especialistas en tecnología preseleccionados y certificados en todo Estados Unidos.",
@@ -447,7 +447,7 @@
       "priorityLow": "Prioridad Baja"
     },
     "staffingFlow": {
-      "title": "Solicitud de Personal de TI",
+      "title": "Solicitud de Contratación de Personal de TI y No TI",
       "subtitle": "Describa sus requisitos de personal a continuación.",
       "roles": "Roles Técnicos Requeridos",
       "teamSize": "Tamaño de Equipo Objetivo",
@@ -498,7 +498,7 @@
         ]
       },
       "about": {
-        "message": "HyperCode es un socio de transformación digital de nivel empresarial. Nos especializamos en la ingeniería de almacenes de datos en la nube, aplicaciones web personalizadas, algoritmos avanzados de IA/ML, sistemas de inteligencia empresarial (BI) y soluciones de personal de TI. Ayudamos a organizaciones del mercado medio y empresarial a acelerar sus ciclos de desarrollo y maximizar su ROI.",
+        "message": "HyperCode es un socio de transformación digital de nivel empresarial. Nos especializamos en la ingeniería de almacenes de datos en la nube, aplicaciones web personalizadas, algoritmos avanzados de IA/ML, sistemas de inteligencia empresarial (BI) y soluciones de contratación de personal de TI y no TI. Ayudamos a organizaciones del mercado medio y empresarial a acelerar sus ciclos de desarrollo y maximizar su ROI.",
         "suggestedPrompts": [
           "Háblame de sus servicios",
           "Quiero una consulta"
@@ -551,7 +551,7 @@
         ]
       },
       "staffing": {
-        "message": "Las soluciones de Sourcing y Talento de HyperCode conectan a su organización con el 1% superior del talento técnico. Ofrecemos contratación de personal de TI, aumento de personal y opciones de contratación directa para escalar sus equipos con desarrolladores de React/Next.js preseleccionados, arquitectos de la nube o ingenieros de datos.\n\n¿Qué tipo de roles busca cubrir?",
+        "message": "Las soluciones de Sourcing y Talento de HyperCode conectan a su organización con el 1% superior del talento técnico y de negocios. Ofrecemos contratación de personal de TI y no TI, aumento de personal y opciones de contratación directa para escalar sus equipos con desarrolladores de React/Next.js preseleccionados, arquitectos de la nube o ingenieros de datos.\n\n¿Qué tipo de roles busca cubrir?",
         "suggestedPrompts": [
           "Obtener cotización de personal",
           "Programar una consulta",
@@ -574,7 +574,7 @@
         ]
       },
       "redirect": {
-        "message": "Solo puedo ayudarle con consultas relacionadas con los servicios profesionales de HyperCode (Consultoría Tecnológica, Análisis de Datos, BI, Soluciones de IA, Desarrollo Web, Soluciones en la Nube y Selección de Personal). Avíseme cómo puedo ayudarle con su transformación digital o escala de equipo.",
+        "message": "Solo puedo ayudarle con consultas relacionadas con los servicios profesionales de HyperCode (Consultoría Tecnológica, Análisis de Datos, BI, Soluciones de IA, Desarrollo Web, Soluciones en la Nube y Contratación de Personal de TI y No TI). Avíseme cómo puedo ayudarle con su transformación digital o escala de equipo.",
         "suggestedPrompts": [
           "Háblame de sus servicios",
           "Quiero una consulta"
@@ -654,7 +654,7 @@
       },
       "services": {
         "title": "5. Servicios y Contratos",
-        "content": "HyperCode proporciona consultoría de desarrollo web empresarial, ingeniería de datos, inteligencia de negocios y selección de personal de TI. Cualquier contrato específico para servicios de consultoría, entregables de proyectos o colocación de candidatos se regirá por un Acuerdo Maestro de Servicios (MSA) o Declaración de Trabajo (SOW) por escrito por separado."
+        "content": "HyperCode proporciona consultoría de desarrollo web empresarial, ingeniería de datos, inteligencia de negocios y contratación de personal de TI y no TI. Cualquier contrato específico para servicios de consultoría, entregables de proyectos o colocación de candidatos se regirá por un Acuerdo Maestro de Servicios (MSA) o Declaración de Trabajo (SOW) por escrito por separado."
       },
       "termination": {
         "title": "6. Gestión del Sitio y Rescisión",

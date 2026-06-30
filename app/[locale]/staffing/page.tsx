@@ -1,7 +1,19 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
-import { Users, CheckCircle, ArrowRight } from 'lucide-react';
+import { 
+  Users, 
+  CheckCircle, 
+  ArrowRight, 
+  Briefcase, 
+  UserCheck, 
+  Clock, 
+  Search, 
+  GraduationCap, 
+  UserPlus, 
+  FileText, 
+  Cpu 
+} from 'lucide-react';
 import Link from 'next/link';
 
 interface Props {
@@ -11,24 +23,56 @@ interface Props {
 export async function generateMetadata({ params }: Props) {
   const { locale } = await params;
   const tc = await getTranslations({ locale, namespace: 'Common' });
+  
+  const seo = {
+    en: {
+      title: `IT & Non-IT Staffing & Augmentation | Talent Solutions | HyperCode`,
+      description: "Access pre-screened IT & Non-IT talent, contract placements, permanent hiring, staff augmentation, bulk hiring, and RPO solutions from HyperCode. Headquartered in Schaumburg, IL.",
+    },
+    es: {
+      title: `Contratación de Personal de TI y No TI | Soluciones de Talento | HyperCode`,
+      description: "Acceda a personal de TI y No TI preseleccionado, contratación por contrato, contratación permanente, aumento de personal y soluciones de RPO. Con sede en Schaumburg, IL.",
+    }
+  };
+
+  const currentSeo = seo[locale as 'en' | 'es'] || seo.en;
+
   return {
-    title: `Talent Solutions | IT Staffing & Augmentation | HyperCode`,
-    description: "Access pre-screened technical talent, contract placements, direct placements, and staff augmentation solutions from HyperCode. Headquartered in Schaumburg, IL.",
+    title: currentSeo.title,
+    description: currentSeo.description,
     alternates: {
       canonical: `https://www.hypercode.com/${locale}/staffing`,
     },
   };
 }
 
+const IconComponent = ({ name, size = 20, className = "" }: { name: string; size?: number; className?: string }) => {
+  switch (name) {
+    case 'Cpu': return <Cpu size={size} className={className} />;
+    case 'Briefcase': return <Briefcase size={size} className={className} />;
+    case 'UserCheck': return <UserCheck size={size} className={className} />;
+    case 'Clock': return <Clock size={size} className={className} />;
+    case 'Search': return <Search size={size} className={className} />;
+    case 'Users': return <Users size={size} className={className} />;
+    case 'GraduationCap': return <GraduationCap size={size} className={className} />;
+    case 'UserPlus': return <UserPlus size={size} className={className} />;
+    case 'FileText': return <FileText size={size} className={className} />;
+    default: return <Users size={size} className={className} />;
+  }
+};
+
 export default async function StaffingPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  // Translations for all 11 languages
+  // Translations for all languages
   const localTrans: Record<string, {
     title: string;
     titleHighlight: string;
     subtitle: string;
+    capabilitiesTitle: string;
+    capabilitiesSubtitle: string;
+    capabilities: Array<{ title: string; desc: string; iconName: string }>;
     staffingSolutions: Array<{
       title: string;
       description: string;
@@ -50,34 +94,47 @@ export default async function StaffingPage({ params }: Props) {
     ctaBtn: string;
   }> = {
     en: {
-      title: "Talent",
-      titleHighlight: "Solutions",
-      subtitle: "Access pre-screened, specialized technology professionals for contract, contract-to-hire, direct placement, and team augmentation.",
+      title: "IT & Non-IT",
+      titleHighlight: "Staffing Solutions",
+      subtitle: "Access pre-screened, specialized technology and business professionals for contract, contract-to-hire, direct placement, and team augmentation.",
+      capabilitiesTitle: "OUR SERVICES",
+      capabilitiesSubtitle: "Comprehensive Staffing Capabilities",
+      capabilities: [
+        { title: "IT Staffing", desc: "Placing pre-screened React/Next.js developers, cloud architects, database engineers, and security specialists.", iconName: "Cpu" },
+        { title: "Non-IT Staffing", desc: "Sourcing business analysts, operations managers, HR specialists, and finance professionals.", iconName: "Briefcase" },
+        { title: "Permanent Hiring", desc: "Finding and vetting permanent engineering leaders, department directors, and operational staff.", iconName: "UserCheck" },
+        { title: "Contract Staffing", desc: "Deploying temporary experts for 6-to-18-month projects to execute database migrations or rebuilds.", iconName: "Clock" },
+        { title: "Executive Search", desc: "Identifying and recruiting high-caliber C-level executives and senior operations directors.", iconName: "Search" },
+        { title: "Bulk Hiring", desc: "Scaling entire corporate teams quickly for large-scale operations or new project initialization.", iconName: "Users" },
+        { title: "Campus Recruitment", desc: "Sourcing, interviewing, and onboarding top talent from leading universities and graduate programs.", iconName: "GraduationCap" },
+        { title: "Staff Augmentation", desc: "Seamlessly scaling your existing teams with dedicated professionals who match your tooling and environments.", iconName: "UserPlus" },
+        { title: "Recruitment Process Outsourcing (RPO)", desc: "Managing end-to-end talent acquisition pipelines for your organization to optimize cost, speed, and candidate quality.", iconName: "FileText" }
+      ],
       staffingSolutions: [
         {
           title: 'Contract Staffing',
-          description: 'Flexible staffing solutions for short-term projects and specialized needs.',
+          description: 'Flexible staffing solutions for short-term projects, peak demand periods, and specialized business needs.',
           duration: '3-12 months',
           path: '/solutions/it-staffing-solutions',
           benefits: ['Quick deployment', 'Flexible terms', 'Cost-effective', 'Specialized skills'],
         },
         {
           title: 'Contract-to-Hire',
-          description: 'Trial period before permanent commitment with reduced hiring risk.',
+          description: 'Trial period before permanent commitment, reducing hiring risk and ensuring correct operational alignment.',
           duration: '3-6 months trial',
           path: '/solutions/it-staffing-solutions',
           benefits: ['Reduced risk', 'Evaluation period', 'Seamless transition', 'Team fit verification'],
         },
         {
           title: 'Direct Placement',
-          description: 'Permanent placement services with comprehensive vetting and support.',
+          description: 'Permanent placement services with comprehensive vetting, background checks, and onboarding support.',
           duration: 'Permanent',
           path: '/solutions/it-staffing-solutions',
           benefits: ['Permanent placement', 'Full benefits', 'Dedicated support', 'Retention focus'],
         },
         {
           title: 'Staff Augmentation',
-          description: 'Extend your team with specialized resources for ongoing needs.',
+          description: 'Extend your active project teams with specialized resources for ongoing development and migrations.',
           duration: 'Ongoing',
           path: '/solutions/staff-augmentation-services',
           benefits: ['Team expansion', 'Scalable resources', 'Full integration', 'Long-term partnership'],
@@ -120,38 +177,51 @@ export default async function StaffingPage({ params }: Props) {
         },
       ],
       ctaTitle: "Ready to Build Your Dream Team?",
-      ctaSubtitle: "Schedule a consultation with our recruitment managers to source specialized technical talent.",
+      ctaSubtitle: "Schedule a consultation with our recruitment managers to source specialized technical and business talent.",
       ctaBtn: "Start Your Hiring Process",
     },
     es: {
-      title: "Soluciones de",
-      titleHighlight: "Talento",
-      subtitle: "Acceda a profesionales tecnológicos especializados y preseleccionados para contratos temporales, contratos de prueba, contratación directa y aumento de personal.",
+      title: "Contratación de",
+      titleHighlight: "Personal de TI y No TI",
+      subtitle: "Acceda a profesionales tecnológicos y de negocios especializados y preseleccionados para contratos temporales, contratos de prueba, contratación directa y aumento de personal.",
+      capabilitiesTitle: "NUESTROS SERVICIOS",
+      capabilitiesSubtitle: "Capacidades Integrales de Personal",
+      capabilities: [
+        { title: "Contratación de Personal de TI", desc: "Colocación de desarrolladores de React/Next.js, arquitectos de nube, ingenieros de datos y administradores de bases de datos preseleccionados.", iconName: "Cpu" },
+        { title: "Personal de No TI", desc: "Búsqueda de analistas de negocio, gerentes de operaciones, especialistas en recursos humanos y profesionales financieros.", iconName: "Briefcase" },
+        { title: "Contratación Permanente", desc: "Encontrar y evaluar líderes de ingeniería permanentes, directores de departamento y personal de operaciones.", iconName: "UserCheck" },
+        { title: "Personal por Contrato", desc: "Despliegue de expertos temporales para proyectos de 6 a 18 meses para ejecutar migraciones o reconstrucciones.", iconName: "Clock" },
+        { title: "Búsqueda Ejecutiva", desc: "Identificar y reclutar ejecutivos de nivel C y directores de operaciones senior de alto calibre.", iconName: "Search" },
+        { title: "Contratación Masiva", desc: "Escalar equipos corporativos completos rápidamente para operaciones a gran escala o inicio de nuevos proyectos.", iconName: "Users" },
+        { title: "Reclutamiento Universitario", desc: "Búsqueda e incorporación de los mejores talentos de las principales universidades y programas de posgrado.", iconName: "GraduationCap" },
+        { title: "Aumento de Personal", desc: "Escalamiento fluido de sus equipos existentes con profesionales dedicados que se alinean con sus herramientas y entornos de desarrollo.", iconName: "UserPlus" },
+        { title: "Outsourcing de Procesos de Reclutamiento (RPO)", desc: "Gestión de canalizaciones de adquisición de talento de extremo a extremo para su organización para optimizar costos, velocidad y calidad.", iconName: "FileText" }
+      ],
       staffingSolutions: [
         {
           title: 'Personal por Contrato',
-          description: 'Soluciones flexibles de personal para proyectos a corto plazo y necesidades especializadas.',
+          description: 'Soluciones flexibles de personal para proyectos a corto plazo, períodos de alta demanda y necesidades específicas de negocio.',
           duration: '3-12 meses',
           path: '/solutions/it-staffing-solutions',
           benefits: ['Despliegue rápido', 'Términos flexibles', 'Rentable', 'Habilidades especializadas'],
         },
         {
           title: 'Contrato con Opción a Compra',
-          description: 'Período de prueba antes de un compromiso permanente con menor riesgo de contratación.',
+          description: 'Período de prueba antes de un compromiso permanente, reduciendo el riesgo de contratación y garantizando la alineación operativa.',
           duration: 'Prueba de 3-6 meses',
           path: '/solutions/it-staffing-solutions',
           benefits: ['Riesgo reducido', 'Período de evaluación', 'Transición perfecta', 'Verificación de ajuste con el equipo'],
         },
         {
           title: 'Colocación Directa',
-          description: 'Servicios de colocación permanente con evaluación y soporte integral.',
+          description: 'Servicios de colocación permanente con evaluación integral, verificación de antecedentes y soporte de incorporación.',
           duration: 'Permanente',
           path: '/solutions/it-staffing-solutions',
           benefits: ['Colocación permanente', 'Beneficios completos', 'Soporte dedicado', 'Enfoque en retención'],
         },
         {
           title: 'Aumento de Personal',
-          description: 'Amplíe su equipo con recursos especializados para necesidades continuas.',
+          description: 'Amplíe sus equipos de proyecto activos con recursos especializados para el desarrollo continuo y migraciones de datos.',
           duration: 'Continuo',
           path: '/solutions/staff-augmentation-services',
           benefits: ['Expansión del equipo', 'Recursos escalables', 'Integración completa', 'Asociación a largo plazo'],
@@ -194,7 +264,7 @@ export default async function StaffingPage({ params }: Props) {
         },
       ],
       ctaTitle: "¿Listo para construir el equipo de tus sueños?",
-      ctaSubtitle: "Programe una consulta con nuestros gerentes de reclutamiento para contratar talento técnico especializado.",
+      ctaSubtitle: "Programe una consulta con nuestros gerentes de reclutamiento para contratar talento técnico y de negocios especializado.",
       ctaBtn: "Comience su proceso de contratación",
     }
   };
@@ -263,6 +333,39 @@ export default async function StaffingPage({ params }: Props) {
                 </div>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* Comprehensive Capabilities Grid */}
+      <section className="py-24 bg-white border-t border-slate-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-2xl mb-16">
+            <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">
+              {activeTrans.capabilitiesTitle}
+            </h2>
+            <h3 className="text-3xl font-extrabold text-slate-900 tracking-tight leading-tight">
+              {activeTrans.capabilitiesSubtitle}
+            </h3>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {activeTrans.capabilities.map((cap, idx) => (
+              <div
+                key={idx}
+                className="p-6 rounded-2xl border border-slate-200 bg-white hover:border-slate-350 transition-all duration-300 shadow-sm flex gap-4 items-start"
+              >
+                <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 text-[#0F4C81] flex items-center justify-center flex-shrink-0">
+                  <IconComponent name={cap.iconName} size={20} />
+                </div>
+                <div className="space-y-1.5">
+                  <h4 className="text-base font-bold text-slate-900 tracking-tight">{cap.title}</h4>
+                  <p className="text-xs sm:text-sm text-slate-650 leading-relaxed font-medium">
+                    {cap.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -342,7 +445,7 @@ export default async function StaffingPage({ params }: Props) {
       <section className="py-24 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
           <h3 className="text-3xl font-extrabold text-slate-900 tracking-tight">{activeTrans.ctaTitle}</h3>
-          <p className="text-base sm:text-lg text-slate-600 max-w-xl mx-auto font-medium">
+          <p className="text-base sm:text-lg text-slate-650 max-w-xl mx-auto font-medium">
             {activeTrans.ctaSubtitle}
           </p>
           <div>

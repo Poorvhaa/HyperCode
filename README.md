@@ -1,6 +1,6 @@
 # HyperCode Enterprise Website
 
-A world-class, fully responsive corporate website for HyperCode - a strategic consulting firm specializing in Business Intelligence, Data Analytics, and IT Staffing Solutions.
+A world-class, fully responsive corporate website for HyperCode - a strategic consulting firm specializing in Business Intelligence, Data Analytics, and IT & Non-IT Staffing Solutions.
 
 ## 🚀 Quick Start
 

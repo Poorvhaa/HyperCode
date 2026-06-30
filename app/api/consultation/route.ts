@@ -36,7 +36,7 @@ function classifyService(service: string): string {
     return 'Web Development';
   }
   if (s.includes('staffing') || s.includes('augmentation') || s.includes('contract') || s.includes('placement') || s.includes('hiring')) {
-    return 'IT Staffing';
+    return 'IT & Non-IT Staffing';
   }
   return 'Technology Consulting'; // default / fallback
 }

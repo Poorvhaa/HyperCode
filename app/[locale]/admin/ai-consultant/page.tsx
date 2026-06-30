@@ -617,8 +617,15 @@ export default function AIConsultantDashboard() {
                   <div className="bg-white p-6 border border-slate-200 rounded-2xl shadow-sm text-left flex flex-col justify-between">
                     <h3 className="text-sm font-bold text-slate-800 tracking-tight mb-4">Leads by Service Interest</h3>
                     <div className="space-y-3.5">
-                      {['AI Solutions', 'Web Development', 'Technology Consulting', 'Data Analytics', 'IT Staffing'].map(svc => {
-                        const count = leads.filter(l => l.service_interest.toLowerCase().includes(svc.toLowerCase()) || l.service_interest === svc).length;
+                      {['AI Solutions', 'Web Development', 'Technology Consulting', 'Data Analytics', 'IT & Non-IT Staffing'].map(svc => {
+                        const count = leads.filter(l => {
+                          const leadInterest = l.service_interest.toLowerCase();
+                          const filterInterest = svc.toLowerCase();
+                          if (filterInterest.includes('staffing')) {
+                            return leadInterest.includes('staffing');
+                          }
+                          return leadInterest.includes(filterInterest) || l.service_interest === svc;
+                        }).length;
                         const pct = totalLeadsCount > 0 ? Math.round((count / totalLeadsCount) * 100) : 0;
                         return (
                           <div key={svc} className="space-y-1">

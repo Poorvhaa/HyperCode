@@ -3,15 +3,15 @@ import { articles, Article, Author } from './insights';
 // Localized Categories
 export const getLocalizedCategories = (locale: string): string[] => {
   const categoriesMap: Record<string, string[]> = {
-    en: ['All', 'Business Intelligence', 'Data Analytics', 'Data Warehousing', 'Cloud Solutions', 'IT Staffing', 'Data Engineering', 'Web Development', 'Strategy'],
-    es: ['Todos', 'Inteligencia de Negocios', 'Análisis de Datos', 'Almacenamiento de Datos', 'Soluciones en la Nube', 'Personal de TI', 'Ingeniería de Datos', 'Desarrollo Web', 'Estrategia']
+    en: ['All', 'Business Intelligence', 'Data Analytics', 'Data Warehousing', 'Cloud Solutions', 'IT & Non-IT Staffing', 'Data Engineering', 'Web Development', 'Strategy'],
+    es: ['Todos', 'Inteligencia de Negocios', 'Análisis de Datos', 'Almacenamiento de Datos', 'Soluciones en la Nube', 'Contratación de Personal de TI y No TI', 'Ingeniería de Datos', 'Desarrollo Web', 'Estrategia']
   };
   return categoriesMap[locale] || categoriesMap.en;
 };
 
 // Translate individual Category Name
 export const getLocalizedCategoryName = (category: string, locale: string): string => {
-  const englishCats = ['All', 'Business Intelligence', 'Data Analytics', 'Data Warehousing', 'Cloud Solutions', 'IT Staffing', 'Data Engineering', 'Web Development', 'Strategy'];
+  const englishCats = ['All', 'Business Intelligence', 'Data Analytics', 'Data Warehousing', 'Cloud Solutions', 'IT & Non-IT Staffing', 'Data Engineering', 'Web Development', 'Strategy'];
   const localized = getLocalizedCategories(locale);
   const index = englishCats.indexOf(category);
   return index !== -1 ? localized[index] : category;
@@ -33,8 +33,8 @@ const articleTranslations: Record<string, Record<string, { title: string; excerp
   },
   'staffing-trends-2025': {
     es: {
-      title: "Tendencias de Personal de TI en 2025: Navegando el Panorama Tecnológico Híbrido",
-      excerpt: "Información sobre el cambiante panorama del personal de TI y estrategias para contratar a los mejores talentos."
+      title: "Tendencias de Contratación de Personal de TI y No TI en 2025: Navegando el Panorama Tecnológico Híbrido",
+      excerpt: "Información sobre el cambiante panorama de la contratación de personal de TI y no TI y estrategias para contratar a los mejores talentos."
     }
   }
 };

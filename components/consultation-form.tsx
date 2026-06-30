@@ -31,7 +31,7 @@ function ConsultationFormContent() {
     { id: 'Data Engineering', label: tNav('dataEngineering') },
     { id: 'Web Development', label: tNav('webDevelopment') },
     { id: 'Technology Consulting', label: tNav('technologyConsulting') },
-    { id: 'IT Staffing', label: tNav('itStaffing') },
+    { id: 'IT & Non-IT Staffing', label: tNav('itStaffing') },
     { id: 'Staff Augmentation', label: tNav('staffAugmentation') },
     { id: 'Contract Staffing', label: tNav('contractStaffing') },
     { id: 'Direct Placement', label: tNav('directPlacement') },
