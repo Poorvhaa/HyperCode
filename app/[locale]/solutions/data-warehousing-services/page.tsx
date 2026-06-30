@@ -9,7 +9,7 @@ export async function generateMetadata({ params }: Props) {
   const { locale } = await params;
   const tc = await getTranslations({ locale, namespace: 'Common' });
   return {
-    title: `Data Warehousing Services | ${tc('solutions')} | HyperCode`,
+    title: `HyperCode | Data Warehousing Services | ${tc('solutions')}`,
     description: "Enterprise Cloud Data Warehousing services, database migration, Snowflake/BigQuery architectures, and data lakehouse deployment. Headquartered in Schaumburg, IL.",
     alternates: {
       canonical: `https://www.hypercode.com/${locale}/solutions/data-warehousing-services`,

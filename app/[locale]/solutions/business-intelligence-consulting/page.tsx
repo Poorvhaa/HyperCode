@@ -9,7 +9,7 @@ export async function generateMetadata({ params }: Props) {
   const { locale } = await params;
   const tc = await getTranslations({ locale, namespace: 'Common' });
   return {
-    title: `Business Intelligence Consulting | ${tc('solutions')} | HyperCode`,
+    title: `HyperCode | Business Intelligence Consulting | ${tc('solutions')}`,
     description: "Enterprise Business Intelligence consulting, Power BI/Tableau dashboard creation, self-service BI setups, and data visualization. Headquartered in Schaumburg, IL.",
     alternates: {
       canonical: `https://www.hypercode.com/${locale}/solutions/business-intelligence-consulting`,

@@ -108,12 +108,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   
   if (!article) {
     return {
-      title: 'Article Not Found | HyperCode',
+      title: 'HyperCode | Article Not Found',
     };
   }
 
   return {
-    title: `${article.title} | HyperCode Insights`,
+    title: `HyperCode | ${article.title} | Insights`,
     description: article.excerpt,
     alternates: {
       canonical: `https://www.hypercode.com/${locale}/insights/${article.slug}`,

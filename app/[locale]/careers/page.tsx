@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: Props) {
   const t = await getTranslations({ locale, namespace: 'Careers' });
 
   return {
-    title: `${tc('careers')} | HyperCode`,
+    title: `HyperCode | ${tc('careers')}`,
     description: t('subtitle'),
     alternates: {
       canonical: `https://www.hypercode.com/${locale}/careers`,

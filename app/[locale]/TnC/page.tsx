@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: Props) {
   const t = await getTranslations({ locale, namespace: 'TermsAndConditions' });
   
   return {
-    title: `${t('title')} | HyperCode`,
+    title: `HyperCode | ${t('title')}`,
     description: t('subtitle'),
     alternates: {
       canonical: `https://www.hypercodeus.com/${locale}/TnC`,

@@ -13,8 +13,8 @@ export async function generateMetadata({ params }: Props) {
   const { locale } = await params;
   const tc = await getTranslations({ locale, namespace: 'Common' });
   return {
-    title: `Contact HyperCode | General Inquiries & Partnerships`,
-    description: "Get in touch with HyperCode for general business inquiries, career questions, partnership proposals, and media requests. Headquartered in Schaumburg, IL.",
+    title: `HyperCode | Contact | General Inquiries & Partnerships`,
+    description: "HyperCode can be contacted for general business inquiries, career questions, partnership proposals, and media requests. Headquartered in Schaumburg, IL.",
     alternates: {
       canonical: `https://www.hypercode.com/${locale}/contact`,
     },

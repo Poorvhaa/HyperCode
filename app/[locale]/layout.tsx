@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   // Custom SEO titles and descriptions mapped for 2 languages
   const seoMap: Record<string, { title: string; desc: string; keywords: string[] }> = {
     en: {
-      title: "AI Solutions | IT & Non-IT Staffing | Web Development | HyperCode",
+      title: "HyperCode | AI Solutions | IT & Non-IT Staffing | Web Development",
       desc: "HyperCode provides AI Solutions, IT & Non-IT Staffing, Custom Software Development, Web Development, Digital Transformation, AI Automation, Enterprise Consulting, and Business Process Automation.",
       keywords: [
         "AI Solutions",
@@ -59,7 +59,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       ]
     },
     es: {
-      title: "Soluciones de IA | Contratación de Personal de TI y No TI | Desarrollo Web | HyperCode",
+      title: "HyperCode | Soluciones de IA | Contratación de Personal de TI y No TI | Desarrollo Web",
       desc: "HyperCode ofrece Soluciones de IA, Contratación de Personal de TI y No TI, Desarrollo de Software Personalizado, Desarrollo Web, Transformación Digital, Automatización de IA, Consultoría Empresarial y Automatización de Procesos de Negocio.",
       keywords: [
         "Soluciones de IA",
@@ -101,7 +101,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     metadataBase: new URL('https://www.hypercode.com'),
     title: {
       default: currentSeo.title,
-      template: `%s | HyperCode`,
+      template: `HyperCode | %s`,
     },
     description: currentSeo.desc,
     generator: 'v0.app',

@@ -9,7 +9,7 @@ export async function generateMetadata({ params }: Props) {
   const { locale } = await params;
   const tc = await getTranslations({ locale, namespace: 'Common' });
   return {
-    title: `Data Analytics Services | ${tc('solutions')} | HyperCode`,
+    title: `HyperCode | Data Analytics Services | ${tc('solutions')}`,
     description: "Enterprise Data Analytics services, predictive modeling, statistical research, customer analytics, and business forecasting. Headquartered in Schaumburg, IL.",
     alternates: {
       canonical: `https://www.hypercode.com/${locale}/solutions/data-analytics-services`,

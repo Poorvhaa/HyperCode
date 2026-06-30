@@ -26,11 +26,11 @@ export async function generateMetadata({ params }: Props) {
   
   const seo = {
     en: {
-      title: `IT & Non-IT Staffing & Augmentation | Talent Solutions | HyperCode`,
+      title: `HyperCode | IT & Non-IT Staffing & Augmentation | Talent Solutions`,
       description: "Access pre-screened IT & Non-IT talent, contract placements, permanent hiring, staff augmentation, bulk hiring, and RPO solutions from HyperCode. Headquartered in Schaumburg, IL.",
     },
     es: {
-      title: `Contratación de Personal de TI y No TI | Soluciones de Talento | HyperCode`,
+      title: `HyperCode | Contratación de Personal de TI y No TI | Soluciones de Talento`,
       description: "Acceda a personal de TI y No TI preseleccionado, contratación por contrato, contratación permanente, aumento de personal y soluciones de RPO. Con sede en Schaumburg, IL.",
     }
   };

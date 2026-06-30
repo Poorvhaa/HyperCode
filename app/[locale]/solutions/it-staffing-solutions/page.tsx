@@ -11,11 +11,11 @@ export async function generateMetadata({ params }: Props) {
 
   const metadataMap = {
     en: {
-      title: `IT & Non-IT Staffing Solutions | ${tc('solutions')} | HyperCode`,
+      title: `HyperCode | IT & Non-IT Staffing Solutions | ${tc('solutions')}`,
       description: "Enterprise IT & Non-IT Staffing Solutions, contract placement, contract-to-hire, direct placements, executive search, bulk hiring, and recruitment process outsourcing (RPO). Headquartered in Schaumburg, IL.",
     },
     es: {
-      title: `Contratación de Personal de TI y No TI | ${tc('solutions')} | HyperCode`,
+      title: `HyperCode | Contratación de Personal de TI y No TI | ${tc('solutions')}`,
       description: "Soluciones de contratación de personal de TI y no TI, colocación por contrato, contrato con opción a compra, colocaciones directas, búsqueda ejecutiva, contratación masiva y externalización de procesos de reclutamiento (RPO). Con sede en Schaumburg, IL.",
     }
   };

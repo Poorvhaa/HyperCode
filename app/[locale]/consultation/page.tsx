@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: Props) {
   const { locale } = await params;
   const tc = await getTranslations({ locale, namespace: 'Common' });
   return {
-    title: `Schedule Consultation | HyperCode Enterprise Solutions`,
+    title: `HyperCode | Schedule Consultation | Enterprise Solutions`,
     description: "Request a project consultation or staffing review with our practice directors and solutions architects. Headquartered in Schaumburg, IL.",
     alternates: {
       canonical: `https://www.hypercode.com/${locale}/consultation`,
