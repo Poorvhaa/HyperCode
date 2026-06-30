@@ -1,6 +1,5 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
 import '../globals.css'
 import { routing } from '@/i18n/routing'
 import { notFound } from 'next/navigation'
@@ -9,12 +8,9 @@ import { NextIntlClientProvider } from 'next-intl'
 import AIConsultant from '@/components/ai-consultant'
 import GoogleAnalytics from '@/components/google-analytics'
 
-
-const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-})
+// Local font variable definitions to prevent build-time network font downloads failing offline/in restricted environments.
+const geistSans = { variable: 'font-geist-sans' };
+const geistMono = { variable: 'font-geist-mono' };
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -206,6 +202,11 @@ export default async function RootLayout({ children, params }: LayoutProps) {
 
   return (
     <html lang={locale} dir="ltr" className={`${geistSans.variable} ${geistMono.variable} bg-background`}>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap" rel="stylesheet" />
+      </head>
       <body className="font-sans antialiased bg-background">
         <GoogleAnalytics />
         <script

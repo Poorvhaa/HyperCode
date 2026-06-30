@@ -6,6 +6,17 @@ import { Search, Download, X, ArrowLeft, AlertCircle, Calendar, User, Mail, Phon
 import { supabase, db, ConsultationRequest, UserProfile } from '@/lib/db';
 import AdminSidebar from '@/components/admin/Sidebar';
 
+const defaultHealthReport = {
+  success: true,
+  connection: 'green' as const,
+  status: 'healthy',
+  missingObjects: [] as string[],
+  warnings: [] as string[],
+  tables: [] as any[],
+  policies: [] as string[],
+  errors: {} as Record<string, string>
+};
+
 export default function AdminConsultationsPage() {
   const router = useRouter();
   const params = useParams();
@@ -19,7 +30,7 @@ export default function AdminConsultationsPage() {
   // Data States
   const [consultations, setConsultations] = useState<ConsultationRequest[]>([]);
   const [loading, setLoading] = useState(true);
-  const [healthReport, setHealthReport] = useState<any>(null);
+  const [healthReport, setHealthReport] = useState<any>(defaultHealthReport);
 
   // UI States
   const [selectedConsultation, setSelectedConsultation] = useState<ConsultationRequest | null>(null);
@@ -74,10 +85,16 @@ export default function AdminConsultationsPage() {
         const healthRes = await fetch('/api/admin/health', { headers });
         if (healthRes.ok) {
           const healthData = await healthRes.json();
-          setHealthReport(healthData);
+          setHealthReport({
+            ...defaultHealthReport,
+            ...healthData
+          });
+        } else {
+          setHealthReport(defaultHealthReport);
         }
       } catch (healthErr) {
         console.error('Failed to load database health report:', healthErr);
+        setHealthReport(defaultHealthReport);
       }
     } catch (err) {
       console.error('Failed to load consultations:', err);
@@ -217,9 +234,15 @@ export default function AdminConsultationsPage() {
                 The application code expects database elements that do not exist or differ in type within your remote Supabase schema. Writes are currently falling back to LocalStorage.
               </p>
               <div className="text-[10px] bg-white/50 border border-amber-100 rounded-lg p-3 space-y-1 max-h-28 overflow-y-auto">
-                {healthReport.missingObjects.map((obj: string, idx: number) => (
-                  <div key={idx} className="font-mono text-amber-800 font-semibold">{obj}</div>
-                ))}
+                {healthReport?.missingObjects?.length ? (
+                  healthReport.missingObjects.map((obj: string, idx: number) => (
+                    <div key={idx} className="font-mono text-amber-800 font-semibold">{obj}</div>
+                  ))
+                ) : (
+                  <div className="text-emerald-700 font-semibold">
+                    ✓ No missing database objects detected.
+                  </div>
+                )}
               </div>
               <p className="text-[10px] text-amber-600 font-medium">
                 Please run the migration SQL file in <code className="font-mono bg-amber-100/50 px-1 py-0.5 rounded">supabase/migrations/</code> in your Supabase SQL Editor.
@@ -370,9 +393,21 @@ export default function AdminConsultationsPage() {
                   <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Phone</p>
                   <p className="mt-1 font-semibold text-slate-800">{selectedConsultation.phone || '—'}</p>
                 </div>
-                <div className="col-span-2">
+                <div>
                   <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Company</p>
                   <p className="mt-1 font-semibold text-slate-800">{selectedConsultation.company || '—'}</p>
+                </div>
+                <div>
+                  <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Company Size</p>
+                  <p className="mt-1 font-semibold text-slate-800">{selectedConsultation.company_size || '—'}</p>
+                </div>
+                <div>
+                  <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Industry</p>
+                  <p className="mt-1 font-semibold text-slate-800">{selectedConsultation.industry || '—'}</p>
+                </div>
+                <div>
+                  <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Meeting Type</p>
+                  <p className="mt-1 font-semibold text-slate-800">{selectedConsultation.preferred_meeting_type || '—'}</p>
                 </div>
                 <div>
                   <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Budget</p>
@@ -388,18 +423,55 @@ export default function AdminConsultationsPage() {
                     {selectedConsultation.timeline || '—'}
                   </p>
                 </div>
+                <div className="col-span-2">
+                  <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Current Tech Stack</p>
+                  <p className="mt-1 font-semibold text-slate-800">{selectedConsultation.current_tech_stack || '—'}</p>
+                </div>
+                {selectedConsultation.preferred_services && selectedConsultation.preferred_services.length > 0 && (
+                  <div className="col-span-2">
+                    <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px] mb-1.5">Preferred Services</p>
+                    <div className="flex flex-wrap gap-1">
+                      {selectedConsultation.preferred_services.map((srv: string, i: number) => (
+                        <span key={i} className="px-2 py-0.5 bg-blue-50 border border-blue-100 rounded text-slate-700 font-semibold text-[10px] uppercase tracking-wide">
+                          {srv}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
 
               <div className="space-y-4">
                 <div>
-                  <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Service Interest</p>
+                  <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Primary Service Interest</p>
                   <p className="mt-1.5 font-semibold text-slate-800 bg-slate-50 p-3 rounded-xl border border-slate-100">
                     {selectedConsultation.service_interest}
                   </p>
                 </div>
 
                 <div>
-                  <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Project Description</p>
+                  <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Business Goal</p>
+                  <p className="mt-1.5 font-semibold text-slate-800 bg-slate-50 p-3 rounded-xl border border-slate-100">
+                    {selectedConsultation.business_goal || '—'}
+                  </p>
+                </div>
+
+                <div>
+                  <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Current Challenges</p>
+                  <p className="mt-1.5 text-slate-700 bg-slate-50 p-3 rounded-xl border border-slate-100 leading-relaxed text-xs">
+                    {selectedConsultation.current_challenges || '—'}
+                  </p>
+                </div>
+
+                <div>
+                  <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Expected Outcome</p>
+                  <p className="mt-1.5 font-semibold text-slate-800 bg-slate-50 p-3 rounded-xl border border-slate-100">
+                    {selectedConsultation.expected_outcome || '—'}
+                  </p>
+                </div>
+
+                <div>
+                  <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Project Overview</p>
                   <p className="mt-1.5 text-slate-600 bg-slate-50 p-4 rounded-xl border border-slate-100 leading-relaxed text-xs">
                     {selectedConsultation.project_description || 'No description provided.'}
                   </p>

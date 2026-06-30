@@ -15,7 +15,14 @@
     "all": "All",
     "viewCaseStudies": "View Case Studies",
     "loading": "Loading...",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "learnMore": "Learn More",
+    "industries": "Industries",
+    "technologies": "Technologies",
+    "resources": "Resources",
+    "support": "Support",
+    "company": "Company",
+    "offices": "Our Offices"
   },
   "Navigation": {
     "home": "Home",
@@ -24,7 +31,21 @@
     "careers": "Careers",
     "contact": "Contact",
     "schedule": "Schedule Consultation",
+    "support": "Support Portal",
+    "aiConsultant": "AI Consultant",
+    "aiAutomation": "AI & Automation",
+    "softwareDev": "Software Development",
+    "webDev": "Web Development",
+    "mobileDev": "Mobile Development",
+    "cloudDevOps": "Cloud & DevOps",
+    "talentSolutions": "IT & Non-IT Talent Solutions",
+    "digitalTrans": "Digital Transformation",
     "dataAnalytics": "Data & Analytics",
+    "cybersecurity": "Cybersecurity",
+    "uiUx": "UI/UX Design",
+    "marketing": "Digital Marketing",
+    "ecommerce": "E-commerce",
+    "techConsulting": "Technology Consulting",
     "businessIntelligence": "Business Intelligence",
     "dataAnalyticsDesc": "Interactive dashboards and executive reporting systems.",
     "predictiveAnalytics": "Data Analytics",
@@ -63,7 +84,17 @@
     "connect": "Connect With Us",
     "copyright": "© 2026 HyperCode. All rights reserved.",
     "privacy": "Privacy Policy",
-    "terms": "Terms & Conditions"
+    "terms": "Terms & Conditions",
+    "sitemap": "Sitemap",
+    "tagline": "Enterprise AI & Digital Transformation Consulting",
+    "officesTitle": "Global Headquarter",
+    "address": "100 Pine St, Suite 2400, San Francisco, CA 94111",
+    "phone": "+1 (555) 019-2834",
+    "email": "info@hypercode.com",
+    "newsletterTitle": "Subscribe to Insights",
+    "newsletterDesc": "Get monthly technological briefings from our solutions directors.",
+    "newsletterPlaceholder": "Corporate Email",
+    "newsletterSuccess": "Thank you for subscribing!"
   },
   "Hero": {
     "badge": "Enterprise Digital Transformation Partner",
@@ -109,402 +140,229 @@
       }
     }
   },
-  "WhyHypercode": {
-    "badge": "Why HyperCode",
-    "title": "Engineering Excellence, Strategic Partnership",
-    "desc": "We differ from standard IT & Non-IT staffing and development shops. We treat client architectures as our own, incorporating rigorous security checks and mentoring loops to ensure total operational handover.",
-    "stats": {
-      "projects": "Projects Completed",
-      "satisfaction": "Client Satisfaction",
-      "consultants": "Consultants Placed"
-    }
-  },
-  "CaseStudies": {
-    "badge": "CASE STUDY",
-    "title": "Featured Success Story",
-    "subtitle": "Learn how we help enterprise organizations resolve data blockages and configure scalable architectures.",
-    "featuredLabel": "FEATURED SUCCESS STORY",
-    "challenge": "Challenge",
-    "solution": "Solution",
-    "outcome": "Outcome",
-    "story": {
-      "category": "FEATURED SUCCESS STORY",
-      "title": "Data Warehouse Modernization",
-      "subtitle": "HIPAA Cloud Consolidation",
-      "challengeText": "Patient records across 15 separate locations were fragmented in legacy databases, creating analysis delays and HIPAA audit concerns.",
-      "solutionText": "Consolidated all databases into a secure, HIPAA-compliant Snowflake data lakehouse using Azure data integration pipelines.",
-      "outcomeText": "Reduced data ingestion times by 200%, saved $3.2M in annual database overhead, and secured 100% compliance audit marks."
-    }
-  },
-  "CTA": {
-    "title": "Ready to Transform Your Technology Stack?",
-    "subtitle": "Schedule a direct session with a HyperCode solutions architect to review your database schemas or application pipeline requirements.",
-    "button": "Schedule Consultation"
-  },
-  "About": {
-    "title": "Building Long-Term Partnerships Through",
-    "titleHighlight": "Expertise, Innovation, and Trust",
-    "subtitle": "HyperCode is a technology and consulting firm dedicated to helping organizations solve complex business challenges through data-driven solutions, modern technology, and specialized talent.",
-    "storyTitle": "Our Story",
-    "storyP1": "HyperCode was founded with a clear objective: to bridge the gap between custom software engineering, raw data pipelines, and executive decision-making. Over the years, we have grown to become a trusted strategic partner for Fortune 500 enterprises and government agencies across the United States.",
-    "storyP2": "What sets us apart is our commitment to combining technical execution with human-centered consulting. We believe modern dashboards and databases are only as effective as the teams utilizing them.",
-    "mission": "Our Mission",
-    "missionDesc": "To empower organizations to solve complex challenges by delivering robust data architectures, modern software, and high-performing technical talent that drive sustainable growth.",
-    "vision": "Our Vision",
-    "visionDesc": "To serve as the premier consulting and talent partner of choice for organizations leveraging data and cloud technology as distinct competitive advantages, known for technical clarity and execution.",
-    "pillars": "ORGANIZATIONAL PILLARS",
-    "valuesTitle": "Our Core Values",
-    "approachTitle": "Our Approach",
-    "approachDesc": "We operate with a sprint-based, transparent consulting approach. Every engagement begins with a strict data audit and ends with mentoring loops to guarantee that your internal team fully controls the modern cloud systems we deploy.",
-    "presenceTitle": "Nationwide Presence",
-    "presenceDesc": "HyperCode supports corporate and public sector clients across the United States. With consulting resources distributed in all 50 states, we quickly mobilize Scrum teams, developers, and analysts to match your exact timeline.",
-    "whyChooseTitle": "Why Clients Choose HyperCode",
-    "whyChooseSubtitle": "We deliver engineering precision, enterprise compliance, and rapid talent deployment designed for long-term reliability.",
-    "whyChoose": {
-      "leadership": {
-        "title": "Proven Technical Leadership",
-        "desc": "Our architects and engineers bring decades of collective experience designing systems for enterprise scale and public sector security."
-      },
-      "custom": {
-        "title": "Agnostic & Scalable Solutions",
-        "desc": "We build architectures tailored to your specific system requirements, ensuring seamless data integration and zero vendor lock-in."
-      },
-      "talent": {
-        "title": "Rapid Talent Mobilization",
-        "desc": "We connect you to a vetted national pool of senior developers, data engineers, and Scrum masters ready to deploy in weeks."
-      },
-      "handover": {
-        "title": "Mentoring & Full Handover",
-        "desc": "We do not leave you dependent on us. Every engagement includes structured documentation and coaching loops for complete team handoff."
-      }
-    },
-    "stats": {
-      "projects": "250+",
-      "projectsLabel": "Projects Completed",
-      "satisfaction": "98%",
-      "satisfactionLabel": "Client Satisfaction",
-      "consultants": "1,200+",
-      "consultantsLabel": "Consultants Placed",
-      "experience": "15+",
-      "experienceLabel": "Years Combined Expertise"
-    },
-    "values": {
-      "integrity": {
-        "title": "Integrity",
-        "desc": "Honesty, compliance, and absolute transparency in all systems we architect and teams we deploy."
-      },
-      "innovation": {
-        "title": "Innovation",
-        "desc": "Continuously researching modern cloud databases and analytical tools to keep clients ahead."
-      },
-      "partnership": {
-        "title": "Partnership",
-        "desc": "Treating client teams as our own, offering direct mentoring loops and post-deployment reviews."
-      },
-      "excellence": {
-        "title": "Excellence",
-        "desc": "Delivering high-performance, secure, and compliance-vetted systems that pass strict audits."
-      }
-    }
-  },
-  "Careers": {
-    "title": "Build the Future of Data & Web Engineering",
-    "subtitle": "Join a team of expert software engineers, solutions architects, and analytics directors building modern systems.",
-    "benefitsTitle": "Why Work at HyperCode?",
-    "benefits": {
-      "projects": {
-        "title": "High-Impact Projects",
-        "desc": "Work directly with Fortune 500 companies and government agencies on business-critical cloud migrations and software implementations."
-      },
-      "growth": {
-        "title": "Continuous Learning",
-        "desc": "Access paid certifications, engineering bootcamps, and structured mentoring pathways to advance your technical skills."
-      },
-      "flexibility": {
-        "title": "Remote-First Environment",
-        "desc": "We embrace distributed collaboration, providing top-tier hardware configurations and flexible working setups."
-      },
-      "compensation": {
-        "title": "Competitive Compensation",
-        "desc": "Enjoy premium healthcare, employer matched 401(k), paid time off, and annual performance-driven bonuses."
-      }
-    },
-    "openPositions": "CURRENT OPENING",
-    "positionsTitle": "Join Our Team",
-    "positions": {
-      "bdm": {
-        "title": "Business Development Manager",
-        "desc": "Drive growth and expand our client base by identifying new business opportunities and building strategic partnerships."
-      }
-    },
-    "applyNow": "Apply Now",
-    "faqTitle": "Frequently Asked Questions",
-    "faq": {
-      "q1": "What is the typical interview process like?",
-      "a1": "Our interview pipeline is structured to verify technical skills and project fit. It starts with an initial recruiter call, followed by a live system architecture discussion with an engineering lead, and concludes with a team alignment review.",
-      "q2": "Do you support visa sponsorships?",
-      "a2": "Yes, for specific senior technical roles, we support H-1B transfers and green card sponsorship based on project requirements and technical skill levels.",
-      "q3": "What training resources do you provide?",
-      "a3": "We offer full financial sponsorship for cloud certifications (AWS, Azure, Snowflake, Databricks), access to enterprise learning platforms, and structured internal training sessions led by our Practice Directors."
-    }
-  },
   "Contact": {
-    "title": "Let's Connect",
-    "subtitle": "Get in touch with our solutions advisors to discuss web applications, business intelligence implementation, or IT & Non-IT staffing needs.",
+    "title": "Partner with HyperCode",
+    "subtitle": "Reach out to our global accounts team to align your custom engineering, AI implementation, or talent acquisition plans.",
+    "form": {
+      "name": "Your Name",
+      "email": "Corporate Email",
+      "company": "Company Name",
+      "phone": "Phone Number",
+      "subject": "Subject",
+      "message": "Project Description / Message",
+      "industry": "Industry",
+      "companySize": "Company Size",
+      "budget": "Project Budget",
+      "timeline": "Expected Timeline",
+      "country": "Country",
+      "contactMethod": "Preferred Contact Method",
+      "projectType": "Project Type",
+      "requiredTech": "Required Technologies",
+      "services": "Requested Services / Focus Areas",
+      "submit": "Submit Inquiry",
+      "submitting": "Sending...",
+      "successTitle": "Inquiry Received!",
+      "successText": "Thank you for reaching out. A practice director has been assigned to review your inquiry and will contact you within 24 hours.",
+      "errorSubmit": "Failed to submit. Please check your inputs and try again.",
+      "nameError": "Name must be at least 2 characters",
+      "emailError": "Please enter a valid corporate email address",
+      "companyError": "Company name must be at least 2 characters",
+      "phoneError": "Please enter a valid phone number (min 10 digits)",
+      "subjectError": "Subject is required",
+      "messageError": "Message must be at least 10 characters",
+      "industryError": "Please select your industry",
+      "budgetError": "Please select a budget range",
+      "timelineError": "Please select a timeline"
+    },
+    "subjects": {
+      "general": "General Enterprise Inquiry",
+      "web": "Custom Web & App Development",
+      "ai": "AI & Agentic Process Automation",
+      "data": "Data Engineering & Analytics",
+      "talent": "IT & Non-IT Talent Solutions",
+      "partnership": "Strategic Partnership",
+      "other": "Other Inquiries"
+    },
     "headquarters": "Corporate Headquarters",
     "email": "Email Inquiries",
     "phone": "Phone Support",
     "formTitle": "Send Us a Message",
-    "formSubtitle": "Complete the form below, and our practice directors will reach out within 24 hours.",
-    "form": {
-      "fullName": "Full Name",
-      "emailAddress": "Email Address",
-      "companyName": "Company Name",
-      "phoneNumber": "Phone Number",
-      "subject": "Subject",
-      "selectSubject": "Select a subject",
-      "message": "Message",
-      "sendMessage": "Send Message",
-      "nameError": "Name must be at least 2 characters",
-      "emailError": "Invalid email address",
-      "companyError": "Company name required",
-      "phoneError": "Valid phone number required",
-      "subjectError": "Please select a subject",
-      "messageError": "Message must be at least 10 characters",
-      "successTitle": "Message Sent Successfully!",
-      "successText": "Thank you for reaching out. Our team will review your inquiry and get back to you within 24 hours.",
-      "errorSubmit": "Failed to submit form. Please try again."
-    },
-    "subjects": {
-      "general": "General Inquiry",
-      "web": "Web Development Inquiry",
-      "partnership": "Partnership Opportunity",
-      "vendor": "Vendor Inquiry",
-      "career": "Career Question",
-      "media": "Media Request",
-      "other": "Other"
-    }
+    "formSubtitle": "Complete the form below, and our practice directors will reach out within 24 hours."
   },
   "Consultation": {
-    "title": "Schedule a Consultation",
-    "subtitle": "Book a technical analysis session with our engineering directors to audit your existing systems or map out development pipelines.",
-    "formTitle": "Request Project Intake Session",
-    "formSubtitle": "Share your project requirements, and we will match you with the appropriate solutions architect.",
+    "title": "Book a Consultation",
+    "subtitle": "Schedule a session with a HyperCode solutions director to design your systems or map recruiting pipelines.",
     "form": {
-      "serviceInterest": "Service Interest",
-      "selectService": "Select a service interest",
-      "budgetRange": "Project Budget Range",
-      "selectBudget": "Select a budget range",
+      "name": "Full Name",
+      "email": "Corporate Email",
+      "company": "Company Name",
+      "phone": "Phone Number",
+      "service": "Preferred Service Focus",
+      "budget": "Estimated Budget",
       "timeline": "Target Timeline",
-      "selectTimeline": "Select a timeline",
-      "description": "Project Description",
-      "placeholderDescription": "Briefly describe your goals, required technology, and current technical challenges...",
-      "submitRequest": "Request Consultation",
+      "message": "Short Project Overview",
+      "businessGoal": "Primary Business Goal",
+      "currentChallenges": "Current Technology Challenges",
+      "expectedOutcome": "Expected Outcome",
+      "currentTechStack": "Current Tech Stack / Tools",
+      "meetingType": "Preferred Meeting Type",
+      "preferredServices": "Service Areas of Interest",
+      "industry": "Industry Vertical",
+      "companySize": "Company Size",
+      "submit": "Schedule Video Consultation",
+      "submitting": "Scheduling...",
+      "successTitle": "Consultation Scheduled!",
+      "successDesc": "Your intake file has been generated and scored. A calendar invite with a video conference link will be dispatched shortly.",
+      "errorSubmit": "Scheduling failed. Please check your inputs.",
       "serviceError": "Please select a service interest",
       "budgetError": "Please select a budget range",
       "timelineError": "Please select a timeline",
-      "messageError": "Please share some details about your project (min 10 characters)",
-      "successTitle": "Consultation Requested!",
-      "successText": "Thank you for your request. Our solutions architect will contact you within 24 hours to schedule our project introduction.",
-      "errorSubmit": "Failed to submit consultation request. Please try again."
+      "messageError": "Please describe your project (min 10 characters)"
     },
     "budgets": {
-      "b1": "Less than $10K",
-      "b2": "$10K-$50K",
-      "b3": "$50K-$100K",
-      "b4": "$100K+",
-      "b5": "Not Sure Yet"
+      "b1": "Under $25,000",
+      "b2": "$25,000 - $100,000",
+      "b3": "$100,000 - $250,000",
+      "b4": "$250,000+",
+      "b5": "To Be Decided"
     },
     "timelines": {
-      "t1": "Immediately",
-      "t2": "Within 30 Days",
-      "t3": "Within 3 Months",
-      "t4": "Exploring Options"
-    }
-  },
-  "Solutions": {
-    "title": "Our Solutions",
-    "subtitle": "Enterprise-grade technology consulting and analytical systems designed for high availability and growth.",
-    "tabOverview": "Overview",
-    "tabServices": "Detailed Services",
-    "businessAnalysis": {
-      "title": "Business Analysis",
-      "subtitle": "Translating Enterprise Objectives into Technology Strategy",
-      "p1": "We collaborate with leadership to map corporate workflows, define database metrics, and plan application roadmaps.",
-      "p2": "Our analysts provide the logical link between software development and core business value."
+      "t1": "Immediately (Under 1 Month)",
+      "t2": "Within 1-3 Months",
+      "t3": "Planning (3-6 Months)",
+      "t4": "Exploring / Long Term"
     },
-    "technologyConsulting": {
-      "title": "Technology Consulting",
-      "subtitle": "Strategic Tech Stack Architecture Audits",
-      "p1": "We review cloud security structures, evaluate database licensing costs, and compare cloud solutions like Snowflake vs Fabric.",
-      "p2": "We help CIOs select tech stacks that balance developer speed, licensing costs, and compute scaling."
-    },
-    "agileProject": {
-      "title": "Agile Project Management",
-      "subtitle": "Iterative Sprint Execution",
-      "p1": "We deploy certified Scrum Masters to run agile pipelines, clear developer blocks, and keep migrations on track.",
-      "p2": "We combine rigorous project management with full transparency for predictable, on-time project deliveries."
-    }
-  },
-  "Staffing": {
-    "title": "IT & Non-IT Staffing & Augmentation",
-    "subtitle": "Accelerate development and database migrations with verified cloud engineering, software, and Scrum talent.",
-    "whyStaffingTitle": "Scale Your Engineering Team Instantly",
-    "whyStaffingDesc": "HyperCode provides flexible hiring arrangements to match your project timelines and budget limits. Our active database contains over 10,000 pre-screened, certified technology specialists across the US.",
-    "contract": {
-      "title": "Contract Staffing",
-      "subtitle": "Flexible Resource Allocation",
-      "p1": "Deploy specialized engineers for 6-to-18-month projects to execute database migrations or frontend rebuilds without long-term overhead.",
-      "p2": "We manage payroll, compliance, and benefits, while you focus on project execution."
-    },
-    "directPlacement": {
-      "title": "Direct Placement",
-      "subtitle": "Strategic Talent Sourcing",
-      "p1": "Let our technical recruiters locate, pre-vet, and place permanent engineering leads or directors in your division.",
-      "p2": "We verify technical skills and team alignment, lowering hiring risk."
-    },
-    "augmentedTitle": "Augmented Developer Capabilities",
-    "augmentedSubtitle": "Our talent pool contains certified experts in modern cloud platforms, analytical modeling, and custom web frameworks.",
-    "timelineTitle": "Hiring Timeline",
-    "timelineSubtitle": "Our structured talent placement pipeline ensures we deploy matching resources in days, not months."
-  },
-  "Insights": {
-    "title": "Thought Leadership",
-    "subtitle": "HyperCode consulting directors and solutions architects share perspectives, guides, and engineering patterns.",
-    "allCategories": "All Categories",
-    "readArticle": "Read Article",
-    "noArticles": "No articles found in this category.",
-    "relatedArticles": "Related Articles",
-    "share": "Share Article",
-    "newsletterTitle": "Stay Updated",
-    "newsletterSubtitle": "Subscribe to our newsletter to receive the latest insights and updates directly in your inbox.",
-    "newsletterPlaceholder": "your.email@company.com",
-    "newsletterButton": "Subscribe",
-    "newsletterSuccess": "Thank you for subscribing to HyperCode insights.",
-    "newsletterAlreadySubscribed": "You are already subscribed.",
-    "newsletterError": "Unable to subscribe right now. Please try again later."
-  },
-  "NotFound": {
-    "title": "Page Not Found",
-    "subtitle": "The page you are looking for does not exist or has been moved.",
-    "button": "Go Home"
-  },
-  "cta": {
-    "badge": "GET IN TOUCH",
-    "heading": "Ready to Empower Your Business Through Data, Technology, and Talent?",
-    "description": "Whether you need to design high-performance web applications, optimize BI dashboards, or scale your engineering teams, HyperCode has the expertise to deliver.",
-    "primaryButton": "SCHEDULE CONSULTATION",
-    "secondaryButton": "CONTACT HYPERCODE"
+    "formTitle": "Request Project Intake Session",
+    "formSubtitle": "Share your project requirements, and we will match you with the appropriate solutions architect."
   },
   "AIConsultant": {
-    "title": "HyperCode AI Consultant",
+    "title": "HyperCode AI Business Consultant",
     "subtitle": "Senior Digital Transformation Advisor",
-    "tooltip": "Chat with our Senior Digital Transformation Advisor",
-    "placeholder": "Ask about our services or scaling your tech team...",
-    "suggestedTitle": "Suggested Queries",
-    "welcomeMessage": "Hello! I am the HyperCode AI Consultant, your Senior Digital Transformation Advisor. How can I assist you with your business goals today?",
-    "typing": "Advisor is analyzing...",
+    "tooltip": "Chat with our Digital Transformation Partner",
+    "placeholder": "Describe your business challenge or staffing request...",
+    "suggestedTitle": "Recommended Advisor Queries",
+    "welcomeMessage": "Hello! I am your HyperCode Technical Advisor. I can recommend solutions, suggest technologies, estimate project timelines, and calculate team sizes based on your goals. What are you looking to build or scale today?",
+    "typing": "Analyzing schema and parameters...",
     "actions": {
-      "close": "Close Chat",
-      "minimize": "Minimize Chat",
+      "close": "Close Session",
+      "minimize": "Minimize Window",
       "back": "Back",
-      "startOver": "Start Over",
+      "startOver": "New Advice Session",
       "submit": "Submit"
     },
     "errors": {
-      "validation": "Please fill out all required fields correctly.",
-      "email": "Please enter a valid email address.",
-      "phone": "Please enter a valid phone number (minimum 7 characters).",
-      "generic": "Something went wrong. Please try again."
+      "validation": "Please complete all required fields.",
+      "email": "Enter a valid corporate email.",
+      "phone": "Enter a valid phone number.",
+      "generic": "Service error. Please try again."
     },
     "consultationFlow": {
-      "title": "Book a Consultation",
-      "subtitle": "Coordinate a direct video session with a HyperCode solutions director.",
-      "date": "Preferred Date & Time",
-      "submit": "Schedule Video Consultation",
+      "title": "Intake Consultation Setup",
+      "subtitle": "Verify your details below to schedule an intake session with a director.",
+      "date": "Preferred Meeting Date",
+      "submit": "Confirm Consultation Request",
       "successTitle": "Consultation Requested!",
-      "successDesc": "We have received your calendar request. Calendar invites will be dispatched to your email shortly."
+      "successDesc": "Your request has been successfully scored and routed. Expect calendar invites shortly."
     },
     "leadQualification": {
-      "title": "Qualify Your Project",
-      "subtitle": "Enter your requirements below. Our scoring engine will assess your priority status and route it to our practice directors.",
-      "name": "Your Name",
+      "title": "AI Project Assessor",
+      "subtitle": "Input your requirements to generate a project blueprint and route it to our practice directors.",
+      "name": "Full Name",
       "email": "Corporate Email",
       "phone": "Phone Number",
       "company": "Company Name",
       "industry": "Industry",
-      "service": "Service Interest",
+      "service": "Service Focus",
       "budget": "Budget Range",
-      "timeline": "Project Timeline",
-      "message": "Project Description / Staffing Roles Needed",
-      "submit": "Submit for Qualification",
-      "successTitle": "Lead Qualified!",
-      "successDesc": "Thank you. Your project has been successfully scored and routed. A director will contact you within 24 business hours.",
-      "scoreLabel": "Lead Score",
-      "priorityHigh": "High Priority",
-      "priorityMedium": "Medium Priority",
-      "priorityLow": "Low Priority"
+      "timeline": "Timeline Constraint",
+      "message": "Describe your goal / required tech",
+      "submit": "Qualify Project Blueprint",
+      "successTitle": "Project Qualified!",
+      "successDesc": "Our engine scored your project. A solutions director will contact you with a blueprint within 24 hours.",
+      "scoreLabel": "Priority Score",
+      "priorityHigh": "Enterprise Priority",
+      "priorityMedium": "Standard Priority",
+      "priorityLow": "Planning Phase"
     },
     "staffingFlow": {
-      "title": "IT & Non-IT Staffing Request",
-      "subtitle": "Describe your staffing requirements below.",
-      "roles": "Required Technical Roles",
-      "teamSize": "Target Team Size",
-      "location": "Preferred Location",
-      "submit": "Submit Staffing Request",
-      "successTitle": "Staffing Request Received!",
-      "successDesc": "Your staffing request has been received. Our recruitment directors will reach out with pre-screened profiles within 24 hours."
+      "title": "Scale Your Engineering Team",
+      "subtitle": "Specify the roles and headcount you need to deploy.",
+      "roles": "Required Technical Roles (e.g. Next.js, Python)",
+      "teamSize": "Target Headcount",
+      "location": "Developer Location (US / LatAm / India)",
+      "submit": "Submit Staffing Quote Request",
+      "successTitle": "Staffing Quote Generated!",
+      "successDesc": "Your staffing request has been routed to our talent directors. We will email matching profiles within 24 hours."
     },
     "successMessages": {
       "leadSuccess": "Your project has been successfully qualified and routed.",
-      "consultSuccess": "Calendar invites will be dispatched to your email shortly."
+      "consultSuccess": "Calendar invites will be dispatched shortly."
     },
     "suggestedPrompts": [
-      "Tell me about your AI solutions",
-      "Help me hire talent",
-      "I need a web development team",
-      "I want a consultation"
+      "I need an AI chatbot",
+      "I want ERP software",
+      "I need cloud migration",
+      "I need dedicated developers",
+      "I want CTO consulting",
+      "I need cybersecurity assessment",
+      "I want Power BI dashboard",
+      "I need Shopify store"
     ],
     "industries": {
-      "enterprise": "Enterprise Corporates",
-      "healthcare": "Healthcare & Life Sciences",
-      "finance": "Financial Services & Banking",
-      "retail": "Retail & E-Commerce",
-      "technology": "Technology & SaaS",
-      "other": "Other Sectors"
+      "healthcare": "Healthcare",
+      "finance": "Finance",
+      "retail": "Retail",
+      "manufacturing": "Manufacturing",
+      "education": "Education",
+      "government": "Government",
+      "realestate": "Real Estate",
+      "logistics": "Logistics",
+      "hospitality": "Hospitality",
+      "construction": "Construction",
+      "legal": "Legal",
+      "pharma": "Pharmaceutical",
+      "startups": "Startups",
+      "smes": "SMEs",
+      "enterprise": "Large Enterprises",
+      "technology": "Technology",
+      "other": "Other"
     },
     "budgets": {
+      "under25k": "Under $25,000",
+      "between25k100k": "$25,000 - $100,000",
+      "between100k250k": "$100,000 - $250,000",
+      "over250k": "$250,000+ (Enterprise)",
       "under5k": "Under $5,000",
       "between5k10k": "$5,000 - $10,000",
       "between10k25k": "$10,000 - $25,000",
-      "between25k50k": "$25,000 - $55,000",
-      "over50k": "$50,000+ (Enterprise)"
+      "between25k50k": "$25,000 - $50,000",
+      "over50k": "$50,000+"
     },
     "timelines": {
       "immediate": "Immediate (Under 1 month)",
       "medium": "1-3 months",
       "long": "3-6 months",
-      "norush": "No rush / Planning phase"
+      "norush": "Exploring / Planning phase"
     },
     "advisor": {
       "greeting": {
-        "message": "Hello! I am the HyperCode AI Consultant, your Senior Digital Transformation Advisor. I can help you explore our services, map out technology roadmaps, hire elite technical talent, or schedule a consultation with our directors.\n\nWhich of our core areas are you interested in today?",
+        "message": "Hello! I am your Technical Advisor. I can recommend solutions, suggest technologies, estimate project timelines, and calculate team sizes based on your goals. What are you looking to build or scale today?",
         "suggestedPrompts": [
-          "Tell me about your AI solutions",
-          "Help me hire talent",
-          "I need a web development team",
-          "I want a consultation"
+          "I need an AI chatbot",
+          "I want ERP software",
+          "I need dedicated developers",
+          "I want CTO consulting"
         ]
       },
       "about": {
-        "message": "HyperCode is an enterprise-grade digital transformation partner. We specialize in engineering cloud data warehouses, custom web applications, advanced AI/ML algorithms, business intelligence systems, and IT & Non-IT staffing solutions. We help mid-market and enterprise organizations accelerate development cycles and drive ROI.",
+        "message": "HyperCode is an enterprise-grade AI and Digital Transformation consulting company. We specialize in engineering robust cloud data platforms, building scalable custom software, and providing IT & Non-IT talent solutions globally. We serve mid-market and enterprise organizations with certified engineers.",
         "suggestedPrompts": [
-          "Tell me about your services",
+          "What services do you offer?",
           "I want a consultation"
         ]
       },
       "location": {
-        "message": "HyperCode is headquartered in Schaumburg, Illinois, USA. We serve corporate clients across North America and globally, deploying hybrid and fully remote engineering squads.",
+        "message": "HyperCode is headquartered in San Francisco, California, with offices in Schaumburg, Illinois. We serve clients across North America and globally, deploying remote and hybrid teams.",
         "suggestedPrompts": [
           "How do we start?",
           "Schedule a consultation"
@@ -578,6 +436,679 @@
           "Tell me about your services",
           "I want a consultation"
         ]
+      }
+    }
+  },
+  "SolutionsPage": {
+    "heroTitle": "Enterprise Technology Consulting & Solutions",
+    "heroSubtitle": "Accelerating business value through Custom Software Engineering, Generative AI, cloud scaling, and IT & Non-IT staffing services.",
+    "searchPlaceholder": "Search services by name, tech stack, or industry vertical...",
+    "filterIndustry": "All Industries",
+    "filterTech": "All Technologies",
+    "filterChallenge": "All Business Challenges",
+    "noResults": "No solutions found matching your search filters.",
+    "keyBenefitsLabel": "Measurable Value Added",
+    "techStandardsLabel": "Technologies & Standards",
+    "practiceProcessLabel": "Our Execution Process",
+    "learnMoreBtn": "View Service Details",
+    "whyTitle": "Why Enterprise Leaders Trust HyperCode",
+    "whySubtitle": "We marry software engineering excellence with data architecture and global sourcing networks to deliver tangible business outcomes.",
+    "faqTitle": "Frequently Asked Questions",
+    "faqSubtitle": "Understand our engagement models, security standards, and delivery frameworks.",
+    "ctaTitle": "Ready to Architect Your Solution?",
+    "ctaDesc": "Schedule a session with a solutions director to scope your roadmap, analyze cost-savings, or set up sourcing.",
+    "ctaBtn": "Get Started Now",
+    "businessValue": "Business Value Impact",
+    "expectedOutcomes": "Expected Outcomes",
+    "stats": {
+      "retentionNum": "99%",
+      "retentionLabel": "Client Retention Rate",
+      "deploymentsNum": "150+",
+      "deploymentsLabel": "Enterprise Projects Delivered",
+      "onboardingNum": "5-10 Days",
+      "onboardingLabel": "Average Squad Onboarding"
+    },
+    "why": {
+      "title": "Why Enterprise Leaders Choose HyperCode",
+      "subtitle": "We marry software engineering excellence with data architecture and global sourcing networks.",
+      "engineersTitle": "Certified SRE Engineers",
+      "engineersDesc": "All squad engineers are fully certified in Next.js, Python, or cloud practices, ensuring compliance and clean architectures.",
+      "deliveryTitle": "Accelerated Delivery",
+      "deliveryDesc": "We optimize hiring pipelines, reducing developer onboarding latency to 5-10 business days with complete compliance.",
+      "securityTitle": "SOC 2 & HIPAA Security",
+      "securityDesc": "All software projects and data platforms are designed under strict access controls (IAM) and continuous vulnerability scans.",
+      "scalabilityTitle": "Enterprise Scalability",
+      "scalabilityDesc": "Architectures engineered to handle peak traffic loads, massive concurrent data streams, and multi-tenant scaling.",
+      "supportTitle": "Global Account Governance",
+      "supportDesc": "Leveraging hybrid structures across US time zones to align workflows and offer real-time project oversight."
+    },
+    "industries": "Industries Served",
+    "technologies": "Technologies & Tools",
+    "relatedServices": "Related Services",
+    "industriesTitle": "Industries We Serve",
+    "industriesSubtitle": "Delivering specialized digital workflows and systems architecture across global sectors.",
+    "techEcosystemTitle": "Technology Ecosystem",
+    "techEcosystemSubtitle": "We engineer solutions using best-of-breed enterprise technologies, frameworks, and data platforms.",
+    "caseStudyLabel": "Case Study Success",
+    "viewCaseStudy": "Read Full Case Study",
+    "benefitsLabel": "Strategic Value & Benefits",
+    "ctaSectionTitle": "Ready to Transform Your Business?",
+    "ctaSectionSubtitle": "Schedule a technical scoping session with our solutions directors or interact with our AI consultant.",
+    "drawerTitle": "Service Capabilities & Scope",
+    "relatedServicesLabel": "Related Capabilities",
+    "industriesList": {
+      "healthcare": {
+        "title": "Healthcare & Life Sciences",
+        "desc": "HIPAA-compliant portals, clinical workflow integrations, and medical analytics dashboards."
+      },
+      "finance": {
+        "title": "Banking & Financial Services",
+        "desc": "Fintech platforms, secure payment processing, and automated auditing systems."
+      },
+      "retail": {
+        "title": "Retail & E-commerce",
+        "desc": "Omnichannel commerce builders, order management platforms, and inventory pipelines."
+      },
+      "manufacturing": {
+        "title": "Advanced Manufacturing",
+        "desc": "IIoT data ingestion pipelines, supply chain visualization, and resource planning ERPs."
+      },
+      "education": {
+        "title": "Education & EdTech",
+        "desc": "Learning management platforms, student information systems, and virtual class hubs."
+      },
+      "logistics": {
+        "title": "Logistics & Supply Chain",
+        "desc": "Real-time fleet tracking, routing optimization engines, and warehouse management software."
+      },
+      "hospitality": {
+        "title": "Hospitality & Travel",
+        "desc": "Custom booking systems, guest service automation, and customer loyalty management portals."
+      },
+      "construction": {
+        "title": "Construction & Real Estate",
+        "desc": "Project management software, field collaboration tools, and property listing databases."
+      },
+      "legal": {
+        "title": "Legal Services",
+        "desc": "Document storage pipelines, contract management workflows, and billing software."
+      },
+      "pharma": {
+        "title": "Pharma & Biotech",
+        "desc": "Laboratory databases, batch production tracking, and FDA compliance reporting tools."
+      },
+      "government": {
+        "title": "Public Sector & GovTech",
+        "desc": "Citizen service portals, secure database records, and compliance auditing tools."
+      },
+      "technology": {
+        "title": "High Tech & Software",
+        "desc": "SaaS MVP architectures, cloud infrastructure automation, and software quality checks."
+      }
+    },
+    "challenges": {
+      "all": "All Challenges",
+      "cost": "Cost Reduction & Efficiency",
+      "scale": "Scale Team & Operations",
+      "migration": "Legacy System Migrations",
+      "ai": "AI Chatbot & Automation Solutions",
+      "security": "Security Assessments & Audits",
+      "reporting": "BI Reporting & Dashboards",
+      "store": "Online Stores & OMS"
+    },
+    "categories": {
+      "ai-automation": {
+        "title": "AI & Automation",
+        "desc": "Deploy generative AI solutions, RAG pipelines, and automated voice/support agents.",
+        "services": {
+          "ai-consulting": {
+            "title": "AI Consulting & Strategy",
+            "desc": "Design roadmap and architecture models for custom AI integrations.",
+            "value": "Reduces strategic latency and aligns AI systems with business metrics.",
+            "outcomes": [
+              "AI readiness score",
+              "Operational roadmap",
+              "ROI estimations"
+            ],
+            "industries": [
+              "Finance",
+              "Healthcare",
+              "Startups"
+            ]
+          },
+          "generative-ai": {
+            "title": "Generative AI Solutions",
+            "desc": "Custom generative interfaces, content creation, and agentic workflows.",
+            "value": "Speeds up content creation and customer service automation.",
+            "outcomes": [
+              "Sub-second generation latency",
+              "Automated document drafts"
+            ],
+            "industries": [
+              "Retail",
+              "Education",
+              "Large Enterprises"
+            ]
+          },
+          "ai-chatbots": {
+            "title": "AI Chatbot Development",
+            "desc": "RAG-driven chatbot engines for automated advisory or support tasks.",
+            "value": "Saves up to 60% of customer support resource costs.",
+            "outcomes": [
+              "24/7 client interactions",
+              "Sub-second response pipelines"
+            ],
+            "industries": [
+              "Retail",
+              "Healthcare",
+              "Finance"
+            ]
+          },
+          "ai-voice-agents": {
+            "title": "AI Voice Agents",
+            "desc": "Automated voice agent integrations for outbound or inbound calls.",
+            "value": "Improves client satisfaction score by eliminating hold queues.",
+            "outcomes": [
+              "Sub-second response time",
+              "Twilio integrations"
+            ],
+            "industries": [
+              "Hospitality",
+              "Logistics",
+              "SMEs"
+            ]
+          }
+        }
+      },
+      "software-development": {
+        "title": "Software Development",
+        "desc": "Enterprise CRM, ERP, and bespoke software systems designed to scale.",
+        "services": {
+          "custom-software": {
+            "title": "Custom Software Engineering",
+            "desc": "Tailor-made software to optimize workflows and replace legacy systems.",
+            "value": "Increases team productivity and eliminates licensing fees.",
+            "outcomes": [
+              "Modular source code",
+              "Modern database backplane"
+            ],
+            "industries": [
+              "Healthcare",
+              "Finance",
+              "Logistics"
+            ]
+          },
+          "enterprise-software": {
+            "title": "Enterprise Systems Integration",
+            "desc": "Scale database records, connect internal modules, and orchestrate middleware.",
+            "value": "Consolidates siloed data lakes into single dashboards.",
+            "outcomes": [
+              "Sub-second processing speeds",
+              "Zero downtime migrations"
+            ],
+            "industries": [
+              "Large Enterprises",
+              "Government",
+              "Pharma"
+            ]
+          },
+          "saas-development": {
+            "title": "SaaS Platform Development",
+            "desc": "Multi-tenant platforms, sub-second API endpoints, and Stripe billing integrations.",
+            "value": "Accelerates time-to-market for digital products.",
+            "outcomes": [
+              "Cloud-native launch-ready MVP",
+              "Sub-second API response"
+            ],
+            "industries": [
+              "Startups",
+              "SMEs",
+              "Finance"
+            ]
+          }
+        }
+      },
+      "web-development": {
+        "title": "Web Development",
+        "desc": "Corporate websites, customer portals, and admin dashboards using Next.js.",
+        "services": {
+          "corporate-websites": {
+            "title": "Corporate Websites",
+            "desc": "High-performance marketing platforms with optimized SEO structures.",
+            "value": "Increases online conversion rate and brand credibility.",
+            "outcomes": [
+              "Sub-second PageSpeed scores",
+              "Sanity CMS integration"
+            ],
+            "industries": [
+              "Finance",
+              "Legal",
+              "Real Estate"
+            ]
+          },
+          "marketplace-platforms": {
+            "title": "Marketplace & Booking Systems",
+            "desc": "Headless booking and e-commerce configurations.",
+            "value": "Automates client registrations and reduces transaction friction.",
+            "outcomes": [
+              "Fully responsive portal",
+              "Real-time calendar sync"
+            ],
+            "industries": [
+              "Retail",
+              "Logistics",
+              "Hospitality"
+            ]
+          },
+          "admin-dashboards": {
+            "title": "Admin Dashboards",
+            "desc": "Secure internal hubs with advanced telemetry and user roles.",
+            "value": "Streamlines operational tracking and credential audits.",
+            "outcomes": [
+              "Secure staff access management",
+              "Visual KPI dashboards"
+            ],
+            "industries": [
+              "Large Enterprises",
+              "Startups",
+              "Logistics"
+            ]
+          }
+        }
+      },
+      "mobile-development": {
+        "title": "Mobile Development",
+        "desc": "Native iOS/Android apps and cross-platform Flutter/React Native builds.",
+        "services": {
+          "ios": {
+            "title": "Native iOS App Development",
+            "desc": "Bespoke Swift and SwiftUI apps integrated with native capabilities.",
+            "value": "Premium user experience and high brand value.",
+            "outcomes": [
+              "App Store launch ready",
+              "Offline syncing capabilities"
+            ],
+            "industries": [
+              "Retail",
+              "Healthcare",
+              "Startups"
+            ]
+          },
+          "flutter": {
+            "title": "Cross-Platform Flutter Apps",
+            "desc": "Single codebase apps targeting iOS, Android, and web.",
+            "value": "Saves up to 40% in initial development and design budgets.",
+            "outcomes": [
+              "Single unified codebase",
+              "Consistent UI across devices"
+            ],
+            "industries": [
+              "SMEs",
+              "Logistics",
+              "Hospitality"
+            ]
+          }
+        }
+      },
+      "cloud-devops": {
+        "title": "Cloud & DevOps",
+        "desc": "AWS/Azure management, Docker containerization, and automated deployments.",
+        "services": {
+          "cloud-migration": {
+            "title": "Cloud Migration",
+            "desc": "Migrate physical servers or legacy systems to AWS or Azure.",
+            "value": "Reduces server maintenance overhead by up to 50%.",
+            "outcomes": [
+              "Zero-downtime database shift",
+              "Clear cloud billing logs"
+            ],
+            "industries": [
+              "Finance",
+              "Healthcare",
+              "Large Enterprises"
+            ]
+          },
+          "kubernetes": {
+            "title": "Kubernetes Orchestration",
+            "desc": "Containerize monolithic applications and configure auto-scaling nodes.",
+            "value": "Maintains high app availability during traffic spikes.",
+            "outcomes": [
+              "Zero-downtime rolling deploys",
+              "Automated cluster scaling"
+            ],
+            "industries": [
+              "Large Enterprises",
+              "Startups",
+              "Finance"
+            ]
+          }
+        }
+      },
+      "talent-solutions": {
+        "title": "IT & Non-IT Talent Solutions",
+        "desc": "Scale teams with permanent staffing, staff augmentation, and dedicated ODC setups.",
+        "services": {
+          "permanent-staffing": {
+            "title": "Permanent Staffing & Placement",
+            "desc": "Recruit and screen full-time technical and business personnel.",
+            "value": "Reduces recruiting time-to-hire from months to days.",
+            "outcomes": [
+              "Verified pre-screened talent profiles",
+              "Recruiting compliance checks"
+            ],
+            "industries": [
+              "Finance",
+              "Healthcare",
+              "Large Enterprises"
+            ]
+          },
+          "staff-augmentation": {
+            "title": "Staff Augmentation",
+            "desc": "Contract developers or project directors to scale internal sprints.",
+            "value": "Instantly fill skill gaps without long-term commitments.",
+            "outcomes": [
+              "Certified developer onboarding in 5 days",
+              "Flexible scaling metrics"
+            ],
+            "industries": [
+              "Startups",
+              "SMEs",
+              "Finance"
+            ]
+          }
+        }
+      },
+      "digital-transformation": {
+        "title": "Digital Transformation",
+        "desc": "Modernize legacy systems, automate manual operations, and go paperless.",
+        "services": {
+          "business-process-automation": {
+            "title": "Business Process Automation",
+            "desc": "Integrate tools like n8n, Zapier, and Python to automate document pipelines.",
+            "value": "Eliminates up to 90% of manual email and entry errors.",
+            "outcomes": [
+              "Automated email workflows",
+              "Unified telemetry feeds"
+            ],
+            "industries": [
+              "Logistics",
+              "Retail",
+              "SMEs"
+            ]
+          },
+          "digital-strategy": {
+            "title": "Digital Strategy & Consulting",
+            "desc": "Establish step-by-step technological architecture roadmaps.",
+            "value": "Ensures software builds align with actual business outcomes.",
+            "outcomes": [
+              "Technology selection blueprint",
+              "Project roadmap matrix"
+            ],
+            "industries": [
+              "Large Enterprises",
+              "Government",
+              "Finance"
+            ]
+          }
+        }
+      },
+      "data-analytics": {
+        "title": "Data & Analytics",
+        "desc": "Semantic models, Snowflake data lakes, and automated reporting platforms.",
+        "services": {
+          "power-bi": {
+            "title": "Power BI & Tableau Setup",
+            "desc": "Deploy interactive data analytics dashboards.",
+            "value": "Empowers managers to verify performance indicators in real time.",
+            "outcomes": [
+              "Executive scorecards",
+              "Automated daily emails"
+            ],
+            "industries": [
+              "Finance",
+              "Manufacturing",
+              "Large Enterprises"
+            ]
+          },
+          "data-warehousing": {
+            "title": "Cloud Data Warehousing",
+            "desc": "Structure Snowflake, BigQuery, or Redshift databases with dbt schemas.",
+            "value": "Enables query execution on billions of rows in seconds.",
+            "outcomes": [
+              "Consolidated database lakes",
+              "Tested dbt data pipelines"
+            ],
+            "industries": [
+              "Finance",
+              "Retail",
+              "Healthcare"
+            ]
+          }
+        }
+      },
+      "cybersecurity": {
+        "title": "Cybersecurity",
+        "desc": "Penetration testing, vulnerability assessments, and compliance auditing.",
+        "services": {
+          "penetration-testing": {
+            "title": "Penetration Testing",
+            "desc": "Identify vulnerability holes in APIs, networks, and web applications.",
+            "value": "Prevents data breaches and protects user credentials.",
+            "outcomes": [
+              "Mitigation report",
+              "API threat check"
+            ],
+            "industries": [
+              "Finance",
+              "Healthcare",
+              "Government"
+            ]
+          },
+          "compliance": {
+            "title": "SOC 2 & GDPR Compliance",
+            "desc": "Enforce secure database encryption and credential access audits.",
+            "value": "Enables startups to close enterprise customer sales.",
+            "outcomes": [
+              "SOC 2 compliance logs",
+              "Secure IAM configurations"
+            ],
+            "industries": [
+              "Healthcare",
+              "Finance",
+              "Large Enterprises"
+            ]
+          }
+        }
+      },
+      "ui-ux-design": {
+        "title": "UI/UX Design",
+        "desc": "UX research, interactive prototypes, and Figma design systems.",
+        "services": {
+          "design-systems": {
+            "title": "Figma Design Systems",
+            "desc": "Build scalable tokenized component libraries for developers.",
+            "value": "Speeds up frontend engineering speeds by 50%.",
+            "outcomes": [
+              "Storybook components",
+              "Consistent typography guidelines"
+            ],
+            "industries": [
+              "Startups",
+              "SMEs",
+              "Large Enterprises"
+            ]
+          },
+          "ux-research": {
+            "title": "UX Research & Prototyping",
+            "desc": "Map out wireframe screens and conduct user journey tests.",
+            "value": "Validates usability assumptions before coding starts.",
+            "outcomes": [
+              "Interactive clickable prototypes",
+              "User feedback logs"
+            ],
+            "industries": [
+              "Healthcare",
+              "Retail",
+              "Finance"
+            ]
+          }
+        }
+      },
+      "digital-marketing": {
+        "title": "Digital Marketing",
+        "desc": "Increase search traffic, manage Google Ads, and local SEO optimizations.",
+        "services": {
+          "seo": {
+            "title": "Search Engine Optimization",
+            "desc": "Improve Google ranking keywords through technical audit fixes.",
+            "value": "Generates organic high-quality business leads daily.",
+            "outcomes": [
+              "Top 10 Google keyword placement",
+              "90+ PageSpeed audits"
+            ],
+            "industries": [
+              "Retail",
+              "Legal",
+              "SMEs"
+            ]
+          }
+        }
+      },
+      "ecommerce": {
+        "title": "E-commerce Engineering",
+        "desc": "Launch WooCommerce and Shopify stores integrated with Order Management Systems.",
+        "services": {
+          "shopify": {
+            "title": "Shopify Storefronts",
+            "desc": "Build custom Shopify Liquid or headless Next.js Commerce setups.",
+            "value": "Improves checkout page conversions by up to 30%.",
+            "outcomes": [
+              "Fully integrated store",
+              "Stripe payment gateway setup"
+            ],
+            "industries": [
+              "Retail",
+              "Startups",
+              "SMEs"
+            ]
+          }
+        }
+      },
+      "technology-consulting": {
+        "title": "Technology Consulting",
+        "desc": "CTO as a Service, startup consultations, and system audits.",
+        "services": {
+          "technology-consulting-service": {
+            "title": "CTO Consulting Services",
+            "desc": "Expert oversight on database schemas, vendor vetting, and tech budgets.",
+            "value": "Prevents architectural dead-ends and technical debt.",
+            "outcomes": [
+              "System diagram blueprints",
+              "Strategic cost assessment"
+            ],
+            "industries": [
+              "Large Enterprises",
+              "Finance",
+              "Healthcare"
+            ]
+          },
+          "cto-as-a-service": {
+            "title": "CTO as a Service",
+            "desc": "On-demand executive guidance for technology strategy.",
+            "value": "Access senior leadership without full-time recruitment costs.",
+            "outcomes": [
+              "Strategic architecture plans",
+              "Engineering sprint structures"
+            ],
+            "industries": [
+              "Startups",
+              "SMEs",
+              "Finance"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "Insights": {
+    "title": "Thought Leadership",
+    "subtitle": "HyperCode consulting directors and solutions architects share perspectives, guides, and engineering patterns.",
+    "allCategories": "All Categories",
+    "readArticle": "Read Article",
+    "noArticles": "No articles found in this category.",
+    "relatedArticles": "Related Articles",
+    "share": "Share Article",
+    "newsletterTitle": "Stay Updated",
+    "newsletterSubtitle": "Subscribe to our newsletter to receive the latest insights and updates directly in your inbox.",
+    "newsletterPlaceholder": "your.email@company.com",
+    "newsletterButton": "Subscribe",
+    "newsletterSuccess": "Thank you for subscribing to HyperCode insights.",
+    "newsletterAlreadySubscribed": "You are already subscribed.",
+    "newsletterError": "Unable to subscribe right now. Please try again later."
+  },
+  "About": {
+    "title": "Building Long-Term Partnerships Through",
+    "titleHighlight": "Expertise, Innovation, and Trust",
+    "subtitle": "HyperCode is a technology and consulting firm dedicated to helping organizations solve complex business challenges through data-driven solutions, modern technology, and specialized talent.",
+    "storyTitle": "Our Story",
+    "storyP1": "HyperCode was founded with a clear objective: to bridge the gap between custom software engineering, raw data pipelines, and executive decision-making. Over the years, we have grown to become a trusted strategic partner for Fortune 500 enterprises and government agencies across the United States.",
+    "storyP2": "What sets us apart is our commitment to combining technical execution with human-centered consulting. We believe modern dashboards and databases are only as effective as the teams utilizing them.",
+    "mission": "Our Mission",
+    "missionDesc": "To empower organizations to solve complex challenges by delivering robust data architectures, modern software, and high-performing technical talent that drive sustainable growth.",
+    "vision": "Our Vision",
+    "visionDesc": "To serve as the premier consulting and talent partner of choice for organizations leveraging data and cloud technology as distinct competitive advantages, known for technical clarity and execution.",
+    "pillars": "ORGANIZATIONAL PILLARS",
+    "valuesTitle": "Our Core Values",
+    "approachTitle": "Our Approach",
+    "approachDesc": "We operate with a sprint-based, transparent consulting approach. Every engagement begins with a strict data audit and ends with mentoring loops to guarantee that your internal team fully controls the modern cloud systems we deploy.",
+    "presenceTitle": "Nationwide Presence",
+    "presenceDesc": "HyperCode supports corporate and public sector clients across the United States. With consulting resources distributed in all 50 states, we quickly mobilize Scrum teams, developers, and analysts to match your exact timeline.",
+    "whyChooseTitle": "Why Clients Choose HyperCode",
+    "whyChooseSubtitle": "We deliver engineering precision, enterprise compliance, and rapid talent deployment designed for long-term reliability.",
+    "whyChoose": {
+      "leadership": {
+        "title": "Proven Technical Leadership",
+        "desc": "Our architects and engineers bring decades of collective experience designing systems for enterprise scale and public sector security."
+      },
+      "custom": {
+        "title": "Agnostic & Scalable Solutions",
+        "desc": "We build architectures tailored to your specific system requirements, ensuring seamless data integration and zero vendor lock-in."
+      },
+      "talent": {
+        "title": "Rapid Talent Mobilization",
+        "desc": "We connect you to a vetted national pool of senior developers, data engineers, and Scrum masters ready to deploy in weeks."
+      },
+      "handover": {
+        "title": "Mentoring & Full Handover",
+        "desc": "We do not leave you dependent on us. Every engagement includes structured documentation and coaching loops for complete team handoff."
+      }
+    },
+    "stats": {
+      "projects": "250+",
+      "projectsLabel": "Projects Completed",
+      "satisfaction": "98%",
+      "satisfactionLabel": "Client Satisfaction",
+      "consultants": "1,200+",
+      "consultantsLabel": "Consultants Placed",
+      "experience": "15+",
+      "experienceLabel": "Years Combined Expertise"
+    },
+    "values": {
+      "integrity": {
+        "title": "Integrity",
+        "desc": "Honesty, compliance, and absolute transparency in all systems we architect and teams we deploy."
+      },
+      "innovation": {
+        "title": "Innovation",
+        "desc": "Continuously researching modern cloud databases and analytical tools to keep clients ahead."
+      },
+      "partnership": {
+        "title": "Partnership",
+        "desc": "Treating client teams as our own, offering direct mentoring loops and post-deployment reviews."
+      },
+      "excellence": {
+        "title": "Excellent",
+        "desc": "Delivering high-performance, secure, and compliance-vetted systems that pass strict audits."
       }
     }
   },
@@ -672,5 +1203,136 @@
         "content": "In order to resolve a complaint regarding the site or to receive further information regarding use of the site, please contact us:\n\n• By email: legal@hypercodeus.com\n\n• By mail: 2095 Hammond Dr Suite B, Schaumburg, IL 60173"
       }
     }
+  },
+  "WhyHypercode": {
+    "badge": "Why HyperCode",
+    "title": "Engineering Excellence, Strategic Partnership",
+    "desc": "We differ from standard IT & Non-IT staffing and development shops. We treat client architectures as our own, incorporating rigorous security checks and mentoring loops to ensure total operational handover.",
+    "stats": {
+      "projects": "Projects Completed",
+      "satisfaction": "Client Satisfaction",
+      "consultants": "Consultants Placed"
+    }
+  },
+  "CaseStudies": {
+    "badge": "CASE STUDY",
+    "title": "Featured Success Story",
+    "subtitle": "Learn how we help enterprise organizations resolve data blockages and configure scalable architectures.",
+    "featuredLabel": "FEATURED SUCCESS STORY",
+    "challenge": "Challenge",
+    "solution": "Solution",
+    "outcome": "Outcome",
+    "story": {
+      "category": "FEATURED SUCCESS STORY",
+      "title": "Data Warehouse Modernization",
+      "subtitle": "HIPAA Cloud Consolidation",
+      "challengeText": "Patient records across 15 separate locations were fragmented in legacy databases, creating analysis delays and HIPAA audit concerns.",
+      "solutionText": "Consolidated all databases into a secure, HIPAA-compliant Snowflake data lakehouse using Azure data integration pipelines.",
+      "outcomeText": "Reduced data ingestion times by 200%, saved $3.2M in annual database overhead, and secured 100% compliance audit marks."
+    }
+  },
+  "CTA": {
+    "title": "Ready to Transform Your Technology Stack?",
+    "subtitle": "Schedule a direct session with a HyperCode solutions architect to review your database schemas or application pipeline requirements.",
+    "button": "Schedule Consultation"
+  },
+  "Careers": {
+    "title": "Build the Future of Data & Web Engineering",
+    "subtitle": "Join a team of expert software engineers, solutions architects, and analytics directors building modern systems.",
+    "benefitsTitle": "Why Work at HyperCode?",
+    "benefits": {
+      "projects": {
+        "title": "High-Impact Projects",
+        "desc": "Work directly with Fortune 500 companies and government agencies on business-critical cloud migrations and software implementations."
+      },
+      "growth": {
+        "title": "Continuous Learning",
+        "desc": "Access paid certifications, engineering bootcamps, and structured mentoring pathways to advance your technical skills."
+      },
+      "flexibility": {
+        "title": "Remote-First Environment",
+        "desc": "We embrace distributed collaboration, providing top-tier hardware configurations and flexible working setups."
+      },
+      "compensation": {
+        "title": "Competitive Compensation",
+        "desc": "Enjoy premium healthcare, employer matched 401(k), paid time off, and annual performance-driven bonuses."
+      }
+    },
+    "openPositions": "CURRENT OPENING",
+    "positionsTitle": "Join Our Team",
+    "positions": {
+      "bdm": {
+        "title": "Business Development Manager",
+        "desc": "Drive growth and expand our client base by identifying new business opportunities and building strategic partnerships."
+      }
+    },
+    "applyNow": "Apply Now",
+    "faqTitle": "Frequently Asked Questions",
+    "faq": {
+      "q1": "What is the typical interview process like?",
+      "a1": "Our interview pipeline is structured to verify technical skills and project fit. It starts with an initial recruiter call, followed by a live system architecture discussion with an engineering lead, and concludes with a team alignment review.",
+      "q2": "Do you support visa sponsorships?",
+      "a2": "Yes, for specific senior technical roles, we support H-1B transfers and green card sponsorship based on project requirements and technical skill levels.",
+      "q3": "What training resources do you provide?",
+      "a3": "We offer full financial sponsorship for cloud certifications (AWS, Azure, Snowflake, Databricks), access to enterprise learning platforms, and structured internal training sessions led by our Practice Directors."
+    }
+  },
+  "Solutions": {
+    "title": "Our Solutions",
+    "subtitle": "Enterprise-grade technology consulting and analytical systems designed for high availability and growth.",
+    "tabOverview": "Overview",
+    "tabServices": "Detailed Services",
+    "businessAnalysis": {
+      "title": "Business Analysis",
+      "subtitle": "Translating Enterprise Objectives into Technology Strategy",
+      "p1": "We collaborate with leadership to map corporate workflows, define database metrics, and plan application roadmaps.",
+      "p2": "Our analysts provide the logical link between software development and core business value."
+    },
+    "technologyConsulting": {
+      "title": "Technology Consulting",
+      "subtitle": "Strategic Tech Stack Architecture Audits",
+      "p1": "We review cloud security structures, evaluate database licensing costs, and compare cloud solutions like Snowflake vs Fabric.",
+      "p2": "We help CIOs select tech stacks that balance developer speed, licensing costs, and compute scaling."
+    },
+    "agileProject": {
+      "title": "Agile Project Management",
+      "subtitle": "Iterative Sprint Execution",
+      "p1": "We deploy certified Scrum Masters to run agile pipelines, clear developer blocks, and keep migrations on track.",
+      "p2": "We combine rigorous project management with full transparency for predictable, on-time project deliveries."
+    }
+  },
+  "Staffing": {
+    "title": "IT & Non-IT Staffing & Augmentation",
+    "subtitle": "Accelerate development and database migrations with verified cloud engineering, software, and Scrum talent.",
+    "whyStaffingTitle": "Scale Your Engineering Team Instantly",
+    "whyStaffingDesc": "HyperCode provides flexible hiring arrangements to match your project timelines and budget limits. Our active database contains over 10,000 pre-screened, certified technology specialists across the US.",
+    "contract": {
+      "title": "Contract Staffing",
+      "subtitle": "Flexible Resource Allocation",
+      "p1": "Deploy specialized engineers for 6-to-18-month projects to execute database migrations or frontend rebuilds without long-term overhead.",
+      "p2": "We manage payroll, compliance, and benefits, while you focus on project execution."
+    },
+    "directPlacement": {
+      "title": "Direct Placement",
+      "subtitle": "Strategic Talent Sourcing",
+      "p1": "Let our technical recruiters locate, pre-vet, and place permanent engineering leads or directors in your division.",
+      "p2": "We verify technical skills and team alignment, lowering hiring risk."
+    },
+    "augmentedTitle": "Augmented Developer Capabilities",
+    "augmentedSubtitle": "Our talent pool contains certified experts in modern cloud platforms, analytical modeling, and custom web frameworks.",
+    "timelineTitle": "Hiring Timeline",
+    "timelineSubtitle": "Our structured talent placement pipeline ensures we deploy matching resources in days, not months."
+  },
+  "NotFound": {
+    "title": "Page Not Found",
+    "subtitle": "The page you are looking for does not exist or has been moved.",
+    "button": "Go Home"
+  },
+  "cta": {
+    "badge": "GET IN TOUCH",
+    "heading": "Ready to Empower Your Business Through Data, Technology, and Talent?",
+    "description": "Whether you need to design high-performance web applications, optimize BI dashboards, or scale your engineering teams, HyperCode has the expertise to deliver.",
+    "primaryButton": "SCHEDULE CONSULTATION",
+    "secondaryButton": "CONTACT HYPERCODE"
   }
 }

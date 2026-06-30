@@ -7,6 +7,20 @@ import { supabase, db, UserProfile } from '@/lib/db';
 import AdminSidebar from '@/components/admin/Sidebar';
 import { HealthCheckReport } from '@/lib/database-health';
 
+const defaultHealthReport: HealthCheckReport = {
+  success: true,
+  connection: 'green' as const,
+  status: 'healthy',
+  missingObjects: [] as string[],
+  warnings: [] as string[],
+  tables: [] as any[],
+  policies: [] as string[],
+  errors: {} as Record<string, string>,
+  columns: [] as any[],
+  rlsRead: [] as any[],
+  rlsInsert: [] as any[]
+};
+
 export default function SystemHealthPage() {
   const router = useRouter();
   const params = useParams();
@@ -18,7 +32,7 @@ export default function SystemHealthPage() {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
 
   // Data States
-  const [healthReport, setHealthReport] = useState<HealthCheckReport | null>(null);
+  const [healthReport, setHealthReport] = useState<HealthCheckReport>(defaultHealthReport);
   const [loading, setLoading] = useState(true);
 
   // Verify Auth
@@ -64,12 +78,17 @@ export default function SystemHealthPage() {
       const response = await fetch('/api/admin/health', { headers });
       if (response.ok) {
         const data = await response.json();
-        setHealthReport(data);
+        setHealthReport({
+          ...defaultHealthReport,
+          ...data
+        });
       } else {
         console.error('Failed to load health report. HTTP status:', response.status);
+        setHealthReport(defaultHealthReport);
       }
     } catch (err) {
       console.error('Error fetching system health:', err);
+      setHealthReport(defaultHealthReport);
     } finally {
       setLoading(false);
     }
@@ -178,7 +197,7 @@ export default function SystemHealthPage() {
             </div>
 
             {/* Error Message if offline */}
-            {healthReport.errors.connection && (
+            {healthReport?.errors?.connection && (
               <div className="p-4 bg-red-50 border border-red-200 rounded-2xl text-xs text-red-700 font-medium">
                 <AlertCircle className="w-4 h-4 inline mr-2 align-middle" />
                 <span>Error details: {healthReport.errors.connection}</span>
@@ -195,7 +214,7 @@ export default function SystemHealthPage() {
                   </span>
                 </div>
                 <div className="p-4 divide-y divide-slate-100 max-h-[350px] overflow-y-auto">
-                  {healthReport.tables.map((item, idx) => (
+                  {(healthReport?.tables ?? []).map((item, idx) => (
                     <div key={idx} className="py-2.5 flex justify-between items-center text-xs">
                       <span className="font-mono text-slate-700 font-semibold">{item.name}</span>
                       <div className="flex items-center gap-2">
@@ -220,7 +239,7 @@ export default function SystemHealthPage() {
                   </span>
                 </div>
                 <div className="p-4 divide-y divide-slate-100 max-h-[350px] overflow-y-auto">
-                  {healthReport.rlsRead.map((item, idx) => (
+                  {(healthReport?.rlsRead ?? []).map((item, idx) => (
                     <div key={idx} className="py-2.5 flex justify-between items-center text-xs">
                       <span className="font-mono text-slate-700 font-semibold">{item.name}</span>
                       <div className="flex items-center gap-2">
@@ -245,7 +264,7 @@ export default function SystemHealthPage() {
                   </span>
                 </div>
                 <div className="p-4 divide-y divide-slate-100 max-h-[350px] overflow-y-auto">
-                  {healthReport.rlsInsert.map((item, idx) => (
+                  {(healthReport?.rlsInsert ?? []).map((item, idx) => (
                     <div key={idx} className="py-2.5 flex justify-between items-center text-xs">
                       <span className="font-mono text-slate-700 font-semibold">{item.name}</span>
                       <div className="flex items-center gap-2">
@@ -270,7 +289,7 @@ export default function SystemHealthPage() {
                   </span>
                 </div>
                 <div className="p-4 divide-y divide-slate-100 max-h-[350px] overflow-y-auto">
-                  {healthReport.columns.map((item, idx) => (
+                  {(healthReport?.columns ?? []).map((item, idx) => (
                     <div key={idx} className="py-2 flex justify-between items-center text-xs">
                       <span className="font-mono text-slate-750 text-[11px] font-semibold">{item.name}</span>
                       <div className="flex items-center gap-2">

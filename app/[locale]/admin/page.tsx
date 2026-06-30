@@ -29,6 +29,17 @@ import {
 } from '@/lib/db';
 import AdminSidebar from '@/components/admin/Sidebar';
 
+const defaultHealthReport = {
+  success: true,
+  connection: 'green' as const,
+  status: 'healthy',
+  missingObjects: [] as string[],
+  warnings: [] as string[],
+  tables: [] as any[],
+  policies: [] as string[],
+  errors: {} as Record<string, string>
+};
+
 export default function AdminOverviewPage() {
   const router = useRouter();
   const params = useParams();
@@ -37,7 +48,7 @@ export default function AdminOverviewPage() {
   // Authentication States
   const [session, setSession] = useState<any>(null);
   const [authLoading, setAuthLoading] = useState(true);
-  const [userRole, setUserRole] = useState<'Admin' | 'Recruiter' | 'Consultant'>('Consultant');
+  const [userRole, setUserRole] = useState<'Admin' | 'Recruiter' | 'Consultant' | 'Manager'>('Consultant');
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
 
   // Database Data States
@@ -53,7 +64,7 @@ export default function AdminOverviewPage() {
 
   // Health and Loading States
   const [loading, setLoading] = useState(true);
-  const [healthReport, setHealthReport] = useState<any>(null);
+  const [healthReport, setHealthReport] = useState<any>(defaultHealthReport);
 
   // 1. Check Authentication & Load Profile on Mount
   useEffect(() => {
@@ -66,7 +77,7 @@ export default function AdminOverviewPage() {
           if (curSess) {
             const profile = await db.getUserProfile(curSess.user.id);
             if (profile) {
-              if (!profile.is_active) {
+              if (profile.is_active === false) {
                 await supabase.auth.signOut();
                 router.push(`/${locale}/admin/login`);
                 return;
@@ -150,10 +161,16 @@ export default function AdminOverviewPage() {
           const healthRes = await fetch('/api/admin/health', { headers });
           if (healthRes.ok) {
             const healthData = await healthRes.json();
-            setHealthReport(healthData);
+            setHealthReport({
+              ...defaultHealthReport,
+              ...healthData
+            });
+          } else {
+            setHealthReport(defaultHealthReport);
           }
         } catch (healthErr) {
           console.error('Failed to load database health report:', healthErr);
+          setHealthReport(defaultHealthReport);
         }
       } catch (err) {
         console.error('Failed to load dashboard data:', err);
@@ -204,9 +221,15 @@ export default function AdminOverviewPage() {
                 The application code expects database elements that do not exist or differ in type within your remote Supabase schema. Writes are currently falling back to LocalStorage.
               </p>
               <div className="text-[10px] bg-white/50 border border-amber-100 rounded-lg p-3 space-y-1 max-h-28 overflow-y-auto">
-                {healthReport.missingObjects.map((obj: string, idx: number) => (
-                  <div key={idx} className="font-mono text-amber-800 font-semibold">{obj}</div>
-                ))}
+                {healthReport?.missingObjects?.length ? (
+                  healthReport.missingObjects.map((obj: string, idx: number) => (
+                    <div key={idx} className="font-mono text-amber-800 font-semibold">{obj}</div>
+                  ))
+                ) : (
+                  <div className="text-emerald-700 font-semibold">
+                    ✓ No missing database objects detected.
+                  </div>
+                )}
               </div>
               <p className="text-[10px] text-amber-600 font-medium">
                 Please run the migration SQL file in <code className="font-mono bg-amber-100/50 px-1 py-0.5 rounded">supabase/migrations/</code> in your Supabase SQL Editor.

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
-import { getSupabaseServer } from '@/lib/supabase-server';
+import { db } from '@/lib/db';
 import { Resend } from 'resend';
 
 // Initialize Resend
@@ -17,6 +17,15 @@ const contactSchema = z.object({
   message: z.string().min(10),
   source: z.string().optional().default('website'),
   locale: z.string().optional().default('en'),
+  services: z.array(z.string()).optional().default([]),
+  industry: z.string().optional().default(''),
+  companySize: z.string().optional().default(''),
+  budget: z.string().optional().default(''),
+  timeline: z.string().optional().default(''),
+  country: z.string().optional().default(''),
+  preferredContactMethod: z.string().optional().default(''),
+  projectType: z.string().optional().default(''),
+  requiredTechnologies: z.array(z.string()).optional().default([]),
 });
 
 export async function POST(req: Request) {
@@ -24,53 +33,41 @@ export async function POST(req: Request) {
     const body = await req.json();
     const validated = contactSchema.parse(body);
 
-    let savedData = null;
-    const supabaseServer = getSupabaseServer();
-
-    // 1. Save to Supabase if configured
-    if (supabaseServer) {
-      const { data, error } = await supabaseServer
-        .from('contact_inquiries')
-        .insert([{
-          full_name: validated.name,
-          company: validated.company,
-          email: validated.email,
-          phone: validated.phone,
-          subject: validated.subject,
-          message: validated.message,
-          status: 'new',
-          source: validated.source
-        }])
-        .select()
-        .single();
-
-      if (error) {
-        console.error('Supabase contact insert error:', error);
-        return NextResponse.json({ error: 'Database save failed' }, { status: 500 });
+    // Save to Supabase using db client
+    const savedData = await db.saveContactInquiry(
+      validated.name,
+      validated.company,
+      validated.email,
+      validated.phone,
+      validated.subject,
+      validated.message,
+      validated.source,
+      {
+        services: validated.services,
+        industry: validated.industry,
+        company_size: validated.companySize,
+        budget: validated.budget,
+        timeline: validated.timeline,
+        country: validated.country,
+        preferred_contact_method: validated.preferredContactMethod,
+        project_type: validated.projectType,
+        required_technologies: validated.requiredTechnologies
       }
-      savedData = data;
-    } else {
-      console.warn('Supabase is not configured. Running in mock offline mode.');
-      savedData = {
-        id: 'mock-' + Math.random().toString(36).substring(2, 9),
-        created_at: new Date().toISOString(),
-        ...validated
-      };
-    }
+    );
 
-    // 2. Trigger Email Notification via Resend
+    // Trigger Email Notification via Resend
     if (resend) {
       try {
         // A. Email to HyperCode team
         const adminEmailHtml = `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc;">
             <div style="background-color: #0f4c81; color: white; padding: 15px; border-radius: 6px; text-align: center;">
-              <h2 style="margin: 0; font-size: 20px;">New Contact Inquiry Received</h2>
+              <h2 style="margin: 0; font-size: 20px;">New Enterprise Contact Inquiry</h2>
             </div>
             <div style="padding: 20px 10px; color: #1e293b; line-height: 1.6;">
               <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
                 <tr>
-                  <td style="padding: 8px 0; font-weight: bold; width: 120px; color: #475569;">Name:</td>
+                  <td style="padding: 8px 0; font-weight: bold; width: 150px; color: #475569;">Name:</td>
                   <td style="padding: 8px 0;">${validated.name}</td>
                 </tr>
                 <tr>
@@ -83,15 +80,43 @@ export async function POST(req: Request) {
                 </tr>
                 <tr>
                   <td style="padding: 8px 0; font-weight: bold; color: #475569;">Company:</td>
-                  <td style="padding: 8px 0;">${validated.company}</td>
+                  <td style="padding: 8px 0;">${validated.company} (${validated.companySize || 'Unknown size'})</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0; font-weight: bold; color: #475569;">Industry:</td>
+                  <td style="padding: 8px 0;">${validated.industry || 'Not specified'}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0; font-weight: bold; color: #475569;">Country:</td>
+                  <td style="padding: 8px 0;">${validated.country || 'Not specified'}</td>
                 </tr>
                 <tr>
                   <td style="padding: 8px 0; font-weight: bold; color: #475569;">Subject:</td>
                   <td style="padding: 8px 0; font-weight: bold;">${validated.subject}</td>
                 </tr>
                 <tr>
-                  <td style="padding: 8px 0; font-weight: bold; color: #475569;">Source:</td>
-                  <td style="padding: 8px 0;"><span style="background-color: #e2e8f0; padding: 2px 6px; border-radius: 4px; font-size: 11px;">${validated.source}</span></td>
+                  <td style="padding: 8px 0; font-weight: bold; color: #475569;">Services Requested:</td>
+                  <td style="padding: 8px 0;">${validated.services.join(', ') || 'None selected'}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0; font-weight: bold; color: #475569;">Project Type:</td>
+                  <td style="padding: 8px 0;">${validated.projectType || 'Not specified'}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0; font-weight: bold; color: #475569;">Budget Range:</td>
+                  <td style="padding: 8px 0; font-weight: bold; color: #0f4c81;">${validated.budget || 'Not specified'}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0; font-weight: bold; color: #475569;">Timeline:</td>
+                  <td style="padding: 8px 0;">${validated.timeline || 'Not specified'}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0; font-weight: bold; color: #475569;">Technologies:</td>
+                  <td style="padding: 8px 0;">${validated.requiredTechnologies.join(', ') || 'None selected'}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0; font-weight: bold; color: #475569;">Contact Method:</td>
+                  <td style="padding: 8px 0;">${validated.preferredContactMethod || 'Email'}</td>
                 </tr>
               </table>
               <div style="background-color: white; border: 1px solid #cbd5e1; border-radius: 6px; padding: 15px; margin-top: 10px; white-space: pre-wrap;">
@@ -100,7 +125,7 @@ export async function POST(req: Request) {
               </div>
             </div>
             <div style="text-align: center; font-size: 11px; color: #94a3b8; margin-top: 20px; border-top: 1px solid #e2e8f0; padding-top: 15px;">
-              This is an automated alert from the HyperCode Platform.
+              This is an automated alert from the HyperCode Enterprise Platform.
             </div>
           </div>
         `;
@@ -135,7 +160,7 @@ export async function POST(req: Request) {
               </div>
               <p>Atentamente,</p>
               <p style="margin: 0; font-weight: bold; color: #0f4c81;">Equipo de Comunicaciones de HyperCode</p>
-              <p style="margin: 0; font-size: 12px; color: #64748b;">Schaumburg, IL</p>
+              <p style="margin: 0; font-size: 12px; color: #64748b;">San Francisco, CA</p>
             </div>
           </div>
         ` : `
@@ -155,13 +180,11 @@ export async function POST(req: Request) {
               </div>
               <p>Best regards,</p>
               <p style="margin: 0; font-weight: bold; color: #0f4c81;">HyperCode Communications Team</p>
-              <p style="margin: 0; font-size: 12px; color: #64748b;">Schaumburg, IL</p>
+              <p style="margin: 0; font-size: 12px; color: #64748b;">San Francisco, CA</p>
             </div>
           </div>
         `;
 
-        // Send confirmation to user (using onboarding sandbox to support trial keys,
-        // but if they have custom domain, they can customize sending)
         await resend.emails.send({
           from: 'HyperCode Team <onboarding@resend.dev>',
           to: validated.email,
@@ -170,10 +193,7 @@ export async function POST(req: Request) {
         });
       } catch (emailErr) {
         console.error('Resend contact email error:', emailErr);
-        // Do not fail request just because email failed
       }
-    } else {
-      console.warn('Resend email client is not configured.');
     }
 
     return NextResponse.json({ success: true, data: savedData });

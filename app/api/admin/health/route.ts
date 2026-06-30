@@ -27,7 +27,7 @@ export async function GET(req: Request) {
     // Fetch user profile role
     const { data: profile, error: profileError } = await supabaseServer
       .from('user_profiles')
-      .select('role, is_active')
+      .select('*')
       .eq('id', user.id)
       .single();
 
@@ -35,7 +35,7 @@ export async function GET(req: Request) {
       return NextResponse.json({ error: 'User profile not found' }, { status: 403 });
     }
 
-    if (!profile.is_active) {
+    if (profile.is_active === false) {
       return NextResponse.json({ error: 'Account is deactivated' }, { status: 403 });
     }
 
@@ -48,6 +48,18 @@ export async function GET(req: Request) {
     const report = await runDbHealthCheck();
     return NextResponse.json(report);
   } catch (err: any) {
-    return NextResponse.json({ error: err.message || String(err) }, { status: 500 });
+    return NextResponse.json({
+      success: false,
+      connection: 'red',
+      tables: [],
+      columns: [],
+      rlsRead: [],
+      rlsInsert: [],
+      errors: { general: err.message || String(err) },
+      status: 'unhealthy',
+      missingObjects: [],
+      warnings: [err.message || String(err)],
+      policies: []
+    });
   }
 }

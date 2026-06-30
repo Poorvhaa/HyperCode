@@ -22,7 +22,7 @@ async function checkAuth(req: Request) {
 
   const { data: profile, error: profileError } = await supabaseServer
     .from('user_profiles')
-    .select('role, is_active')
+    .select('*')
     .eq('id', user.id)
     .single();
 
@@ -30,7 +30,7 @@ async function checkAuth(req: Request) {
     return { error: 'User profile not found', status: 403 };
   }
 
-  if (!profile.is_active) {
+  if (profile.is_active === false) {
     return { error: 'Account is deactivated', status: 403 };
   }
 

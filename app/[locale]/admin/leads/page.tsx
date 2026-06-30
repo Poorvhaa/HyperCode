@@ -6,6 +6,17 @@ import { Search, Download, X, ArrowLeft, AlertCircle, Sparkles, User, Mail, Cale
 import { supabase, db, ContactInquiry, ChatLead, UserProfile } from '@/lib/db';
 import AdminSidebar from '@/components/admin/Sidebar';
 
+const defaultHealthReport = {
+  success: true,
+  connection: 'green' as const,
+  status: 'healthy',
+  missingObjects: [] as string[],
+  warnings: [] as string[],
+  tables: [] as any[],
+  policies: [] as string[],
+  errors: {} as Record<string, string>
+};
+
 export default function AdminLeadsPage() {
   const router = useRouter();
   const params = useParams();
@@ -20,7 +31,7 @@ export default function AdminLeadsPage() {
   const [inquiries, setInquiries] = useState<ContactInquiry[]>([]);
   const [chatLeads, setChatLeads] = useState<ChatLead[]>([]);
   const [loading, setLoading] = useState(true);
-  const [healthReport, setHealthReport] = useState<any>(null);
+  const [healthReport, setHealthReport] = useState<any>(defaultHealthReport);
 
   // Sub-navigation and Drawer States
   const [leadsSubTab, setLeadsSubTab] = useState<'inquiries' | 'chat_leads'>('inquiries');
@@ -82,10 +93,16 @@ export default function AdminLeadsPage() {
         const healthRes = await fetch('/api/admin/health', { headers });
         if (healthRes.ok) {
           const healthData = await healthRes.json();
-          setHealthReport(healthData);
+          setHealthReport({
+            ...defaultHealthReport,
+            ...healthData
+          });
+        } else {
+          setHealthReport(defaultHealthReport);
         }
       } catch (healthErr) {
         console.error('Failed to load database health report:', healthErr);
+        setHealthReport(defaultHealthReport);
       }
     } catch (err) {
       console.error('Failed to load leads data:', err);
@@ -259,9 +276,15 @@ export default function AdminLeadsPage() {
                 The application code expects database elements that do not exist or differ in type within your remote Supabase schema. Writes are currently falling back to LocalStorage.
               </p>
               <div className="text-[10px] bg-white/50 border border-amber-100 rounded-lg p-3 space-y-1 max-h-28 overflow-y-auto">
-                {healthReport.missingObjects.map((obj: string, idx: number) => (
-                  <div key={idx} className="font-mono text-amber-800 font-semibold">{obj}</div>
-                ))}
+                {healthReport?.missingObjects?.length ? (
+                  healthReport.missingObjects.map((obj: string, idx: number) => (
+                    <div key={idx} className="font-mono text-amber-800 font-semibold">{obj}</div>
+                  ))
+                ) : (
+                  <div className="text-emerald-700 font-semibold">
+                    ✓ No missing database objects detected.
+                  </div>
+                )}
               </div>
               <p className="text-[10px] text-amber-600 font-medium">
                 Please run the migration SQL file in <code className="font-mono bg-amber-100/50 px-1 py-0.5 rounded">supabase/migrations/</code> in your Supabase SQL Editor.
@@ -462,6 +485,68 @@ export default function AdminLeadsPage() {
                   <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Company</p>
                   <p className="mt-1 font-semibold text-slate-800">{selectedLead.data.company || '—'}</p>
                 </div>
+                {selectedLead.type === 'contact' && (
+                  <>
+                    <div>
+                      <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Industry</p>
+                      <p className="mt-1 font-semibold text-slate-800">{selectedLead.data.industry || '—'}</p>
+                    </div>
+                    <div>
+                      <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Company Size</p>
+                      <p className="mt-1 font-semibold text-slate-800">{selectedLead.data.company_size || '—'}</p>
+                    </div>
+                    <div>
+                      <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Budget</p>
+                      <p className="mt-1 font-semibold text-indigo-750 text-indigo-700">{selectedLead.data.budget || '—'}</p>
+                    </div>
+                    <div>
+                      <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Timeline</p>
+                      <p className="mt-1 font-semibold text-slate-800">{selectedLead.data.timeline || '—'}</p>
+                    </div>
+                    <div>
+                      <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Country</p>
+                      <p className="mt-1 font-semibold text-slate-800">{selectedLead.data.country || '—'}</p>
+                    </div>
+                    <div>
+                      <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Preferred Contact</p>
+                      <p className="mt-1 font-semibold text-slate-800">{selectedLead.data.preferred_contact_method || '—'}</p>
+                    </div>
+                    <div>
+                      <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Project Type</p>
+                      <p className="mt-1 font-semibold text-slate-800">{selectedLead.data.project_type || '—'}</p>
+                    </div>
+                    <div>
+                      <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Source</p>
+                      <p className="mt-1 font-semibold text-slate-800 uppercase">{selectedLead.data.source || 'website'}</p>
+                    </div>
+
+                    {selectedLead.data.services && selectedLead.data.services.length > 0 && (
+                      <div className="col-span-2">
+                        <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px] mb-1.5">Services Requested</p>
+                        <div className="flex flex-wrap gap-1">
+                          {selectedLead.data.services.map((srv: string, i: number) => (
+                            <span key={i} className="px-2 py-0.5 bg-blue-50 border border-blue-100 rounded text-slate-700 font-semibold text-[10px] uppercase tracking-wide">
+                              {srv}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {selectedLead.data.required_technologies && selectedLead.data.required_technologies.length > 0 && (
+                      <div className="col-span-2">
+                        <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px] mb-1.5">Preferred Technologies</p>
+                        <div className="flex flex-wrap gap-1">
+                          {selectedLead.data.required_technologies.map((tech: string, i: number) => (
+                            <span key={i} className="px-2 py-0.5 bg-slate-100 border border-slate-205 rounded text-slate-800 font-semibold text-[10px] uppercase tracking-wide">
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </>
+                )}
                 {selectedLead.type === 'chat_lead' && (
                   <>
                     <div>

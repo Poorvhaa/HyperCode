@@ -42,19 +42,46 @@ export default function AdminLoginPage() {
 
         if (data?.user) {
           // Fetch profile and check role & status
-          const profile = await db.getUserProfile(data.user.id);
+          let profile = await db.getUserProfile(data.user.id);
           
           if (!profile) {
-            // Auto create default profile if not exists (fallback)
-            const defProfile = await db.saveUserProfile(data.user.id, data.user.email || email, 'Consultant');
-            router.push(`/${locale}/admin`);
-          } else if (!profile.is_active) {
+            try {
+              // Auto create default profile if not exists
+              profile = await db.saveUserProfile(data.user.id, data.user.email || email, 'Consultant');
+              if (!profile) {
+                setError(locale === 'es' ? 'Su cuenta existe pero no se ha configurado ningún perfil.' : 'Your account exists but no profile is configured.');
+                await supabase.auth.signOut();
+                setLoading(false);
+                return;
+              }
+            } catch (createErr) {
+              console.error('Failed to auto-create profile:', createErr);
+              setError(locale === 'es' ? 'No se encontró perfil de administrador.' : 'No administrator profile found.');
+              await supabase.auth.signOut();
+              setLoading(false);
+              return;
+            }
+          }
+
+          // Validate role
+          const validRoles = ['Admin', 'Recruiter', 'Consultant', 'Manager'];
+          if (!profile.role || !validRoles.includes(profile.role)) {
+            setError(locale === 'es' ? 'Rol de administrador no válido.' : 'Invalid administrator role.');
+            await supabase.auth.signOut();
+            setLoading(false);
+            return;
+          }
+
+          // Check is_active safely
+          if (profile.is_active === false) {
             setError(locale === 'es' ? 'Su cuenta ha sido desactivada. Póngase en contacto con el administrador.' : 'Your account has been deactivated. Please contact an admin.');
             await supabase.auth.signOut();
-          } else {
-            // User is active and has a valid role
-            router.push(`/${locale}/admin`);
+            setLoading(false);
+            return;
           }
+
+          // Successful authentication, redirect to admin panel
+          router.push(`/${locale}/admin`);
         }
       } else {
         // Fallback Mock Local Auth

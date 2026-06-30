@@ -37,26 +37,32 @@ const getCompactChipLabel = (prompt: string, locale: string): string => {
   const p = prompt.toLowerCase();
   const isEs = locale === 'es';
 
-  if (p.includes('ai solutions') || p.includes('inteligencia artificial') || p.includes('soluciones de ia')) {
-    return isEs ? 'Soluciones de IA' : 'AI Solutions';
+  if (p.includes('chatbot') || p.includes('ia')) {
+    return isEs ? 'Chatbot de IA' : 'AI Chatbot';
   }
-  if (p.includes('hire talent') || p.includes('staffing') || p.includes('talento') || p.includes('contratar')) {
-    return isEs ? 'Contratar Talento' : 'Hire Talent';
+  if (p.includes('erp') || p.includes('software')) {
+    return isEs ? 'Software ERP' : 'ERP Software';
   }
-  if (p.includes('web development') || p.includes('website') || p.includes('desarrollo web') || p.includes('sitio web') || p.includes('web dev')) {
-    return isEs ? 'Desarrollo Web' : 'Website Development';
+  if (p.includes('cloud') || p.includes('migration') || p.includes('nube')) {
+    return isEs ? 'Migrar a Nube' : 'Cloud Migration';
   }
-  if (p.includes('consultation') || p.includes('consulta') || p.includes('schedule') || p.includes('programar') || p.includes('book')) {
+  if (p.includes('developers') || p.includes('desarrolladores') || p.includes('talent')) {
+    return isEs ? 'Contratar Talento' : 'Hire Developers';
+  }
+  if (p.includes('cto') || p.includes('virtual cto')) {
+    return isEs ? 'Consultoría CTO' : 'CTO Consulting';
+  }
+  if (p.includes('cyber') || p.includes('seguridad') || p.includes('pentest')) {
+    return isEs ? 'Ciberseguridad' : 'Cyber Assessment';
+  }
+  if (p.includes('power bi') || p.includes('dashboard') || p.includes('analytics')) {
+    return isEs ? 'Power BI / Tableros' : 'Power BI Dashboards';
+  }
+  if (p.includes('shopify') || p.includes('store') || p.includes('tienda')) {
+    return isEs ? 'Tienda Shopify' : 'Shopify Store';
+  }
+  if (p.includes('consultation') || p.includes('consulta')) {
     return isEs ? 'Consulta' : 'Consultation';
-  }
-  if (p.includes('services') || p.includes('servicios') || p.includes('explore')) {
-    return isEs ? 'Servicios' : 'Services';
-  }
-  if (p.includes('how do we start') || p.includes('cómo empezamos') || p.includes('como empezamos')) {
-    return isEs ? 'Comenzar' : 'Get Started';
-  }
-  if (p.includes('qualify') || p.includes('calificar')) {
-    return isEs ? 'Calificar Proyecto' : 'Qualify Project';
   }
 
   if (prompt.length > 20) {
@@ -140,12 +146,18 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
     }
   };
 
-  const getDefaultPrompts = () => [
-    getSafeTranslation('suggestedPrompts.0', "Tell me about your AI solutions"),
-    getSafeTranslation('suggestedPrompts.1', "Help me hire talent"),
-    getSafeTranslation('suggestedPrompts.2', "I need a web development team"),
-    getSafeTranslation('suggestedPrompts.3', "I want a consultation")
-  ];
+  const getDefaultPrompts = () => {
+    try {
+      const raw = t.raw('suggestedPrompts');
+      if (Array.isArray(raw)) return raw;
+    } catch {}
+    return [
+      "I need an AI chatbot",
+      "I want ERP software",
+      "I need dedicated developers",
+      "I want CTO consulting"
+    ];
+  };
 
   // 1. Initialize Session ID and Load Chat
   useEffect(() => {
@@ -158,15 +170,22 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
     setSuggestedPrompts(getDefaultPrompts());
   }, [t]);
 
-  // 2. Keyboard ESC Support
+  // 2. Keyboard ESC Support & Custom Open Event
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setWindowState('closed');
       }
     };
+    const handleOpenChat = () => {
+      setWindowState('open');
+    };
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener('open-hypercode-chat', handleOpenChat);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('open-hypercode-chat', handleOpenChat);
+    };
   }, []);
 
   // 3. Click Outside to Close/Minimize
@@ -1047,7 +1066,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                           {t('suggestedTitle')}
                         </span>
                         <div className="flex flex-wrap gap-2 justify-center max-w-full">
-                          {suggestedPrompts.slice(0, 4).map((prompt, idx) => (
+                          {suggestedPrompts.slice(0, 8).map((prompt, idx) => (
                             <button
                               key={idx}
                               onClick={() => routeSuggestedPrompt(prompt)}
@@ -1445,7 +1464,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                     {t('suggestedTitle')}
                   </span>
                   <div className="flex flex-wrap gap-2 items-start justify-start">
-                    {suggestedPrompts.slice(0, 4).map((prompt, idx) => (
+                    {suggestedPrompts.slice(0, 8).map((prompt, idx) => (
                       <button
                         key={idx}
                         onClick={() => routeSuggestedPrompt(prompt)}

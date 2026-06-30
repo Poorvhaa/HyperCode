@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
-import { getSupabaseServer } from '@/lib/supabase-server';
+import { db } from '@/lib/db';
 import { Resend } from 'resend';
 
 // Initialize Resend
@@ -18,120 +18,118 @@ const consultationSchema = z.object({
   timeline: z.string().min(1),
   message: z.string().min(10),
   locale: z.string().optional().default('en'),
+  businessGoal: z.string().optional().default(''),
+  currentChallenges: z.string().optional().default(''),
+  expectedOutcome: z.string().optional().default(''),
+  preferredServices: z.array(z.string()).optional().default([]),
+  industry: z.string().optional().default(''),
+  companySize: z.string().optional().default(''),
+  currentTechStack: z.string().optional().default(''),
+  preferredMeetingType: z.string().optional().default(''),
 });
-
-// Automatic service interest classifier for lead routing
-function classifyService(service: string): string {
-  const s = service.toLowerCase();
-  if (s.includes('business intelligence') || s.includes('bi') || s.includes('reporting') || s.includes('dashboard')) {
-    return 'Business Intelligence';
-  }
-  if (s.includes('analytics') || s.includes('predictive') || s.includes('machine learning') || s.includes('ml')) {
-    return 'Data Analytics';
-  }
-  if (s.includes('warehouse') || s.includes('warehousing') || s.includes('engineering') || s.includes('pipeline') || s.includes('dbt') || s.includes('etl')) {
-    return 'Data Warehousing';
-  }
-  if (s.includes('web') || s.includes('development') || s.includes('next.js') || s.includes('react') || s.includes('custom application')) {
-    return 'Web Development';
-  }
-  if (s.includes('staffing') || s.includes('augmentation') || s.includes('contract') || s.includes('placement') || s.includes('hiring')) {
-    return 'IT & Non-IT Staffing';
-  }
-  return 'Technology Consulting'; // default / fallback
-}
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
     const validated = consultationSchema.parse(body);
-    const classification = classifyService(validated.service);
 
-    let savedData = null;
-    const supabaseServer = getSupabaseServer();
-
-    // 1. Save to Supabase
-    if (supabaseServer) {
-      const { data, error } = await supabaseServer
-        .from('consultation_requests')
-        .insert([{
-          full_name: validated.name,
-          company: validated.company,
-          email: validated.email,
-          phone: validated.phone,
-          service_interest: classification, // Save classified lead category
-          project_description: validated.message,
-          budget: validated.budget,
-          timeline: validated.timeline,
-          status: 'new'
-        }])
-        .select()
-        .single();
-
-      if (error) {
-        console.error('Supabase consultation insert error:', error);
-        return NextResponse.json({ error: 'Database save failed' }, { status: 500 });
+    // Save to Supabase using db client
+    const savedData = await db.saveConsultationRequest(
+      validated.name,
+      validated.company,
+      validated.email,
+      validated.phone,
+      validated.service,
+      validated.budget,
+      validated.timeline,
+      validated.message,
+      {
+        business_goal: validated.businessGoal,
+        current_challenges: validated.currentChallenges,
+        expected_outcome: validated.expectedOutcome,
+        preferred_services: validated.preferredServices,
+        industry: validated.industry,
+        company_size: validated.companySize,
+        current_tech_stack: validated.currentTechStack,
+        preferred_meeting_type: validated.preferredMeetingType
       }
-      savedData = data;
-    } else {
-      console.warn('Supabase is not configured. Running in mock offline mode.');
-      savedData = {
-        id: 'mock-' + Math.random().toString(36).substring(2, 9),
-        created_at: new Date().toISOString(),
-        service_interest: classification,
-        status: 'new',
-        ...validated
-      };
-    }
+    );
 
-    // 2. Send Emails via Resend
+    // Send Emails via Resend
     if (resend) {
       try {
         // A. Admin Alert Email
         const adminEmailHtml = `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc;">
             <div style="background-color: #0f4c81; color: white; padding: 15px; border-radius: 6px; text-align: center;">
-              <h2 style="margin: 0; font-size: 20px;">New Consultation Request Received</h2>
-              <p style="margin: 5px 0 0 0; font-size: 13px;">Classified Priority: <strong>${classification}</strong></p>
+              <h2 style="margin: 0; font-size: 20px;">New Consultation Request</h2>
             </div>
             <div style="padding: 20px 10px; color: #1e293b; line-height: 1.6;">
               <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
                 <tr>
-                  <td style="padding: 8px 0; font-weight: bold; width: 150px; color: #475569;">Company Name:</td>
-                  <td style="padding: 8px 0; font-weight: bold;">${validated.company}</td>
+                  <td style="padding: 8px 0; font-weight: bold; width: 180px; color: #475569;">Company Name:</td>
+                  <td style="padding: 8px 0;">${validated.company} (${validated.companySize || 'Unknown size'})</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0; font-weight: bold; color: #475569;">Industry:</td>
+                  <td style="padding: 8px 0;">${validated.industry || 'Not specified'}</td>
                 </tr>
                 <tr>
                   <td style="padding: 8px 0; font-weight: bold; color: #475569;">Contact Name:</td>
                   <td style="padding: 8px 0;">${validated.name}</td>
                 </tr>
                 <tr>
-                  <td style="padding: 8px 0; font-weight: bold; color: #475569;">Email:</td>
+                  <td style="padding: 8px 0; font-weight: bold; color: #475569;">Email Address:</td>
                   <td style="padding: 8px 0;"><a href="mailto:${validated.email}">${validated.email}</a></td>
                 </tr>
                 <tr>
-                  <td style="padding: 8px 0; font-weight: bold; color: #475569;">Phone:</td>
+                  <td style="padding: 8px 0; font-weight: bold; color: #475569;">Phone Number:</td>
                   <td style="padding: 8px 0;">${validated.phone}</td>
                 </tr>
                 <tr>
-                  <td style="padding: 8px 0; font-weight: bold; color: #475569;">Original Service:</td>
-                  <td style="padding: 8px 0;">${validated.service}</td>
+                  <td style="padding: 8px 0; font-weight: bold; color: #475569;">Primary Service Interest:</td>
+                  <td style="padding: 8px 0; font-weight: bold; color: #0f4c81;">${validated.service}</td>
                 </tr>
                 <tr>
-                  <td style="padding: 8px 0; font-weight: bold; color: #475569;">Project Budget:</td>
-                  <td style="padding: 8px 0; color: #059669; font-weight: bold;">${validated.budget}</td>
+                  <td style="padding: 8px 0; font-weight: bold; color: #475569;">Preferred Services:</td>
+                  <td style="padding: 8px 0;">${validated.preferredServices.join(', ') || 'None selected'}</td>
                 </tr>
                 <tr>
-                  <td style="padding: 8px 0; font-weight: bold; color: #475569;">Project Timeline:</td>
-                  <td style="padding: 8px 0; color: #d97706; font-weight: bold;">${validated.timeline}</td>
+                  <td style="padding: 8px 0; font-weight: bold; color: #475569;">Estimated Budget:</td>
+                  <td style="padding: 8px 0;">${validated.budget}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0; font-weight: bold; color: #475569;">Deployment Timeline:</td>
+                  <td style="padding: 8px 0;">${validated.timeline}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0; font-weight: bold; color: #475569;">Meeting Type:</td>
+                  <td style="padding: 8px 0;">${validated.preferredMeetingType || 'Video Call'}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0; font-weight: bold; color: #475569;">Current Tech Stack:</td>
+                  <td style="padding: 8px 0;">${validated.currentTechStack || 'None specified'}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0; font-weight: bold; color: #475569;">Business Goal:</td>
+                  <td style="padding: 8px 0;">${validated.businessGoal || 'Not specified'}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0; font-weight: bold; color: #475569;">Current Challenges:</td>
+                  <td style="padding: 8px 0;">${validated.currentChallenges || 'None specified'}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 0; font-weight: bold; color: #475569;">Expected Outcomes:</td>
+                  <td style="padding: 8px 0;">${validated.expectedOutcome || 'None specified'}</td>
                 </tr>
               </table>
               <div style="background-color: white; border: 1px solid #cbd5e1; border-radius: 6px; padding: 15px; margin-top: 10px; white-space: pre-wrap;">
-                <strong>Project Description:</strong><br/>
+                <strong>Project Overview:</strong><br/>
                 ${validated.message}
               </div>
             </div>
             <div style="text-align: center; font-size: 11px; color: #94a3b8; margin-top: 20px; border-top: 1px solid #e2e8f0; padding-top: 15px;">
-              This is an automated alert from the HyperCode Platform.
+              This is an automated alert from the HyperCode Enterprise Platform.
             </div>
           </div>
         `;
@@ -139,69 +137,63 @@ export async function POST(req: Request) {
         await resend.emails.send({
           from: 'HyperCode Platform <onboarding@resend.dev>',
           to: contactRecipient,
-          subject: `[Consultation Booked] ${validated.company} - ${classification}`,
+          subject: `[Consultation Intake] New Request from ${validated.company}`,
           html: adminEmailHtml,
         });
 
-        // B. User Confirmation Email
+        // B. Client Confirmation Email
         const isSpanish = validated.locale === 'es';
-        const userSubject = isSpanish
-          ? 'Confirmación de solicitud de consulta - HyperCode'
-          : 'Consultation Request Confirmed - HyperCode';
+        const clientSubject = isSpanish 
+          ? 'Confirmación de solicitud de videoconsulta - HyperCode' 
+          : 'Video Consultation Request Received - HyperCode';
 
-        const userEmailHtml = isSpanish ? `
+        const clientEmailHtml = isSpanish ? `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;">
             <div style="text-align: center; padding-bottom: 20px;">
               <h2 style="color: #0f4c81; margin: 0;">HyperCode</h2>
-              <p style="color: #64748b; font-size: 14px; margin: 5px 0 0 0;">Soluciones de Datos, Tecnología y Talento</p>
+              <p style="color: #64748b; font-size: 14px; margin: 5px 0 0 0;">Consultoría de IA y Transformación Digital</p>
             </div>
             <div style="color: #1e293b; line-height: 1.6; border-top: 1px solid #e2e8f0; padding-top: 20px;">
               <p>Hola <strong>${validated.name}</strong>,</p>
-              <p>Gracias por solicitar una consulta técnica con HyperCode.</p>
-              <p>Hemos recibido sus requisitos para el servicio de <strong>"${classification}"</strong>. Un Director de Soluciones Técnicas revisará su descripción y preparará un análisis inicial del alcance de su proyecto.</p>
-              <p>Nos pondremos en contacto con usted en un plazo de 24 horas hábiles para coordinar una reunión por videoconferencia.</p>
-              <div style="margin: 20px 0; padding: 15px; background-color: #f8fafc; border-radius: 6px; font-size: 13px;">
-                <strong>Detalles registrados:</strong><br/>
-                • Empresa: ${validated.company}<br/>
-                • Presupuesto: ${validated.budget}<br/>
-                • Cronograma: ${validated.timeline}
+              <p>Hemos recibido su solicitud de videoconsulta tecnológica para su empresa, <strong>${validated.company}</strong>.</p>
+              <p>Nuestros directores de soluciones están revisando sus objetivos de negocio en torno al enfoque de <strong>"${validated.service}"</strong> y coordinando una agenda técnica adecuada.</p>
+              <p>Una invitación de Zoom o Google Meet con fechas propuestas le será enviada a este correo en un plazo de 24 horas hábiles.</p>
+              <div style="margin: 25px 0; padding: 15px; background-color: #f8fafc; border-left: 4px solid #0f4c81; font-size: 13px; color: #475569;">
+                <strong>Resumen de desafíos técnicos:</strong><br/>
+                <em>"${validated.currentChallenges || validated.message}"</em>
               </div>
-              <p>Esperamos trabajar con usted.</p>
               <p>Atentamente,</p>
-              <p style="margin: 0; font-weight: bold; color: #0f4c81;">Práctica de Consultoría de HyperCode</p>
-              <p style="margin: 0; font-size: 12px; color: #64748b;">Schaumburg, IL</p>
+              <p style="margin: 0; font-weight: bold; color: #0f4c81;">Práctica de Transformación Digital</p>
+              <p style="margin: 0; font-size: 12px; color: #64748b;">HyperCode Consulting</p>
             </div>
           </div>
         ` : `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;">
             <div style="text-align: center; padding-bottom: 20px;">
               <h2 style="color: #0f4c81; margin: 0;">HyperCode</h2>
-              <p style="color: #64748b; font-size: 14px; margin: 5px 0 0 0;">Data, Technology, & Talent Solutions</p>
+              <p style="color: #64748b; font-size: 14px; margin: 5px 0 0 0;">AI & Digital Transformation Consulting</p>
             </div>
             <div style="color: #1e293b; line-height: 1.6; border-top: 1px solid #e2e8f0; padding-top: 20px;">
               <p>Hi <strong>${validated.name}</strong>,</p>
-              <p>Thank you for requesting a technical consultation with HyperCode.</p>
-              <p>We have successfully registered your request for <strong>"${classification}"</strong> solutions. A Technical Solutions Director is reviewing your scope details and will compile an initial blueprint outline before our call.</p>
-              <p>We will contact you within 24 business hours with calendar invites to schedule our videoconference.</p>
-              <div style="margin: 20px 0; padding: 15px; background-color: #f8fafc; border-radius: 6px; font-size: 13px;">
-                <strong>Logged Parameters:</strong><br/>
-                • Company: ${validated.company}<br/>
-                • Est. Budget: ${validated.budget}<br/>
-                • Timeline: ${validated.timeline}
+              <p>We have successfully received your video consultation request for <strong>${validated.company}</strong>.</p>
+              <p>Our solutions director is reviewing your business goal of <strong>"${validated.service}"</strong> and aligning it with our practice engineers.</p>
+              <p>A calendar invite with Google Meet/Zoom options will be dispatched to your corporate email shortly.</p>
+              <div style="margin: 25px 0; padding: 15px; background-color: #f8fafc; border-left: 4px solid #0f4c81; font-size: 13px; color: #475569;">
+                <strong>Challenge summary:</strong><br/>
+                <em>"${validated.currentChallenges || validated.message}"</em>
               </div>
-              <p>We look forward to collaborating on this initiative.</p>
               <p>Best regards,</p>
-              <p style="margin: 0; font-weight: bold; color: #0f4c81;">HyperCode Consulting Practice</p>
-              <p style="margin: 0; font-size: 12px; color: #64748b;">Schaumburg, IL</p>
+              <p style="margin: 0; font-weight: bold; color: #0f4c81;">Digital Transformation Practice</p>
+              <p style="margin: 0; font-size: 12px; color: #64748b;">HyperCode Consulting</p>
             </div>
           </div>
         `;
 
         await resend.emails.send({
-          from: 'HyperCode Consulting <onboarding@resend.dev>',
+          from: 'HyperCode Team <onboarding@resend.dev>',
           to: validated.email,
-          subject: userSubject,
-          html: userEmailHtml,
+          subject: clientSubject,
+          html: clientEmailHtml,
         });
       } catch (emailErr) {
         console.error('Resend consultation email error:', emailErr);

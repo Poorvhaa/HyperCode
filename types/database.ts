@@ -10,6 +10,14 @@ export interface ConsultationRequest {
   budget: string | null;
   timeline: string | null;
   status: string;
+  business_goal?: string;
+  current_challenges?: string;
+  expected_outcome?: string;
+  preferred_services?: string[];
+  industry?: string;
+  company_size?: string;
+  current_tech_stack?: string;
+  preferred_meeting_type?: string;
 }
 
 export interface Candidate {

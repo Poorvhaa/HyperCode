@@ -1,15 +1,15 @@
 'use client';
 
 import { useState, useEffect, Suspense } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useSearchParams } from 'next/navigation';
-import { Loader2, AlertCircle, CheckCircle } from 'lucide-react';
+import { Loader2, AlertCircle, CheckCircle, HelpCircle, Check } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 import { db } from '@/lib/db';
 import { trackGAEvent } from '@/lib/analytics';
-
+import { motion } from 'framer-motion';
 
 function ContactFormContent() {
   const searchParams = useSearchParams();
@@ -19,19 +19,58 @@ function ContactFormContent() {
 
   const t = useTranslations('Contact.form');
   const tSubjects = useTranslations('Contact.subjects');
+  const tNav = useTranslations('Navigation');
+  const tConsult = useTranslations('Consultation');
+  const tAi = useTranslations('AIConsultant');
+  const locale = useLocale();
 
-  // Define subject options dynamically using translated labels
+  // 1. Service options mapping (translates the 13 categories)
+  const serviceOptions = [
+    { id: 'AI & Automation', label: tNav('aiAutomation') },
+    { id: 'Software Development', label: tNav('softwareDev') },
+    { id: 'Web Development', label: tNav('webDev') },
+    { id: 'Mobile Development', label: tNav('mobileDev') },
+    { id: 'Cloud & DevOps', label: tNav('cloudDevOps') },
+    { id: 'IT & Non-IT Talent Solutions', label: tNav('talentSolutions') },
+    { id: 'Digital Transformation', label: tNav('digitalTrans') },
+    { id: 'Data & Analytics', label: tNav('dataAnalytics') },
+    { id: 'Cybersecurity', label: tNav('cybersecurity') },
+    { id: 'UI/UX Design', label: tNav('uiUx') },
+    { id: 'Digital Marketing', label: tNav('marketing') },
+    { id: 'E-commerce', label: tNav('ecommerce') },
+    { id: 'Technology Consulting', label: tNav('techConsulting') },
+  ];
+
+  // 2. Tech options
+  const techOptions = [
+    'React/Next.js',
+    'TypeScript',
+    'Node.js',
+    'Python',
+    'Power BI',
+    'Tableau',
+    'AWS',
+    'Azure',
+    'Google Cloud',
+    'Docker/Kubernetes',
+    'Shopify',
+    'WooCommerce',
+    'Salesforce',
+    'Security Audits/Pen-Testing'
+  ];
+
+  // 3. Subject options (maintained for compatibility)
   const subjectOptions = [
     { id: 'General Inquiry', label: tSubjects('general') },
-    { id: 'Web Development Inquiry', label: tSubjects('web') },
+    { id: 'Custom Development', label: tSubjects('web') },
+    { id: 'AI Solutions', label: tSubjects('ai') },
+    { id: 'Data Engineering & Analytics', label: tSubjects('data') },
+    { id: 'IT & Non-IT Staffing', label: tSubjects('talent') },
     { id: 'Partnership Opportunity', label: tSubjects('partnership') },
-    { id: 'Vendor Inquiry', label: tSubjects('vendor') },
-    { id: 'Career Question', label: tSubjects('career') },
-    { id: 'Media Request', label: tSubjects('media') },
     { id: 'Other', label: tSubjects('other') },
   ];
 
-  // Schema defined inside the component to use next-intl translation hooks
+  // Zod Validation Schema
   const contactSchema = z.object({
     name: z.string().min(2, t('nameError')),
     email: z.string().email(t('emailError')),
@@ -39,6 +78,15 @@ function ContactFormContent() {
     phone: z.string().min(10, t('phoneError')),
     subject: z.string().min(1, t('subjectError')),
     message: z.string().min(10, t('messageError')),
+    services: z.array(z.string()).default([]),
+    industry: z.string().min(1, t('industryError')),
+    companySize: z.string().default(''),
+    budget: z.string().min(1, t('budgetError')),
+    timeline: z.string().min(1, t('timelineError')),
+    country: z.string().default(''),
+    preferredContactMethod: z.string().default('Email'),
+    projectType: z.string().default(''),
+    requiredTechnologies: z.array(z.string()).default([]),
   });
 
   type ContactFormData = z.infer<typeof contactSchema>;
@@ -47,35 +95,53 @@ function ContactFormContent() {
     register,
     handleSubmit,
     setValue,
+    control,
+    watch,
     formState: { errors },
     reset,
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
     defaultValues: {
-      subject: '',
+      subject: 'General Inquiry',
       message: '',
+      services: [],
+      industry: '',
+      companySize: '',
+      budget: '',
+      timeline: '',
+      country: '',
+      preferredContactMethod: 'Email',
+      projectType: '',
+      requiredTechnologies: [],
     },
   });
 
-  // Handle URL search params on mount to support prefilling
+  const selectedServices = watch('services');
+  const selectedTech = watch('requiredTechnologies');
+
+  // URL Query parameter pre-filling
   useEffect(() => {
     const subjectParam = searchParams.get('subject');
     const positionParam = searchParams.get('position');
+    const serviceParam = searchParams.get('service');
 
     if (subjectParam) {
-      const matchedSubject = subjectOptions.find(
-        (s) => s.id.toLowerCase() === subjectParam.toLowerCase()
-      );
-      if (matchedSubject) {
-        setValue('subject', matchedSubject.id);
+      const matched = subjectOptions.find(s => s.id.toLowerCase() === subjectParam.toLowerCase());
+      if (matched) {
+        setValue('subject', matched.id);
       }
     } else if (positionParam) {
-      setValue('subject', 'Career Question');
-      setValue('message', `I am interested in career opportunities, specifically regarding the ${positionParam} position.`);
+      setValue('subject', 'IT & Non-IT Staffing');
+      setValue('services', ['IT & Non-IT Talent Solutions']);
+      setValue('message', `Looking for recruitment assistance regarding position: ${positionParam}.`);
+    } else if (serviceParam) {
+      const matchedService = serviceOptions.find(opt => opt.id.toLowerCase().includes(serviceParam.toLowerCase()));
+      if (matchedService) {
+        setValue('services', [matchedService.id]);
+        setValue('subject', matchedService.id);
+      }
     }
   }, [searchParams, setValue]);
-
-  const locale = useLocale();
 
   const onSubmit = async (data: ContactFormData) => {
     setSubmitting(true);
@@ -88,14 +154,9 @@ function ContactFormContent() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          name: data.name,
-          company: data.company,
-          email: data.email,
-          phone: data.phone,
-          subject: data.subject,
-          message: data.message,
+          ...data,
           source: 'website',
-          locale
+          locale,
         }),
       });
 
@@ -106,7 +167,7 @@ function ContactFormContent() {
       trackGAEvent({
         action: 'contact_form_submission',
         category: 'Leads',
-        label: data.subject
+        label: data.subject,
       });
 
       setSubmitted(true);
@@ -115,7 +176,7 @@ function ContactFormContent() {
     } catch (err) {
       setError(t('errorSubmit'));
       console.error('Contact form error:', err);
-      // Fallback save to local storage in offline mode
+      // Fallback save in offline / fallback database modes
       try {
         await db.saveContactInquiry(
           data.name,
@@ -123,7 +184,19 @@ function ContactFormContent() {
           data.email,
           data.phone,
           data.subject,
-          data.message
+          data.message,
+          'website',
+          {
+            services: data.services,
+            industry: data.industry,
+            company_size: data.companySize,
+            budget: data.budget,
+            timeline: data.timeline,
+            country: data.country,
+            preferred_contact_method: data.preferredContactMethod,
+            project_type: data.projectType,
+            required_technologies: data.requiredTechnologies,
+          }
         );
       } catch (localErr) {
         console.error('Local fallback contact save failed:', localErr);
@@ -133,136 +206,310 @@ function ContactFormContent() {
     }
   };
 
+  const toggleService = (serviceId: string) => {
+    const current = [...selectedServices];
+    const index = current.indexOf(serviceId);
+    if (index === -1) {
+      current.push(serviceId);
+    } else {
+      current.splice(index, 1);
+    }
+    setValue('services', current);
+  };
+
+  const toggleTech = (tech: string) => {
+    const current = [...selectedTech];
+    const index = current.indexOf(tech);
+    if (index === -1) {
+      current.push(tech);
+    } else {
+      current.splice(index, 1);
+    }
+    setValue('requiredTechnologies', current);
+  };
+
   if (submitted) {
     return (
-      <div className="space-y-6">
-        <div className="p-6 rounded-2xl border border-green-200 bg-green-50 flex gap-4">
-          <CheckCircle size={24} className="text-green-650 flex-shrink-0 mt-0.5" />
-          <div className="text-left">
-            <h3 className="font-bold text-green-900">{t('successTitle')}</h3>
-            <p className="text-green-800 text-sm mt-1">{t('successText')}</p>
-          </div>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="p-8 rounded-2xl border border-green-200 bg-green-50/50 backdrop-blur-md flex gap-4 text-left shadow-lg"
+      >
+        <CheckCircle size={32} className="text-green-600 flex-shrink-0" />
+        <div>
+          <h3 className="font-bold text-green-900 text-lg">{t('successTitle')}</h3>
+          <p className="text-green-800 text-sm mt-2 leading-relaxed">{t('successText')}</p>
         </div>
-      </div>
+      </motion.div>
     );
   }
 
   return (
-    <div className="space-y-6 text-left">
-      <form onSubmit={handleSubmit(onSubmit)} id="contact-form-inputs" className="space-y-6">
-        {error && (
-          <div className="p-4 rounded-xl border border-red-200 bg-red-50 flex gap-3">
-            <AlertCircle size={20} className="text-red-655 flex-shrink-0 mt-0.5" />
-            <p className="text-red-800 text-sm">{error}</p>
-          </div>
-        )}
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 text-left bg-white/70 backdrop-blur-lg p-8 sm:p-12 rounded-3xl border border-slate-100 shadow-xl">
+      {error && (
+        <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 flex gap-3 text-sm">
+          <AlertCircle size={20} className="flex-shrink-0" />
+          <span>{error}</span>
+        </div>
+      )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Name */}
-          <div className="space-y-2">
-            <label className="block text-sm font-semibold text-slate-700">{t('fullName')}</label>
-            <input
-              {...register('name')}
-              type="text"
-              placeholder="John Doe"
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] text-sm"
-            />
-            {errors.name && <p className="text-xs text-red-655 font-semibold">{errors.name.message}</p>}
-          </div>
-
-          {/* Email */}
-          <div className="space-y-2">
-            <label className="block text-sm font-semibold text-slate-700">{t('emailAddress')}</label>
-            <input
-              {...register('email')}
-              type="email"
-              placeholder="john@company.com"
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] text-sm"
-            />
-            {errors.email && <p className="text-xs text-red-655 font-semibold">{errors.email.message}</p>}
-          </div>
-
-          {/* Company */}
-          <div className="space-y-2">
-            <label className="block text-sm font-semibold text-slate-700">{t('companyName')}</label>
-            <input
-              {...register('company')}
-              type="text"
-              placeholder="Your Company"
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] text-sm"
-            />
-            {errors.company && <p className="text-xs text-red-655 font-semibold">{errors.company.message}</p>}
-          </div>
-
-          {/* Phone */}
-          <div className="space-y-2">
-            <label className="block text-sm font-semibold text-slate-700">{t('phoneNumber')}</label>
-            <input
-              {...register('phone')}
-              type="tel"
-              placeholder="+1 (555) 123-4567"
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] text-sm"
-            />
-            {errors.phone && <p className="text-xs text-red-655 font-semibold">{errors.phone.message}</p>}
-          </div>
-
-          {/* Subject Options select dropdown */}
-          <div className="md:col-span-2 space-y-2">
-            <label className="block text-sm font-semibold text-slate-700">{t('subject')}</label>
-            <select
-              {...register('subject')}
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] text-sm"
-            >
-              <option value="">{t('selectSubject')}</option>
-              {subjectOptions.map((opt) => (
-                <option key={opt.id} value={opt.id}>
-                  {opt.label}
-                </option>
-              ))}
-            </select>
-            {errors.subject && <p className="text-xs text-red-655 font-semibold">{errors.subject.message}</p>}
-          </div>
-
-          {/* Message */}
-          <div className="md:col-span-2 space-y-2">
-            <label className="block text-sm font-semibold text-slate-700">{t('message')}</label>
-            <textarea
-              {...register('message')}
-              placeholder="How can we help you?"
-              rows={5}
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] text-sm resize-none"
-            />
-            {errors.message && <p className="text-xs text-red-655 font-semibold">{errors.message.message}</p>}
-          </div>
+      {/* Grid for Name, Email, Company, Phone */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('name')}</label>
+          <input
+            type="text"
+            placeholder="John Doe"
+            {...register('name')}
+            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${
+              errors.name ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
+            }`}
+          />
+          {errors.name && <span className="text-xs text-red-500 mt-1 block">{errors.name.message}</span>}
         </div>
 
-        {/* Submit Button */}
+        <div>
+          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('email')}</label>
+          <input
+            type="email"
+            placeholder="john@company.com"
+            {...register('email')}
+            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${
+              errors.email ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
+            }`}
+          />
+          {errors.email && <span className="text-xs text-red-500 mt-1 block">{errors.email.message}</span>}
+        </div>
+
+        <div>
+          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('company')}</label>
+          <input
+            type="text"
+            placeholder="Enter company name"
+            {...register('company')}
+            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${
+              errors.company ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
+            }`}
+          />
+          {errors.company && <span className="text-xs text-red-500 mt-1 block">{errors.company.message}</span>}
+        </div>
+
+        <div>
+          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('phone')}</label>
+          <input
+            type="tel"
+            placeholder="+1 (555) 012-3456"
+            {...register('phone')}
+            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${
+              errors.phone ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
+            }`}
+          />
+          {errors.phone && <span className="text-xs text-red-500 mt-1 block">{errors.phone.message}</span>}
+        </div>
+      </div>
+
+      {/* Multi-Select Services Chips */}
+      <div>
+        <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-3">{t('services') || 'Services Needed'}</label>
+        <div className="flex flex-wrap gap-2">
+          {serviceOptions.map((opt) => {
+            const active = selectedServices.includes(opt.id);
+            return (
+              <button
+                key={opt.id}
+                type="button"
+                onClick={() => toggleService(opt.id)}
+                className={`px-4 py-2 rounded-full border text-sm font-medium transition-all flex items-center gap-2 cursor-pointer ${
+                  active
+                    ? 'bg-[#0F4C81]/10 border-[#0F4C81] text-[#0F4C81]'
+                    : 'bg-slate-50 border-slate-200 text-slate-600 hover:border-slate-350 hover:bg-slate-100'
+                }`}
+              >
+                {active && <Check size={14} />}
+                {opt.label}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Grid for Select Options */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('industry')}</label>
+          <select
+            {...register('industry')}
+            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700"
+          >
+            <option value="">-- Select Industry --</option>
+            {Object.entries(tAi.raw('industries')).map(([key, val]) => (
+              <option key={key} value={val as string}>{val as string}</option>
+            ))}
+          </select>
+          {errors.industry && <span className="text-xs text-red-500 mt-1 block">{errors.industry.message}</span>}
+        </div>
+
+        <div>
+          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('companySize') || 'Company Size'}</label>
+          <select
+            {...register('companySize')}
+            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700"
+          >
+            <option value="">-- Select Size --</option>
+            <option value="1-10">1-10 Employees</option>
+            <option value="11-50">11-50 Employees</option>
+            <option value="51-200">51-200 Employees</option>
+            <option value="201-500">201-500 Employees</option>
+            <option value="500+">500+ (Enterprise)</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('budget')}</label>
+          <select
+            {...register('budget')}
+            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700"
+          >
+            <option value="">-- Select Budget --</option>
+            {Object.entries(tConsult.raw('budgets')).map(([key, val]) => (
+              <option key={key} value={val as string}>{val as string}</option>
+            ))}
+          </select>
+          {errors.budget && <span className="text-xs text-red-500 mt-1 block">{errors.budget.message}</span>}
+        </div>
+
+        <div>
+          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('timeline')}</label>
+          <select
+            {...register('timeline')}
+            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700"
+          >
+            <option value="">-- Select Timeline --</option>
+            {Object.entries(tConsult.raw('timelines')).map(([key, val]) => (
+              <option key={key} value={val as string}>{val as string}</option>
+            ))}
+          </select>
+          {errors.timeline && <span className="text-xs text-red-500 mt-1 block">{errors.timeline.message}</span>}
+        </div>
+
+        <div>
+          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('country') || 'Country / Region'}</label>
+          <input
+            type="text"
+            placeholder="e.g. United States, United Kingdom"
+            {...register('country')}
+            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700"
+          />
+        </div>
+
+        <div>
+          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('contactMethod') || 'Preferred Contact Method'}</label>
+          <select
+            {...register('preferredContactMethod')}
+            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700"
+          >
+            <option value="Email">Email</option>
+            <option value="Phone Call">Phone Call</option>
+            <option value="WhatsApp">WhatsApp</option>
+            <option value="Video Conference">Video Conference</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('projectType') || 'Project Type'}</label>
+          <select
+            {...register('projectType')}
+            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700"
+          >
+            <option value="">-- Select Project Type --</option>
+            <option value="New Product from Scratch">New Product from Scratch</option>
+            <option value="Scale/Augment Engineering Team">Scale/Augment Engineering Team</option>
+            <option value="Legacy System Migration">Legacy System Migration</option>
+            <option value="Consulting & Feasibility Audit">Consulting & Feasibility Audit</option>
+            <option value="Staffing / Recruiting Agency Service">Staffing / Recruiting Agency Service</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('subject')}</label>
+          <select
+            {...register('subject')}
+            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700"
+          >
+            {subjectOptions.map((opt) => (
+              <option key={opt.id} value={opt.id}>{opt.label}</option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      {/* Multi-Select Required Tech Chips */}
+      <div>
+        <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-3">{t('requiredTech') || 'Preferred Technologies'}</label>
+        <div className="flex flex-wrap gap-2">
+          {techOptions.map((tech) => {
+            const active = selectedTech.includes(tech);
+            return (
+              <button
+                key={tech}
+                type="button"
+                onClick={() => toggleTech(tech)}
+                className={`px-3 py-1.5 rounded-full border text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer ${
+                  active
+                    ? 'bg-slate-800 border-slate-800 text-white'
+                    : 'bg-white border-slate-200 text-slate-600 hover:border-slate-300'
+                }`}
+              >
+                {active && <Check size={12} />}
+                {tech}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Message Textarea */}
+      <div>
+        <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('message')}</label>
+        <textarea
+          rows={5}
+          placeholder="Please describe your technology requirements, key challenges, or hiring profiles..."
+          {...register('message')}
+          className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${
+            errors.message ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
+          }`}
+        />
+        {errors.message && <span className="text-xs text-red-500 mt-1 block">{errors.message.message}</span>}
+      </div>
+
+      {/* Submit Button */}
+      <div className="flex justify-end">
         <button
           type="submit"
           disabled={submitting}
-          className="w-full h-12 flex items-center justify-center bg-[#0F4C81] text-white font-semibold text-sm rounded-xl hover:bg-[#0c3c66] transition-colors duration-200 shadow-sm disabled:opacity-75 disabled:cursor-not-allowed gap-2 cursor-pointer border-none"
+          className="px-8 py-4 rounded-xl font-semibold text-white bg-[#0F4C81] hover:bg-[#0D3F6D] transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75 disabled:cursor-not-allowed min-w-[200px]"
         >
           {submitting ? (
             <>
-              <Loader2 size={16} className="animate-spin" />
-              <span>{t('sendMessage')}</span>
+              <Loader2 size={20} className="animate-spin" />
+              <span>{t('submitting')}</span>
             </>
           ) : (
-            <span>{t('sendMessage')}</span>
+            <span>{t('submit')}</span>
           )}
         </button>
-
-        <p className="text-xs text-slate-500 text-center font-medium">
-          We respect your privacy. Submitting this form sends a message to our general communications squad.
-        </p>
-      </form>
-    </div>
+      </div>
+    </form>
   );
 }
 
 export function ContactForm() {
   return (
-    <Suspense fallback={<div className="text-center p-8"><Loader2 size={24} className="animate-spin text-[#0F4C81] inline" /></div>}>
+    <Suspense fallback={
+      <div className="flex justify-center p-12">
+        <Loader2 className="animate-spin text-[#0F4C81]" size={36} />
+      </div>
+    }>
       <ContactFormContent />
     </Suspense>
   );

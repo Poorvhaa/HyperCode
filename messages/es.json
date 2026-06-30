@@ -1,7 +1,7 @@
 {
   "Common": {
     "home": "Inicio",
-    "about": "Nosotros",
+    "about": "Acerca de",
     "solutions": "Soluciones",
     "careers": "Carreras",
     "contact": "Contacto",
@@ -12,10 +12,17 @@
     "back": "Atrás",
     "success": "Éxito",
     "error": "Error",
-    "all": "Todo",
+    "all": "Todos",
     "viewCaseStudies": "Ver Casos de Éxito",
     "loading": "Cargando...",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "learnMore": "Saber Más",
+    "industries": "Industrias",
+    "technologies": "Tecnologías",
+    "resources": "Recursos",
+    "support": "Soporte",
+    "company": "Compañía",
+    "offices": "Nuestras Oficinas"
   },
   "Navigation": {
     "home": "Inicio",
@@ -24,7 +31,21 @@
     "careers": "Carreras",
     "contact": "Contacto",
     "schedule": "Programar Consulta",
+    "support": "Portal de Soporte",
+    "aiConsultant": "Consultor de IA",
+    "aiAutomation": "IA y Automatización",
+    "softwareDev": "Desarrollo de Software",
+    "webDev": "Desarrollo Web",
+    "mobileDev": "Desarrollo Móvil",
+    "cloudDevOps": "Nube y DevOps",
+    "talentSolutions": "Soluciones de Talento TI y No-TI",
+    "digitalTrans": "Transformación Digital",
     "dataAnalytics": "Datos y Analítica",
+    "cybersecurity": "Ciberseguridad",
+    "uiUx": "Diseño UI/UX",
+    "marketing": "Marketing Digital",
+    "ecommerce": "Comercio Electrónico",
+    "techConsulting": "Consultoría Tecnológica",
     "businessIntelligence": "Inteligencia de Negocios",
     "dataAnalyticsDesc": "Paneles interactivos y sistemas de informes ejecutivos.",
     "predictiveAnalytics": "Análisis de Datos",
@@ -60,37 +81,46 @@
     "directPlacementDesc": "Soluciones de contratación permanente para funciones técnicas clave."
   },
   "Footer": {
-    "tagline": "Empoderando a las empresas a través de soluciones de datos, tecnología y talento",
-    "connect": "Conéctese Con Nosotros",
+    "connect": "Conéctese con Nosotros",
     "copyright": "© 2026 HyperCode. Todos los derechos reservados.",
     "privacy": "Política de Privacidad",
-    "terms": "Términos y Condiciones"
+    "terms": "Términos y Condiciones",
+    "sitemap": "Mapa del Sitio",
+    "tagline": "Consultoría de IA y Transformación Digital Empresarial",
+    "officesTitle": "Sede Central Global",
+    "address": "100 Pine St, Suite 2400, San Francisco, CA 94111",
+    "phone": "+1 (555) 019-2834",
+    "email": "info@hypercode.com",
+    "newsletterTitle": "Suscríbase a Insights",
+    "newsletterDesc": "Reciba boletines tecnológicos mensuales redactados por nuestros directores de soluciones.",
+    "newsletterPlaceholder": "Correo Corporativo",
+    "newsletterSuccess": "¡Gracias por suscribirse!"
   },
   "Hero": {
     "badge": "Socio de Transformación Digital Empresarial",
-    "title": "Empoderando a las empresas a través de soluciones de ",
-    "titleHighlight": "datos, tecnología y talento",
-    "subtitle": "Combinamos desarrollo web personalizado, ingeniería de datos en la nube, análisis avanzado y personal estratégico de TI y no TI para acelerar el crecimiento corporativo.",
+    "title": "Empoderando Empresas a través de ",
+    "titleHighlight": "Soluciones de Datos, Tecnología y Talento",
+    "subtitle": "Combinamos desarrollo web a medida, ingeniería de datos en la nube, analítica avanzada y reclutamiento estratégico de personal TI y No-TI para acelerar el crecimiento corporativo.",
     "talkToConsultant": "Hablar con un Consultor",
     "nodes": {
       "sources": "Fuentes de Datos",
-      "sourcesDesc": "Ingiere bases de datos directas, API, archivos en la nube y eventos de transmisión.",
+      "sourcesDesc": "Ingesta flujos de bases de datos, APIs, archivos en la nube y eventos de streaming.",
       "engineering": "Ingeniería de Datos",
-      "engineeringDesc": "Crea canalizaciones sólidas de ETL/ELT y automatiza la integración de esquemas.",
+      "engineeringDesc": "Construye canales robustos de ETL/ELT y automatiza la integración de esquemas.",
       "platform": "Plataforma de Datos",
       "platformDesc": "Consolida lagos de almacenamiento y almacenes de datos seguros en la nube.",
       "analytics": "Analítica",
-      "analyticsDesc": "Implementa modelos de pronóstico avanzados y rastrea tendencias estadísticas.",
+      "analyticsDesc": "Despliega modelos de previsión avanzados y rastrea tendencias estadísticas.",
       "bi": "Inteligencia de Negocios",
-      "biDesc": "Traduce activos de datos limpios en informes visuales y paneles.",
+      "biDesc": "Traduce activos de datos limpios en informes visuales y paneles de control.",
       "outcomes": "Resultados Estratégicos",
-      "outcomesDesc": "Empodera a las partes interesadas ejecutivas para impulsar el crecimiento operativo y el ROI."
+      "outcomesDesc": "Empodera a los directivos para impulsar el crecimiento operativo y el retorno de inversión."
     }
   },
   "Services": {
-    "badge": "Competencias Clave",
+    "badge": "Competencias Principales",
     "title": "Servicios y Soluciones Empresariales",
-    "subtitle": "Desplegando equipos integrados para diseñar canalizaciones de datos en la nube, aplicaciones web personalizadas y plataformas analíticas ágiles.",
+    "subtitle": "Desplegamos equipos integrados para diseñar flujos de datos en la nube, aplicaciones web a medida y plataformas de análisis ágiles.",
     "items": {
       "bi": {
         "title": "Inteligencia de Negocios",
@@ -110,37 +140,911 @@
       }
     }
   },
-  "WhyHypercode": {
-    "badge": "Por qué HyperCode",
-    "title": "Excelencia en Ingeniería, Asociación Estratégica",
-    "desc": "Nos diferenciamos de las agencias de desarrollo y contratación de personal de TI y no TI estándar. Tratamos las arquitecturas de los clientes como propias, incorporando rigurosos controles de seguridad y bucles de tutoría para garantizar la transferencia operativa completa.",
+  "Contact": {
+    "title": "Asóciese con HyperCode",
+    "subtitle": "Comuníquese con nuestro equipo de cuentas globales para alinear sus planes de ingeniería a medida, implementación de IA o adquisición de talento.",
+    "form": {
+      "name": "Su Nombre",
+      "email": "Correo Corporativo",
+      "company": "Nombre de la Empresa",
+      "phone": "Número de Teléfono",
+      "subject": "Asunto",
+      "message": "Descripción del Proyecto / Mensaje",
+      "industry": "Industria",
+      "companySize": "Tamaño de la Empresa",
+      "budget": "Presupuesto del Proyecto",
+      "timeline": "Plazo Estimado",
+      "country": "País",
+      "contactMethod": "Método de Contacto Preferido",
+      "projectType": "Tipo de Proyecto",
+      "requiredTech": "Tecnologías Requeridas",
+      "services": "Servicios Solicitados / Áreas de Enfoque",
+      "submit": "Enviar Consulta",
+      "submitting": "Enviando...",
+      "successTitle": "¡Consulta Recibida!",
+      "successText": "Gracias por contactarnos. Se ha asignado a un director de práctica para revisar su consulta, quien se pondrá en contacto con usted en un plazo de 24 horas.",
+      "errorSubmit": "Error al enviar. Por favor, compruebe los datos introducidos e inténtelo de nuevo.",
+      "nameError": "El nombre debe tener al menos 2 caracteres",
+      "emailError": "Por favor, introduzca una dirección de correo corporativo válida",
+      "companyError": "El nombre de la empresa debe tener al menos 2 caracteres",
+      "phoneError": "Por favor, introduzca un número de teléfono válido (mín. 10 dígitos)",
+      "subjectError": "El asunto es requerido",
+      "messageError": "El mensaje debe tener al menos 10 caracteres",
+      "industryError": "Por favor, seleccione su industria",
+      "budgetError": "Por favor, seleccione un rango de presupuesto",
+      "timelineError": "Por favor, seleccione un plazo estimado"
+    },
+    "subjects": {
+      "general": "Consulta General Corporativa",
+      "web": "Desarrollo Web y Apps a Medida",
+      "ai": "IA y Automatización de Procesos Agenciales",
+      "data": "Ingeniería de Datos y Analítica",
+      "talent": "Soluciones de Talento TI y No-TI",
+      "partnership": "Asociación Estratégica",
+      "other": "Otras Consultas"
+    },
+    "headquarters": "Sede Corporativa",
+    "email": "Consultas por Correo",
+    "phone": "Soporte Telefónico",
+    "formTitle": "Envíenos un Mensaje",
+    "formSubtitle": "Complete el formulario a continuación y nuestros directores de práctica se comunicarán con usted en un plazo de 24 horas."
+  },
+  "Consultation": {
+    "title": "Programar Consulta",
+    "subtitle": "Reserve una sesión con un director de soluciones de HyperCode para diseñar sus sistemas o planificar flujos de contratación.",
+    "form": {
+      "name": "Nombre Completo",
+      "email": "Correo Corporativo",
+      "company": "Nombre de la Empresa",
+      "phone": "Número de Teléfono",
+      "service": "Área de Enfoque de Servicio",
+      "budget": "Presupuesto Estimado",
+      "timeline": "Plazo Objetivo",
+      "message": "Breve Resumen del Proyecto",
+      "businessGoal": "Objetivo Principal de Negocio",
+      "currentChallenges": "Desafíos Tecnológicos Actuales",
+      "expectedOutcome": "Resultado Esperado",
+      "currentTechStack": "Pila Tecnológica / Herramientas Actuales",
+      "meetingType": "Tipo de Reunión Preferida",
+      "preferredServices": "Áreas de Servicio de Interés",
+      "industry": "Vertical de la Industria",
+      "companySize": "Tamaño de la Empresa",
+      "submit": "Programar Videoconsulta",
+      "submitting": "Programando...",
+      "successTitle": "¡Videoconsulta Solicitada!",
+      "successDesc": "Se ha generado y calificado su expediente. En breve se enviará una invitación de calendario con el enlace de la videoconferencia.",
+      "errorSubmit": "Error al programar. Compruebe los campos del formulario.",
+      "serviceError": "Seleccione un área de servicio de interés",
+      "budgetError": "Seleccione un rango de presupuesto",
+      "timelineError": "Seleccione un plazo estimado",
+      "messageError": "Describa brevemente su proyecto (mín. 10 caracteres)"
+    },
+    "budgets": {
+      "b1": "Menos de $25,000",
+      "b2": "$25,000 - $100,000",
+      "b3": "$100,000 - $250,000",
+      "b4": "$250,000+",
+      "b5": "Por Decidir"
+    },
+    "timelines": {
+      "t1": "Inmediatamente (Menos de 1 Mes)",
+      "t2": "Dentro de 1-3 Meses",
+      "t3": "Planificación (3-6 Meses)",
+      "t4": "Explorando / A Largo Plazo"
+    },
+    "formTitle": "Solicitar Sesión de Admisión del Proyecto",
+    "formSubtitle": "Comparta los requisitos de su proyecto y lo asignaremos con el arquitecto de soluciones adecuado."
+  },
+  "AIConsultant": {
+    "title": "Consultor de IA HyperCode",
+    "subtitle": "Asesor Senior de Transformación Digital",
+    "tooltip": "Hable con nuestro Socio de Transformación Digital",
+    "placeholder": "Describa su desafío empresarial o solicitud de contratación...",
+    "suggestedTitle": "Consultas Recomendadas del Asesor",
+    "welcomeMessage": "¡Hola! Soy su asesor técnico de HyperCode. Puedo recomendarle soluciones, sugerirle tecnologías, estimar plazos de proyectos y calcular el tamaño de los equipos de desarrollo. ¿Qué desea construir o escalar hoy?",
+    "typing": "Analizando esquemas y parámetros...",
+    "actions": {
+      "close": "Cerrar Sesión",
+      "minimize": "Minimizar Ventana",
+      "back": "Atrás",
+      "startOver": "Nueva Sesión de Asesoría",
+      "submit": "Enviar"
+    },
+    "errors": {
+      "validation": "Por favor complete todos los campos requeridos.",
+      "email": "Introduzca un correo corporativo válido.",
+      "phone": "Introduzca un número de teléfono válido.",
+      "generic": "Error de servicio. Inténtelo de nuevo."
+    },
+    "consultationFlow": {
+      "title": "Configurar Sesión de Consulta",
+      "subtitle": "Verifique sus detalles a continuación para agendar una sesión técnica con un director.",
+      "date": "Fecha Preferida de Reunión",
+      "submit": "Confirmar Solicitud de Consulta",
+      "successTitle": "¡Consulta Solicitada!",
+      "successDesc": "Su solicitud ha sido calificada y enviada con éxito. Recibirá las invitaciones de calendario en breve."
+    },
+    "leadQualification": {
+      "title": "Evaluador de Proyectos IA",
+      "subtitle": "Ingrese sus requerimientos para generar un borrador de proyecto y enviarlo a nuestros directores de práctica.",
+      "name": "Nombre Completo",
+      "email": "Correo Corporativo",
+      "phone": "Número de Teléfono",
+      "company": "Nombre de la Empresa",
+      "industry": "Industria",
+      "service": "Enfoque de Servicio",
+      "budget": "Rango de Presupuesto",
+      "timeline": "Limitación de Plazo",
+      "message": "Describa su objetivo / tecnologías requeridas",
+      "submit": "Calificar Plan de Proyecto",
+      "successTitle": "¡Proyecto Calificado!",
+      "successDesc": "Nuestro motor ha calificado su proyecto. Un director de soluciones se comunicará con usted con una propuesta en 24 horas.",
+      "scoreLabel": "Puntaje de Prioridad",
+      "priorityHigh": "Prioridad Corporativa",
+      "priorityMedium": "Prioridad Estándar",
+      "priorityLow": "Fase de Planificación"
+    },
+    "staffingFlow": {
+      "title": "Escale su Equipo de Ingeniería",
+      "subtitle": "Especifique los roles y el número de desarrolladores que necesita desplegar.",
+      "roles": "Roles Técnicos Requeridos (ej. Next.js, Python)",
+      "teamSize": "Número de Desarrolladores",
+      "location": "Ubicación (EE. UU. / LatAm / India)",
+      "submit": "Solicitar Cotización de Contratación",
+      "successTitle": "¡Cotización Solicitada!",
+      "successDesc": "Su solicitud de contratación ha sido enviada a nuestros directores de talento. Le enviaremos perfiles que coincidan en 24 horas."
+    },
+    "successMessages": {
+      "leadSuccess": "Su proyecto ha sido calificado y dirigido correctamente.",
+      "consultSuccess": "Se enviarán invitaciones de calendario a su correo en breve."
+    },
+    "suggestedPrompts": [
+      "Necesito un chatbot de IA",
+      "Quiero un software ERP",
+      "Necesito migración a la nube",
+      "Necesito desarrolladores dedicados",
+      "Quiero consultoría de CTO",
+      "Necesito evaluación de ciberseguridad",
+      "Quiero un dashboard de Power BI",
+      "Necesito una tienda Shopify"
+    ],
+    "industries": {
+      "healthcare": "Salud",
+      "finance": "Finanzas",
+      "retail": "Venta al por menor",
+      "manufacturing": "Manufactura",
+      "education": "Educación",
+      "government": "Gobierno",
+      "realestate": "Bienes Raíces",
+      "logistics": "Logística",
+      "hospitality": "Hospitalidad",
+      "construction": "Construcción",
+      "legal": "Legal",
+      "pharma": "Farmacéutica",
+      "startups": "Startups",
+      "smes": "PyMEs",
+      "enterprise": "Grandes Empresas",
+      "technology": "Tecnología",
+      "other": "Otro"
+    },
+    "budgets": {
+      "under25k": "Menos de $25,000",
+      "between25k100k": "$25,000 - $100,000",
+      "between100k250k": "$100,000 - $250,000",
+      "over250k": "$250,000+ (Corporativo)",
+      "under5k": "Menos de $5,000",
+      "between5k10k": "$5,000 - $10,000",
+      "between10k25k": "$10,000 - $25,000",
+      "between25k50k": "$25,000 - $50,000",
+      "over50k": "$50,000+"
+    },
+    "timelines": {
+      "immediate": "Inmediato (Menos de 1 mes)",
+      "medium": "1-3 meses",
+      "long": "3-6 meses",
+      "norush": "Explorando / En planificación"
+    },
+    "advisor": {
+      "greeting": {
+        "message": "¡Hola! Soy su asesor técnico de HyperCode. Puedo recomendarle soluciones, sugerirle tecnologías, estimar plazos de proyectos y calcular el tamaño de los equipos de desarrollo. ¿Qué desea construir o escalar hoy?",
+        "suggestedPrompts": [
+          "Necesito un chatbot de IA",
+          "Quiero un software ERP",
+          "Necesito desarrolladores dedicados",
+          "Quiero consultoría de CTO"
+        ]
+      },
+      "about": {
+        "message": "HyperCode es una firma de consultoría de IA y transformación digital de grado empresarial. Nos especializamos en estructurar plataformas de datos en la nube, desarrollar software a medida y proporcionar soluciones globales de reclutamiento técnico. Apoyamos a empresas medianas y corporativas con ingenieros certificados.",
+        "suggestedPrompts": [
+          "¿Qué servicios ofrecen?",
+          "Quiero una consulta"
+        ]
+      },
+      "location": {
+        "message": "HyperCode tiene su sede principal en San Francisco, California, con oficinas en Schaumburg, Illinois. Servimos a clientes en toda América del Norte y a nivel mundial mediante squads de ingeniería remotos e híbridos.",
+        "suggestedPrompts": [
+          "¿Cómo empezamos?",
+          "Programar una consulta"
+        ]
+      },
+      "pricing": {
+        "message": "Nuestras tarifas varían según el modelo de compromiso: squads dedicados por sprints, contratos por proyectos cerrados o reclutamiento de personal. Si me describe su proyecto, puedo pre-evaluar el presupuesto y los perfiles necesarios.",
+        "suggestedPrompts": [
+          "Calificar mi proyecto",
+          "Programar una consulta"
+        ]
+      },
+      "techConsulting": {
+        "message": "Nuestra práctica de Consultoría Tecnológica ofrece estrategia de IA, diseño de arquitectura de sistemas y CTO como servicio para alinear sus operaciones comerciales con pilas tecnológicas modernas.\n\n¿Le gustaría agendar una reunión técnica con nuestros directores?",
+        "suggestedPrompts": [
+          "Calificar mi proyecto",
+          "Programar una consulta",
+          "Volver a servicios"
+        ]
+      },
+      "aiSolutions": {
+        "message": "Construimos soluciones de IA generativa, flujos automatizados de agentes cognitivos, procesamiento documental inteligente y sistemas RAG utilizando LLMs comerciales para optimizar operaciones.\n\n¿Desea evaluar un proyecto de IA?",
+        "suggestedPrompts": [
+          "Calificar mi proyecto",
+          "Programar una consulta",
+          "Volver a servicios"
+        ]
+      },
+      "dataAnalytics": {
+        "message": "Ingenierizamos sistemas de análisis integrales, conectando almacenes de datos en la nube con Power BI, Tableau y flujos automatizados de ETL para habilitar la toma de decisiones directivas.",
+        "suggestedPrompts": [
+          "Quiero un dashboard de Power BI",
+          "Programar una consulta",
+          "Volver a servicios"
+        ]
+      },
+      "bi": {
+        "message": "Conectamos motores de bases de datos con cuadros de mando interactivos (Power BI y Tableau) para la generación automática de reportes ejecutivos.",
+        "suggestedPrompts": [
+          "Quiero un dashboard de Power BI",
+          "Programar una consulta",
+          "Volver a servicios"
+        ]
+      },
+      "staffing": {
+        "message": "Nuestras Soluciones de Talento escalan sus departamentos con desarrolladores Next.js, Cloud y de Datos pre-seleccionados mediante contratos temporales, permanentes o búsqueda ejecutiva.\n\nIndíqueme los perfiles requeridos.",
+        "suggestedPrompts": [
+          "Solicitar presupuesto",
+          "Necesito desarrolladores dedicados",
+          "Volver a servicios"
+        ]
+      },
+      "webDev": {
+        "message": "Nuestros squads de React, Next.js y TypeScript construyen aplicaciones web con velocidad de carga subsegundo, plataformas SaaS, portales de clientes y herramientas CRM/ERP a medida.",
+        "suggestedPrompts": [
+          "Calificar mi proyecto",
+          "Quiero un software ERP",
+          "Volver a servicios"
+        ]
+      },
+      "consultation": {
+        "message": "Por favor, indique los objetivos de la reunión y su fecha preferida de contacto a continuación. Nuestro motor agendará la videoconferencia con un director.",
+        "suggestedPrompts": [
+          "Agendar llamada ahora",
+          "Volver a servicios"
+        ]
+      },
+      "redirect": {
+        "message": "Me especializo en consultoría tecnológica, ingeniería de software a medida, automatización con IA, ciberseguridad, arquitectura en la nube y soluciones de talento. Indíqueme cuál de estas áreas prefiere discutir.",
+        "suggestedPrompts": [
+          "Saber más de servicios",
+          "Quiero una consulta"
+        ]
+      }
+    }
+  },
+  "SolutionsPage": {
+    "heroTitle": "Consultoría y Soluciones Tecnológicas Corporativas",
+    "heroSubtitle": "Aceleramos el valor de su negocio a través de Ingeniería de Software, Inteligencia Artificial Generativa, migración a la nube y soluciones de reclutamiento TI y No-TI.",
+    "searchPlaceholder": "Busque servicios por nombre, tecnología o industria vertical...",
+    "filterIndustry": "Todas las Industrias",
+    "filterTech": "Todas las Tecnologías",
+    "filterChallenge": "Todos los Desafíos",
+    "noResults": "No se encontraron soluciones que coincidan con sus filtros de búsqueda.",
+    "keyBenefitsLabel": "Valor Añadido Medible",
+    "techStandardsLabel": "Tecnologías y Estándares",
+    "practiceProcessLabel": "Nuestro Proceso de Ejecución",
+    "learnMoreBtn": "Ver Detalles del Servicio",
+    "whyTitle": "Por qué los Líderes Corporativos Confían en HyperCode",
+    "whySubtitle": "Combinamos la excelencia en ingeniería con la arquitectura de datos y redes globales de talento para entregar resultados de negocio medibles.",
+    "faqTitle": "Preguntas Frecuentes",
+    "faqSubtitle": "Conozca nuestros modelos de trabajo, estándares de seguridad y marcos de entrega.",
+    "ctaTitle": "¿Listo para Diseñar su Solución?",
+    "ctaDesc": "Programe una reunión técnica con un director de soluciones para definir su roadmap, analizar ahorros de costos o estructurar su contratación.",
+    "ctaBtn": "Comenzar Ahora",
+    "businessValue": "Impacto de Valor de Negocio",
+    "expectedOutcomes": "Resultados Esperados",
     "stats": {
-      "projects": "Proyectos Completados",
-      "satisfaction": "Satisfacción del Cliente",
-      "consultants": "Consultores Colocados"
+      "retentionNum": "99%",
+      "retentionLabel": "Tasa de Retención de Clientes",
+      "deploymentsNum": "150+",
+      "deploymentsLabel": "Proyectos Corporativos Entregados",
+      "onboardingNum": "5-10 Días",
+      "onboardingLabel": "Onboarding Promedio de Células"
+    },
+    "why": {
+      "title": "Por qué los Líderes Corporativos Eligen a HyperCode",
+      "subtitle": "Combinamos la excelencia en ingeniería con la arquitectura de datos y redes globales de talento.",
+      "engineersTitle": "Ingenieros SRE Certificados",
+      "engineersDesc": "Todos nuestros ingenieros están completamente certificados en Next.js, Python o prácticas en la nube, asegurando compliance y arquitecturas limpias.",
+      "deliveryTitle": "Entrega Acelerada",
+      "deliveryDesc": "Optimizamos los canales de contratación, reduciendo la latencia de onboarding de desarrolladores a 5-10 días hábiles.",
+      "securityTitle": "Seguridad SOC 2 e HIPAA",
+      "securityDesc": "Todos los proyectos de software y plataformas de datos se diseñan bajo controles estrictos de acceso (IAM) y escaneos de vulnerabilidad continuos.",
+      "scalabilityTitle": "Escalabilidad Empresarial",
+      "scalabilityDesc": "Arquitecturas diseñadas para manejar cargas de tráfico pico, flujos de datos concurrentes masivos y escalado multi-tenant.",
+      "supportTitle": "Gobernanza de Cuentas Globales",
+      "supportDesc": "Aprovechamos estructuras híbridas en zonas horarias de EE. UU. para alinear flujos de trabajo y ofrecer supervisión de proyectos en tiempo real."
+    },
+    "industries": "Industrias Atendidas",
+    "technologies": "Tecnologías y Herramientas",
+    "relatedServices": "Servicios Relacionados",
+    "industriesTitle": "Industrias que Atendemos",
+    "industriesSubtitle": "Entregamos flujos de trabajo digitales especializados y arquitectura de sistemas en sectores globales.",
+    "techEcosystemTitle": "Ecosistema Tecnológico",
+    "techEcosystemSubtitle": "Diseñamos soluciones utilizando las mejores tecnologías, frameworks y plataformas de datos empresariales.",
+    "caseStudyLabel": "Caso de Éxito",
+    "viewCaseStudy": "Leer Caso de Estudio Completo",
+    "benefitsLabel": "Valor Estratégico y Beneficios",
+    "ctaSectionTitle": "¿Listo para Transformar su Negocio?",
+    "ctaSectionSubtitle": "Programe una sesión técnica con nuestros directores de soluciones o interactúe con el consultor de IA.",
+    "drawerTitle": "Capacidades y Alcance del Servicio",
+    "relatedServicesLabel": "Capacidades Relacionadas",
+    "industriesList": {
+      "healthcare": {
+        "title": "Salud y Ciencias Biológicas",
+        "desc": "Portales compatibles con HIPAA, integración de flujos clínicos y paneles de analítica médica."
+      },
+      "finance": {
+        "title": "Banca y Servicios Financieros",
+        "desc": "Plataformas fintech, procesamiento seguro de pagos y sistemas de auditoría automatizados."
+      },
+      "retail": {
+        "title": "Venta al por Menor y Comercio Electrónico",
+        "desc": "Constructores de comercio omnicanal, plataformas de gestión de pedidos y canales de inventario."
+      },
+      "manufacturing": {
+        "title": "Manufactura Avanzada",
+        "desc": "Canales de ingesta de datos IIoT, visualización de cadena de suministro y ERP de planificación."
+      },
+      "education": {
+        "title": "Educación y EdTech",
+        "desc": "Plataformas de gestión de aprendizaje, sistemas de información estudiantil y aulas virtuales."
+      },
+      "logistics": {
+        "title": "Logística y Cadena de Suministro",
+        "desc": "Seguimiento de flotas en tiempo real, motores de optimización de rutas y software de almacenes."
+      },
+      "hospitality": {
+        "title": "Hospitalidad y Viajes",
+        "desc": "Sistemas de reserva a medida, automatización de huéspedes y gestión de programas de fidelización."
+      },
+      "construction": {
+        "title": "Construcción y Bienes Raíces",
+        "desc": "Software de gestión de proyectos, herramientas de campo y bases de datos de inmuebles."
+      },
+      "legal": {
+        "title": "Servicios Legales",
+        "desc": "Canales de almacenamiento de documentos, flujos de contratos y software de facturación."
+      },
+      "pharma": {
+        "title": "Farmacéutica y Biotecnología",
+        "desc": "Bases de datos de laboratorio, seguimiento de lotes y herramientas de cumplimiento de la FDA."
+      },
+      "government": {
+        "title": "Sector Público y GovTech",
+        "desc": "Portales de servicios al ciudadano, registros de datos seguros y herramientas de auditoría."
+      },
+      "technology": {
+        "title": "Alta Tecnología y Software",
+        "desc": "Arquitecturas MVP SaaS, automatización de infraestructura en la nube y pruebas de calidad."
+      }
+    },
+    "challenges": {
+      "all": "Todos los Desafíos",
+      "cost": "Reducción de Costos y Eficiencia",
+      "scale": "Escalar Equipos y Operaciones",
+      "migration": "Migraciones de Sistemas Legados",
+      "ai": "Chatbots de IA y Soluciones de Automatización",
+      "security": "Evaluaciones y Auditorías de Seguridad",
+      "reporting": "Reportes Ejecutivos y Dashboards",
+      "store": "Tiendas Online y OMS"
+    },
+    "categories": {
+      "ai-automation": {
+        "title": "IA y Automatización",
+        "desc": "Despliegue soluciones de IA generativa, pipelines RAG y agentes de voz/soporte automáticos.",
+        "services": {
+          "ai-consulting": {
+            "title": "Consultoría y Estrategia de IA",
+            "desc": "Diseño de roadmap y modelos de arquitectura para integraciones de IA a medida.",
+            "value": "Reduce la latencia estratégica y alinea los sistemas de IA con métricas de negocio.",
+            "outcomes": [
+              "Evaluación de preparación para IA",
+              "Plan de ruta operativa",
+              "Estimación de ROI"
+            ],
+            "industries": [
+              "Finanzas",
+              "Salud",
+              "Startups"
+            ]
+          },
+          "generative-ai": {
+            "title": "Soluciones de IA Generativa",
+            "desc": "Interfaces generativas personalizadas, creación de contenido y flujos de agentes.",
+            "value": "Acelera la creación de contenido y la automatización del servicio al cliente.",
+            "outcomes": [
+              "Latencia de generación subsegundo",
+              "Borradores de documentos automatizados"
+            ],
+            "industries": [
+              "Venta al por menor",
+              "Educación",
+              "Grandes Empresas"
+            ]
+          },
+          "ai-chatbots": {
+            "title": "Desarrollo de Chatbots de IA",
+            "desc": "Motores de chatbot impulsados por RAG para tareas de asesoría o soporte.",
+            "value": "Ahorra hasta un 60% en costos de recursos de soporte al cliente.",
+            "outcomes": [
+              "Interacciones con clientes 24/7",
+              "Canales de respuesta subsegundo"
+            ],
+            "industries": [
+              "Venta al por menor",
+              "Salud",
+              "Finanzas"
+            ]
+          },
+          "ai-voice-agents": {
+            "title": "Agentes de Voz de IA",
+            "desc": "Integraciones de agentes de voz automáticos para llamadas salientes o entrantes.",
+            "value": "Mejora la satisfacción del cliente eliminando las colas de espera.",
+            "outcomes": [
+              "Tiempo de respuesta subsegundo",
+              "Integraciones con Twilio"
+            ],
+            "industries": [
+              "Hospitalidad",
+              "Logística",
+              "PyMEs"
+            ]
+          }
+        }
+      },
+      "software-development": {
+        "title": "Desarrollo de Software",
+        "desc": "Sistemas de CRM, ERP y software empresarial a medida diseñados para escalar.",
+        "services": {
+          "custom-software": {
+            "title": "Ingeniería de Software a Medida",
+            "desc": "Software diseñado a la medida para optimizar flujos de trabajo y reemplazar sistemas heredados.",
+            "value": "Incrementa la productividad y elimina los costos de licencias de terceros.",
+            "outcomes": [
+              "Código fuente modular",
+              "Base de datos moderna"
+            ],
+            "industries": [
+              "Salud",
+              "Finanzas",
+              "Logística"
+            ]
+          },
+          "enterprise-software": {
+            "title": "Integración de Sistemas Corporativos",
+            "desc": "Escalado de bases de datos, conexión de módulos internos y orquestación de middleware.",
+            "value": "Consolida lagos de datos aislados en tableros unificados.",
+            "outcomes": [
+              "Procesamiento subsegundo",
+              "Migraciones con cero tiempo de inactividad"
+            ],
+            "industries": [
+              "Grandes Empresas",
+              "Gobierno",
+              "Farmacéutica"
+            ]
+          },
+          "saas-development": {
+            "title": "Desarrollo de Plataformas SaaS",
+            "desc": "Plataformas multi-inquilino, APIs con velocidad subsegundo y cobros con Stripe.",
+            "value": "Acelera el tiempo de lanzamiento de productos digitales.",
+            "outcomes": [
+              "MVP listo para la nube",
+              "Respuestas de API subsegundo"
+            ],
+            "industries": [
+              "Startups",
+              "PyMEs",
+              "Finanzas"
+            ]
+          }
+        }
+      },
+      "web-development": {
+        "title": "Desarrollo Web",
+        "desc": "Sitios corporativos, portales de clientes y dashboards administrativos con Next.js.",
+        "services": {
+          "corporate-websites": {
+            "title": "Sitios Web Corporativos",
+            "desc": "Plataformas de marketing de alto rendimiento con optimización SEO.",
+            "value": "Aumenta la tasa de conversión en línea y la credibilidad de marca.",
+            "outcomes": [
+              "Puntaje de PageSpeed superior a 90",
+              "Integración con Sanity CMS"
+            ],
+            "industries": [
+              "Finanzas",
+              "Legal",
+              "Bienes Raíces"
+            ]
+          },
+          "marketplace-platforms": {
+            "title": "Marketplaces y Sistemas de Reserva",
+            "desc": "Sistemas de reserva e e-commerce headless de alto rendimiento.",
+            "value": "Automatiza los registros de clientes y reduce la fricción transaccional.",
+            "outcomes": [
+              "Portal responsivo",
+              "Sincronización de calendario en tiempo real"
+            ],
+            "industries": [
+              "Venta al por menor",
+              "Logística",
+              "Hospitalidad"
+            ]
+          },
+          "admin-dashboards": {
+            "title": "Dashboards de Administración",
+            "desc": "Centros internos seguros con telemetría avanzada y roles de usuario.",
+            "value": "Agiliza el seguimiento operativo y las auditorías de credenciales.",
+            "outcomes": [
+              "Gestión segura de accesos",
+              "Dashboards visuales de KPIs"
+            ],
+            "industries": [
+              "Grandes Empresas",
+              "Startups",
+              "Logistics"
+            ]
+          }
+        }
+      },
+      "mobile-development": {
+        "title": "Desarrollo Móvil",
+        "desc": "Aplicaciones nativas de iOS/Android y desarrollos híbridos con Flutter o React Native.",
+        "services": {
+          "ios": {
+            "title": "Desarrollo Nativo de Aplicaciones iOS",
+            "desc": "Aplicaciones a medida en Swift y SwiftUI integradas con capacidades del sistema.",
+            "value": "Experiencia de usuario premium y alto valor de marca.",
+            "outcomes": [
+              "Listas para App Store",
+              "Sincronización fuera de línea"
+            ],
+            "industries": [
+              "Venta al por menor",
+              "Salud",
+              "Startups"
+            ]
+          },
+          "flutter": {
+            "title": "Aplicaciones Multiplataforma Flutter",
+            "desc": "Aplicaciones con una sola base de código para iOS, Android y web.",
+            "value": "Ahorra hasta un 40% en presupuestos de desarrollo y diseño inicial.",
+            "outcomes": [
+              "Base de código única",
+              "Diseño consistente en todos los dispositivos"
+            ],
+            "industries": [
+              "PyMEs",
+              "Logística",
+              "Hospitalidad"
+            ]
+          }
+        }
+      },
+      "cloud-devops": {
+        "title": "Nube y DevOps",
+        "desc": "Administración de AWS/Azure, contenedorización con Docker y despliegues automáticos.",
+        "services": {
+          "cloud-migration": {
+            "title": "Migración a la Nube",
+            "desc": "Migración de servidores físicos o sistemas heredados a AWS o Azure.",
+            "value": "Reduce los costos de mantenimiento de servidores hasta en un 50%.",
+            "outcomes": [
+              "Migración de bases de datos sin interrupción",
+              "Reportes de costos claros"
+            ],
+            "industries": [
+              "Finanzas",
+              "Salud",
+              "Grandes Empresas"
+            ]
+          },
+          "kubernetes": {
+            "title": "Orquestación con Kubernetes",
+            "desc": "Contenedorización de aplicaciones monolíticas y nodos con escalado automático.",
+            "value": "Mantiene alta disponibilidad ante picos de tráfico repentinos.",
+            "outcomes": [
+              "Despliegues sin inactividad",
+              "Escalado automático de clústeres"
+            ],
+            "industries": [
+              "Grandes Empresas",
+              "Startups",
+              "Finanzas"
+            ]
+          }
+        }
+      },
+      "talent-solutions": {
+        "title": "Soluciones de Talento TI y No-TI",
+        "desc": "Escalado de equipos con personal permanente, aumento de personal y centros dedicados.",
+        "services": {
+          "permanent-staffing": {
+            "title": "Búsqueda y Contratación Permanente",
+            "desc": "Reclutamiento y evaluación de personal técnico y de negocios a tiempo completo.",
+            "value": "Reduce el tiempo de contratación de meses a días.",
+            "outcomes": [
+              "Perfiles de talento verificados",
+              "Auditorías de cumplimiento laboral"
+            ],
+            "industries": [
+              "Finanzas",
+              "Salud",
+              "Grandes Empresas"
+            ]
+          },
+          "staff-augmentation": {
+            "title": "Aumento de Personal (Staff Augmentation)",
+            "desc": "Desarrolladores contratados para acelerar sprints internos.",
+            "value": "Cubre brechas de habilidades al instante sin compromisos de largo plazo.",
+            "outcomes": [
+              "Onboarding en 5 días",
+              "Escalabilidad flexible del equipo"
+            ],
+            "industries": [
+              "Startups",
+              "PyMEs",
+              "Finanzas"
+            ]
+          }
+        }
+      },
+      "digital-transformation": {
+        "title": "Transformación Digital",
+        "desc": "Modernización de sistemas legados, automatización de tareas y oficina sin papel.",
+        "services": {
+          "business-process-automation": {
+            "title": "Automatización de Procesos de Negocio",
+            "desc": "Integración de n8n, Zapier y scripts para automatizar flujos documentales.",
+            "value": "Elimina hasta el 90% de los errores de entrada y correos manuales.",
+            "outcomes": [
+              "Flujos de correo automatizados",
+              "Paneles unificados de control"
+            ],
+            "industries": [
+              "Logística",
+              "Venta al por menor",
+              "PyMEs"
+            ]
+          },
+          "digital-strategy": {
+            "title": "Estrategia Digital y Consultoría",
+            "desc": "Planificación detallada de arquitecturas y adopción de tecnologías modernas.",
+            "value": "Garantiza que el desarrollo de software se alinee con los objetivos de negocio.",
+            "outcomes": [
+              "Propuesta de selección de tecnologías",
+              "Matriz de roadmap de proyecto"
+            ],
+            "industries": [
+              "Grandes Empresas",
+              "Gobierno",
+              "Finanzas"
+            ]
+          }
+        }
+      },
+      "data-analytics": {
+        "title": "Datos y Analítica",
+        "desc": "Modelos semánticos, lagos de datos en Snowflake y plataformas de reportes automatizadas.",
+        "services": {
+          "power-bi": {
+            "title": "Configuración de Power BI y Tableau",
+            "desc": "Despliegue de paneles analíticos interactivos y de autoservicio.",
+            "value": "Permite a los gerentes verificar indicadores clave en tiempo real.",
+            "outcomes": [
+              "Reportes ejecutivos automáticos",
+              "Alertas diarias de KPI"
+            ],
+            "industries": [
+              "Finanzas",
+              "Manufactura",
+              "Grandes Empresas"
+            ]
+          },
+          "data-warehousing": {
+            "title": "Data Warehousing en la Nube",
+            "desc": "Estructuración de Snowflake, BigQuery o Redshift con modelos dbt.",
+            "value": "Habilita consultas de miles de millones de filas en segundos.",
+            "outcomes": [
+              "Lagos de datos consolidados",
+              "Pipelines con dbt configurados"
+            ],
+            "industries": [
+              "Finanzas",
+              "Venta al por menor",
+              "Salud"
+            ]
+          }
+        }
+      },
+      "cybersecurity": {
+        "title": "Ciberseguridad",
+        "desc": "Pruebas de penetración, evaluaciones de vulnerabilidades y cumplimiento.",
+        "services": {
+          "penetration-testing": {
+            "title": "Pruebas de Penetración (Pentesting)",
+            "desc": "Identificación de brechas en APIs, redes de datos y aplicaciones web.",
+            "value": "Previene filtraciones de datos y protege las credenciales de usuarios.",
+            "outcomes": [
+              "Informe detallado de mitigaciones",
+              "Auditoría de vulnerabilidades de API"
+            ],
+            "industries": [
+              "Finanzas",
+              "Salud",
+              "Gobierno"
+            ]
+          },
+          "compliance": {
+            "title": "Cumplimiento SOC 2 y GDPR",
+            "desc": "Configuración de cifrado seguro y control de accesos de credenciales.",
+            "value": "Habilita a las startups para concretar ventas a clientes corporativos.",
+            "outcomes": [
+              "Bitácoras de cumplimiento SOC 2",
+              "Configuración segura de IAM"
+            ],
+            "industries": [
+              "Salud",
+              "Finanzas",
+              "Grandes Empresas"
+            ]
+          }
+        }
+      },
+      "ui-ux-design": {
+        "title": "Diseño UI/UX",
+        "desc": "Investigación UX, prototipos interactivos y sistemas de diseño en Figma.",
+        "services": {
+          "design-systems": {
+            "title": "Sistemas de Diseño en Figma",
+            "desc": "Construcción de bibliotecas de componentes reutilizables y tokenizados.",
+            "value": "Acelera el desarrollo del frontend hasta en un 50%.",
+            "outcomes": [
+              "Componentes integrados en Storybook",
+              "Guías consistentes de UI"
+            ],
+            "industries": [
+              "Startups",
+              "PyMEs",
+              "Grandes Empresas"
+            ]
+          },
+          "ux-research": {
+            "title": "Investigación UX y Prototipos",
+            "desc": "Diseño de flujos de interacción de pantallas y pruebas de usabilidad.",
+            "value": "Valida suposiciones antes de iniciar la programación.",
+            "outcomes": [
+              "Prototipos interactivos clicables",
+              "Resultados de pruebas de usuario"
+            ],
+            "industries": [
+              "Salud",
+              "Venta al por menor",
+              "Finanzas"
+            ]
+          }
+        }
+      },
+      "digital-marketing": {
+        "title": "Marketing Digital",
+        "desc": "Optimización SEO, campañas en Google Ads y posicionamiento de marca.",
+        "services": {
+          "seo": {
+            "title": "Optimización para Motores de Búsqueda",
+            "desc": "Mejora el posicionamiento en Google a través de auditorías de velocidad y contenido.",
+            "value": "Genera leads calificados de forma orgánica diariamente.",
+            "outcomes": [
+              "Posicionamiento en los primeros resultados de Google",
+              "Velocidades de carga optimizadas"
+            ],
+            "industries": [
+              "Venta al por menor",
+              "Legal",
+              "PyMEs"
+            ]
+          }
+        }
+      },
+      "ecommerce": {
+        "title": "Comercio Electrónico",
+        "desc": "Tiendas Shopify o WooCommerce integradas con sistemas ERP y OMS.",
+        "services": {
+          "shopify": {
+            "title": "Tiendas Shopify a Medida",
+            "desc": "Estructuras Shopify Liquid o implementaciones headless Next.js.",
+            "value": "Incrementa las ventas con un proceso de pago optimizado.",
+            "outcomes": [
+              "Integración completa con OMS",
+              "Configuración de pasarelas de pago"
+            ],
+            "industries": [
+              "Venta al por menor",
+              "Startups",
+              "PyMEs"
+            ]
+          }
+        }
+      },
+      "technology-consulting": {
+        "title": "Consultoría Tecnológica",
+        "desc": "CTO as a Service, consultoría para startups y auditoría de sistemas legados.",
+        "services": {
+          "technology-consulting-service": {
+            "title": "Servicios de Consultoría de CTO",
+            "desc": "Supervisión experta de bases de datos, selección de proveedores y presupuestos.",
+            "value": "Evita callejones sin salida en el desarrollo y reduce la deuda técnica.",
+            "outcomes": [
+              "Diagramas de arquitectura de sistemas",
+              "Evaluación de costos tecnológicos"
+            ],
+            "industries": [
+              "Grandes Empresas",
+              "Finanzas",
+              "Salud"
+            ]
+          },
+          "cto-as-a-service": {
+            "title": "Director de Tecnología Bajo Demanda",
+            "desc": "Orientación ejecutiva continua para definir su estrategia tecnológica.",
+            "value": "Acceso a liderazgo técnico sin los costos de un salario de tiempo completo.",
+            "outcomes": [
+              "Planes estratégicos de sistemas",
+              "Matriz de sprints de desarrollo"
+            ],
+            "industries": [
+              "Startups",
+              "PyMEs",
+              "Finanzas"
+            ]
+          }
+        }
+      }
     }
   },
-  "CaseStudies": {
-    "badge": "CASO DE ESTUDIO",
-    "title": "Historia de Éxito Destacada",
-    "subtitle": "Conozca cómo ayudamos a las organizaciones empresariales a resolver bloqueos de datos y configurar arquitecturas escalables.",
-    "featuredLabel": "HISTORIA DE ÉXITO DESTACADA",
-    "challenge": "Desafío",
-    "solution": "Solución",
-    "outcome": "Resultado",
-    "story": {
-      "category": "HISTORIA DE ÉXITO DESTACADA",
-      "title": "Modernización del Almacén de Datos",
-      "subtitle": "Consolidación de Nube HIPAA",
-      "challengeText": "Los registros de pacientes en 15 ubicaciones separadas estaban fragmentados en bases de datos heredadas, creando demoras en los análisis e inquietudes sobre auditorías HIPAA.",
-      "solutionText": "Consolidó todas las bases de datos en un almacén de datos Snowflake seguro y conforme a HIPAA utilizando canalizaciones de integración de datos de Azure.",
-      "outcomeText": "Redujo los tiempos de ingesta de datos en un 200%, ahorró $3.2 millones en gastos generales anuales de bases de datos y obtuvo calificaciones de auditoría de cumplimiento del 100%."
-    }
-  },
-  "CTA": {
-    "title": "¿Listo para Transformar su Pila Tecnológica?",
-    "subtitle": "Programe una sesión directa con un arquitecto de soluciones de HyperCode para revisar sus esquemas de base de datos o requisitos de canalización de aplicaciones.",
-    "button": "Programar Consulta"
+  "Insights": {
+    "title": "Pensamiento de Liderazgo",
+    "subtitle": "Los directores de consultoría de HyperCode y arquitectos de soluciones comparten perspectivas, guías y patrones de ingeniería.",
+    "allCategories": "Todas las Categorías",
+    "readArticle": "Leer Artículo",
+    "noArticles": "No se encontraron artículos en esta categoría.",
+    "relatedArticles": "Artículos Relacionados",
+    "share": "Compartir Artículo",
+    "newsletterTitle": "Manténgase Actualizado",
+    "newsletterSubtitle": "Suscríbase a nuestro boletín para recibir las últimas ideas y actualizaciones directamente en su bandeja de entrada.",
+    "newsletterPlaceholder": "tu.correo@empresa.com",
+    "newsletterButton": "Suscribirse",
+    "newsletterSuccess": "Gracias por suscribirse a las ideas de HyperCode.",
+    "newsletterAlreadySubscribed": "Ya se encuentra suscrito.",
+    "newsletterError": "No es posible suscribirse en este momento. Por favor, inténtelo de nuevo más tarde."
   },
   "About": {
     "title": "Construyendo asociaciones a largo plazo a través de la",
@@ -208,6 +1112,130 @@
       }
     }
   },
+  "PrivacyPolicy": {
+    "legal": "Aspectos Legales de HyperCode",
+    "title": "Política de Privacidad",
+    "subtitle": "Valoramos su privacidad y estamos comprometidos a proteger sus datos personales.",
+    "lastUpdated": "Última Actualización: 26 de junio de 2026",
+    "downloadPdf": "Descargar Versión PDF",
+    "toc": "Tabla de Contenidos",
+    "sections": {
+      "introduction": {
+        "title": "1. Introducción",
+        "content": "Bienvenido a HyperCode. Esta Política de Privacidad describe cómo HyperCode LLC (\"nosotros\", \"nos\" o \"nuestro\") recopila, utiliza, comparte y protege sus datos personales cuando visita nuestro sitio web (https://www.hypercode.com), utiliza nuestro chatbot Consultor de IA, envía solicitudes de contacto o consulta, o solicita puestos de trabajo vacantes. Al acceder a nuestros servicios, usted acepta las prácticas descritas en esta política."
+      },
+      "collect": {
+        "title": "2. Información que Recopilamos",
+        "content": "Recopilamos información que usted nos proporciona voluntariamente y aquella que se recopila automáticamente cuando utiliza nuestro sitio web. Esto incluye:\n\n• Información de Identificación Personal: Nombre, dirección de correo electrónico, número de teléfono, nombre de la empresa, cargo y detalles del currículum al enviar formularios, postularse a puestos de trabajo o pre-calificar oportunidades.\n\n• Datos de Comunicación: Transcripciones de sus conversaciones con el chatbot Consultor de IA y mensajes enviados a través de formularios de contacto.\n\n• Datos de Uso y Dispositivo: Dirección IP, tipo de navegador, sistema operativo, URLs de referencia, páginas vistas y tiempos de acceso recopilados mediante cookies y tecnologías de seguimiento."
+      },
+      "use": {
+        "title": "3. Cómo Utilizamos su Información",
+        "content": "Procesamos su información para fines comerciales legítimos, que incluyen:\n\n• Proporcionar, mantener y optimizar nuestro sitio web y servicios.\n\n• Responder a sus formularios de contacto, solicitudes de consulta y preguntas del chatbot.\n\n• Evaluar solicitudes de empleo y gestionar canales de contratación.\n\n• Enviar boletines de noticias, contenidos promocionales o alertas (cuando haya dado su consentimiento).\n\n• Detectar, prevenir y abordar incidentes de seguridad, fraudes o problemas técnicos."
+      },
+      "cookies": {
+        "title": "4. Cookies y Seguimiento",
+        "content": "Utilizamos cookies, balizas web y tecnologías de seguimiento similares para mejorar la experiencia del usuario, analizar el rendimiento del sitio y rastrear los patrones de tráfico. Puede configurar su navegador para que rechace todas las cookies o para que le indique cuándo se envía una cookie. Sin embargo, si no acepta las cookies, algunas partes de nuestro sitio web podrían no funcionar correctamente."
+      },
+      "sharing": {
+        "title": "5. Intercambio y Divulgación de Datos",
+        "content": "No vendemos, alquilamos ni comercializamos sus datos personales. Podemos compartir su información con proveedores externos de confianza que nos ayudan a operar nuestro sitio web, gestionar correos electrónicos o analizar el tráfico (por ejemplo, Supabase, Vercel, Resend, Google Analytics), siempre que acepten mantener esta información confidencial y secure."
+      },
+      "security": {
+        "title": "6. Seguridad de sus Datos",
+        "content": "Implementamos medidas de seguridad administrativas, técnicas y físicas estándar de la industria para proteger sus datos personales. Sin embargo, tenga en cuenta que ninguna transmisión por Internet o sistema de almacenamiento electrónico es 100% seguro, y no podemos garantizar una seguridad absoluta de los datos."
+      },
+      "rights": {
+        "title": "7. Sus Derechos y Opciones",
+        "content": "Dependiendo de su ubicación (como la UE bajo el RGPD o California bajo la CCPA), puede poseer derechos específicos con respecto a su información personal, incluido el derecho a acceder, corregir, eliminar o limitar el que usemos sus datos. Para ejercer cualquiera de estos derechos, póngase en contacto con nosotros en privacy@hypercodeus.com."
+      },
+      "changes": {
+        "title": "8. Cambios en esta Política",
+        "content": "Nos reservamos el derecho de modificar esta Política de Privacidad en cualquier momento. Cualquier cambio se publicará en esta página con una fecha de revisión actualizada. Le recomendamos revisar esta política periódicamente para mantenerse informado sobre cómo protegemos su información."
+      },
+      "contact": {
+        "title": "9. Contáctenos",
+        "content": "Si tiene alguna pregunta o inquietud con respecto a esta Política de Privacidad, póngase en contacto con nosotros:\n\n• Por correo electrónico: privacy@hypercodeus.com\n\n• Por correo postal: 2095 Hammond Dr Suite B, Schaumburg, IL 60173"
+      }
+    }
+  },
+  "TermsAndConditions": {
+    "legal": "Aspectos Legales de HyperCode",
+    "title": "Términos y Condiciones",
+    "subtitle": "Por favor, lea atentamente estos términos y condiciones antes de utilizar nuestro sitio web y servicios.",
+    "lastUpdated": "Última Actualización: 26 de junio de 2026",
+    "downloadPdf": "Descargar Versión PDF",
+    "toc": "Tabla de Contenidos",
+    "sections": {
+      "agreement": {
+        "title": "1. Acuerdo de los Términos",
+        "content": "Al acceder o utilizar el sitio web de HyperCode (https://www.hypercode.com) y nuestros servicios profesionales, usted acepta quedar vinculado por estos Términos y Condiciones. Si no está de acuerdo con todos estos términos, se le prohíbe expresamente utilizar nuestro sitio y servicios, y debe interrumpir su uso de inmediato."
+      },
+      "intellectual": {
+        "title": "2. Derechos de Propiedad Intelectual",
+        "content": "A menos que se indique lo contrario, el sitio web, incluidos su código fuente, databases, funcionalidad, software, diseños, audio, video, texto, fotografías y gráficos, son de nuestra propiedad exclusiva y están protegidos por leyes de derechos de autor y marcas registradas. El contenido se proporciona en el sitio \"TAL CUAL\" solo para su información y uso personal."
+      },
+      "user": {
+        "title": "3. Representaciones de Usuario",
+        "content": "Al utilizar el sitio web, usted declara y garantiza que: (1) toda la información de registro y envío que proporcione es verdadera, exacta y completa; (2) mantendrá la exactitud de dicha información; (3) tiene la capacidad legal y acepta cumplir con estos Términos y Condiciones; y (4) su uso del sitio web no violará ninguna ley o regulación aplicable."
+      },
+      "prohibited": {
+        "title": "4. Actividades Prohibidas",
+        "content": "No puede acceder al sitio web ni utilizarlo para ningún fin que no sea aquel para el que lo ponemos a disposición. Las actividades prohibidas incluyen: recopilación sistemática de datos para crear colecciones de bases de datos; enmarcado o enlace no autorizado; intentar eludir los filtros de seguridad del sitio web; y utilizar sistemas automatizados (como arañas o robots) para extraer datos."
+      },
+      "services": {
+        "title": "5. Servicios y Contrataciones",
+        "content": "HyperCode ofrece consultoría en desarrollo web empresarial, ingeniería de datos, inteligencia de negocios y reclutamiento de personal técnico TI y No-TI. Cualquier contratación específica para servicios de consultoría, entregables de proyectos o colocación de candidatos se regirá por un Contrato Marco de Servicios (MSA) o una Declaración de Trabajo (SOW) por separado por escrito."
+      },
+      "termination": {
+        "title": "6. Gestión del Sitio y Terminación",
+        "content": "Nos reservamos el derecho, pero no la obligación, de supervisar el sitio web para detectar violaciones de estos Términos y Condiciones. Podemos bloquear, suspenso o terminar el acceso al sitio a los usuarios que violen nuestros términos o participen en conductas perturbadoras, sin previo aviso ni responsabilidad."
+      },
+      "liability": {
+        "title": "7. Limitación de Responsabilidad",
+        "content": "En no caso HyperCode, sus directores, empleados o socios serán responsables ante usted o cualquier tercero por cualquier daño directo, indirecto, consecuente, ejemplar, incidental, especial o punitivo, incluyendo la pérdida de beneficios, pérdida de ingresos o pérdida de datos derivados de su uso del sitio web."
+      },
+      "governing": {
+        "title": "8. Ley Aplicable",
+        "content": "Estos Términos y Condiciones y el uso que haga del sitio web se rigen e interpretan de acuerdo con las leyes del Estado de Illinois, Estados Unidos, sin tener en cuenta sus principios de conflicto de leyes."
+      },
+      "contact": {
+        "title": "9. Contáctenos",
+        "content": "In order to resolve a complaint regarding the site or to receive further information regarding use of the site, please contact us:\n\n• By email: legal@hypercodeus.com\n\n• By mail: 2095 Hammond Dr Suite B, Schaumburg, IL 60173"
+      }
+    }
+  },
+  "WhyHypercode": {
+    "badge": "Por qué HyperCode",
+    "title": "Excelencia en Ingeniería, Asociación Estratégica",
+    "desc": "Nos diferenciamos de las agencias de desarrollo y contratación de personal de TI y no TI estándar. Tratamos las arquitecturas de los clientes como propias, incorporando rigurosos controles de seguridad y bucles de tutoría para garantizar la transferencia operativa completa.",
+    "stats": {
+      "projects": "Proyectos Completados",
+      "satisfaction": "Satisfacción del Cliente",
+      "consultants": "Consultores Colocados"
+    }
+  },
+  "CaseStudies": {
+    "badge": "CASO DE ESTUDIO",
+    "title": "Historia de Éxito Destacada",
+    "subtitle": "Conozca cómo ayudamos a las organizaciones empresariales a resolver bloqueos de datos y configurar arquitecturas escalables.",
+    "featuredLabel": "HISTORIA DE ÉXITO DESTACADA",
+    "challenge": "Desafío",
+    "solution": "Solución",
+    "outcome": "Resultado",
+    "story": {
+      "category": "HISTORIA DE ÉXITO DESTACADA",
+      "title": "Modernización del Almacén de Datos",
+      "subtitle": "Consolidación de Nube HIPAA",
+      "challengeText": "Los registros de pacientes en 15 ubicaciones separadas estaban fragmentados en bases de datos heredadas, creando demoras en los análisis e inquietudes sobre auditorías HIPAA.",
+      "solutionText": "Consolidó todas las bases de datos en un almacén de datos Snowflake seguro y conforme a HIPAA utilizando canalizaciones de integración de datos de Azure.",
+      "outcomeText": "Redujo los tiempos de ingesta de datos en un 200%, ahorró $3.2 millones en gastos generales anuales de bases de datos y obtuvo calificaciones de auditoría de cumplimiento del 100%."
+    }
+  },
+  "CTA": {
+    "title": "¿Listo para Transformar su Pila Tecnológica?",
+    "subtitle": "Programe una sesión directa con un arquitecto de soluciones de HyperCode para revisar sus esquemas de base de datos o requisitos de canalización de aplicaciones.",
+    "button": "Programar Consulta"
+  },
   "Careers": {
     "title": "Construya el Futuro de la Ingeniería de Datos y la Web",
     "subtitle": "Únase a un equipo de ingenieros de software expertos, arquitectos de soluciones y directores de analítica que crean sistemas modernos.",
@@ -247,80 +1275,6 @@
       "a2": "Sí, para funciones técnicas senior específicas, apoyamos transferencias H-1B y patrocinio de tarjeta verde según los requisitos del proyecto y los niveles de habilidad técnica.",
       "q3": "¿Qué recursos de capacitación ofrecen?",
       "a3": "Ofrecemos patrocinio financiero completo para certificaciones en la nube (AWS, Azure, Snowflake, Databricks), acceso a plataformas de aprendizaje empresarial y sesiones de capacitación interna estructuradas dirigidas por nuestros Directores de Práctica."
-    }
-  },
-  "Contact": {
-    "title": "Conéctese con Nosotros",
-    "subtitle": "Póngase en contacto con nuestros asesores de soluciones para discutir aplicaciones web, implementación de inteligencia de negocios o necesidades de contratación de personal de TI y no TI.",
-    "headquarters": "Sede Corporativa",
-    "email": "Consultas por Correo",
-    "phone": "Soporte Telefónico",
-    "formTitle": "Envíenos un Mensaje",
-    "formSubtitle": "Complete el formulario a continuación y nuestros directores de práctica se comunicarán con usted en un plazo de 24 horas.",
-    "form": {
-      "fullName": "Nombre Completo",
-      "emailAddress": "Dirección de Correo Electrónico",
-      "companyName": "Nombre de la Empresa",
-      "phoneNumber": "Número de Teléfono",
-      "subject": "Asunto",
-      "selectSubject": "Seleccione un asunto",
-      "message": "Mensaje",
-      "sendMessage": "Enviar Mensaje",
-      "nameError": "El nombre debe tener al menos 2 caracteres",
-      "emailError": "Dirección de correo electrónico no válida",
-      "companyError": "Nombre de la empresa requerido",
-      "phoneError": "Número de teléfono válido requerido",
-      "subjectError": "Por favor seleccione un asunto",
-      "messageError": "El mensaje debe tener al menos 10 caracteres",
-      "successTitle": "¡Mensaje Enviado con Éxito!",
-      "successText": "Gracias por contactarnos. Nuestro equipo revisará su consulta y se comunicará con usted en un plazo de 24 horas.",
-      "errorSubmit": "No se pudo enviar el formulario. Por favor, inténtelo de nuevo."
-    },
-    "subjects": {
-      "general": "Consulta General",
-      "web": "Consulta sobre Desarrollo Web",
-      "partnership": "Oportunidad de Asociación",
-      "vendor": "Consulta de Proveedores",
-      "career": "Pregunta sobre Carreras",
-      "media": "Solicitud de Medios",
-      "other": "Otro"
-    }
-  },
-  "Consultation": {
-    "title": "Programar una Consulta",
-    "subtitle": "Reserve una sesión de análisis técnico con nuestros directores de ingeniería para auditar sus sistemas existentes o trazar canalizaciones de desarrollo.",
-    "formTitle": "Solicitar Sesión de Admisión del Proyecto",
-    "formSubtitle": "Comparta los requisitos de su proyecto y lo asignaremos con el arquitecto de soluciones adecuado.",
-    "form": {
-      "serviceInterest": "Servicio de Interés",
-      "selectService": "Seleccione un servicio de interés",
-      "budgetRange": "Rango de Presupuesto del Proyecto",
-      "selectBudget": "Seleccione un rango de presupuesto",
-      "timeline": "Plazo del Proyecto",
-      "selectTimeline": "Seleccione un plazo",
-      "description": "Descripción del Proyecto",
-      "placeholderDescription": "Describa brevemente sus objetivos, la tecnología requerida y los desafíos técnicos actuales...",
-      "submitRequest": "Solicitar Consulta",
-      "serviceError": "Por favor seleccione un servicio de interés",
-      "budgetError": "Por favor seleccione un rango de presupuesto",
-      "timelineError": "Por favor seleccione un plazo",
-      "messageError": "Por favor comparta algunos detalles sobre su proyecto (mín. 10 caracteres)",
-      "successTitle": "¡Consulta Solicitada!",
-      "successText": "Gracias por su solicitud. Nuestro arquitecto de soluciones se comunicará con usted dentro de las 24 horas para programar nuestra presentación del proyecto.",
-      "errorSubmit": "No se pudo enviar la solicitud de consulta. Por favor, inténtelo de nuevo."
-    },
-    "budgets": {
-      "b1": "Menos de $10K",
-      "b2": "$10K-$50K",
-      "b3": "$50K-$100K",
-      "b4": "$100K+",
-      "b5": "No Estoy Seguro Aún"
-    },
-    "timelines": {
-      "t1": "Inmediatamente",
-      "t2": "Dentro de 30 Días",
-      "t3": "Dentro de 3 Meses",
-      "t4": "Explorando Opciones"
     }
   },
   "Solutions": {
@@ -369,22 +1323,6 @@
     "timelineTitle": "Plazo de Contratación",
     "timelineSubtitle": "Nuestra canalización estructurada de colocación de talento garantiza que despleguemos recursos coincidentes en días, no meses."
   },
-  "Insights": {
-    "title": "Pensamiento de Liderazgo",
-    "subtitle": "Los directores de consultoría de HyperCode y arquitectos de soluciones comparten perspectivas, guías y patrones de ingeniería.",
-    "allCategories": "Todas las Categorías",
-    "readArticle": "Leer Artículo",
-    "noArticles": "No se encontraron artículos en esta categoría.",
-    "relatedArticles": "Artículos Relacionados",
-    "share": "Compartir Artículo",
-    "newsletterTitle": "Manténgase Actualizado",
-    "newsletterSubtitle": "Suscríbase a nuestro boletín para recibir las últimas ideas y actualizaciones directamente en su bandeja de entrada.",
-    "newsletterPlaceholder": "tu.correo@empresa.com",
-    "newsletterButton": "Suscribirse",
-    "newsletterSuccess": "Gracias por suscribirse a las ideas de HyperCode.",
-    "newsletterAlreadySubscribed": "Ya se encuentra suscrito.",
-    "newsletterError": "No es posible suscribirse en este momento. Por favor, inténtelo de nuevo más tarde."
-  },
   "NotFound": {
     "title": "Página No Encontrada",
     "subtitle": "La página que busca no existe o ha sido movida.",
@@ -396,282 +1334,5 @@
     "description": "Ya sea que necesite desarrollar aplicaciones web de alto rendimiento, optimizar paneles de inteligencia empresarial o ampliar sus equipos de ingeniería, HyperCode tiene la experiencia necesaria para ayudarle.",
     "primaryButton": "PROGRAMAR CONSULTA",
     "secondaryButton": "CONTACTAR A HYPERCODE"
-  },
-  "AIConsultant": {
-    "title": "Consultor de IA de HyperCode",
-    "subtitle": "Asesor Principal de Transformación Digital",
-    "tooltip": "Chatee con nuestro Asesor Principal de Transformación Digital",
-    "placeholder": "Consulte sobre nuestros servicios o cómo escalar su equipo técnico...",
-    "suggestedTitle": "Consultas Sugeridas",
-    "welcomeMessage": "¡Hola! Soy el Consultor de IA de HyperCode, su Asesor Principal de Transformación Digital. ¿Cómo puedo ayudarle con sus objetivos comerciales hoy?",
-    "typing": "El Asesor está analizando...",
-    "actions": {
-      "close": "Cerrar Chat",
-      "minimize": "Minimizar Chat",
-      "back": "Atrás",
-      "startOver": "Reiniciar",
-      "submit": "Enviar"
-    },
-    "errors": {
-      "validation": "Por favor, complete todos los campos requeridos correctamente.",
-      "email": "Por favor, ingrese un correo electrónico válido.",
-      "phone": "Por favor, ingrese un número de teléfono válido (mínimo 7 caracteres).",
-      "generic": "Algo salió mal. Por favor, inténtelo de nuevo."
-    },
-    "consultationFlow": {
-      "title": "Agendar una Consulta",
-      "subtitle": "Coordine una sesión de video directa con un director de soluciones de HyperCode.",
-      "date": "Fecha y Hora Preferida",
-      "submit": "Programar Video Consulta",
-      "successTitle": "¡Consulta Solicitada!",
-      "successDesc": "Hemos recibido su solicitud de reunión. En breve se enviarán las invitaciones de calendario a su correo."
-    },
-    "leadQualification": {
-      "title": "Califique su Proyecto",
-      "subtitle": "Ingrese sus requisitos a continuación. Nuestro motor evaluará su nivel de prioridad y lo asignará con nuestros directores de práctica.",
-      "name": "Su Nombre",
-      "email": "Correo Corporativo",
-      "phone": "Número de Teléfono",
-      "company": "Nombre de la Empresa",
-      "industry": "Sector / Industria",
-      "service": "Servicio de Interés",
-      "budget": "Rango de Presupuesto",
-      "timeline": "Plazo del Proyecto",
-      "message": "Descripción del Proyecto / Roles de Personal Necesarios",
-      "submit": "Enviar para Calificación",
-      "successTitle": "¡Prospecto Calificado!",
-      "successDesc": "Gracias. Su proyecto ha sido calificado y asignado con éxito. Un director se comunicará con usted dentro de las próximas 24 horas hábiles.",
-      "scoreLabel": "Puntaje de Prospecto",
-      "priorityHigh": "Prioridad Alta",
-      "priorityMedium": "Prioridad Media",
-      "priorityLow": "Prioridad Baja"
-    },
-    "staffingFlow": {
-      "title": "Solicitud de Contratación de Personal de TI y No TI",
-      "subtitle": "Describa sus requisitos de personal a continuación.",
-      "roles": "Roles Técnicos Requeridos",
-      "teamSize": "Tamaño de Equipo Objetivo",
-      "location": "Ubicación Preferida",
-      "submit": "Enviar Solicitud de Personal",
-      "successTitle": "¡Solicitud de Personal Recibida!",
-      "successDesc": "Su solicitud de personal ha sido recibida. Nuestros directores de selección de personal se comunicarán con perfiles preseleccionados dentro de las próximas 24 horas."
-    },
-    "successMessages": {
-      "leadSuccess": "Su proyecto ha sido calificado y asignado con éxito.",
-      "consultSuccess": "En breve se enviarán las invitaciones de calendario a su correo."
-    },
-    "suggestedPrompts": [
-      "Háblame de sus soluciones de IA",
-      "Ayúdeme a contratar talento",
-      "Necesito un equipo de desarrollo web",
-      "Quiero una consulta"
-    ],
-    "industries": {
-      "enterprise": "Corporativo / Empresa Grande",
-      "healthcare": "Salud y Ciencias de la Vida",
-      "finance": "Servicios Financieros y Banca",
-      "retail": "Venta al por Menor y Comercio Electrónico",
-      "technology": "Tecnología y SaaS",
-      "other": "Otros Sectores"
-    },
-    "budgets": {
-      "under5k": "Menos de $5,000",
-      "between5k10k": "$5,000 - $10,000",
-      "between10k25k": "$10,000 - $25,000",
-      "between25k50k": "$25,000 - $50,000",
-      "over50k": "$50,000+ (Corporativo)"
-    },
-    "timelines": {
-      "immediate": "Inmediato (Menos de 1 mes)",
-      "medium": "1-3 meses",
-      "long": "3-6 meses",
-      "norush": "Sin prisa / Fase de planificación"
-    },
-    "advisor": {
-      "greeting": {
-        "message": "¡Hola! Soy el Consultor de IA de HyperCode, su Asesor Principal de Transformación Digital. Puedo ayudarle a explorar nuestros servicios, diseñar mapas de ruta tecnológicos, contratar talento técnico de élite o programar una consulta con nuestros directores.\n\n¿En cuál de nuestras áreas principales está interesado hoy?",
-        "suggestedPrompts": [
-          "Háblame de sus soluciones de IA",
-          "Ayúdeme a contratar talento",
-          "Necesito un equipo de desarrollo web",
-          "Quiero una consulta"
-        ]
-      },
-      "about": {
-        "message": "HyperCode es un socio de transformación digital de nivel empresarial. Nos especializamos en la ingeniería de almacenes de datos en la nube, aplicaciones web personalizadas, algoritmos avanzados de IA/ML, sistemas de inteligencia empresarial (BI) y soluciones de contratación de personal de TI y no TI. Ayudamos a organizaciones del mercado medio y empresarial a acelerar sus ciclos de desarrollo y maximizar su ROI.",
-        "suggestedPrompts": [
-          "Háblame de sus servicios",
-          "Quiero una consulta"
-        ]
-      },
-      "location": {
-        "message": "HyperCode tiene su sede en Schaumburg, Illinois, EE. UU. Servimos a clientes corporativos en toda América del Norte y a nivel mundial, desplegando equipos de ingeniería híbridos y completamente remotos.",
-        "suggestedPrompts": [
-          "¿Cómo empezamos?",
-          "Programar una consulta"
-        ]
-      },
-      "pricing": {
-        "message": "Nuestros precios dependen del modelo de compromiso (equipos dedicados, contratos basados en proyectos o aumento de personal) y del alcance del trabajo. Para brindarle una estimación precisa, recomiendo enviar una descripción rápida del proyecto para calificarlo o programar una llamada de revisión técnica.",
-        "suggestedPrompts": [
-          "Calificar mi proyecto",
-          "Programar una consulta"
-        ]
-      },
-      "techConsulting": {
-        "message": "Nuestra práctica de Consultoría Tecnológica alinea su estrategia comercial con la infraestructura moderna. Asesoramos en arquitectura en la nube (AWS/Azure), diseño de esquemas de bases de datos y selección de herramientas para reducir la deuda técnica.\n\n¿Le gustaría calificar los detalles de su proyecto para ver si cumple con nuestros umbrales empresariales?",
-        "suggestedPrompts": [
-          "Calificar mi proyecto",
-          "Programar una consulta",
-          "Volver a servicios"
-        ]
-      },
-      "aiSolutions": {
-        "message": "HyperCode crea soluciones empresariales de IA y Datos. Esto incluye la integración de LLM personalizados (como Google Gemini y OpenAI), implementación de sistemas de búsqueda semántica, modelado predictivo y construcción de flujos de trabajo de agentes automatizados para optimizar operaciones.\n\nEvaluemos las necesidades de su proyecto de IA.",
-        "suggestedPrompts": [
-          "Calificar mi proyecto",
-          "Programar una consulta",
-          "Volver a servicios"
-        ]
-      },
-      "dataAnalytics": {
-        "message": "Diseñamos sistemas de análisis de datos de extremo a extremo. Desde la estructuración de lagos de datos en la nube hasta el despliegue de modelos de pronóstico y conocimientos estadísticos, convertimos los feeds de bases de datos en bruto en ventajas competitivas.\n\n¿Le gustaría calificar su proyecto de análisis de datos?",
-        "suggestedPrompts": [
-          "Calificar mi proyecto",
-          "Programar una consulta",
-          "Volver a servicios"
-        ]
-      },
-      "bi": {
-        "message": "Nuestro servicio de Inteligencia Empresarial (BI) conecta las bases de datos de su empresa con paneles interactivos en tiempo real (utilizando Power BI o Tableau). Mapeamos sus KPI principales y construimos suites de informes ejecutivos para el seguimiento automatizado del rendimiento.",
-        "suggestedPrompts": [
-          "Calificar mi proyecto",
-          "Programar una consulta",
-          "Volver a servicios"
-        ]
-      },
-      "staffing": {
-        "message": "Las soluciones de Sourcing y Talento de HyperCode conectan a su organización con el 1% superior del talento técnico y de negocios. Ofrecemos contratación de personal de TI y no TI, aumento de personal y opciones de contratación directa para escalar sus equipos con desarrolladores de React/Next.js preseleccionados, arquitectos de la nube o ingenieros de datos.\n\n¿Qué tipo de roles busca cubrir?",
-        "suggestedPrompts": [
-          "Obtener cotización de personal",
-          "Programar una consulta",
-          "Volver a servicios"
-        ]
-      },
-      "webDev": {
-        "message": "Nuestros equipos de Desarrollo Web crean aplicaciones web personalizadas de alto rendimiento y plataformas SaaS utilizando React, Next.js y TypeScript. Nos enfocamos en cargas de página de menos de un segundo, diseños adaptables, integraciones de API y protocolos de seguridad robustos.",
-        "suggestedPrompts": [
-          "Calificar mi proyecto",
-          "Programar una consulta",
-          "Volver a servicios"
-        ]
-      },
-      "consultation": {
-        "message": "Nos encantaría programar una llamada de revisión técnica con un director de práctica. Complete los campos de solicitud de consulta a continuación con su fecha y hora preferidas, y nuestro equipo coordinará las invitaciones de calendario en menos de 24 horas hábiles.",
-        "suggestedPrompts": [
-          "Programar llamada ahora",
-          "Volver a servicios"
-        ]
-      },
-      "redirect": {
-        "message": "Solo puedo ayudarle con consultas relacionadas con los servicios profesionales de HyperCode (Consultoría Tecnológica, Análisis de Datos, BI, Soluciones de IA, Desarrollo Web, Soluciones en la Nube y Contratación de Personal de TI y No TI). Avíseme cómo puedo ayudarle con su transformación digital o escala de equipo.",
-        "suggestedPrompts": [
-          "Háblame de sus servicios",
-          "Quiero una consulta"
-        ]
-      }
-    }
-  },
-  "PrivacyPolicy": {
-    "legal": "Sección Legal de HyperCode",
-    "title": "Política de Privacidad",
-    "subtitle": "Valoramos su privacidad y estamos comprometidos a proteger sus datos personales.",
-    "lastUpdated": "Última actualización: 26 de junio de 2026",
-    "downloadPdf": "Descargar versión PDF",
-    "toc": "Tabla de Contenidos",
-    "sections": {
-      "introduction": {
-        "title": "1. Introducción",
-        "content": "Bienvenido a HyperCode. Esta Política de Privacidad describe cómo HyperCode LLC (\"nosotros\", \"nos\" o \"nuestro\") recopila, utiliza, comparte y protege sus datos personales cuando visita nuestro sitio web (https://www.hypercode.com), utiliza nuestro chatbot de Consultor de IA, envía solicitudes de contacto o consulta, o solicita puestos de trabajo. Al acceder a nuestros servicios, acepta las prácticas descritas en esta política."
-      },
-      "collect": {
-        "title": "2. Información que Recopilamos",
-        "content": "Recopilamos información que usted nos proporciona voluntariamente e información que se recopila automáticamente cuando utiliza nuestro sitio web. Esto incluye:\n\n• Información de identificación personal: Nombre, dirección de correo electrónico, número de teléfono, nombre de la empresa, puesto de trabajo y detalles del currículum cuando envía formularios, solicita puestos o califica clientes potenciales.\n\n• Datos de comunicación: Transcripciones de texto de sus conversaciones con nuestro chatbot de Consultor de IA y mensajes enviados a través de formularios de contacto.\n\n• Datos de uso y dispositivo: Dirección IP, tipo de navegador, sistema operativo, URL de referencia, páginas vistas y tiempos de acceso recopilados a través de cookies y tecnologías de seguimiento."
-      },
-      "use": {
-        "title": "3. Cómo Utilizamos su Información",
-        "content": "Procesamos su información para fines comerciales legítimos, que incluyen:\n\n• Proporcionar, mantener y optimizar nuestro sitio web y servicios.\n\n• Responder a sus formularios de contacto, solicitudes de consulta y consultas de chatbot.\n\n• Evaluar solicitudes de empleo y gestionar canales de contratación.\n\n• Enviar actualizaciones de boletines informativos, contenido promocional o alertas (donde haya dado su consentimiento).\n\n• Detectar, prevenir y abordar incidentes de seguridad, fraude o problemas técnicos."
-      },
-      "cookies": {
-        "title": "4. Cookies y Seguimiento",
-        "content": "Utilizamos cookies, balizas web y tecnologías de seguimiento similares para mejorar la experiencia del usuario, analizar el rendimiento del sitio y realizar un seguimiento de los patrones de tráfico. Puede configurar su navegador para rechazar todas las cookies o para indicar cuándo se envía una cookie. Sin embargo, si no acepta las cookies, es posible que algunas partes de nuestro sitio web no funcionen correctamente."
-      },
-      "sharing": {
-        "title": "5. Intercambio y Divulgación de Datos",
-        "content": "No vendemos, alquilamos ni comercializamos sus datos personales. Podemos compartir su información con proveedores externos de confianza que nos ayudan a operar nuestro sitio web, administrar correos electrónicos o analizar el tráfico (por ejemplo, Supabase, Vercel, Resend, Google Analytics), siempre que acepten mantener esta información confidencial y segura."
-      },
-      "security": {
-        "title": "6. Seguridad de sus Datos",
-        "content": "Implementamos medidas de seguridad administrativas, técnicas y físicas estándar de la industria para salvaguardar sus datos personales. Sin embargo, tenga en cuenta que ninguna transmisión por Internet o sistema de almacenamiento electrónico es 100% seguro y no podemos garantizar la seguridad absoluta de los datos."
-      },
-      "rights": {
-        "title": "7. Sus Derechos y Opciones",
-        "content": "Según su ubicación (como la UE bajo el GDPR o California bajo la CCPA), es posible que posea derechos específicos con respecto a su información personal, incluido el derecho de acceder, corregir, eliminar o limitar el uso de sus datos. Para ejercer cualquiera de estos derechos, contáctenos en privacy@hypercodeus.com."
-      },
-      "changes": {
-        "title": "8. Cambios a esta Política",
-        "content": "Nos reservamos el derecho de modificar esta Política de Privacidad en cualquier momento. Cualquier cambio se publicará en esta página con una fecha de revisión actualizada. Le recomendamos que revise esta política periódicamente para mantenerse informado sobre cómo protegemos su información."
-      },
-      "contact": {
-        "title": "9. Contáctenos",
-        "content": "Si tiene alguna pregunta o inquietud con respecto a esta Política de Privacidad, contáctenos:\n\n• Por correo electrónico: privacy@hypercodeus.com\n\n• Por correo postal: 2095 Hammond Dr Suite B, Schaumburg, IL 60173"
-      }
-    }
-  },
-  "TermsAndConditions": {
-    "legal": "Sección Legal de HyperCode",
-    "title": "Términos y Condiciones",
-    "subtitle": "Lea atentamente estos términos y condiciones antes de utilizar nuestro sitio web y servicios.",
-    "lastUpdated": "Última actualización: 26 de junio de 2026",
-    "downloadPdf": "Descargar versión PDF",
-    "toc": "Tabla de Contenidos",
-    "sections": {
-      "agreement": {
-        "title": "1. Aceptación de los Términos",
-        "content": "Al acceder o utilizar el sitio web de HyperCode (https://www.hypercode.com) y nuestros servicios profesionales, usted acepta estar sujeto a estos Términos y Condiciones. Si no está de acuerdo con todos estos términos, se le prohíbe expresamente utilizar nuestro sitio y servicios y debe interrumpir su uso de inmediato."
-      },
-      "intellectual": {
-        "title": "2. Derechos de Propiedad Intelectual",
-        "content": "A menos que se indique lo contrario, el sitio web, incluido su código fuente, bases de datos, funcionalidad, software, diseños, audio, video, texto, fotografías y gráficos, son de nuestra propiedad y están protegidos por leyes de derechos de autor y marcas registradas. El contenido se proporciona en el sitio 'TAL CUAL' para su información y uso personal únicamente."
-      },
-      "user": {
-        "title": "3. Representaciones del Usuario",
-        "content": "Al usar el sitio web, usted declara y garantiza que: (1) toda la información de registro y envío que proporcione es verdadera, precisa y completa; (2) mantendrá la precisión de dicha información; (3) tiene la capacidad legal y acepta cumplir con estos Términos y Condiciones; y (4) su uso del sitio web no violará ninguna ley o regulación aplicable."
-      },
-      "prohibited": {
-        "title": "4. Actividades Prohibidas",
-        "content": "No puede acceder ni utilizar el sitio web para ningún otro propósito que no sea aquel para el cual lo ponemos a disposición. Las actividades prohibidas incluyen: la recopilación sistemática de datos para crear colecciones de bases de datos; el encuadre o enlace no autorizado; intentar eludir los filtros de seguridad del sitio web; y utilizar sistemas automatizados (como arañas o robots) para extraer datos."
-      },
-      "services": {
-        "title": "5. Servicios y Contratos",
-        "content": "HyperCode proporciona consultoría de desarrollo web empresarial, ingeniería de datos, inteligencia de negocios y contratación de personal de TI y no TI. Cualquier contrato específico para servicios de consultoría, entregables de proyectos o colocación de candidatos se regirá por un Acuerdo Maestro de Servicios (MSA) o Declaración de Trabajo (SOW) por escrito por separado."
-      },
-      "termination": {
-        "title": "6. Gestión del Sitio y Rescisión",
-        "content": "Nos reservamos el derecho, pero no la obligación, de monitorear el sitio web para detectar violaciones de estos Términos y Condiciones. Podemos bloquear, suspender o rescindir el acceso al sitio para los usuarios que violen nuestros términos o participen en comportamientos disruptivos, sin previo aviso ni responsabilidad."
-      },
-      "liability": {
-        "title": "7. Limitación de Responsabilidad",
-        "content": "En ningún caso HyperCode, sus directores, empleados o socios serán responsables ante usted o cualquier tercero por daños directos, indirectos, consecuentes, ejemplares, incidentales, especiales o punitivos, incluida la pérdida de ganancias, pérdida de ingresos o pérdida de datos que surjan de su uso del sitio web."
-      },
-      "governing": {
-        "title": "8. Ley Aplicable",
-        "content": "Estos Términos y Condiciones y su uso del sitio web se rigen y analizan de acuerdo con las leyes del Estado de Illinois, Estados Unidos, sin tener en cuenta sus principios de conflicto de leyes."
-      },
-      "contact": {
-        "title": "9. Contáctenos",
-        "content": "Para resolver una queja sobre el sitio o recibir más información sobre el uso del mismo, contáctenos:\n\n• Por correo electrónico: legal@hypercodeus.com\n\n• Por correo postal: 2095 Hammond Dr Suite B, Schaumburg, IL 60173"
-      }
-    }
   }
 }

@@ -22,10 +22,8 @@ import { supabase } from '@/lib/db';
 
 interface SidebarProps {
   userProfile: {
-    name: string | null;
     email: string;
-    role: 'Admin' | 'Recruiter' | 'Consultant';
-    avatar: string | null;
+    role: 'Admin' | 'Recruiter' | 'Consultant' | 'Manager';
   } | null;
   activeTab?: string; // Kept for backward compatibility
 }
@@ -227,15 +225,11 @@ export default function AdminSidebar({ userProfile, activeTab }: SidebarProps) {
       <div className="p-4 border-t border-slate-100 bg-slate-50">
         <div className="flex items-center gap-3 mb-3">
           <div className="w-10 h-10 rounded-full bg-slate-200 border border-slate-300 overflow-hidden flex items-center justify-center text-slate-500 font-bold uppercase">
-            {userProfile?.avatar ? (
-              <img src={userProfile.avatar} alt="Avatar" className="w-full h-full object-cover" />
-            ) : (
-              <User className="w-5 h-5" />
-            )}
+            <User className="w-5 h-5" />
           </div>
           <div className="flex-1 min-w-0 text-left">
             <p className="text-xs font-semibold text-slate-800 truncate">
-              {userProfile?.name || userProfile?.email.split('@')[0] || 'User'}
+              {userProfile?.email ? userProfile.email.split('@')[0] : 'User'}
             </p>
             <div className="inline-flex items-center gap-1 mt-0.5 px-1.5 py-0.5 rounded-md bg-blue-100 text-blue-800 text-[9px] font-bold uppercase">
               <Shield className="w-2.5 h-2.5" />
