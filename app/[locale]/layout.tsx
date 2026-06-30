@@ -33,12 +33,12 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     en: {
       title: "HyperCode | Data Analytics, Web Development & IT Staffing Consulting",
       desc: "Transform your business with HyperCode. Enterprise-grade Web Development, Business Intelligence, Data Analytics, and IT Staffing solutions.",
-      keywords: ["Business Intelligence", "Data Analytics", "IT Staffing", "Data Engineering", "Web Development"]
+      keywords: ["Business Intelligence", "Data Analytics", "IT & Non-IT Staffing", "Data Engineering", "Web Development"]
     },
     es: {
       title: "HyperCode | Consultoría de Análisis de Datos, Desarrollo Web y Personal de TI",
       desc: "Transforme su negocio con HyperCode. Soluciones de desarrollo web empresarial, inteligencia de negocios, análisis de datos y personal de TI.",
-      keywords: ["Inteligencia de Negocios", "Análisis de Datos", "Personal de TI", "Ingeniería de Datos", "Desarrollo Web"]
+      keywords: ["Inteligencia de Negocios", "Análisis de Datos", "Personal de TI y no relacionado con TI", "Ingeniería de Datos", "Desarrollo Web"]
     }
   };
 
