@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   // Custom SEO titles and descriptions mapped for 2 languages
   const seoMap: Record<string, { title: string; desc: string; keywords: string[] }> = {
     en: {
-      title: "HyperCode | AI Solutions | IT & Non-IT Staffing | Web Development",
+      title: "HyperCode | AI Solutions | IT & Non-IT Staffing | Web Development| Custom Software Development| Digital Transformation| AI Automation| Enterprise Consulting| Business Process Automation",
       desc: "HyperCode provides AI Solutions, IT & Non-IT Staffing, Custom Software Development, Web Development, Digital Transformation, AI Automation, Enterprise Consulting, and Business Process Automation.",
       keywords: [
         "AI Solutions",
