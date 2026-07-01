@@ -21,9 +21,8 @@ export default async function DataAnalyticsServicesPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const tc = await getTranslations('Common');
-
+  
   return (
-    <SolutionDetailPage locale={locale} pageKey="data-analytics-services" tc={tc} />
+    <SolutionDetailPage locale={locale} pageKey="data-analytics-services"  />
   );
 }

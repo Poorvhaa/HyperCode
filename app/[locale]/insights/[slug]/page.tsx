@@ -1,7 +1,7 @@
 import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
 import { ArrowLeft, Calendar, Clock, User, Share2, Mail } from 'lucide-react';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import { notFound } from 'next/navigation';
 import { getLocalizedArticle } from '@/lib/insights-localizer';
 import { routing } from '@/i18n/routing';
@@ -219,9 +219,9 @@ export default async function ArticlePage({ params }: PageProps) {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full space-y-6">
           {/* Breadcrumbs */}
           <nav className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-wider">
-            <Link href={`/${locale}`} className="hover:text-[#0F4C81] transition-colors">{tc('home')}</Link>
+            <Link href="/" className="hover:text-[#0F4C81] transition-colors">{tc('home')}</Link>
             <span>/</span>
-            <Link href={`/${locale}/insights`} className="hover:text-[#0F4C81] transition-colors">{tInsights('title')}</Link>
+            <Link href="/insights" className="hover:text-[#0F4C81] transition-colors">{tInsights('title')}</Link>
             <span>/</span>
             <span className="text-slate-500 truncate max-w-[200px] sm:max-w-xs">{article.category}</span>
           </nav>
@@ -267,7 +267,7 @@ export default async function ArticlePage({ params }: PageProps) {
             {/* Left/Sidebar: Share Bar */}
             <div className="lg:col-span-1 space-y-6 lg:sticky lg:top-28">
               <Link
-                href={`/${locale}/insights`}
+                href="/insights"
                 className="inline-flex items-center gap-2 text-xs font-bold text-[#0F4C81] hover:text-[#0c3c66] transition-colors uppercase tracking-wider"
               >
                 <ArrowLeft size={14} />
@@ -371,7 +371,7 @@ export default async function ArticlePage({ params }: PageProps) {
                   </p>
                   <div className="pt-2">
                     <Link
-                      href={`/${locale}/consultation`}
+                      href="/consultation"
                       className="inline-flex items-center justify-center h-10 px-6 bg-[#0F4C81] hover:bg-[#0A365D] text-white font-bold text-xs uppercase tracking-wider rounded-md transition-colors"
                     >
                       {activeTrans.bookConsultation}
@@ -405,13 +405,13 @@ export default async function ArticlePage({ params }: PageProps) {
                     {art.category}
                   </span>
                   <h4 className="text-sm font-bold text-slate-900 mb-2 leading-snug group-hover:text-[#0F4C81] transition-colors line-clamp-2">
-                    <Link href={`/${locale}/insights/${art.slug}`}>{art.title}</Link>
+                    <Link href={`/insights/${art.slug}`}>{art.title}</Link>
                   </h4>
                   <p className="text-xs text-slate-500 leading-relaxed font-medium line-clamp-3 mb-4">{art.excerpt}</p>
                 </div>
                 <div className="flex items-center justify-between text-[10px] text-slate-400 font-bold uppercase tracking-wider pt-3 border-t border-slate-100">
                   <span>{art.date}</span>
-                  <Link href={`/${locale}/insights/${art.slug}`} className="text-[#0F4C81]">
+                  <Link href={`/insights/${art.slug}`} className="text-[#0F4C81]">
                     {activeTrans.readBrief}
                   </Link>
                 </div>

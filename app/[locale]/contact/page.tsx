@@ -3,7 +3,7 @@ import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
 import { ContactForm } from '@/components/contact-form';
 import { Mail, MapPin, Clock, ArrowRight, Award, Shield } from 'lucide-react';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import Image from 'next/image';
 import { HeroBanner } from '@/components/hero-banner';
 
@@ -113,8 +113,8 @@ export default async function ContactPage({ params }: Props) {
         titleHighlight={activeTrans.titleHighlight}
         subtitle={activeTrans.subtitle}
         breadcrumbs={[
-          { label: locale === 'es' ? 'Inicio' : 'Home', href: `/${locale}` },
-          { label: locale === 'es' ? 'Contacto' : 'Contact' }
+          { label: locale === 'es' ? 'Inicio' : 'Home', href: '/' },
+          { label: locale === 'es' ? 'Contacto' : 'Contact Us' }
         ]}
       />
 
@@ -214,7 +214,7 @@ export default async function ContactPage({ params }: Props) {
               </div>
               <div className="pt-2">
                 <Link
-                  href={`/${locale}/consultation`}
+                  href="/consultation"
                   className="inline-flex items-center text-xs font-bold text-[#0F4C81] dark:text-blue-400 hover:gap-2 transition-all gap-1"
                 >
                   <span>{activeTrans.boxConsultingLink}</span>
@@ -233,7 +233,7 @@ export default async function ContactPage({ params }: Props) {
               </div>
               <div className="pt-2">
                 <Link
-                  href={`/${locale}/consultation?service=IT%20Staffing`}
+                  href="/consultation?service=IT%20Staffing"
                   className="inline-flex items-center text-xs font-bold text-[#0F4C81] dark:text-blue-400 hover:gap-2 transition-all gap-1"
                 >
                   <span>{activeTrans.boxStaffingLink}</span>

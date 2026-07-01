@@ -3,7 +3,7 @@ import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
 import { CareersForm } from '@/components/careers-form';
 import { ChevronLeft } from 'lucide-react';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -53,7 +53,7 @@ export default async function CareersApplyPage({ params, searchParams }: Props) 
           <div className="max-w-3xl space-y-4">
             <div>
               <Link
-                href={`/${locale}/careers`}
+                href="/careers"
                 className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C81] hover:text-[#0c3c66] transition-colors"
               >
                 <ChevronLeft size={16} />

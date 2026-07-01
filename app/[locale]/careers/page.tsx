@@ -18,7 +18,7 @@ import {
   HeartHandshake,
   DollarSign
 } from 'lucide-react';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import Image from 'next/image';
 import { HeroBanner } from '@/components/hero-banner';
 
@@ -385,7 +385,7 @@ export default async function CareersPage({ params }: Props) {
         titleHighlight={activeTrans.heroTitleHighlight}
         subtitle={activeTrans.heroSubtitle}
         breadcrumbs={[
-          { label: locale === 'es' ? 'Inicio' : 'Home', href: `/${locale}` },
+          { label: locale === 'es' ? 'Inicio' : 'Home', href: '/' },
           { label: locale === 'es' ? 'Carreras' : 'Careers' }
         ]}
       />
@@ -697,7 +697,7 @@ export default async function CareersPage({ params }: Props) {
             {/* Apply Button */}
             <div className="pt-8 text-center">
               <Link
-                href={`/${locale}/careers/apply?position=${encodeURIComponent('Business Development Manager')}`}
+                href={`/careers/apply?position=${encodeURIComponent('Business Development Manager')}`}
                 className="inline-flex items-center justify-center h-12 px-10 bg-[#0F4C81] text-white font-bold text-xs uppercase tracking-wider rounded-xl hover:bg-[#0c3c66] transition-colors duration-200 shadow-sm"
               >
                 {t('applyNow')}
@@ -718,7 +718,7 @@ export default async function CareersPage({ params }: Props) {
           </p>
           <div>
             <Link
-              href={`/${locale}/contact`}
+              href="/contact"
               className="inline-flex items-center justify-center h-12 px-8 bg-[#0F4C81] text-white font-semibold text-[14px] rounded-xl hover:bg-[#0c3c66] transition-colors duration-200 shadow-sm"
             >
               {activeTrans.getInTouchBtn}

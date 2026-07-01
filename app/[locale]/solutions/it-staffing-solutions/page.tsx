@@ -35,9 +35,8 @@ export default async function ITStaffingSolutionsPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const tc = await getTranslations('Common');
-
+  
   return (
-    <SolutionDetailPage locale={locale} pageKey="it-staffing-solutions" tc={tc} />
+    <SolutionDetailPage locale={locale} pageKey="it-staffing-solutions"  />
   );
 }

@@ -8,6 +8,7 @@ import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
 import { HeroBanner } from '@/components/hero-banner';
 import { SERVICES_CATALOG } from '@/lib/services-data';
+import { getServiceDetails } from '@/lib/services-details';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   CheckCircle, 
@@ -198,8 +199,7 @@ function SolutionsPageContent() {
 
       {/* Hero Banner Component */}
       <HeroBanner
-        bgImage="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600"
-        categoryLabel={locale === 'es' ? 'Transformación Digital de Extremo a Extremo' : 'End-to-End Digital Transformation'}
+        categoryLabel={t('categoryLabel')}
         title={t('heroTitle')}
         subtitle={t('heroSubtitle')}
         ctaButtons={
@@ -244,14 +244,12 @@ function SolutionsPageContent() {
       <section className="py-28 relative z-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
           <div className="max-w-3xl space-y-4">
-            <span className="text-xs font-bold text-[#0F4C81] uppercase tracking-widest">{locale === 'es' ? 'Nuestras Prácticas de Consultoría' : 'Our Consulting Practices'}</span>
+            <span className="text-xs font-bold text-[#0F4C81] uppercase tracking-widest">{t('consultingPracticesTitle')}</span>
             <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-              {locale === 'es' ? 'Soluciones Tecnológicas de Grado Empresarial' : 'Enterprise Technology Capabilities'}
+              {t('enterpriseCapabilitiesTitle')}
             </h3>
             <p className="text-slate-500 text-sm md:text-base leading-relaxed">
-              {locale === 'es' 
-                ? 'Ofrecemos soluciones integradas para optimizar flujos de trabajo, acelerar lanzamientos de software y desplegar talento certificado.'
-                : 'We offer fully integrated delivery teams to structure software, optimize workflows, secure architectures, and scale systems.'}
+              {t('enterpriseCapabilitiesDesc')}
             </p>
           </div>
 
@@ -295,9 +293,8 @@ function SolutionsPageContent() {
                     
                     <p className="text-slate-500 text-sm leading-relaxed line-clamp-2">{categoryDesc}</p>
 
-                    {/* Capability badge lists */}
                     <div className="space-y-2.5">
-                      <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest">{locale === 'es' ? 'Especialidades' : 'Specialties'}</span>
+                      <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest">{tc('specialties')}</span>
                       <div className="flex flex-wrap gap-1.5">
                         {badges.map((badge, idx) => (
                           <span key={idx} className="px-2.5 py-1 bg-slate-50 border border-slate-100 text-slate-600 rounded-lg text-xs font-semibold">
@@ -322,7 +319,7 @@ function SolutionsPageContent() {
                       href={`/contact?service=${encodeURIComponent(categoryTitle)}`}
                       className="inline-flex items-center justify-center gap-1 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all shadow-sm cursor-pointer"
                     >
-                      <span>{locale === 'es' ? 'Contratar' : 'Request'}</span>
+                      <span>{tc('request')}</span>
                       <ArrowUpRight size={14} />
                     </Link>
                   </div>
@@ -426,24 +423,9 @@ function SolutionsPageContent() {
 
           <div className="space-y-4">
             {[
-              {
-                q: locale === 'es' ? '¿Cómo determinan el tamaño del equipo y la estimación de plazos?' : 'How do you determine team sizing and timeline estimates?',
-                a: locale === 'es' 
-                  ? 'Nuestros directores de práctica analizan su pila tecnológica actual, objetivos de negocio y limitaciones presupuestarias para generar un plan técnico detallado que define el perfil ideal de los desarrolladores y la duración de los sprints.' 
-                  : 'Our practice leads analyze your current technical stack, business objectives, and budget constraints to generate a detailed sprint plan detailing developer profiles and project milestones.'
-              },
-              {
-                q: locale === 'es' ? '¿Cuáles son los modelos de compromiso para las soluciones de talento?' : 'What are the engagement models for talent solutions?',
-                a: locale === 'es'
-                  ? 'Ofrecemos contratación permanente, temporal (staff augmentation) y squads dedicados con soporte de project management. Podemos desplegar perfiles pre-evaluados de Next.js, Python o DevOps en un plazo de 5 a 10 días hábiles.'
-                  : 'We offer permanent placement, contract staffing (staff augmentation), and dedicated development squads supported by PMs. We can onboard pre-screened Next.js, Python, or DevOps profiles in 5-10 business days.'
-              },
-              {
-                q: locale === 'es' ? '¿Cumplen con los estándares de seguridad de datos (SOC 2, HIPAA)?' : 'Do you comply with data security standards (SOC 2, HIPAA)?',
-                a: locale === 'es'
-                  ? 'Sí. Todos nuestros proyectos de software y plataformas de datos se diseñan bajo estrictas políticas de gestión de accesos (IAM), encriptación en tránsito y reposo, y auditorías de seguridad constantes.'
-                  : 'Yes. All software projects and data platforms are designed under strict access controls (IAM), TLS encryption in transit/at rest, and continuous vulnerability scans.'
-              }
+              { q: t('faqQ1'), a: t('faqA1') },
+              { q: t('faqQ2'), a: t('faqA2') },
+              { q: t('faqQ3'), a: t('faqA3') }
             ].map((faq, idx) => (
               <div key={idx} className="border border-slate-200 rounded-2xl overflow-hidden bg-slate-50/20">
                 <details className="group">
@@ -540,33 +522,39 @@ function SolutionsPageContent() {
 
                 {/* Section 2: Specific capabilities */}
                 <div className="space-y-4">
-                  <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest">{locale === 'es' ? 'Capacidades Detalladas' : 'Detailed Capabilities'}</h4>
+                  <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest">{tc('detailedCapabilities')}</h4>
                   <div className="space-y-4">
-                    {selectedCategory.cat.services.map((srv: any) => (
-                      <div key={srv.id} className="p-5 rounded-2xl border border-slate-100 bg-white shadow-sm space-y-2">
-                        <h5 className="font-bold text-slate-900 text-sm sm:text-base">{t(`categories.${selectedCategory.cat.id}.services.${srv.id}.title`)}</h5>
-                        <p className="text-xs sm:text-sm text-slate-500 leading-relaxed">{t(`categories.${selectedCategory.cat.id}.services.${srv.id}.desc`)}</p>
-                        
-                        {/* Outcomes */}
-                        <div className="pt-2">
-                          <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">{t('expectedOutcomes')}</span>
-                          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                            {(t.raw(`categories.${selectedCategory.cat.id}.services.${srv.id}.outcomes`) as string[]).map((out, idx) => (
-                              <li key={idx} className="flex items-start gap-1.5 text-xs text-slate-600 font-medium">
-                                <CheckCircle size={14} className="text-[#0F4C81] flex-shrink-0 mt-0.5" />
-                                <span>{out}</span>
-                              </li>
-                            ))}
-                          </ul>
+                    {selectedCategory.cat.services.map((srv: any) => {
+                      const srvDetails = getServiceDetails(srv.id, locale);
+                      const srvTitle = srvDetails ? srvDetails.title : t(`categories.${selectedCategory.cat.id}.services.${srv.id}.title`);
+                      const srvDesc = srvDetails ? srvDetails.description : t(`categories.${selectedCategory.cat.id}.services.${srv.id}.desc`);
+                      const srvPath = srvDetails ? `/solutions/${srv.id}` : srv.path;
+
+                      return (
+                        <div key={srv.id} className="p-5 rounded-2xl border border-slate-100 bg-white shadow-sm space-y-3">
+                          <h5 className="font-bold text-slate-900 text-sm sm:text-base">{srvTitle}</h5>
+                          <p className="text-xs sm:text-sm text-slate-500 leading-relaxed">{srvDesc}</p>
+                          
+                          {/* Link to dedicated landing page */}
+                          <div className="pt-2 border-t border-slate-100/50 mt-1 flex items-center justify-between">
+                            <Link 
+                              href={srvPath}
+                              onClick={() => setSelectedCategory(null)}
+                              className="text-xs font-bold text-[#0F4C81] hover:underline flex items-center gap-1"
+                            >
+                              <span>{t('viewServiceDetails')}</span>
+                              <ArrowRight size={12} />
+                            </Link>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
 
                 {/* Section 3: Technologies Used */}
                 <div className="space-y-3">
-                  <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest">{t('technologies')}</h4>
+                  <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest">{tc('technologies')}</h4>
                   <div className="flex flex-wrap gap-1.5">
                     {useMemo(() => {
                       const techs = new Set<string>();
@@ -582,7 +570,7 @@ function SolutionsPageContent() {
 
                 {/* Section 4: Target Industries */}
                 <div className="space-y-3">
-                  <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest">{t('industries')}</h4>
+                  <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest">{tc('industries')}</h4>
                   <div className="flex flex-wrap gap-1.5">
                     {useMemo(() => {
                       const inds = new Set<string>();
@@ -626,7 +614,7 @@ function SolutionsPageContent() {
                   onClick={() => setSelectedCategory(null)}
                   className="px-6 h-12 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm uppercase tracking-wider rounded-xl transition-all cursor-pointer border-none"
                 >
-                  {locale === 'es' ? 'Cerrar' : 'Close'}
+                  {tc('close')}
                 </button>
               </div>
             </motion.div>

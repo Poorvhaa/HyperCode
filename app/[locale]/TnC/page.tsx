@@ -55,7 +55,7 @@ export default async function TermsAndConditionsPage({ params }: Props) {
         title={t('title')}
         subtitle={`${t('subtitle')} • ${t('lastUpdated')}`}
         breadcrumbs={[
-          { label: locale === 'es' ? 'Inicio' : 'Home', href: `/${locale}` },
+          { label: locale === 'es' ? 'Inicio' : 'Home', href: '/' },
           { label: t('title') }
         ]}
         ctaButtons={

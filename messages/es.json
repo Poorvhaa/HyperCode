@@ -22,7 +22,11 @@
     "resources": "Recursos",
     "support": "Soporte",
     "company": "Compañía",
-    "offices": "Nuestras Oficinas"
+    "offices": "Nuestras Oficinas",
+    "specialties": "Especialidades",
+    "request": "Contratar",
+    "detailedCapabilities": "Capacidades Detalladas",
+    "close": "Cerrar"
   },
   "Navigation": {
     "home": "Inicio",
@@ -30,6 +34,7 @@
     "about": "Nosotros",
     "careers": "Carreras",
     "contact": "Contacto",
+    "directPlacement": "Colocación Directa",
     "schedule": "Programar Consulta",
     "support": "Portal de Soporte",
     "aiConsultant": "Consultor de IA",
@@ -77,8 +82,16 @@
     "staffAugmentationDesc": "Escalamiento fluido de su equipo técnico existente.",
     "contractStaffing": "Personal por Contrato",
     "contractStaffingDesc": "Recursos contractuales flexibles para necesidades basadas en proyectos.",
-    "directPlacement": "Colocación Directa",
-    "directPlacementDesc": "Soluciones de contratación permanente para funciones técnicas clave."
+    "directPlacementDesc": "Soluciones de contratación permanente para funciones técnicas clave.",
+    "viewAllSolutions": "Ver Todas las Soluciones",
+    "talkToAI": "Hablar con Consultor de IA",
+    "viewAll": "Ver Todo",
+    "cyberSecurity": "Ciberseguridad",
+    "digitalMarketing": "Marketing Digital",
+    "consulting": "Consultoría Tecnológica",
+    "uiux": "Diseño UI/UX",
+    "staffing": "Contratación de Personal",
+    "digitalTransformation": "Transformación Digital"
   },
   "Footer": {
     "connect": "Conéctese con Nosotros",
@@ -94,7 +107,12 @@
     "newsletterTitle": "Suscríbase a Insights",
     "newsletterDesc": "Reciba boletines tecnológicos mensuales redactados por nuestros directores de soluciones.",
     "newsletterPlaceholder": "Correo Corporativo",
-    "newsletterSuccess": "¡Gracias por suscribirse!"
+    "newsletterSuccess": "¡Gracias por suscribirse!",
+    "corporateHq": "Sede Central",
+    "unitedStates": "Estados Unidos",
+    "phone": "Teléfono",
+    "email": "Correo electrónico",
+    "legal": "Legal"
   },
   "Hero": {
     "badge": "Socio de Transformación Digital Empresarial",
@@ -1299,7 +1317,23 @@
       "subtitle": "Ejecución Iterativa de Sprints",
       "p1": "Desplegamos Scrum Masters certificados para ejecutar canalizaciones ágiles, eliminar bloqueos de desarrolladores y mantener las migraciones en marcha.",
       "p2": "Combinamos una gestión de proyectos rigurosa con total transparencia para entregas de proyectos predecibles y a tiempo."
-    }
+    },
+    "learnMoreBtn": "Saber Más",
+    "drawerTitle": "Detalles del Servicio",
+    "businessValue": "Valor de Negocio",
+    "expectedOutcomes": "Resultados Esperados",
+    "caseStudyLabel": "Resultado del Caso de Estudio",
+    "categoryLabel": "Transformación Digital de Extremo a Extremo",
+    "consultingPracticesTitle": "Nuestras Prácticas de Consultoría",
+    "enterpriseCapabilitiesTitle": "Soluciones Tecnológicas de Grado Empresarial",
+    "enterpriseCapabilitiesDesc": "Consulte nuestras prácticas de tecnología a nivel empresarial. Desde consultoría estratégica de IA hasta el aumento de personal.",
+    "viewServiceDetails": "Ver Detalles del Servicio",
+    "faqQ1": "¿Cómo determinan el tamaño del equipo y la estimación de plazos?",
+    "faqA1": "Nuestros directores de práctica analizan su pila tecnológica actual, objetivos de negocio y limitaciones presupuestarias para generar un plan técnico detallado que define el perfil ideal de los desarrolladores y la duración de los sprints.",
+    "faqQ2": "¿Cuáles son los modelos de compromiso para las soluciones de talento?",
+    "faqA2": "Ofrecemos contratación permanente, temporal (staff augmentation) y squads dedicados con soporte de project management. Podemos desplegar perfiles pre-evaluados de Next.js, Python o DevOps en un plazo de 5 a 10 días hábiles.",
+    "faqQ3": "¿Cumplen con los estándares de seguridad de datos (SOC 2, HIPAA)?",
+    "faqA3": "Sí. Todos nuestros proyectos de software y plataformas de datos se diseñan bajo estrictas políticas de gestión de accesos (IAM), encriptación en tránsito y reposo, y auditorías de seguridad constantes."
   },
   "Staffing": {
     "title": "Contratación de Personal de TI y No TI y Aumento de Equipos",

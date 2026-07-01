@@ -57,26 +57,26 @@ export const SERVICES_CATALOG: ServiceCategory[] = [
         tech: ['OpenAI', 'Gemini', 'LangChain', 'LlamaIndex'],
         industries: ['Finance', 'Healthcare', 'Startups'],
         challenges: ['ai', 'scale'],
-        related: ['ai-strategy', 'generative-ai'],
-        path: '/solutions/business-intelligence-consulting#ai'
+        related: ['ai-strategy', 'generative-ai-solutions'],
+        path: '/solutions/ai-consulting'
       },
       {
-        id: 'generative-ai',
+        id: 'generative-ai-solutions',
         iconName: 'Sparkles',
         tech: ['GPT-4', 'Claude', 'HuggingFace', 'Python'],
         industries: ['Retail', 'Education', 'Large Enterprises'],
         challenges: ['ai', 'cost'],
-        related: ['ai-chatbots', 'ai-workflow-automation'],
-        path: '/solutions/business-intelligence-consulting#ai'
+        related: ['ai-chatbot-development', 'ai-workflow-automation'],
+        path: '/solutions/generative-ai-solutions'
       },
       {
-        id: 'ai-chatbots',
+        id: 'ai-chatbot-development',
         iconName: 'Sparkles',
         tech: ['Pinecone', 'Next.js', 'Vercel AI SDK', 'Node.js'],
         industries: ['Retail', 'Finance', 'Logistics'],
         challenges: ['ai', 'cost', 'scale'],
-        related: ['generative-ai', 'ai-customer-support'],
-        path: '/solutions/business-intelligence-consulting#ai'
+        related: ['generative-ai-solutions', 'ai-customer-support-automation'],
+        path: '/solutions/ai-chatbot-development'
       },
       {
         id: 'ai-voice-agents',
@@ -84,8 +84,8 @@ export const SERVICES_CATALOG: ServiceCategory[] = [
         tech: ['ElevenLabs', 'Twilio', 'Vapi', 'Python'],
         industries: ['Hospitality', 'Logistics', 'SMEs'],
         challenges: ['ai', 'cost'],
-        related: ['ai-customer-support', 'ai-sales-assistants'],
-        path: '/solutions/business-intelligence-consulting#ai'
+        related: ['ai-customer-support-automation', 'ai-sales-assistants'],
+        path: '/solutions/ai-voice-agents'
       }
     ]
   },
@@ -94,13 +94,13 @@ export const SERVICES_CATALOG: ServiceCategory[] = [
     iconName: 'Layers',
     services: [
       {
-        id: 'custom-software',
+        id: 'custom-software-development',
         iconName: 'Layers',
         tech: ['Next.js', 'Node.js', 'PostgreSQL', 'Docker'],
         industries: ['Healthcare', 'Finance', 'Logistics'],
         challenges: ['scale', 'migration'],
         related: ['enterprise-software', 'saas-development'],
-        path: '/solutions/web-development-services#software'
+        path: '/solutions/custom-software-development'
       },
       {
         id: 'enterprise-software',
@@ -108,8 +108,8 @@ export const SERVICES_CATALOG: ServiceCategory[] = [
         tech: ['Java/Spring', 'C#/.NET', 'Kubernetes', 'Oracle'],
         industries: ['Large Enterprises', 'Government', 'Pharma'],
         challenges: ['scale', 'migration'],
-        related: ['erp', 'crm'],
-        path: '/solutions/web-development-services#software'
+        related: ['erp-development', 'crm-development'],
+        path: '/solutions/enterprise-software'
       },
       {
         id: 'saas-development',
@@ -117,8 +117,8 @@ export const SERVICES_CATALOG: ServiceCategory[] = [
         tech: ['React', 'NestJS', 'Supabase', 'Stripe'],
         industries: ['Startups', 'SMEs', 'Finance'],
         challenges: ['scale', 'cost'],
-        related: ['custom-software', 'api-development'],
-        path: '/solutions/web-development-services#software'
+        related: ['custom-software-development', 'api-development'],
+        path: '/solutions/saas-development'
       }
     ]
   },
@@ -133,16 +133,16 @@ export const SERVICES_CATALOG: ServiceCategory[] = [
         industries: ['Finance', 'Legal', 'Real Estate'],
         challenges: ['reporting', 'scale'],
         related: ['business-websites', 'ui-design'],
-        path: '/solutions/web-development-services'
+        path: '/solutions/corporate-websites'
       },
       {
-        id: 'marketplace-platforms',
+        id: 'marketplace-development',
         iconName: 'Globe',
         tech: ['GraphQL', 'Next.js', 'Node.js', 'Redis'],
         industries: ['Retail', 'Logistics', 'Hospitality'],
         challenges: ['store', 'scale'],
         related: ['ecommerce-websites', 'customer-portals'],
-        path: '/solutions/web-development-services'
+        path: '/solutions/marketplace-development'
       },
       {
         id: 'admin-dashboards',
@@ -150,8 +150,8 @@ export const SERVICES_CATALOG: ServiceCategory[] = [
         tech: ['React', 'TypeScript', 'Tremor', 'Supabase'],
         industries: ['Large Enterprises', 'Startups', 'Logistics'],
         challenges: ['reporting', 'cost'],
-        related: ['customer-portals', 'power-bi'],
-        path: '/solutions/web-development-services'
+        related: ['customer-portals', 'power-bi-dashboards'],
+        path: '/solutions/admin-dashboards'
       }
     ]
   },
@@ -160,22 +160,22 @@ export const SERVICES_CATALOG: ServiceCategory[] = [
     iconName: 'Smartphone',
     services: [
       {
-        id: 'ios',
+        id: 'ios-apps',
         iconName: 'Smartphone',
         tech: ['Swift', 'SwiftUI', 'GraphQL', 'CoreData'],
         industries: ['Retail', 'Healthcare', 'Startups'],
         challenges: ['scale'],
-        related: ['android', 'flutter'],
-        path: '/solutions/web-development-services#mobile'
+        related: ['android-apps', 'flutter-development'],
+        path: '/solutions/ios-apps'
       },
       {
-        id: 'flutter',
+        id: 'flutter-development',
         iconName: 'Smartphone',
         tech: ['Flutter', 'Dart', 'Bloc', 'Firebase'],
         industries: ['SMEs', 'Logistics', 'Hospitality'],
         challenges: ['cost', 'scale'],
-        related: ['react-native', 'ios'],
-        path: '/solutions/web-development-services#mobile'
+        related: ['react-native-development', 'ios-apps'],
+        path: '/solutions/flutter-development'
       }
     ]
   },
@@ -189,17 +189,17 @@ export const SERVICES_CATALOG: ServiceCategory[] = [
         tech: ['AWS', 'Azure', 'Terraform', 'Ansible'],
         industries: ['Finance', 'Healthcare', 'Large Enterprises'],
         challenges: ['migration', 'cost'],
-        related: ['kubernetes', 'infrastructure-automation'],
-        path: '/solutions/data-engineering-solutions#cloud'
+        related: ['kubernetes-orchestration', 'infrastructure-automation'],
+        path: '/solutions/cloud-migration'
       },
       {
-        id: 'kubernetes',
+        id: 'kubernetes-orchestration',
         iconName: 'Cloud',
         tech: ['Docker', 'Kubernetes', 'Helm', 'ArgoCD'],
         industries: ['Large Enterprises', 'Startups', 'Finance'],
         challenges: ['scale', 'cost'],
-        related: ['ci-cd', 'cloud-migration'],
-        path: '/solutions/data-engineering-solutions#cloud'
+        related: ['ci-cd-pipelines', 'cloud-migration'],
+        path: '/solutions/kubernetes-orchestration'
       }
     ]
   },
@@ -214,7 +214,7 @@ export const SERVICES_CATALOG: ServiceCategory[] = [
         industries: ['Finance', 'Healthcare', 'Large Enterprises'],
         challenges: ['scale'],
         related: ['executive-search', 'staff-augmentation'],
-        path: '/solutions/it-staffing-solutions'
+        path: '/solutions/permanent-staffing'
       },
       {
         id: 'staff-augmentation',
@@ -223,7 +223,7 @@ export const SERVICES_CATALOG: ServiceCategory[] = [
         industries: ['Startups', 'SMEs', 'Finance'],
         challenges: ['scale', 'cost'],
         related: ['dedicated-teams', 'contract-staffing'],
-        path: '/solutions/it-staffing-solutions'
+        path: '/solutions/staff-augmentation'
       }
     ]
   },
@@ -238,7 +238,7 @@ export const SERVICES_CATALOG: ServiceCategory[] = [
         industries: ['Logistics', 'Retail', 'SMEs'],
         challenges: ['cost', 'ai'],
         related: ['digital-strategy', 'process-optimization'],
-        path: '/solutions/business-intelligence-consulting#digital'
+        path: '/solutions/business-process-automation'
       },
       {
         id: 'digital-strategy',
@@ -246,8 +246,8 @@ export const SERVICES_CATALOG: ServiceCategory[] = [
         tech: ['Agile Maturity Audits', 'Value Stream Maps', 'Architecture Assessments'],
         industries: ['Large Enterprises', 'Government', 'Finance'],
         challenges: ['migration'],
-        related: ['legacy-modernization-dt', 'technology-consulting-service'],
-        path: '/solutions/business-intelligence-consulting#digital'
+        related: ['legacy-modernization-dt', 'technology-consulting'],
+        path: '/solutions/digital-strategy'
       }
     ]
   },
@@ -256,13 +256,13 @@ export const SERVICES_CATALOG: ServiceCategory[] = [
     iconName: 'Database',
     services: [
       {
-        id: 'power-bi',
+        id: 'power-bi-dashboards',
         iconName: 'Database',
         tech: ['Power BI', 'DAX', 'SQL Server', 'Power Query'],
         industries: ['Finance', 'Manufacturing', 'Large Enterprises'],
         challenges: ['reporting'],
         related: ['business-intelligence', 'data-visualization'],
-        path: '/solutions/data-analytics-services'
+        path: '/solutions/power-bi-dashboards'
       },
       {
         id: 'data-warehousing',
@@ -270,8 +270,8 @@ export const SERVICES_CATALOG: ServiceCategory[] = [
         tech: ['Snowflake', 'BigQuery', 'Redshift', 'dbt'],
         industries: ['Finance', 'Retail', 'Healthcare'],
         challenges: ['migration', 'scale'],
-        related: ['etl', 'business-intelligence'],
-        path: '/solutions/data-analytics-services'
+        related: ['etl-pipelines', 'business-intelligence'],
+        path: '/solutions/data-warehousing'
       }
     ]
   },
@@ -286,16 +286,16 @@ export const SERVICES_CATALOG: ServiceCategory[] = [
         industries: ['Finance', 'Healthcare', 'Government'],
         challenges: ['security'],
         related: ['security-assessment', 'security-audits'],
-        path: '/solutions/business-intelligence-consulting#security'
+        path: '/solutions/penetration-testing'
       },
       {
-        id: 'compliance',
+        id: 'compliance-consulting',
         iconName: 'ShieldCheck',
         tech: ['SOC 2 Auditing', 'HIPAA Mapping', 'GDPR Verification'],
         industries: ['Healthcare', 'Finance', 'Large Enterprises'],
         challenges: ['security'],
-        related: ['security-audits', 'iam'],
-        path: '/solutions/business-intelligence-consulting#security'
+        related: ['security-audits', 'identity-access-management'],
+        path: '/solutions/compliance-consulting'
       }
     ]
   },
@@ -310,7 +310,7 @@ export const SERVICES_CATALOG: ServiceCategory[] = [
         industries: ['Startups', 'SMEs', 'Large Enterprises'],
         challenges: ['scale', 'cost'],
         related: ['ui-design', 'product-design'],
-        path: '/solutions/web-development-services#design'
+        path: '/solutions/design-systems'
       },
       {
         id: 'ux-research',
@@ -318,8 +318,8 @@ export const SERVICES_CATALOG: ServiceCategory[] = [
         tech: ['Hotjar', 'UserTesting', 'Maze', 'Figma prototypes'],
         industries: ['Healthcare', 'Retail', 'Finance'],
         challenges: ['reporting'],
-        related: ['wireframes', 'prototype'],
-        path: '/solutions/web-development-services#design'
+        related: ['wireframing', 'prototyping'],
+        path: '/solutions/ux-research'
       }
     ]
   },
@@ -328,13 +328,13 @@ export const SERVICES_CATALOG: ServiceCategory[] = [
     iconName: 'TrendingUp',
     services: [
       {
-        id: 'seo',
+        id: 'seo-optimization',
         iconName: 'TrendingUp',
         tech: ['SEMrush', 'Ahrefs', 'Google Search Console', 'Screaming Frog'],
         industries: ['Retail', 'Legal', 'SMEs'],
         challenges: ['scale'],
         related: ['local-seo', 'content-marketing'],
-        path: '/solutions/web-development-services#marketing'
+        path: '/solutions/seo-optimization'
       }
     ]
   },
@@ -343,13 +343,13 @@ export const SERVICES_CATALOG: ServiceCategory[] = [
     iconName: 'ShoppingCart',
     services: [
       {
-        id: 'shopify',
+        id: 'shopify-development',
         iconName: 'ShoppingCart',
         tech: ['Shopify Liquid', 'Hydrogen', 'Stripe', 'Klaviyo'],
         industries: ['Retail', 'Startups', 'SMEs'],
         challenges: ['store', 'scale'],
-        related: ['woocommerce', 'payment-gateway'],
-        path: '/solutions/web-development-services#ecommerce'
+        related: ['woocommerce-development', 'payment-gateway-integration'],
+        path: '/solutions/shopify-development'
       }
     ]
   },
@@ -358,13 +358,13 @@ export const SERVICES_CATALOG: ServiceCategory[] = [
     iconName: 'Lightbulb',
     services: [
       {
-        id: 'technology-consulting-service',
+        id: 'technology-consulting',
         iconName: 'Lightbulb',
         tech: ['Architecture Diagrams', 'Technical Auditing', 'Tech Debt Analysis'],
         industries: ['Large Enterprises', 'Finance', 'Healthcare'],
         challenges: ['migration', 'cost'],
-        related: ['ai-strategy', 'architecture-consulting'],
-        path: '/solutions/business-intelligence-consulting#cto'
+        related: ['ai-strategy', 'software-architecture'],
+        path: '/solutions/technology-consulting'
       },
       {
         id: 'cto-as-a-service',
@@ -372,8 +372,8 @@ export const SERVICES_CATALOG: ServiceCategory[] = [
         tech: ['Team management', 'Scale diagrams', 'Technology vetting'],
         industries: ['Startups', 'SMEs', 'Finance'],
         challenges: ['scale', 'cost'],
-        related: ['product-consulting', 'digital-transformation-strategy'],
-        path: '/solutions/business-intelligence-consulting#cto'
+        related: ['product-consulting', 'software-architecture'],
+        path: '/solutions/cto-as-a-service'
       }
     ]
   }

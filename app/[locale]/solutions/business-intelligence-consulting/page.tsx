@@ -21,9 +21,8 @@ export default async function BusinessIntelligenceConsultingPage({ params }: Pro
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const tc = await getTranslations('Common');
-
+  
   return (
-    <SolutionDetailPage locale={locale} pageKey="business-intelligence-consulting" tc={tc} />
+    <SolutionDetailPage locale={locale} pageKey="business-intelligence-consulting"  />
   );
 }

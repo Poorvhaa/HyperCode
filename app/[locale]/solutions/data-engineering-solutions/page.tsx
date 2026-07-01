@@ -21,9 +21,8 @@ export default async function DataEngineeringSolutionsPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const tc = await getTranslations('Common');
-
+  
   return (
-    <SolutionDetailPage locale={locale} pageKey="data-engineering-solutions" tc={tc} />
+    <SolutionDetailPage locale={locale} pageKey="data-engineering-solutions"  />
   );
 }

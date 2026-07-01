@@ -21,7 +21,14 @@ import {
   Network,
   Users,
   ShoppingCart,
-  Palette
+  Palette,
+  Brain,
+  Lock,
+  Lightbulb,
+  Shuffle,
+  Smartphone,
+  Cloud,
+  ArrowRight
 } from 'lucide-react';
 
 const languages = [
@@ -36,6 +43,8 @@ export function Navigation() {
   const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(false);
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [isMobileLangOpen, setIsMobileLangOpen] = useState(false);
+  const [activeCategory, setActiveCategory] = useState<string>('ai-automation');
+  const [mobileExpandedCat, setMobileExpandedCat] = useState<string | null>(null);
 
   const pathname = usePathname();
   const router = useRouter();
@@ -86,36 +95,175 @@ export function Navigation() {
   };
 
   // Grouped 13 service categories
-  const solutionsMegaMenu = {
-    consultingAI: {
-      title: locale === 'es' ? 'Consultoría y Automatización de IA' : 'Consulting & AI Automation',
+  // Grouped 13 service categories mapped to actual slugs
+  const solutionsMegaMenu = [
+    {
+      id: 'ai-automation',
+      title: locale === 'es' ? 'IA y Automatización' : 'AI & Automation',
+      icon: Sparkles,
+      desc: locale === 'es' ? 'Agentes de voz, chatbots de IA y flujos de RAG.' : 'AI voice agents, chatbots, and RAG pipelines.',
       items: [
-        { title: t('aiAutomation'), href: '/solutions/business-intelligence-consulting#ai', desc: locale === 'es' ? 'Soluciones generativas de IA, RAG y agentes de voz.' : 'Generative AI, RAG, and voice agents.', icon: Sparkles },
-        { title: t('techConsulting'), href: '/solutions/business-intelligence-consulting#cto', desc: locale === 'es' ? 'Estrategia de IA, CTO as a Service y arquitectura.' : 'AI strategy, CTO as a Service, and architecture.', icon: Cpu },
-        { title: t('digitalTrans'), href: '/solutions/business-intelligence-consulting#digital', desc: locale === 'es' ? 'Optimización de procesos y transformación empresarial.' : 'Process optimization and digital shifts.', icon: Zap },
-        { title: t('cybersecurity'), href: '/solutions/business-intelligence-consulting#security', desc: locale === 'es' ? 'Auditorías de cumplimiento, pruebas de penetración e IAM.' : 'Compliance audits, pentesting, and IAM.', icon: ShieldCheck }
+        { name: locale === 'es' ? 'Consultoría de IA' : 'AI Consulting', slug: 'ai-consulting' },
+        { name: locale === 'es' ? 'Chatbots de IA' : 'AI Chatbots', slug: 'ai-chatbot-development' },
+        { name: locale === 'es' ? 'Agentes de Voz' : 'Voice Agents', slug: 'ai-voice-agents' },
+        { name: locale === 'es' ? 'Base de Conocimiento (RAG)' : 'AI RAG Systems', slug: 'ai-knowledge-base-rag' },
+        { name: locale === 'es' ? 'Automatización de Flujos' : 'AI Workflow Automation', slug: 'ai-workflow-automation' },
+        { name: locale === 'es' ? 'Integración de IA' : 'AI Integration', slug: 'ai-integration' }
       ]
     },
-    engineering: {
-      title: locale === 'es' ? 'Ingeniería de Software a Medida' : 'Custom Software Engineering',
+    {
+      id: 'software-development',
+      title: locale === 'es' ? 'Desarrollo de Software' : 'Software Development',
+      icon: Layers,
+      desc: locale === 'es' ? 'SaaS, ERP, CRM y modernización de sistemas legados.' : 'SaaS, ERP, CRM, and legacy modernization.',
       items: [
-        { title: t('softwareDev'), href: '/solutions/web-development-services#software', desc: locale === 'es' ? 'SaaS, ERP, CRM y modernización de sistemas legados.' : 'SaaS, ERP, CRM, and legacy modernization.', icon: Layers },
-        { title: t('webDev'), href: '/solutions/web-development-services', desc: locale === 'es' ? 'Portales corporativos y aplicaciones web de alto rendimiento.' : 'Corporate portals and high-performance web apps.', icon: Globe },
-        { title: t('mobileDev'), href: '/solutions/web-development-services#mobile', desc: locale === 'es' ? 'Aplicaciones nativas e híbridas (iOS, Android, Flutter).' : 'Native and hybrid apps (iOS, Android, Flutter).', icon: Settings },
-        { title: t('ecommerce'), href: '/solutions/web-development-services#ecommerce', desc: locale === 'es' ? 'Plataformas Shopify, WooCommerce y pasarelas de pago.' : 'Shopify, WooCommerce, and payment integrations.', icon: ShoppingCart },
-        { title: t('uiUx'), href: '/solutions/web-development-services#design', desc: locale === 'es' ? 'Investigación de usuarios, prototipos y sistemas de diseño.' : 'User research, prototyping, and design systems.', icon: Palette }
+        { name: locale === 'es' ? 'Software a Medida' : 'Custom Software', slug: 'custom-software-development' },
+        { name: locale === 'es' ? 'Software Empresarial' : 'Enterprise Software', slug: 'enterprise-software' },
+        { name: locale === 'es' ? 'SaaS' : 'SaaS Development', slug: 'saas-development' },
+        { name: locale === 'es' ? 'CRM' : 'CRM Development', slug: 'crm-development' },
+        { name: locale === 'es' ? 'ERP' : 'ERP Development', slug: 'erp-development' },
+        { name: locale === 'es' ? 'APIs' : 'APIs Development', slug: 'api-development' }
       ]
     },
-    dataTalent: {
-      title: locale === 'es' ? 'Alianzas de Datos y Talento' : 'Data & Talent Partnerships',
+    {
+      id: 'web-development',
+      title: locale === 'es' ? 'Desarrollo Web' : 'Web Development',
+      icon: Globe,
+      desc: locale === 'es' ? 'Portales corporativos y aplicaciones web de alto rendimiento.' : 'Corporate portals and high-performance web apps.',
       items: [
-        { title: t('dataAnalytics'), href: '/solutions/data-analytics-services', desc: locale === 'es' ? 'Power BI, Tableau y almacenes de datos en la nube.' : 'Power BI, Tableau, and cloud data warehouses.', icon: Database },
-        { title: t('cloudDevOps'), href: '/solutions/data-engineering-solutions#cloud', desc: locale === 'es' ? 'Migración a AWS/Azure, Docker, Kubernetes y CI/CD.' : 'AWS/Azure migration, Kubernetes, and CI/CD.', icon: Network },
-        { title: t('talentSolutions'), href: '/solutions/it-staffing-solutions', desc: locale === 'es' ? 'Contratación permanente, temporal y aumento de personal.' : 'Permanent, contract, and staff augmentation.', icon: Users },
-        { title: t('marketing'), href: '/solutions/web-development-services#marketing', desc: locale === 'es' ? 'SEO local, campañas de Google Ads y LinkedIn.' : 'Local SEO, Google Ads, and LinkedIn marketing.', icon: TrendingUp }
+        { name: locale === 'es' ? 'Sitios Corporativos' : 'Corporate Websites', slug: 'corporate-websites' },
+        { name: locale === 'es' ? 'Sitios de Negocios' : 'Business Websites', slug: 'business-websites' },
+        { name: locale === 'es' ? 'Comercio Electrónico' : 'Ecommerce Websites', slug: 'ecommerce-websites' },
+        { name: locale === 'es' ? 'Portales de Clientes' : 'Customer Portals', slug: 'customer-portals' },
+        { name: locale === 'es' ? 'Tableros Admin' : 'Admin Dashboards', slug: 'admin-dashboards' }
+      ]
+    },
+    {
+      id: 'mobile-development',
+      title: locale === 'es' ? 'Desarrollo Móvil' : 'Mobile Development',
+      icon: Smartphone,
+      desc: locale === 'es' ? 'Aplicaciones nativas e híbridas (iOS, Android, Flutter).' : 'Native and hybrid apps (iOS, Android, Flutter).',
+      items: [
+        { name: locale === 'es' ? 'Aplicaciones iOS' : 'iOS Apps', slug: 'ios-apps' },
+        { name: locale === 'es' ? 'Aplicaciones Android' : 'Android Apps', slug: 'android-apps' },
+        { name: locale === 'es' ? 'Multiplataforma' : 'Cross-Platform Apps', slug: 'cross-platform-apps' },
+        { name: locale === 'es' ? 'Flutter' : 'Flutter Development', slug: 'flutter-development' },
+        { name: locale === 'es' ? 'React Native' : 'React Native Dev', slug: 'react-native-development' }
+      ]
+    },
+    {
+      id: 'cloud-devops',
+      title: locale === 'es' ? 'Nube y DevOps' : 'Cloud & DevOps',
+      icon: Cloud,
+      desc: locale === 'es' ? 'Migración a AWS/Azure, Docker, Kubernetes y CI/CD.' : 'AWS/Azure migration, Kubernetes, and CI/CD.',
+      items: [
+        { name: locale === 'es' ? 'Migración a la Nube' : 'Cloud Migration', slug: 'cloud-migration' },
+        { name: locale === 'es' ? 'AWS' : 'AWS Cloud Solutions', slug: 'aws-cloud-solutions' },
+        { name: locale === 'es' ? 'Azure' : 'Azure Cloud Solutions', slug: 'azure-cloud-solutions' },
+        { name: locale === 'es' ? 'Kubernetes' : 'Kubernetes Orchestration', slug: 'kubernetes-orchestration' },
+        { name: locale === 'es' ? 'CI/CD Pipelines' : 'CI/CD Pipelines', slug: 'ci-cd-pipelines' }
+      ]
+    },
+    {
+      id: 'talent-solutions',
+      title: locale === 'es' ? 'Talento TI y No TI' : 'IT & Non-IT Talent',
+      icon: Users,
+      desc: locale === 'es' ? 'Contratación permanente, temporal y aumento de personal.' : 'Permanent, contract, and staff augmentation.',
+      items: [
+        { name: locale === 'es' ? 'Contratación Permanente' : 'Permanent Staffing', slug: 'permanent-staffing' },
+        { name: locale === 'es' ? 'Contratación por Contrato' : 'Contract Staffing', slug: 'contract-staffing' },
+        { name: locale === 'es' ? 'Búsqueda Ejecutiva' : 'Executive Search', slug: 'executive-search' },
+        { name: locale === 'es' ? 'Aumento de Personal' : 'Staff Augmentation', slug: 'staff-augmentation' },
+        { name: locale === 'es' ? 'Equipos Dedicados' : 'Dedicated Teams', slug: 'dedicated-teams' }
+      ]
+    },
+    {
+      id: 'digital-transformation',
+      title: locale === 'es' ? 'Transformación Digital' : 'Digital Transformation',
+      icon: Shuffle,
+      desc: locale === 'es' ? 'Optimización de procesos y transformación empresarial.' : 'Process optimization and digital shifts.',
+      items: [
+        { name: locale === 'es' ? 'Automatización de Procesos' : 'Process Automation', slug: 'business-process-automation' },
+        { name: locale === 'es' ? 'Consultoría Digital' : 'Digital Consulting', slug: 'digital-transformation-consulting' },
+        { name: locale === 'es' ? 'Modernización Legada' : 'Legacy Modernization', slug: 'legacy-modernization-dt' },
+        { name: locale === 'es' ? 'Estrategia Digital' : 'Digital Strategy', slug: 'digital-strategy' }
+      ]
+    },
+    {
+      id: 'data-analytics',
+      title: locale === 'es' ? 'Datos y Analítica' : 'Data & Analytics',
+      icon: Database,
+      desc: locale === 'es' ? 'Power BI, Tableau y almacenes de datos en la nube.' : 'Power BI, Tableau, and cloud data warehouses.',
+      items: [
+        { name: locale === 'es' ? 'Power BI' : 'Power BI Dashboards', slug: 'power-bi-dashboards' },
+        { name: locale === 'es' ? 'Tableau' : 'Tableau Dashboards', slug: 'tableau-dashboards' },
+        { name: locale === 'es' ? 'Almacenamiento de Datos' : 'Data Warehousing', slug: 'data-warehousing' },
+        { name: locale === 'es' ? 'Canalizaciones ETL' : 'ETL Pipelines', slug: 'etl-pipelines' },
+        { name: locale === 'es' ? 'Inteligencia de Negocios' : 'Business Intelligence', slug: 'business-intelligence' }
+      ]
+    },
+    {
+      id: 'cybersecurity',
+      title: locale === 'es' ? 'Ciberseguridad' : 'Cybersecurity',
+      icon: Lock,
+      desc: locale === 'es' ? 'Auditorías de cumplimiento, pruebas de penetración e IAM.' : 'Compliance audits, pentesting, and IAM.',
+      items: [
+        { name: locale === 'es' ? 'Evaluación de Seguridad' : 'Security Assessment', slug: 'security-assessment' },
+        { name: locale === 'es' ? 'Pruebas de Penetración' : 'Penetration Testing', slug: 'penetration-testing' },
+        { name: locale === 'es' ? 'Auditorías de Seguridad' : 'Security Audits', slug: 'security-audits' },
+        { name: locale === 'es' ? 'Cumplimiento Normativo' : 'Compliance Consulting', slug: 'compliance-consulting' }
+      ]
+    },
+    {
+      id: 'ui-ux-design',
+      title: locale === 'es' ? 'Diseño UI/UX' : 'UI/UX Design',
+      icon: Palette,
+      desc: locale === 'es' ? 'Investigación de usuarios, prototipos y sistemas de diseño.' : 'User research, prototyping, and design systems.',
+      items: [
+        { name: locale === 'es' ? 'Diseño UI' : 'UI Design', slug: 'ui-design' },
+        { name: locale === 'es' ? 'Investigación UX' : 'UX Research', slug: 'ux-research' },
+        { name: locale === 'es' ? 'Wireframes' : 'Wireframing', slug: 'wireframing' },
+        { name: locale === 'es' ? 'Prototipos' : 'Prototyping', slug: 'prototyping' },
+        { name: locale === 'es' ? 'Sistemas de Diseño' : 'Design Systems', slug: 'design-systems' }
+      ]
+    },
+    {
+      id: 'digital-marketing',
+      title: locale === 'es' ? 'Marketing Digital' : 'Digital Marketing',
+      icon: TrendingUp,
+      desc: locale === 'es' ? 'SEO local, campañas de Google Ads y LinkedIn.' : 'Local SEO, Google Ads, and LinkedIn marketing.',
+      items: [
+        { name: locale === 'es' ? 'SEO' : 'SEO Optimization', slug: 'seo-optimization' },
+        { name: locale === 'es' ? 'SEO Local' : 'Local SEO', slug: 'local-seo' },
+        { name: locale === 'es' ? 'Google Ads' : 'Google Ads', slug: 'google-ads' },
+        { name: locale === 'es' ? 'Marketing en LinkedIn' : 'LinkedIn Marketing', slug: 'linkedin-marketing' }
+      ]
+    },
+    {
+      id: 'ecommerce',
+      title: locale === 'es' ? 'Comercio Electrónico' : 'E-commerce',
+      icon: ShoppingCart,
+      desc: locale === 'es' ? 'Plataformas Shopify, WooCommerce y pasarelas de pago.' : 'Shopify, WooCommerce, and payment integrations.',
+      items: [
+        { name: locale === 'es' ? 'Shopify' : 'Shopify Development', slug: 'shopify-development' },
+        { name: locale === 'es' ? 'WooCommerce' : 'WooCommerce Dev', slug: 'woocommerce-development' },
+        { name: locale === 'es' ? 'Magento' : 'Magento Development', slug: 'magento-development' },
+        { name: locale === 'es' ? 'Pasarelas de Pago' : 'Payment Gateways', slug: 'payment-gateway-integration' }
+      ]
+    },
+    {
+      id: 'technology-consulting',
+      title: locale === 'es' ? 'Consultoría Tecnológica' : 'Technology Consulting',
+      icon: Lightbulb,
+      desc: locale === 'es' ? 'Estrategia de IA, CTO as a Service y arquitectura.' : 'AI strategy, CTO as a Service, and architecture.',
+      items: [
+        { name: locale === 'es' ? 'Consultoría de TI' : 'Tech Consulting', slug: 'technology-consulting' },
+        { name: locale === 'es' ? 'Estrategia de IA' : 'AI Strategy', slug: 'ai-strategy' },
+        { name: locale === 'es' ? 'CTO como Servicio' : 'CTO as a Service', slug: 'cto-as-a-service' },
+        { name: locale === 'es' ? 'Arquitectura de Software' : 'Software Architecture', slug: 'software-architecture' }
       ]
     }
-  };
+  ];
 
   const activeLangName = languages.find((lang) => lang.code === locale)?.name || 'English';
 
@@ -194,70 +342,89 @@ export function Navigation() {
                         transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                         className="fixed top-20 left-1/2 -translate-x-1/2 w-full max-w-6xl px-4 sm:px-6 lg:px-8 z-50 pointer-events-auto"
                       >
-                        <div className="bg-white/95 dark:bg-[#0B0F19]/95 backdrop-blur-xl border border-slate-200/60 dark:border-slate-800/60 rounded-3xl shadow-2xl shadow-slate-900/10 p-8 grid grid-cols-3 gap-8 text-left mt-2">
+                        <div className="bg-white/95 dark:bg-[#0B0F19]/95 backdrop-blur-xl border border-slate-200/60 dark:border-slate-800/60 rounded-3xl shadow-2xl shadow-slate-900/10 p-8 flex gap-8 text-left mt-2">
                           
-                          {/* Column 1 */}
-                          <div className="space-y-4">
-                            <h3 className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest border-b border-slate-100 dark:border-slate-800 pb-2">{solutionsMegaMenu.consultingAI.title}</h3>
-                            <div className="space-y-1">
-                              {solutionsMegaMenu.consultingAI.items.map((item, idx) => {
-                                const Icon = item.icon;
-                                return (
-                                  <Link key={idx} href={item.href} onClick={closeDropdowns} className="group flex items-start gap-3.5 p-3 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-all duration-300">
-                                    <div className="p-2.5 bg-slate-50 dark:bg-slate-900 group-hover:bg-[#0F4C81] dark:group-hover:bg-[#0F4C81] rounded-xl text-slate-500 group-hover:text-white dark:text-slate-400 transition-all duration-300">
-                                      <Icon size={18} />
+                          {/* Left Panel: Categories Selection */}
+                          <div className="w-1/3 border-r border-slate-200/60 dark:border-slate-800/60 pr-6 space-y-1 max-h-[500px] overflow-y-auto scrollbar-thin">
+                            {solutionsMegaMenu.map((cat) => {
+                              const CatIcon = cat.icon;
+                              const isCatActive = activeCategory === cat.id;
+                              return (
+                                <button
+                                  key={cat.id}
+                                  onMouseEnter={() => setActiveCategory(cat.id)}
+                                  className={`w-full flex items-center justify-between p-3 rounded-2xl text-left transition-all duration-200 cursor-pointer border-none outline-none ${
+                                    isCatActive 
+                                      ? 'bg-slate-100/80 dark:bg-slate-900/60 text-[#0F4C81] dark:text-blue-400 font-extrabold shadow-sm'
+                                      : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50/50 dark:hover:bg-slate-900/30'
+                                  }`}
+                                >
+                                  <div className="flex items-center gap-3">
+                                    <div className={`p-1.5 rounded-lg ${isCatActive ? 'bg-[#0F4C81]/10 text-[#0F4C81] dark:text-blue-400' : 'bg-slate-100/50 dark:bg-slate-900/30 text-slate-400'}`}>
+                                      <CatIcon size={16} />
                                     </div>
-                                    <div className="space-y-0.5">
-                                      <div className="text-sm font-bold text-slate-800 dark:text-slate-200 group-hover:text-[#0F4C81] dark:group-hover:text-blue-400 transition-colors">{item.title}</div>
-                                      <div className="text-[11px] text-slate-500 dark:text-slate-455 leading-relaxed">{item.desc}</div>
-                                    </div>
-                                  </Link>
-                                );
-                              })}
-                            </div>
+                                    <span className="text-xs font-bold tracking-tight">{cat.title}</span>
+                                  </div>
+                                  <ArrowRight size={12} className={`opacity-0 transition-opacity ${isCatActive ? 'opacity-100' : ''}`} />
+                                </button>
+                              );
+                            })}
                           </div>
 
-                          {/* Column 2 */}
-                          <div className="space-y-4">
-                            <h3 className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest border-b border-slate-100 dark:border-slate-800 pb-2">{solutionsMegaMenu.engineering.title}</h3>
-                            <div className="space-y-1">
-                              {solutionsMegaMenu.engineering.items.map((item, idx) => {
-                                const Icon = item.icon;
-                                return (
-                                  <Link key={idx} href={item.href} onClick={closeDropdowns} className="group flex items-start gap-3.5 p-3 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-all duration-300">
-                                    <div className="p-2.5 bg-slate-50 dark:bg-slate-900 group-hover:bg-[#0F4C81] dark:group-hover:bg-[#0F4C81] rounded-xl text-slate-500 group-hover:text-white dark:text-slate-400 transition-all duration-300">
-                                      <Icon size={18} />
+                          {/* Right Panel: Selected Category Services Grid */}
+                          {(() => {
+                            const activeCatObj = solutionsMegaMenu.find(c => c.id === activeCategory) || solutionsMegaMenu[0];
+                            const ActiveCatIcon = activeCatObj.icon;
+                            return (
+                              <div className="w-2/3 pl-6 flex flex-col justify-between h-[480px]">
+                                <div className="space-y-6">
+                                  <div className="flex items-start gap-4">
+                                    <div className="p-3 bg-[#0F4C81]/5 border border-[#0F4C81]/15 text-[#0F4C81] dark:text-blue-400 rounded-2xl">
+                                      <ActiveCatIcon size={24} />
                                     </div>
-                                    <div className="space-y-0.5">
-                                      <div className="text-sm font-bold text-slate-800 dark:text-slate-200 group-hover:text-[#0F4C81] dark:group-hover:text-blue-400 transition-colors">{item.title}</div>
-                                      <div className="text-[11px] text-slate-500 dark:text-slate-455 leading-relaxed">{item.desc}</div>
+                                    <div className="space-y-1">
+                                      <h4 className="text-base font-extrabold text-slate-800 dark:text-slate-200">{activeCatObj.title}</h4>
+                                      <p className="text-xs text-slate-400 dark:text-slate-500 leading-relaxed max-w-lg">{activeCatObj.desc}</p>
                                     </div>
-                                  </Link>
-                                );
-                              })}
-                            </div>
-                          </div>
+                                  </div>
 
-                          {/* Column 3 */}
-                          <div className="space-y-4">
-                            <h3 className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest border-b border-slate-100 dark:border-slate-800 pb-2">{solutionsMegaMenu.dataTalent.title}</h3>
-                            <div className="space-y-1">
-                              {solutionsMegaMenu.dataTalent.items.map((item, idx) => {
-                                const Icon = item.icon;
-                                return (
-                                  <Link key={idx} href={item.href} onClick={closeDropdowns} className="group flex items-start gap-3.5 p-3 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-all duration-300">
-                                    <div className="p-2.5 bg-slate-50 dark:bg-slate-900 group-hover:bg-[#0F4C81] dark:group-hover:bg-[#0F4C81] rounded-xl text-slate-500 group-hover:text-white dark:text-slate-400 transition-all duration-300">
-                                      <Icon size={18} />
-                                    </div>
-                                    <div className="space-y-0.5">
-                                      <div className="text-sm font-bold text-slate-800 dark:text-slate-200 group-hover:text-[#0F4C81] dark:group-hover:text-blue-400 transition-colors">{item.title}</div>
-                                      <div className="text-[11px] text-slate-500 dark:text-slate-455 leading-relaxed">{item.desc}</div>
-                                    </div>
+                                  <div className="grid grid-cols-2 gap-4">
+                                    {activeCatObj.items.map((item, idx) => (
+                                      <Link
+                                        key={idx}
+                                        href={`/solutions/${item.slug}`}
+                                        onClick={closeDropdowns}
+                                        className="group flex items-center justify-between p-3 rounded-2xl border border-slate-100/50 dark:border-slate-850/40 bg-slate-50/20 dark:bg-slate-900/10 hover:border-[#0F4C81]/30 hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-all"
+                                      >
+                                        <span className="text-xs font-bold text-slate-700 dark:text-slate-350 group-hover:text-[#0F4C81] dark:group-hover:text-blue-400 transition-colors">
+                                          {item.name}
+                                        </span>
+                                        <ChevronDown size={14} className="text-slate-400 group-hover:text-[#0F4C81] dark:group-hover:text-blue-400 transform -rotate-90 group-hover:translate-x-1 transition-all" />
+                                      </Link>
+                                    ))}
+                                  </div>
+                                </div>
+
+                                <div className="border-t border-slate-100 dark:border-slate-800/80 pt-4 flex items-center justify-between">
+                                  <Link
+                                    href="/solutions"
+                                    onClick={closeDropdowns}
+                                    className="inline-flex items-center gap-2 text-xs font-extrabold text-[#0F4C81] dark:text-blue-400 hover:underline"
+                                  >
+                                    <span>{t('viewAllSolutions')}</span>
+                                    <ArrowRight size={14} />
                                   </Link>
-                                );
-                              })}
-                            </div>
-                          </div>
+                                  <button
+                                    onClick={triggerOpenChat}
+                                    className="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 bg-transparent border-none cursor-pointer"
+                                  >
+                                    <span>{t('talkToAI')}</span>
+                                    <Sparkles size={12} className="text-blue-400 animate-pulse" />
+                                  </button>
+                                </div>
+                              </div>
+                            );
+                          })()}
 
                         </div>
                       </motion.div>
@@ -408,21 +575,47 @@ export function Navigation() {
                   </button>
 
                   {mobileSolutionsOpen && (
-                    <div className="pl-6 space-y-2 mt-1">
-                      <div className="text-[11px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-widest mt-2">{solutionsMegaMenu.consultingAI.title}</div>
-                      {solutionsMegaMenu.consultingAI.items.map((item, idx) => (
-                        <Link key={idx} href={item.href} onClick={() => setIsOpen(false)} className="block py-2 text-sm font-semibold text-slate-655 dark:text-slate-400 hover:text-[#0F4C81]">{item.title}</Link>
-                      ))}
-
-                      <div className="text-[11px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-widest mt-3">{solutionsMegaMenu.engineering.title}</div>
-                      {solutionsMegaMenu.engineering.items.map((item, idx) => (
-                        <Link key={idx} href={item.href} onClick={() => setIsOpen(false)} className="block py-2 text-sm font-semibold text-slate-655 dark:text-slate-400 hover:text-[#0F4C81]">{item.title}</Link>
-                      ))}
-
-                      <div className="text-[11px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-widest mt-3">{solutionsMegaMenu.dataTalent.title}</div>
-                      {solutionsMegaMenu.dataTalent.items.map((item, idx) => (
-                        <Link key={idx} href={item.href} onClick={() => setIsOpen(false)} className="block py-2 text-sm font-semibold text-slate-655 dark:text-slate-400 hover:text-[#0F4C81]">{item.title}</Link>
-                      ))}
+                    <div className="pl-4 space-y-3 mt-2 border-l border-slate-100 dark:border-slate-800">
+                      {solutionsMegaMenu.map((cat, catIdx) => {
+                        const isMobileCatExpanded = mobileExpandedCat === cat.id;
+                        const CatIcon = cat.icon;
+                        return (
+                          <div key={catIdx} className="space-y-1">
+                            <button
+                              onClick={() => setMobileExpandedCat(isMobileCatExpanded ? null : cat.id)}
+                              className="w-full flex items-center justify-between py-2 text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-[#0F4C81] text-left bg-transparent border-none outline-none cursor-pointer"
+                            >
+                              <div className="flex items-center gap-2">
+                                <CatIcon size={14} className="text-slate-400" />
+                                <span>{cat.title}</span>
+                              </div>
+                              <ChevronDown size={12} className={`transform transition-transform ${isMobileCatExpanded ? 'rotate-180' : ''}`} />
+                            </button>
+                            
+                            {isMobileCatExpanded && (
+                              <div className="pl-6 space-y-2.5 py-1 border-l border-slate-100 dark:border-slate-850">
+                                {cat.items.map((item, idx) => (
+                                  <Link
+                                    key={idx}
+                                    href={`/solutions/${item.slug}`}
+                                    onClick={() => setIsOpen(false)}
+                                    className="block text-xs font-semibold text-slate-500 hover:text-[#0F4C81] dark:text-slate-400"
+                                  >
+                                    {item.name}
+                                  </Link>
+                                ))}
+                                <Link
+                                  href="/solutions"
+                                  onClick={() => setIsOpen(false)}
+                                  className="block text-xs font-extrabold text-[#0F4C81] dark:text-blue-400 pt-1"
+                                >
+                                  {t('viewAll')}
+                                </Link>
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
                     </div>
                   )}
                 </div>

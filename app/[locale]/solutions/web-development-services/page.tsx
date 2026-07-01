@@ -21,9 +21,8 @@ export default async function WebDevelopmentServicesPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const tc = await getTranslations('Common');
-
+  
   return (
-    <SolutionDetailPage locale={locale} pageKey="web-development-services" tc={tc} />
+    <SolutionDetailPage locale={locale} pageKey="web-development-services"  />
   );
 }

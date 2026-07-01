@@ -44,19 +44,19 @@ export function Footer() {
   };
 
   const solutionsList = [
-    { name: tNav('aiAutomation') || 'AI & Automation', href: '/solutions/business-intelligence-consulting#ai' },
-    { name: tNav('softwareDev') || 'Software Development', href: '/solutions/web-development-services#software' },
-    { name: tNav('webDev') || 'Web Development', href: '/solutions/web-development-services' },
-    { name: tNav('mobileDev') || 'Mobile Development', href: '/solutions/web-development-services#mobile' },
-    { name: tNav('cloudDevOps') || 'Cloud & DevOps', href: '/solutions/data-engineering-solutions#cloud' },
-    { name: tNav('talentSolutions') || 'IT & Non-IT Talent Solutions', href: '/solutions/it-staffing-solutions' },
-    { name: tNav('digitalTrans') || 'Digital Transformation', href: '/solutions/business-intelligence-consulting#digital' },
-    { name: tNav('dataAnalytics') || 'Data & Analytics', href: '/solutions/data-analytics-services' },
-    { name: tNav('cybersecurity') || 'Cybersecurity', href: '/solutions/business-intelligence-consulting#security' },
-    { name: tNav('uiUx') || 'UI/UX Design', href: '/solutions/web-development-services#design' },
-    { name: tNav('marketing') || 'Digital Marketing', href: '/solutions/web-development-services#marketing' },
-    { name: tNav('ecommerce') || 'E-commerce', href: '/solutions/web-development-services#ecommerce' },
-    { name: tNav('techConsulting') || 'Technology Consulting', href: '/solutions/business-intelligence-consulting#cto' },
+    { name: tNav('aiAutomation') || 'AI & Automation', href: `/solutions/ai-consulting` },
+    { name: tNav('softwareDev') || 'Software Development', href: `/solutions/custom-software-development` },
+    { name: tNav('webDev') || 'Web Development', href: `/solutions/corporate-websites` },
+    { name: tNav('mobileDev') || 'Mobile Development', href: `/solutions/ios-apps` },
+    { name: tNav('cloudDevOps') || 'Cloud & DevOps', href: `/solutions/cloud-migration` },
+    { name: tNav('talentSolutions') || 'IT & Non-IT Talent Solutions', href: `/solutions/permanent-staffing` },
+    { name: tNav('digitalTrans') || 'Digital Transformation', href: `/solutions/business-process-automation` },
+    { name: tNav('dataAnalytics') || 'Data & Analytics', href: `/solutions/business-intelligence` },
+    { name: tNav('cybersecurity') || 'Cybersecurity', href: `/solutions/security-assessment` },
+    { name: tNav('uiUx') || 'UI/UX Design', href: `/solutions/ui-design` },
+    { name: tNav('marketing') || 'Digital Marketing', href: `/solutions/seo-optimization` },
+    { name: tNav('ecommerce') || 'E-commerce', href: `/solutions/shopify-development` },
+    { name: tNav('techConsulting') || 'Technology Consulting', href: `/solutions/technology-consulting` },
   ];
 
   return (
@@ -130,19 +130,18 @@ export function Footer() {
               <div className="flex items-start gap-3">
                 <MapPin size={18} className="text-slate-500 mt-1 flex-shrink-0" />
                 <div className="leading-relaxed">
-                  <span className="block text-white font-extrabold mb-1">{locale === 'es' ? 'Sede Central' : 'Corporate HQ'}</span>
+                  <span className="block text-white font-extrabold mb-1">{tf('corporateHq')}</span>
                   <span className="text-slate-400">2095 Hammond Dr</span><br />
                   <span className="text-slate-400">Suite C</span><br />
                   <span className="text-slate-400">Schaumburg, IL 60173</span><br />
-                  <span className="text-slate-400 font-bold">{locale === 'es' ? 'Estados Unidos' : 'United States'}</span>
+                  <span className="text-slate-400 font-bold">{tf('unitedStates')}</span>
                 </div>
               </div>
               
-              {/* Phone */}
               <div className="flex items-start gap-3">
                 <Phone size={18} className="text-slate-500 mt-0.5 flex-shrink-0" />
                 <div>
-                  <span className="block text-[10px] text-slate-500 font-extrabold uppercase tracking-widest mb-0.5">{locale === 'es' ? 'Teléfono' : 'Phone'}</span>
+                  <span className="block text-[10px] text-slate-500 font-extrabold uppercase tracking-widest mb-0.5">{tf('phone')}</span>
                   <a href="tel:+15102039270" className="hover:text-white transition-colors text-slate-400 font-bold">
                     +1 (510) 203-9270
                   </a>
@@ -153,7 +152,7 @@ export function Footer() {
               <div className="flex items-start gap-3">
                 <Mail size={18} className="text-slate-500 mt-0.5 flex-shrink-0" />
                 <div>
-                  <span className="block text-[10px] text-slate-500 font-extrabold uppercase tracking-widest mb-0.5">{locale === 'es' ? 'Correo electrónico' : 'Email'}</span>
+                  <span className="block text-[10px] text-slate-500 font-extrabold uppercase tracking-widest mb-0.5">{tf('email')}</span>
                   <a href="mailto:info@hypercodeus.com" className="hover:text-white transition-colors text-slate-400 font-bold">
                     info@hypercodeus.com
                   </a>
@@ -190,7 +189,7 @@ export function Footer() {
 
           {/* Column 2: Company */}
           <div className="space-y-6">
-            <h4 className="text-xs font-bold text-white uppercase tracking-widest border-l-2 border-[#0F4C81] pl-2">{locale === 'es' ? 'Empresa' : 'Company'}</h4>
+            <h4 className="text-xs font-bold text-white uppercase tracking-widest border-l-2 border-[#0F4C81] pl-2">{tc('company')}</h4>
             <ul className="space-y-4 text-sm font-semibold">
               <li><Link href="/about" className="hover:text-white transition-colors duration-200">{tNav('about')}</Link></li>
               <li><Link href="/careers" className="hover:text-white transition-colors duration-200">{tNav('careers')}</Link></li>
@@ -203,7 +202,9 @@ export function Footer() {
             <h4 className="text-xs font-bold text-white uppercase tracking-widest border-l-2 border-[#0F4C81] pl-2">{tc('solutions')}</h4>
             <ul className="space-y-4 text-sm font-semibold">
               {solutionsList.slice(0, 7).map((s, idx) => (
-                <li key={idx}><Link href={s.href} className="hover:text-white transition-colors duration-200">{s.name}</Link></li>
+                <li key={idx}>
+                  <Link href={s.href} className="hover:text-white transition-colors duration-200">{s.name}</Link>
+                </li>
               ))}
             </ul>
           </div>
@@ -213,15 +214,26 @@ export function Footer() {
             <h4 className="text-xs font-bold text-white uppercase tracking-widest border-l-2 border-[#0F4C81] pl-2 opacity-0 hidden lg:block">Services Continued</h4>
             <ul className="space-y-4 text-sm font-semibold lg:mt-12">
               {solutionsList.slice(7).map((s, idx) => (
-                <li key={idx}><Link href={s.href} className="hover:text-white transition-colors duration-200">{s.name}</Link></li>
+                <li key={idx}>
+                  <Link href={s.href} className="hover:text-white transition-colors duration-200">{s.name}</Link>
+                </li>
               ))}
+              <li>
+                <Link
+                  href="/solutions"
+                  className="hover:text-white transition-colors duration-200 text-blue-400 font-extrabold flex items-center gap-1 mt-1"
+                >
+                  <span>{tNav('viewAllSolutions')}</span>
+                  <ArrowRight size={12} />
+                </Link>
+              </li>
             </ul>
           </div>
 
           {/* Column 5: Legal & Support */}
           <div className="space-y-12">
             <div className="space-y-6">
-              <h4 className="text-xs font-bold text-white uppercase tracking-widest border-l-2 border-[#0F4C81] pl-2">{locale === 'es' ? 'Legal' : 'Legal'}</h4>
+              <h4 className="text-xs font-bold text-white uppercase tracking-widest border-l-2 border-[#0F4C81] pl-2">{tf('legal')}</h4>
               <ul className="space-y-4 text-sm font-semibold">
                 <li><Link href="/PP" className="hover:text-white transition-colors duration-200">{tf('privacy')}</Link></li>
                 <li><Link href="/TnC" className="hover:text-white transition-colors duration-200">{tf('terms')}</Link></li>
@@ -229,7 +241,7 @@ export function Footer() {
             </div>
             
             <div className="space-y-6">
-              <h4 className="text-xs font-bold text-white uppercase tracking-widest border-l-2 border-[#0F4C81] pl-2">{locale === 'es' ? 'Soporte' : 'Support'}</h4>
+              <h4 className="text-xs font-bold text-white uppercase tracking-widest border-l-2 border-[#0F4C81] pl-2">{tc('support')}</h4>
               <ul className="space-y-4 text-sm font-semibold">
                 <li><button onClick={triggerOpenChat} className="hover:text-white transition-colors text-left bg-transparent border-none p-0 cursor-pointer font-bold">{tNav('aiConsultant') || 'AI Consultant'}</button></li>
                 <li><Link href="/consultation" className="hover:text-white transition-colors duration-200">{tNav('schedule')}</Link></li>

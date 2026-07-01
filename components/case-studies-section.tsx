@@ -8,7 +8,7 @@ import { db, CaseStudy } from '@/lib/db';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 
-export function CaseStudiesSection() {
+export function CaseStudiesSection({ categoryFilter }: { categoryFilter?: string } = {}) {
   const t = useTranslations('CaseStudies');
   const tc = useTranslations('Common');
   const locale = useLocale();
@@ -21,7 +21,13 @@ export function CaseStudiesSection() {
     const fetchStudies = async () => {
       try {
         const list = await db.getAllCaseStudies();
-        const published = (list || []).filter(c => c && c.is_published && c.language === locale);
+        let published = (list || []).filter(c => c && c.is_published && c.language === locale);
+        if (categoryFilter) {
+          published = published.filter(c => 
+            (c.industry && c.industry.toLowerCase().includes(categoryFilter.toLowerCase())) ||
+            (c.title && c.title.toLowerCase().includes(categoryFilter.toLowerCase()))
+          );
+        }
         setDbCaseStudies(published);
       } catch (err) {
         console.warn('[Warning] Failed to fetch case studies, falling back to static studies:', err);
@@ -31,7 +37,7 @@ export function CaseStudiesSection() {
       }
     };
     fetchStudies();
-  }, [locale]);
+  }, [locale, categoryFilter]);
 
   // Default featured static case studies if database is empty
   const staticStudies = [
@@ -67,7 +73,7 @@ export function CaseStudiesSection() {
     }
   ];
 
-  const activeStudies = dbCaseStudies.length > 0 
+  const dbFiltered = dbCaseStudies.length > 0 
     ? dbCaseStudies.map(s => ({
         category: s.industry,
         title: s.title,
@@ -83,17 +89,31 @@ export function CaseStudiesSection() {
           { val: 'SOC 2', label: locale === 'es' ? 'Seguridad' : 'Compliance Level' }
         ]
       }))
+    : [];
+
+  const staticFiltered = categoryFilter
+    ? staticStudies.filter(s => 
+        s.category.toLowerCase().includes(categoryFilter.toLowerCase()) || 
+        s.subtitle.toLowerCase().includes(categoryFilter.toLowerCase()) ||
+        (categoryFilter === 'ai-automation' && s.category.toLowerCase().includes('ia')) ||
+        (categoryFilter === 'ai-automation' && s.category.toLowerCase().includes('ai'))
+      )
     : staticStudies;
 
+  const finalStudies = dbFiltered.length > 0 
+    ? dbFiltered 
+    : (staticFiltered.length > 0 ? staticFiltered : staticStudies);
+
   const handlePrev = () => {
-    setCurrentIndex(prev => (prev === 0 ? activeStudies.length - 1 : prev - 1));
+    setCurrentIndex(prev => (prev === 0 ? finalStudies.length - 1 : prev - 1));
   };
 
   const handleNext = () => {
-    setCurrentIndex(prev => (prev === activeStudies.length - 1 ? 0 : prev + 1));
+    setCurrentIndex(prev => (prev === finalStudies.length - 1 ? 0 : prev + 1));
   };
 
-  const currentStudy = activeStudies[currentIndex];
+  const currentStudy = finalStudies[currentIndex] || staticStudies[0];
+
 
   return (
     <section className="py-32 bg-slate-50/50 dark:bg-[#07090e] border-b border-slate-100 dark:border-slate-900 text-left overflow-hidden">

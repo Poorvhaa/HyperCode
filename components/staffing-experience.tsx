@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { ClipboardList, Users, Search, UserCheck, ShieldCheck, GraduationCap, CalendarDays, ArrowRight, UserPlus } from 'lucide-react';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 
 interface StaffingOffer {
   title: string;

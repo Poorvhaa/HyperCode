@@ -2,7 +2,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
 import { Target, Eye, ShieldCheck, Award, Lightbulb, Users, Cpu, Zap, BookOpen } from 'lucide-react';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import Image from 'next/image';
 import { HeroBanner } from '@/components/hero-banner';
 
@@ -62,7 +62,7 @@ export default async function AboutPage({ params }: Props) {
         titleHighlight={t('titleHighlight')}
         subtitle={t('subtitle')}
         breadcrumbs={[
-          { label: locale === 'es' ? 'Inicio' : 'Home', href: `/${locale}` },
+          { label: locale === 'es' ? 'Inicio' : 'Home', href: '/' },
           { label: locale === 'es' ? 'Nosotros' : 'About Us' }
         ]}
       />
@@ -278,7 +278,7 @@ export default async function AboutPage({ params }: Props) {
             </p>
             <div className="pt-4">
               <Link
-                href={`/${locale}/consultation`}
+                href="/consultation"
                 className="inline-flex items-center justify-center h-12 px-8 bg-[#0F4C81] hover:bg-[#0A365D] text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md hover:shadow-lg cursor-pointer"
               >
                 {tc('consultation')}

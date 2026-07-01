@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { ArrowRight, Calendar, BookOpen, User, Search } from 'lucide-react';
-import Link from 'next/link';
-import { useSearchParams, useRouter, useParams } from 'next/navigation';
+import { Link, useRouter } from '@/i18n/routing';
+import { useSearchParams, useParams } from 'next/navigation';
 import { Article } from '@/lib/insights';
 import { useTranslations } from 'next-intl';
 
@@ -42,11 +42,11 @@ export function InsightsList({ initialArticles, translatedCategories }: Insights
   const handleCategorySelect = (category: string) => {
     setSelectedCategory(category);
     if (category === translatedCategories[0]) {
-      router.push(`/${locale}/insights`, { scroll: false });
+      router.push('/insights', { scroll: false });
     } else {
       // Make it URL safe by slugifying, but also keeping the raw english categories fallback if needed
       const slugified = category.toLowerCase().replace(/\s+/g, '-');
-      router.push(`/${locale}/insights?category=${slugified}`, { scroll: false });
+      router.push(`/insights?category=${slugified}`, { scroll: false });
     }
   };
 
@@ -127,7 +127,7 @@ export function InsightsList({ initialArticles, translatedCategories }: Insights
 
                 {/* Title */}
                 <h3 className="text-lg font-bold text-slate-900 mb-2 leading-snug group-hover:text-[#0F4C81] transition-colors">
-                  <Link href={`/${locale}/insights/${article.slug}`}>
+                  <Link href={`/insights/${article.slug}`}>
                     {article.title}
                   </Link>
                 </h3>
@@ -158,7 +158,7 @@ export function InsightsList({ initialArticles, translatedCategories }: Insights
                   </div>
                   
                   <Link
-                    href={`/${locale}/insights/${article.slug}`}
+                    href={`/insights/${article.slug}`}
                     className="inline-flex items-center text-[#0F4C81] hover:text-[#0c3c66] gap-1"
                   >
                     <span>{t('readArticle')}</span>

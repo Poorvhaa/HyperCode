@@ -14,7 +14,7 @@ import {
   FileText, 
   Cpu 
 } from 'lucide-react';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -323,7 +323,7 @@ export default async function StaffingPage({ params }: Props) {
 
                   <div className="pt-6">
                     <Link
-                      href={`/${locale}${solution.path}`}
+                      href={solution.path}
                       className="inline-flex items-center justify-center h-10 px-5 bg-white border border-[#0F4C81] hover:bg-slate-50 text-[#0F4C81] font-bold text-xs uppercase tracking-wider rounded-md transition-colors duration-200 shadow-sm hover:shadow-md"
                     >
                       <span>{activeTrans.learnMore}</span>
@@ -450,7 +450,7 @@ export default async function StaffingPage({ params }: Props) {
           </p>
           <div>
             <Link
-              href={`/${locale}/consultation`}
+              href="/consultation"
               className="inline-flex items-center justify-center h-11 px-7 bg-[#0F4C81] hover:bg-[#0A365D] text-white font-bold text-xs uppercase tracking-wider rounded-md transition-colors duration-200 shadow-sm hover:shadow-md"
             >
               {activeTrans.ctaBtn}

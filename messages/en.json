@@ -22,7 +22,11 @@
     "resources": "Resources",
     "support": "Support",
     "company": "Company",
-    "offices": "Our Offices"
+    "offices": "Our Offices",
+    "specialties": "Specialties",
+    "request": "Request",
+    "detailedCapabilities": "Detailed Capabilities",
+    "close": "Close"
   },
   "Navigation": {
     "home": "Home",
@@ -30,6 +34,7 @@
     "about": "About Us",
     "careers": "Careers",
     "contact": "Contact",
+    "directPlacement": "Direct Placement",
     "schedule": "Schedule Consultation",
     "support": "Support Portal",
     "aiConsultant": "AI Consultant",
@@ -77,8 +82,16 @@
     "staffAugmentationDesc": "Seamlessly scaling your existing tech team.",
     "contractStaffing": "Contract Staffing",
     "contractStaffingDesc": "Flexible contract resources for project-based needs.",
-    "directPlacement": "Direct Placement",
-    "directPlacementDesc": "Permanent recruitment solutions for key technical roles."
+    "directPlacementDesc": "Permanent recruitment solutions for key technical roles.",
+    "viewAllSolutions": "View All Solutions",
+    "talkToAI": "Talk to AI Consultant",
+    "viewAll": "View All",
+    "cyberSecurity": "Cybersecurity",
+    "digitalMarketing": "Digital Marketing",
+    "consulting": "Technology Consulting",
+    "uiux": "UI/UX Design",
+    "staffing": "IT & Non-IT Staffing",
+    "digitalTransformation": "Digital Transformation"
   },
   "Footer": {
     "connect": "Connect With Us",
@@ -94,7 +107,12 @@
     "newsletterTitle": "Subscribe to Insights",
     "newsletterDesc": "Get monthly technological briefings from our solutions directors.",
     "newsletterPlaceholder": "Corporate Email",
-    "newsletterSuccess": "Thank you for subscribing!"
+    "newsletterSuccess": "Thank you for subscribing!",
+    "corporateHq": "Corporate HQ",
+    "unitedStates": "United States",
+    "phone": "Phone",
+    "email": "Email",
+    "legal": "Legal"
   },
   "Hero": {
     "badge": "Enterprise Digital Transformation Partner",
@@ -1299,7 +1317,23 @@
       "subtitle": "Iterative Sprint Execution",
       "p1": "We deploy certified Scrum Masters to run agile pipelines, clear developer blocks, and keep migrations on track.",
       "p2": "We combine rigorous project management with full transparency for predictable, on-time project deliveries."
-    }
+    },
+    "learnMoreBtn": "Learn More",
+    "drawerTitle": "Service Details",
+    "businessValue": "Business Value",
+    "expectedOutcomes": "Expected Outcomes",
+    "caseStudyLabel": "Case Study Outcome",
+    "categoryLabel": "End-to-End Digital Transformation",
+    "consultingPracticesTitle": "Our Consulting Practices",
+    "enterpriseCapabilitiesTitle": "Enterprise Technology Capabilities",
+    "enterpriseCapabilitiesDesc": "Browse our enterprise-grade consulting practices. From strategic AI consulting to technical talent placement.",
+    "viewServiceDetails": "View Service Details",
+    "faqQ1": "How do you determine team sizing and timeline estimates?",
+    "faqA1": "Our practice leads analyze your current technical stack, business objectives, and budget constraints to generate a detailed sprint plan detailing developer profiles and project milestones.",
+    "faqQ2": "What are the engagement models for talent solutions?",
+    "faqA2": "We offer permanent placement, contract staffing (staff augmentation), and dedicated development squads supported by PMs. We can onboard pre-screened Next.js, Python, or DevOps profiles in 5-10 business days.",
+    "faqQ3": "Do you comply with data security standards (SOC 2, HIPAA)?",
+    "faqA3": "Yes. All software projects and data platforms are designed under strict access controls (IAM), TLS encryption in transit/at rest, and continuous vulnerability scans."
   },
   "Staffing": {
     "title": "IT & Non-IT Staffing & Augmentation",

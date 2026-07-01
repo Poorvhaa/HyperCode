@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { Navigation } from '@/components/navigation';
@@ -32,7 +32,7 @@ export default function NotFound() {
 
           <div className="pt-4">
             <Link
-              href={`/${locale}`}
+              href="/"
               className="inline-flex items-center justify-center h-11 px-7 bg-[#0F4C81] hover:bg-[#0c3c66] text-white font-semibold text-[13px] rounded-xl transition-colors duration-200 shadow-sm"
             >
               {t('button')}
