@@ -2,7 +2,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
 import { ContactForm } from '@/components/contact-form';
-import { Mail, MapPin, Clock, ArrowRight } from 'lucide-react';
+import { Mail, MapPin, Clock, ArrowRight, Award, Shield } from 'lucide-react';
 import Link from 'next/link';
 
 interface Props {
@@ -25,7 +25,7 @@ export default async function ContactPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  // Translations for all 11 languages
+  // Translations for English and Spanish
   const localTrans: Record<string, {
     title: string;
     titleHighlight: string;
@@ -50,18 +50,18 @@ export default async function ContactPage({ params }: Props) {
     boxPartnershipFooter: string;
   }> = {
     en: {
-      title: "Contact",
+      title: "Partner with",
       titleHighlight: "HyperCode",
-      subtitle: "Have a general question, career inquiry, or partnership opportunity? We would love to hear from you.",
+      subtitle: "Whether you have an upcoming project, a staffing request, or a strategic partnership proposal, we are ready to accelerate your goals.",
       hq: "Headquarters",
-      hqDesc: "Serving clients nationwide",
+      hqDesc: "Serving commercial & government clients nationwide",
       hours: "Business Hours",
       hoursDesc: "Monday - Friday: 8:00 AM - 6:00 PM CST",
-      hoursSub: "After-hours by request",
-      slaBadge: "Response SLA",
+      hoursSub: "After-hours response on request",
+      slaBadge: "Response Service SLA",
       slaTitle: "Within 24 Hours",
-      slaDesc: "We review every inquiry and route it to the appropriate department promptly.",
-      formTitle: "Send a Message",
+      slaDesc: "Every inquiry is assigned to a practice director and reviewed with priority.",
+      formTitle: "Send Us a Message",
       boxConsultingTitle: "For Consulting",
       boxConsultingDesc: "Looking to architect a new cloud solution, optimize analytics, or scope an enterprise data project?",
       boxConsultingLink: "Request Consultation",
@@ -70,21 +70,21 @@ export default async function ContactPage({ params }: Props) {
       boxStaffingLink: "Request Staffing",
       boxPartnershipTitle: "For Partnerships",
       boxPartnershipDesc: "Interested in joint technology offerings, reseller options, or strategic system integration alliances?",
-      boxPartnershipFooter: 'Select "Partnership Opportunity" above',
+      boxPartnershipFooter: 'Select "Partnership Opportunity" in dropdown',
     },
     es: {
-      title: "Contacto",
+      title: "Asóciese con",
       titleHighlight: "HyperCode",
-      subtitle: "¿Tiene alguna pregunta general, consulta sobre carreras o alguna oportunidad de asociación? Nos encantaría saber de usted.",
+      subtitle: "Ya sea que tenga un próximo proyecto, una solicitud de personal o una propuesta de asociación estratégica, estamos listos para acelerar sus metas.",
       hq: "Sede Central",
-      hqDesc: "Sirviendo a clientes en todo el país",
+      hqDesc: "Sirviendo a clientes comerciales y gubernamentales en todo el país",
       hours: "Horario Comercial",
       hoursDesc: "Lunes - Viernes: 8:00 AM - 6:00 PM CST",
-      hoursSub: "Fuera de horario a petición",
-      slaBadge: "SLA de Respuesta",
+      hoursSub: "Respuesta fuera de horario bajo solicitud",
+      slaBadge: "SLA de Respuesta de Servicio",
       slaTitle: "En 24 Horas",
-      slaDesc: "Revisamos cada consulta y la dirigimos rápidamente al departamento correspondiente.",
-      formTitle: "Enviar un Mensaje",
+      slaDesc: "Cada consulta se asigna a un director de práctica y se revisa con prioridad.",
+      formTitle: "Envíenos un Mensaje",
       boxConsultingTitle: "Para Consultoría",
       boxConsultingDesc: "¿Busca diseñar una nueva solución en la nube, optimizar el análisis o definir el alcance de un proyecto de datos empresarial?",
       boxConsultingLink: "Solicitar Consulta",
@@ -93,103 +93,123 @@ export default async function ContactPage({ params }: Props) {
       boxStaffingLink: "Solicitar Personal",
       boxPartnershipTitle: "Para Asociaciones",
       boxPartnershipDesc: "¿Interesado en ofertas conjuntas de tecnología, opciones de revendedor o alianzas estratégicas de integración de sistemas?",
-      boxPartnershipFooter: 'Seleccione "Oportunidad de Asociación" arriba',
+      boxPartnershipFooter: 'Seleccione "Oportunidad de Asociación" en el formulario',
     }
   };
 
   const activeTrans = localTrans[locale] || localTrans.en;
 
   return (
-    <main className="relative w-full bg-white text-left">
+    <main className="relative w-full bg-[#fcfdfe] dark:bg-[#07090e] text-left min-h-screen bg-dot-pattern">
       <Navigation />
 
       {/* Hero Section */}
-      <section className="bg-slate-50 pt-36 pb-20 border-b border-slate-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="max-w-3xl space-y-4">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
-              {activeTrans.title} <span className="text-[#0F4C81]">{activeTrans.titleHighlight}</span>
+      <section className="relative pt-40 pb-24 overflow-hidden border-b border-slate-200/50 dark:border-slate-800/40">
+        <div className="absolute top-0 right-0 w-[500px] h-[350px] bg-blue-50/50 dark:bg-blue-950/5 rounded-full blur-3xl pointer-events-none -z-10" />
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
+          <div className="max-w-3xl space-y-6">
+            <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C81] tracking-widest uppercase">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#0F4C81]" />
+              {locale === 'es' ? 'CONTACTAR NUESTRO EQUIPO' : 'GET IN TOUCH'}
+            </span>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white tracking-tight leading-[1.12]">
+              {activeTrans.title} <span className="text-[#0F4C81] dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-r dark:from-blue-400 dark:to-cyan-300">{activeTrans.titleHighlight}</span>
             </h1>
-            <p className="text-lg sm:text-xl text-slate-600 font-medium leading-relaxed">
+            <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-350 leading-relaxed font-semibold max-w-2xl">
               {activeTrans.subtitle}
             </p>
           </div>
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+      {/* Contact Split Layout */}
+      <section className="py-24 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             
-            {/* Contact Information */}
-            <div className="lg:col-span-1 space-y-8">
-              {/* Location */}
-              <div className="space-y-3">
+            {/* Left Column: Contact Cards & Office Details (5 columns) */}
+            <div className="lg:col-span-5 space-y-8">
+              
+              {/* Location Card */}
+              <div className="bg-white dark:bg-[#0b0f19] border border-slate-200/50 dark:border-slate-800/50 rounded-3xl p-7 shadow-sm space-y-5">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center text-[#0F4C81]">
+                  <div className="w-10 h-10 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 flex items-center justify-center text-[#0F4C81] dark:text-blue-400 shadow-sm">
                     <MapPin size={20} />
                   </div>
-                  <h3 className="font-bold text-slate-900">{activeTrans.hq}</h3>
+                  <h3 className="font-extrabold text-slate-900 dark:text-white uppercase text-xs tracking-wider">{activeTrans.hq}</h3>
                 </div>
-                <div className="pl-13 space-y-1">
-                  <p className="text-sm font-semibold text-slate-700">Schaumburg, Illinois</p>
-                  <p className="text-xs text-slate-500 font-bold uppercase tracking-wider">{activeTrans.hqDesc}</p>
+                <div className="pl-13 space-y-2">
+                  <p className="text-sm font-bold text-slate-800 dark:text-slate-200">2095 Hammond Dr, Suite C</p>
+                  <p className="text-sm font-bold text-slate-800 dark:text-slate-200">Schaumburg, IL 60173</p>
+                  <p className="text-[10px] text-slate-400 dark:text-slate-500 font-extrabold uppercase tracking-widest">{activeTrans.hqDesc}</p>
                 </div>
               </div>
 
-              {/* Hours */}
-              <div className="space-y-3">
+              {/* Hours Card */}
+              <div className="bg-white dark:bg-[#0b0f19] border border-slate-200/50 dark:border-slate-800/50 rounded-3xl p-7 shadow-sm space-y-5">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center text-[#0F4C81]">
+                  <div className="w-10 h-10 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 flex items-center justify-center text-[#0F4C81] dark:text-blue-400 shadow-sm">
                     <Clock size={20} />
                   </div>
-                  <h3 className="font-bold text-slate-900">{activeTrans.hours}</h3>
+                  <h3 className="font-extrabold text-slate-900 dark:text-white uppercase text-xs tracking-wider">{activeTrans.hours}</h3>
                 </div>
-                <div className="pl-13 space-y-1.5 text-sm font-semibold text-slate-700">
+                <div className="pl-13 space-y-2 text-sm font-bold text-slate-800 dark:text-slate-200">
                   <p>{activeTrans.hoursDesc}</p>
-                  <p className="text-xs text-slate-500 font-bold uppercase tracking-wider">{activeTrans.hoursSub}</p>
+                  <p className="text-[10px] text-slate-400 dark:text-slate-500 font-extrabold uppercase tracking-widest">{activeTrans.hoursSub}</p>
                 </div>
               </div>
 
-              {/* Response Time Card */}
-              <div className="p-6 rounded-2xl border border-slate-200 bg-slate-50 shadow-sm space-y-2">
-                <p className="text-xs font-bold tracking-wider text-slate-400 uppercase">{activeTrans.slaBadge}</p>
-                <p className="text-2xl font-bold text-[#0F4C81]">{activeTrans.slaTitle}</p>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
+              {/* Response Time SLA Card */}
+              <div className="p-7 rounded-3xl border border-slate-200/60 dark:border-slate-800/50 bg-[#0F4C81]/5 dark:bg-slate-900/35 shadow-sm space-y-3">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                  <span className="text-[10px] font-extrabold tracking-wider text-slate-400 dark:text-slate-500 uppercase">{activeTrans.slaBadge}</span>
+                </div>
+                <p className="text-3xl font-black text-[#0F4C81] dark:text-blue-400">{activeTrans.slaTitle}</p>
+                <p className="text-xs sm:text-sm text-slate-550 dark:text-slate-400 leading-relaxed font-semibold">
                   {activeTrans.slaDesc}
                 </p>
               </div>
+
+              {/* Secure Trust Badge */}
+              <div className="flex items-center gap-3 px-6 py-4 bg-slate-50 dark:bg-slate-900/20 border border-slate-200/40 dark:border-slate-850 rounded-2xl">
+                <Shield size={16} className="text-[#0F4C81] dark:text-blue-400" />
+                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">SSL Encrypted Intake System</span>
+              </div>
+
             </div>
 
-            {/* Contact Form */}
-            <div className="lg:col-span-2">
-              <div className="p-6 sm:p-10 rounded-3xl border border-slate-200 bg-white shadow-sm">
-                <h2 className="text-2xl font-bold text-slate-900 mb-8">{activeTrans.formTitle}</h2>
-                <ContactForm />
+            {/* Right Column: Contact Form (7 columns) */}
+            <div className="lg:col-span-7 bg-white dark:bg-[#0b0f19] border border-slate-200/50 dark:border-slate-800/40 rounded-[28px] p-8 sm:p-10 shadow-lg">
+              <div className="space-y-2 mb-8">
+                <h2 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">{activeTrans.formTitle}</h2>
+                <p className="text-xs sm:text-sm font-semibold text-slate-500 dark:text-slate-400">Complete the form below to route directly to our solutions directors.</p>
               </div>
+              <ContactForm />
             </div>
 
           </div>
         </div>
       </section>
 
-      {/* Additional Info Cards Grid */}
-      <section className="py-24 bg-slate-50 border-t border-b border-slate-100">
+      {/* Grid of Solutions Specific CTAs */}
+      <section className="py-24 bg-slate-50 dark:bg-slate-950/40 border-t border-b border-slate-100 dark:border-slate-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
             {/* Box 1 */}
-            <div className="p-6 sm:p-8 rounded-2xl border border-slate-200 bg-white shadow-sm space-y-4 flex flex-col justify-between">
+            <div className="p-8 rounded-3xl border border-slate-200/60 dark:border-slate-850 bg-white dark:bg-[#0b0f19] shadow-sm space-y-5 flex flex-col justify-between hover:-translate-y-1 hover:border-[#0F4C81] dark:hover:border-blue-500 transition-all duration-300">
               <div className="space-y-4">
-                <h3 className="text-lg font-bold text-slate-900">{activeTrans.boxConsultingTitle}</h3>
-                <p className="text-xs sm:text-sm text-slate-500 leading-relaxed font-medium">
+                <h3 className="text-lg font-bold text-slate-900 dark:text-slate-250">{activeTrans.boxConsultingTitle}</h3>
+                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-semibold">
                   {activeTrans.boxConsultingDesc}
                 </p>
               </div>
               <div className="pt-2">
                 <Link
                   href={`/${locale}/consultation`}
-                  className="inline-flex items-center text-xs font-bold text-[#0F4C81] hover:text-[#0c3c66] transition-colors gap-1"
+                  className="inline-flex items-center text-xs font-bold text-[#0F4C81] dark:text-blue-400 hover:gap-2 transition-all gap-1"
                 >
                   <span>{activeTrans.boxConsultingLink}</span>
                   <ArrowRight size={14} />
@@ -198,17 +218,17 @@ export default async function ContactPage({ params }: Props) {
             </div>
 
             {/* Box 2 */}
-            <div className="p-6 sm:p-8 rounded-2xl border border-slate-200 bg-white shadow-sm space-y-4 flex flex-col justify-between">
+            <div className="p-8 rounded-3xl border border-slate-200/60 dark:border-slate-850 bg-white dark:bg-[#0b0f19] shadow-sm space-y-5 flex flex-col justify-between hover:-translate-y-1 hover:border-[#0F4C81] dark:hover:border-blue-500 transition-all duration-300">
               <div className="space-y-4">
-                <h3 className="text-lg font-bold text-slate-900">{activeTrans.boxStaffingTitle}</h3>
-                <p className="text-xs sm:text-sm text-slate-500 leading-relaxed font-medium">
+                <h3 className="text-lg font-bold text-slate-900 dark:text-slate-250">{activeTrans.boxStaffingTitle}</h3>
+                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-semibold">
                   {activeTrans.boxStaffingDesc}
                 </p>
               </div>
               <div className="pt-2">
                 <Link
                   href={`/${locale}/consultation?service=IT%20Staffing`}
-                  className="inline-flex items-center text-xs font-bold text-[#0F4C81] hover:text-[#0c3c66] transition-colors gap-1"
+                  className="inline-flex items-center text-xs font-bold text-[#0F4C81] dark:text-blue-400 hover:gap-2 transition-all gap-1"
                 >
                   <span>{activeTrans.boxStaffingLink}</span>
                   <ArrowRight size={14} />
@@ -217,17 +237,18 @@ export default async function ContactPage({ params }: Props) {
             </div>
 
             {/* Box 3 */}
-            <div className="p-6 sm:p-8 rounded-2xl border border-slate-200 bg-white shadow-sm space-y-4 flex flex-col justify-between">
+            <div className="p-8 rounded-3xl border border-slate-200/60 dark:border-slate-850 bg-white dark:bg-[#0b0f19] shadow-sm space-y-5 flex flex-col justify-between hover:-translate-y-1 hover:border-[#0F4C81] dark:hover:border-blue-500 transition-all duration-300">
               <div className="space-y-4">
-                <h3 className="text-lg font-bold text-slate-900">{activeTrans.boxPartnershipTitle}</h3>
-                <p className="text-xs sm:text-sm text-slate-500 leading-relaxed font-medium">
+                <h3 className="text-lg font-bold text-slate-900 dark:text-slate-250">{activeTrans.boxPartnershipTitle}</h3>
+                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-semibold">
                   {activeTrans.boxPartnershipDesc}
                 </p>
               </div>
-              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
+              <p className="text-[10px] font-extrabold text-[#0F4C81] dark:text-blue-400 uppercase tracking-wider">
                 {activeTrans.boxPartnershipFooter}
               </p>
             </div>
+
           </div>
         </div>
       </section>

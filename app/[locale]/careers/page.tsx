@@ -45,7 +45,6 @@ export default async function CareersPage({ params }: Props) {
   const t = await getTranslations('Careers');
   const tc = await getTranslations('Common');
 
-  // Multi-language local translations for arrays not in the JSON dictionaries
   const localTrans: Record<string, {
     heroTitle: string;
     heroTitleHighlight: string;
@@ -225,7 +224,7 @@ export default async function CareersPage({ params }: Props) {
     es: {
       heroTitle: "Construya su Carrera en",
       heroTitleHighlight: "HyperCode",
-      heroSubtitle: "Únase a un equipo estratégico dedicado a transformar datos complejos en inteligencia de nivel empresarial.",
+      heroSubtitle: "Únase a un equipo estratégico debido a la transformación de datos complejos en inteligencia de nivel empresarial.",
       badgeWhy: "POR QUÉ UNIRSE A NOSOTROS",
       titleWhy: "Por Qué los Profesionales Eligen HyperCode",
       challengingProjectsTitle: "Proyectos Desafiantes",
@@ -355,147 +354,11 @@ export default async function CareersPage({ params }: Props) {
       readyTitle: "¿Listo para Trabajar con Nosotros?",
       readyDesc: "Envíenos sus credenciales para comenzar a explorar oportunidades técnicas en HyperCode.",
       getInTouchBtn: "Ponerse en Contacto"
-    },
-    // Adding fallbacks to Spanish for Romance/European languages and localized English for others to ensure high fidelity translation quality
-    fr: {
-      heroTitle: "Bâtissez votre carrière chez",
-      heroTitleHighlight: "HyperCode",
-      heroSubtitle: "Rejoignez une équipe stratégique dédiée à la transformation de données complexes en intelligence d'entreprise.",
-      badgeWhy: "POURQUOI NOUS REJOINDRE",
-      titleWhy: "Pourquoi les professionnels choisissent HyperCode",
-      challengingProjectsTitle: "Projets stimulants",
-      challengingProjectsDesc: "Travaillez sur des projets de migration complexes et à fort impact pour des organisations de premier plan.",
-      collaborativeCultureTitle: "Culture collaborative",
-      collaborativeCultureDesc: "Collaborez directement avec des architectes cloud et des analystes chevronnés au sein d'un écosystème ouvert.",
-      careerAdvancementTitle: "Évolution de carrière",
-      careerAdvancementDesc: "Développez vos compétences grâce à des budgets de formation, des certifications et un mentorat direct.",
-      badgePerks: "AVANTAGES ET AVANTAGES SOCIAUX",
-      titlePerks: "Avantages compétitifs",
-      benefitsList: [
-        'Rémunération compétitive',
-        'Couverture santé complète (médicale, dentaire, vision)',
-        'Programme d\'épargne retraite 401(k) avec abondement',
-        'Budget de développement professionnel et de formation',
-        'Horaires et modalités de travail flexibles',
-        'Environnement de travail adapté au télétravail',
-        'Mentorat structuré et accompagnement de carrière',
-        'Événements d\'équipe collaboratifs et ateliers d\'innovation',
-      ],
-      badgeCulture: "NOTRE ENVIRONNEMENT",
-      titleCulture: "Culture d'entreprise",
-      cultureCards: [
-        {
-          title: "Environnement collaboratif",
-          desc: "Nous croyons que les meilleures idées naissent du partage d'expérience. Nos équipes collaborent étroitement pour résoudre des défis technologiques."
-        },
-        {
-          title: "Formation continue",
-          desc: "La technologie évolue constamment. Nous investissons dans nos consultants via des formations qualifiantes et des bootcamps techniques."
-        },
-        {
-          title: "Équilibre vie pro/perso",
-          desc: "Nous respectons votre temps. Des horaires flexibles et du télétravail vous aident à concilier vie professionnelle et vie privée."
-        },
-        {
-          title: "Stratégie axée sur l'impact",
-          desc: "Votre contribution est mesurable. Chaque tâche est alignée sur des livrables clients concrets pour donner du sens à votre travail."
-        }
-      ],
-      badgeAcquisition: "PROCESSUS D'ACQUISITION DE TALENTS",
-      titleAcquisition: "Recrutement et intégration de talents",
-      descAcquisition: "Connecter des talents d'exception à des opportunités enrichissantes grâce à des outils de gestion RH de pointe.",
-      workflowLabels: [
-        'Opportunités de carrière',
-        'Examen des candidatures',
-        'Entretien de présélection',
-        'Appariement client',
-        'Processus d\'entretien',
-        'Offre et intégration'
-      ],
-      featureCards: [
-        {
-          title: "Recrutement piloté par ATS",
-          description: "Nos recruteurs utilisent des outils ATS modernes pour cibler rapidement les opportunités correspondant à votre profil.",
-          features: ['Ciblage rapide des profils', 'Recherche par compétences', 'Recrutement simplifié']
-        },
-        {
-          title: "Solutions de recrutement d'entreprise",
-          description: "HyperCode collabore avec les systèmes VMS d'entreprise pour déployer des profils d'experts qualifiés.",
-          features: ['Prestations temporaires', 'Renforcement d\'équipes', 'Recrutement direct']
-        },
-        {
-          title: "Expérience candidat privilégiée",
-          description: "La transparence, la communication ouverte et l'accompagnement de votre évolution sont au cœur de nos priorités.",
-          features: ['Recruteurs dédiés', 'Orientation de carrière', 'Développement continu']
-        }
-      ],
-      badgePromise: "PROMESSE AUX CANDIDATS",
-      titlePromise: "Ce que nous vous offrons",
-      candidatePromiseCards: [
-        {
-          title: 'Crecimiento Profesional',
-          description: 'Accédez à des parcours de formation, des certifications financées par l\'entreprise et un accompagnement sur mesure.'
-        },
-        {
-          title: 'Projets stimulants',
-          description: 'Prenez part à des projets d\'envergure d\'architecture de données, de migration cloud et de développement moderne.'
-        },
-        {
-          title: 'Rémunération attractive',
-          description: 'Bénéficiez de packages de rémunération attractifs incluant une couverture santé complète et des primes de performance.'
-        },
-        {
-          title: 'Flexibilité organisationnelle',
-          description: 'Optez pour du télétravail partiel ou total ou des configurations sur site adaptées à votre mode de vie.'
-        },
-        {
-          title: 'Experts du secteur',
-          description: 'Travaillez aux côtés d\'architectes cloud seniors et d\'analystes confirmés passionnés d\'excellence technique.'
-        },
-        {
-          title: 'Partenariat à long terme',
-          description: 'Construisez votre carrière à nos côtés. Nous vous accompagnons d\'un projet à l\'autre au fil de l\'évolution de vos aspirations.'
-        }
-      ],
-      badgeTimeline: "PLAN D'ENGAGEMENT",
-      titleTimeline: "Étapes de recrutement",
-      descTimeline: "Notre processus de recrutement clair et structuré garantit un suivi fluide et transparent de votre candidature.",
-      badgePositions: "REJOINDRE L'ÉQUIPE",
-      titlePositions: "Poste à Pourvoir",
-      locationLabel: "Schaumburg, IL / Télétravail",
-      jobTypeLabel: "Temps plein",
-      bdmTitle: "Responsable du Développement Commercial",
-      bdmDescription: "Nous recherchons un Responsable du Développement Commercial performant pour stimuler la croissance et élargir notre clientèle. À ce poste, vous identifierez de nouvelles opportunités commerciales, établirez des partenariats stratégiques et présenterez nos solutions de développement web sur mesure et d'ingénierie de données à des clients de niveau entreprise.",
-      bdmResponsibilities: [
-        "Identifier et cibler les clients potentiels pour les services de développement web et d'ingénierie de données.",
-        "Établir et maintenir des relations solides et durables avec les principaux décideurs et parties prenantes.",
-        "Développer et exécuter des plans de vente stratégiques pour atteindre les objectifs de croissance et accroître la part de marché.",
-        "Collaborer avec les équipes techniques pour rédiger des propositions personnalisées et réaliser des présentations à fort impact.",
-        "Négocier les contrats et conclure des accords commerciaux pour maximiser les revenus de l'entreprise."
-      ],
-      bdmQualifications: [
-        "Licence en commerce, marketing, informatique ou domaine connexe.",
-        "Plus de 3 ans d'expérience dans le développement commercial ou la vente au sein de l'industrie du conseil en logiciels / services informatiques.",
-        "Antécédents éprouvés de conclusion de transactions d'entreprise et d'atteinte ou de dépassement des objectifs de vente.",
-        "Solide compréhension des technologies web modernes, des applications personnalisées et des écosystèmes de données cloud.",
-        "Excellentes compétences en communication, présentation, négociation et établissement de relations."
-      ],
-      bdmBenefits: [
-        "Salaire de base hautement compétitif avec structure de commissions non plafonnée.",
-        "Forfaits complets d'assurance maladie, dentaire et visuelle.",
-        "Horaires de travail flexibles et options de travail à distance/hybride.",
-        "Programme de jumelage 401(k).",
-        "Congés payés et primes de performance annuelles."
-      ],
-      readyTitle: "Prêt à nous rejoindre ?",
-      readyDesc: "Envoyez-nous votre profil pour commencer à explorer les opportunités technologiques chez HyperCode.",
-      getInTouchBtn: "Contactez-nous"
     }
   };
 
   const activeTrans = localTrans[locale] || localTrans.en;
 
-  // Map Lucide icons dynamically to steps and promises
   const workflowIcons = [Briefcase, FileText, Phone, GitMerge, Users, CheckCircle];
   const workflowSteps = activeTrans.workflowLabels.map((label, idx) => ({
     label,
@@ -508,29 +371,24 @@ export default async function CareersPage({ params }: Props) {
     icon: promiseIcons[idx] || TrendingUp
   }));
 
-  // Read translated jobs from dictionary files dynamically
-  // Since we only have the Business Development Manager role active:
-  const openPositions = [
-    {
-      title: activeTrans.bdmTitle,
-      location: activeTrans.locationLabel,
-      type: activeTrans.jobTypeLabel,
-      description: activeTrans.bdmDescription
-    }
-  ];
-
   return (
-    <main className="relative w-full bg-white text-left">
+    <main className="relative w-full bg-[#fcfdfe] dark:bg-[#07090e] text-left min-h-screen bg-dot-pattern">
       <Navigation />
 
       {/* Hero Section */}
-      <section className="bg-slate-50 pt-36 pb-20 border-b border-slate-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="max-w-3xl space-y-4">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
-              {activeTrans.heroTitle} <span className="text-[#0F4C81]">{activeTrans.heroTitleHighlight}</span>
+      <section className="relative pt-40 pb-24 border-b border-slate-200/50 dark:border-slate-800/40 overflow-hidden">
+        <div className="absolute top-0 right-0 w-[500px] h-[350px] bg-blue-50/50 dark:bg-blue-950/5 rounded-full blur-3xl pointer-events-none -z-10" />
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
+          <div className="max-w-3xl space-y-6">
+            <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C81] tracking-widest uppercase">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#0F4C81]" />
+              {activeTrans.badgeWhy}
+            </span>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white tracking-tight leading-[1.12]">
+              {activeTrans.heroTitle} <span className="text-[#0F4C81] dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-r dark:from-blue-400 dark:to-cyan-300">{activeTrans.heroTitleHighlight}</span>
             </h1>
-            <p className="text-lg sm:text-xl text-slate-600 font-medium leading-relaxed">
+            <p className="text-lg sm:text-xl text-slate-655 dark:text-slate-350 leading-relaxed font-semibold max-w-2xl">
               {activeTrans.heroSubtitle}
             </p>
           </div>
@@ -538,35 +396,36 @@ export default async function CareersPage({ params }: Props) {
       </section>
 
       {/* Why Work Here */}
-      <section className="py-24 bg-white">
+      <section className="py-24 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="space-y-3">
-              <div className="w-10 h-10 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center text-[#0F4C81]">
+            
+            <div className="p-7 rounded-3xl border border-slate-200/60 dark:border-slate-850 bg-white dark:bg-[#0b0f19] shadow-sm space-y-4">
+              <div className="w-10 h-10 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-100/80 dark:border-slate-800 flex items-center justify-center text-[#0F4C81] dark:text-blue-400">
                 <Briefcase size={20} />
               </div>
-              <h3 className="text-lg font-bold text-slate-900">{activeTrans.challengingProjectsTitle}</h3>
-              <p className="text-sm text-slate-600 leading-relaxed font-medium">
+              <h3 className="text-lg font-bold text-slate-900 dark:text-slate-250">{activeTrans.challengingProjectsTitle}</h3>
+              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-semibold">
                 {activeTrans.challengingProjectsDesc}
               </p>
             </div>
             
-            <div className="space-y-3">
-              <div className="w-10 h-10 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center text-[#0F4C81]">
+            <div className="p-7 rounded-3xl border border-slate-200/60 dark:border-slate-850 bg-white dark:bg-[#0b0f19] shadow-sm space-y-4">
+              <div className="w-10 h-10 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-100/80 dark:border-slate-800 flex items-center justify-center text-[#0F4C81] dark:text-blue-400">
                 <Users size={20} />
               </div>
-              <h3 className="text-lg font-bold text-slate-900">{activeTrans.collaborativeCultureTitle}</h3>
-              <p className="text-sm text-slate-600 leading-relaxed font-medium">
+              <h3 className="text-lg font-bold text-slate-900 dark:text-slate-250">{activeTrans.collaborativeCultureTitle}</h3>
+              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-semibold">
                 {activeTrans.collaborativeCultureDesc}
               </p>
             </div>
 
-            <div className="space-y-3">
-              <div className="w-10 h-10 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center text-[#0F4C81]">
+            <div className="p-7 rounded-3xl border border-slate-200/60 dark:border-slate-850 bg-white dark:bg-[#0b0f19] shadow-sm space-y-4">
+              <div className="w-10 h-10 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-100/80 dark:border-slate-800 flex items-center justify-center text-[#0F4C81] dark:text-blue-400">
                 <TrendingUp size={20} />
               </div>
-              <h3 className="text-lg font-bold text-slate-900">{activeTrans.careerAdvancementTitle}</h3>
-              <p className="text-sm text-slate-600 leading-relaxed font-medium">
+              <h3 className="text-lg font-bold text-slate-900 dark:text-slate-250">{activeTrans.careerAdvancementTitle}</h3>
+              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-semibold">
                 {activeTrans.careerAdvancementDesc}
               </p>
             </div>
@@ -575,18 +434,21 @@ export default async function CareersPage({ params }: Props) {
       </section>
 
       {/* Benefits */}
-      <section className="py-24 bg-slate-50 border-t border-b border-slate-100">
+      <section className="py-24 bg-slate-50 dark:bg-slate-950/40 border-t border-b border-slate-100 dark:border-slate-900">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl mb-12">
-            <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">{activeTrans.badgePerks}</h2>
-            <h3 className="text-3xl font-extrabold text-slate-900 tracking-tight leading-none">{activeTrans.titlePerks}</h3>
+          <div className="max-w-2xl mb-16 space-y-4">
+            <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C81] tracking-widest uppercase">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#0F4C81]" />
+              {activeTrans.badgePerks}
+            </span>
+            <h3 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">{activeTrans.titlePerks}</h3>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {activeTrans.benefitsList.map((benefit, i) => (
-              <div key={i} className="flex items-center gap-3 p-4 rounded-xl bg-white border border-slate-200 shadow-sm">
-                <div className="w-2 h-2 rounded-full bg-[#0F4C81] flex-shrink-0" />
-                <p className="text-sm text-slate-600 font-semibold">{benefit}</p>
+              <div key={i} className="flex items-center gap-3.5 p-4.5 rounded-2xl bg-white dark:bg-[#0b0f19] border border-slate-200/50 dark:border-slate-850 shadow-sm hover:shadow-md transition-shadow">
+                <div className="w-2 h-2 rounded-full bg-[#0F4C81] dark:bg-blue-400 flex-shrink-0" />
+                <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-350 font-bold">{benefit}</p>
               </div>
             ))}
           </div>
@@ -594,18 +456,21 @@ export default async function CareersPage({ params }: Props) {
       </section>
 
       {/* Company Culture */}
-      <section className="py-24 bg-white border-b border-slate-100">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-          <div className="text-center max-w-2xl mx-auto mb-6">
-            <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">{activeTrans.badgeCulture}</h2>
-            <h3 className="text-3xl font-extrabold text-slate-900 tracking-tight leading-none">{activeTrans.titleCulture}</h3>
+      <section className="py-24 relative border-b border-slate-100 dark:border-slate-900">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+          <div className="text-center max-w-2xl mx-auto space-y-4">
+            <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C81] tracking-widest uppercase">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#0F4C81]" />
+              {activeTrans.badgeCulture}
+            </span>
+            <h3 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight leading-none">{activeTrans.titleCulture}</h3>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {activeTrans.cultureCards.map((card, i) => (
-              <div key={i} className="p-6 rounded-2xl border border-slate-200 bg-white shadow-sm space-y-2">
-                <h3 className="text-base font-bold text-slate-900">{card.title}</h3>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
+              <div key={i} className="p-8 rounded-3xl border border-slate-200/60 dark:border-slate-850 bg-white dark:bg-[#0b0f19] shadow-sm space-y-3">
+                <h3 className="text-lg font-bold text-slate-900 dark:text-slate-200">{card.title}</h3>
+                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-semibold">
                   {card.desc}
                 </p>
               </div>
@@ -615,25 +480,26 @@ export default async function CareersPage({ params }: Props) {
       </section>
 
       {/* Modern Talent Acquisition & Delivery */}
-      <section className="py-24 bg-slate-50 border-b border-slate-100">
+      <section className="py-24 bg-slate-50 dark:bg-slate-950/40 border-b border-slate-100 dark:border-slate-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mb-16">
-            <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">
+          <div className="max-w-3xl mb-16 space-y-4">
+            <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C81] tracking-widest uppercase">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#0F4C81]" />
               {activeTrans.badgeAcquisition}
-            </h2>
-            <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-[1.1]">
+            </span>
+            <h3 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight leading-[1.1]">
               {activeTrans.titleAcquisition}
             </h3>
-            <p className="text-base sm:text-lg text-slate-600 mt-4 leading-relaxed font-medium">
+            <p className="text-base sm:text-lg text-slate-500 dark:text-slate-400 font-semibold leading-relaxed">
               {activeTrans.descAcquisition}
             </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-            {/* Left Column: Workflow visualization */}
-            <div className="lg:col-span-5 space-y-8">
-              <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
-                <span className="text-[10px] font-bold text-slate-400 tracking-widest uppercase block mb-6">
+            {/* Left Column: Workflow */}
+            <div className="lg:col-span-5">
+              <div className="bg-white dark:bg-[#0b0f19] border border-slate-200/50 dark:border-slate-800/50 rounded-3xl p-8 shadow-sm">
+                <span className="text-[10px] font-extrabold text-[#0F4C81] dark:text-blue-400 tracking-widest uppercase block mb-8">
                   {activeTrans.badgeTimeline}
                 </span>
                 
@@ -643,16 +509,16 @@ export default async function CareersPage({ params }: Props) {
                     return (
                       <div key={idx} className="flex flex-col items-start w-full">
                         <div className="flex items-center gap-4 py-2">
-                          <div className="w-10 h-10 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center text-[#0F4C81] shadow-sm flex-shrink-0 z-10">
+                          <div className="w-10 h-10 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 flex items-center justify-center text-[#0F4C81] dark:text-blue-400 shadow-sm flex-shrink-0 z-10">
                             <Icon size={16} />
                           </div>
-                          <span className="text-xs sm:text-sm font-bold text-slate-800 tracking-wide">
+                          <span className="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 tracking-wide">
                             {step.label}
                           </span>
                         </div>
                         {idx < workflowSteps.length - 1 && (
                           <div className="w-10 flex justify-center -my-2.5">
-                            <div className="w-0.5 h-7 bg-slate-200 border-dashed border-l" />
+                            <div className="w-[1.5px] h-7 bg-slate-200 dark:bg-slate-800 border-dashed border-l" />
                           </div>
                         )}
                       </div>
@@ -662,25 +528,25 @@ export default async function CareersPage({ params }: Props) {
               </div>
             </div>
 
-            {/* Right Column: Three Feature Cards */}
+            {/* Right Column: Feature Cards */}
             <div className="lg:col-span-7 space-y-6">
               {activeTrans.featureCards.map((card, idx) => (
                 <div
                   key={idx}
-                  className="p-6 rounded-2xl border border-slate-200 bg-white shadow-sm hover:border-slate-300 transition-colors duration-200 space-y-4"
+                  className="p-8 rounded-3xl border border-slate-200/60 dark:border-slate-850 bg-white dark:bg-[#0b0f19] shadow-sm hover:shadow-md transition-shadow space-y-5"
                 >
-                  <div className="space-y-1.5">
-                    <h4 className="text-base font-bold text-slate-900">{card.title}</h4>
-                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
+                  <div className="space-y-2">
+                    <h4 className="text-base font-bold text-slate-900 dark:text-slate-200">{card.title}</h4>
+                    <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-semibold">
                       {card.description}
                     </p>
                   </div>
                   
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-4 border-t border-slate-100">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-5 border-t border-slate-100 dark:border-slate-900">
                     {card.features.map((feature, fIdx) => (
                       <div key={fIdx} className="flex items-center gap-2">
-                        <Check size={14} className="text-[#0F4C81] flex-shrink-0" />
-                        <span className="text-[11px] sm:text-xs font-bold text-slate-700">
+                        <Check size={14} className="text-[#0F4C81] dark:text-blue-400 flex-shrink-0" />
+                        <span className="text-[11px] sm:text-xs font-bold text-slate-700 dark:text-slate-300">
                           {feature}
                         </span>
                       </div>
@@ -693,14 +559,15 @@ export default async function CareersPage({ params }: Props) {
         </div>
       </section>
 
-      {/* Candidate Benefits Subsection */}
-      <section className="py-24 bg-white border-b border-slate-100">
+      {/* Candidate Promise */}
+      <section className="py-24 bg-white dark:bg-[#07090e] border-b border-slate-100 dark:border-slate-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">
+          <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
+            <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C81] tracking-widest uppercase">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#0F4C81]" />
               {activeTrans.badgePromise}
-            </h2>
-            <h3 className="text-3xl font-extrabold text-slate-900 tracking-tight leading-none">
+            </span>
+            <h3 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight leading-none">
               {activeTrans.titlePromise}
             </h3>
           </div>
@@ -711,14 +578,14 @@ export default async function CareersPage({ params }: Props) {
               return (
                 <div
                   key={idx}
-                  className="p-6 rounded-2xl border border-slate-200 bg-white shadow-sm hover:border-slate-300 transition-colors duration-200 flex flex-col justify-between"
+                  className="p-7 rounded-3xl border border-slate-200/60 dark:border-slate-850 bg-white dark:bg-[#0b0f19] shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between"
                 >
-                  <div className="space-y-3">
-                    <div className="w-9 h-9 rounded-lg bg-slate-50 border border-slate-100 text-[#0F4C81] flex items-center justify-center">
-                      <Icon size={16} />
+                  <div className="space-y-4">
+                    <div className="w-10 h-10 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 text-[#0F4C81] dark:text-blue-400 flex items-center justify-center">
+                      <Icon size={18} />
                     </div>
-                    <h4 className="text-sm font-bold text-slate-900">{benefit.title}</h4>
-                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
+                    <h4 className="text-sm font-bold text-slate-900 dark:text-slate-250">{benefit.title}</h4>
+                    <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-semibold">
                       {benefit.description}
                     </p>
                   </div>
@@ -729,17 +596,18 @@ export default async function CareersPage({ params }: Props) {
         </div>
       </section>
 
-      {/* Hiring Process Timeline Section */}
-      <section className="py-24 bg-slate-50 border-b border-slate-100">
+      {/* Hiring Timeline */}
+      <section className="py-24 bg-slate-50 dark:bg-slate-950/40 border-b border-slate-100 dark:border-slate-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">
+          <div className="text-center max-w-2xl mx-auto mb-20 space-y-4">
+            <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C81] tracking-widest uppercase">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#0F4C81]" />
               {activeTrans.badgeTimeline}
-            </h2>
-            <h3 className="text-3xl font-extrabold text-slate-900 tracking-tight leading-none mb-4">
+            </span>
+            <h3 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight leading-none mb-4">
               {activeTrans.titleTimeline}
             </h3>
-            <p className="text-sm text-slate-600 leading-relaxed font-medium">
+            <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-semibold">
               {activeTrans.descTimeline}
             </p>
           </div>
@@ -749,49 +617,52 @@ export default async function CareersPage({ params }: Props) {
       </section>
 
       {/* Open Positions */}
-      <section className="py-24 bg-white border-b border-slate-100">
+      <section className="py-24 bg-white dark:bg-[#07090e] border-b border-slate-100 dark:border-slate-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">{activeTrans.badgePositions}</h2>
-            <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-none">{activeTrans.titlePositions}</h3>
+          <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
+            <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C81] tracking-widest uppercase">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#0F4C81]" />
+              {activeTrans.badgePositions}
+            </span>
+            <h3 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight leading-none">{activeTrans.titlePositions}</h3>
           </div>
 
-          <div className="max-w-4xl mx-auto bg-white border border-slate-200 rounded-3xl p-8 sm:p-12 shadow-sm hover:shadow-md transition-all duration-350">
-            {/* Header: Title, Location, Type */}
-            <div className="text-center space-y-4 pb-8 border-b border-slate-100">
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold bg-[#0F4C81]/10 text-[#0F4C81] uppercase tracking-wider">
+          <div className="max-w-4xl mx-auto bg-white dark:bg-[#0b0f19] border border-slate-200/60 dark:border-slate-800/60 rounded-[32px] p-8 sm:p-12 shadow-lg">
+            {/* Header */}
+            <div className="text-center space-y-4 pb-8 border-b border-slate-100 dark:border-slate-900">
+              <span className="inline-flex items-center px-4 py-1.5 rounded-full text-[10px] font-bold bg-[#0F4C81]/10 text-[#0F4C81] dark:bg-blue-950/20 dark:text-blue-400 uppercase tracking-wider">
                 {activeTrans.jobTypeLabel}
               </span>
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+              <h3 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight leading-none">
                 {activeTrans.bdmTitle}
               </h3>
-              <p className="text-slate-500 text-xs sm:text-sm font-bold uppercase tracking-wider">
+              <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm font-extrabold uppercase tracking-widest">
                 {activeTrans.locationLabel}
               </p>
             </div>
 
-            {/* Overview / Description */}
+            {/* Overview */}
             <div className="py-8 space-y-4">
               <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest">
-                {locale === 'es' ? 'Resumen del Puesto' : locale === 'fr' ? 'Aperçu du Poste' : 'Role Overview'}
+                {locale === 'es' ? 'Resumen del Puesto' : 'Role Overview'}
               </h4>
-              <p className="text-slate-600 text-sm sm:text-base leading-relaxed font-medium">
+              <p className="text-slate-600 dark:text-slate-350 text-xs sm:text-sm leading-relaxed font-semibold">
                 {activeTrans.bdmDescription}
               </p>
             </div>
 
             {/* Grid for Responsibilities and Requirements */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-8 border-t border-b border-slate-100">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-8 border-t border-b border-slate-100 dark:border-slate-900">
               {/* Responsibilities */}
               <div className="space-y-4">
                 <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest">
-                  {locale === 'es' ? 'Responsabilidades Clave' : locale === 'fr' ? 'Responsabilités Clés' : 'Key Responsibilities'}
+                  {locale === 'es' ? 'Responsabilidades Clave' : 'Key Responsibilities'}
                 </h4>
                 <ul className="space-y-3">
                   {activeTrans.bdmResponsibilities.map((resp, idx) => (
                     <li key={idx} className="flex items-start gap-3">
-                      <Check className="text-[#0F4C81] w-4 h-4 mt-0.5 flex-shrink-0" />
-                      <span className="text-slate-600 text-xs sm:text-sm font-medium leading-relaxed">{resp}</span>
+                      <Check className="text-[#0F4C81] dark:text-blue-400 w-4 h-4 mt-0.5 flex-shrink-0" />
+                      <span className="text-slate-600 dark:text-slate-350 text-xs sm:text-sm font-semibold leading-relaxed">{resp}</span>
                     </li>
                   ))}
                 </ul>
@@ -800,13 +671,13 @@ export default async function CareersPage({ params }: Props) {
               {/* Requirements */}
               <div className="space-y-4">
                 <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest">
-                  {locale === 'es' ? 'Requisitos' : locale === 'fr' ? 'Exigences' : 'Requirements'}
+                  {locale === 'es' ? 'Requisitos' : 'Requirements'}
                 </h4>
                 <ul className="space-y-3">
                   {activeTrans.bdmQualifications.map((qual, idx) => (
                     <li key={idx} className="flex items-start gap-3">
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#0F4C81] mt-2 flex-shrink-0" />
-                      <span className="text-slate-600 text-xs sm:text-sm font-medium leading-relaxed">{qual}</span>
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#0F4C81] dark:bg-blue-400 mt-2 flex-shrink-0" />
+                      <span className="text-slate-600 dark:text-slate-350 text-xs sm:text-sm font-semibold leading-relaxed">{qual}</span>
                     </li>
                   ))}
                 </ul>
@@ -816,19 +687,19 @@ export default async function CareersPage({ params }: Props) {
             {/* Benefits */}
             <div className="py-8 space-y-4">
               <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest">
-                {locale === 'es' ? 'Beneficios del Puesto' : locale === 'fr' ? 'Avantages' : 'Role Benefits'}
+                {locale === 'es' ? 'Beneficios del Puesto' : 'Role Benefits'}
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {activeTrans.bdmBenefits.map((benefit, idx) => (
-                  <div key={idx} className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200/50 shadow-sm">
+                  <div key={idx} className="flex items-center gap-3 p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/30 border border-slate-100/50 dark:border-slate-850">
                     <span className="text-sm flex-shrink-0">💼</span>
-                    <span className="text-slate-700 text-xs sm:text-sm font-bold leading-none">{benefit}</span>
+                    <span className="text-slate-700 dark:text-slate-200 text-xs sm:text-sm font-bold leading-none">{benefit}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* CTA button */}
+            {/* Apply Button */}
             <div className="pt-8 text-center">
               <Link
                 href={`/${locale}/careers/apply?position=${encodeURIComponent('Business Development Manager')}`}
@@ -844,16 +715,16 @@ export default async function CareersPage({ params }: Props) {
       <CareersFAQ />
 
       {/* CTA Section */}
-      <section className="py-24 bg-slate-50">
+      <section className="py-24 bg-slate-50 dark:bg-slate-950/40">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-          <h3 className="text-3xl font-extrabold text-slate-900 tracking-tight">{activeTrans.readyTitle}</h3>
-          <p className="text-base sm:text-lg text-slate-600 max-w-xl mx-auto font-medium">
+          <h3 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight leading-none">{activeTrans.readyTitle}</h3>
+          <p className="text-base sm:text-lg text-slate-550 dark:text-slate-400 max-w-xl mx-auto font-semibold">
             {activeTrans.readyDesc}
           </p>
           <div>
             <Link
               href={`/${locale}/contact`}
-              className="inline-flex items-center justify-center h-12 px-7 bg-[#0F4C81] text-white font-semibold text-[14px] rounded-xl hover:bg-[#0c3c66] transition-colors duration-200 shadow-sm"
+              className="inline-flex items-center justify-center h-12 px-8 bg-[#0F4C81] text-white font-semibold text-[14px] rounded-xl hover:bg-[#0c3c66] transition-colors duration-200 shadow-sm"
             >
               {activeTrans.getInTouchBtn}
             </Link>

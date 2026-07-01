@@ -1000,27 +1000,37 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
             transition={{ duration: 0.25, ease: 'easeOut' }}
             role="dialog"
             aria-label="AI Consultant Chat Window"
-            className="w-full sm:w-[380px] lg:w-[400px] xl:w-[420px] xl:max-w-[450px] xl:min-w-[390px] h-[min(80vh,calc(100vh-20px))] sm:h-[min(75vh,calc(100vh-40px))] lg:h-[min(620px,calc(100vh-48px))] xl:h-[min(650px,calc(100vh-48px))] bg-slate-900/95 backdrop-blur-xl border border-slate-800/80 rounded-[24px] shadow-[0_20px_50px_rgba(0,0,0,0.4)] overflow-hidden flex flex-col pointer-events-auto mb-0"
+            className="w-full sm:w-[380px] lg:w-[400px] xl:w-[420px] xl:max-w-[450px] xl:min-w-[390px] h-[min(80vh,calc(100vh-20px))] sm:h-[min(75vh,calc(100vh-40px))] lg:h-[min(620px,calc(100vh-48px))] xl:h-[min(650px,calc(100vh-48px))] bg-slate-900/90 dark:bg-[#0B0F19]/90 backdrop-blur-xl border border-white/10 dark:border-slate-800 rounded-[28px] shadow-[0_24px_60px_rgba(0,0,0,0.45)] overflow-hidden flex flex-col pointer-events-auto mb-0"
           >
             {/* Header bar (shrink-0 prevents squash) */}
-            <div className="h-[72px] px-4 border-b border-slate-800/80 flex justify-between items-center bg-gradient-to-r from-slate-900 to-slate-950 shrink-0">
-              <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-[#0F4C81] to-[#38BDF8] flex items-center justify-center text-white shadow-md shadow-blue-500/20">
-                  <Bot className="w-4.5 h-4.5" />
+            <div className="h-[76px] px-5 border-b border-white/5 dark:border-slate-800 flex justify-between items-center bg-gradient-to-r from-slate-900/50 to-slate-950/50 shrink-0">
+              <div className="flex items-center gap-3">
+                <div className="relative">
+                  <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#0F4C81] to-[#3b82f6] flex items-center justify-center text-white shadow-lg shadow-blue-500/20">
+                    <Bot className="w-5 h-5" />
+                  </div>
+                  {/* Status Indicator */}
+                  <span className="absolute -bottom-0.5 -right-0.5 flex h-3 w-3">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500 border-2 border-slate-900"></span>
+                  </span>
                 </div>
                 <div className="text-left">
-                  <h3 className="text-xs font-extrabold text-white tracking-wider uppercase leading-none">{t('title')}</h3>
-                  <p className="text-[9px] text-slate-400 font-medium tracking-tight mt-0.5 leading-none">{t('subtitle')}</p>
+                  <h3 className="text-xs font-black text-white tracking-wider uppercase leading-none">{t('title')}</h3>
+                  <p className="text-[9px] text-slate-400 font-extrabold tracking-widest mt-1 leading-none uppercase flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    {locale === 'es' ? 'Consejero de IA En Línea' : 'AI Advisor Online'}
+                  </p>
                 </div>
               </div>
               
               {/* Header Action Buttons */}
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-1.5">
                 <button
                   onClick={() => setWindowState('minimized')}
                   title={t('actions.minimize')}
                   aria-label="Minimize AI Consultant"
-                  className="w-8 h-8 hover:bg-slate-800 text-slate-400 hover:text-white rounded-lg transition-colors cursor-pointer focus:ring-1 focus:ring-[#38BDF8] outline-none flex items-center justify-center shrink-0"
+                  className="w-8 h-8 hover:bg-white/5 text-slate-400 hover:text-white rounded-xl transition-colors cursor-pointer outline-none flex items-center justify-center shrink-0"
                 >
                   <Minus className="w-4 h-4" />
                 </button>
@@ -1028,7 +1038,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                   onClick={() => setWindowState('closed')}
                   title={t('actions.close')}
                   aria-label="Close AI Consultant"
-                  className="w-8 h-8 bg-slate-800 hover:bg-red-900/60 text-slate-400 hover:text-white rounded-lg transition-colors cursor-pointer focus:ring-1 focus:ring-red-500 outline-none flex items-center justify-center shrink-0"
+                  className="w-8 h-8 bg-white/5 hover:bg-rose-950/60 text-slate-400 hover:text-white rounded-xl transition-colors cursor-pointer outline-none flex items-center justify-center shrink-0"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -1038,31 +1048,31 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
             {/* Scrollable Content or Forms */}
             {activeFlow === 'chat' ? (
               isChatEmpty ? (
-                /* Empty state: vertically centered welcome and suggested queries */
-                <div className="flex-1 flex flex-col justify-center items-center p-4 bg-slate-900/40 min-h-0 overflow-y-auto">
+                /* Empty state: welcome & suggested queries */
+                <div className="flex-1 flex flex-col justify-center items-center p-5 bg-transparent min-h-0 overflow-y-auto">
                   <motion.div
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3 }}
                     className="flex flex-col items-center max-w-[90%] text-center my-auto py-4"
                   >
-                    <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#0F4C81] to-[#38BDF8] flex items-center justify-center text-white shadow-lg shadow-blue-500/20 mb-3 animate-pulse">
-                      <Bot className="w-5.5 h-5.5" />
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#0F4C81] to-[#3b82f6] flex items-center justify-center text-white shadow-xl shadow-blue-500/25 mb-4 animate-pulse">
+                      <Bot className="w-7 h-7" />
                     </div>
                     {messages.length > 0 && (
-                      <div className="bg-slate-850/80 border border-slate-800/80 px-4 py-3 rounded-2xl rounded-tl-none text-xs leading-relaxed text-slate-200 text-left shadow-md max-w-[95%]">
-                        <div className="space-y-1">
-                          <p className="font-semibold text-sm text-white flex items-center gap-1">{greetingText}</p>
-                          <p className="text-slate-350">{introText}</p>
-                          <p className="text-blue-400 font-medium pt-1 border-t border-slate-800/60 mt-1">{questionText}</p>
+                      <div className="bg-white/5 border border-white/10 dark:bg-slate-900/50 dark:border-slate-850 p-5 rounded-3xl rounded-tl-none text-xs leading-relaxed text-slate-200 text-left shadow-lg max-w-[95%]">
+                        <div className="space-y-2">
+                          <p className="font-extrabold text-sm text-white flex items-center gap-1.5">{greetingText}</p>
+                          <p className="text-slate-350 font-semibold">{introText}</p>
+                          <p className="text-blue-400 font-bold pt-2 border-t border-white/5 mt-2">{questionText}</p>
                         </div>
                       </div>
                     )}
                     
-                    {/* Suggested Queries right underneath */}
+                    {/* Suggested Queries */}
                     {showChips && suggestedPrompts.length > 0 && (
-                      <div className="flex flex-col gap-2.5 mt-[20px] items-center w-full animate-fadeIn">
-                        <span className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">
+                      <div className="flex flex-col gap-3 mt-8 items-center w-full animate-fadeIn">
+                        <span className="text-[10px] font-extrabold text-slate-500 uppercase tracking-widest">
                           {t('suggestedTitle')}
                         </span>
                         <div className="flex flex-wrap gap-2 justify-center max-w-full">
@@ -1071,7 +1081,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                               key={idx}
                               onClick={() => routeSuggestedPrompt(prompt)}
                               disabled={isSending || isTyping}
-                              className="px-3 py-1.5 bg-slate-800/60 hover:bg-[#0F4C81] hover:text-white text-slate-300 rounded-full text-[11px] font-semibold border border-slate-700/50 transition-all duration-200 cursor-pointer shadow-sm hover:shadow hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center shrink-0"
+                              className="px-3.5 py-2 bg-white/5 hover:bg-[#0F4C81] hover:border-[#0F4C81] text-slate-200 rounded-2xl text-[11px] font-bold border border-white/10 transition-all duration-300 cursor-pointer shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 shrink-0"
                             >
                               {getCompactChipLabel(prompt, locale)}
                             </button>
@@ -1083,7 +1093,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                 </div>
               ) : (
                 /* Active chat state: scrollable messages list */
-                <div className="flex-1 overflow-y-auto p-4 space-y-3 flex flex-col custom-scrollbar bg-slate-900/40 min-h-0">
+                <div className="flex-1 overflow-y-auto p-5 space-y-4 flex flex-col custom-scrollbar bg-transparent min-h-0">
                   <div className="flex-grow min-h-[0px]" />
                   {messages.map((msg) => (
                     <motion.div
@@ -1091,28 +1101,30 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.2 }}
-                      className={`flex gap-2 max-w-[85%] ${
+                      className={`flex gap-3.5 max-w-[85%] ${
                         msg.sender === 'user' ? 'self-end flex-row-reverse' : 'self-start'
                       }`}
                     >
                       <div
-                        className={`w-6 h-6 rounded-lg shrink-0 flex items-center justify-center text-[10px] font-bold ${
-                          msg.sender === 'user' ? 'bg-slate-800 text-slate-300' : 'bg-gradient-to-tr from-[#0F4C81] to-[#38BDF8] text-white'
+                        className={`w-7 h-7 rounded-xl shrink-0 flex items-center justify-center text-[10px] font-bold shadow-sm ${
+                          msg.sender === 'user' 
+                            ? 'bg-slate-800 text-slate-300' 
+                            : 'bg-gradient-to-tr from-[#0F4C81] to-[#3b82f6] text-white'
                         }`}
                       >
-                        {msg.sender === 'user' ? <User className="w-3 h-3" /> : <Bot className="w-3 h-3" />}
+                        {msg.sender === 'user' ? <User className="w-3.5 h-3.5" /> : <Bot className="w-3.5 h-3.5" />}
                       </div>
                       <div className="flex flex-col text-left">
                         <div
-                          className={`px-3.5 py-2 rounded-xl text-xs leading-relaxed whitespace-pre-wrap ${
+                          className={`px-4 py-3 rounded-2xl text-xs leading-relaxed whitespace-pre-wrap font-semibold ${
                             msg.sender === 'user'
-                              ? 'bg-[#0F4C81] text-white rounded-tr-none shadow-sm'
-                              : 'bg-slate-850 border border-slate-800/80 text-slate-200 rounded-tl-none'
+                              ? 'bg-[#0F4C81] text-white rounded-tr-none shadow-md'
+                              : 'bg-white/5 border border-white/10 dark:bg-slate-900/50 dark:border-slate-800 text-slate-200 rounded-tl-none shadow-sm'
                           }`}
                         >
                           {msg.message}
                         </div>
-                        <span className="text-[8px] text-slate-500 font-medium mt-0.5 px-1">
+                        <span className="text-[8px] text-slate-500 font-extrabold uppercase mt-1 px-1 tracking-wider">
                           {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                         </span>
                       </div>
@@ -1120,14 +1132,14 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                   ))}
                   
                   {isTyping && (
-                    <div className="flex gap-2 self-start items-center">
-                      <div className="w-6 h-6 rounded-lg bg-gradient-to-tr from-[#0F4C81] to-[#38BDF8] flex items-center justify-center text-white shrink-0">
-                        <Bot className="w-3 h-3 animate-pulse" />
+                    <div className="flex gap-3 self-start items-center">
+                      <div className="w-7 h-7 rounded-xl bg-gradient-to-tr from-[#0F4C81] to-[#3b82f6] flex items-center justify-center text-white shrink-0 shadow-sm">
+                        <Bot className="w-3.5 h-3.5 animate-pulse" />
                       </div>
-                      <div className="bg-slate-850 border border-slate-800/80 px-3.5 py-2 rounded-xl rounded-tl-none flex items-center gap-1">
-                        <div className="w-1 h-1 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                        <div className="w-1 h-1 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                        <div className="w-1 h-1 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                      <div className="bg-white/5 border border-white/10 dark:bg-slate-900/50 dark:border-slate-800 px-4 py-3 rounded-2xl rounded-tl-none flex items-center gap-1.5 shadow-sm">
+                        <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                        <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                        <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
                       </div>
                     </div>
                   )}
@@ -1458,9 +1470,9 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 10 }}
                   transition={{ duration: 0.25 }}
-                  className="px-4 mt-[20px] mb-[16px] flex flex-col gap-2 bg-slate-900/40 border-t border-slate-800/50 shrink-0 animate-fadeIn pt-[20px]"
+                  className="px-5 mt-4 mb-4 flex flex-col gap-2.5 bg-transparent border-t border-white/5 shrink-0 animate-fadeIn pt-4"
                 >
-                  <span className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider text-left block px-1">
+                  <span className="text-[10px] font-extrabold text-slate-500 uppercase tracking-widest text-left block px-1">
                     {t('suggestedTitle')}
                   </span>
                   <div className="flex flex-wrap gap-2 items-start justify-start">
@@ -1469,7 +1481,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                         key={idx}
                         onClick={() => routeSuggestedPrompt(prompt)}
                         disabled={isSending || isTyping}
-                        className="px-3 py-1.5 bg-slate-850 hover:bg-[#0F4C81] active:bg-[#0d3f6b] text-slate-300 hover:text-white rounded-full text-[11px] font-semibold border border-slate-750 cursor-pointer max-w-full truncate outline-none focus:ring-2 focus:ring-[#38BDF8] min-h-[44px] flex items-center justify-center"
+                        className="px-3.5 py-2.5 bg-white/5 hover:bg-[#0F4C81] active:bg-[#0d3f6b] text-slate-200 hover:text-white rounded-2xl text-[11px] font-bold border border-white/10 cursor-pointer max-w-full truncate outline-none transition-all duration-300 min-h-[44px] flex items-center justify-center"
                       >
                         {getCompactChipLabel(prompt, locale)}
                       </button>
@@ -1481,8 +1493,8 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
 
             {/* Sticky Input Bar (shrink-0, sticky, always visible at bottom) */}
             {activeFlow === 'chat' && (
-              <div className="h-[70px] border-t border-slate-800/60 bg-slate-950 flex items-center px-4 shrink-0 w-full relative">
-                <div className="relative flex items-center w-full h-[56px] bg-slate-900 border border-slate-800 rounded-full pl-4 pr-1.5 focus-within:border-[#0F4C81] focus-within:ring-1 focus-within:ring-[#38BDF8]/40 transition-all">
+              <div className="h-[74px] border-t border-white/5 bg-[#07090e]/90 flex items-center px-4 shrink-0 w-full relative">
+                <div className="relative flex items-center w-full h-[56px] bg-slate-900/60 border border-white/10 rounded-full pl-5 pr-1.5 focus-within:border-[#0F4C81] focus-within:ring-2 focus-within:ring-[#0F4C81]/30 transition-all">
                   <input
                     type="text"
                     placeholder={placeholderText}
@@ -1493,13 +1505,13 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                     }}
                     disabled={isSending || isTyping}
                     aria-label="Chat input message"
-                    className="flex-1 bg-transparent text-xs text-white placeholder-slate-500 focus:outline-none py-1.5 outline-none"
+                    className="flex-1 bg-transparent text-xs text-white placeholder-slate-550 focus:outline-none py-1.5 outline-none font-semibold"
                   />
                   <button
                     onClick={() => handleUserSubmit(inputValue)}
                     disabled={!inputValue.trim() || isSending || isTyping}
                     aria-label="Send Message"
-                    className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#0F4C81] to-[#38BDF8] disabled:from-slate-800 disabled:to-slate-800 disabled:text-slate-500 hover:from-[#0d3f6b] hover:to-[#22aae6] text-white flex items-center justify-center shadow-md shadow-blue-500/10 cursor-pointer transition-all shrink-0 hover:scale-105 active:scale-95"
+                    className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#0F4C81] to-[#3b82f6] disabled:from-slate-800 disabled:to-slate-800 disabled:text-slate-500 hover:from-[#0d3f6b] hover:to-[#22aae6] text-white flex items-center justify-center shadow-lg shadow-blue-500/10 cursor-pointer transition-all shrink-0 hover:scale-105 active:scale-95 border-none"
                   >
                     {isSending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
                   </button>
@@ -1524,12 +1536,12 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
             title={t('tooltip')}
             aria-label="Open AI Consultant"
             aria-haspopup="dialog"
-            className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#0F4C81] to-[#38BDF8] text-white flex items-center justify-center shadow-xl shadow-blue-500/25 pointer-events-auto cursor-pointer hover:shadow-blue-500/35 transition-all relative group focus:ring-4 focus:ring-blue-400 outline-none"
+            className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#0F4C81] to-[#3b82f6] text-white flex items-center justify-center shadow-xl shadow-blue-500/25 pointer-events-auto cursor-pointer hover:shadow-blue-500/35 transition-all relative group border-none outline-none"
           >
             <MessageSquare className="w-6 h-6 group-hover:rotate-6 transition-transform" />
             <span className="absolute inset-0 rounded-2xl bg-blue-500/20 animate-ping pointer-events-none scale-105 duration-2000" />
             <span className="absolute -top-1 -right-1 flex h-3.5 w-3.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-450 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-sky-500 border-2 border-slate-900"></span>
             </span>
           </motion.button>
