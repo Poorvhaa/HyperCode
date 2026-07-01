@@ -42,12 +42,26 @@ export function Navigation() {
   const locale = useLocale();
   const t = useTranslations('Navigation');
   const tc = useTranslations('Common');
-
   const isActive = (href: string) => {
     if (href === '/') {
       return pathname === '/';
     }
     return pathname.startsWith(href);
+  };
+  const getLinkClass = (href: string) => {
+    const base = "font-bold text-sm transition-all duration-350 relative py-2 cursor-pointer bg-transparent border-none outline-none flex items-center h-full";
+    const activeColor = "text-[#60A5FA] font-black";
+    const inactiveColor = "text-white/90 hover:text-[#60A5FA] hover:drop-shadow-[0_0_8px_rgba(96,165,250,0.5)]";
+    return `${base} ${isActive(href) ? activeColor : inactiveColor}`;
+  };
+
+  const getLangButtonClass = () => {
+    const base = "flex items-center gap-1.5 px-3.5 py-2 rounded-xl border text-xs font-black transition-all duration-300 cursor-pointer";
+    if (isScrolled) {
+      return `${base} border-white/20 text-white hover:bg-white/10 bg-slate-900/60 backdrop-blur-md`;
+    } else {
+      return `${base} border-white/30 text-white hover:bg-white/10 bg-white/5 backdrop-blur-md`;
+    }
   };
 
   useEffect(() => {
@@ -110,14 +124,14 @@ export function Navigation() {
   return (
     <>
       <motion.nav
-        className={`fixed top-0 left-0 right-0 z-50 h-20 transition-all duration-500 ease-in-out border-b ${
+        className={`fixed z-50 transition-all duration-500 ease-in-out ${
           isScrolled 
-            ? 'bg-white/80 dark:bg-[#0B0F19]/80 backdrop-blur-lg border-slate-200/50 dark:border-slate-800/50 shadow-lg shadow-slate-100/10 dark:shadow-none' 
-            : 'bg-white/40 dark:bg-transparent border-transparent'
+            ? 'top-4 left-1/2 -translate-x-1/2 w-[92%] max-w-7xl h-16 rounded-2xl border bg-slate-950/75 dark:bg-[#0B0F19]/80 backdrop-blur-xl border-white/10 shadow-2xl' 
+            : 'top-0 left-0 right-0 w-full h-20 bg-slate-950/30 dark:bg-[#0B0F19]/30 backdrop-blur-md border-white/5 border-b shadow-lg'
         }`}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        transition={{ type: 'spring', stiffness: 100, damping: 20 }}
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
           <div className="flex items-center justify-between h-full w-full">
@@ -126,20 +140,28 @@ export function Navigation() {
                 <Image
                   src="/logo.jpg"
                   alt="HyperCode"
-                  width={220}
-                  height={32}
+                  width={729}
+                  height={950}
                   priority
-                  className="h-10 w-auto object-contain dark:invert"
+                  className="h-11 w-auto object-contain transition-all duration-300"
+                  style={{ filter: 'invert(1) hue-rotate(180deg)' }}
                 />
               </Link>
 
               {/* Center Navigation Links */}
               <div className="hidden lg:flex items-center space-x-8 h-full rtl:space-x-reverse">
-                <Link
-                  href="/"
-                  className={`nav-link ${isActive('/') ? 'nav-link-active' : ''}`}
-                >
-                  {t('home')}
+                <Link href="/" className={`${getLinkClass('/')} group`}>
+                  <span className="relative py-1">
+                    {t('home')}
+                    <span className="absolute -bottom-1.5 left-0 w-full h-[2px] bg-[#60A5FA] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                  </span>
+                  {isActive('/') && (
+                    <motion.div 
+                      layoutId="activeIndicator"
+                      className="absolute -bottom-1.5 left-0 right-0 h-[2px] bg-[#60A5FA] rounded-full"
+                      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                    />
+                  )}
                 </Link>
 
                 {/* Solutions Mega Menu Dropdown */}
@@ -148,9 +170,19 @@ export function Navigation() {
                   onMouseEnter={() => setActiveDropdown('solutions')}
                   onMouseLeave={closeDropdowns}
                 >
-                  <button className={`flex items-center gap-1.5 nav-link ${isActive('/solutions') ? 'nav-link-active' : ''} cursor-pointer bg-transparent border-none outline-none`}>
-                    <span>{tc('solutions')}</span>
-                    <ChevronDown size={14} className={`transition-transform duration-350 ${activeDropdown === 'solutions' ? 'rotate-180 text-[#0F4C81]' : ''}`} />
+                  <button className={`${getLinkClass('/solutions')} group`}>
+                    <span className="relative py-1 flex items-center">
+                      <span>{tc('solutions')}</span>
+                      <ChevronDown size={12} className={`ml-1 transition-transform duration-300 ${activeDropdown === 'solutions' ? 'rotate-180 text-[#60A5FA]' : ''}`} />
+                      <span className="absolute -bottom-1.5 left-0 w-full h-[2px] bg-[#60A5FA] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                    </span>
+                    {isActive('/solutions') && (
+                      <motion.div 
+                        layoutId="activeIndicator"
+                        className="absolute -bottom-1.5 left-0 right-0 h-[2px] bg-[#60A5FA] rounded-full"
+                        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                      />
+                    )}
                   </button>
 
                   <AnimatePresence>
@@ -177,7 +209,7 @@ export function Navigation() {
                                     </div>
                                     <div className="space-y-0.5">
                                       <div className="text-sm font-bold text-slate-800 dark:text-slate-200 group-hover:text-[#0F4C81] dark:group-hover:text-blue-400 transition-colors">{item.title}</div>
-                                      <div className="text-[11px] text-slate-500 dark:text-slate-450 leading-relaxed">{item.desc}</div>
+                                      <div className="text-[11px] text-slate-500 dark:text-slate-455 leading-relaxed">{item.desc}</div>
                                     </div>
                                   </Link>
                                 );
@@ -198,7 +230,7 @@ export function Navigation() {
                                     </div>
                                     <div className="space-y-0.5">
                                       <div className="text-sm font-bold text-slate-800 dark:text-slate-200 group-hover:text-[#0F4C81] dark:group-hover:text-blue-400 transition-colors">{item.title}</div>
-                                      <div className="text-[11px] text-slate-500 dark:text-slate-450 leading-relaxed">{item.desc}</div>
+                                      <div className="text-[11px] text-slate-500 dark:text-slate-455 leading-relaxed">{item.desc}</div>
                                     </div>
                                   </Link>
                                 );
@@ -219,7 +251,7 @@ export function Navigation() {
                                     </div>
                                     <div className="space-y-0.5">
                                       <div className="text-sm font-bold text-slate-800 dark:text-slate-200 group-hover:text-[#0F4C81] dark:group-hover:text-blue-400 transition-colors">{item.title}</div>
-                                      <div className="text-[11px] text-slate-500 dark:text-slate-450 leading-relaxed">{item.desc}</div>
+                                      <div className="text-[11px] text-slate-500 dark:text-slate-455 leading-relaxed">{item.desc}</div>
                                     </div>
                                   </Link>
                                 );
@@ -233,25 +265,46 @@ export function Navigation() {
                   </AnimatePresence>
                 </div>
 
-                <Link
-                  href="/about"
-                  className={`nav-link ${isActive('/about') ? 'nav-link-active' : ''}`}
-                >
-                  {t('about')}
+                <Link href="/about" className={`${getLinkClass('/about')} group`}>
+                  <span className="relative py-1">
+                    {t('about')}
+                    <span className="absolute -bottom-1.5 left-0 w-full h-[2px] bg-[#60A5FA] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                  </span>
+                  {isActive('/about') && (
+                    <motion.div 
+                      layoutId="activeIndicator"
+                      className="absolute -bottom-1.5 left-0 right-0 h-[2px] bg-[#60A5FA] rounded-full"
+                      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                    />
+                  )}
                 </Link>
 
-                <Link
-                  href="/careers"
-                  className={`nav-link ${isActive('/careers') ? 'nav-link-active' : ''}`}
-                >
-                  {t('careers')}
+                <Link href="/careers" className={`${getLinkClass('/careers')} group`}>
+                  <span className="relative py-1">
+                    {t('careers')}
+                    <span className="absolute -bottom-1.5 left-0 w-full h-[2px] bg-[#60A5FA] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                  </span>
+                  {isActive('/careers') && (
+                    <motion.div 
+                      layoutId="activeIndicator"
+                      className="absolute -bottom-1.5 left-0 right-0 h-[2px] bg-[#60A5FA] rounded-full"
+                      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                    />
+                  )}
                 </Link>
 
-                <Link
-                  href="/contact"
-                  className={`nav-link ${isActive('/contact') ? 'nav-link-active' : ''}`}
-                >
-                  {t('contact')}
+                <Link href="/contact" className={`${getLinkClass('/contact')} group`}>
+                  <span className="relative py-1">
+                    {t('contact')}
+                    <span className="absolute -bottom-1.5 left-0 w-full h-[2px] bg-[#60A5FA] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                  </span>
+                  {isActive('/contact') && (
+                    <motion.div 
+                      layoutId="activeIndicator"
+                      className="absolute -bottom-1.5 left-0 right-0 h-[2px] bg-[#60A5FA] rounded-full"
+                      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                    />
+                  )}
                 </Link>
               </div>
             </div>
@@ -262,11 +315,11 @@ export function Navigation() {
               <div className="relative">
                 <button
                   onClick={() => setIsLangOpen(!isLangOpen)}
-                  className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-800 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900 cursor-pointer font-bold transition-colors"
+                  className={getLangButtonClass()}
                 >
-                  <Globe size={14} className="text-slate-400" />
+                  <Globe size={13} className="text-white/80" />
                   <span>{activeLangName}</span>
-                  <ChevronDown size={12} className={`transition-transform duration-300 ${isLangOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown size={11} className={`transition-transform duration-300 ${isLangOpen ? 'rotate-180' : ''}`} />
                 </button>
 
                 <AnimatePresence>
@@ -276,14 +329,14 @@ export function Navigation() {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 5, scale: 0.95 }}
                       transition={{ duration: 0.15 }}
-                      className="absolute right-0 mt-2 w-36 bg-white dark:bg-[#0B0F19] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl py-1.5 z-50 overflow-hidden"
+                      className="absolute right-0 mt-2 w-36 bg-slate-950 dark:bg-[#0B0F19] border border-white/10 rounded-2xl shadow-xl py-1.5 z-50 overflow-hidden"
                     >
                       {languages.map((lang) => (
                         <button
                           key={lang.code}
                           onClick={() => handleLanguageChange(lang.code)}
-                          className={`w-full text-left px-4 py-2.5 text-sm hover:bg-slate-50 dark:hover:bg-slate-900 cursor-pointer transition-colors ${
-                            locale === lang.code ? 'text-[#0F4C81] dark:text-blue-400 font-bold' : 'text-slate-700 dark:text-slate-350'
+                          className={`w-full text-left px-4 py-2.5 text-xs font-bold hover:bg-white/10 cursor-pointer transition-colors ${
+                            locale === lang.code ? 'text-[#60A5FA]' : 'text-slate-200'
                           }`}
                         >
                           {lang.name}
@@ -297,11 +350,11 @@ export function Navigation() {
               {/* AI Consultant highlighted CTA */}
               <motion.button
                 onClick={triggerOpenChat}
-                className="px-5 py-2.5 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-[#0F4C81] to-[#1e6cb3] hover:shadow-lg hover:shadow-blue-500/20 active:scale-95 transition-all duration-300 cursor-pointer flex items-center gap-2 border-none"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                className="px-5 py-2.5 rounded-xl text-xs font-black text-white bg-gradient-to-r from-[#0F4C81] to-blue-600 hover:from-blue-600 hover:to-[#0F4C81] hover:shadow-lg hover:shadow-blue-500/20 active:scale-95 transition-all duration-300 cursor-pointer flex items-center gap-2 border-none"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
               >
-                <Sparkles size={14} className="animate-pulse" />
+                <Sparkles size={13} className="animate-pulse text-blue-300" />
                 <span>{t('aiConsultant') || 'AI Consultant'}</span>
               </motion.button>
             </div>

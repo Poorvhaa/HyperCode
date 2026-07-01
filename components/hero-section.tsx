@@ -120,27 +120,27 @@ export function HeroSection() {
             alt="HyperCode Enterprise AI Systems"
             fill
             priority
-            className="object-cover object-center opacity-65 select-none pointer-events-none"
+            className="object-cover object-center opacity-45 select-none pointer-events-none"
           />
         </motion.div>
         
-        {/* Custom Gradient Overlay matching 45-60% opacity */}
+        {/* Custom Gradient Overlay with Transparent Center & Slightly Brighter Left Side */}
         <div 
           className="absolute inset-0 z-10" 
           style={{
-            background: 'linear-gradient(to bottom, rgba(5,15,30,0.58), rgba(8,25,45,0.48), rgba(5,10,20,0.55))'
+            background: 'linear-gradient(180deg, rgba(5,15,30,0.8) 0%, rgba(5,18,35,0.3) 50%, rgba(5,10,20,0.9) 100%), radial-gradient(circle at center, rgba(30,58,138,0.15) 0%, rgba(5,15,30,0.8) 85%)'
           }}
         />
         
         {/* Vignette Overlay */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_40%,rgba(0,0,0,0.30))] z-10 pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_35%,rgba(0,0,0,0.4))] z-10 pointer-events-none" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
           {/* Left Content Column (occupies ~41.6% width on desktop) */}
-          <div className="lg:col-span-5 bg-slate-950/45 backdrop-blur-xl border border-white/10 p-8 sm:p-10 rounded-[32px] shadow-2xl space-y-8 animate-fadeIn">
+          <div className="lg:col-span-5 space-y-8 animate-fadeIn z-20">
             
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -148,26 +148,29 @@ export function HeroSection() {
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
               className="space-y-5"
             >
-              <div className="inline-flex items-center space-x-2 px-3 py-1.5 bg-white/5 border border-white/10 rounded-full shadow-sm">
-                <Sparkles size={14} className="text-blue-400 animate-pulse" />
-                <span className="text-[10px] font-extrabold text-blue-450 uppercase tracking-widest">
+              {/* Glass Enterprise Badge */}
+              <div className="inline-flex items-center space-x-2.5 px-4 py-2.5 bg-slate-950/60 backdrop-blur-xl border border-blue-500/50 rounded-full shadow-[0_0_20px_rgba(37,99,235,0.3)] transition-all duration-300">
+                <Sparkles size={14} className="text-cyan-300 animate-pulse drop-shadow-[0_0_6px_rgba(34,211,238,0.8)]" />
+                <span className="text-[10px] font-black text-white tracking-widest uppercase drop-shadow-sm">
                   {t('badge')}
                 </span>
               </div>
               
-              <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black text-white tracking-tight leading-[1.08] drop-shadow-md">
+              {/* Ultra bold Headline with Keyword gradient highlights */}
+              <h1 className="text-4xl sm:text-5xl lg:text-[62px] font-black text-white tracking-tight leading-[1.05] drop-shadow-[0_4px_12px_rgba(0,0,0,0.55)]">
                 {t('title')}{' '}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-cyan-300 drop-shadow-none">
                   {t('titleHighlight')}
                 </span>
               </h1>
               
-              <p className="text-sm sm:text-base text-slate-200 leading-relaxed max-w-xl font-bold">
+              {/* Soft White description paragraph */}
+              <p className="text-base sm:text-[18px] text-white/95 leading-relaxed max-w-xl font-bold drop-shadow-[0_2px_4px_rgba(0,0,0,0.45)]">
                 {t('subtitle')}
               </p>
             </motion.div>
 
-            {/* CTA Buttons */}
+            {/* CTA Buttons with Lift, Glow and Outline */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -176,7 +179,7 @@ export function HeroSection() {
             >
               <Link
                 href="/consultation"
-                className="inline-flex items-center justify-center h-12 px-8 bg-gradient-to-r from-[#0F4C81] to-blue-600 hover:from-[#0d3f6b] hover:to-blue-700 text-white font-bold text-xs uppercase tracking-wider rounded-2xl transition-all duration-300 gap-2 border-none shadow-lg shadow-blue-500/10 cursor-pointer hover:scale-[1.02]"
+                className="inline-flex items-center justify-center h-14 px-9 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-widest rounded-2xl transition-all duration-300 gap-2 border-none shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_30px_rgba(37,99,235,0.5)] cursor-pointer hover:scale-[1.03] active:scale-97"
               >
                 <span>{t('talkToConsultant')}</span>
                 <ArrowRight size={14} />
@@ -184,7 +187,7 @@ export function HeroSection() {
               
               <a
                 href="#services"
-                className="inline-flex items-center justify-center h-12 px-8 bg-white/5 border border-white/10 text-white font-bold text-xs uppercase tracking-wider rounded-2xl hover:bg-white/10 transition-colors shadow-sm cursor-pointer"
+                className="inline-flex items-center justify-center h-14 px-9 bg-white/5 border border-white/20 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] text-white font-bold text-xs uppercase tracking-widest rounded-2xl hover:bg-white/10 transition-all duration-300 shadow-sm cursor-pointer hover:scale-[1.03] active:scale-97"
               >
                 {tc('solutions')}
               </a>
@@ -195,12 +198,12 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="grid grid-cols-3 gap-4 pt-6 border-t border-white/5"
+              className="grid grid-cols-3 gap-4 pt-6 border-t border-white/10"
             >
               {heroStats.map((stat, index) => (
                 <div key={index} className="space-y-1">
-                  <div className="text-2xl sm:text-3xl font-black text-white">{stat.value}</div>
-                  <div className="text-[9px] sm:text-[10px] font-extrabold text-slate-350 uppercase tracking-widest leading-tight">{stat.label}</div>
+                  <div className="text-2xl sm:text-3xl font-black text-white drop-shadow-sm">{stat.value}</div>
+                  <div className="text-[9px] sm:text-[10px] font-extrabold text-slate-350 uppercase tracking-widest leading-tight drop-shadow-sm">{stat.label}</div>
                 </div>
               ))}
             </motion.div>
@@ -212,12 +215,12 @@ export function HeroSection() {
               transition={{ duration: 0.8, delay: 0.45 }}
               className="space-y-3"
             >
-              <div className="text-[9px] font-extrabold text-slate-400 uppercase tracking-widest">
+              <div className="text-[9px] font-extrabold text-slate-400 uppercase tracking-widest drop-shadow-sm">
                 {locale === 'es' ? 'TECNOLOGÍA RECONOCIDA POR LÍDERES' : 'ENGINEERING RECOGNIZED BY LEADERS'}
               </div>
               <div className="flex flex-wrap gap-6 items-center">
                 {mockClientLogos.map((logo, idx) => (
-                  <span key={idx} className="text-xs font-black text-slate-350 tracking-wider">
+                  <span key={idx} className="text-xs font-black text-slate-300 tracking-wider drop-shadow-sm">
                     {logo.name}
                   </span>
                 ))}
@@ -233,12 +236,15 @@ export function HeroSection() {
               
               {/* Connection Pipelines (SVG) */}
               <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 w-full h-full pointer-events-none z-0">
-                <path
+                {/* Continuous animated flow path */}
+                <motion.path
                   d="M 20 15 L 80 15 L 80 50 L 20 50 L 20 85 L 80 85"
                   fill="none"
-                  stroke="rgba(255, 255, 255, 0.08)"
-                  strokeWidth="1.5"
-                  strokeDasharray="4 6"
+                  stroke="rgba(96, 165, 250, 0.20)"
+                  strokeWidth="2"
+                  strokeDasharray="5 10"
+                  animate={{ strokeDashoffset: [0, -30] }}
+                  transition={{ repeat: Infinity, ease: "linear", duration: 4 }}
                 />
 
                 {/* Hover active path */}
@@ -246,11 +252,12 @@ export function HeroSection() {
                   <motion.path
                     d={activeFlowPath}
                     fill="none"
-                    stroke="#3b82f6"
-                    strokeWidth="2.5"
+                    stroke="#60A5FA"
+                    strokeWidth="3.5"
                     initial={{ pathLength: 0 }}
                     animate={{ pathLength: 1 }}
-                    transition={{ duration: 0.35, ease: 'easeOut' }}
+                    transition={{ duration: 0.4, ease: 'easeOut' }}
+                    className="drop-shadow-[0_0_8px_rgba(96,165,250,0.6)]"
                   />
                 )}
               </svg>
@@ -261,40 +268,51 @@ export function HeroSection() {
                 const isHovered = hoveredNode === node.id;
                 
                 return (
-                  <div
+                  <motion.div
                     key={node.id}
                     style={{ left: node.x, top: node.y }}
                     className="absolute -translate-x-1/2 -translate-y-1/2 w-[210px] lg:w-[230px] z-10"
                     onMouseEnter={() => setHoveredNode(node.id)}
                     onMouseLeave={() => setHoveredNode(null)}
+                    animate={{
+                      y: [0, -8, 0],
+                    }}
+                    transition={{
+                      duration: 4 + (node.id % 3) * 0.8,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: node.id * 0.4
+                    }}
                   >
                     <div
                       style={{
-                        background: isHovered ? 'rgba(15,26,46,0.85)' : 'rgba(10,18,32,0.75)',
-                        backdropFilter: 'blur(20px)',
-                        WebkitBackdropFilter: 'blur(20px)'
+                        background: isHovered 
+                          ? 'linear-gradient(135deg, rgba(15,23,42,0.9) 0%, rgba(30,58,138,0.5) 100%)' 
+                          : 'linear-gradient(135deg, rgba(10,18,32,0.8) 0%, rgba(15,23,42,0.65) 100%)',
+                        backdropFilter: 'blur(24px)',
+                        WebkitBackdropFilter: 'blur(24px)'
                       }}
-                      className={`flex items-center gap-3.5 p-4 rounded-2xl border transition-all duration-300 shadow-lg ${
+                      className={`flex items-center gap-3.5 p-4 rounded-2xl border transition-all duration-300 shadow-2xl shadow-black/40 ${
                         isHovered
-                          ? 'border-blue-500/60 shadow-blue-500/15 -translate-y-1.5 scale-[1.03]'
-                          : 'border-white/10'
+                          ? 'border-blue-400 shadow-blue-500/20 scale-[1.04]'
+                          : 'border-white/15'
                       }`}
                     >
                       <div
                         className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 ${
                           isHovered 
-                            ? 'bg-blue-500/10 text-blue-400 rotate-12 scale-110'
-                            : 'bg-white/5 text-slate-400'
+                            ? 'bg-blue-500/20 text-[#60A5FA] rotate-12 scale-110 drop-shadow-[0_0_8px_rgba(96,165,250,0.5)]'
+                            : 'bg-white/5 text-slate-350'
                         }`}
                       >
                         <Icon size={20} />
                       </div>
                       
                       <div className="text-left space-y-0.5">
-                        <span className="text-xs font-bold text-slate-200 leading-tight block">
+                        <span className="text-xs font-bold text-slate-100 leading-tight block">
                           {node.label}
                         </span>
-                        <span className="text-[9px] text-slate-500 font-extrabold tracking-wider uppercase block">
+                        <span className="text-[9px] text-[#60A5FA] font-extrabold tracking-wider uppercase block">
                           {locale === 'es' ? 'Paso' : 'Step'} 0{node.id + 1}
                         </span>
                       </div>
@@ -311,13 +329,13 @@ export function HeroSection() {
                           className="absolute z-30 top-[115%] left-1/2 -translate-x-1/2 w-[230px] bg-slate-900 border border-white/10 shadow-2xl p-4 rounded-2xl text-left pointer-events-none backdrop-blur-md"
                         >
                           <div className="absolute -top-1 left-1/2 -translate-x-1/2 rotate-45 w-2 h-2 bg-slate-900 border-t border-l border-white/10" />
-                          <p className="text-[11px] font-bold text-slate-450 leading-relaxed">
+                          <p className="text-[11px] font-bold text-slate-300 leading-relaxed">
                             {node.description}
                           </p>
                         </motion.div>
                       )}
                     </AnimatePresence>
-                  </div>
+                  </motion.div>
                 );
               })}
             </div>
@@ -336,7 +354,7 @@ export function HeroSection() {
                     <div className="bg-[#0b0f19]/90 border border-white/5 p-4 rounded-2xl shadow-sm text-left flex-1">
                       <div className="flex justify-between items-center mb-1">
                         <h4 className="text-xs font-bold text-slate-200">{node.label}</h4>
-                        <span className="text-[9px] text-slate-500 font-extrabold uppercase tracking-wider">0{node.id + 1}</span>
+                        <span className="text-[9px] text-[#60A5FA] font-extrabold uppercase tracking-wider">0{node.id + 1}</span>
                       </div>
                       <p className="text-[11px] text-slate-400 font-semibold leading-relaxed">
                         {node.description}

@@ -6,12 +6,12 @@ import Image from 'next/image';
 import { HeroBanner } from '@/components/hero-banner';
 
 const HERO_IMAGES: Record<string, string> = {
-  'business-intelligence-consulting': 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600',
-  'data-analytics-services': 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600',
+  'business-intelligence-consulting': 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1600',
+  'data-analytics-services': 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1600',
   'data-engineering-solutions': 'https://images.unsplash.com/photo-1597852074816-d933c4d2b988?q=80&w=1600',
-  'data-warehousing-services': 'https://images.unsplash.com/photo-1597852074816-d933c4d2b988?q=80&w=1600',
+  'data-warehousing-services': 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=1600',
   'it-staffing-solutions': 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=1600',
-  'staff-augmentation-services': 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=1600',
+  'staff-augmentation-services': 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1600',
   'web-development-services': 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=1600'
 };
 

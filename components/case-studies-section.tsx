@@ -21,10 +21,11 @@ export function CaseStudiesSection() {
     const fetchStudies = async () => {
       try {
         const list = await db.getAllCaseStudies();
-        const published = list.filter(c => c.is_published && c.language === locale);
+        const published = (list || []).filter(c => c && c.is_published && c.language === locale);
         setDbCaseStudies(published);
       } catch (err) {
-        console.error('Failed to fetch case studies:', err);
+        console.warn('[Warning] Failed to fetch case studies, falling back to static studies:', err);
+        setDbCaseStudies([]);
       } finally {
         setLoading(false);
       }

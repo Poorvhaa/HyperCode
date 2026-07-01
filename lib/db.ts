@@ -548,15 +548,20 @@ export const db = {
   // 12. CMS Articles - CRUD
   async getAllArticles(): Promise<Article[]> {
     if (!supabase) {
-      throw new Error('Database service unavailable: Supabase client is not configured.');
+      return [];
     }
 
-    const { data, error } = await supabase.from('articles').select('*').order('created_at', { ascending: false });
-    if (error) {
-      console.error('[DB Error] Supabase getAllArticles failed:', error.message || error);
-      throw error;
+    try {
+      const { data, error } = await supabase.from('articles').select('*').order('created_at', { ascending: false });
+      if (error) {
+        console.warn('[DB Warning] Supabase getAllArticles failed:', error.message || error);
+        return [];
+      }
+      return data || [];
+    } catch (err: any) {
+      console.warn('[DB Warning] Supabase getAllArticles exception caught:', err?.message || err);
+      return [];
     }
-    return data || [];
   },
 
   async getArticleBySlug(slug: string): Promise<Article | null> {
@@ -618,15 +623,20 @@ export const db = {
   // 13. CMS Case Studies - CRUD
   async getAllCaseStudies(): Promise<CaseStudy[]> {
     if (!supabase) {
-      throw new Error('Database service unavailable: Supabase client is not configured.');
+      return [];
     }
 
-    const { data, error } = await supabase.from('case_studies').select('*').order('created_at', { ascending: false });
-    if (error) {
-      console.error('[DB Error] Supabase getAllCaseStudies failed:', error.message || error);
-      throw error;
+    try {
+      const { data, error } = await supabase.from('case_studies').select('*').order('created_at', { ascending: false });
+      if (error) {
+        console.warn('[DB Warning] Supabase getAllCaseStudies failed:', error.message || error);
+        return [];
+      }
+      return data || [];
+    } catch (err: any) {
+      console.warn('[DB Warning] Supabase getAllCaseStudies exception caught:', err?.message || err);
+      return [];
     }
-    return data || [];
   },
 
   async getCaseStudyBySlug(slug: string): Promise<CaseStudy | null> {
