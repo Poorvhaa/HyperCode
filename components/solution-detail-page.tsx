@@ -2,6 +2,18 @@ import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
 import { CheckCircle } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
+
+const HERO_IMAGES: Record<string, string> = {
+  'business-intelligence-consulting': '/images/case-study-dashboard.png',
+  'data-analytics-services': '/images/ai-automation.png',
+  'data-engineering-solutions': '/images/cloud-infrastructure.png',
+  'data-warehousing-services': '/images/cloud-infrastructure.png',
+  'it-staffing-solutions': '/images/staffing-team.png',
+  'staff-augmentation-services': '/images/staffing-team.png',
+  'web-development-services': '/images/case-study-dashboard.png'
+};
+
 
 interface SolutionDetailPageProps {
   locale: string;
@@ -417,77 +429,128 @@ export function SolutionDetailPage({ locale, pageKey, tc }: SolutionDetailPagePr
   const activeTrans = (localTrans[locale] && localTrans[locale][pageKey]) || localTrans.en[pageKey] || localTrans.en['business-intelligence-consulting'];
 
   return (
-    <main className="relative w-full bg-white text-left">
+    <main className="relative w-full bg-[#fcfdfe] dark:bg-[#07090e] text-left bg-dot-pattern">
       <Navigation />
 
-      {/* Hero Section */}
-      <section className="bg-slate-50 pt-36 pb-20 border-b border-slate-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="max-w-3xl space-y-4">
-            <span className="text-[10px] font-bold text-[#0F4C81] tracking-widest uppercase bg-white border border-slate-150 px-2.5 py-1 rounded-md">
+      {/* Solutions Immersive Hero Section */}
+      <section className="relative pt-40 pb-28 overflow-hidden bg-[#07090e] border-b border-white/5">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src={HERO_IMAGES[pageKey] || '/images/hero-enterprise.png'}
+            alt={activeTrans.title}
+            fill
+            priority
+            className="object-cover object-center opacity-30 scale-105 select-none pointer-events-none"
+          />
+          {/* Gradients */}
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/85 to-transparent z-10" />
+          <div className="absolute inset-0 bg-slate-950/40 z-10" />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-20">
+          <div className="max-w-3xl space-y-6">
+            <span className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-400 tracking-widest uppercase">
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
               {activeTrans.categoryLabel}
             </span>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
-              {activeTrans.title} <span className="text-[#0F4C81]">{activeTrans.titleHighlight}</span>
+            <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black text-white tracking-tight leading-[1.1]">
+              {activeTrans.title} <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">{activeTrans.titleHighlight}</span>
             </h1>
-            <p className="text-lg sm:text-xl text-slate-600 font-medium leading-relaxed">
+            <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-semibold max-w-xl">
               {activeTrans.description}
             </p>
           </div>
         </div>
       </section>
 
-      {/* Overview Section */}
-      <section className="py-24 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">
-            {activeTrans.overviewTitle}
-          </h2>
-          <div className="text-base sm:text-lg text-slate-600 leading-relaxed font-medium space-y-4">
-            <p>{activeTrans.overviewP1}</p>
-            <p>{activeTrans.overviewP2}</p>
+      {/* Overview Section (Alternating Left) */}
+      <section className="py-24 bg-white dark:bg-[#07090e] relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            {/* Text left */}
+            <div className="lg:col-span-7 space-y-6">
+              <h2 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+                {activeTrans.overviewTitle}
+              </h2>
+              <div className="text-xs sm:text-sm text-slate-550 dark:text-slate-400 leading-relaxed font-semibold space-y-4">
+                <p>{activeTrans.overviewP1}</p>
+                <p>{activeTrans.overviewP2}</p>
+              </div>
+            </div>
+            {/* Image right */}
+            <div className="lg:col-span-5 relative w-full h-[340px] rounded-3xl overflow-hidden border border-slate-200/50 dark:border-slate-800 shadow-xl">
+              <Image
+                src={HERO_IMAGES[pageKey] || '/images/hero-enterprise.png'}
+                alt={activeTrans.overviewTitle}
+                fill
+                className="object-cover object-center hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-slate-950/20" />
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Benefits Section */}
-      <section className="py-24 bg-slate-50 border-t border-b border-slate-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mb-16">
-            <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">{activeTrans.keySolutionsLabel}</h2>
-            <h3 className="text-3xl font-extrabold text-slate-900 tracking-tight">{activeTrans.benefitsTitle}</h3>
-          </div>
+      {/* Benefits Section (Alternating Right) */}
+      <section className="py-24 bg-slate-50 dark:bg-slate-950/40 border-t border-b border-slate-100 dark:border-slate-900 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            {/* Image left */}
+            <div className="lg:col-span-5 relative w-full h-[400px] rounded-3xl overflow-hidden border border-slate-200/50 dark:border-slate-800 shadow-xl order-last lg:order-first">
+              <Image
+                src={pageKey.includes('staffing') ? '/images/contact-office.png' : '/images/hero-enterprise.png'}
+                alt={activeTrans.benefitsTitle}
+                fill
+                className="object-cover object-center hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-slate-950/20" />
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {activeTrans.benefits.map((benefit, i) => (
-              <div key={i} className="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
-                <div className="w-10 h-10 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center text-[#0F4C81] flex-shrink-0">
-                  <CheckCircle size={20} />
-                </div>
-                <div className="space-y-1">
-                  <h4 className="text-base font-bold text-slate-900">{benefit.title}</h4>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">{benefit.desc}</p>
-                </div>
+            {/* Text right */}
+            <div className="lg:col-span-7 space-y-8">
+              <div className="space-y-3">
+                <span className="text-[10px] font-extrabold text-[#0F4C81] dark:text-blue-400 tracking-widest uppercase">
+                  {activeTrans.keySolutionsLabel}
+                </span>
+                <h3 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+                  {activeTrans.benefitsTitle}
+                </h3>
               </div>
-            ))}
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {activeTrans.benefits.map((benefit, i) => (
+                  <div key={i} className="bg-white dark:bg-[#0b0f19] p-6 rounded-2xl border border-slate-200/50 dark:border-slate-850 shadow-sm flex items-start gap-4 hover:shadow-md transition-shadow">
+                    <div className="w-9 h-9 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 flex items-center justify-center text-[#0F4C81] dark:text-blue-400 flex-shrink-0">
+                      <CheckCircle size={18} />
+                    </div>
+                    <div className="space-y-1">
+                      <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white leading-tight">{benefit.title}</h4>
+                      <p className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-450 leading-relaxed font-semibold">{benefit.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Technologies Section */}
-      <section className="py-24 bg-white border-b border-slate-100">
+      <section className="py-24 bg-white dark:bg-[#07090e] border-b border-slate-100 dark:border-slate-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mb-16">
-            <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">{activeTrans.techTitle}</h2>
-            <h3 className="text-3xl font-extrabold text-slate-900 tracking-tight">{activeTrans.techTitle}</h3>
+          <div className="max-w-3xl mb-16 space-y-3">
+            <span className="text-[10px] font-extrabold text-[#0F4C81] dark:text-blue-400 tracking-widest uppercase">
+              {activeTrans.techTitle}
+            </span>
+            <h3 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">{activeTrans.techTitle}</h3>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {activeTrans.technologies.map((tech, i) => (
-              <div key={i} className="p-6 rounded-2xl border border-slate-200 bg-white shadow-sm flex flex-col justify-between hover:border-slate-300 transition-colors duration-200">
+              <div key={i} className="p-6 rounded-2xl border border-slate-200/60 dark:border-slate-850 bg-white dark:bg-[#0b0f19] shadow-sm flex flex-col justify-between hover:border-[#0F4C81] dark:hover:border-blue-500 hover:shadow-md transition-all duration-300">
                 <div className="space-y-2">
-                  <h4 className="text-base font-bold text-slate-900">{tech.name}</h4>
-                  <p className="text-xs text-slate-500 leading-relaxed font-semibold uppercase tracking-wider">{tech.role}</p>
+                  <h4 className="text-base font-bold text-slate-900 dark:text-slate-200">{tech.name}</h4>
+                  <p className="text-[9px] text-slate-400 dark:text-slate-500 leading-relaxed font-extrabold uppercase tracking-widest">{tech.role}</p>
                 </div>
               </div>
             ))}
@@ -496,16 +559,16 @@ export function SolutionDetailPage({ locale, pageKey, tc }: SolutionDetailPagePr
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 bg-slate-50">
+      <section className="py-24 bg-slate-50 dark:bg-slate-950/40">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-          <h3 className="text-3xl font-extrabold text-slate-900 tracking-tight">{activeTrans.ctaTitle}</h3>
-          <p className="text-base sm:text-lg text-slate-600 max-w-xl mx-auto font-medium">
+          <h3 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight leading-none">{activeTrans.ctaTitle}</h3>
+          <p className="text-base sm:text-lg text-slate-550 dark:text-slate-400 max-w-xl mx-auto font-semibold">
             {activeTrans.ctaDesc}
           </p>
           <div>
             <Link
               href={`/${locale}/consultation`}
-              className="inline-flex items-center justify-center h-12 px-7 bg-[#0F4C81] text-white font-semibold text-[14px] rounded-xl hover:bg-[#0c3c66] transition-colors duration-200 shadow-sm"
+              className="inline-flex items-center justify-center h-12 px-8 bg-[#0F4C81] text-white font-bold text-xs uppercase tracking-wider rounded-xl hover:bg-[#0c3c66] transition-colors duration-200 shadow-sm"
             >
               {activeTrans.ctaBtn}
             </Link>

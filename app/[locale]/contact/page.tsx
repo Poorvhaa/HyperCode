@@ -4,6 +4,7 @@ import { Footer } from '@/components/footer';
 import { ContactForm } from '@/components/contact-form';
 import { Mail, MapPin, Clock, ArrowRight, Award, Shield } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -103,20 +104,30 @@ export default async function ContactPage({ params }: Props) {
     <main className="relative w-full bg-[#fcfdfe] dark:bg-[#07090e] text-left min-h-screen bg-dot-pattern">
       <Navigation />
 
-      {/* Hero Section */}
-      <section className="relative pt-40 pb-24 overflow-hidden border-b border-slate-200/50 dark:border-slate-800/40">
-        <div className="absolute top-0 right-0 w-[500px] h-[350px] bg-blue-50/50 dark:bg-blue-950/5 rounded-full blur-3xl pointer-events-none -z-10" />
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
-          <div className="max-w-3xl space-y-6">
-            <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C81] tracking-widest uppercase">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#0F4C81]" />
+      {/* Contact Immersive Hero Section */}
+      <section className="relative pt-40 pb-28 overflow-hidden bg-[#07090e] border-b border-white/5">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/contact-office.png"
+            alt="Contact HyperCode"
+            fill
+            priority
+            className="object-cover object-center opacity-30 scale-105 select-none pointer-events-none"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/85 to-transparent z-10" />
+          <div className="absolute inset-0 bg-slate-950/40 z-10" />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-20">
+          <div className="max-w-3xl space-y-6 animate-fadeIn">
+            <span className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-400 tracking-widest uppercase">
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
               {locale === 'es' ? 'CONTACTAR NUESTRO EQUIPO' : 'GET IN TOUCH'}
             </span>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white tracking-tight leading-[1.12]">
-              {activeTrans.title} <span className="text-[#0F4C81] dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-r dark:from-blue-400 dark:to-cyan-300">{activeTrans.titleHighlight}</span>
+            <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black text-white tracking-tight leading-[1.1]">
+              {activeTrans.title} <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">{activeTrans.titleHighlight}</span>
             </h1>
-            <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-350 leading-relaxed font-semibold max-w-2xl">
+            <p className="text-sm sm:text-base text-slate-305 leading-relaxed font-semibold max-w-xl">
               {activeTrans.subtitle}
             </p>
           </div>
@@ -131,6 +142,17 @@ export default async function ContactPage({ params }: Props) {
             {/* Left Column: Contact Cards & Office Details (5 columns) */}
             <div className="lg:col-span-5 space-y-8">
               
+              {/* Welcoming Office Visual */}
+              <div className="relative w-full h-[220px] rounded-3xl overflow-hidden border border-slate-200/50 dark:border-slate-800 shadow-md">
+                <Image
+                  src="/images/contact-office.png"
+                  alt="HyperCode Office Environment"
+                  fill
+                  className="object-cover object-center hover:scale-105 transition-transform duration-500 select-none pointer-events-none"
+                />
+                <div className="absolute inset-0 bg-slate-950/20" />
+              </div>
+
               {/* Location Card */}
               <div className="bg-white dark:bg-[#0b0f19] border border-slate-200/50 dark:border-slate-800/50 rounded-3xl p-7 shadow-sm space-y-5">
                 <div className="flex items-center gap-3">
