@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
 import { FileDown, Calendar, ChevronRight, Shield } from 'lucide-react';
+import { HeroBanner } from '@/components/hero-banner';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -47,40 +48,30 @@ export default async function PrivacyPolicyPage({ params }: Props) {
     <main className="relative w-full bg-white text-left">
       <Navigation />
 
-      {/* Hero Section */}
-      <section className="bg-slate-50 pt-36 pb-16 border-b border-slate-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-            <div className="max-w-3xl space-y-4">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-[#0F4C81] text-xs font-bold uppercase tracking-wider">
-                <Shield className="w-3.5 h-3.5" />
-                <span>{t('legal')}</span>
-              </div>
-              <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">
-                {t('title')}
-              </h1>
-              <p className="text-lg text-slate-500 font-medium leading-relaxed max-w-2xl">
-                {t('subtitle')}
-              </p>
-              <div className="flex items-center gap-2 text-sm font-semibold text-slate-400 uppercase tracking-wider">
-                <Calendar className="w-4 h-4 text-slate-300" />
-                <span>{t('lastUpdated')}</span>
-              </div>
-            </div>
-            <div className="flex-shrink-0">
-              <a
-                href={pdfUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-[#0F4C81] hover:bg-[#0c3c66] text-white font-bold rounded-xl text-sm transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 cursor-pointer"
-              >
-                <FileDown className="w-4 h-4" />
-                <span>{t('downloadPdf')}</span>
-              </a>
-            </div>
+      {/* Privacy Policy Reusable Hero Banner */}
+      <HeroBanner
+        bgImage="https://images.unsplash.com/photo-1450133064473-71024230f91b?q=80&w=1600"
+        categoryLabel={t('legal')}
+        title={t('title')}
+        subtitle={`${t('subtitle')} • ${t('lastUpdated')}`}
+        breadcrumbs={[
+          { label: locale === 'es' ? 'Inicio' : 'Home', href: `/${locale}` },
+          { label: t('title') }
+        ]}
+        ctaButtons={
+          <div className="flex-shrink-0 z-20">
+            <a
+              href={pdfUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#0F4C81] hover:bg-[#0c3c66] text-white font-bold rounded-xl text-xs uppercase tracking-wider transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 cursor-pointer"
+            >
+              <FileDown className="w-4 h-4" />
+              <span>{t('downloadPdf')}</span>
+            </a>
           </div>
-        </div>
-      </section>
+        }
+      />
 
       {/* Content Layout */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">

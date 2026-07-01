@@ -4,6 +4,7 @@ import { Footer } from '@/components/footer';
 import { Target, Eye, ShieldCheck, Award, Lightbulb, Users, Cpu, Zap, BookOpen } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { HeroBanner } from '@/components/hero-banner';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -53,35 +54,18 @@ export default async function AboutPage({ params }: Props) {
     <main className="relative w-full bg-[#fcfdfe] dark:bg-[#07090e] text-left bg-dot-pattern min-h-screen">
       <Navigation />
 
-      {/* About Immersive Hero Section */}
-      <section className="relative pt-40 pb-28 overflow-hidden bg-[#07090e] border-b border-white/5">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/images/contact-office.png"
-            alt="About HyperCode Office"
-            fill
-            priority
-            className="object-cover object-center opacity-30 scale-105 select-none pointer-events-none"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/85 to-transparent z-10" />
-          <div className="absolute inset-0 bg-slate-950/40 z-10" />
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-20">
-          <div className="max-w-3xl space-y-6">
-            <span className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-400 tracking-widest uppercase">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
-              {locale === 'es' ? 'CONÓCENOS' : 'ABOUT US'}
-            </span>
-            <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black text-white tracking-tight leading-[1.1]">
-              {t('title')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">{t('titleHighlight')}</span>
-            </h1>
-            <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-semibold max-w-xl">
-              {t('subtitle')}
-            </p>
-          </div>
-        </div>
-      </section>
+      {/* About Reusable Hero Banner */}
+      <HeroBanner
+        bgImage="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1600"
+        categoryLabel={locale === 'es' ? 'CONÓCENOS' : 'ABOUT US'}
+        title={t('title')}
+        titleHighlight={t('titleHighlight')}
+        subtitle={t('subtitle')}
+        breadcrumbs={[
+          { label: locale === 'es' ? 'Inicio' : 'Home', href: `/${locale}` },
+          { label: locale === 'es' ? 'Nosotros' : 'About Us' }
+        ]}
+      />
 
       {/* Storytelling Section (Alternating Left) */}
       <section className="py-24 bg-white dark:bg-[#07090e] relative overflow-hidden">

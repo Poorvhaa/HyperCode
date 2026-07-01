@@ -6,6 +6,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
+import { HeroBanner } from '@/components/hero-banner';
 import { SERVICES_CATALOG } from '@/lib/services-data';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
@@ -195,50 +196,45 @@ function SolutionsPageContent() {
     <main className="relative w-full bg-slate-50 text-left min-h-screen">
       <Navigation />
 
-      {/* Hero Section with Statistics */}
-      <section className="relative pt-40 pb-28 overflow-hidden bg-white border-b border-slate-200/50">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(15,76,129,0.06),transparent_50%)]" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-16">
-          <div className="max-w-4xl space-y-6">
-            <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#0F4C81]/10 text-xs font-bold text-[#0F4C81] uppercase tracking-wider">
-              <Cpu size={12} className="animate-pulse" />
-              {locale === 'es' ? 'Transformación Digital de Extremo a Extremo' : 'End-to-End Digital Transformation'}
-            </span>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.08]">
-              {t('heroTitle')}
-            </h1>
-            <p className="text-lg sm:text-xl text-slate-500 font-medium leading-relaxed max-w-3xl">
-              {t('heroSubtitle')}
-            </p>
-            <div className="flex flex-wrap gap-4 pt-2">
-              <Link
-                href="/consultation"
-                className="inline-flex items-center justify-center h-12 px-8 bg-[#0F4C81] hover:bg-[#0D3F6D] text-white font-bold text-sm uppercase tracking-wider rounded-xl transition-all shadow-md hover:shadow-lg cursor-pointer"
-              >
-                {t('ctaBtn')}
-              </Link>
-              <button
-                onClick={triggerOpenChat}
-                className="inline-flex items-center justify-center h-12 px-8 bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm uppercase tracking-wider rounded-xl transition-all shadow-md hover:shadow-lg cursor-pointer border-none"
-              >
-                {tAi('title') || 'Talk to AI Consultant'}
-              </button>
-            </div>
+      {/* Hero Banner Component */}
+      <HeroBanner
+        bgImage="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600"
+        categoryLabel={locale === 'es' ? 'Transformación Digital de Extremo a Extremo' : 'End-to-End Digital Transformation'}
+        title={t('heroTitle')}
+        subtitle={t('heroSubtitle')}
+        ctaButtons={
+          <div className="flex flex-wrap gap-4 pt-2">
+            <Link
+              href="/consultation"
+              className="inline-flex items-center justify-center h-12 px-8 bg-[#0F4C81] hover:bg-[#0D3F6D] text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md hover:shadow-lg cursor-pointer"
+            >
+              {t('ctaBtn')}
+            </Link>
+            <button
+              onClick={triggerOpenChat}
+              className="inline-flex items-center justify-center h-12 px-8 bg-white/5 border border-white/10 hover:bg-white/10 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md hover:shadow-lg cursor-pointer border-none"
+            >
+              {tAi('title') || 'Talk to AI Consultant'}
+            </button>
           </div>
+        }
+      />
 
-          {/* Key Statistics Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-8 border-t border-slate-100">
+      {/* Key Statistics Grid Section */}
+      <section className="py-12 bg-white dark:bg-[#0b0f19] border-b border-slate-200/50 dark:border-slate-800/40">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
             <div className="space-y-1">
-              <span className="block text-4xl sm:text-5xl font-black text-[#0F4C81] tracking-tight">{t('stats.retentionNum')}</span>
-              <span className="block text-sm font-bold text-slate-500 uppercase tracking-wider">{t('stats.retentionLabel')}</span>
+              <span className="block text-4xl sm:text-5xl font-black text-[#0F4C81] dark:text-blue-400 tracking-tight">{t('stats.retentionNum')}</span>
+              <span className="block text-[10px] font-extrabold text-slate-500 uppercase tracking-widest">{t('stats.retentionLabel')}</span>
             </div>
             <div className="space-y-1">
-              <span className="block text-4xl sm:text-5xl font-black text-[#0F4C81] tracking-tight">{t('stats.deploymentsNum')}</span>
-              <span className="block text-sm font-bold text-slate-500 uppercase tracking-wider">{t('stats.deploymentsLabel')}</span>
+              <span className="block text-4xl sm:text-5xl font-black text-[#0F4C81] dark:text-blue-400 tracking-tight">{t('stats.deploymentsNum')}</span>
+              <span className="block text-[10px] font-extrabold text-slate-500 uppercase tracking-widest">{t('stats.deploymentsLabel')}</span>
             </div>
             <div className="space-y-1">
-              <span className="block text-4xl sm:text-5xl font-black text-[#0F4C81] tracking-tight">{t('stats.onboardingNum')}</span>
-              <span className="block text-sm font-bold text-slate-500 uppercase tracking-wider">{t('stats.onboardingLabel')}</span>
+              <span className="block text-4xl sm:text-5xl font-black text-[#0F4C81] dark:text-blue-400 tracking-tight">{t('stats.onboardingNum')}</span>
+              <span className="block text-[10px] font-extrabold text-slate-500 uppercase tracking-widest">{t('stats.onboardingLabel')}</span>
             </div>
           </div>
         </div>

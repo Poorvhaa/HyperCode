@@ -3,15 +3,16 @@ import { Footer } from '@/components/footer';
 import { CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { HeroBanner } from '@/components/hero-banner';
 
 const HERO_IMAGES: Record<string, string> = {
-  'business-intelligence-consulting': '/images/case-study-dashboard.png',
-  'data-analytics-services': '/images/ai-automation.png',
-  'data-engineering-solutions': '/images/cloud-infrastructure.png',
-  'data-warehousing-services': '/images/cloud-infrastructure.png',
-  'it-staffing-solutions': '/images/staffing-team.png',
-  'staff-augmentation-services': '/images/staffing-team.png',
-  'web-development-services': '/images/case-study-dashboard.png'
+  'business-intelligence-consulting': 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600',
+  'data-analytics-services': 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600',
+  'data-engineering-solutions': 'https://images.unsplash.com/photo-1597852074816-d933c4d2b988?q=80&w=1600',
+  'data-warehousing-services': 'https://images.unsplash.com/photo-1597852074816-d933c4d2b988?q=80&w=1600',
+  'it-staffing-solutions': 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=1600',
+  'staff-augmentation-services': 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=1600',
+  'web-development-services': 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=1600'
 };
 
 
@@ -432,36 +433,19 @@ export function SolutionDetailPage({ locale, pageKey, tc }: SolutionDetailPagePr
     <main className="relative w-full bg-[#fcfdfe] dark:bg-[#07090e] text-left bg-dot-pattern">
       <Navigation />
 
-      {/* Solutions Immersive Hero Section */}
-      <section className="relative pt-40 pb-28 overflow-hidden bg-[#07090e] border-b border-white/5">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src={HERO_IMAGES[pageKey] || '/images/hero-enterprise.png'}
-            alt={activeTrans.title}
-            fill
-            priority
-            className="object-cover object-center opacity-30 scale-105 select-none pointer-events-none"
-          />
-          {/* Gradients */}
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/85 to-transparent z-10" />
-          <div className="absolute inset-0 bg-slate-950/40 z-10" />
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-20">
-          <div className="max-w-3xl space-y-6">
-            <span className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-400 tracking-widest uppercase">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
-              {activeTrans.categoryLabel}
-            </span>
-            <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black text-white tracking-tight leading-[1.1]">
-              {activeTrans.title} <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">{activeTrans.titleHighlight}</span>
-            </h1>
-            <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-semibold max-w-xl">
-              {activeTrans.description}
-            </p>
-          </div>
-        </div>
-      </section>
+      {/* Solutions Reusable Hero Banner */}
+      <HeroBanner
+        bgImage={HERO_IMAGES[pageKey] || 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1600'}
+        categoryLabel={activeTrans.categoryLabel}
+        title={activeTrans.title}
+        titleHighlight={activeTrans.titleHighlight}
+        subtitle={activeTrans.description}
+        breadcrumbs={[
+          { label: locale === 'es' ? 'Inicio' : 'Home', href: `/${locale}` },
+          { label: locale === 'es' ? 'Soluciones' : 'Solutions', href: `/${locale}/solutions` },
+          { label: activeTrans.title }
+        ]}
+      />
 
       {/* Overview Section (Alternating Left) */}
       <section className="py-24 bg-white dark:bg-[#07090e] relative overflow-hidden">

@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { HeroBanner } from '@/components/hero-banner';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -376,35 +377,18 @@ export default async function CareersPage({ params }: Props) {
     <main className="relative w-full bg-[#fcfdfe] dark:bg-[#07090e] text-left min-h-screen bg-dot-pattern">
       <Navigation />
 
-      {/* Careers Immersive Hero Section */}
-      <section className="relative pt-40 pb-28 overflow-hidden bg-[#07090e] border-b border-white/5">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/images/staffing-team.png"
-            alt="Careers at HyperCode"
-            fill
-            priority
-            className="object-cover object-center opacity-25 scale-105 select-none pointer-events-none"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/85 to-transparent z-10" />
-          <div className="absolute inset-0 bg-slate-950/40 z-10" />
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-20">
-          <div className="max-w-3xl space-y-6 animate-fadeIn">
-            <span className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-400 tracking-widest uppercase">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
-              {activeTrans.badgeWhy}
-            </span>
-            <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black text-white tracking-tight leading-[1.1]">
-              {activeTrans.heroTitle} <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">{activeTrans.heroTitleHighlight}</span>
-            </h1>
-            <p className="text-sm sm:text-base text-slate-350 leading-relaxed font-semibold max-w-xl">
-              {activeTrans.heroSubtitle}
-            </p>
-          </div>
-        </div>
-      </section>
+      {/* Careers Reusable Hero Banner */}
+      <HeroBanner
+        bgImage="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1600"
+        categoryLabel={activeTrans.badgeWhy}
+        title={activeTrans.heroTitle}
+        titleHighlight={activeTrans.heroTitleHighlight}
+        subtitle={activeTrans.heroSubtitle}
+        breadcrumbs={[
+          { label: locale === 'es' ? 'Inicio' : 'Home', href: `/${locale}` },
+          { label: locale === 'es' ? 'Carreras' : 'Careers' }
+        ]}
+      />
 
       {/* Why Work Here */}
       <section className="py-24 relative">
