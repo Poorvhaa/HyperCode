@@ -58,9 +58,9 @@ export function Navigation() {
     return pathname.startsWith(href);
   };
   const getLinkClass = (href: string) => {
-    const base = "font-bold text-sm transition-all duration-350 relative py-2 cursor-pointer bg-transparent border-none outline-none flex items-center h-full";
-    const activeColor = "text-[#60A5FA] font-black";
-    const inactiveColor = "text-white/90 hover:text-[#60A5FA] hover:drop-shadow-[0_0_8px_rgba(96,165,250,0.5)]";
+    const base = "font-bold text-sm transition-all duration-300 relative py-2 cursor-pointer bg-transparent border-none outline-none flex items-center h-full";
+    const activeColor = "text-[#60A5FA] font-black drop-shadow-[0_0_8px_rgba(96,165,250,0.4)]";
+    const inactiveColor = "text-white hover:text-[#60A5FA] hover:drop-shadow-[0_0_10px_rgba(96,165,250,0.6)]";
     return `${base} ${isActive(href) ? activeColor : inactiveColor}`;
   };
 
@@ -274,8 +274,8 @@ export function Navigation() {
       <motion.nav
         className={`fixed z-50 transition-all duration-500 ease-in-out ${
           isScrolled 
-            ? 'top-4 left-1/2 -translate-x-1/2 w-[92%] max-w-7xl h-16 rounded-2xl border bg-slate-950/75 dark:bg-[#0B0F19]/80 backdrop-blur-xl border-white/10 shadow-2xl' 
-            : 'top-0 left-0 right-0 w-full h-20 bg-slate-950/30 dark:bg-[#0B0F19]/30 backdrop-blur-md border-white/5 border-b shadow-lg'
+            ? 'top-4 left-1/2 -translate-x-1/2 w-[92%] max-w-7xl h-16 rounded-2xl border bg-slate-950/80 dark:bg-[#0B0F19]/85 backdrop-blur-2xl border-white/15 shadow-[0_8px_32px_0_rgba(0,0,0,0.5)]' 
+            : 'top-0 left-0 right-0 w-full h-20 bg-slate-950/45 dark:bg-[#0B0F19]/50 backdrop-blur-xl border-white/10 border-b shadow-lg'
         }`}
         initial={{ y: -100 }}
         animate={{ y: 0 }}

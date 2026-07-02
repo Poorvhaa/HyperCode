@@ -1,13 +1,21 @@
 'use client';
 
-import { Award, Users, Globe, Handshake, CheckCircle2, XCircle, Zap, ShieldAlert, Cpu } from 'lucide-react';
+import { 
+  Sparkles, 
+  ShieldCheck, 
+  Award, 
+  Zap, 
+  Users, 
+  Server, 
+  CheckCircle2, 
+  XCircle 
+} from 'lucide-react';
 import { useLocale } from 'next-intl';
 import { motion } from 'framer-motion';
 
 export function WhyHypercodeSection() {
   const locale = useLocale();
 
-  // Local translation dictionary for self-contained differentiators
   const trans: Record<string, {
     badge: string;
     title: string;
@@ -15,34 +23,46 @@ export function WhyHypercodeSection() {
     timelineHeader: string;
     traditional: string;
     accelerated: string;
+    comparisonTitle: string;
+    comparisonSub: string;
     r1Title: string; r1Desc: string;
     r2Title: string; r2Desc: string;
     r3Title: string; r3Desc: string;
     r4Title: string; r4Desc: string;
+    r5Title: string; r5Desc: string;
+    r6Title: string; r6Desc: string;
   }> = {
     en: {
       badge: "WHY PARTNER WITH US",
-      title: "Why Organizations Choose HyperCode",
-      description: "Traditional enterprise IT consulting models require months of audits, spec drafting, and bloated onboarding cycles. HyperCode merges strategic blueprints with a pre-vetted national staffing pool to cut deployment speed in half.",
+      title: "Built for Enterprise Acceleration",
+      description: "Traditional enterprise consulting requires months of bloated planning and slow onboarding. HyperCode merges strategic blueprints with an agile nationwide talent pool to deploy production-ready systems in weeks.",
       timelineHeader: "AVERAGE DEPLOYMENT TIMELINE",
       traditional: "Traditional Integrators",
       accelerated: "HyperCode Accelerated Engine",
-      r1Title: "Enterprise Expertise", r1Desc: "Deep experience in web applications, analytics, cloud databases, and enterprise systems.",
-      r2Title: "Flexible Talent Solutions", r2Desc: "Contract, contract-to-hire, and direct placement services.",
-      r3Title: "Nationwide Delivery", r3Desc: "Supporting commercial and government organizations across the United States.",
-      r4Title: "Long-Term Partnerships", r4Desc: "Focused on trust, accountability, and measurable business outcomes."
+      comparisonTitle: "Feature Comparison",
+      comparisonSub: "Enterprise Class",
+      r1Title: "AI-First Innovation", r1Desc: "Infusing generative AI and intelligent agent automation into core business workflows.",
+      r2Title: "Enterprise-Grade Delivery", r2Desc: "A proven track record of engineering high-availability, secure, and compliant digital products.",
+      r3Title: "Certified Tech Experts", r3Desc: "Top-tier solutions architects and developers skilled in modern cloud and database systems.",
+      r4Title: "Agile Project Execution", r4Desc: "Direct, transparent delivery pipelines that eliminate administrative bloat and cut cycles in half.",
+      r5Title: "Dedicated Success Manager", r5Desc: "A single senior point of contact to align project deliverables with your long-term business goals.",
+      r6Title: "Secure & Scalable Tech", r6Desc: "Security-first custom architectures built for SOC 2, HIPAA, and GDPR compliance."
     },
     es: {
       badge: "POR QUÉ ASOCIARSE CON NOSOTROS",
-      title: "Por qué las Organizaciones Elijen HyperCode",
-      description: "Los modelos tradicionales de consultoría de TI empresarial requieren meses de auditorías, redacción de especificaciones y ciclos de incorporación inflados. HyperCode fusiona planes estratégicos con un grupo nacional de personal preseleccionado para reducir la velocidad de implementación a la mitad.",
+      title: "Construido para la Aceleración Empresarial",
+      description: "La consultoría tradicional requiere meses de planificación lenta e incorporación inflada. HyperCode fusiona planes estratégicos con un grupo ágil de talentos para implementar sistemas listos para producción en semanas.",
       timelineHeader: "CRONOGRAMA PROMEDIO DE IMPLEMENTACIÓN",
       traditional: "Integradores Tradicionales",
       accelerated: "Motor Acelerado HyperCode",
-      r1Title: "Experiencia Empresarial", r1Desc: "Profunda experiencia en aplicaciones web, analítica, bases de datos en la nube y sistemas empresariales.",
-      r2Title: "Soluciones Flexibles de Talento", r2Desc: "Servicios de contrato, contrato a contratación y colocación directa.",
-      r3Title: "Entrega a Nivel Nacional", r3Desc: "Apoyo a organizaciones comerciales y gubernamentales en todo Estados Unidos.",
-      r4Title: "Asociaciones a Largo Plazo", r4Desc: "Enfocado en la confianza, la responsabilidad y los resultados comerciales medibles."
+      comparisonTitle: "Matriz Comparativa",
+      comparisonSub: "Clase Empresarial",
+      r1Title: "Innovación AI-First", r1Desc: "Inyección de IA generativa y agentes inteligentes en los flujos clave de su negocio.",
+      r2Title: "Entrega de Clase Empresarial", r2Desc: "Una trayectoria comprobada en la ingeniería de productos digitales seguros y de alta disponibilidad.",
+      r3Title: "Expertos Certificados", r3Desc: "Arquitectos de soluciones y desarrolladores de primer nivel en sistemas de datos y nube modernos.",
+      r4Title: "Ejecución de Proyectos Ágil", r4Desc: "Líneas de entrega transparentes y directas que eliminan la burocracia y reducen los tiempos a la mitad.",
+      r5Title: "Gestor de Éxito Dedicado", r5Desc: "Un único punto de contacto senior para alinear las entregas del proyecto con sus objetivos comerciales.",
+      r6Title: "Arquitectura Segura y Escalable", r6Desc: "Arquitecturas personalizadas creadas bajo un enfoque de seguridad y listas para SOC 2, HIPAA y GDPR."
     }
   };
 
@@ -50,24 +70,34 @@ export function WhyHypercodeSection() {
 
   const reasons = [
     {
-      icon: Award,
+      icon: Sparkles,
       title: curr.r1Title,
       desc: curr.r1Desc,
     },
     {
-      icon: Users,
+      icon: ShieldCheck,
       title: curr.r2Title,
       desc: curr.r2Desc,
     },
     {
-      icon: Globe,
+      icon: Award,
       title: curr.r3Title,
       desc: curr.r3Desc,
     },
     {
-      icon: Handshake,
+      icon: Zap,
       title: curr.r4Title,
       desc: curr.r4Desc,
+    },
+    {
+      icon: Users,
+      title: curr.r5Title,
+      desc: curr.r5Desc,
+    },
+    {
+      icon: Server,
+      title: curr.r6Title,
+      desc: curr.r6Desc,
     },
   ];
 
@@ -85,8 +115,8 @@ export function WhyHypercodeSection() {
         
         {/* Title Block */}
         <div className="max-w-3xl mb-20 space-y-4">
-          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C81] tracking-widest uppercase">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#0F4C81]" />
+          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C81] dark:text-blue-400 tracking-widest uppercase">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#0F4C81] dark:bg-blue-400" />
             {curr.badge}
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
@@ -144,8 +174,8 @@ export function WhyHypercodeSection() {
             {/* Comparison Matrix Table */}
             <div className="bg-white dark:bg-[#0b0f19]/40 border border-slate-200/60 dark:border-slate-800/60 rounded-3xl overflow-hidden shadow-sm">
               <div className="px-6 py-4 bg-slate-50 dark:bg-[#0B0F19] border-b border-slate-200/60 dark:border-slate-800/60 flex justify-between items-center">
-                <span className="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">{locale === 'es' ? 'Matriz Comparativa' : 'Feature Comparison'}</span>
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Enterprise Class</span>
+                <span className="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">{curr.comparisonTitle}</span>
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{curr.comparisonSub}</span>
               </div>
               <div className="divide-y divide-slate-100 dark:divide-slate-900">
                 {comparisonRows.map((row, index) => (
@@ -156,7 +186,7 @@ export function WhyHypercodeSection() {
                         <CheckCircle2 size={12} className="text-emerald-500" />
                         {row.hc}
                       </div>
-                      <div className="text-xs font-semibold text-slate-400 dark:text-slate-500 flex items-center gap-1.5">
+                      <div className="text-xs font-semibold text-slate-400 dark:text-slate-550 flex items-center gap-1.5">
                         <XCircle size={12} className="text-slate-300 dark:text-slate-700" />
                         {row.trad}
                       </div>
@@ -189,7 +219,7 @@ export function WhyHypercodeSection() {
                       <h4 className="text-lg font-bold text-slate-900 dark:text-slate-200">
                         {reason.title}
                       </h4>
-                      <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-semibold">
+                      <p className="text-xs sm:text-sm text-slate-555 dark:text-slate-400 leading-relaxed font-semibold">
                         {reason.desc}
                       </p>
                     </div>

@@ -104,22 +104,22 @@
     "address": "100 Pine St, Suite 2400, San Francisco, CA 94111",
     "phone": "+1 (555) 019-2834",
     "email": "info@hypercode.com",
+    "legal": "Legal",
     "newsletterTitle": "Suscríbase a Insights",
     "newsletterDesc": "Reciba boletines tecnológicos mensuales redactados por nuestros directores de soluciones.",
     "newsletterPlaceholder": "Correo Corporativo",
     "newsletterSuccess": "¡Gracias por suscribirse!",
     "corporateHq": "Sede Central",
     "unitedStates": "Estados Unidos",
-    "phone": "Teléfono",
-    "email": "Correo electrónico",
-    "legal": "Legal"
+    "phone": "Teléfono"
   },
   "Hero": {
     "badge": "Socio de Transformación Digital Empresarial",
-    "title": "Empoderando Empresas a través de ",
-    "titleHighlight": "Soluciones de Datos, Tecnología y Talento",
-    "subtitle": "Combinamos desarrollo web a medida, ingeniería de datos en la nube, analítica avanzada y reclutamiento estratégico de personal TI y No-TI para acelerar el crecimiento corporativo.",
-    "talkToConsultant": "Hablar con un Consultor",
+    "title": "Construya Soluciones Digitales con IA & ",
+    "titleHighlight": "Escale con Tecnología Empresarial",
+    "subtitle": "HyperCode es una empresa de consultoría de TI y soluciones de IA empresarial. Combinamos ingeniería de software a medida, estructuras de datos en la nube, analítica avanzada y soluciones de talento estratégico para acelerar el crecimiento corporativo.",
+    "talkToConsultant": "Programar Consulta",
+    "exploreSolutions": "Explorar Soluciones",
     "nodes": {
       "sources": "Fuentes de Datos",
       "sourcesDesc": "Ingesta flujos de bases de datos, APIs, archivos en la nube y eventos de streaming.",
@@ -138,23 +138,23 @@
   "Services": {
     "badge": "Competencias Principales",
     "title": "Servicios y Soluciones Empresariales",
-    "subtitle": "Desplegamos equipos integrados para diseñar flujos de datos en la nube, aplicaciones web a medida y plataformas de análisis ágiles.",
+    "subtitle": "Desplegamos equipos integrados de ingeniería y consultores estratégicos para resolver sus desafíos tecnológicos más complejos.",
     "items": {
       "bi": {
-        "title": "Inteligencia de Negocios",
-        "desc": "Conexión de depósitos de datos sin procesar a paneles interactivos (Power BI, Tableau) para el seguimiento del rendimiento ejecutivo."
+        "title": "IA y Analítica Avanzada",
+        "desc": "Diseño de modelos predictivos, agentes personalizados de LLM y sistemas interactivos de inteligencia ejecutiva para convertir datos brutos en previsión estratégica."
       },
       "de": {
-        "title": "Ingeniería de Datos",
-        "desc": "Estructuración de almacenes en la nube (Snowflake, Databricks) y scripting de canalizaciones de alto volumen utilizando dbt y Airflow."
+        "title": "Ingeniería de Datos en la Nube",
+        "desc": "Diseño de almacenes de datos (lakehouses) en la nube de alta disponibilidad, flujos de datos automatizados y modelos de gobernanza robustos para garantizar la integridad y el cumplimiento."
       },
       "web": {
-        "title": "Desarrollo Web",
-        "desc": "Codificación de plataformas React y Next.js personalizadas optimizadas para alta disponibilidad, velocidad de API y seguridad empresarial."
+        "title": "Desarrollo de Software Empresarial",
+        "desc": "Ingeniería de aplicaciones web a medida seguras y escalables, plataformas SaaS de alta disponibilidad e integraciones de API empresariales."
       },
       "staffing": {
-        "title": "Contratación de Personal de TI y No TI",
-        "desc": "Colocación de ingenieros de nube, desarrolladores de BI y Scrum Masters verificados para acelerar sus plazos de integración."
+        "title": "Soluciones de Talento Estratégico",
+        "desc": "Despliegue de equipos técnicos de alto rendimiento preseleccionados, desarrolladores sénior y arquitectos de soluciones para escalar sus capacidades de ingeniería interna."
       }
     }
   },
@@ -1069,8 +1069,8 @@
     "titleHighlight": "experiencia, la innovación y la confianza",
     "subtitle": "HyperCode es una firma de consultoría y tecnología dedicada a ayudar a las organizaciones a resolver desafíos comerciales complejos a través de soluciones basadas en datos, tecnología moderna y talento especializado.",
     "storyTitle": "Nuestra Historia",
-    "storyP1": "HyperCode se fundó con un objetivo claro: cerrar la brecha entre la ingeniería de software personalizada, las canalizaciones de datos sin procesar y la toma de decisiones ejecutivas. Con los años, nos hemos convertido en un socio estratégico de confianza para empresas de Fortune 500 y agencias gubernamentales en todo Estados Unidos.",
-    "storyP2": "Lo que nos diferencia es nuestro compromiso de combinar la ejecución técnica con la consultoría centrada en el ser humano. Creemos que los paneles y las bases de datos modernos son solo tan efectivos como los equipos que los utilizan.",
+    "storyP1": "HyperCode es una firma de consultoría estratégica consolidada, centrada en ofrecer soluciones de inteligencia empresarial y análisis de datos, así como servicios de implementación y soporte, a clientes líderes de los sectores comercial y gubernamental. Nuestro equipo posee un espíritu emprendedor y una visión de futuro, y es reconocido por su amplia experiencia en soluciones empresariales y su profundo conocimiento del sector. Junto con nuestros clientes, creamos un entorno de trabajo que fomenta la creatividad, la innovación, la productividad y la confianza.",
+    "storyP2": "HyperCode define el éxito mediante niveles equivalentes de satisfacción tanto del cliente como del individuo, fruto de la confianza mutua, la responsabilidad y la productividad. Nuestro entorno de trabajo emprendedor y las oportunidades que ofrece para el crecimiento personal y profesional constituyen el eje central de todas nuestras actividades. Como resultado, nuestros clientes se benefician de un servicio inigualable y de soluciones innovadoras para sus desafíos empresariales y técnicos. Asimismo, aplicamos este mismo enfoque en las comunidades a las que servimos, compartiendo nuestro tiempo y recursos económicos. Somos una firma de confianza en servicios de dotación de personal y reclutamiento, especializada en la captación de talento —tanto técnico (TI) como no técnico— para diversos sectores.",
     "mission": "Nuestra Misión",
     "missionDesc": "Empoderar a las organizaciones para resolver desafíos complejos mediante la entrega de arquitecturas de datos sólidas, software moderno y talento técnico de alto rendimiento que impulsen el crecimiento sostenible.",
     "vision": "Nuestra Visión",
@@ -1364,8 +1364,8 @@
   },
   "cta": {
     "badge": "PÓNGASE EN CONTACTO",
-    "heading": "¿Listo para impulsar su empresa con soluciones de datos, tecnología y talento?",
-    "description": "Ya sea que necesite desarrollar aplicaciones web de alto rendimiento, optimizar paneles de inteligencia empresarial o ampliar sus equipos de ingeniería, HyperCode tiene la experiencia necesaria para ayudarle.",
+    "heading": "¿Listo para crear su próxima solución digital?",
+    "description": "Asóciese con nuestros equipos de ingeniería de élite y consultores tecnológicos para crear sistemas seguros, escalables y orientados a la IA.",
     "primaryButton": "PROGRAMAR CONSULTA",
     "secondaryButton": "CONTACTAR A HYPERCODE"
   }

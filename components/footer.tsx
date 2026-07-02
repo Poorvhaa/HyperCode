@@ -1,11 +1,9 @@
 'use client';
 
 import { Link } from '@/i18n/routing';
-import Image from "next/image";
-import { Mail, Phone, MapPin, ArrowRight, ShieldCheck, Award, Globe, Database, Network } from 'lucide-react';
+import { Mail, Phone, MapPin, ArrowRight, ShieldCheck, Award, Database, Network } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useState, type FormEvent } from 'react';
 
 export function Footer() {
   const tNav = useTranslations('Navigation');
@@ -17,7 +15,7 @@ export function Footer() {
   const [subscribed, setSubscribed] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
-  const handleSubscribe = async (e: React.FormEvent) => {
+  const handleSubscribe = async (e: FormEvent) => {
     e.preventDefault();
     if (!email) return;
     setSubmitting(true);
@@ -191,9 +189,9 @@ export function Footer() {
           <div className="space-y-6">
             <h4 className="text-xs font-bold text-white uppercase tracking-widest border-l-2 border-[#0F4C81] pl-2">{tc('company')}</h4>
             <ul className="space-y-4 text-sm font-semibold">
-              <li><Link href="/about" className="hover:text-white transition-colors duration-200">{tNav('about')}</Link></li>
-              <li><Link href="/careers" className="hover:text-white transition-colors duration-200">{tNav('careers')}</Link></li>
-              <li><Link href="/contact" className="hover:text-white transition-colors duration-200">{tNav('contact')}</Link></li>
+              <li><Link href="/about" className="hover:text-[#60A5FA] hover:translate-x-1 inline-block transition-all duration-200">{tNav('about')}</Link></li>
+              <li><Link href="/careers" className="hover:text-[#60A5FA] hover:translate-x-1 inline-block transition-all duration-200">{tNav('careers')}</Link></li>
+              <li><Link href="/contact" className="hover:text-[#60A5FA] hover:translate-x-1 inline-block transition-all duration-200">{tNav('contact')}</Link></li>
             </ul>
           </div>
 
@@ -203,7 +201,7 @@ export function Footer() {
             <ul className="space-y-4 text-sm font-semibold">
               {solutionsList.slice(0, 7).map((s, idx) => (
                 <li key={idx}>
-                  <Link href={s.href} className="hover:text-white transition-colors duration-200">{s.name}</Link>
+                  <Link href={s.href} className="hover:text-[#60A5FA] hover:translate-x-1 inline-block transition-all duration-200">{s.name}</Link>
                 </li>
               ))}
             </ul>
@@ -215,13 +213,13 @@ export function Footer() {
             <ul className="space-y-4 text-sm font-semibold lg:mt-12">
               {solutionsList.slice(7).map((s, idx) => (
                 <li key={idx}>
-                  <Link href={s.href} className="hover:text-white transition-colors duration-200">{s.name}</Link>
+                  <Link href={s.href} className="hover:text-[#60A5FA] hover:translate-x-1 inline-block transition-all duration-200">{s.name}</Link>
                 </li>
               ))}
               <li>
                 <Link
                   href="/solutions"
-                  className="hover:text-white transition-colors duration-200 text-blue-400 font-extrabold flex items-center gap-1 mt-1"
+                  className="hover:text-[#60A5FA] hover:translate-x-1 inline-flex items-center gap-1 transition-all duration-200 text-blue-450 font-extrabold mt-1"
                 >
                   <span>{tNav('viewAllSolutions')}</span>
                   <ArrowRight size={12} />
@@ -235,48 +233,19 @@ export function Footer() {
             <div className="space-y-6">
               <h4 className="text-xs font-bold text-white uppercase tracking-widest border-l-2 border-[#0F4C81] pl-2">{tf('legal')}</h4>
               <ul className="space-y-4 text-sm font-semibold">
-                <li><Link href="/PP" className="hover:text-white transition-colors duration-200">{tf('privacy')}</Link></li>
-                <li><Link href="/TnC" className="hover:text-white transition-colors duration-200">{tf('terms')}</Link></li>
+                <li><Link href="/PP" className="hover:text-[#60A5FA] hover:translate-x-1 inline-block transition-all duration-200">{tf('privacy')}</Link></li>
+                <li><Link href="/TnC" className="hover:text-[#60A5FA] hover:translate-x-1 inline-block transition-all duration-200">{tf('terms')}</Link></li>
               </ul>
             </div>
             
             <div className="space-y-6">
               <h4 className="text-xs font-bold text-white uppercase tracking-widest border-l-2 border-[#0F4C81] pl-2">{tc('support')}</h4>
               <ul className="space-y-4 text-sm font-semibold">
-                <li><button onClick={triggerOpenChat} className="hover:text-white transition-colors text-left bg-transparent border-none p-0 cursor-pointer font-bold">{tNav('aiConsultant') || 'AI Consultant'}</button></li>
-                <li><Link href="/consultation" className="hover:text-white transition-colors duration-200">{tNav('schedule')}</Link></li>
-                <li><Link href="/contact" className="hover:text-white transition-colors duration-200">{tNav('contact')}</Link></li>
+                <li><button onClick={triggerOpenChat} className="hover:text-[#60A5FA] hover:translate-x-1 inline-block transition-all duration-200 text-left bg-transparent border-none p-0 cursor-pointer font-bold">{tNav('aiConsultant') || 'AI Consultant'}</button></li>
+                <li><Link href="/consultation" className="hover:text-[#60A5FA] hover:translate-x-1 inline-block transition-all duration-200">{tNav('schedule')}</Link></li>
+                <li><Link href="/contact" className="hover:text-[#60A5FA] hover:translate-x-1 inline-block transition-all duration-200">{tNav('contact')}</Link></li>
               </ul>
             </div>
-          </div>
-        </div>
-
-        {/* Global Partner & Certification Displays */}
-        <div className="py-12 border-b border-slate-900 flex flex-wrap items-center justify-between gap-8">
-          <div className="flex flex-col gap-2">
-            <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Enterprise Certifications</span>
-            <div className="flex flex-wrap items-center gap-6">
-              <div className="flex items-center gap-1.5 text-xs text-slate-400 font-bold">
-                <Award size={16} className="text-[#0F4C81]" />
-                <span>Microsoft Gold Partner</span>
-              </div>
-              <div className="flex items-center gap-1.5 text-xs text-slate-400 font-bold">
-                <Network size={16} className="text-cyan-500" />
-                <span>AWS Consulting Network</span>
-              </div>
-              <div className="flex items-center gap-1.5 text-xs text-slate-400 font-bold">
-                <Database size={16} className="text-purple-400" />
-                <span>Snowflake Partner Network</span>
-              </div>
-            </div>
-          </div>
-          
-          <div className="text-xs text-slate-500 font-bold flex gap-4">
-            <span>SOC 2 Type II Certified</span>
-            <span>•</span>
-            <span>GDPR Compliant</span>
-            <span>•</span>
-            <span>HIPAA Compliant</span>
           </div>
         </div>
 

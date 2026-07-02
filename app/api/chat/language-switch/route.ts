@@ -37,7 +37,7 @@ export async function POST(req: Request) {
   } catch (err) {
     console.error('Language switch route error:', err);
     if (err instanceof z.ZodError) {
-      return NextResponse.json({ error: 'Validation failed', details: err.errors }, { status: 400 });
+      return NextResponse.json({ error: 'Validation failed', details: err.issues }, { status: 400 });
     }
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }

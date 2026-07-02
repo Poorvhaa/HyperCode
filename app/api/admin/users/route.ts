@@ -190,7 +190,7 @@ export async function POST(req: Request) {
         role
       };
       if (availableCols.includes('name')) payload.name = name || email.split('@')[0];
-      if (availableCols.includes('avatar')) payload.avatar = `https://images.unsplash.com/photo-${1535713875002-d1d0cf377fde}?auto=format&fit=crop&w=100&h=100&q=80`;
+      if (availableCols.includes('avatar')) payload.avatar = 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&h=100&q=80';
       if (availableCols.includes('is_active')) payload.is_active = true;
       if (availableCols.includes('created_at')) payload.created_at = new Date().toISOString();
 

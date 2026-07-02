@@ -6,7 +6,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Database, 
   Cloud, 
-  BarChart3, 
   Layers, 
   Cpu, 
   Network, 
@@ -15,36 +14,48 @@ import {
   Server, 
   Terminal,
   Activity,
-  Workflow
+  Workflow,
+  Sparkles,
+  Brain,
+  Smartphone,
+  Globe,
+  Zap,
+  Palette
 } from 'lucide-react';
 
-type TabKey = 'ai_analytics' | 'engineering' | 'cloud_devops' | 'database_security';
+type TabKey = 'ai' | 'cloud' | 'frontend' | 'backend' | 'mobile' | 'database' | 'devops';
 
 export function TechnologyExpertise() {
   const locale = useLocale() as 'en' | 'es';
-  const [activeTab, setActiveTab] = useState<TabKey>('ai_analytics');
+  const [activeTab, setActiveTab] = useState<TabKey>('ai');
 
   const translations = {
     en: {
-      badge: "Enterprise Tech Stack",
-      title: "Technology & Platform Ecosystem",
+      badge: "Technologies We Master",
+      title: "Enterprise Technology Stack",
       subtitle: "We architect custom software, scale automated workflows, and orchestrate cloud databases using gold-standard certified tools.",
       tabs: {
-        ai_analytics: "AI & Analytics",
-        engineering: "Frontend & Backend",
-        cloud_devops: "Cloud & DevOps",
-        database_security: "Database & Security"
+        ai: "AI",
+        cloud: "Cloud",
+        frontend: "Frontend",
+        backend: "Backend",
+        mobile: "Mobile",
+        database: "Database",
+        devops: "DevOps"
       }
     },
     es: {
-      badge: "Pila Tecnológica Empresarial",
-      title: "Ecosistema de Tecnología y Plataformas",
+      badge: "Tecnologías que Dominamos",
+      title: "Pila Tecnológica Empresarial",
       subtitle: "Diseñamos software a medida, escalamos flujos automatizados y orquestamos bases de datos en la nube con herramientas certificadas.",
       tabs: {
-        ai_analytics: "IA y Analítica",
-        engineering: "Frontend y Backend",
-        cloud_devops: "Nube y DevOps",
-        database_security: "Bases de Datos y Seguridad"
+        ai: "IA",
+        cloud: "Nube",
+        frontend: "Frontend",
+        backend: "Backend",
+        mobile: "Móvil",
+        database: "Bases de Datos",
+        devops: "DevOps"
       }
     }
   };
@@ -52,60 +63,94 @@ export function TechnologyExpertise() {
   const activeTranslation = translations[locale] || translations.en;
 
   const categories = {
-    ai_analytics: {
+    ai: {
       badges: {
-        en: ['Generative AI', 'Large Language Models', 'Data Visualization', 'Predictive Modeling'],
-        es: ['IA Generativa', 'Modelos de Lenguaje Grandes', 'Visualización de Datos', 'Modelado Predictivo']
+        en: ['Generative AI', 'Agentic Systems', 'Cognitive Search', 'ML Ops'],
+        es: ['IA Generativa', 'Sistemas Agentes', 'Búsqueda Cognitiva', 'ML Ops']
       },
       items: [
-        { name: 'OpenAI / Claude API', icon: Cpu, desc: { en: 'Generative agents & RAG pipelines', es: 'Agentes generativos y flujos RAG' } },
-        { name: 'Python / PyTorch', icon: Workflow, desc: { en: 'Machine learning development', es: 'Desarrollo de aprendizaje automático' } },
-        { name: 'Power BI', icon: BarChart3, desc: { en: 'Executive dashboards & analytics', es: 'Tableros e informes ejecutivos' } },
-        { name: 'Tableau', icon: Database, desc: { en: 'Self-service business intelligence', es: 'Inteligencia de negocios autoservicio' } },
-        { name: 'LangChain', icon: Network, desc: { en: 'Agentic framework orchestration', es: 'Orquestación de marcos de trabajo agentes' } },
-        { name: 'Hugging Face', icon: Layers, desc: { en: 'Model fine-tuning & integration', es: 'Ajuste fino e integración de modelos' } },
+        { name: 'OpenAI GPT-4', icon: Sparkles, desc: { en: 'Generative LLM agents & models', es: 'Modelos y agentes LLM generativos' } },
+        { name: 'Anthropic Claude', icon: Cpu, desc: { en: 'Contextual reasoning & automation', es: 'Razonamiento contextual y automatización' } },
+        { name: 'LangChain', icon: Network, desc: { en: 'Multi-agent system orchestration', es: 'Orquestación de sistemas multi-agente' } },
+        { name: 'LlamaIndex', icon: Brain, desc: { en: 'RAG knowledge engines & pipelines', es: 'Flujos y motores de conocimiento RAG' } },
+        { name: 'Hugging Face', icon: Layers, desc: { en: 'Custom model training & hosting', es: 'Alojamiento y entrenamiento de modelos' } },
+        { name: 'PyTorch / Python', icon: Activity, desc: { en: 'Deep learning & neural networks', es: 'Redes neuronales y aprendizaje profundo' } }
       ]
     },
-    engineering: {
+    cloud: {
       badges: {
-        en: ['Custom Web Apps', 'SaaS Architectures', 'Type-Safe Systems', 'API Services'],
-        es: ['Apps Web a Medida', 'Arquitecturas SaaS', 'Sistemas con Tipado Seguro', 'Servicios API']
+        en: ['Multi-Cloud', 'Edge Computing', 'Scalable Networks', 'Serverless'],
+        es: ['Multi-Nube', 'Cómputo Perimetral', 'Redes Escalables', 'Serverless']
       },
       items: [
-        { name: 'React / Next.js', icon: Code, desc: { en: 'High-availability frontend portals', es: 'Portales frontend de alta disponibilidad' } },
-        { name: 'TypeScript', icon: ShieldCheck, desc: { en: 'Robust client and server logic', es: 'Lógica robusta de cliente y servidor' } },
-        { name: 'Node.js', icon: Terminal, desc: { en: 'Scalable API & event gateways', es: 'Puertas de enlace de API y eventos escalables' } },
-        { name: '.NET Core', icon: Server, desc: { en: 'Enterprise C# backends & services', es: 'Servicios y backends empresariales en C#' } },
-        { name: 'Go (Golang)', icon: Workflow, desc: { en: 'High-performance microservices', es: 'Microservicios de alto rendimiento' } },
-        { name: 'Tailwind CSS', icon: Layers, desc: { en: 'Premium responsive design systems', es: 'Sistemas de diseño responsivos premium' } },
+        { name: 'AWS Cloud', icon: Cloud, desc: { en: 'Scalable computing infrastructure', es: 'Infraestructura de cómputo escalable' } },
+        { name: 'Microsoft Azure', icon: Server, desc: { en: 'Enterprise cloud ecosystem', es: 'Ecosistema de nube empresarial' } },
+        { name: 'Google Cloud Platform', icon: Globe, desc: { en: 'Big data analytics & cloud tools', es: 'Análisis de datos y herramientas de nube' } },
+        { name: 'Vercel Edge', icon: Zap, desc: { en: 'Serverless deployment & rendering', es: 'Implementación y renderizado serverless' } },
+        { name: 'Netlify Services', icon: Layers, desc: { en: 'Modern static and dynamic hosting', es: 'Alojamiento moderno estático y dinámico' } }
       ]
     },
-    cloud_devops: {
+    frontend: {
       badges: {
-        en: ['Cloud Platforms', 'Container Orchestration', 'CI/CD Pipelines', 'Infrastructure as Code'],
-        es: ['Plataformas Nube', 'Orquestación de Contenedores', 'Flujos CI/CD', 'Infraestructura como Código']
+        en: ['Type-Safe UI', 'Single Page Apps', 'Design Systems', 'Modern CSS'],
+        es: ['IU con Tipado Seguro', 'Aplicaciones de Una Página', 'Sistemas de Diseño', 'CSS Moderno']
       },
       items: [
-        { name: 'AWS Cloud', icon: Cloud, desc: { en: 'Elastic computing & architectures', es: 'Cómputo elástico y arquitecturas en la nube' } },
-        { name: 'Microsoft Azure', icon: Network, desc: { en: 'Hybrid integrations & directory services', es: 'Integraciones híbridas y directorios' } },
-        { name: 'Docker / Kubernetes', icon: Layers, desc: { en: 'Microservices containerization', es: 'Contenedorización de microservicios' } },
-        { name: 'Terraform', icon: Workflow, desc: { en: 'Declarative infrastructure setups', es: 'Configuración declarativa de infraestructura' } },
-        { name: 'GitHub Actions', icon: Terminal, desc: { en: 'Automated software deployments', es: 'Implementaciones automatizadas de software' } },
-        { name: 'Vercel / Netlify', icon: Server, desc: { en: 'Next-gen edge server deployments', es: 'Implementaciones de servidores perimetrales' } },
+        { name: 'React', icon: Code, desc: { en: 'Interactive component state engine', es: 'Motor de estado de componentes interactivos' } },
+        { name: 'Next.js', icon: Terminal, desc: { en: 'Server-side rendered frameworks', es: 'Marcos de trabajo renderizados en servidor' } },
+        { name: 'TypeScript', icon: ShieldCheck, desc: { en: 'Robust static typing declarations', es: 'Declaraciones robustas de tipado estático' } },
+        { name: 'Tailwind CSS', icon: Palette, desc: { en: 'Utility-first utility styling systems', es: 'Sistemas de diseño basados en utilidades' } },
+        { name: 'HTML5 & JavaScript', icon: Code, desc: { en: 'Modern web scripting and structures', es: 'Estructuras y scripts web modernos' } }
       ]
     },
-    database_security: {
+    backend: {
       badges: {
-        en: ['Data Lakes', 'Relational Databases', 'Access Management', 'Compliance Auditing'],
-        es: ['Lagos de Datos', 'Bases de Datos Relacionales', 'Gestión de Accesos', 'Auditoría de Cumplimiento']
+        en: ['Microservices', 'RESTful APIs', 'Concurrency', 'Security'],
+        es: ['Microservicios', 'APIs RESTful', 'Concurrencia', 'Seguridad']
       },
       items: [
-        { name: 'Snowflake', icon: Database, desc: { en: 'Cloud-native data warehousing', es: 'Almacén de datos nativo de la nube' } },
-        { name: 'Databricks', icon: Cpu, desc: { en: 'Unified Lakehouse & engineering', es: 'Lago de datos y análisis unificado' } },
-        { name: 'PostgreSQL / SQL Server', icon: Server, desc: { en: 'High-volume transaction engines', es: 'Motores transaccionales de alto volumen' } },
-        { name: 'Auth0 / Okta (IAM)', icon: ShieldCheck, desc: { en: 'Enterprise identity security', es: 'Seguridad de identidad corporativa' } },
-        { name: 'Supabase / Firebase', icon: Workflow, desc: { en: 'Backend as a Service integration', es: 'Integración de backend como servicio' } },
-        { name: 'Cloudflare WAF', icon: Activity, desc: { en: 'Edge firewall and DDoS shielding', es: 'Cortafuegos perimetral y blindaje DDoS' } },
+        { name: 'Node.js', icon: Terminal, desc: { en: 'Event-driven server-side scripts', es: 'Scripts en el servidor basados en eventos' } },
+        { name: '.NET Core', icon: Server, desc: { en: 'High-performance C# microservices', es: 'Microservicios de C# de alto rendimiento' } },
+        { name: 'Go (Golang)', icon: Cpu, desc: { en: 'Fast execution, concurrent structures', es: 'Estructuras concurrentes de rápida ejecución' } },
+        { name: 'Python Backend', icon: Workflow, desc: { en: 'Data APIs & analytical backends', es: 'APIs de datos y backends analíticos' } }
+      ]
+    },
+    mobile: {
+      badges: {
+        en: ['Native iOS/Android', 'Hybrid Apps', 'Responsive Flow', 'Cross-Platform'],
+        es: ['iOS/Android Nativo', 'Apps Híbridas', 'Flujo Responsivo', 'Multiplataforma']
+      },
+      items: [
+        { name: 'iOS / Swift', icon: Smartphone, desc: { en: 'Elite native Apple experience', es: 'Experiencia nativa de Apple de élite' } },
+        { name: 'Android / Kotlin', icon: Smartphone, desc: { en: 'Premium native Google mobile OS', es: 'SO móvil nativo premium de Google' } },
+        { name: 'Flutter', icon: Workflow, desc: { en: 'Fast cross-platform rendering engine', es: 'Motor rápido de renderizado multiplataforma' } },
+        { name: 'React Native', icon: Layers, desc: { en: 'Component-based hybrid mobile apps', es: 'Apps móviles híbridas basadas en componentes' } }
+      ]
+    },
+    database: {
+      badges: {
+        en: ['Data Lakehouse', 'ACID Transactions', 'Real-Time Sync', 'Cloud Analytics'],
+        es: ['Lago de Datos', 'Transacciones ACID', 'Sincronización en Tiempo Real', 'Analítica en Nube']
+      },
+      items: [
+        { name: 'PostgreSQL', icon: Database, desc: { en: 'Robust relational database engines', es: 'Motores de bases de datos relacionales' } },
+        { name: 'Snowflake', icon: Database, desc: { en: 'Cloud elasticity data warehouse', es: 'Almacén de datos con elasticidad en nube' } },
+        { name: 'Databricks', icon: Cpu, desc: { en: 'Unified data intelligence platforms', es: 'Plataforma unificada de inteligencia de datos' } },
+        { name: 'Supabase / Firebase', icon: Layers, desc: { en: 'Real-time database sync & backends', es: 'Sincronización de base de datos en tiempo real' } },
+        { name: 'Microsoft SQL Server', icon: Server, desc: { en: 'High-availability corporate data engine', es: 'Motor corporativo de bases de datos relacionales' } }
+      ]
+    },
+    devops: {
+      badges: {
+        en: ['Infrastructure as Code', 'Orchestration', 'Continuous Delivery', 'GitOps'],
+        es: ['Infraestructura como Código', 'Orquestación', 'Entrega Continua', 'GitOps']
+      },
+      items: [
+        { name: 'Docker Containers', icon: Layers, desc: { en: 'Consistent isolated runtime packages', es: 'Paquetes de ejecución aislados consistentes' } },
+        { name: 'Kubernetes', icon: Network, desc: { en: 'Automated container scaling clusters', es: 'Clústeres automatizados de escalado' } },
+        { name: 'Terraform', icon: Workflow, desc: { en: 'Declarative system resource builders', es: 'Creadores declarativos de recursos del sistema' } },
+        { name: 'GitHub Actions', icon: Terminal, desc: { en: 'Automated script build pipelines', es: 'Canalizaciones de compilación automatizadas' } },
+        { name: 'CI/CD Pipelines', icon: Activity, desc: { en: 'Continuous code delivery gates', es: 'Pasarelas de entrega de código continua' } }
       ]
     }
   };
@@ -114,11 +159,16 @@ export function TechnologyExpertise() {
   const activeBadges = activeCategory.badges[locale] || activeCategory.badges.en;
   
   const tabIcons = {
-    ai_analytics: Cpu,
-    engineering: Code,
-    cloud_devops: Cloud,
-    database_security: ShieldCheck
+    ai: Sparkles,
+    cloud: Cloud,
+    frontend: Code,
+    backend: Server,
+    mobile: Smartphone,
+    database: Database,
+    devops: Network
   };
+
+  // Local helpers removed, standard lucide-react icons imported instead
 
   return (
     <section className="relative bg-[#fcfdfe] dark:bg-[#07090e] border-t border-b border-slate-100 dark:border-slate-900 py-32 select-none text-left overflow-hidden bg-dot-pattern">
@@ -129,8 +179,8 @@ export function TechnologyExpertise() {
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C81] tracking-widest uppercase">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#0F4C81]" />
+          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C81] dark:text-blue-400 tracking-widest uppercase">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#0F4C81] dark:bg-blue-400" />
             {activeTranslation.badge}
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
@@ -142,7 +192,7 @@ export function TechnologyExpertise() {
         </div>
 
         {/* Tab Selectors */}
-        <div className="flex flex-wrap md:flex-row justify-center gap-2 p-2 bg-slate-100/60 dark:bg-slate-900/40 border border-slate-200/50 dark:border-slate-800/50 rounded-2xl max-w-3xl mx-auto mb-10 shadow-inner backdrop-blur-md">
+        <div className="flex flex-wrap justify-center gap-2 p-2 bg-slate-100/60 dark:bg-slate-900/40 border border-slate-200/50 dark:border-slate-800/50 rounded-2xl max-w-5xl mx-auto mb-10 shadow-inner backdrop-blur-md">
           {(Object.keys(categories) as TabKey[]).map((tabKey) => {
             const TabIcon = tabIcons[tabKey];
             const isActive = activeTab === tabKey;
@@ -150,10 +200,10 @@ export function TechnologyExpertise() {
               <button
                 key={tabKey}
                 onClick={() => setActiveTab(tabKey)}
-                className={`flex-1 flex items-center justify-center gap-2.5 px-6 py-3.5 text-xs sm:text-sm rounded-xl font-bold transition-all duration-300 cursor-pointer ${
+                className={`flex-grow md:flex-initial flex items-center justify-center gap-2 px-5 py-3 text-xs sm:text-sm rounded-xl font-bold transition-all duration-300 cursor-pointer ${
                   isActive
                     ? "bg-white dark:bg-[#0B0F19] text-[#0F4C81] dark:text-blue-400 border border-slate-250/50 dark:border-slate-800 shadow-md"
-                    : "text-slate-655 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/40 dark:hover:bg-slate-900/20"
+                    : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/40 dark:hover:bg-slate-900/20"
                 }`}
               >
                 <TabIcon size={16} className={isActive ? "text-[#0F4C81] dark:text-blue-400" : "text-slate-400"} />

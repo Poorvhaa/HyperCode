@@ -1523,7 +1523,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
         )}
       </AnimatePresence>
 
-      {/* 2. Floating Launcher Button (Visible in Closed or Minimized state) */}
+      {/* 2. Floating Launcher Button (Visible in Closed or Minimized state) 
       <AnimatePresence>
         {(windowState === 'closed' || windowState === 'minimized') && (
           <motion.button
@@ -1546,7 +1546,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
             </span>
           </motion.button>
         )}
-      </AnimatePresence>
+      </AnimatePresence> */}
 
     </div>,
     document.body

@@ -50,6 +50,8 @@ export function CaseStudiesSection({ categoryFilter }: { categoryFilter?: string
       outcome: t('story.outcomeText') || 'Reduced data loading time to 15 minutes and lowered cloud server spend by 45%.',
       image: '/images/case-study-dashboard.png',
       logo: 'NEXCODE',
+      slug: 'data-warehousing-modernization',
+      technologies: ['Snowflake', 'dbt', 'AWS', 'Python', 'Airflow'],
       metrics: [
         { val: '-45%', label: locale === 'es' ? 'Gasto en Nube' : 'Cloud Spend' },
         { val: '15 Min', label: locale === 'es' ? 'Latencia de Datos' : 'Data Latency' },
@@ -65,6 +67,8 @@ export function CaseStudiesSection({ categoryFilter }: { categoryFilter?: string
       outcome: locale === 'es' ? 'Resolución del 70% de las dudas de soporte en el primer contacto.' : 'Automated 70% of common support inquiries with instant resolution.',
       image: '/images/ai-automation.png',
       logo: 'LOGISTIX',
+      slug: 'custom-web-applications',
+      technologies: ['OpenAI GPT-4', 'Next.js', 'Pinecone', 'Node.js', 'Vercel AI SDK'],
       metrics: [
         { val: '70%', label: locale === 'es' ? 'Resolución Auto' : 'Self-Resolution' },
         { val: '24/7', label: locale === 'es' ? 'Disponibilidad' : 'Availability SLA' },
@@ -81,8 +85,10 @@ export function CaseStudiesSection({ categoryFilter }: { categoryFilter?: string
         challenge: s.challenge,
         solution: s.solution,
         outcome: s.results,
-        image: '/images/case-study-dashboard.png',
-        logo: s.client || 'CLIENT',
+        image: s.featured_image || '/images/case-study-dashboard.png',
+        logo: s.client_type || 'CLIENT',
+        slug: s.slug,
+        technologies: s.technologies ? s.technologies.split(',').map(t => t.trim()) : ['Next.js', 'Cloud', 'AI'],
         metrics: [
           { val: 'ROI 2.5x', label: locale === 'es' ? 'Retorno' : 'Est. Project ROI' },
           { val: '100%', label: locale === 'es' ? 'Entrega A tiempo' : 'On-Time Delivery' },
@@ -114,7 +120,6 @@ export function CaseStudiesSection({ categoryFilter }: { categoryFilter?: string
 
   const currentStudy = finalStudies[currentIndex] || staticStudies[0];
 
-
   return (
     <section className="py-32 bg-slate-50/50 dark:bg-[#07090e] border-b border-slate-100 dark:border-slate-900 text-left overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -122,8 +127,8 @@ export function CaseStudiesSection({ categoryFilter }: { categoryFilter?: string
         {/* Title Block */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-20">
           <div className="max-w-3xl space-y-4">
-            <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C81] tracking-widest uppercase">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#0F4C81]" />
+            <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C81] dark:text-blue-400 tracking-widest uppercase">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#0F4C81] dark:bg-blue-400" />
               {t('badge')}
             </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
@@ -174,15 +179,23 @@ export function CaseStudiesSection({ categoryFilter }: { categoryFilter?: string
                   
                   {/* Category logo/badge header */}
                   <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-900 pb-6">
-                    <div className="space-y-1">
+                    <div className="space-y-1.5 flex-1 min-w-[240px]">
                       <span className="text-[10px] font-black text-[#0F4C81] dark:text-blue-400 uppercase tracking-widest block">
                         {currentStudy.category}
                       </span>
                       <h4 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
                         {currentStudy.title}
                       </h4>
+                      {/* Technologies Deployed */}
+                      <div className="flex flex-wrap gap-1.5 pt-2">
+                        {currentStudy.technologies?.map((tech, tIdx) => (
+                          <span key={tIdx} className="px-2.5 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-900 text-[#0F4C81] dark:text-blue-400 text-[10px] font-extrabold uppercase tracking-wide border border-slate-200/30 dark:border-slate-800/60">
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
                     </div>
-                    <div className="px-4 py-1.5 bg-[#0F4C81]/5 border border-[#0F4C81]/15 text-[#0F4C81] dark:text-blue-400 text-xs font-black rounded-xl tracking-wider uppercase">
+                    <div className="px-4 py-1.5 bg-[#0F4C81]/5 border border-[#0F4C81]/15 text-[#0F4C81] dark:text-blue-400 text-xs font-black rounded-xl tracking-wider uppercase flex-shrink-0">
                       {currentStudy.logo}
                     </div>
                   </div>
@@ -191,7 +204,7 @@ export function CaseStudiesSection({ categoryFilter }: { categoryFilter?: string
                   <div className="relative space-y-8 pl-1 md:pl-2">
                     
                     {/* Continuous Vertical Timeline Connector */}
-                    <div className="absolute left-[28px] top-[28px] bottom-[28px] w-[2px] bg-slate-100 dark:bg-slate-900 z-[1]" />
+                    <div className="absolute left-[28px] top-[28px] bottom-[28px] w-[2px] bg-slate-100 dark:bg-slate-900/60 z-[1]" />
 
                     {/* Challenge */}
                     <div className="flex gap-6 items-start relative z-10">
@@ -239,14 +252,26 @@ export function CaseStudiesSection({ categoryFilter }: { categoryFilter?: string
                     </div>
                   </div>
 
-                  {/* Highlights Metric Grid */}
-                  <div className="grid grid-cols-3 gap-4 pt-8 border-t border-slate-100 dark:border-slate-900">
-                    {currentStudy.metrics.map((metric, mIdx) => (
-                      <div key={mIdx} className="space-y-1 bg-slate-50 dark:bg-slate-900/30 p-3 rounded-2xl border border-slate-100/50 dark:border-slate-850">
-                        <div className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">{metric.val}</div>
-                        <div className="text-[9px] sm:text-[10px] font-extrabold text-slate-400 dark:text-slate-550 uppercase tracking-widest">{metric.label}</div>
-                      </div>
-                    ))}
+                  {/* Highlights Metric Grid & Read Full Case Study CTA */}
+                  <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-8 border-t border-slate-100 dark:border-slate-900">
+                    <div className="grid grid-cols-3 gap-4 flex-1 w-full">
+                      {currentStudy.metrics.map((metric, mIdx) => (
+                        <div key={mIdx} className="space-y-1 bg-slate-50 dark:bg-slate-900/30 p-3 rounded-2xl border border-slate-100/50 dark:border-slate-850">
+                          <div className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">{metric.val}</div>
+                          <div className="text-[9px] sm:text-[10px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-widest">{metric.label}</div>
+                        </div>
+                      ))}
+                    </div>
+                    
+                    <div className="w-full sm:w-auto flex-shrink-0">
+                      <Link
+                        href={`/insights/${currentStudy.slug}`}
+                        className="inline-flex items-center justify-center h-12 px-6 w-full sm:w-auto bg-[#0F4C81] hover:bg-[#155e9e] text-white font-bold text-xs uppercase tracking-wider rounded-2xl transition-all shadow-md gap-2"
+                      >
+                        <span>{locale === 'es' ? 'Caso Completo' : 'Read Full Case Study'}</span>
+                        <ArrowRight size={14} />
+                      </Link>
+                    </div>
                   </div>
 
                 </div>

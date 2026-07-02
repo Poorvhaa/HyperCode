@@ -170,7 +170,6 @@ HyperCode Website (Next.js 16)
 - ✅ Services: BI, Analytics, Data Warehousing, Big Data, IT Staffing, Agile
 - ✅ Location: Schaumburg, Illinois highlighted
 - ✅ Nationwide delivery mentioned
-- ✅ Fortune 500 and government focus emphasized
 
 ### Design Requirements
 - ✅ Premium enterprise design (not startup-style)

@@ -104,6 +104,7 @@
     "address": "100 Pine St, Suite 2400, San Francisco, CA 94111",
     "phone": "+1 (555) 019-2834",
     "email": "info@hypercode.com",
+    "legal": "Legal",
     "newsletterTitle": "Subscribe to Insights",
     "newsletterDesc": "Get monthly technological briefings from our solutions directors.",
     "newsletterPlaceholder": "Corporate Email",
@@ -116,10 +117,11 @@
   },
   "Hero": {
     "badge": "Enterprise Digital Transformation Partner",
-    "title": "Empowering Businesses Through ",
-    "titleHighlight": "Data, Technology, and Talent Solutions",
-    "subtitle": "We combine custom web development, cloud data engineering, advanced analytics, and strategic IT & Non-IT staffing to accelerate corporate growth.",
-    "talkToConsultant": "Talk to a Consultant",
+    "title": "Build AI-Powered Digital Solutions & ",
+    "titleHighlight": "Scale with Enterprise Technology",
+    "subtitle": "HyperCode is an enterprise IT consulting and AI solutions company. We combine custom software engineering, cloud data structures, advanced analytics, and strategic talent solutions to accelerate growth.",
+    "talkToConsultant": "Schedule Consultation",
+    "exploreSolutions": "Explore Solutions",
     "nodes": {
       "sources": "Data Sources",
       "sourcesDesc": "Ingests raw database feeds, APIs, cloud files, and streaming events.",
@@ -138,23 +140,23 @@
   "Services": {
     "badge": "Core Competencies",
     "title": "Enterprise Services & Solutions",
-    "subtitle": "Deploying integrated squads to engineer cloud data pipelines, custom web apps, and agile analytics platforms.",
+    "subtitle": "Deploying integrated engineering squads and strategic consultants to solve your most complex technology challenges.",
     "items": {
       "bi": {
-        "title": "Business Intelligence",
-        "desc": "Connecting raw data reservoirs to responsive dashboards (Power BI, Tableau) for executive performance tracking."
+        "title": "AI & Advanced Analytics",
+        "desc": "Architecting predictive models, custom LLM agents, and interactive executive intelligence systems that turn raw data into strategic foresight."
       },
       "de": {
-        "title": "Data Engineering",
-        "desc": "Structuring cloud warehouses (Snowflake, Databricks) and scripting high-volume pipelines using dbt and Airflow."
+        "title": "Cloud Data Engineering",
+        "desc": "Designing high-availability data lakehouses, automated data pipelines, and robust governance models to ensure data integrity and compliance."
       },
       "web": {
-        "title": "Web Development",
-        "desc": "Coding custom React and Next.js platforms optimized for high availability, API speed, and enterprise security."
+        "title": "Enterprise Software Development",
+        "desc": "Engineering secure, scalable custom web applications, high-availability SaaS platforms, and enterprise API integrations."
       },
       "staffing": {
-        "title": "IT & Non-IT Staff Augmentation",
-        "desc": "Placing verified cloud engineers, BI developers, and Scrum masters to accelerate your integration timelines."
+        "title": "Strategic Talent Solutions",
+        "desc": "Deploying pre-vetted, high-performing technical squads, senior developers, and solutions architects to scale your internal engineering capabilities."
       }
     }
   },
@@ -254,7 +256,7 @@
     "formSubtitle": "Share your project requirements, and we will match you with the appropriate solutions architect."
   },
   "AIConsultant": {
-    "title": "HyperCode AI Business Consultant",
+    "title": "HyperCode AI Consultant",
     "subtitle": "Senior Digital Transformation Advisor",
     "tooltip": "Chat with our Digital Transformation Partner",
     "placeholder": "Describe your business challenge or staffing request...",
@@ -1069,8 +1071,8 @@
     "titleHighlight": "Expertise, Innovation, and Trust",
     "subtitle": "HyperCode is a technology and consulting firm dedicated to helping organizations solve complex business challenges through data-driven solutions, modern technology, and specialized talent.",
     "storyTitle": "Our Story",
-    "storyP1": "HyperCode was founded with a clear objective: to bridge the gap between custom software engineering, raw data pipelines, and executive decision-making. Over the years, we have grown to become a trusted strategic partner for Fortune 500 enterprises and government agencies across the United States.",
-    "storyP2": "What sets us apart is our commitment to combining technical execution with human-centered consulting. We believe modern dashboards and databases are only as effective as the teams utilizing them.",
+    "storyP1": "HyperCode is a well-established strategic consulting firm, focused on delivering Business Intelligence and Data Analytics solutions and implementation services and support to leading clients in the commercial and government sectors. Our team is entrepreneurial and forward-thinking and is recognized for our extensive experience in enterprise solutions and industry expertise. Together with our clients, we develop a working environment that fosters creativity, innovation, productivity, and trust.",
+    "storyP2": "HyperCode defines success by the equal levels of client and individual satisfaction that stem from mutual trust, accountability, and productivity. Our entrepreneurial work environment and the opportunities it provides for personal and professional growth are at the center of everything we do. As a result, our clients benefit from service that is second to none and innovative solutions to their business and technical problems. In addition, we work to carry out this same approach within the communities we serve by sharing our time and financial resources.It is a trusted staffing and recruitment firm specializing in IT and Non-IT talent acquisition across diverse industries. We provide end-to-end recruitment solutions, including permanent, contract, and executive hiring.",
     "mission": "Our Mission",
     "missionDesc": "To empower organizations to solve complex challenges by delivering robust data architectures, modern software, and high-performing technical talent that drive sustainable growth.",
     "vision": "Our Vision",
@@ -1261,7 +1263,7 @@
     "benefits": {
       "projects": {
         "title": "High-Impact Projects",
-        "desc": "Work directly with Fortune 500 companies and government agencies on business-critical cloud migrations and software implementations."
+        "desc": "Work directly with  companies and government agencies on business-critical cloud migrations and software implementations."
       },
       "growth": {
         "title": "Continuous Learning",
@@ -1364,8 +1366,8 @@
   },
   "cta": {
     "badge": "GET IN TOUCH",
-    "heading": "Ready to Empower Your Business Through Data, Technology, and Talent?",
-    "description": "Whether you need to design high-performance web applications, optimize BI dashboards, or scale your engineering teams, HyperCode has the expertise to deliver.",
+    "heading": "Ready to Build Your Next Digital Solution?",
+    "description": "Partner with our elite engineering squads and technology consultants to build secure, scalable, and AI-first systems.",
     "primaryButton": "SCHEDULE CONSULTATION",
     "secondaryButton": "CONTACT HYPERCODE"
   }

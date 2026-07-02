@@ -47,7 +47,6 @@ import {
 interface SolutionDetailPageProps {
   locale: string;
   pageKey: string;
-  tc: any;
 }
 
 // Industry Icon Mapping for "Industries We Serve" section
@@ -109,7 +108,7 @@ function BrainIcon(props: any) {
   );
 }
 
-export function SolutionDetailPage({ locale, pageKey, tc }: SolutionDetailPageProps) {
+export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps) {
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
 
   // Fetch localized service details

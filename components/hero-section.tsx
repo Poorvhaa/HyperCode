@@ -16,7 +16,10 @@ import {
   Sparkles,
   Users,
   CheckCircle,
-  FileCheck
+  FileCheck,
+  Building2,
+  ShieldCheck,
+  Zap
 } from 'lucide-react';
 
 export function HeroSection() {
@@ -91,81 +94,83 @@ export function HeroSection() {
 
   const activeFlowPath = getActiveFlowPath();
 
-  const mockClientLogos = [
-    { name: 'Vercel', class: 'opacity-50 hover:opacity-100 transition-opacity' },
-    { name: 'Stripe', class: 'opacity-50 hover:opacity-100 transition-opacity' },
-    { name: 'Linear', class: 'opacity-50 hover:opacity-100 transition-opacity' },
-    { name: 'Framer', class: 'opacity-50 hover:opacity-100 transition-opacity' },
-    { name: 'AWS', class: 'opacity-50 hover:opacity-100 transition-opacity' },
-  ];
+
 
   const heroStats = [
-    { value: '50+', label: locale === 'es' ? 'Clientes Corporativos' : 'Enterprise Clients' },
-    { value: '99.9%', label: locale === 'es' ? 'SLA de Operación' : 'SLA Target Uptime' },
-    { value: '4-6', label: locale === 'es' ? 'Semanas de Despliegue' : 'Weeks Avg Deployment' }
-  ];
-  return (
-    <section className="relative w-full h-[750px] sm:h-[850px] lg:h-[950px] flex items-center overflow-hidden bg-[#050f1e] border-b border-white/5 text-left">
+    { 
+      value: '50+', 
+      label: locale === 'es' ? 'Clientes Corporativos' : 'Enterprise Clients',
+      icon: Building2
+    },
+    { 
+      value: '99.9%', 
+      label: locale === 'es' ? 'SLA de Operación' : 'SLA Target Uptime',
+      icon: ShieldCheck
+    },
+    { 
+      value: '4-6', 
+      label: locale === 'es' ? 'Semanas de Despliegue' : 'Weeks Avg Deployment',
+      icon: Zap
+    }
+  ];  return (
+    <section className="relative w-full min-h-screen py-24 sm:py-32 lg:py-40 flex items-center overflow-hidden bg-[#030712] border-b border-white/5 text-left">
       
       {/* Background Image Container with Slow Zoom and Gradient Overlays */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <motion.div
-          initial={{ scale: 1.06 }}
+          initial={{ scale: 1.15 }}
           animate={{ scale: 1 }}
-          transition={{ duration: 12, ease: 'easeOut' }}
+          transition={{ duration: 15, ease: 'easeOut' }}
           className="relative w-full h-full"
         >
           <Image
-            src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1600"
-            alt="HyperCode Enterprise AI Systems"
+            src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2000"
+            alt="HyperCode Enterprise IT Consulting & AI Solutions"
             fill
             priority
-            className="object-cover object-center opacity-45 select-none pointer-events-none"
+            className="object-cover object-center opacity-40 select-none pointer-events-none filter contrast-110 saturate-75"
           />
         </motion.div>
         
-        {/* Custom Gradient Overlay with Transparent Center & Slightly Brighter Left Side */}
+        {/* Custom Gradient Overlay with Deeper Dark Colors and Blue Glow */}
         <div 
           className="absolute inset-0 z-10" 
           style={{
-            background: 'linear-gradient(180deg, rgba(5,15,30,0.8) 0%, rgba(5,18,35,0.3) 50%, rgba(5,10,20,0.9) 100%), radial-gradient(circle at center, rgba(30,58,138,0.15) 0%, rgba(5,15,30,0.8) 85%)'
+            background: 'linear-gradient(180deg, rgba(3,7,18,0.92) 0%, rgba(3,7,18,0.55) 50%, rgba(3,7,18,0.96) 100%), radial-gradient(circle at 30% 40%, rgba(37,99,235,0.2) 0%, transparent 60%)'
           }}
         />
-        
-        {/* Vignette Overlay */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_35%,rgba(0,0,0,0.4))] z-10 pointer-events-none" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
-          {/* Left Content Column (occupies ~41.6% width on desktop) */}
+          {/* Left Content Column */}
           <div className="lg:col-span-5 space-y-8 animate-fadeIn z-20">
             
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="space-y-5"
+              className="space-y-6"
             >
               {/* Glass Enterprise Badge */}
-              <div className="inline-flex items-center space-x-2.5 px-4 py-2.5 bg-slate-950/60 backdrop-blur-xl border border-blue-500/50 rounded-full shadow-[0_0_20px_rgba(37,99,235,0.3)] transition-all duration-300">
-                <Sparkles size={14} className="text-cyan-300 animate-pulse drop-shadow-[0_0_6px_rgba(34,211,238,0.8)]" />
-                <span className="text-[10px] font-black text-white tracking-widest uppercase drop-shadow-sm">
+              <div className="inline-flex items-center space-x-2 px-4 py-2 bg-blue-500/10 border border-blue-500/30 rounded-full shadow-[0_0_20px_rgba(37,99,235,0.15)] backdrop-blur-md">
+                <Sparkles size={12} className="text-cyan-400 animate-pulse" />
+                <span className="text-[10px] sm:text-xs font-semibold text-blue-300 tracking-wider uppercase">
                   {t('badge')}
                 </span>
               </div>
               
               {/* Ultra bold Headline with Keyword gradient highlights */}
-              <h1 className="text-4xl sm:text-5xl lg:text-[62px] font-black text-white tracking-tight leading-[1.05] drop-shadow-[0_4px_12px_rgba(0,0,0,0.55)]">
+              <h1 className="text-4xl sm:text-5xl lg:text-[56px] font-extrabold text-white tracking-tight leading-[1.1] drop-shadow-sm">
                 {t('title')}{' '}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-cyan-300 drop-shadow-none">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-indigo-400 drop-shadow-none animate-gradient">
                   {t('titleHighlight')}
                 </span>
               </h1>
               
               {/* Soft White description paragraph */}
-              <p className="text-base sm:text-[18px] text-white/95 leading-relaxed max-w-xl font-bold drop-shadow-[0_2px_4px_rgba(0,0,0,0.45)]">
+              <p className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-xl font-normal">
                 {t('subtitle')}
               </p>
             </motion.div>
@@ -179,17 +184,17 @@ export function HeroSection() {
             >
               <Link
                 href="/consultation"
-                className="inline-flex items-center justify-center h-14 px-9 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-widest rounded-2xl transition-all duration-300 gap-2 border-none shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_30px_rgba(37,99,235,0.5)] cursor-pointer hover:scale-[1.03] active:scale-97"
+                className="inline-flex items-center justify-center h-12 px-8 bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm tracking-wide rounded-xl transition-all duration-200 gap-2 border-none shadow-[0_4px_20px_rgba(37,99,235,0.4)] hover:shadow-[0_4px_25px_rgba(37,99,235,0.6)] cursor-pointer hover:-translate-y-0.5 active:translate-y-0"
               >
                 <span>{t('talkToConsultant')}</span>
-                <ArrowRight size={14} />
+                <ArrowRight size={16} />
               </Link>
               
               <a
                 href="#services"
-                className="inline-flex items-center justify-center h-14 px-9 bg-white/5 border border-white/20 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] text-white font-bold text-xs uppercase tracking-widest rounded-2xl hover:bg-white/10 transition-all duration-300 shadow-sm cursor-pointer hover:scale-[1.03] active:scale-97"
+                className="inline-flex items-center justify-center h-12 px-8 bg-slate-900/80 border border-slate-800 hover:border-slate-700 hover:bg-slate-800 text-white font-bold text-sm tracking-wide rounded-xl transition-all duration-200 shadow-md cursor-pointer hover:-translate-y-0.5 active:translate-y-0"
               >
-                {tc('solutions')}
+                {t('exploreSolutions')}
               </a>
             </motion.div>
 
@@ -198,14 +203,31 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="grid grid-cols-3 gap-4 pt-6 border-t border-white/10"
+              className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-6"
             >
-              {heroStats.map((stat, index) => (
-                <div key={index} className="space-y-1">
-                  <div className="text-2xl sm:text-3xl font-black text-white drop-shadow-sm">{stat.value}</div>
-                  <div className="text-[9px] sm:text-[10px] font-extrabold text-slate-350 uppercase tracking-widest leading-tight drop-shadow-sm">{stat.label}</div>
-                </div>
-              ))}
+              {heroStats.map((stat, index) => {
+                const Icon = stat.icon;
+                return (
+                  <div
+                    key={index}
+                    className="flex flex-col justify-between p-6 rounded-3xl bg-slate-900/40 backdrop-blur-2xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)] hover:border-blue-500/60 hover:shadow-[0_0_30px_rgba(37,99,235,0.25)] hover:bg-slate-900/60 transition-all duration-300 group min-h-[170px]"
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-300 border border-blue-500/30 flex items-center justify-center group-hover:scale-110 group-hover:bg-blue-500/20 group-hover:text-blue-200 transition-all duration-300">
+                        <Icon size={18} />
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="text-4xl sm:text-5xl font-black text-white leading-none tracking-tight drop-shadow-[0_2px_8px_rgba(255,255,255,0.15)] group-hover:scale-[1.03] transition-transform duration-300 origin-left">
+                        {stat.value}
+                      </div>
+                      <div className="text-xs sm:text-sm font-semibold text-slate-300 group-hover:text-white transition-colors leading-snug">
+                        {stat.label}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </motion.div>
 
             {/* Client trust logos */}
@@ -215,16 +237,7 @@ export function HeroSection() {
               transition={{ duration: 0.8, delay: 0.45 }}
               className="space-y-3"
             >
-              <div className="text-[9px] font-extrabold text-slate-400 uppercase tracking-widest drop-shadow-sm">
-                {locale === 'es' ? 'TECNOLOGÍA RECONOCIDA POR LÍDERES' : 'ENGINEERING RECOGNIZED BY LEADERS'}
-              </div>
-              <div className="flex flex-wrap gap-6 items-center">
-                {mockClientLogos.map((logo, idx) => (
-                  <span key={idx} className="text-xs font-black text-slate-300 tracking-wider drop-shadow-sm">
-                    {logo.name}
-                  </span>
-                ))}
-              </div>
+             
             </motion.div>
           </div>
 
@@ -367,18 +380,6 @@ export function HeroSection() {
 
           </div>
         </div>
-      </div>
-
-      {/* Animated Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1.5 opacity-60">
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-          className="w-5 h-9 rounded-full border-2 border-white/30 flex justify-center p-1"
-        >
-          <div className="w-1.5 h-2 bg-white rounded-full" />
-        </motion.div>
-        <span className="text-[9px] font-extrabold tracking-widest text-white/40 uppercase">Scroll</span>
       </div>
 
     </section>
