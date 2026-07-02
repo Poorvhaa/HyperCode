@@ -514,16 +514,14 @@ export function Navigation() {
                 </AnimatePresence>
               </div>
 
-              {/* AI Consultant highlighted CTA */}
-              <motion.button
-                onClick={triggerOpenChat}
-                className="px-5 py-2.5 rounded-xl text-xs font-black text-white bg-gradient-to-r from-[#0F4C81] to-blue-600 hover:from-blue-600 hover:to-[#0F4C81] hover:shadow-lg hover:shadow-blue-500/20 active:scale-95 transition-all duration-300 cursor-pointer flex items-center gap-2 border-none"
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
+              {/* Primary Consultation CTA */}
+              <Link
+                href="/consultation"
+                className="group px-5 py-2.5 rounded-xl text-xs font-black text-white bg-gradient-to-r from-[#0F4C81] to-blue-600 hover:from-blue-600 hover:to-[#0F4C81] hover:shadow-lg hover:shadow-blue-500/20 hover:scale-[1.03] active:scale-95 transition-all duration-300 cursor-pointer flex items-center gap-2 border-none"
               >
-                <Sparkles size={13} className="animate-pulse text-blue-300" />
-                <span>{t('aiConsultant') || 'AI Consultant'}</span>
-              </motion.button>
+                <span>{t('schedule')}</span>
+                <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform duration-300" />
+              </Link>
             </div>
 
             {/* Mobile Actions */}
@@ -644,15 +642,16 @@ export function Navigation() {
                   {t('contact')}
                 </Link>
 
-                {/* Mobile AI Consultant CTA */}
+                {/* Mobile Consultation CTA */}
                 <div className="pt-4 px-3">
-                  <button
-                    onClick={triggerOpenChat}
+                  <Link
+                    href="/consultation"
+                    onClick={() => setIsOpen(false)}
                     className="w-full text-center py-3 rounded-xl font-bold text-white bg-gradient-to-r from-[#0F4C81] to-[#1e6cb3] border-none flex items-center justify-center gap-2 cursor-pointer"
                   >
-                    <Sparkles size={16} />
-                    <span>{t('aiConsultant') || 'AI Consultant'}</span>
-                  </button>
+                    <span>{t('schedule')}</span>
+                    <ArrowRight size={16} />
+                  </Link>
                 </div>
               </div>
             </motion.div>

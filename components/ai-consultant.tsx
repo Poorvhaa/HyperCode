@@ -30,7 +30,7 @@ interface Message {
 }
 
 interface AIConsultantProps {
-  outsideClickAction?: 'minimize' | 'close' | 'none';
+  outsideClickAction?: 'minimized' | 'closed' | 'none';
 }
 
 const getCompactChipLabel = (prompt: string, locale: string): string => {
@@ -71,7 +71,7 @@ const getCompactChipLabel = (prompt: string, locale: string): string => {
   return prompt;
 };
 
-export default function AIConsultant({ outsideClickAction = 'minimize' }: AIConsultantProps) {
+export default function AIConsultant({ outsideClickAction = 'minimized' }: AIConsultantProps) {
   const t = useTranslations('AIConsultant');
   const locale = useLocale();
 
@@ -983,10 +983,10 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
   if (!mounted) return null;
 
   return createPortal(
-    <div className={`fixed z-[999999] pointer-events-none flex flex-col items-center sm:items-end justify-end ${
+    <div className={`fixed z-[999999] pointer-events-none flex flex-col items-end justify-end ${
       windowState === 'open' 
-        ? 'bottom-2.5 left-2.5 right-2.5 sm:bottom-6 sm:right-6 sm:left-auto' 
-        : 'bottom-3 right-3 left-3 sm:bottom-6 sm:right-6 sm:left-auto'
+        ? 'bottom-3 left-3 right-3 sm:bottom-6 sm:right-6 sm:left-auto' 
+        : 'bottom-5 right-5 sm:bottom-6 sm:right-6'
     }`}>
       
       {/* 1. Chat Widget Window */}
@@ -1536,7 +1536,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
             title={t('tooltip')}
             aria-label="Open AI Consultant"
             aria-haspopup="dialog"
-            className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#0F4C81] to-[#3b82f6] text-white flex items-center justify-center shadow-xl shadow-blue-500/25 pointer-events-auto cursor-pointer hover:shadow-blue-500/35 transition-all relative group border-none outline-none"
+            className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#0F4C81] to-[#3b82f6] text-white flex items-center justify-center shadow-xl shadow-blue-500/25 ring-1 ring-white/10 pointer-events-auto cursor-pointer hover:shadow-blue-500/40 transition-all duration-300 relative group border-none outline-none"
           >
             <MessageSquare className="w-6 h-6 group-hover:rotate-6 transition-transform" />
             <span className="absolute inset-0 rounded-2xl bg-blue-500/20 animate-ping pointer-events-none scale-105 duration-2000" />
