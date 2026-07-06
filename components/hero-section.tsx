@@ -210,18 +210,33 @@ export function HeroSection() {
                 return (
                   <div
                     key={index}
-                    className="flex flex-col justify-between p-6 rounded-3xl bg-slate-900/40 backdrop-blur-2xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)] hover:border-blue-500/60 hover:shadow-[0_0_30px_rgba(37,99,235,0.25)] hover:bg-slate-900/60 transition-all duration-300 group min-h-[170px]"
+                     className="flex flex-col items-center justify-center p-7 lg:p-8 rounded-3xl bg-slate-900/40 backdrop-blur-2xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)] hover:border-blue-500/60 hover:shadow-[0_0_30px_rgba(37,99,235,0.25)] hover:bg-slate-900/60 transition-all duration-300 group min-h-[190px]"
                   >
-                    <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center justify-center mb-4">
                       <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-300 border border-blue-500/30 flex items-center justify-center group-hover:scale-110 group-hover:bg-blue-500/20 group-hover:text-blue-200 transition-all duration-300">
                         <Icon size={18} />
                       </div>
                     </div>
-                    <div className="space-y-2">
-                      <div className="text-4xl sm:text-5xl font-black text-white leading-none tracking-tight drop-shadow-[0_2px_8px_rgba(255,255,255,0.15)] group-hover:scale-[1.03] transition-transform duration-300 origin-left">
-                        {stat.value}
-                      </div>
-                      <div className="text-xs sm:text-sm font-semibold text-slate-300 group-hover:text-white transition-colors leading-snug">
+                    <div className="space-y-2 w-full text-center">
+                      <div
+  className="
+    w-full
+    text-4xl
+    lg:text-5xl
+    font-black
+    text-white
+    leading-none
+    tracking-tight
+    text-center
+    whitespace-nowrap
+    drop-shadow-[0_2px_8px_rgba(255,255,255,0.15)]
+    group-hover:scale-105
+    transition-transform
+    duration-300
+  "
+>
+</div>
+                      <div className="w-full text-center text-xs sm:text-sm font-semibold text-slate-300 group-hover:text-white transition-colors leading-snug">
                         {stat.label}
                       </div>
                     </div>

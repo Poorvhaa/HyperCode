@@ -305,15 +305,7 @@ export function Navigation() {
                 <Link href="/" className={`${getLinkClass('/')} group`}>
                   <span className="relative py-1">
                     {t('home')}
-                    <span className="absolute -bottom-1.5 left-0 w-full h-[2px] bg-[#60A5FA] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
                   </span>
-                  {isActive('/') && (
-                    <motion.div 
-                      layoutId="activeIndicator"
-                      className="absolute -bottom-1.5 left-0 right-0 h-[2px] bg-[#60A5FA] rounded-full"
-                      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                    />
-                  )}
                 </Link>
 
                 {/* Solutions Mega Menu Dropdown */}
@@ -326,15 +318,9 @@ export function Navigation() {
                     <span className="relative py-1 flex items-center">
                       <span>{tc('solutions')}</span>
                       <ChevronDown size={12} className={`ml-1 transition-transform duration-300 ${activeDropdown === 'solutions' ? 'rotate-180 text-[#60A5FA]' : ''}`} />
-                      <span className="absolute -bottom-1.5 left-0 w-full h-[2px] bg-[#60A5FA] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                      
                     </span>
-                    {isActive('/solutions') && (
-                      <motion.div 
-                        layoutId="activeIndicator"
-                        className="absolute -bottom-1.5 left-0 right-0 h-[2px] bg-[#60A5FA] rounded-full"
-                        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                      />
-                    )}
+                    
                   </button>
 
                   <AnimatePresence>
@@ -439,43 +425,25 @@ export function Navigation() {
                 <Link href="/about" className={`${getLinkClass('/about')} group`}>
                   <span className="relative py-1">
                     {t('about')}
-                    <span className="absolute -bottom-1.5 left-0 w-full h-[2px] bg-[#60A5FA] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                    
                   </span>
-                  {isActive('/about') && (
-                    <motion.div 
-                      layoutId="activeIndicator"
-                      className="absolute -bottom-1.5 left-0 right-0 h-[2px] bg-[#60A5FA] rounded-full"
-                      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                    />
-                  )}
+                  
                 </Link>
 
                 <Link href="/careers" className={`${getLinkClass('/careers')} group`}>
                   <span className="relative py-1">
                     {t('careers')}
-                    <span className="absolute -bottom-1.5 left-0 w-full h-[2px] bg-[#60A5FA] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                
                   </span>
-                  {isActive('/careers') && (
-                    <motion.div 
-                      layoutId="activeIndicator"
-                      className="absolute -bottom-1.5 left-0 right-0 h-[2px] bg-[#60A5FA] rounded-full"
-                      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                    />
-                  )}
+                  
                 </Link>
 
                 <Link href="/contact" className={`${getLinkClass('/contact')} group`}>
                   <span className="relative py-1">
                     {t('contact')}
-                    <span className="absolute -bottom-1.5 left-0 w-full h-[2px] bg-[#60A5FA] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                    
                   </span>
-                  {isActive('/contact') && (
-                    <motion.div 
-                      layoutId="activeIndicator"
-                      className="absolute -bottom-1.5 left-0 right-0 h-[2px] bg-[#60A5FA] rounded-full"
-                      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                    />
-                  )}
+                  
                 </Link>
               </div>
             </div>

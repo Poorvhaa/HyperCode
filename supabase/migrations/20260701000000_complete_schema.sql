@@ -265,9 +265,12 @@ CREATE TABLE IF NOT EXISTS public.company_settings (
     id TEXT PRIMARY KEY DEFAULT 'default',
     company_name TEXT NOT NULL DEFAULT 'HyperCode',
     email TEXT NOT NULL DEFAULT 'info@hypercode.com',
-    phone TEXT DEFAULT '+1 (555) 019-2834',
-    address TEXT DEFAULT '100 Pine St, Suite 2400, San Francisco, CA 94111',
-    social_links JSONB DEFAULT '{"linkedin": "https://linkedin.com/company/hypercode", "twitter": "https://twitter.com/hypercode", "github": "https://github.com/hypercode"}'::jsonb,
+    phone TEXT DEFAULT '+1 (510) 203-9270',
+    address TEXT DEFAULT '2095 Hammond Dr
+Suite C
+Schaumburg, IL 60173
+United States',
+    social_links JSONB DEFAULT '{"linkedin": "https://linkedin.com/company/hypercode"}'::jsonb,
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
@@ -509,7 +512,10 @@ CREATE POLICY "Allow admins to manage email templates" ON public.email_templates
 -- 12. Initial Seeds
 -- =========================================================================
 INSERT INTO public.company_settings (id, company_name, email, phone, address, social_links)
-VALUES ('default', 'HyperCode', 'info@hypercode.com', '+1 (555) 019-2834', '100 Pine St, Suite 2400, San Francisco, CA 94111', '{"linkedin": "https://linkedin.com/company/hypercode", "twitter": "https://twitter.com/hypercode", "github": "https://github.com/hypercode"}'::jsonb)
+VALUES ('default', 'HyperCode', 'info@hypercode.com', '+1 (510) 203-9270', '2095 Hammond Dr
+Suite C
+Schaumburg, IL 60173
+United States', '{"linkedin": "https://linkedin.com/company/hypercode"}'::jsonb)
 ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO public.email_templates (id, subject, body) VALUES

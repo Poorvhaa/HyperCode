@@ -1586,7 +1586,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                           setWindowState('minimized');
                           window.location.href = '/' + locale;
                         }}
-                        className="w-full h-10 border border-slate-700 hover:bg-slate-800/80 text-slate-350 font-bold rounded-xl text-xs uppercase tracking-wider transition-all cursor-pointer outline-none"
+                        className="w-full h-10 border border-slate-700 hover:bg-slate-800/60 text-slate-400 font-bold rounded-xl text-xs uppercase tracking-wider transition-all cursor-pointer outline-none"
                       >
                         {isEs ? 'Volver al inicio' : 'Back to Home'}
                       </button>

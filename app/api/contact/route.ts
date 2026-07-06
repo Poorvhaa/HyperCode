@@ -160,7 +160,10 @@ export async function POST(req: Request) {
               </div>
               <p>Atentamente,</p>
               <p style="margin: 0; font-weight: bold; color: #0f4c81;">Equipo de Comunicaciones de HyperCode</p>
-              <p style="margin: 0; font-size: 12px; color: #64748b;">San Francisco, CA</p>
+              <p style="margin: 0; font-size: 12px; color: #64748b;">2095 Hammond Dr
+Suite C
+Schaumburg, IL 60173
+United States</p>
             </div>
           </div>
         ` : `
@@ -180,7 +183,10 @@ export async function POST(req: Request) {
               </div>
               <p>Best regards,</p>
               <p style="margin: 0; font-weight: bold; color: #0f4c81;">HyperCode Communications Team</p>
-              <p style="margin: 0; font-size: 12px; color: #64748b;">San Francisco, CA</p>
+              <p style="margin: 0; font-size: 12px; color: #64748b;">2095 Hammond Dr
+Suite C
+Schaumburg, IL 60173
+United States, CA</p>
             </div>
           </div>
         `;

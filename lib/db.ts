@@ -162,8 +162,8 @@ let localSettings: CompanySettings = {
   id: 'default',
   company_name: 'HyperCode',
   email: 'info@hypercode.com',
-  phone: '+1 (555) 019-2834',
-  address: '100 Pine St, Suite 2400, San Francisco, CA 94111',
+  phone: '+1 (510) 203-9270',
+  address: '2095 Hammond Dr Suite C ,Schaumburg, IL 60173,United States',
   social_links: { linkedin: 'https://linkedin.com/company/hypercode', twitter: 'https://twitter.com/hypercode', github: 'https://github.com/hypercode' },
   updated_at: new Date().toISOString()
 };

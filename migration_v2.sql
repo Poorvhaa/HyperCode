@@ -166,8 +166,11 @@ CREATE TABLE IF NOT EXISTS company_settings (
     id TEXT PRIMARY KEY DEFAULT 'default',
     company_name TEXT NOT NULL DEFAULT 'HyperCode',
     email TEXT NOT NULL DEFAULT 'info@hypercode.com',
-    phone TEXT DEFAULT '+1 (555) 019-2834',
-    address TEXT DEFAULT '100 Pine St, Suite 2400, San Francisco, CA 94111',
+    phone TEXT DEFAULT '+1 (510) 203-9270',
+    address TEXT DEFAULT '2095 Hammond Dr
+Suite C
+Schaumburg, IL 60173
+United States',
     social_links JSONB DEFAULT '{"linkedin": "https://linkedin.com/company/hypercode", "twitter": "https://twitter.com/hypercode", "github": "https://github.com/hypercode"}'::jsonb,
     updated_at TIMESTAMPTZ DEFAULT now()
 );
@@ -195,7 +198,10 @@ CREATE POLICY "Admins can manage templates" ON email_templates FOR ALL USING (ge
 
 -- Seed defaults
 INSERT INTO company_settings (id, company_name, email, phone, address, social_links)
-VALUES ('default', 'HyperCode', 'info@hypercode.com', '+1 (555) 019-2834', '100 Pine St, Suite 2400, San Francisco, CA 94111', '{"linkedin": "https://linkedin.com/company/hypercode", "twitter": "https://twitter.com/hypercode", "github": "https://github.com/hypercode"}'::jsonb)
+VALUES ('default', 'HyperCode', 'info@hypercode.com', '+1 (510) 203-9270', '100 Pine St, Suite 2400,2095 Hammond Dr
+Suite C
+Schaumburg, IL 60173
+United States', '{"linkedin": "https://linkedin.com/company/hypercode", "twitter": "https://twitter.com/hypercode", "github": "https://github.com/hypercode"}'::jsonb)
 ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO email_templates (id, subject, body) VALUES

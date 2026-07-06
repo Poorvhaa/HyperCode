@@ -101,8 +101,8 @@
     "sitemap": "Mapa del Sitio",
     "tagline": "Consultoría de IA y Transformación Digital Empresarial",
     "officesTitle": "Sede Central Global",
-    "address": "100 Pine St, Suite 2400, San Francisco, CA 94111",
-    "phone": "+1 (555) 019-2834",
+    "address": "2095 Hammond Dr Suite C ,Schaumburg, IL 60173,United States",
+    "phone": "+1 (510) 203-9270",
     "email": "info@hypercode.com",
     "legal": "Legal",
     "newsletterTitle": "Suscríbase a Insights",
@@ -380,7 +380,7 @@
         ]
       },
       "location": {
-        "message": "HyperCode tiene su sede principal en San Francisco, California, con oficinas en Schaumburg, Illinois. Servimos a clientes en toda América del Norte y a nivel mundial mediante squads de ingeniería remotos e híbridos.",
+        "message": "HyperCode tiene su sede principal en Schaumburg, Illinois. Servimos a clientes en toda América del Norte y a nivel mundial mediante squads de ingeniería remotos e híbridos.",
         "suggestedPrompts": [
           "¿Cómo empezamos?",
           "Programar una consulta"
@@ -1108,7 +1108,7 @@
       "satisfactionLabel": "Satisfacción del Cliente",
       "consultants": "1.200+",
       "consultantsLabel": "Consultores Colocados",
-      "experience": "15+",
+      "experience": "12+",
       "experienceLabel": "Años de Experiencia Combinada"
     },
     "values": {
