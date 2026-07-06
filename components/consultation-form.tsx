@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect, Suspense, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -9,13 +9,16 @@ import { Loader2, AlertCircle, CheckCircle, Check } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 import { db, sanitizePayload } from '@/lib/db';
 import { trackGAEvent } from '@/lib/analytics';
+import { scrollToFirstError, getErrorAttributes, getInputErrorClass, getErrorAnimationClass, getErrorId } from '@/lib/form-validation';
 import { motion } from 'framer-motion';
 
 function ConsultationFormContent() {
   const searchParams = useSearchParams();
+  const formRef = useRef<HTMLFormElement>(null);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
 
   const t = useTranslations('Consultation.form');
   const tNav = useTranslations('Navigation');
@@ -90,6 +93,7 @@ function ConsultationFormContent() {
     reset,
   } = useForm<ConsultationFormData>({
     resolver: zodResolver(consultationSchema),
+    mode: 'onBlur',
     defaultValues: {
       service: '',
       budget: '',
@@ -129,14 +133,12 @@ function ConsultationFormContent() {
     setSubmitting(true);
     setError('');
 
-    // Structured log for submission payload
     console.log({
       step: 'consultation_form_submission_start',
       payload: data
     });
 
     try {
-      // 1. Sanitize the payload (Circular-safe, Date-safe, undefined-safe, JSON-safe)
       const sanitized = sanitizePayload({
         ...data,
         locale
@@ -150,7 +152,6 @@ function ConsultationFormContent() {
         body: JSON.stringify(sanitized),
       });
 
-      // Structured log for API response
       console.log({
         step: 'consultation_api_response',
         status: res.status,
@@ -171,7 +172,6 @@ function ConsultationFormContent() {
       reset();
       setTimeout(() => setSubmitted(false), 5000);
     } catch (err: any) {
-      // Structured log for API failure
       console.error({
         step: 'consultation_api_failed',
         payload: data,
@@ -180,7 +180,6 @@ function ConsultationFormContent() {
         stack: err?.stack
       });
 
-      // 2. Attempt LocalStorage fallback
       try {
         const savedLocal = await db.saveConsultationRequest(
           data.name,
@@ -208,7 +207,6 @@ function ConsultationFormContent() {
           savedObject: savedLocal
         });
 
-        // Even though remote failed, local fallback succeeded, so present success flow!
         trackGAEvent({
           action: 'consultation_request_fallback_submission',
           category: 'Leads',
@@ -219,7 +217,6 @@ function ConsultationFormContent() {
         reset();
         setTimeout(() => setSubmitted(false), 5000);
       } catch (localErr: any) {
-        // Structured log for local fallback failure
         console.error({
           step: 'consultation_local_fallback_failed',
           payload: data,
@@ -228,7 +225,6 @@ function ConsultationFormContent() {
           stack: localErr?.stack
         });
 
-        // Inform user that both online & local saves failed (e.g. storage full or private browsing)
         setError(locale === 'es' 
           ? 'Error de envío: El servidor no está disponible y el almacenamiento local está deshabilitado o lleno.' 
           : 'Submission error: The server is unavailable and local storage is disabled or full.'
@@ -236,6 +232,7 @@ function ConsultationFormContent() {
       }
     } finally {
       setSubmitting(false);
+      setIsTyping(false);
     }
   };
 
@@ -251,6 +248,10 @@ function ConsultationFormContent() {
     if (current.length > 0 && !watch('service')) {
       setValue('service', current[0]);
     }
+  };
+
+  const handleFormError = () => {
+    scrollToFirstError(errors);
   };
 
   if (submitted) {
@@ -270,62 +271,91 @@ function ConsultationFormContent() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 text-left bg-white/70 backdrop-blur-lg p-8 sm:p-12 rounded-3xl border border-slate-100 shadow-xl">
+    <form 
+      ref={formRef}
+      onSubmit={handleSubmit(onSubmit, handleFormError)} 
+      className="space-y-8 text-left bg-white/70 backdrop-blur-lg p-8 sm:p-12 rounded-3xl border border-slate-100 shadow-xl"
+      noValidate
+    >
       {error && (
-        <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 flex gap-3 text-sm">
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 flex gap-3 text-sm"
+        >
           <AlertCircle size={20} className="flex-shrink-0" />
           <span>{error}</span>
-        </div>
+        </motion.div>
       )}
 
       {/* Primary Contact Block */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('name')}</label>
+          <label htmlFor="name" className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('name')}</label>
           <input
+            id="name"
             type="text"
             placeholder="John Doe"
             {...register('name')}
-            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${
-              errors.name ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
-            }`}
+            onFocus={() => setIsTyping(true)}
+            onBlur={() => setIsTyping(false)}
+            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${getInputErrorClass(!!errors.name)} ${getErrorAnimationClass(!!errors.name, isTyping)}`}
+            {...getErrorAttributes('name', !!errors.name)}
           />
+          {errors.name && (
+            <span id={getErrorId('name')} className="text-xs text-red-500 mt-1 block font-medium">{errors.name.message}</span>
+          )}
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('email')}</label>
+          <label htmlFor="email" className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('email')}</label>
           <input
+            id="email"
             type="email"
             placeholder="john@company.com"
             {...register('email')}
-            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${
-              errors.email ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
-            }`}
+            onFocus={() => setIsTyping(true)}
+            onBlur={() => setIsTyping(false)}
+            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${getInputErrorClass(!!errors.email)} ${getErrorAnimationClass(!!errors.email, isTyping)}`}
+            {...getErrorAttributes('email', !!errors.email)}
           />
+          {errors.email && (
+            <span id={getErrorId('email')} className="text-xs text-red-500 mt-1 block font-medium">{errors.email.message}</span>
+          )}
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('company')}</label>
+          <label htmlFor="company" className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('company')}</label>
           <input
+            id="company"
             type="text"
             placeholder="Company Name"
             {...register('company')}
-            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${
-              errors.company ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
-            }`}
+            onFocus={() => setIsTyping(true)}
+            onBlur={() => setIsTyping(false)}
+            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${getInputErrorClass(!!errors.company)} ${getErrorAnimationClass(!!errors.company, isTyping)}`}
+            {...getErrorAttributes('company', !!errors.company)}
           />
+          {errors.company && (
+            <span id={getErrorId('company')} className="text-xs text-red-500 mt-1 block font-medium">{errors.company.message}</span>
+          )}
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('phone')}</label>
+          <label htmlFor="phone" className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('phone')}</label>
           <input
+            id="phone"
             type="tel"
             placeholder="+1 (555) 012-3456"
             {...register('phone')}
-            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${
-              errors.phone ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
-            }`}
+            onFocus={() => setIsTyping(true)}
+            onBlur={() => setIsTyping(false)}
+            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${getInputErrorClass(!!errors.phone)} ${getErrorAnimationClass(!!errors.phone, isTyping)}`}
+            {...getErrorAttributes('phone', !!errors.phone)}
           />
+          {errors.phone && (
+            <span id={getErrorId('phone')} className="text-xs text-red-500 mt-1 block font-medium">{errors.phone.message}</span>
+          )}
         </div>
       </div>
 
@@ -352,27 +382,35 @@ function ConsultationFormContent() {
             );
           })}
         </div>
-        {errors.service && <span className="text-xs text-red-500 mt-1 block">{errors.service.message}</span>}
+        {errors.service && (
+          <span className="text-xs text-red-500 mt-1 block font-medium">{errors.service.message}</span>
+        )}
       </div>
 
       {/* Advanced Consulting Intake Fields */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('industry') || 'Industry'}</label>
+          <label htmlFor="industry" className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('industry') || 'Industry'}</label>
           <select
+            id="industry"
             {...register('industry')}
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700"
+            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700 ${getInputErrorClass(!!errors.industry)}`}
+            {...getErrorAttributes('industry', !!errors.industry)}
           >
             <option value="">-- Select Industry --</option>
             {Object.entries(tAi.raw('industries')).map(([key, val]) => (
               <option key={key} value={val as string}>{val as string}</option>
             ))}
           </select>
+          {errors.industry && (
+            <span id={getErrorId('industry')} className="text-xs text-red-500 mt-1 block font-medium">{errors.industry.message}</span>
+          )}
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('companySize') || 'Company Size'}</label>
+          <label htmlFor="companySize" className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('companySize') || 'Company Size'}</label>
           <select
+            id="companySize"
             {...register('companySize')}
             className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700"
           >
@@ -386,8 +424,9 @@ function ConsultationFormContent() {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('meetingType') || 'Preferred Meeting Type'}</label>
+          <label htmlFor="meetingType" className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('meetingType') || 'Preferred Meeting Type'}</label>
           <select
+            id="meetingType"
             {...register('preferredMeetingType')}
             className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700"
           >
@@ -399,12 +438,13 @@ function ConsultationFormContent() {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('currentTechStack') || 'Current Tech Stack / Key Tools'}</label>
+          <label htmlFor="techStack" className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('currentTechStack') || 'Current Tech Stack / Key Tools'}</label>
           <input
+            id="techStack"
             type="text"
             placeholder="e.g. AWS, Postgres, Salesforce, React"
             {...register('currentTechStack')}
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-705 text-slate-700"
+            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700"
           />
         </div>
       </div>
@@ -412,8 +452,9 @@ function ConsultationFormContent() {
       {/* Goal, Challenges, Outcomes Fields */}
       <div className="space-y-6">
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('businessGoal') || 'Primary Business Goal'}</label>
+          <label htmlFor="businessGoal" className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('businessGoal') || 'Primary Business Goal'}</label>
           <input
+            id="businessGoal"
             type="text"
             placeholder="e.g. Automate support operations, migration to AWS, build a new SaaS product"
             {...register('businessGoal')}
@@ -422,18 +463,22 @@ function ConsultationFormContent() {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('currentChallenges') || 'Current Technology Challenges'}</label>
+          <label htmlFor="challenges" className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('currentChallenges') || 'Current Technology Challenges'}</label>
           <textarea
+            id="challenges"
             rows={2}
             placeholder="e.g. Manual process bottleneck, slow dashboard speed, scaling issues, developer recruitment delay"
             {...register('currentChallenges')}
+            onFocus={() => setIsTyping(true)}
+            onBlur={() => setIsTyping(false)}
             className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700"
           />
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('expectedOutcome') || 'Expected Outcome & Success Criteria'}</label>
+          <label htmlFor="outcome" className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('expectedOutcome') || 'Expected Outcome & Success Criteria'}</label>
           <input
+            id="outcome"
             type="text"
             placeholder="e.g. 50% operational cost reduction, sub-second latency, launch MVP by Q3"
             {...register('expectedOutcome')}
@@ -466,7 +511,9 @@ function ConsultationFormContent() {
               );
             })}
           </div>
-          {errors.budget && <span className="text-xs text-red-500 mt-1 block">{errors.budget.message}</span>}
+          {errors.budget && (
+            <span className="text-xs text-red-500 mt-1 block font-medium">{errors.budget.message}</span>
+          )}
         </div>
 
         <div>
@@ -491,22 +538,28 @@ function ConsultationFormContent() {
               );
             })}
           </div>
-          {errors.timeline && <span className="text-xs text-red-500 mt-1 block">{errors.timeline.message}</span>}
+          {errors.timeline && (
+            <span className="text-xs text-red-500 mt-1 block font-medium">{errors.timeline.message}</span>
+          )}
         </div>
       </div>
 
       {/* Main message textarea */}
       <div>
-        <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('message')}</label>
+        <label htmlFor="message" className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('message')}</label>
         <textarea
+          id="message"
           rows={4}
           placeholder="Please describe your technology requirements, project background, or team augmentation targets..."
           {...register('message')}
-          className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${
-            errors.message ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
-          }`}
+          onFocus={() => setIsTyping(true)}
+          onBlur={() => setIsTyping(false)}
+          className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${getInputErrorClass(!!errors.message)} ${getErrorAnimationClass(!!errors.message, isTyping)}`}
+          {...getErrorAttributes('message', !!errors.message)}
         />
-        {errors.message && <span className="text-xs text-red-500 mt-1 block">{errors.message.message}</span>}
+        {errors.message && (
+          <span id={getErrorId('message')} className="text-xs text-red-500 mt-1 block font-medium">{errors.message.message}</span>
+        )}
       </div>
 
       {/* Submit button */}
@@ -514,7 +567,7 @@ function ConsultationFormContent() {
         <button
           type="submit"
           disabled={submitting}
-          className="px-8 py-4 rounded-xl font-semibold text-white bg-[#0F4C81] hover:bg-[#0D3F6D] transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75 disabled:cursor-not-allowed min-w-[220px]"
+          className="px-8 py-4 rounded-xl font-semibold text-white bg-[#0F4C81] hover:bg-[#0D3F6D] transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75 disabled:cursor-not-allowed"
         >
           {submitting ? (
             <>
