@@ -10,12 +10,18 @@ import { useTranslations, useLocale } from 'next-intl';
 import { db } from '@/lib/db';
 import { trackGAEvent } from '@/lib/analytics';
 import { motion } from 'framer-motion';
+import { useFormValidation } from '@/hooks/use-form-validation';
 
 function ContactFormContent() {
   const searchParams = useSearchParams();
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
+
+  const { formRef, focusAndScrollToError } = useFormValidation({
+    navbarSelector: 'header',
+    extraOffset: 24,
+  });
 
   const t = useTranslations('Contact.form');
   const tSubjects = useTranslations('Contact.subjects');
@@ -100,7 +106,8 @@ function ContactFormContent() {
     formState: { errors },
     reset,
   } = useForm<ContactFormData>({
-    resolver: zodResolver(contactSchema),
+    resolver: zodResolver(contactSchema) as any,
+    mode: 'onChange',
     defaultValues: {
       subject: 'General Inquiry',
       message: '',
@@ -245,7 +252,11 @@ function ContactFormContent() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 text-left bg-white/70 backdrop-blur-lg p-8 sm:p-12 rounded-3xl border border-slate-100 shadow-xl">
+    <form
+      ref={formRef}
+      onSubmit={handleSubmit(onSubmit, (errs) => focusAndScrollToError(errs))}
+      className="space-y-8 text-left bg-white/70 backdrop-blur-lg p-8 sm:p-12 rounded-3xl border border-slate-100 shadow-xl"
+    >
       {error && (
         <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 flex gap-3 text-sm">
           <AlertCircle size={20} className="flex-shrink-0" />
@@ -339,7 +350,9 @@ function ContactFormContent() {
           <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('industry')}</label>
           <select
             {...register('industry')}
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700"
+            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700 ${
+              errors.industry ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
+            }`}
           >
             <option value="">-- Select Industry --</option>
             {Object.entries(tAi.raw('industries')).map(([key, val]) => (
@@ -368,7 +381,9 @@ function ContactFormContent() {
           <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('budget')}</label>
           <select
             {...register('budget')}
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700"
+            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700 ${
+              errors.budget ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
+            }`}
           >
             <option value="">-- Select Budget --</option>
             {Object.entries(tConsult.raw('budgets')).map(([key, val]) => (
@@ -382,7 +397,9 @@ function ContactFormContent() {
           <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('timeline')}</label>
           <select
             {...register('timeline')}
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700"
+            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700 ${
+              errors.timeline ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
+            }`}
           >
             <option value="">-- Select Timeline --</option>
             {Object.entries(tConsult.raw('timelines')).map(([key, val]) => (
@@ -434,7 +451,9 @@ function ContactFormContent() {
           <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('subject')}</label>
           <select
             {...register('subject')}
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700"
+            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700 ${
+              errors.subject ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
+            }`}
           >
             {subjectOptions.map((opt) => (
               <option key={opt.id} value={opt.id}>{opt.label}</option>

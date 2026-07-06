@@ -7,6 +7,7 @@ import { z } from 'zod';
 import { useLocale } from 'next-intl';
 import { Loader2, Upload, FileText, CheckCircle, AlertCircle, Trash2 } from 'lucide-react';
 import { trackGAEvent } from '@/lib/analytics';
+import { useFormValidation } from '@/hooks/use-form-validation';
 
 
 interface CareersFormProps {
@@ -84,6 +85,11 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
   const locale = useLocale() as 'en' | 'es';
   const t = formTranslations[locale] || formTranslations.en;
 
+  const { formRef, focusAndScrollToError } = useFormValidation({
+    navbarSelector: 'header',
+    extraOffset: 24,
+  });
+
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [fileError, setFileError] = useState('');
@@ -114,7 +120,8 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
     formState: { errors },
     reset
   } = useForm<FormData>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(schema) as any,
+    mode: 'onChange',
     defaultValues: {
       position: 'Business Development Manager',
       yearsExperience: 0,
@@ -293,7 +300,11 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
 
   return (
     <div className="space-y-6 text-left max-w-3xl mx-auto bg-white p-6 sm:p-10 border border-slate-200 rounded-3xl shadow-sm">
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <form
+        ref={formRef}
+        onSubmit={handleSubmit(onSubmit, (errs) => focusAndScrollToError(errs))}
+        className="space-y-6"
+      >
         {submitError && (
           <div className="p-4 rounded-xl border border-red-200 bg-red-50 flex gap-3">
             <AlertCircle size={20} className="text-red-655 flex-shrink-0 mt-0.5" />
@@ -309,9 +320,17 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
               {...register('name')}
               type="text"
               placeholder="John Doe"
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] text-sm"
+              aria-invalid={errors.name ? 'true' : 'false'}
+              aria-describedby={errors.name ? 'name-error' : undefined}
+              className={`w-full px-4 py-3 rounded-xl border bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] text-sm ${
+                errors.name ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
+              }`}
             />
-            {errors.name && <p className="text-xs text-red-655 font-semibold">{errors.name.message}</p>}
+            {errors.name && (
+              <p id="name-error" className="text-xs text-red-500 font-semibold mt-1">
+                {errors.name.message}
+              </p>
+            )}
           </div>
 
           {/* Email Address */}
@@ -321,9 +340,17 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
               {...register('email')}
               type="email"
               placeholder="john@company.com"
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] text-sm"
+              aria-invalid={errors.email ? 'true' : 'false'}
+              aria-describedby={errors.email ? 'email-error' : undefined}
+              className={`w-full px-4 py-3 rounded-xl border bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] text-sm ${
+                errors.email ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
+              }`}
             />
-            {errors.email && <p className="text-xs text-red-655 font-semibold">{errors.email.message}</p>}
+            {errors.email && (
+              <p id="email-error" className="text-xs text-red-500 font-semibold mt-1">
+                {errors.email.message}
+              </p>
+            )}
           </div>
 
           {/* Phone Number */}
@@ -333,9 +360,17 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
               {...register('phone')}
               type="tel"
               placeholder="+1 (555) 123-4567"
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] text-sm"
+              aria-invalid={errors.phone ? 'true' : 'false'}
+              aria-describedby={errors.phone ? 'phone-error' : undefined}
+              className={`w-full px-4 py-3 rounded-xl border bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] text-sm ${
+                errors.phone ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
+              }`}
             />
-            {errors.phone && <p className="text-xs text-red-655 font-semibold">{errors.phone.message}</p>}
+            {errors.phone && (
+              <p id="phone-error" className="text-xs text-red-500 font-semibold mt-1">
+                {errors.phone.message}
+              </p>
+            )}
           </div>
 
           {/* LinkedIn URL */}
@@ -345,9 +380,17 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
               {...register('linkedin')}
               type="text"
               placeholder="https://linkedin.com/in/username"
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] text-sm"
+              aria-invalid={errors.linkedin ? 'true' : 'false'}
+              aria-describedby={errors.linkedin ? 'linkedin-error' : undefined}
+              className={`w-full px-4 py-3 rounded-xl border bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] text-sm ${
+                errors.linkedin ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
+              }`}
             />
-            {errors.linkedin && <p className="text-xs text-red-655 font-semibold">{errors.linkedin.message}</p>}
+            {errors.linkedin && (
+              <p id="linkedin-error" className="text-xs text-red-500 font-semibold mt-1">
+                {errors.linkedin.message}
+              </p>
+            )}
           </div>
 
           {/* Position Applied For */}
@@ -367,9 +410,17 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
               type="number"
               min="0"
               placeholder="5"
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] text-sm"
+              aria-invalid={errors.yearsExperience ? 'true' : 'false'}
+              aria-describedby={errors.yearsExperience ? 'yearsExperience-error' : undefined}
+              className={`w-full px-4 py-3 rounded-xl border bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] text-sm ${
+                errors.yearsExperience ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
+              }`}
             />
-            {errors.yearsExperience && <p className="text-xs text-red-655 font-semibold">{errors.yearsExperience.message}</p>}
+            {errors.yearsExperience && (
+              <p id="yearsExperience-error" className="text-xs text-red-500 font-semibold mt-1">
+                {errors.yearsExperience.message}
+              </p>
+            )}
           </div>
 
           {/* Core Technical Skills */}
@@ -379,9 +430,17 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
               {...register('skills')}
               type="text"
               placeholder={t.skillsPlaceholder}
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] text-sm"
+              aria-invalid={errors.skills ? 'true' : 'false'}
+              aria-describedby={errors.skills ? 'skills-error' : undefined}
+              className={`w-full px-4 py-3 rounded-xl border bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] text-sm ${
+                errors.skills ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
+              }`}
             />
-            {errors.skills && <p className="text-xs text-red-655 font-semibold">{errors.skills.message}</p>}
+            {errors.skills && (
+              <p id="skills-error" className="text-xs text-red-500 font-semibold mt-1">
+                {errors.skills.message}
+              </p>
+            )}
           </div>
 
           {/* Cover Message */}
@@ -391,9 +450,17 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
               {...register('message')}
               placeholder={t.coverLetterPlaceholder}
               rows={4}
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] text-sm resize-none"
+              aria-invalid={errors.message ? 'true' : 'false'}
+              aria-describedby={errors.message ? 'message-error' : undefined}
+              className={`w-full px-4 py-3 rounded-xl border bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] text-sm resize-none ${
+                errors.message ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
+              }`}
             />
-            {errors.message && <p className="text-xs text-red-655 font-semibold">{errors.message.message}</p>}
+            {errors.message && (
+              <p id="message-error" className="text-xs text-red-500 font-semibold mt-1">
+                {errors.message.message}
+              </p>
+            )}
           </div>
 
           {/* File Upload Zone */}

@@ -52,7 +52,7 @@ export default async function ContactPage({ params }: Props) {
     boxPartnershipFooter: string;
   }> = {
     en: {
-      title: "Partner with",
+      title: "Connect with",
       titleHighlight: "HyperCode",
       subtitle: "Whether you have an upcoming project, a staffing request, or a strategic partnership proposal, we are ready to accelerate your goals.",
       hq: "Headquarters",
@@ -75,7 +75,7 @@ export default async function ContactPage({ params }: Props) {
       boxPartnershipFooter: 'Select "Partnership Opportunity" in dropdown',
     },
     es: {
-      title: "Asóciese con",
+      title: "Conéctese con",
       titleHighlight: "HyperCode",
       subtitle: "Ya sea que tenga un próximo proyecto, una solicitud de personal o una propuesta de asociación estratégica, estamos listos para acelerar sus metas.",
       hq: "Sede Central",

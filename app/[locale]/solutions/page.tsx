@@ -976,7 +976,7 @@ function SolutionsPageContent() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="fixed bottom-6 right-6 z-40 p-3 bg-[#0F4C81] text-white rounded-full shadow-xl hover:bg-[#0D3F6D] transition-colors border-none cursor-pointer hidden lg:block"
+            className="fixed bottom-24 right-6 z-40 p-3 bg-[#0F4C81] text-white rounded-full shadow-xl hover:bg-[#0D3F6D] transition-colors border-none cursor-pointer hidden lg:block"
           >
             <ArrowUp size={20} />
           </motion.button>

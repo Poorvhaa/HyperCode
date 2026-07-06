@@ -82,6 +82,10 @@ export function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    window.dispatchEvent(new CustomEvent('hypercode-mobile-menu-toggle', { detail: { open: isOpen } }));
+  }, [isOpen]);
+
   const handleLanguageChange = (code: string) => {
     localStorage.setItem('NEXT_LOCALE', code);
     router.replace(pathname, { locale: code });
@@ -514,16 +518,13 @@ export function Navigation() {
                 </AnimatePresence>
               </div>
 
-              {/* AI Consultant highlighted CTA */}
-              <motion.button
-                onClick={triggerOpenChat}
-                className="px-5 py-2.5 rounded-xl text-xs font-black text-white bg-gradient-to-r from-[#0F4C81] to-blue-600 hover:from-blue-600 hover:to-[#0F4C81] hover:shadow-lg hover:shadow-blue-500/20 active:scale-95 transition-all duration-300 cursor-pointer flex items-center gap-2 border-none"
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
+              {/* Schedule Consultation highlighted CTA */}
+              <Link
+                href="/consultation"
+                className="px-5 py-2.5 rounded-xl text-xs font-black text-white bg-gradient-to-r from-[#0F4C81] to-blue-600 hover:from-blue-600 hover:to-[#0F4C81] hover:shadow-lg hover:shadow-blue-500/20 active:scale-95 transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 border-none no-underline"
               >
-                <Sparkles size={13} className="animate-pulse text-blue-300" />
-                <span>{t('aiConsultant') || 'AI Consultant'}</span>
-              </motion.button>
+                <span>{t('schedule') || 'Schedule Consultation'}</span>
+              </Link>
             </div>
 
             {/* Mobile Actions */}
@@ -644,15 +645,15 @@ export function Navigation() {
                   {t('contact')}
                 </Link>
 
-                {/* Mobile AI Consultant CTA */}
+                {/* Mobile Consultation CTA */}
                 <div className="pt-4 px-3">
-                  <button
-                    onClick={triggerOpenChat}
-                    className="w-full text-center py-3 rounded-xl font-bold text-white bg-gradient-to-r from-[#0F4C81] to-[#1e6cb3] border-none flex items-center justify-center gap-2 cursor-pointer"
+                  <Link
+                    href="/consultation"
+                    onClick={() => setIsOpen(false)}
+                    className="w-full text-center py-3 rounded-xl font-bold text-white bg-gradient-to-r from-[#0F4C81] to-[#1e6cb3] border-none flex items-center justify-center gap-2 cursor-pointer no-underline"
                   >
-                    <Sparkles size={16} />
-                    <span>{t('aiConsultant') || 'AI Consultant'}</span>
-                  </button>
+                    <span>{t('schedule') || 'Schedule Consultation'}</span>
+                  </Link>
                 </div>
               </div>
             </motion.div>

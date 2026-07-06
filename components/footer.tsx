@@ -1,7 +1,7 @@
 'use client';
 
 import { Link } from '@/i18n/routing';
-import { Mail, Phone, MapPin, ArrowRight, ShieldCheck, Award, Database, Network } from 'lucide-react';
+import { Mail, Phone, MapPin, ArrowRight, ShieldCheck } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 import { useState, type FormEvent } from 'react';
 
@@ -108,7 +108,7 @@ export function Footer() {
         </div>
 
         {/* Main Section: Sitemap columns and Company details */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 py-20 border-b border-slate-900 text-left">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 py-20 border-b border-slate-900 text-left">
           
           {/* Column 1: Company Info & Contact Details */}
           <div className="space-y-8 lg:col-span-1">
@@ -122,8 +122,9 @@ export function Footer() {
             <p className="text-xs text-slate-400 leading-relaxed font-semibold">
               {tf('tagline') || 'Enterprise AI & Digital Transformation Consulting'}
             </p>
-
-            <div className="space-y-5 text-xs sm:text-sm font-semibold text-slate-300">
+            
+            {/* Contact Details */}
+            <div className="space-y-5 text-xs sm:text-sm font-semibold text-slate-350">
               {/* Address */}
               <div className="flex items-start gap-3">
                 <MapPin size={18} className="text-slate-500 mt-1 flex-shrink-0" />
@@ -136,11 +137,12 @@ export function Footer() {
                 </div>
               </div>
               
+              {/* Phone */}
               <div className="flex items-start gap-3">
                 <Phone size={18} className="text-slate-500 mt-0.5 flex-shrink-0" />
                 <div>
                   <span className="block text-[10px] text-slate-500 font-extrabold uppercase tracking-widest mb-0.5">{tf('phone')}</span>
-                  <a href="tel:+15102039270" className="hover:text-white transition-colors text-slate-400 font-bold">
+                  <a href="tel:+15102039270" className="hover:text-[#60A5FA] transition-colors duration-200 text-slate-400 font-bold">
                     +1 (510) 203-9270
                   </a>
                 </div>
@@ -151,7 +153,7 @@ export function Footer() {
                 <Mail size={18} className="text-slate-500 mt-0.5 flex-shrink-0" />
                 <div>
                   <span className="block text-[10px] text-slate-500 font-extrabold uppercase tracking-widest mb-0.5">{tf('email')}</span>
-                  <a href="mailto:info@hypercodeus.com" className="hover:text-white transition-colors text-slate-400 font-bold">
+                  <a href="mailto:info@hypercodeus.com" className="hover:text-[#60A5FA] transition-colors duration-200 text-slate-400 font-bold">
                     info@hypercodeus.com
                   </a>
                 </div>
@@ -165,7 +167,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
-                className="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 hover:border-blue-500 hover:bg-[#0F4C81] text-slate-400 hover:text-white flex items-center justify-center transition-all duration-300"
+                className="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 hover:border-[#60A5FA] hover:bg-[#0F4C81] hover:scale-110 active:scale-95 text-slate-400 hover:text-white flex items-center justify-center transition-all duration-300 ease-out"
               >
                 <svg className="w-[18px] h-[18px] fill-current" viewBox="0 0 24 24">
                   <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
@@ -176,7 +178,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Github"
-                className="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 hover:border-blue-500 hover:bg-[#0F4C81] text-slate-400 hover:text-white flex items-center justify-center transition-all duration-300"
+                className="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 hover:border-[#60A5FA] hover:bg-[#0F4C81] hover:scale-110 active:scale-95 text-slate-400 hover:text-white flex items-center justify-center transition-all duration-300 ease-out"
               >
                 <svg className="w-[18px] h-[18px] fill-current" viewBox="0 0 24 24">
                   <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
@@ -189,9 +191,9 @@ export function Footer() {
           <div className="space-y-6">
             <h4 className="text-xs font-bold text-white uppercase tracking-widest border-l-2 border-[#0F4C81] pl-2">{tc('company')}</h4>
             <ul className="space-y-4 text-sm font-semibold">
-              <li><Link href="/about" className="hover:text-[#60A5FA] hover:translate-x-1 inline-block transition-all duration-200">{tNav('about')}</Link></li>
-              <li><Link href="/careers" className="hover:text-[#60A5FA] hover:translate-x-1 inline-block transition-all duration-200">{tNav('careers')}</Link></li>
-              <li><Link href="/contact" className="hover:text-[#60A5FA] hover:translate-x-1 inline-block transition-all duration-200">{tNav('contact')}</Link></li>
+              <li><Link href="/about" className="hover:text-[#60A5FA] hover:pl-1.5 inline-block transition-all duration-300 ease-out">{tNav('about')}</Link></li>
+              <li><Link href="/careers" className="hover:text-[#60A5FA] hover:pl-1.5 inline-block transition-all duration-300 ease-out">{tNav('careers')}</Link></li>
+              <li><Link href="/contact" className="hover:text-[#60A5FA] hover:pl-1.5 inline-block transition-all duration-300 ease-out">{tNav('contact')}</Link></li>
             </ul>
           </div>
 
@@ -201,7 +203,7 @@ export function Footer() {
             <ul className="space-y-4 text-sm font-semibold">
               {solutionsList.slice(0, 7).map((s, idx) => (
                 <li key={idx}>
-                  <Link href={s.href} className="hover:text-[#60A5FA] hover:translate-x-1 inline-block transition-all duration-200">{s.name}</Link>
+                  <Link href={s.href} className="hover:text-[#60A5FA] hover:pl-1.5 inline-block transition-all duration-300 ease-out">{s.name}</Link>
                 </li>
               ))}
             </ul>
@@ -209,43 +211,23 @@ export function Footer() {
 
           {/* Column 4: Solutions (Pillar 2) */}
           <div className="space-y-6">
-            <h4 className="text-xs font-bold text-white uppercase tracking-widest border-l-2 border-[#0F4C81] pl-2 opacity-0 hidden lg:block">Services Continued</h4>
-            <ul className="space-y-4 text-sm font-semibold lg:mt-12">
+            <h4 className="text-xs font-bold text-white uppercase tracking-widest border-l-2 border-[#0F4C81] pl-2 opacity-0 hidden lg:block select-none">Continued</h4>
+            <ul className="space-y-4 text-sm font-semibold lg:mt-[44px]">
               {solutionsList.slice(7).map((s, idx) => (
                 <li key={idx}>
-                  <Link href={s.href} className="hover:text-[#60A5FA] hover:translate-x-1 inline-block transition-all duration-200">{s.name}</Link>
+                  <Link href={s.href} className="hover:text-[#60A5FA] hover:pl-1.5 inline-block transition-all duration-300 ease-out">{s.name}</Link>
                 </li>
               ))}
               <li>
                 <Link
                   href="/solutions"
-                  className="hover:text-[#60A5FA] hover:translate-x-1 inline-flex items-center gap-1 transition-all duration-200 text-blue-450 font-extrabold mt-1"
+                  className="hover:text-[#60A5FA] hover:pl-1.5 inline-flex items-center gap-1 transition-all duration-300 ease-out text-blue-450 font-extrabold mt-1"
                 >
                   <span>{tNav('viewAllSolutions')}</span>
                   <ArrowRight size={12} />
                 </Link>
               </li>
             </ul>
-          </div>
-
-          {/* Column 5: Legal & Support */}
-          <div className="space-y-12">
-            <div className="space-y-6">
-              <h4 className="text-xs font-bold text-white uppercase tracking-widest border-l-2 border-[#0F4C81] pl-2">{tf('legal')}</h4>
-              <ul className="space-y-4 text-sm font-semibold">
-                <li><Link href="/PP" className="hover:text-[#60A5FA] hover:translate-x-1 inline-block transition-all duration-200">{tf('privacy')}</Link></li>
-                <li><Link href="/TnC" className="hover:text-[#60A5FA] hover:translate-x-1 inline-block transition-all duration-200">{tf('terms')}</Link></li>
-              </ul>
-            </div>
-            
-            <div className="space-y-6">
-              <h4 className="text-xs font-bold text-white uppercase tracking-widest border-l-2 border-[#0F4C81] pl-2">{tc('support')}</h4>
-              <ul className="space-y-4 text-sm font-semibold">
-                <li><button onClick={triggerOpenChat} className="hover:text-[#60A5FA] hover:translate-x-1 inline-block transition-all duration-200 text-left bg-transparent border-none p-0 cursor-pointer font-bold">{tNav('aiConsultant') || 'AI Consultant'}</button></li>
-                <li><Link href="/consultation" className="hover:text-[#60A5FA] hover:translate-x-1 inline-block transition-all duration-200">{tNav('schedule')}</Link></li>
-                <li><Link href="/contact" className="hover:text-[#60A5FA] hover:translate-x-1 inline-block transition-all duration-200">{tNav('contact')}</Link></li>
-              </ul>
-            </div>
           </div>
         </div>
 

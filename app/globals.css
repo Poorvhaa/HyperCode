@@ -293,3 +293,26 @@
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(15, 76, 129, 0.4);
 }
+
+/* Shake Animation for Invalid Form Elements */
+@keyframes shake-error-keyframes {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  20%, 60% {
+    transform: translateX(-6px);
+  }
+  40%, 80% {
+    transform: translateX(6px);
+  }
+}
+
+.shake-error {
+  animation: shake-error-keyframes 0.4s ease-in-out !important;
+}
+
+.shake-error:focus,
+.shake-error:focus-within {
+  animation: none !important;
+}
+

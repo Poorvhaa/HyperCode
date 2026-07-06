@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslations, useLocale } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useFormValidation } from '@/hooks/use-form-validation';
 import {
   MessageSquare,
   X,
@@ -76,10 +77,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
   const locale = useLocale();
 
   const [mounted, setMounted] = useState(false);
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
+  
   // Widget Window States: 'closed' | 'minimized' | 'open'
   const [windowState, setWindowState] = useState<'closed' | 'minimized' | 'open'>('closed');
   
@@ -98,6 +96,101 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
 
   // Custom Flow States
   const [chatState, setChatState] = useState<'DEFAULT' | 'AI_SOLUTIONS' | 'STAFFING' | 'WEB_DEVELOPMENT' | 'CONSULTATION'>('DEFAULT');
+
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Mount effect with state restoration
+  useEffect(() => {
+    setMounted(true);
+    
+    const savedWindowState = localStorage.getItem('hypercode_ai_consult_window_state');
+    if (savedWindowState === 'open' || savedWindowState === 'minimized') {
+      setWindowState(savedWindowState);
+    }
+    
+    const savedConvoId = localStorage.getItem('hypercode_ai_consult_conversation_id');
+    if (savedConvoId) {
+      setConversationId(savedConvoId);
+    }
+
+    const savedMessagesStr = localStorage.getItem('hypercode_ai_consult_messages');
+    if (savedMessagesStr) {
+      try {
+        const parsed = JSON.parse(savedMessagesStr);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setMessages(parsed);
+        }
+      } catch (e) {
+        console.warn('Failed to parse saved chat messages:', e);
+      }
+    }
+
+    const savedChatState = localStorage.getItem('hypercode_ai_consult_chat_state');
+    if (savedChatState) {
+      setChatState(savedChatState as any);
+    }
+
+    const savedActiveFlow = localStorage.getItem('hypercode_ai_consult_active_flow');
+    if (savedActiveFlow) {
+      setActiveFlow(savedActiveFlow as any);
+    }
+
+    const savedPrompts = localStorage.getItem('hypercode_ai_consult_suggested_prompts');
+    if (savedPrompts) {
+      try {
+        setSuggestedPrompts(JSON.parse(savedPrompts));
+      } catch (e) {}
+    }
+  }, []);
+
+  // Listen to mobile menu events to hide launcher
+  useEffect(() => {
+    const handleMobileMenuToggle = (e: Event) => {
+      const customEvent = e as CustomEvent<{ open: boolean }>;
+      setIsMobileMenuOpen(customEvent.detail.open);
+    };
+    window.addEventListener('hypercode-mobile-menu-toggle', handleMobileMenuToggle);
+    return () => {
+      window.removeEventListener('hypercode-mobile-menu-toggle', handleMobileMenuToggle);
+    };
+  }, []);
+
+  // Persist state effects
+  useEffect(() => {
+    if (mounted) {
+      localStorage.setItem('hypercode_ai_consult_window_state', windowState);
+    }
+  }, [windowState, mounted]);
+
+  useEffect(() => {
+    if (mounted && conversationId) {
+      localStorage.setItem('hypercode_ai_consult_conversation_id', conversationId);
+    }
+  }, [conversationId, mounted]);
+
+  useEffect(() => {
+    if (mounted) {
+      localStorage.setItem('hypercode_ai_consult_messages', JSON.stringify(messages));
+    }
+  }, [messages, mounted]);
+
+  useEffect(() => {
+    if (mounted) {
+      localStorage.setItem('hypercode_ai_consult_chat_state', chatState);
+    }
+  }, [chatState, mounted]);
+
+  useEffect(() => {
+    if (mounted) {
+      localStorage.setItem('hypercode_ai_consult_active_flow', activeFlow);
+    }
+  }, [activeFlow, mounted]);
+
+  useEffect(() => {
+    if (mounted) {
+      localStorage.setItem('hypercode_ai_consult_suggested_prompts', JSON.stringify(suggestedPrompts));
+    }
+  }, [suggestedPrompts, mounted]);
   const [staffingStep, setStaffingStep] = useState<number>(0);
   const [staffingData, setStaffingData] = useState({
     role: '',
@@ -132,7 +225,29 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
   
   // Validation / Error States
   const [formError, setFormError] = useState('');
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [isFormSubmitting, setIsFormSubmitting] = useState(false);
+
+  const { formRef: leadFormRef, focusAndScrollToError: focusAndScrollToLeadError } = useFormValidation({
+    navbarSelector: 'header',
+    extraOffset: 12,
+  });
+
+  const { formRef: consultFormRef, focusAndScrollToError: focusAndScrollToConsultError } = useFormValidation({
+    navbarSelector: 'header',
+    extraOffset: 12,
+  });
+
+  const handleFieldChange = (field: string, value: string, setter: (val: string) => void) => {
+    setter(value);
+    if (fieldErrors[field]) {
+      setFieldErrors(prev => {
+        const next = { ...prev };
+        delete next[field];
+        return next;
+      });
+    }
+  };
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const widgetRef = useRef<HTMLDivElement>(null);
@@ -823,19 +938,30 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
   const handleLeadSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormError('');
+    setFieldErrors({});
 
-    if (!formName || !formEmail || !formPhone || !formCompany) {
-      setFormError(t('errors.validation'));
-      return;
+    const newErrors: Record<string, string> = {};
+    if (!formName.trim()) newErrors.name = t('errors.validation');
+    
+    if (!formEmail.trim()) {
+      newErrors.email = t('errors.validation');
+    } else if (!formEmail.includes('@') || !formEmail.includes('.')) {
+      newErrors.email = t('errors.email');
     }
-
-    if (!formEmail.includes('@') || !formEmail.includes('.')) {
-      setFormError(t('errors.email'));
-      return;
+    
+    if (!formPhone.trim()) {
+      newErrors.phone = t('errors.validation');
+    } else if (formPhone.replace(/\D/g, '').length < 7) {
+      newErrors.phone = t('errors.phone');
     }
+    
+    if (!formCompany.trim()) newErrors.company = t('errors.validation');
 
-    if (formPhone.replace(/\D/g, '').length < 7) {
-      setFormError(t('errors.phone'));
+    if (Object.keys(newErrors).length > 0) {
+      setFieldErrors(newErrors);
+      setTimeout(() => {
+        focusAndScrollToLeadError(newErrors);
+      }, 0);
       return;
     }
 
@@ -891,14 +1017,32 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
   const handleConsultationSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormError('');
+    setFieldErrors({});
 
-    if (!formName || !formEmail || !formPhone || !formCompany || !formDate || !formMessage) {
-      setFormError(t('errors.validation'));
-      return;
+    const newErrors: Record<string, string> = {};
+    if (!formName.trim()) newErrors.name = t('errors.validation');
+    
+    if (!formEmail.trim()) {
+      newErrors.email = t('errors.validation');
+    } else if (!formEmail.includes('@') || !formEmail.includes('.')) {
+      newErrors.email = t('errors.email');
+    }
+    
+    if (!formPhone.trim()) {
+      newErrors.phone = t('errors.validation');
+    } else if (formPhone.replace(/\D/g, '').length < 7) {
+      newErrors.phone = t('errors.phone');
     }
 
-    if (!formEmail.includes('@') || !formEmail.includes('.')) {
-      setFormError(t('errors.email'));
+    if (!formCompany.trim()) newErrors.company = t('errors.validation');
+    if (!formDate.trim()) newErrors.date = t('errors.validation');
+    if (!formMessage.trim()) newErrors.message = t('errors.validation');
+
+    if (Object.keys(newErrors).length > 0) {
+      setFieldErrors(newErrors);
+      setTimeout(() => {
+        focusAndScrollToConsultError(newErrors);
+      }, 0);
       return;
     }
 
@@ -983,10 +1127,10 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
   if (!mounted) return null;
 
   return createPortal(
-    <div className={`fixed z-[999999] pointer-events-none flex flex-col items-center sm:items-end justify-end ${
+    <div className={`fixed z-[999999] pointer-events-none flex flex-col items-end justify-end ${
       windowState === 'open' 
-        ? 'bottom-2.5 left-2.5 right-2.5 sm:bottom-6 sm:right-6 sm:left-auto' 
-        : 'bottom-3 right-3 left-3 sm:bottom-6 sm:right-6 sm:left-auto'
+        ? 'bottom-4 left-4 right-4 sm:bottom-6 sm:right-6 sm:left-auto' 
+        : 'bottom-5 right-5 sm:bottom-6 sm:right-6'
     }`}>
       
       {/* 1. Chat Widget Window */}
@@ -1523,9 +1667,9 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
         )}
       </AnimatePresence>
 
-      {/* 2. Floating Launcher Button (Visible in Closed or Minimized state) 
+      {/* 2. Floating Launcher Button (Visible in Closed or Minimized state) */}
       <AnimatePresence>
-        {(windowState === 'closed' || windowState === 'minimized') && (
+        {(windowState === 'closed' || windowState === 'minimized') && !isMobileMenuOpen && (
           <motion.button
             initial={{ opacity: 0, scale: 0.7 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -1536,17 +1680,44 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
             title={t('tooltip')}
             aria-label="Open AI Consultant"
             aria-haspopup="dialog"
-            className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#0F4C81] to-[#3b82f6] text-white flex items-center justify-center shadow-xl shadow-blue-500/25 pointer-events-auto cursor-pointer hover:shadow-blue-500/35 transition-all relative group border-none outline-none"
+            className="w-14 h-14 rounded-3xl bg-gradient-to-tr from-[#0F4C81] to-blue-600 text-white flex items-center justify-center shadow-xl shadow-blue-500/25 pointer-events-auto cursor-pointer hover:shadow-blue-500/35 transition-all relative group border-none outline-none"
           >
-            <MessageSquare className="w-6 h-6 group-hover:rotate-6 transition-transform" />
-            <span className="absolute inset-0 rounded-2xl bg-blue-500/20 animate-ping pointer-events-none scale-105 duration-2000" />
+            <Bot className="w-6 h-6 group-hover:rotate-6 transition-transform" />
+            
+            {/* Outer glowing pulsing rings */}
+            <motion.div
+              animate={{
+                scale: [1, 1.25, 1],
+                opacity: [0.35, 0, 0.35]
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="absolute -inset-1.5 rounded-[28px] border border-blue-500/30 pointer-events-none"
+            />
+            <motion.div
+              animate={{
+                scale: [1, 1.45, 1],
+                opacity: [0.2, 0, 0.2]
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                delay: 1.5,
+                ease: "easeInOut"
+              }}
+              className="absolute -inset-3 rounded-[32px] border border-blue-500/15 pointer-events-none"
+            />
+
             <span className="absolute -top-1 -right-1 flex h-3.5 w-3.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-450 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-sky-500 border-2 border-slate-900"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500 border-2 border-slate-900"></span>
             </span>
           </motion.button>
         )}
-      </AnimatePresence> */}
+      </AnimatePresence>
 
     </div>,
     document.body

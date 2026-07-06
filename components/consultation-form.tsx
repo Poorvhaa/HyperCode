@@ -10,6 +10,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { db, sanitizePayload } from '@/lib/db';
 import { trackGAEvent } from '@/lib/analytics';
 import { motion } from 'framer-motion';
+import { useFormValidation } from '@/hooks/use-form-validation';
 
 function ConsultationFormContent() {
   const searchParams = useSearchParams();
@@ -17,7 +18,13 @@ function ConsultationFormContent() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
 
+  const { formRef, focusAndScrollToError } = useFormValidation({
+    navbarSelector: 'header',
+    extraOffset: 24,
+  });
+
   const t = useTranslations('Consultation.form');
+  const tContact = useTranslations('Contact.form');
   const tNav = useTranslations('Navigation');
   const tBudgets = useTranslations('Consultation.budgets');
   const tTimelines = useTranslations('Consultation.timelines');
@@ -61,10 +68,10 @@ function ConsultationFormContent() {
 
   // Validation schema
   const consultationSchema = z.object({
-    name: z.string().min(2, t('serviceError')), 
-    email: z.string().email(tc('error') || 'Invalid email'),
-    company: z.string().min(2, t('serviceError')),
-    phone: z.string().min(10, t('serviceError')),
+    name: z.string().min(2, tContact('nameError')), 
+    email: z.string().email(tContact('emailError')),
+    company: z.string().min(2, tContact('companyError')),
+    phone: z.string().min(10, tContact('phoneError')),
     service: z.string().min(1, t('serviceError')),
     budget: z.string().min(1, t('budgetError')),
     timeline: z.string().min(1, t('timelineError')),
@@ -73,7 +80,7 @@ function ConsultationFormContent() {
     currentChallenges: z.string().default(''),
     expectedOutcome: z.string().default(''),
     preferredServices: z.array(z.string()).default([]),
-    industry: z.string().min(1, t('serviceError')),
+    industry: z.string().min(1, tContact('industryError')),
     companySize: z.string().default(''),
     currentTechStack: z.string().default(''),
     preferredMeetingType: z.string().default('Video Call'),
@@ -89,7 +96,8 @@ function ConsultationFormContent() {
     formState: { errors },
     reset,
   } = useForm<ConsultationFormData>({
-    resolver: zodResolver(consultationSchema),
+    resolver: zodResolver(consultationSchema) as any,
+    mode: 'onChange',
     defaultValues: {
       service: '',
       budget: '',
@@ -270,7 +278,11 @@ function ConsultationFormContent() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 text-left bg-white/70 backdrop-blur-lg p-8 sm:p-12 rounded-3xl border border-slate-100 shadow-xl">
+    <form
+      ref={formRef}
+      onSubmit={handleSubmit(onSubmit, (errs) => focusAndScrollToError(errs))}
+      className="space-y-8 text-left bg-white/70 backdrop-blur-lg p-8 sm:p-12 rounded-3xl border border-slate-100 shadow-xl"
+    >
       {error && (
         <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 flex gap-3 text-sm">
           <AlertCircle size={20} className="flex-shrink-0" />
@@ -286,10 +298,17 @@ function ConsultationFormContent() {
             type="text"
             placeholder="John Doe"
             {...register('name')}
+            aria-invalid={errors.name ? 'true' : 'false'}
+            aria-describedby={errors.name ? 'name-error' : undefined}
             className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${
               errors.name ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
             }`}
           />
+          {errors.name && (
+            <span id="name-error" className="text-xs text-red-500 mt-1 block font-semibold">
+              {errors.name.message}
+            </span>
+          )}
         </div>
 
         <div>
@@ -298,10 +317,17 @@ function ConsultationFormContent() {
             type="email"
             placeholder="john@company.com"
             {...register('email')}
+            aria-invalid={errors.email ? 'true' : 'false'}
+            aria-describedby={errors.email ? 'email-error' : undefined}
             className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${
               errors.email ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
             }`}
           />
+          {errors.email && (
+            <span id="email-error" className="text-xs text-red-500 mt-1 block font-semibold">
+              {errors.email.message}
+            </span>
+          )}
         </div>
 
         <div>
@@ -310,10 +336,17 @@ function ConsultationFormContent() {
             type="text"
             placeholder="Company Name"
             {...register('company')}
+            aria-invalid={errors.company ? 'true' : 'false'}
+            aria-describedby={errors.company ? 'company-error' : undefined}
             className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${
               errors.company ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
             }`}
           />
+          {errors.company && (
+            <span id="company-error" className="text-xs text-red-500 mt-1 block font-semibold">
+              {errors.company.message}
+            </span>
+          )}
         </div>
 
         <div>
@@ -322,15 +355,31 @@ function ConsultationFormContent() {
             type="tel"
             placeholder="+1 (555) 012-3456"
             {...register('phone')}
+            aria-invalid={errors.phone ? 'true' : 'false'}
+            aria-describedby={errors.phone ? 'phone-error' : undefined}
             className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${
               errors.phone ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
             }`}
           />
+          {errors.phone && (
+            <span id="phone-error" className="text-xs text-red-500 mt-1 block font-semibold">
+              {errors.phone.message}
+            </span>
+          )}
         </div>
       </div>
 
       {/* Multi-Select Services Choice */}
-      <div>
+      <div className="relative">
+        <input
+          type="text"
+          {...register('service')}
+          className="sr-only"
+          tabIndex={-1}
+          aria-hidden="true"
+          aria-invalid={errors.service ? 'true' : 'false'}
+          aria-describedby={errors.service ? 'service-error' : undefined}
+        />
         <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-3">{t('preferredServices') || 'Select Service Areas of Interest'}</label>
         <div className="flex flex-wrap gap-2">
           {serviceOptions.map((opt) => {
@@ -343,6 +392,8 @@ function ConsultationFormContent() {
                 className={`px-4 py-2 rounded-full border text-sm font-medium transition-all flex items-center gap-2 cursor-pointer ${
                   active
                     ? 'bg-[#0F4C81]/10 border-[#0F4C81] text-[#0F4C81]'
+                    : errors.service
+                    ? 'bg-slate-50 border-red-300 ring-1 ring-red-300 text-slate-600 hover:border-slate-300 hover:bg-slate-100'
                     : 'bg-slate-50 border-slate-200 text-slate-600 hover:border-slate-300 hover:bg-slate-100'
                 }`}
               >
@@ -352,7 +403,11 @@ function ConsultationFormContent() {
             );
           })}
         </div>
-        {errors.service && <span className="text-xs text-red-500 mt-1 block">{errors.service.message}</span>}
+        {errors.service && (
+          <span id="service-error" className="text-xs text-red-500 mt-1 block font-semibold">
+            {errors.service.message}
+          </span>
+        )}
       </div>
 
       {/* Advanced Consulting Intake Fields */}
@@ -361,13 +416,22 @@ function ConsultationFormContent() {
           <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('industry') || 'Industry'}</label>
           <select
             {...register('industry')}
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700"
+            aria-invalid={errors.industry ? 'true' : 'false'}
+            aria-describedby={errors.industry ? 'industry-error' : undefined}
+            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700 ${
+              errors.industry ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
+            }`}
           >
             <option value="">-- Select Industry --</option>
             {Object.entries(tAi.raw('industries')).map(([key, val]) => (
               <option key={key} value={val as string}>{val as string}</option>
             ))}
           </select>
+          {errors.industry && (
+            <span id="industry-error" className="text-xs text-red-500 mt-1 block font-semibold">
+              {errors.industry.message}
+            </span>
+          )}
         </div>
 
         <div>
@@ -444,7 +508,16 @@ function ConsultationFormContent() {
 
       {/* Budget and Timeline Selection pills */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div>
+        <div className="relative">
+          <input
+            type="text"
+            {...register('budget')}
+            className="sr-only"
+            tabIndex={-1}
+            aria-hidden="true"
+            aria-invalid={errors.budget ? 'true' : 'false'}
+            aria-describedby={errors.budget ? 'budget-error' : undefined}
+          />
           <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-3">{t('budget')}</label>
           <div className="flex flex-col gap-2">
             {budgetOptions.map((opt) => {
@@ -457,6 +530,8 @@ function ConsultationFormContent() {
                   className={`w-full px-4 py-3 rounded-xl border text-sm font-medium transition-all text-left flex items-center justify-between cursor-pointer ${
                     active
                       ? 'bg-[#0F4C81] border-[#0F4C81] text-white'
+                      : errors.budget
+                      ? 'bg-slate-50 border-red-300 ring-1 ring-red-300 text-slate-650 hover:bg-slate-100'
                       : 'bg-slate-50 border-slate-200 text-slate-650 hover:bg-slate-100'
                   }`}
                 >
@@ -466,10 +541,23 @@ function ConsultationFormContent() {
               );
             })}
           </div>
-          {errors.budget && <span className="text-xs text-red-500 mt-1 block">{errors.budget.message}</span>}
+          {errors.budget && (
+            <span id="budget-error" className="text-xs text-red-500 mt-1 block font-semibold">
+              {errors.budget.message}
+            </span>
+          )}
         </div>
 
-        <div>
+        <div className="relative">
+          <input
+            type="text"
+            {...register('timeline')}
+            className="sr-only"
+            tabIndex={-1}
+            aria-hidden="true"
+            aria-invalid={errors.timeline ? 'true' : 'false'}
+            aria-describedby={errors.timeline ? 'timeline-error' : undefined}
+          />
           <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-3">{t('timeline')}</label>
           <div className="flex flex-col gap-2">
             {timelineOptions.map((opt) => {
@@ -482,6 +570,8 @@ function ConsultationFormContent() {
                   className={`w-full px-4 py-3 rounded-xl border text-sm font-medium transition-all text-left flex items-center justify-between cursor-pointer ${
                     active
                       ? 'bg-[#0F4C81] border-[#0F4C81] text-white'
+                      : errors.timeline
+                      ? 'bg-slate-50 border-red-300 ring-1 ring-red-300 text-slate-655 hover:bg-slate-100'
                       : 'bg-slate-50 border-slate-200 text-slate-655 hover:bg-slate-100'
                   }`}
                 >
@@ -491,7 +581,11 @@ function ConsultationFormContent() {
               );
             })}
           </div>
-          {errors.timeline && <span className="text-xs text-red-500 mt-1 block">{errors.timeline.message}</span>}
+          {errors.timeline && (
+            <span id="timeline-error" className="text-xs text-red-500 mt-1 block font-semibold">
+              {errors.timeline.message}
+            </span>
+          )}
         </div>
       </div>
 
@@ -502,11 +596,17 @@ function ConsultationFormContent() {
           rows={4}
           placeholder="Please describe your technology requirements, project background, or team augmentation targets..."
           {...register('message')}
+          aria-invalid={errors.message ? 'true' : 'false'}
+          aria-describedby={errors.message ? 'message-error' : undefined}
           className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${
             errors.message ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
           }`}
         />
-        {errors.message && <span className="text-xs text-red-500 mt-1 block">{errors.message.message}</span>}
+        {errors.message && (
+          <span id="message-error" className="text-xs text-red-500 mt-1 block font-semibold">
+            {errors.message.message}
+          </span>
+        )}
       </div>
 
       {/* Submit button */}
