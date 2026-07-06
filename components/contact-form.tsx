@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect, Suspense, useRef } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -9,13 +9,16 @@ import { Loader2, AlertCircle, CheckCircle, HelpCircle, Check } from 'lucide-rea
 import { useTranslations, useLocale } from 'next-intl';
 import { db } from '@/lib/db';
 import { trackGAEvent } from '@/lib/analytics';
+import { scrollToFirstError, getErrorAttributes, getInputErrorClass, getErrorAnimationClass, getErrorId } from '@/lib/form-validation';
 import { motion } from 'framer-motion';
 
 function ContactFormContent() {
   const searchParams = useSearchParams();
+  const formRef = useRef<HTMLFormElement>(null);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
 
   const t = useTranslations('Contact.form');
   const tSubjects = useTranslations('Contact.subjects');
@@ -101,6 +104,7 @@ function ContactFormContent() {
     reset,
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
+    mode: 'onBlur',
     defaultValues: {
       subject: 'General Inquiry',
       message: '',
@@ -203,6 +207,7 @@ function ContactFormContent() {
       }
     } finally {
       setSubmitting(false);
+      setIsTyping(false);
     }
   };
 
@@ -228,6 +233,10 @@ function ContactFormContent() {
     setValue('requiredTechnologies', current);
   };
 
+  const handleFormError = () => {
+    scrollToFirstError(errors);
+  };
+
   if (submitted) {
     return (
       <motion.div
@@ -245,66 +254,91 @@ function ContactFormContent() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 text-left bg-white/70 backdrop-blur-lg p-8 sm:p-12 rounded-3xl border border-slate-100 shadow-xl">
+    <form 
+      ref={formRef}
+      onSubmit={handleSubmit(onSubmit, handleFormError)} 
+      className="space-y-8 text-left bg-white/70 backdrop-blur-lg p-8 sm:p-12 rounded-3xl border border-slate-100 shadow-xl"
+      noValidate
+    >
       {error && (
-        <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 flex gap-3 text-sm">
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 flex gap-3 text-sm"
+        >
           <AlertCircle size={20} className="flex-shrink-0" />
           <span>{error}</span>
-        </div>
+        </motion.div>
       )}
 
       {/* Grid for Name, Email, Company, Phone */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('name')}</label>
+          <label htmlFor="name" className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('name')}</label>
           <input
+            id="name"
             type="text"
             placeholder="John Doe"
             {...register('name')}
-            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${
-              errors.name ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
-            }`}
+            onFocus={() => setIsTyping(true)}
+            onBlur={() => setIsTyping(false)}
+            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${getInputErrorClass(!!errors.name)} ${getErrorAnimationClass(!!errors.name, isTyping)}`}
+            {...getErrorAttributes('name', !!errors.name)}
           />
-          {errors.name && <span className="text-xs text-red-500 mt-1 block">{errors.name.message}</span>}
+          {errors.name && (
+            <span id={getErrorId('name')} className="text-xs text-red-500 mt-1 block font-medium">{errors.name.message}</span>
+          )}
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('email')}</label>
+          <label htmlFor="email" className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('email')}</label>
           <input
+            id="email"
             type="email"
             placeholder="john@company.com"
             {...register('email')}
-            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${
-              errors.email ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
-            }`}
+            onFocus={() => setIsTyping(true)}
+            onBlur={() => setIsTyping(false)}
+            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${getInputErrorClass(!!errors.email)} ${getErrorAnimationClass(!!errors.email, isTyping)}`}
+            {...getErrorAttributes('email', !!errors.email)}
           />
-          {errors.email && <span className="text-xs text-red-500 mt-1 block">{errors.email.message}</span>}
+          {errors.email && (
+            <span id={getErrorId('email')} className="text-xs text-red-500 mt-1 block font-medium">{errors.email.message}</span>
+          )}
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('company')}</label>
+          <label htmlFor="company" className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('company')}</label>
           <input
+            id="company"
             type="text"
             placeholder="Enter company name"
             {...register('company')}
-            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${
-              errors.company ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
-            }`}
+            onFocus={() => setIsTyping(true)}
+            onBlur={() => setIsTyping(false)}
+            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${getInputErrorClass(!!errors.company)} ${getErrorAnimationClass(!!errors.company, isTyping)}`}
+            {...getErrorAttributes('company', !!errors.company)}
           />
-          {errors.company && <span className="text-xs text-red-500 mt-1 block">{errors.company.message}</span>}
+          {errors.company && (
+            <span id={getErrorId('company')} className="text-xs text-red-500 mt-1 block font-medium">{errors.company.message}</span>
+          )}
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('phone')}</label>
+          <label htmlFor="phone" className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('phone')}</label>
           <input
+            id="phone"
             type="tel"
             placeholder="+1 (555) 012-3456"
             {...register('phone')}
-            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${
-              errors.phone ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
-            }`}
+            onFocus={() => setIsTyping(true)}
+            onBlur={() => setIsTyping(false)}
+            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${getInputErrorClass(!!errors.phone)} ${getErrorAnimationClass(!!errors.phone, isTyping)}`}
+            {...getErrorAttributes('phone', !!errors.phone)}
           />
-          {errors.phone && <span className="text-xs text-red-500 mt-1 block">{errors.phone.message}</span>}
+          {errors.phone && (
+            <span id={getErrorId('phone')} className="text-xs text-red-500 mt-1 block font-medium">{errors.phone.message}</span>
+          )}
         </div>
       </div>
 
@@ -336,22 +370,27 @@ function ContactFormContent() {
       {/* Grid for Select Options */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('industry')}</label>
+          <label htmlFor="industry" className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('industry')}</label>
           <select
+            id="industry"
             {...register('industry')}
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700"
+            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700 ${getInputErrorClass(!!errors.industry)}`}
+            {...getErrorAttributes('industry', !!errors.industry)}
           >
             <option value="">-- Select Industry --</option>
             {Object.entries(tAi.raw('industries')).map(([key, val]) => (
               <option key={key} value={val as string}>{val as string}</option>
             ))}
           </select>
-          {errors.industry && <span className="text-xs text-red-500 mt-1 block">{errors.industry.message}</span>}
+          {errors.industry && (
+            <span id={getErrorId('industry')} className="text-xs text-red-500 mt-1 block font-medium">{errors.industry.message}</span>
+          )}
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('companySize') || 'Company Size'}</label>
+          <label htmlFor="companySize" className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('companySize') || 'Company Size'}</label>
           <select
+            id="companySize"
             {...register('companySize')}
             className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700"
           >
@@ -365,36 +404,45 @@ function ContactFormContent() {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('budget')}</label>
+          <label htmlFor="budget" className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('budget')}</label>
           <select
+            id="budget"
             {...register('budget')}
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700"
+            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700 ${getInputErrorClass(!!errors.budget)}`}
+            {...getErrorAttributes('budget', !!errors.budget)}
           >
             <option value="">-- Select Budget --</option>
             {Object.entries(tConsult.raw('budgets')).map(([key, val]) => (
               <option key={key} value={val as string}>{val as string}</option>
             ))}
           </select>
-          {errors.budget && <span className="text-xs text-red-500 mt-1 block">{errors.budget.message}</span>}
+          {errors.budget && (
+            <span id={getErrorId('budget')} className="text-xs text-red-500 mt-1 block font-medium">{errors.budget.message}</span>
+          )}
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('timeline')}</label>
+          <label htmlFor="timeline" className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('timeline')}</label>
           <select
+            id="timeline"
             {...register('timeline')}
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700"
+            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700 ${getInputErrorClass(!!errors.timeline)}`}
+            {...getErrorAttributes('timeline', !!errors.timeline)}
           >
             <option value="">-- Select Timeline --</option>
             {Object.entries(tConsult.raw('timelines')).map(([key, val]) => (
               <option key={key} value={val as string}>{val as string}</option>
             ))}
           </select>
-          {errors.timeline && <span className="text-xs text-red-500 mt-1 block">{errors.timeline.message}</span>}
+          {errors.timeline && (
+            <span id={getErrorId('timeline')} className="text-xs text-red-500 mt-1 block font-medium">{errors.timeline.message}</span>
+          )}
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('country') || 'Country / Region'}</label>
+          <label htmlFor="country" className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('country') || 'Country / Region'}</label>
           <input
+            id="country"
             type="text"
             placeholder="e.g. United States, United Kingdom"
             {...register('country')}
@@ -403,8 +451,9 @@ function ContactFormContent() {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('contactMethod') || 'Preferred Contact Method'}</label>
+          <label htmlFor="contactMethod" className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('contactMethod') || 'Preferred Contact Method'}</label>
           <select
+            id="contactMethod"
             {...register('preferredContactMethod')}
             className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700"
           >
@@ -416,8 +465,9 @@ function ContactFormContent() {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('projectType') || 'Project Type'}</label>
+          <label htmlFor="projectType" className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('projectType') || 'Project Type'}</label>
           <select
+            id="projectType"
             {...register('projectType')}
             className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700"
           >
@@ -431,8 +481,9 @@ function ContactFormContent() {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('subject')}</label>
+          <label htmlFor="subject" className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('subject')}</label>
           <select
+            id="subject"
             {...register('subject')}
             className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700"
           >
@@ -470,16 +521,20 @@ function ContactFormContent() {
 
       {/* Message Textarea */}
       <div>
-        <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('message')}</label>
+        <label htmlFor="message" className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('message')}</label>
         <textarea
+          id="message"
           rows={5}
           placeholder="Please describe your technology requirements, key challenges, or hiring profiles..."
           {...register('message')}
-          className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${
-            errors.message ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
-          }`}
+          onFocus={() => setIsTyping(true)}
+          onBlur={() => setIsTyping(false)}
+          className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${getInputErrorClass(!!errors.message)} ${getErrorAnimationClass(!!errors.message, isTyping)}`}
+          {...getErrorAttributes('message', !!errors.message)}
         />
-        {errors.message && <span className="text-xs text-red-500 mt-1 block">{errors.message.message}</span>}
+        {errors.message && (
+          <span id={getErrorId('message')} className="text-xs text-red-500 mt-1 block font-medium">{errors.message.message}</span>
+        )}
       </div>
 
       {/* Submit Button */}
@@ -487,7 +542,7 @@ function ContactFormContent() {
         <button
           type="submit"
           disabled={submitting}
-          className="px-8 py-4 rounded-xl font-semibold text-white bg-[#0F4C81] hover:bg-[#0D3F6D] transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75 disabled:cursor-not-allowed min-w-[200px]"
+          className="px-8 py-4 rounded-xl font-semibold text-white bg-[#0F4C81] hover:bg-[#0D3F6D] transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75 disabled:cursor-not-allowed"
         >
           {submitting ? (
             <>
