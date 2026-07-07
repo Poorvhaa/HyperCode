@@ -121,20 +121,20 @@ export function CaseStudiesSection({ categoryFilter }: { categoryFilter?: string
   const currentStudy = finalStudies[currentIndex] || staticStudies[0];
 
   return (
-    <section className="py-32 bg-slate-50/50 dark:bg-[#07090e] border-b border-slate-100 dark:border-slate-900 text-left overflow-hidden">
+    <section className="section-padding bg-[#F8FAFC] border-b border-slate-200 text-left overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Title Block */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-20">
           <div className="max-w-3xl space-y-4">
-            <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C81] dark:text-blue-400 tracking-widest uppercase">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#0F4C81] dark:bg-blue-400" />
+            <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C81] tracking-widest uppercase">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#0F4C81]" />
               {t('badge')}
             </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+            <h2 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">
               {t('title')}
             </h2>
-            <p className="text-base sm:text-lg text-slate-500 dark:text-slate-400 leading-relaxed font-semibold">
+            <p className="text-[16px] md:text-[17px] lg:text-[18px] text-slate-650 leading-[1.7] font-semibold">
               {t('subtitle')}
             </p>
           </div>
@@ -143,14 +143,14 @@ export function CaseStudiesSection({ categoryFilter }: { categoryFilter?: string
           <div className="flex gap-2">
             <button
               onClick={handlePrev}
-              className="w-11 h-11 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 hover:border-slate-350 transition-all cursor-pointer shadow-sm"
+              className="w-11 h-11 rounded-xl border border-slate-200 bg-white flex items-center justify-center text-slate-600 hover:bg-slate-50 transition-all cursor-pointer shadow-sm"
               aria-label="Previous story"
             >
               <ChevronLeft size={18} />
             </button>
             <button
               onClick={handleNext}
-              className="w-11 h-11 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 hover:border-slate-350 transition-all cursor-pointer shadow-sm"
+              className="w-11 h-11 rounded-xl border border-slate-200 bg-white flex items-center justify-center text-slate-600 hover:bg-slate-50 transition-all cursor-pointer shadow-sm"
               aria-label="Next story"
             >
               <ChevronRight size={18} />
@@ -175,27 +175,27 @@ export function CaseStudiesSection({ categoryFilter }: { categoryFilter?: string
                 className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center"
               >
                 {/* Left side info panel (7 columns) */}
-                <div className="lg:col-span-7 space-y-8 bg-white dark:bg-[#0b0f19] border border-slate-200/50 dark:border-slate-800/40 rounded-3xl p-8 sm:p-10 shadow-lg relative overflow-hidden">
+                <div className="lg:col-span-7 space-y-8 premium-card shadow-lg bg-white overflow-hidden p-8 sm:p-10 rounded-[24px]">
                   
                   {/* Category logo/badge header */}
-                  <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-900 pb-6">
+                  <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-6">
                     <div className="space-y-1.5 flex-1 min-w-[240px]">
-                      <span className="text-[10px] font-black text-[#0F4C81] dark:text-blue-400 uppercase tracking-widest block">
+                      <span className="text-[10px] font-black text-[#0F4C81] uppercase tracking-widest block">
                         {currentStudy.category}
                       </span>
-                      <h4 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+                      <h4 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight leading-tight">
                         {currentStudy.title}
                       </h4>
                       {/* Technologies Deployed */}
                       <div className="flex flex-wrap gap-1.5 pt-2">
                         {currentStudy.technologies?.map((tech, tIdx) => (
-                          <span key={tIdx} className="px-2.5 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-900 text-[#0F4C81] dark:text-blue-400 text-[10px] font-extrabold uppercase tracking-wide border border-slate-200/30 dark:border-slate-800/60">
+                          <span key={tIdx} className="px-2.5 py-0.5 rounded-lg bg-slate-100 text-[#0F4C81] text-[10px] font-extrabold uppercase tracking-wide border border-slate-200/50">
                             {tech}
                           </span>
                         ))}
                       </div>
                     </div>
-                    <div className="px-4 py-1.5 bg-[#0F4C81]/5 border border-[#0F4C81]/15 text-[#0F4C81] dark:text-blue-400 text-xs font-black rounded-xl tracking-wider uppercase flex-shrink-0">
+                    <div className="px-4 py-1.5 bg-[#0F4C81]/5 border border-[#0F4C81]/15 text-[#0F4C81] text-xs font-black rounded-xl tracking-wider uppercase flex-shrink-0">
                       {currentStudy.logo}
                     </div>
                   </div>
@@ -204,18 +204,18 @@ export function CaseStudiesSection({ categoryFilter }: { categoryFilter?: string
                   <div className="relative space-y-8 pl-1 md:pl-2">
                     
                     {/* Continuous Vertical Timeline Connector */}
-                    <div className="absolute left-[28px] top-[28px] bottom-[28px] w-[2px] bg-slate-100 dark:bg-slate-900/60 z-[1]" />
+                    <div className="absolute left-[28px] top-[28px] bottom-[28px] w-[2px] bg-slate-100 z-[1]" />
 
                     {/* Challenge */}
                     <div className="flex gap-6 items-start relative z-10">
-                      <div className="w-14 h-14 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800/50 flex items-center justify-center flex-shrink-0 shadow-sm text-rose-500">
+                      <div className="w-14 h-14 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-center flex-shrink-0 shadow-sm text-rose-500">
                         <ShieldAlert size={22} />
                       </div>
                       <div className="space-y-1.5 pt-1.5 flex-1">
                         <h5 className="text-xs font-extrabold text-rose-500 uppercase tracking-widest">
                           {t('challenge')}
                         </h5>
-                        <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-semibold">
+                        <p className="text-[16px] md:text-[17px] text-slate-600 leading-[1.7] font-medium">
                           {currentStudy.challenge}
                         </p>
                       </div>
@@ -223,14 +223,14 @@ export function CaseStudiesSection({ categoryFilter }: { categoryFilter?: string
 
                     {/* Solution */}
                     <div className="flex gap-6 items-start relative z-10">
-                      <div className="w-14 h-14 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800/50 flex items-center justify-center flex-shrink-0 shadow-sm text-[#0F4C81] dark:text-blue-400">
+                      <div className="w-14 h-14 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-center flex-shrink-0 shadow-sm text-[#0F4C81]">
                         <Cpu size={22} />
                       </div>
                       <div className="space-y-1.5 pt-1.5 flex-1">
-                        <h5 className="text-xs font-extrabold text-[#0F4C81] dark:text-blue-400 uppercase tracking-widest">
+                        <h5 className="text-xs font-extrabold text-[#0F4C81] uppercase tracking-widest">
                           {t('solution')}
                         </h5>
-                        <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-semibold">
+                        <p className="text-[16px] md:text-[17px] text-slate-600 leading-[1.7] font-medium">
                           {currentStudy.solution}
                         </p>
                       </div>
@@ -238,14 +238,14 @@ export function CaseStudiesSection({ categoryFilter }: { categoryFilter?: string
 
                     {/* Outcome */}
                     <div className="flex gap-6 items-start relative z-10">
-                      <div className="w-14 h-14 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800/50 flex items-center justify-center flex-shrink-0 shadow-sm text-emerald-500">
+                      <div className="w-14 h-14 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-center flex-shrink-0 shadow-sm text-emerald-500">
                         <CheckCircle2 size={22} />
                       </div>
                       <div className="space-y-1.5 pt-1.5 flex-1">
                         <h5 className="text-xs font-extrabold text-emerald-500 uppercase tracking-widest">
                           {t('outcome')}
                         </h5>
-                        <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-semibold">
+                        <p className="text-[16px] md:text-[17px] text-slate-600 leading-[1.7] font-medium">
                           {currentStudy.outcome}
                         </p>
                       </div>
@@ -253,12 +253,12 @@ export function CaseStudiesSection({ categoryFilter }: { categoryFilter?: string
                   </div>
 
                   {/* Highlights Metric Grid & Read Full Case Study CTA */}
-                  <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-8 border-t border-slate-100 dark:border-slate-900">
+                  <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-8 border-t border-slate-100">
                     <div className="grid grid-cols-3 gap-4 flex-1 w-full">
                       {currentStudy.metrics.map((metric, mIdx) => (
-                        <div key={mIdx} className="space-y-1 bg-slate-50 dark:bg-slate-900/30 p-3 rounded-2xl border border-slate-100/50 dark:border-slate-850">
-                          <div className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">{metric.val}</div>
-                          <div className="text-[9px] sm:text-[10px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-widest">{metric.label}</div>
+                        <div key={mIdx} className="space-y-1 bg-slate-50 p-3 rounded-2xl border border-slate-200/50">
+                          <div className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">{metric.val}</div>
+                          <div className="text-[9px] sm:text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">{metric.label}</div>
                         </div>
                       ))}
                     </div>
@@ -266,10 +266,10 @@ export function CaseStudiesSection({ categoryFilter }: { categoryFilter?: string
                     <div className="w-full sm:w-auto flex-shrink-0">
                       <Link
                         href={`/insights/${currentStudy.slug}`}
-                        className="inline-flex items-center justify-center h-12 px-6 w-full sm:w-auto bg-[#0F4C81] hover:bg-[#155e9e] text-white font-bold text-xs uppercase tracking-wider rounded-2xl transition-all shadow-md gap-2"
+                        className="btn-primary"
                       >
                         <span>{locale === 'es' ? 'Caso Completo' : 'Read Full Case Study'}</span>
-                        <ArrowRight size={14} />
+                        <ArrowRight size={16} className="ml-2" />
                       </Link>
                     </div>
                   </div>
@@ -277,16 +277,16 @@ export function CaseStudiesSection({ categoryFilter }: { categoryFilter?: string
                 </div>
 
                 {/* Right side mockup panel (5 columns) */}
-                <div className="lg:col-span-5 relative w-full h-[320px] sm:h-[400px] flex items-center justify-center bg-gradient-to-tr from-[#0F4C81]/10 to-transparent dark:from-slate-900 rounded-3xl border border-slate-200/40 dark:border-slate-800/40 overflow-hidden shadow-inner">
+                <div className="lg:col-span-5 relative w-full h-[320px] sm:h-[400px] flex items-center justify-center bg-gradient-to-tr from-[#0F4C81]/5 to-transparent rounded-[24px] border border-slate-200 overflow-hidden shadow-inner">
                   
                   {/* Laptop Mockup Box */}
-                  <div className="relative w-[90%] h-[80%] rounded-2xl overflow-hidden shadow-2xl border border-slate-250/70 dark:border-slate-800 bg-[#0B0F19]">
-                    <div className="h-5 bg-slate-900 dark:bg-black px-4 flex items-center gap-1.5 border-b border-slate-850">
+                  <div className="relative w-[90%] h-[80%] rounded-2xl overflow-hidden shadow-2xl border border-slate-200 bg-white">
+                    <div className="h-5 bg-slate-50 px-4 flex items-center gap-1.5 border-b border-slate-200">
                       <div className="w-2 h-2 rounded-full bg-rose-500" />
                       <div className="w-2 h-2 rounded-full bg-amber-500" />
                       <div className="w-2 h-2 rounded-full bg-emerald-500" />
                     </div>
-                    <div className="relative w-full h-[calc(100%-20px)]">
+                    <div className="relative w-full h-[calc(100%-20px)] bg-slate-50">
                       <Image
                         src={currentStudy.image}
                         alt="Analytics Dashboard"
@@ -297,8 +297,8 @@ export function CaseStudiesSection({ categoryFilter }: { categoryFilter?: string
                   </div>
 
                   {/* Absolute Badge */}
-                  <div className="absolute bottom-6 right-6 bg-white/90 dark:bg-slate-950/90 backdrop-blur-md px-3.5 py-2 rounded-xl border border-slate-200/50 dark:border-slate-850 shadow-lg text-[10px] font-bold text-slate-800 dark:text-slate-250 flex items-center gap-1.5">
-                    <Award size={14} className="text-[#0F4C81] dark:text-blue-400 animate-bounce" />
+                  <div className="absolute bottom-6 right-6 bg-white/90 backdrop-blur-md px-3.5 py-2 rounded-xl border border-slate-200 shadow-lg text-[10px] font-bold text-slate-800 flex items-center gap-1.5">
+                    <Award size={14} className="text-[#0F4C81] animate-bounce" />
                     <span>Verified Project Outcomes</span>
                   </div>
                 </div>
@@ -312,10 +312,10 @@ export function CaseStudiesSection({ categoryFilter }: { categoryFilter?: string
         <div className="text-center mt-16">
           <Link
             href="/insights"
-            className="inline-flex items-center justify-center h-12 px-7 bg-white dark:bg-slate-900 border border-[#0F4C81] dark:border-slate-800 text-[#0F4C81] dark:text-slate-250 font-bold text-xs uppercase tracking-wider rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-850 transition-all shadow-sm gap-2 cursor-pointer"
+            className="btn-secondary"
           >
             <span>{tc('viewCaseStudies')}</span>
-            <ArrowRight size={14} />
+            <ArrowRight size={16} className="ml-2" />
           </Link>
         </div>
 

@@ -110,14 +110,13 @@
     "newsletterPlaceholder": "Correo Corporativo",
     "newsletterSuccess": "¡Gracias por suscribirse!",
     "corporateHq": "Sede Central",
-    "unitedStates": "Estados Unidos",
-    "phone": "Teléfono"
+    "unitedStates": "Estados Unidos"
   },
   "Hero": {
     "badge": "Socio de Transformación Digital Empresarial",
-    "title": "Construya Soluciones Digitales con IA & ",
-    "titleHighlight": "Escale con Tecnología Empresarial",
-    "subtitle": "HyperCode es una empresa de consultoría de TI y soluciones de IA empresarial. Combinamos ingeniería de software a medida, estructuras de datos en la nube, analítica avanzada y soluciones de talento estratégico para acelerar el crecimiento corporativo.",
+    "title": "Construya empresas más inteligentes con software empresarial, ",
+    "titleHighlight": "IA e innovación digital.",
+    "subtitle": "Hypercode es una firma de reclutamiento de confianza —tanto en el ámbito tecnológico como en el no tecnológico— que ofrece soluciones de contratación rápidas y de calidad. Combinamos ingeniería de software a medida, estructuras de datos en la nube, analítica avanzada,inteligencia artificial y soluciones de talento estratégico para acelerar el crecimiento corporativo.",
     "talkToConsultant": "Programar Consulta",
     "exploreSolutions": "Explorar Soluciones",
     "nodes": {

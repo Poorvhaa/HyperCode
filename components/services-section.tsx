@@ -150,41 +150,40 @@ export function ServicesSection() {
   ];
 
   return (
-    <section id="services" className="relative py-32 bg-slate-50/50 dark:bg-[#07090e] border-b border-slate-100 dark:border-slate-900 text-left overflow-hidden">
-      
+    <section id="services" className="relative section-padding bg-[#F8FAFC] border-b border-slate-200 text-left overflow-hidden">
       {/* Decorative Orbs */}
-      <div className="absolute top-1/4 right-0 w-[450px] h-[450px] bg-blue-100/30 dark:bg-blue-950/5 rounded-full blur-3xl -z-10 pointer-events-none" />
-      <div className="absolute bottom-1/4 left-0 w-[450px] h-[450px] bg-slate-100/50 dark:bg-indigo-950/5 rounded-full blur-3xl -z-10 pointer-events-none" />
+      <div className="absolute top-1/4 right-0 w-[450px] h-[450px] bg-blue-50/50 rounded-full blur-3xl -z-10 pointer-events-none" />
+      <div className="absolute bottom-1/4 left-0 w-[450px] h-[450px] bg-slate-50/80 rounded-full blur-3xl -z-10 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Title Block */}
         <div className="max-w-3xl mb-20 space-y-4">
-          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C81] dark:text-blue-400 tracking-widest uppercase">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#0F4C81] dark:bg-blue-400" />
+          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C81] tracking-widest uppercase">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#0F4C81]" />
             {curr.badge}
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+          <h2 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">
             {curr.title}
           </h2>
-          <p className="text-base sm:text-lg text-slate-500 dark:text-slate-400 leading-relaxed font-semibold">
+          <p className="text-[16px] md:text-[17px] lg:text-[18px] text-slate-600 leading-[1.7] font-semibold">
             {curr.subtitle}
           </p>
         </div>
 
-        {/* Solutions Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Solutions Grid - 40px Gaps */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {services.map((service, idx) => {
             const Icon = service.icon;
             const itemTranslation = curr.items[service.key];
             return (
               <motion.div
                 key={service.key}
-                className="group flex flex-col justify-between rounded-3xl border border-slate-200/60 dark:border-slate-800/60 bg-white dark:bg-[#0b0f19] shadow-sm hover:shadow-xl hover:border-[#0F4C81] dark:hover:border-blue-500/80 transition-all duration-400 overflow-hidden min-h-[420px]"
+                className="group flex flex-col justify-between rounded-[24px] border border-slate-250 bg-white shadow-sm hover:shadow-xl hover:border-[#0F4C81] transition-all duration-300 overflow-hidden min-h-[420px]"
                 whileHover={{ y: -6 }}
               >
                 {/* Header Image & Badge */}
-                <div className="relative h-48 w-full bg-slate-100 dark:bg-slate-900 overflow-hidden">
+                <div className="relative h-48 w-full bg-slate-100 overflow-hidden">
                   <Image
                     src={service.image}
                     alt={itemTranslation.title}
@@ -193,29 +192,29 @@ export function ServicesSection() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-slate-900/20 to-transparent" />
                   
-                  {/* Floating Icon */}
-                  <div className="absolute top-4 left-4 w-10 h-10 rounded-xl bg-white/95 dark:bg-slate-950/95 backdrop-blur-md text-[#0F4C81] dark:text-blue-400 flex items-center justify-center shadow-md border border-white/20 dark:border-white/5 group-hover:scale-110 transition-transform">
-                    <Icon size={18} />
+                  {/* Floating Icon - 48px Size */}
+                  <div className="absolute top-4 left-4 w-12 h-12 rounded-xl bg-white text-[#0F4C81] flex items-center justify-center shadow-md border border-slate-100 group-hover:scale-110 transition-transform">
+                    <Icon size={24} />
                   </div>
                 </div>
 
-                {/* Content */}
-                <div className="p-7 flex-1 flex flex-col justify-between space-y-6">
+                {/* Content - 32px Padding */}
+                <div className="p-8 flex-1 flex flex-col justify-between space-y-6">
                   <div className="space-y-3">
-                    <h3 className="text-xl font-bold text-slate-900 dark:text-slate-150 tracking-tight group-hover:text-[#0F4C81] dark:group-hover:text-blue-400 transition-colors">
+                    <h3 className="text-[22px] font-bold text-slate-900 tracking-tight group-hover:text-[#0F4C81] transition-colors leading-[1.2]">
                       {itemTranslation.title}
                     </h3>
                     
-                    <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-semibold">
+                    <p className="text-[16px] md:text-[17px] text-slate-650 leading-[1.7] font-medium">
                       {itemTranslation.desc}
                     </p>
                   </div>
 
                   {/* Action Link */}
-                  <div className="pt-2 border-t border-slate-100 dark:border-slate-900/80">
+                  <div className="pt-2 border-t border-slate-100">
                     <Link
                       href={service.href}
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C81] dark:text-blue-400 hover:gap-2.5 transition-all group/link"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C81] hover:gap-2.5 transition-all group/link"
                     >
                       <span>{curr.explore}</span>
                       <ArrowRight size={14} className="group-hover/link:translate-x-0.5 transition-transform" />

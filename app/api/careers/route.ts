@@ -5,7 +5,7 @@ import { Resend } from 'resend';
 // Initialize Resend
 const resendApiKey = process.env.RESEND_API_KEY || '';
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
-const contactRecipient = process.env.HYPERCODE_CONTACT_EMAIL || 'Info@hypercodeus.com';
+const contactRecipient = process.env.HYPERCODE_CONTACT_EMAIL || 'HR@hypercodeus.com';
 
 export async function POST(req: Request) {
   console.log('\n========================================');
@@ -253,13 +253,13 @@ export async function POST(req: Request) {
         console.log('[Careers API] Sending recruiter and candidate notification emails in parallel...');
         await Promise.all([
           resend.emails.send({
-            from: 'HyperCode Careers <onboarding@resend.dev>',
+            from: 'HyperCode Careers <HR@hypercodeus.com>',
             to: contactRecipient,
             subject: `[Applicant Alert] New Application: ${name} - ${position}`,
             html: adminEmailHtml,
           }),
           resend.emails.send({
-            from: 'HyperCode Careers <onboarding@resend.dev>',
+            from: 'HyperCode Careers <HR@hypercodeus.com>>',
             to: email,
             subject: userSubject,
             html: userEmailHtml,

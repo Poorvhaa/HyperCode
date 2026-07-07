@@ -103,23 +103,20 @@
     "officesTitle": "Global Headquarter",
     "address": "2095 Hammond Dr Suite C,Schaumburg, IL 6017,United States",
     "phone": "+1 (510) 203-9270",
-    "email": "info@hypercode.com",
+    "email": "HR@hypercodeus.com",
     "legal": "Legal",
     "newsletterTitle": "Subscribe to Insights",
     "newsletterDesc": "Get monthly technological briefings from our solutions directors.",
     "newsletterPlaceholder": "Corporate Email",
     "newsletterSuccess": "Thank you for subscribing!",
     "corporateHq": "Corporate HQ",
-    "unitedStates": "United States",
-    "phone": "Phone",
-    "email": "Email",
-    "legal": "Legal"
+    "unitedStates": "United States"
   },
   "Hero": {
     "badge": "Enterprise Digital Transformation Partner",
-    "title": "Build AI-Powered Digital Solutions & ",
-    "titleHighlight": "Scale with Enterprise Technology",
-    "subtitle": "HyperCode is an enterprise IT consulting and AI solutions company. We combine custom software engineering, cloud data structures, advanced analytics, and strategic talent solutions to accelerate growth.",
+    "title": "Build Smarter Businesses with Enterprise Software,",
+    "titleHighlight": " AI & Digital Innovation",
+    "subtitle": "Hypercode is a trusted IT and Non-IT recruitment firm delivering fast, quality hiring solutions. We combine custom software engineering, cloud data structures, advanced analytics,artificial intelligence and strategic talent solutions to accelerate growth.",
     "talkToConsultant": "Schedule Consultation",
     "exploreSolutions": "Explore Solutions",
     "nodes": {

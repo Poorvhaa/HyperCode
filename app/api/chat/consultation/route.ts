@@ -7,7 +7,7 @@ import { isRateLimited, getClientIp, sanitizeInput } from '@/lib/security';
 // Initialize Resend
 const resendApiKey = process.env.RESEND_API_KEY || '';
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
-const contactRecipient = process.env.HYPERCODE_CONTACT_EMAIL || 'info@hypercodeus.com';
+const contactRecipient = process.env.HYPERCODE_CONTACT_EMAIL || 'HR@hypercodeus.com';
 
 const schema = z.object({
   name: z.string().min(2).max(100),
@@ -120,13 +120,16 @@ export async function POST(req: Request) {
             </div>
           </div>
         `;
+console.log("Admin recipient:", contactRecipient);
 
-        await resend.emails.send({
-          from: 'HyperCode AI Consultant <onboarding@resend.dev>',
-          to: contactRecipient,
-          subject: `[AI Consultant Call] ${company} - ${service}`,
-          html: adminEmailHtml,
-        });
+        const adminResult = await resend.emails.send({
+  from: 'HyperCode AI Consultant <HR@hypercodeus.com>',
+  to: contactRecipient,
+  subject: `[AI Consultant Call] ${company} - ${service}`,
+  html: adminEmailHtml,
+});
+
+console.log("Admin email result:", adminResult);
 
         // Visitor Confirmation Email
         const isSpanish = language === 'es';
@@ -182,12 +185,14 @@ export async function POST(req: Request) {
           </div>
         `;
 
-        await resend.emails.send({
-          from: 'HyperCode Consulting <onboarding@resend.dev>',
-          to: email,
-          subject: userSubject,
-          html: userEmailHtml,
-        });
+      const userEmailResult = await resend.emails.send({
+  from: 'HyperCode AI Consultant <HR@hypercodeus.com>',
+  to: email,
+  subject: userSubject,
+  html: userEmailHtml,
+});
+
+console.log("User email result:", userEmailResult);
       } catch (emailErr) {
         console.error('Resend chat consultation email error:', emailErr);
       }

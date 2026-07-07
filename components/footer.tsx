@@ -153,8 +153,8 @@ export function Footer() {
                 <Mail size={18} className="text-slate-500 mt-0.5 flex-shrink-0" />
                 <div>
                   <span className="block text-[10px] text-slate-500 font-extrabold uppercase tracking-widest mb-0.5">{tf('email')}</span>
-                  <a href="mailto:info@hypercodeus.com" className="hover:text-[#60A5FA] transition-colors duration-200 text-slate-400 font-bold">
-                    info@hypercodeus.com
+                  <a href="mailto:HR@hypercodeus.com" className="hover:text-[#60A5FA] transition-colors duration-200 text-slate-400 font-bold">
+                    HR@hypercodeus.com
                   </a>
                 </div>
               </div>

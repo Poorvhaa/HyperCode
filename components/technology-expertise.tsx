@@ -168,31 +168,30 @@ export function TechnologyExpertise() {
     devops: Network
   };
 
-  // Local helpers removed, standard lucide-react icons imported instead
-
   return (
-    <section className="relative bg-[#fcfdfe] dark:bg-[#07090e] border-t border-b border-slate-100 dark:border-slate-900 py-32 select-none text-left overflow-hidden bg-dot-pattern">
-      {/* Decorative Blur */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-gradient-to-b from-[#0F4C81]/5 to-transparent rounded-full blur-3xl pointer-events-none" />
+    <section className="section-padding bg-white border-b border-slate-200 text-left relative overflow-hidden bg-dot-pattern">
+      {/* Decorative Orbs */}
+      <div className="absolute top-1/4 left-0 w-[450px] h-[450px] bg-blue-50/50 rounded-full blur-3xl -z-0 pointer-events-none" />
+      <div className="absolute top-1/4 right-0 w-[450px] h-[450px] bg-slate-50/80 rounded-full blur-3xl -z-0 pointer-events-none" />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C81] dark:text-blue-400 tracking-widest uppercase">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#0F4C81] dark:bg-blue-400" />
+        <div className="text-left max-w-3xl mb-16 space-y-4">
+          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C81] tracking-widest uppercase">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#0F4C81]" />
             {activeTranslation.badge}
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
             {activeTranslation.title}
           </h2>
-          <p className="text-base sm:text-lg text-slate-500 dark:text-slate-400 font-semibold leading-relaxed max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-slate-600 font-semibold leading-relaxed">
             {activeTranslation.subtitle}
           </p>
         </div>
 
         {/* Tab Selectors */}
-        <div className="flex flex-wrap justify-center gap-2 p-2 bg-slate-100/60 dark:bg-slate-900/40 border border-slate-200/50 dark:border-slate-800/50 rounded-2xl max-w-5xl mx-auto mb-10 shadow-inner backdrop-blur-md">
+        <div className="flex flex-wrap justify-center gap-2 p-2 bg-slate-150/60 border border-slate-200 rounded-2xl max-w-5xl mx-auto mb-10 shadow-inner backdrop-blur-md">
           {(Object.keys(categories) as TabKey[]).map((tabKey) => {
             const TabIcon = tabIcons[tabKey];
             const isActive = activeTab === tabKey;
@@ -202,11 +201,11 @@ export function TechnologyExpertise() {
                 onClick={() => setActiveTab(tabKey)}
                 className={`flex-grow md:flex-initial flex items-center justify-center gap-2 px-5 py-3 text-xs sm:text-sm rounded-xl font-bold transition-all duration-300 cursor-pointer ${
                   isActive
-                    ? "bg-white dark:bg-[#0B0F19] text-[#0F4C81] dark:text-blue-400 border border-slate-250/50 dark:border-slate-800 shadow-md"
-                    : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/40 dark:hover:bg-slate-900/20"
+                    ? "bg-white text-[#0F4C81] border border-slate-200 shadow-md"
+                    : "text-slate-600 hover:text-slate-900 hover:bg-white/40"
                 }`}
               >
-                <TabIcon size={16} className={isActive ? "text-[#0F4C81] dark:text-blue-400" : "text-slate-400"} />
+                <TabIcon size={16} className={isActive ? "text-[#0F4C81]" : "text-slate-400"} />
                 {activeTranslation.tabs[tabKey]}
               </button>
             );
@@ -218,9 +217,9 @@ export function TechnologyExpertise() {
           {activeBadges.map((badgeText, idx) => (
             <span
               key={idx}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-[10px] sm:text-xs font-bold bg-[#0F4C81]/5 text-[#0F4C81] dark:bg-blue-950/20 dark:text-blue-400 border border-[#0F4C81]/10 dark:border-blue-900/30"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-[10px] sm:text-xs font-bold bg-[#0F4C81]/5 text-[#0F4C81] border border-[#0F4C81]/10"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#0F4C81] dark:bg-blue-400" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#0F4C81]" />
               {badgeText}
             </span>
           ))}
@@ -243,22 +242,22 @@ export function TechnologyExpertise() {
                 return (
                   <div
                     key={idx}
-                    className="flex items-center gap-4.5 p-6 bg-white dark:bg-[#0b0f19] border border-slate-200/50 dark:border-slate-800/40 rounded-2xl transition-all duration-300 shadow-sm hover:-translate-y-1 hover:border-[#0F4C81] dark:hover:border-blue-500 hover:shadow-lg dark:hover:shadow-blue-950/10 group relative overflow-hidden min-h-[110px]"
+                    className="flex items-center gap-4.5 p-6 bg-white border border-slate-200 rounded-2xl transition-all duration-300 shadow-sm hover:-translate-y-1 hover:border-[#0F4C81] hover:shadow-lg group relative overflow-hidden min-h-[110px]"
                   >
                     {/* Hover border glow highlight */}
-                    <div className="absolute inset-x-0 bottom-0 h-[2.5px] bg-gradient-to-r from-[#0F4C81] to-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute inset-x-0 bottom-0 h-[2.5px] bg-[#0F4C81] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     
                     {/* Icon Container */}
-                    <div className="w-12 h-12 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 flex items-center justify-center text-slate-500 dark:text-slate-400 group-hover:text-[#0F4C81] dark:group-hover:text-blue-400 group-hover:bg-[#0F4C81]/5 dark:group-hover:bg-[#0F4C81]/10 group-hover:border-[#0F4C81]/15 dark:group-hover:border-blue-900/30 transition-all duration-300 flex-shrink-0">
+                    <div className="w-12 h-12 rounded-xl bg-slate-50 border border-slate-250 flex items-center justify-center text-slate-500 group-hover:text-[#0F4C81] group-hover:bg-[#0F4C81]/5 group-hover:border-[#0F4C81]/15 transition-all duration-300 flex-shrink-0">
                       <IconComponent size={22} className="group-hover:scale-110 transition-transform duration-300" />
                     </div>
                     
                     {/* Content */}
                     <div className="space-y-1">
-                      <h4 className="text-sm sm:text-base font-bold text-slate-900 dark:text-slate-200 group-hover:text-[#0F4C81] dark:group-hover:text-blue-400 transition-colors duration-300">
+                      <h4 className="text-sm sm:text-base font-bold text-slate-900 group-hover:text-[#0F4C81] transition-colors duration-300">
                         {item.name}
                       </h4>
-                      <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold leading-relaxed">
+                      <p className="text-xs text-slate-500 font-semibold leading-relaxed">
                         {description}
                       </p>
                     </div>

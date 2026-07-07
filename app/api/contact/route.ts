@@ -6,7 +6,9 @@ import { Resend } from 'resend';
 // Initialize Resend
 const resendApiKey = process.env.RESEND_API_KEY || '';
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
-const contactRecipient = process.env.HYPERCODE_CONTACT_EMAIL || 'Info@hypercodeus.com';
+const contactRecipient = process.env.HYPERCODE_CONTACT_EMAIL || 'HR@hypercodeus.com';
+console.log('HYPERCODE_CONTACT_EMAIL:', process.env.HYPERCODE_CONTACT_EMAIL);
+console.log('Resolved contactRecipient:', contactRecipient);
 
 const contactSchema = z.object({
   name: z.string().min(2),
@@ -29,7 +31,7 @@ const contactSchema = z.object({
 });
 
 export async function POST(req: Request) {
-  try {
+try {
     const body = await req.json();
     const validated = contactSchema.parse(body);
 
@@ -130,12 +132,19 @@ export async function POST(req: Request) {
           </div>
         `;
 
-        await resend.emails.send({
-          from: 'HyperCode Platform <onboarding@resend.dev>',
-          to: contactRecipient,
-          subject: `[Lead Alert] New Contact Inquiry: ${validated.subject}`,
-          html: adminEmailHtml,
-        });
+        try {
+  const adminEmailResult = await resend.emails.send({
+    from: 'HyperCode Platform <HR@hypercodeus.com>',
+    to: contactRecipient,
+    subject: `[Lead Alert] New Contact Inquiry: ${validated.subject}`,
+    html: adminEmailHtml,
+  });
+
+  console.log('✅ Admin recipient:', contactRecipient);
+  console.log('✅ Admin email result:', adminEmailResult);
+} catch (err) {
+  console.error('❌ Admin email failed:', err);
+}
 
         // B. Confirmation Email to User
         const isSpanish = validated.locale === 'es';
@@ -191,19 +200,21 @@ United States, CA</p>
           </div>
         `;
 
-        await resend.emails.send({
-          from: 'HyperCode Team <onboarding@resend.dev>',
-          to: validated.email,
-          subject: userSubject,
-          html: userEmailHtml,
-        });
+        try {
+  const userEmailResult = await resend.emails.send({
+  from: 'HyperCode Team <HR@hypercodeus.com>',
+  to: validated.email,
+  subject: userSubject,
+  html: userEmailHtml,
+});
+
+console.log('✅ User email sent:', userEmailResult);
       } catch (emailErr) {
         console.error('Resend contact email error:', emailErr);
       }
-    }
-
+ 
     return NextResponse.json({ success: true, data: savedData });
-  } catch (err) {
+     } catch (err) {
     console.error('Contact route error:', err);
     if (err instanceof z.ZodError) {
       return NextResponse.json({ error: 'Validation failed', details: err.issues }, { status: 400 });

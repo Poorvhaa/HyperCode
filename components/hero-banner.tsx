@@ -36,7 +36,7 @@ export function HeroBanner({
   const botOpacity = Math.min(overlayOpacity + 0.06, 0.60);
 
   return (
-    <section className="relative w-full h-[750px] sm:h-[850px] lg:h-[900px] flex items-center overflow-hidden bg-[#050f1e] border-b border-white/5">
+    <section className="relative w-full h-[480px] sm:h-[520px] lg:h-[560px] flex items-center overflow-hidden bg-[#F8FAFC] border-b border-slate-200 bg-dot-pattern text-left">
       {/* Background Image Container with Slow Zoom */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <motion.div
@@ -50,40 +50,37 @@ export function HeroBanner({
             alt={title}
             fill
             priority
-            className="object-cover object-center opacity-70 select-none pointer-events-none"
+            className="object-cover object-center opacity-[0.06] select-none pointer-events-none filter saturate-50"
           />
         </motion.div>
         
-        {/* Custom Gradient Overlay with Cool Blue Brand Tint (45-60% opacity range) */}
+        {/* Custom Light Gradient Overlay */}
         <div 
           className="absolute inset-0 z-10" 
           style={{
-            background: `linear-gradient(to bottom, rgba(5,15,30,${topOpacity}), rgba(8,25,45,${midOpacity}), rgba(5,10,20,${botOpacity}))`
+            background: 'linear-gradient(to bottom, rgba(248,250,252,0.85) 0%, rgba(241,245,249,0.95) 100%)'
           }}
         />
-        
-        {/* Vignette Overlay */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_40%,rgba(0,0,0,0.35))] z-10 pointer-events-none" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-20 pt-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-20 pt-12">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
           
           {/* Content Block */}
           <div className="max-w-3xl space-y-5">
             {/* Breadcrumbs */}
             {breadcrumbs && breadcrumbs.length > 0 && (
-              <nav className="flex items-center gap-1.5 text-[10px] font-extrabold text-slate-300 tracking-widest uppercase mb-2 drop-shadow-md">
+              <nav className="flex items-center gap-1.5 text-[10px] font-extrabold text-slate-500 tracking-widest uppercase mb-2">
                 {breadcrumbs.map((crumb, idx) => (
                   <div key={idx} className="flex items-center gap-1.5">
                     {crumb.href ? (
-                      <Link href={crumb.href} className="hover:text-blue-300 transition-colors">
+                      <Link href={crumb.href} className="hover:text-[#0F4C81] transition-colors">
                         {crumb.label}
                       </Link>
                     ) : (
                       <span className="text-slate-400">{crumb.label}</span>
                     )}
-                    {idx < breadcrumbs.length - 1 && <span className="text-slate-500">/</span>}
+                    {idx < breadcrumbs.length - 1 && <span className="text-slate-450">/</span>}
                   </div>
                 ))}
               </nav>
@@ -91,22 +88,22 @@ export function HeroBanner({
 
             {/* Category Badge */}
             {categoryLabel && (
-              <span className="inline-flex items-center gap-1.5 text-xs font-black text-blue-300 tracking-widest uppercase drop-shadow-md">
-                <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
+              <span className="inline-flex items-center gap-1.5 text-xs font-black text-[#0F4C81] tracking-widest uppercase">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#0F4C81]" />
                 {categoryLabel}
               </span>
             )}
 
-            <h1 className="text-4xl sm:text-5xl lg:text-[56px] font-black text-white tracking-tight leading-[1.08] drop-shadow-lg">
+            <h1 className="text-4xl sm:text-5xl lg:text-[56px] font-black text-slate-900 tracking-tight leading-[1.1]">
               {title}{' '}
               {titleHighlight && (
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-cyan-300">
+                <span className="text-[#0F4C81]">
                   {titleHighlight}
                 </span>
               )}
             </h1>
             
-            <p className="text-sm sm:text-base text-slate-100 leading-relaxed font-bold max-w-xl drop-shadow-md">
+            <p className="text-[16px] md:text-[17px] lg:text-[18px] text-slate-600 leading-[1.7] max-w-xl font-medium">
               {subtitle}
             </p>
           </div>

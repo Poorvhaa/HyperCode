@@ -58,19 +58,14 @@ export function Navigation() {
     return pathname.startsWith(href);
   };
   const getLinkClass = (href: string) => {
-    const base = "font-bold text-sm transition-all duration-300 relative py-2 cursor-pointer bg-transparent border-none outline-none flex items-center h-full";
-    const activeColor = "text-[#60A5FA] font-black drop-shadow-[0_0_8px_rgba(96,165,250,0.4)]";
-    const inactiveColor = "text-white hover:text-[#60A5FA] hover:drop-shadow-[0_0_10px_rgba(96,165,250,0.6)]";
+    const base = "font-bold text-sm lg:text-[16px] xl:text-[17px] transition-all duration-200 relative py-2 cursor-pointer bg-transparent border-none outline-none flex items-center h-full text-slate-700 hover:text-[#0F4C81]";
+    const activeColor = "text-[#0F4C81] font-extrabold";
+    const inactiveColor = "text-slate-750";
     return `${base} ${isActive(href) ? activeColor : inactiveColor}`;
   };
 
   const getLangButtonClass = () => {
-    const base = "flex items-center gap-1.5 px-3.5 py-2 rounded-xl border text-xs font-black transition-all duration-300 cursor-pointer";
-    if (isScrolled) {
-      return `${base} border-white/20 text-white hover:bg-white/10 bg-slate-900/60 backdrop-blur-md`;
-    } else {
-      return `${base} border-white/30 text-white hover:bg-white/10 bg-white/5 backdrop-blur-md`;
-    }
+    return "flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-slate-200 text-xs font-bold transition-all duration-200 cursor-pointer text-slate-700 hover:bg-slate-50 bg-white shadow-sm";
   };
 
   useEffect(() => {
@@ -276,10 +271,8 @@ export function Navigation() {
   return (
     <>
       <motion.nav
-        className={`fixed z-50 transition-all duration-500 ease-in-out ${
-          isScrolled 
-            ? 'top-4 left-1/2 -translate-x-1/2 w-[92%] max-w-7xl h-16 rounded-2xl border bg-slate-950/80 dark:bg-[#0B0F19]/85 backdrop-blur-2xl border-white/15 shadow-[0_8px_32px_0_rgba(0,0,0,0.5)]' 
-            : 'top-0 left-0 right-0 w-full h-20 bg-slate-950/45 dark:bg-[#0B0F19]/50 backdrop-blur-xl border-white/10 border-b shadow-lg'
+        className={`fixed z-50 transition-all duration-300 ease-in-out top-0 left-0 right-0 w-full bg-white/95 backdrop-blur-md border-b border-slate-200/60 shadow-sm ${
+          isScrolled ? 'h-20 shadow-md' : 'h-[88px]'
         }`}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
@@ -287,7 +280,7 @@ export function Navigation() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
           <div className="flex items-center justify-between h-full w-full">
-            <div className="flex items-center h-full gap-8 xl:gap-12">
+            <div className="flex items-center h-full">
               <Link href="/" className="flex items-center flex-shrink-0">
                 <Image
                   src="/logo.jpg"
@@ -295,157 +288,148 @@ export function Navigation() {
                   width={729}
                   height={950}
                   priority
-                  className="h-11 w-auto object-contain transition-all duration-300"
-                  style={{ filter: 'invert(1) hue-rotate(180deg)' }}
+                  className="h-14 lg:h-16 w-auto object-contain py-1 transition-all duration-300"
                 />
               </Link>
+            </div>
 
-              {/* Center Navigation Links */}
-              <div className="hidden lg:flex items-center space-x-8 h-full rtl:space-x-reverse">
-                <Link href="/" className={`${getLinkClass('/')} group`}>
-                  <span className="relative py-1">
-                    {t('home')}
+            {/* Center Navigation Links */}
+            <div className="hidden lg:flex items-center justify-center space-x-8 h-full rtl:space-x-reverse flex-1">
+              <Link href="/" className={`${getLinkClass('/')} group`}>
+                <span className="relative py-1">
+                  {t('home')}
+                </span>
+              </Link>
+
+              {/* Solutions Mega Menu Dropdown */}
+              <div
+                className="h-full flex items-center relative"
+                onMouseEnter={() => setActiveDropdown('solutions')}
+                onMouseLeave={closeDropdowns}
+              >
+                <button className={`${getLinkClass('/solutions')} group`}>
+                  <span className="relative py-1 flex items-center">
+                    <span>{tc('solutions')}</span>
+                    <ChevronDown size={12} className={`ml-1 transition-transform duration-300 ${activeDropdown === 'solutions' ? 'rotate-180 text-[#0F4C81]' : ''}`} />
                   </span>
-                </Link>
+                </button>
 
-                {/* Solutions Mega Menu Dropdown */}
-                <div
-                  className="h-full flex items-center relative"
-                  onMouseEnter={() => setActiveDropdown('solutions')}
-                  onMouseLeave={closeDropdowns}
-                >
-                  <button className={`${getLinkClass('/solutions')} group`}>
-                    <span className="relative py-1 flex items-center">
-                      <span>{tc('solutions')}</span>
-                      <ChevronDown size={12} className={`ml-1 transition-transform duration-300 ${activeDropdown === 'solutions' ? 'rotate-180 text-[#60A5FA]' : ''}`} />
-                      
-                    </span>
-                    
-                  </button>
-
-                  <AnimatePresence>
-                    {activeDropdown === 'solutions' && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 15, scale: 0.98 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 10, scale: 0.98 }}
-                        transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                        className="fixed top-20 left-1/2 -translate-x-1/2 w-full max-w-6xl px-4 sm:px-6 lg:px-8 z-50 pointer-events-auto"
-                      >
-                        <div className="bg-white/95 dark:bg-[#0B0F19]/95 backdrop-blur-xl border border-slate-200/60 dark:border-slate-800/60 rounded-3xl shadow-2xl shadow-slate-900/10 p-8 flex gap-8 text-left mt-2">
-                          
-                          {/* Left Panel: Categories Selection */}
-                          <div className="w-1/3 border-r border-slate-200/60 dark:border-slate-800/60 pr-6 space-y-1 max-h-[500px] overflow-y-auto scrollbar-thin">
-                            {solutionsMegaMenu.map((cat) => {
-                              const CatIcon = cat.icon;
-                              const isCatActive = activeCategory === cat.id;
-                              return (
-                                <button
-                                  key={cat.id}
-                                  onMouseEnter={() => setActiveCategory(cat.id)}
-                                  className={`w-full flex items-center justify-between p-3 rounded-2xl text-left transition-all duration-200 cursor-pointer border-none outline-none ${
-                                    isCatActive 
-                                      ? 'bg-slate-100/80 dark:bg-slate-900/60 text-[#0F4C81] dark:text-blue-400 font-extrabold shadow-sm'
-                                      : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50/50 dark:hover:bg-slate-900/30'
-                                  }`}
-                                >
-                                  <div className="flex items-center gap-3">
-                                    <div className={`p-1.5 rounded-lg ${isCatActive ? 'bg-[#0F4C81]/10 text-[#0F4C81] dark:text-blue-400' : 'bg-slate-100/50 dark:bg-slate-900/30 text-slate-400'}`}>
-                                      <CatIcon size={16} />
-                                    </div>
-                                    <span className="text-xs font-bold tracking-tight">{cat.title}</span>
-                                  </div>
-                                  <ArrowRight size={12} className={`opacity-0 transition-opacity ${isCatActive ? 'opacity-100' : ''}`} />
-                                </button>
-                              );
-                            })}
-                          </div>
-
-                          {/* Right Panel: Selected Category Services Grid */}
-                          {(() => {
-                            const activeCatObj = solutionsMegaMenu.find(c => c.id === activeCategory) || solutionsMegaMenu[0];
-                            const ActiveCatIcon = activeCatObj.icon;
+                <AnimatePresence>
+                  {activeDropdown === 'solutions' && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 15, scale: 0.98 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 10, scale: 0.98 }}
+                      transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                      className="fixed top-20 left-1/2 -translate-x-1/2 w-full max-w-6xl px-4 sm:px-6 lg:px-8 z-50 pointer-events-auto"
+                    >
+                      <div className="bg-white backdrop-blur-xl border border-slate-200/80 rounded-[24px] shadow-2xl shadow-slate-900/5 p-8 flex gap-8 text-left mt-2">
+                        
+                        {/* Left Panel: Categories Selection */}
+                        <div className="w-1/3 border-r border-slate-200 pr-6 space-y-1 max-h-[500px] overflow-y-auto scrollbar-thin">
+                          {solutionsMegaMenu.map((cat) => {
+                            const CatIcon = cat.icon;
+                            const isCatActive = activeCategory === cat.id;
                             return (
-                              <div className="w-2/3 pl-6 flex flex-col justify-between h-[480px]">
-                                <div className="space-y-6">
-                                  <div className="flex items-start gap-4">
-                                    <div className="p-3 bg-[#0F4C81]/5 border border-[#0F4C81]/15 text-[#0F4C81] dark:text-blue-400 rounded-2xl">
-                                      <ActiveCatIcon size={24} />
-                                    </div>
-                                    <div className="space-y-1">
-                                      <h4 className="text-base font-extrabold text-slate-800 dark:text-slate-200">{activeCatObj.title}</h4>
-                                      <p className="text-xs text-slate-400 dark:text-slate-500 leading-relaxed max-w-lg">{activeCatObj.desc}</p>
-                                    </div>
+                              <button
+                                key={cat.id}
+                                onMouseEnter={() => setActiveCategory(cat.id)}
+                                className={`w-full flex items-center justify-between p-3 rounded-2xl text-left transition-all duration-200 cursor-pointer border-none outline-none ${
+                                  isCatActive 
+                                    ? 'bg-[#F1F5F9] text-[#0F4C81] font-extrabold shadow-sm'
+                                    : 'text-slate-600 hover:bg-slate-50'
+                                }`}
+                              >
+                                <div className="flex items-center gap-3">
+                                  <div className={`p-1.5 rounded-lg ${isCatActive ? 'bg-[#0F4C81]/10 text-[#0F4C81]' : 'bg-slate-100/85 text-slate-405'}`}>
+                                    <CatIcon size={16} />
                                   </div>
+                                  <span className="text-xs font-bold tracking-tight">{cat.title}</span>
+                                </div>
+                                <ArrowRight size={12} className={`opacity-0 transition-opacity ${isCatActive ? 'opacity-100' : ''}`} />
+                              </button>
+                            );
+                          })}
+                        </div>
 
-                                  <div className="grid grid-cols-2 gap-4">
-                                    {activeCatObj.items.map((item, idx) => (
-                                      <Link
-                                        key={idx}
-                                        href={`/solutions/${item.slug}`}
-                                        onClick={closeDropdowns}
-                                        className="group flex items-center justify-between p-3 rounded-2xl border border-slate-100/50 dark:border-slate-850/40 bg-slate-50/20 dark:bg-slate-900/10 hover:border-[#0F4C81]/30 hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-all"
-                                      >
-                                        <span className="text-xs font-bold text-slate-700 dark:text-slate-350 group-hover:text-[#0F4C81] dark:group-hover:text-blue-400 transition-colors">
-                                          {item.name}
-                                        </span>
-                                        <ChevronDown size={14} className="text-slate-400 group-hover:text-[#0F4C81] dark:group-hover:text-blue-400 transform -rotate-90 group-hover:translate-x-1 transition-all" />
-                                      </Link>
-                                    ))}
+                        {/* Right Panel: Selected Category Services Grid */}
+                        {(() => {
+                          const activeCatObj = solutionsMegaMenu.find(c => c.id === activeCategory) || solutionsMegaMenu[0];
+                          const ActiveCatIcon = activeCatObj.icon;
+                          return (
+                            <div className="w-2/3 pl-6 flex flex-col justify-between h-[480px]">
+                              <div className="space-y-6">
+                                <div className="flex items-start gap-4">
+                                  <div className="p-3 bg-[#0F4C81]/5 border border-[#0F4C81]/15 text-[#0F4C81] rounded-2xl">
+                                    <ActiveCatIcon size={24} />
+                                  </div>
+                                  <div className="space-y-1">
+                                    <h4 className="text-base font-extrabold text-slate-800">{activeCatObj.title}</h4>
+                                    <p className="text-xs text-slate-500 leading-relaxed max-w-lg">{activeCatObj.desc}</p>
                                   </div>
                                 </div>
 
-                                <div className="border-t border-slate-100 dark:border-slate-800/80 pt-4 flex items-center justify-between">
-                                  <Link
-                                    href="/solutions"
-                                    onClick={closeDropdowns}
-                                    className="inline-flex items-center gap-2 text-xs font-extrabold text-[#0F4C81] dark:text-blue-400 hover:underline"
-                                  >
-                                    <span>{t('viewAllSolutions')}</span>
-                                    <ArrowRight size={14} />
-                                  </Link>
-                                  <button
-                                    onClick={triggerOpenChat}
-                                    className="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 bg-transparent border-none cursor-pointer"
-                                  >
-                                    <span>{t('talkToAI')}</span>
-                                    <Sparkles size={12} className="text-blue-400 animate-pulse" />
-                                  </button>
+                                <div className="grid grid-cols-2 gap-4">
+                                  {activeCatObj.items.map((item, idx) => (
+                                    <Link
+                                      key={idx}
+                                      href={`/solutions/${item.slug}`}
+                                      onClick={closeDropdowns}
+                                      className="group flex items-center justify-between p-3 rounded-2xl border border-slate-100 bg-slate-50/30 hover:border-[#0F4C81]/30 hover:bg-slate-50 transition-all"
+                                    >
+                                      <span className="text-xs font-bold text-slate-700 group-hover:text-[#0F4C81] transition-colors">
+                                        {item.name}
+                                      </span>
+                                      <ChevronDown size={14} className="text-slate-400 group-hover:text-[#0F4C81] transform -rotate-90 group-hover:translate-x-1 transition-all" />
+                                    </Link>
+                                  ))}
                                 </div>
                               </div>
-                            );
-                          })()}
 
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
+                              <div className="border-t border-slate-100 pt-4 flex items-center justify-between">
+                                <Link
+                                  href="/solutions"
+                                  onClick={closeDropdowns}
+                                  className="inline-flex items-center gap-2 text-xs font-extrabold text-[#0F4C81] hover:underline"
+                                >
+                                  <span>{t('viewAllSolutions')}</span>
+                                  <ArrowRight size={14} />
+                                </Link>
+                                <button
+                                  onClick={triggerOpenChat}
+                                  className="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-[#0F4C81] bg-transparent border-none cursor-pointer"
+                                >
+                                  <span>{t('talkToAI')}</span>
+                                  <Sparkles size={12} className="text-blue-500 animate-pulse" />
+                                </button>
+                              </div>
+                            </div>
+                          );
+                        })()}
 
-                <Link href="/about" className={`${getLinkClass('/about')} group`}>
-                  <span className="relative py-1">
-                    {t('about')}
-                    
-                  </span>
-                  
-                </Link>
-
-                <Link href="/careers" className={`${getLinkClass('/careers')} group`}>
-                  <span className="relative py-1">
-                    {t('careers')}
-                
-                  </span>
-                  
-                </Link>
-
-                <Link href="/contact" className={`${getLinkClass('/contact')} group`}>
-                  <span className="relative py-1">
-                    {t('contact')}
-                    
-                  </span>
-                  
-                </Link>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
+
+              <Link href="/about" className={`${getLinkClass('/about')} group`}>
+                <span className="relative py-1">
+                  {t('about')}
+                </span>
+              </Link>
+
+              <Link href="/careers" className={`${getLinkClass('/careers')} group`}>
+                <span className="relative py-1">
+                  {t('careers')}
+                </span>
+              </Link>
+
+              <Link href="/contact" className={`${getLinkClass('/contact')} group`}>
+                <span className="relative py-1">
+                  {t('contact')}
+                </span>
+              </Link>
             </div>
 
             {/* Right Side Actions */}
@@ -456,7 +440,7 @@ export function Navigation() {
                   onClick={() => setIsLangOpen(!isLangOpen)}
                   className={getLangButtonClass()}
                 >
-                  <Globe size={13} className="text-white/80" />
+                  <Globe size={13} className="text-slate-600" />
                   <span>{activeLangName}</span>
                   <ChevronDown size={11} className={`transition-transform duration-300 ${isLangOpen ? 'rotate-180' : ''}`} />
                 </button>
@@ -468,14 +452,14 @@ export function Navigation() {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 5, scale: 0.95 }}
                       transition={{ duration: 0.15 }}
-                      className="absolute right-0 mt-2 w-36 bg-slate-950 dark:bg-[#0B0F19] border border-white/10 rounded-2xl shadow-xl py-1.5 z-50 overflow-hidden"
+                      className="absolute right-0 mt-2 w-36 bg-white border border-slate-200 rounded-2xl shadow-xl py-1.5 z-50 overflow-hidden"
                     >
                       {languages.map((lang) => (
                         <button
                           key={lang.code}
                           onClick={() => handleLanguageChange(lang.code)}
-                          className={`w-full text-left px-4 py-2.5 text-xs font-bold hover:bg-white/10 cursor-pointer transition-colors ${
-                            locale === lang.code ? 'text-[#60A5FA]' : 'text-slate-200'
+                          className={`w-full text-left px-4 py-2.5 text-xs font-bold hover:bg-slate-50 cursor-pointer transition-colors ${
+                            locale === lang.code ? 'text-[#0F4C81]' : 'text-slate-700'
                           }`}
                         >
                           {lang.name}
@@ -489,7 +473,7 @@ export function Navigation() {
               {/* Schedule Consultation highlighted CTA */}
               <Link
                 href="/consultation"
-                className="px-5 py-2.5 rounded-xl text-xs font-black text-white bg-gradient-to-r from-[#0F4C81] to-blue-600 hover:from-blue-600 hover:to-[#0F4C81] hover:shadow-lg hover:shadow-blue-500/20 active:scale-95 transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 border-none no-underline"
+                className="px-6 py-3 rounded-full text-sm font-bold text-white bg-[#0F4C81] hover:bg-[#0c3e69] hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all duration-200 cursor-pointer border-none no-underline shadow-sm flex items-center justify-center gap-2"
               >
                 <span>{t('schedule') || 'Schedule Consultation'}</span>
               </Link>
@@ -499,14 +483,14 @@ export function Navigation() {
             <div className="flex lg:hidden items-center gap-3">
               <button
                 onClick={() => setIsMobileLangOpen(!isMobileLangOpen)}
-                className="px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 text-xs font-bold text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900"
+                className="px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 bg-white"
               >
                 {locale.toUpperCase()}
               </button>
 
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="p-2 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900"
+                className="p-2 rounded-xl text-slate-605 hover:bg-slate-50"
               >
                 {isOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
@@ -522,13 +506,13 @@ export function Navigation() {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
-              className="lg:hidden border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-[#0B0F19] overflow-hidden shadow-xl absolute top-20 left-0 right-0 z-55 max-h-[calc(100vh-80px)] overflow-y-auto"
+              className="lg:hidden border-t border-slate-200 bg-white overflow-hidden shadow-xl absolute top-20 left-0 right-0 z-55 max-h-[calc(100vh-80px)] overflow-y-auto"
             >
               <div className="px-4 pt-2 pb-6 space-y-3">
                 <Link
                   href="/"
                   onClick={() => setIsOpen(false)}
-                  className="block px-3 py-2.5 text-base font-bold text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-900 rounded-xl"
+                  className="block px-3 py-2.5 text-base font-bold text-slate-800 hover:bg-slate-50 rounded-xl"
                 >
                   {t('home')}
                 </Link>
@@ -537,14 +521,14 @@ export function Navigation() {
                 <div>
                   <button
                     onClick={() => setMobileSolutionsOpen(!mobileSolutionsOpen)}
-                    className="w-full flex items-center justify-between px-3 py-2.5 text-base font-bold text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-900 rounded-xl text-left"
+                    className="w-full flex items-center justify-between px-3 py-2.5 text-base font-bold text-slate-800 hover:bg-slate-50 rounded-xl text-left"
                   >
                     <span>{tc('solutions')}</span>
                     <ChevronDown size={16} className={`transform transition-transform duration-300 ${mobileSolutionsOpen ? 'rotate-180' : ''}`} />
                   </button>
 
                   {mobileSolutionsOpen && (
-                    <div className="pl-4 space-y-3 mt-2 border-l border-slate-100 dark:border-slate-800">
+                    <div className="pl-4 space-y-3 mt-2 border-l border-slate-100">
                       {solutionsMegaMenu.map((cat, catIdx) => {
                         const isMobileCatExpanded = mobileExpandedCat === cat.id;
                         const CatIcon = cat.icon;
@@ -552,7 +536,7 @@ export function Navigation() {
                           <div key={catIdx} className="space-y-1">
                             <button
                               onClick={() => setMobileExpandedCat(isMobileCatExpanded ? null : cat.id)}
-                              className="w-full flex items-center justify-between py-2 text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-[#0F4C81] text-left bg-transparent border-none outline-none cursor-pointer"
+                              className="w-full flex items-center justify-between py-2 text-xs font-bold text-slate-600 hover:text-[#0F4C81] text-left bg-transparent border-none outline-none cursor-pointer"
                             >
                               <div className="flex items-center gap-2">
                                 <CatIcon size={14} className="text-slate-400" />
@@ -562,100 +546,100 @@ export function Navigation() {
                             </button>
                             
                             {isMobileCatExpanded && (
-                              <div className="pl-6 space-y-2.5 py-1 border-l border-slate-100 dark:border-slate-850">
+                              <div className="pl-6 space-y-2.5 py-1 border-l border-slate-100">
                                 {cat.items.map((item, idx) => (
                                   <Link
                                     key={idx}
                                     href={`/solutions/${item.slug}`}
                                     onClick={() => setIsOpen(false)}
-                                    className="block text-xs font-semibold text-slate-500 hover:text-[#0F4C81] dark:text-slate-400"
+                                    className="block text-xs font-semibold text-slate-500 hover:text-[#0F4C81]"
                                   >
                                     {item.name}
                                   </Link>
                                 ))}
                                 <Link
-                                  href="/solutions"
-                                  onClick={() => setIsOpen(false)}
-                                  className="block text-xs font-extrabold text-[#0F4C81] dark:text-blue-400 pt-1"
-                                >
-                                  {t('viewAll')}
-                                </Link>
-                              </div>
-                            )}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
+                                    href="/solutions"
+                                    onClick={() => setIsOpen(false)}
+                                    className="block text-xs font-extrabold text-[#0F4C81] pt-1"
+                                  >
+                                    {t('viewAll')}
+                                  </Link>
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
 
-                <Link
-                  href="/about"
-                  onClick={() => setIsOpen(false)}
-                  className="block px-3 py-2.5 text-base font-bold text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-900 rounded-xl"
-                >
-                  {t('about')}
-                </Link>
-
-                <Link
-                  href="/careers"
-                  onClick={() => setIsOpen(false)}
-                  className="block px-3 py-2.5 text-base font-bold text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-900 rounded-xl"
-                >
-                  {t('careers')}
-                </Link>
-
-                <Link
-                  href="/contact"
-                  onClick={() => setIsOpen(false)}
-                  className="block px-3 py-2.5 text-base font-bold text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-900 rounded-xl"
-                >
-                  {t('contact')}
-                </Link>
-
-                {/* Mobile Consultation CTA */}
-                <div className="pt-4 px-3">
                   <Link
-                    href="/consultation"
+                    href="/about"
                     onClick={() => setIsOpen(false)}
-                    className="w-full text-center py-3 rounded-xl font-bold text-white bg-gradient-to-r from-[#0F4C81] to-[#1e6cb3] border-none flex items-center justify-center gap-2 cursor-pointer no-underline"
+                    className="block px-3 py-2.5 text-base font-bold text-slate-800 hover:bg-slate-50 rounded-xl"
                   >
-                    <span>{t('schedule') || 'Schedule Consultation'}</span>
+                    {t('about')}
                   </Link>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.nav>
 
-      {/* Language Mobile Dropdown Panel Overlay */}
-      {isMobileLangOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-900/40 dark:bg-black/60 flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-[#0B0F19] rounded-3xl p-6 w-full max-w-xs shadow-2xl border border-slate-100 dark:border-slate-800 space-y-4">
-            <h3 className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">{locale === 'es' ? 'Seleccionar Idioma' : 'Select Language'}</h3>
-            <div className="space-y-2">
-              {languages.map((lang) => (
-                <button
-                  key={lang.code}
-                  onClick={() => handleLanguageChange(lang.code)}
-                  className={`w-full py-3 px-4 rounded-2xl border text-sm font-bold text-left transition-all ${
-                    locale === lang.code ? 'bg-[#0F4C81] border-[#0F4C81] text-white' : 'bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-850 text-slate-700 dark:text-slate-300'
-                  }`}
-                >
-                  {lang.name}
-                </button>
-              ))}
+                  <Link
+                    href="/careers"
+                    onClick={() => setIsOpen(false)}
+                    className="block px-3 py-2.5 text-base font-bold text-slate-800 hover:bg-slate-50 rounded-xl"
+                  >
+                    {t('careers')}
+                  </Link>
+
+                  <Link
+                    href="/contact"
+                    onClick={() => setIsOpen(false)}
+                    className="block px-3 py-2.5 text-base font-bold text-slate-800 hover:bg-slate-50 rounded-xl"
+                  >
+                    {t('contact')}
+                  </Link>
+
+                  {/* Mobile Consultation CTA */}
+                  <div className="pt-4 px-3">
+                    <Link
+                      href="/consultation"
+                      onClick={() => setIsOpen(false)}
+                      className="w-full text-center py-3 rounded-full font-bold text-white bg-[#0F4C81] border-none flex items-center justify-center gap-2 cursor-pointer no-underline"
+                    >
+                      <span>{t('schedule') || 'Schedule Consultation'}</span>
+                    </Link>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.nav>
+
+        {/* Language Mobile Dropdown Panel Overlay */}
+        {isMobileLangOpen && (
+          <div className="fixed inset-0 z-50 bg-slate-900/30 backdrop-blur-sm flex items-center justify-center p-4">
+            <div className="bg-white rounded-3xl p-6 w-full max-w-xs shadow-2xl border border-slate-200 space-y-4">
+              <h3 className="text-sm font-bold text-slate-550 uppercase tracking-wider">{locale === 'es' ? 'Seleccionar Idioma' : 'Select Language'}</h3>
+              <div className="space-y-2">
+                {languages.map((lang) => (
+                  <button
+                    key={lang.code}
+                    onClick={() => handleLanguageChange(lang.code)}
+                    className={`w-full py-3 px-4 rounded-2xl border text-sm font-bold text-left transition-all ${
+                      locale === lang.code ? 'bg-[#0F4C81] border-[#0F4C81] text-white' : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
+                    }`}
+                  >
+                    {lang.name}
+                  </button>
+                ))}
+              </div>
+              <button
+                onClick={() => setIsMobileLangOpen(false)}
+                className="w-full text-center text-xs text-slate-500 hover:text-slate-700 font-bold uppercase tracking-widest pt-2 cursor-pointer bg-transparent border-none"
+              >
+                {locale === 'es' ? 'Cerrar' : 'Close'}
+              </button>
             </div>
-            <button
-              onClick={() => setIsMobileLangOpen(false)}
-              className="w-full text-center text-xs text-slate-400 dark:text-slate-500 font-bold uppercase tracking-widest pt-2 cursor-pointer"
-            >
-              {locale === 'es' ? 'Cerrar' : 'Close'}
-            </button>
           </div>
-        </div>
-      )}
+        )}
     </>
   );
 }
