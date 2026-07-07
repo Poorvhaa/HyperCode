@@ -89,19 +89,16 @@ export function NewsletterForm() {
           setEmail('');
           setHoneypot('');
           setError('');
-        } catch (localErr: any) {
-          console.error('Newsletter subscription error', {
-            error: localErr,
-            message: localErr?.message,
-            code: localErr?.code,
-            details: localErr?.details,
-            hint: localErr?.hint,
-            stack: localErr?.stack
-          });
-        }
+              } catch (localErr: any) {
+        console.error('Newsletter subscription error', {
+          error: localErr,
+          message: localErr?.message,
+          code: localErr?.code,
+          details: localErr?.details,
+          hint: localErr?.hint,
+          stack: localErr?.stack
+        });
       }
-    } catch {
-      // Catch-all
     } finally {
       setSubmitting(false);
     }
