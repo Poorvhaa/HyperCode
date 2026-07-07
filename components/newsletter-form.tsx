@@ -19,90 +19,103 @@ export function NewsletterForm() {
   const { formRef, focusAndScrollToError } = useFormValidation();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!email) {
+  e.preventDefault();
+
+  if (!email) {
+    focusAndScrollToError({ email: true });
+    return;
+  }
+
+  if (!email.includes('@') || !email.includes('.')) {
+    setError(tContact('emailError') || 'Please enter a valid email address');
+
+    setTimeout(() => {
       focusAndScrollToError({ email: true });
-      return;
-    }
+    }, 0);
 
-    if (!email.includes('@') || !email.includes('.')) {
-      setError(tContact('emailError') || 'Please enter a valid email address');
-      // Set short delay to allow React state update to render the error label first
-      setTimeout(() => {
-        focusAndScrollToError({ email: true });
-      }, 0);
-      return;
-    }
+    return;
+  }
 
-    setSubmitting(true);
-    setError('');
+  setSubmitting(true);
+  setError('');
 
-    try {
-      const res = await fetch('/api/newsletter', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email,
-          language: locale === 'es' ? 'es' : 'en',
-          sourcePage: typeof window !== 'undefined' ? window.location.pathname : '',
-          honeypot,
-        }),
-      });
+  try {
+    const res = await fetch('/api/newsletter', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        language: locale === 'es' ? 'es' : 'en',
+        sourcePage:
+          typeof window !== 'undefined'
+            ? window.location.pathname
+            : '',
+        honeypot,
+      }),
+    });
 
-      if (!res.ok) {
-        const errorBody = await res.json();
-        throw new Error(
-          errorBody?.error ||
+    if (!res.ok) {
+      const errorBody = await res.json();
+
+      throw new Error(
+        errorBody?.error ||
           errorBody?.message ||
           `Newsletter subscription failed (${res.status})`
-        );
-      }
+      );
+    }
 
-      setSuccess(true);
-      setEmail('');
-      setHoneypot('');
-    } catch (err: any) {
-      console.error(err);
-      
-      const isDuplicate = err.message === 'You are already subscribed';
-      setError(isDuplicate ? t('newsletterAlreadySubscribed') : t('newsletterError'));
-      
-      // Focus the field on submission error
-      setTimeout(() => {
-        focusAndScrollToError({ email: true });
-      }, 0);
+    setSuccess(true);
+    setEmail('');
+    setHoneypot('');
+  } catch (err: any) {
+    console.error(err);
 
-      // Local fallback in offline/error mode (only if it is not a duplicate error)
-      if (!isDuplicate) {
-        try {
-          if (!honeypot) {
-            await db.saveNewsletterSubscriber(
-              email,
-              locale === 'es' ? 'es' : 'en',
-              typeof window !== 'undefined' ? window.location.pathname : ''
-            );
-          }
-          setSuccess(true);
-          setEmail('');
-          setHoneypot('');
-          setError('');
-              } catch (localErr: any) {
+    const isDuplicate =
+      err.message === 'You are already subscribed';
+
+    setError(
+      isDuplicate
+        ? t('newsletterAlreadySubscribed')
+        : t('newsletterError')
+    );
+
+    setTimeout(() => {
+      focusAndScrollToError({ email: true });
+    }, 0);
+
+    if (!isDuplicate) {
+      try {
+        if (!honeypot) {
+          await db.saveNewsletterSubscriber(
+            email,
+            locale === 'es' ? 'es' : 'en',
+            typeof window !== 'undefined'
+              ? window.location.pathname
+              : ''
+          );
+        }
+
+        setSuccess(true);
+        setEmail('');
+        setHoneypot('');
+        setError('');
+      } catch (localErr: any) {
         console.error('Newsletter subscription error', {
           error: localErr,
           message: localErr?.message,
           code: localErr?.code,
           details: localErr?.details,
           hint: localErr?.hint,
-          stack: localErr?.stack
+          stack: localErr?.stack,
         });
       }
-    } }finally {
-      setSubmitting(false);
     }
-  };
+  } finally {
+    setSubmitting(false);
+  }
+};
 
   if (success) {
     return (
