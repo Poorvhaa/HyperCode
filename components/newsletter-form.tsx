@@ -99,7 +99,7 @@ export function NewsletterForm() {
           stack: localErr?.stack
         });
       }
-    } finally {
+    } }finally {
       setSubmitting(false);
     }
   };
