@@ -110,17 +110,15 @@ export async function POST(req: Request) {
           </div>
         `;
 
-        try {
-              const customerEmailResult = await resend.emails.send({
-              from: 'HyperCode Editorial <HR@hypercodeus.com>',
-              to: validated.email,
-              subject: subject,
-              html: confirmEmailHtml,
+        const customerEmailResult = await resend.emails.send({
+          from: 'HyperCode Editorial <HR@hypercodeus.com>',
+          to: validated.email,
+          subject: subject,
+          html: confirmEmailHtml,
         });
 
-            console.log('✅ Customer email:', validated.email);
-            console.log('✅ Customer email result:', customerEmailResult);
-          } 
+        console.log('✅ Customer email:', validated.email);
+        console.log('✅ Customer email result:', customerEmailResult); 
       } catch (emailErr) {
         console.error('Resend newsletter email error:', emailErr);
       }

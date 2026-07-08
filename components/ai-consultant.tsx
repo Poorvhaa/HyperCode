@@ -312,7 +312,11 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
         widgetRef.current &&
         !widgetRef.current.contains(e.target as Node)
       ) {
-        setWindowState(outsideClickAction);
+        if (outsideClickAction === 'minimize') {
+          setWindowState('minimized');
+        } else if (outsideClickAction === 'close') {
+          setWindowState('closed');
+        }
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -1144,25 +1148,25 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
             transition={{ duration: 0.25, ease: 'easeOut' }}
             role="dialog"
             aria-label="AI Consultant Chat Window"
-            className="w-full sm:w-[380px] lg:w-[400px] xl:w-[420px] xl:max-w-[450px] xl:min-w-[390px] h-[min(80vh,calc(100vh-20px))] sm:h-[min(75vh,calc(100vh-40px))] lg:h-[min(620px,calc(100vh-48px))] xl:h-[min(650px,calc(100vh-48px))] bg-slate-900/90 dark:bg-[#0B0F19]/90 backdrop-blur-xl border border-white/10 dark:border-slate-800 rounded-[28px] shadow-[0_24px_60px_rgba(0,0,0,0.45)] overflow-hidden flex flex-col pointer-events-auto mb-0"
+            className="w-full sm:w-[380px] lg:w-[400px] xl:w-[420px] xl:max-w-[450px] xl:min-w-[390px] h-[min(80vh,calc(100vh-20px))] sm:h-[min(75vh,calc(100vh-40px))] lg:h-[min(620px,calc(100vh-48px))] xl:h-[min(650px,calc(100vh-48px))] bg-white/95 backdrop-blur-xl border border-slate-200 rounded-[28px] shadow-[0_24px_60px_rgba(15,76,129,0.15)] overflow-hidden flex flex-col pointer-events-auto mb-0"
           >
             {/* Header bar (shrink-0 prevents squash) */}
-            <div className="h-[76px] px-5 border-b border-white/5 dark:border-slate-800 flex justify-between items-center bg-gradient-to-r from-slate-900/50 to-slate-950/50 shrink-0">
+            <div className="h-[76px] px-5 border-b border-slate-100 flex justify-between items-center bg-slate-50 shrink-0">
               <div className="flex items-center gap-3">
                 <div className="relative">
-                  <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#0F4C81] to-[#3b82f6] flex items-center justify-center text-white shadow-lg shadow-blue-500/20">
+                  <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#0F4C81] to-blue-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/20">
                     <Bot className="w-5 h-5" />
                   </div>
                   {/* Status Indicator */}
                   <span className="absolute -bottom-0.5 -right-0.5 flex h-3 w-3">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500 border-2 border-slate-900"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500 border-2 border-white"></span>
                   </span>
                 </div>
                 <div className="text-left">
-                  <h3 className="text-xs font-black text-white tracking-wider uppercase leading-none">{t('title')}</h3>
-                  <p className="text-[9px] text-slate-400 font-extrabold tracking-widest mt-1 leading-none uppercase flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <h3 className="text-xs font-black text-slate-900 tracking-wider uppercase leading-none">{t('title')}</h3>
+                  <p className="text-[9px] text-slate-505 font-extrabold tracking-widest mt-1 leading-none uppercase flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                     {locale === 'es' ? 'Consejero de IA En Línea' : 'AI Advisor Online'}
                   </p>
                 </div>
@@ -1174,7 +1178,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                   onClick={() => setWindowState('minimized')}
                   title={t('actions.minimize')}
                   aria-label="Minimize AI Consultant"
-                  className="w-8 h-8 hover:bg-white/5 text-slate-400 hover:text-white rounded-xl transition-colors cursor-pointer outline-none flex items-center justify-center shrink-0"
+                  className="w-8 h-8 hover:bg-slate-100 text-slate-500 rounded-xl transition-colors cursor-pointer outline-none flex items-center justify-center shrink-0 border-none"
                 >
                   <Minus className="w-4 h-4" />
                 </button>
@@ -1182,7 +1186,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                   onClick={() => setWindowState('closed')}
                   title={t('actions.close')}
                   aria-label="Close AI Consultant"
-                  className="w-8 h-8 bg-white/5 hover:bg-rose-950/60 text-slate-400 hover:text-white rounded-xl transition-colors cursor-pointer outline-none flex items-center justify-center shrink-0"
+                  className="w-8 h-8 bg-slate-100 hover:bg-rose-50 hover:text-rose-600 text-slate-500 rounded-xl transition-colors cursor-pointer outline-none flex items-center justify-center shrink-0 border-none"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -1200,15 +1204,15 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                     transition={{ duration: 0.3 }}
                     className="flex flex-col items-center max-w-[90%] text-center my-auto py-4"
                   >
-                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#0F4C81] to-[#3b82f6] flex items-center justify-center text-white shadow-xl shadow-blue-500/25 mb-4 animate-pulse">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#0F4C81] to-blue-600 flex items-center justify-center text-white shadow-xl shadow-blue-500/25 mb-4 animate-pulse">
                       <Bot className="w-7 h-7" />
                     </div>
                     {messages.length > 0 && (
-                      <div className="bg-white/5 border border-white/10 dark:bg-slate-900/50 dark:border-slate-850 p-5 rounded-3xl rounded-tl-none text-xs leading-relaxed text-slate-200 text-left shadow-lg max-w-[95%]">
+                      <div className="bg-slate-50 border border-slate-200 p-5 rounded-3xl rounded-tl-none text-xs leading-relaxed text-slate-800 text-left shadow-sm max-w-[95%]">
                         <div className="space-y-2">
-                          <p className="font-extrabold text-sm text-white flex items-center gap-1.5">{greetingText}</p>
-                          <p className="text-slate-350 font-semibold">{introText}</p>
-                          <p className="text-blue-400 font-bold pt-2 border-t border-white/5 mt-2">{questionText}</p>
+                          <p className="font-extrabold text-sm text-slate-900 flex items-center gap-1.5">{greetingText}</p>
+                          <p className="text-slate-655 font-semibold">{introText}</p>
+                          <p className="text-[#0F4C81] font-bold pt-2 border-t border-slate-200/50 mt-2">{questionText}</p>
                         </div>
                       </div>
                     )}
@@ -1225,7 +1229,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                               key={idx}
                               onClick={() => routeSuggestedPrompt(prompt)}
                               disabled={isSending || isTyping}
-                              className="px-3.5 py-2 bg-white/5 hover:bg-[#0F4C81] hover:border-[#0F4C81] text-slate-200 rounded-2xl text-[11px] font-bold border border-white/10 transition-all duration-300 cursor-pointer shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 shrink-0"
+                              className="px-3.5 py-2 bg-slate-50 hover:bg-[#0F4C81] hover:border-[#0F4C81] text-slate-600 hover:text-white rounded-2xl text-[11px] font-bold border border-slate-200 transition-all duration-300 cursor-pointer shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 shrink-0"
                             >
                               {getCompactChipLabel(prompt, locale)}
                             </button>
@@ -1252,8 +1256,8 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                       <div
                         className={`w-7 h-7 rounded-xl shrink-0 flex items-center justify-center text-[10px] font-bold shadow-sm ${
                           msg.sender === 'user' 
-                            ? 'bg-slate-800 text-slate-300' 
-                            : 'bg-gradient-to-tr from-[#0F4C81] to-[#3b82f6] text-white'
+                            ? 'bg-slate-100 text-slate-600' 
+                            : 'bg-gradient-to-tr from-[#0F4C81] to-blue-600 text-white'
                         }`}
                       >
                         {msg.sender === 'user' ? <User className="w-3.5 h-3.5" /> : <Bot className="w-3.5 h-3.5" />}
@@ -1262,13 +1266,13 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                         <div
                           className={`px-4 py-3 rounded-2xl text-xs leading-relaxed whitespace-pre-wrap font-semibold ${
                             msg.sender === 'user'
-                              ? 'bg-[#0F4C81] text-white rounded-tr-none shadow-md'
-                              : 'bg-white/5 border border-white/10 dark:bg-slate-900/50 dark:border-slate-800 text-slate-200 rounded-tl-none shadow-sm'
+                              ? 'bg-[#0F4C81] text-white rounded-tr-none shadow-md shadow-[#0F4C81]/15'
+                              : 'bg-slate-50 border border-slate-200 text-slate-800 rounded-tl-none shadow-sm'
                           }`}
                         >
                           {msg.message}
                         </div>
-                        <span className="text-[8px] text-slate-500 font-extrabold uppercase mt-1 px-1 tracking-wider">
+                        <span className="text-[8px] text-slate-400 font-extrabold uppercase mt-1 px-1 tracking-wider">
                           {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                         </span>
                       </div>
@@ -1277,10 +1281,10 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                   
                   {isTyping && (
                     <div className="flex gap-3 self-start items-center">
-                      <div className="w-7 h-7 rounded-xl bg-gradient-to-tr from-[#0F4C81] to-[#3b82f6] flex items-center justify-center text-white shrink-0 shadow-sm">
+                      <div className="w-7 h-7 rounded-xl bg-gradient-to-tr from-[#0F4C81] to-blue-600 flex items-center justify-center text-white shrink-0 shadow-sm">
                         <Bot className="w-3.5 h-3.5 animate-pulse" />
                       </div>
-                      <div className="bg-white/5 border border-white/10 dark:bg-slate-900/50 dark:border-slate-800 px-4 py-3 rounded-2xl rounded-tl-none flex items-center gap-1.5 shadow-sm">
+                      <div className="bg-slate-50 border border-slate-200 px-4 py-3 rounded-2xl rounded-tl-none flex items-center gap-1.5 shadow-sm">
                         <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
                         <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
                         <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
@@ -1292,35 +1296,35 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
               )
             ) : (
               /* Non-chat active flows: forms & success screens (scrollable) */
-              <div className="flex-1 overflow-y-auto p-4 space-y-4 flex flex-col custom-scrollbar bg-slate-900/40 min-h-0">
+              <div className="flex-1 overflow-y-auto p-4 space-y-4 flex flex-col custom-scrollbar bg-slate-50 min-h-0">
                 {activeFlow === 'lead_form' && (
                   <motion.form
                     initial={{ opacity: 0, x: 15 }}
                     animate={{ opacity: 1, x: 0 }}
                     onSubmit={handleLeadSubmit}
-                    className="space-y-4 text-left p-4 bg-slate-850/80 border border-slate-800 rounded-2xl animate-fadeIn"
+                    className="space-y-4 text-left p-4 bg-white border border-slate-200 rounded-2xl animate-fadeIn"
                   >
-                    <div className="flex justify-between items-center pb-2 border-b border-slate-800">
-                      <h4 className="text-xs font-extrabold text-blue-400 uppercase tracking-wider flex items-center gap-1.5">
+                    <div className="flex justify-between items-center pb-2 border-b border-slate-150">
+                      <h4 className="text-xs font-extrabold text-[#0F4C81] uppercase tracking-wider flex items-center gap-1.5">
                         <Sparkles className="w-3.5 h-3.5" />
                         {t('leadQualification.title')}
                       </h4>
                       <button
                         type="button"
                         onClick={() => setActiveFlow('chat')}
-                        className="text-[10px] text-slate-500 hover:text-slate-350 font-bold flex items-center gap-1 cursor-pointer py-1 px-2 hover:bg-slate-800 rounded-lg transition-colors"
+                        className="text-[10px] text-slate-550 hover:text-[#0F4C81] font-bold flex items-center gap-1 cursor-pointer py-1 px-2 hover:bg-slate-100 rounded-lg transition-colors border-none"
                       >
                         <ArrowLeft className="w-3 h-3" />
                         {t('actions.back')}
                       </button>
                     </div>
                     
-                    <p className="text-[10px] text-slate-400 leading-relaxed font-semibold">
+                    <p className="text-[10px] text-slate-500 leading-relaxed font-semibold">
                       {t('leadQualification.subtitle')}
                     </p>
 
                     {formError && (
-                      <div className="p-2.5 bg-red-950/50 border border-red-800 rounded-xl text-[10px] font-bold text-red-400">
+                      <div className="p-2.5 bg-rose-50 border border-rose-200 rounded-xl text-[10px] font-bold text-rose-600">
                         {formError}
                       </div>
                     )}
@@ -1333,7 +1337,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                           required
                           value={formName}
                           onChange={(e) => setFormName(e.target.value)}
-                          className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#38BDF8] transition-all outline-none"
+                          className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-slate-800 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none"
                         />
                       </div>
 
@@ -1345,7 +1349,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                             required
                             value={formEmail}
                             onChange={(e) => setFormEmail(e.target.value)}
-                            className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#38BDF8] transition-all outline-none"
+                            className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-slate-800 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none"
                           />
                         </div>
                         <div>
@@ -1355,7 +1359,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                             required
                             value={formPhone}
                             onChange={(e) => setFormPhone(e.target.value)}
-                            className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#38BDF8] transition-all outline-none"
+                            className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-slate-800 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none"
                           />
                         </div>
                       </div>
@@ -1368,7 +1372,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                             required
                             value={formCompany}
                             onChange={(e) => setFormCompany(e.target.value)}
-                            className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#38BDF8] transition-all outline-none"
+                            className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-slate-800 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none"
                           />
                         </div>
                         <div>
@@ -1376,7 +1380,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                           <select
                             value={formIndustry}
                             onChange={(e) => setFormIndustry(e.target.value)}
-                            className="w-full bg-slate-950 border border-slate-800 rounded-xl px-2 py-2 text-slate-300 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#38BDF8] cursor-pointer outline-none"
+                            className="w-full bg-white border border-slate-200 rounded-xl px-2 py-2 text-slate-700 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#0F4C81]/25 cursor-pointer outline-none"
                           >
                             <option value="technology">{t('industries.technology')}</option>
                             <option value="enterprise">{t('industries.enterprise')}</option>
@@ -1394,7 +1398,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                           <select
                             value={formBudget}
                             onChange={(e) => setFormBudget(e.target.value)}
-                            className="w-full bg-slate-950 border border-slate-800 rounded-xl px-2 py-2 text-slate-300 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#38BDF8] cursor-pointer outline-none"
+                            className="w-full bg-white border border-slate-200 rounded-xl px-2 py-2 text-slate-700 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#0F4C81]/25 cursor-pointer outline-none"
                           >
                             <option value="under5k">{t('budgets.under5k')}</option>
                             <option value="between5k10k">{t('budgets.between5k10k')}</option>
@@ -1408,7 +1412,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                           <select
                             value={formTimeline}
                             onChange={(e) => setFormTimeline(e.target.value)}
-                            className="w-full bg-slate-950 border border-slate-800 rounded-xl px-2 py-2 text-slate-300 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#38BDF8] cursor-pointer outline-none"
+                            className="w-full bg-white border border-slate-200 rounded-xl px-2 py-2 text-slate-700 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#0F4C81]/25 cursor-pointer outline-none"
                           >
                             <option value="immediate">{t('timelines.immediate')}</option>
                             <option value="medium">{t('timelines.medium')}</option>
@@ -1424,7 +1428,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                           value={formMessage}
                           onChange={(e) => setFormMessage(e.target.value)}
                           rows={2}
-                          className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#38BDF8] transition-all resize-none outline-none"
+                          className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-slate-800 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#0F4C81]/25 transition-all resize-none outline-none"
                         />
                       </div>
                     </div>
@@ -1432,7 +1436,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                     <button
                       type="submit"
                       disabled={isFormSubmitting}
-                      className="w-full h-11 bg-gradient-to-tr from-[#0F4C81] to-[#38BDF8] hover:from-[#0d3f6b] hover:to-[#22aae6] hover:-translate-y-0.5 active:translate-y-0 transition-all text-white font-extrabold rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-blue-500/10 outline-none focus:ring-2 focus:ring-[#38BDF8]"
+                      className="w-full h-11 bg-gradient-to-tr from-[#0F4C81] to-blue-600 hover:from-[#0d3f6b] hover:to-blue-700 hover:-translate-y-0.5 active:translate-y-0 transition-all text-white font-extrabold rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-blue-500/10 outline-none focus:ring-2 focus:ring-[#0F4C81]"
                     >
                       {isFormSubmitting ? <Loader2 className="w-4.5 h-4.5 animate-spin" /> : <Sparkles className="w-4.5 h-4.5" />}
                       <span>{t('leadQualification.submit')}</span>
@@ -1444,29 +1448,29 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                     initial={{ opacity: 0, x: 15 }}
                     animate={{ opacity: 1, x: 0 }}
                     onSubmit={handleConsultationSubmit}
-                    className="space-y-4 text-left p-4 bg-slate-850/80 border border-slate-800 rounded-2xl animate-fadeIn"
+                    className="space-y-4 text-left p-4 bg-white border border-slate-200 rounded-2xl animate-fadeIn"
                   >
-                    <div className="flex justify-between items-center pb-2 border-b border-slate-800">
-                      <h4 className="text-xs font-extrabold text-blue-400 uppercase tracking-wider flex items-center gap-1.5">
+                    <div className="flex justify-between items-center pb-2 border-b border-slate-150">
+                      <h4 className="text-xs font-extrabold text-[#0F4C81] uppercase tracking-wider flex items-center gap-1.5">
                         <Calendar className="w-3.5 h-3.5" />
                         {t('consultationFlow.title')}
                       </h4>
                       <button
                         type="button"
                         onClick={() => setActiveFlow('chat')}
-                        className="text-[10px] text-slate-500 hover:text-slate-350 font-bold flex items-center gap-1 cursor-pointer py-1 px-2 hover:bg-slate-800 rounded-lg transition-colors"
+                        className="text-[10px] text-slate-550 hover:text-[#0F4C81] font-bold flex items-center gap-1 cursor-pointer py-1 px-2 hover:bg-slate-100 rounded-lg transition-colors border-none"
                       >
                         <ArrowLeft className="w-3 h-3" />
                         {t('actions.back')}
                       </button>
                     </div>
                     
-                    <p className="text-[10px] text-slate-400 leading-relaxed font-semibold">
+                    <p className="text-[10px] text-slate-500 leading-relaxed font-semibold">
                       {t('consultationFlow.subtitle')}
                     </p>
 
                     {formError && (
-                      <div className="p-2.5 bg-red-950/50 border border-red-800 rounded-xl text-[10px] font-bold text-red-400">
+                      <div className="p-2.5 bg-rose-50 border border-rose-200 rounded-xl text-[10px] font-bold text-rose-600">
                         {formError}
                       </div>
                     )}
@@ -1479,7 +1483,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                           required
                           value={formName}
                           onChange={(e) => setFormName(e.target.value)}
-                          className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#38BDF8] transition-all outline-none"
+                          className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-slate-800 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none"
                         />
                       </div>
 
@@ -1491,7 +1495,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                             required
                             value={formEmail}
                             onChange={(e) => setFormEmail(e.target.value)}
-                            className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#38BDF8] transition-all outline-none"
+                            className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-slate-800 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none"
                           />
                         </div>
                         <div>
@@ -1501,7 +1505,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                             required
                             value={formPhone}
                             onChange={(e) => setFormPhone(e.target.value)}
-                            className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#38BDF8] transition-all outline-none"
+                            className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-slate-800 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none"
                           />
                         </div>
                       </div>
@@ -1514,7 +1518,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                             required
                             value={formCompany}
                             onChange={(e) => setFormCompany(e.target.value)}
-                            className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#38BDF8] transition-all outline-none"
+                            className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-slate-800 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none"
                           />
                         </div>
                         <div>
@@ -1525,7 +1529,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                             required
                             value={formDate}
                             onChange={(e) => setFormDate(e.target.value)}
-                            className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#38BDF8] transition-all outline-none"
+                            className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-slate-800 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none"
                           />
                         </div>
                       </div>
@@ -1537,7 +1541,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                           value={formMessage}
                           onChange={(e) => setFormMessage(e.target.value)}
                           rows={3}
-                          className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#38BDF8] transition-all resize-none outline-none"
+                          className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-slate-800 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#0F4C81]/25 transition-all resize-none outline-none"
                         />
                       </div>
                     </div>
@@ -1545,7 +1549,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                     <button
                       type="submit"
                       disabled={isFormSubmitting}
-                      className="w-full h-11 bg-gradient-to-tr from-[#0F4C81] to-[#38BDF8] hover:from-[#0d3f6b] hover:to-[#22aae6] hover:-translate-y-0.5 active:translate-y-0 transition-all text-white font-extrabold rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-blue-500/10 outline-none focus:ring-2 focus:ring-[#38BDF8]"
+                      className="w-full h-11 bg-gradient-to-tr from-[#0F4C81] to-blue-600 hover:from-[#0d3f6b] hover:to-blue-700 hover:-translate-y-0.5 active:translate-y-0 transition-all text-white font-extrabold rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-blue-500/10 outline-none focus:ring-2 focus:ring-[#0F4C81]"
                     >
                       {isFormSubmitting ? <Loader2 className="w-4.5 h-4.5 animate-spin" /> : <Calendar className="w-4.5 h-4.5" />}
                       <span>{t('consultationFlow.submit')}</span>
@@ -1556,17 +1560,17 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                   <motion.div
                     initial={{ opacity: 0, scale: 0.97 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="bg-slate-850/40 border border-slate-800/80 p-5 rounded-2xl text-center space-y-4 flex-1 flex flex-col justify-center max-w-[90%] mx-auto my-auto"
+                    className="bg-white border border-slate-200 p-5 rounded-2xl text-center space-y-4 flex-1 flex flex-col justify-center max-w-[90%] mx-auto my-auto shadow-sm animate-fadeIn"
                   >
-                    <div className="w-12 h-12 bg-emerald-950/80 border border-emerald-800 text-emerald-400 rounded-full flex items-center justify-center mx-auto text-xl shadow-lg shadow-emerald-500/10">
+                    <div className="w-12 h-12 bg-emerald-50 border border-emerald-250 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-xl shadow-sm animate-bounce">
                       <CheckCircle className="w-6 h-6" />
                     </div>
                     
                     <div className="space-y-1.5">
-                      <h3 className="text-sm font-extrabold text-white uppercase tracking-wider">
+                      <h3 className="text-sm font-extrabold text-slate-900 uppercase tracking-wider">
                         {activeFlow === 'lead_success' ? t('leadQualification.successTitle') : t('consultationFlow.successTitle')}
                       </h3>
-                      <p className="text-xs text-slate-350 leading-relaxed font-semibold">
+                      <p className="text-xs text-slate-500 leading-relaxed font-semibold">
                         {isEs 
                           ? '¡Gracias! Nuestro consultor se pondrá en contacto con usted en breve.' 
                           : 'Thank you! Our consultant will contact you shortly.'}
@@ -1576,7 +1580,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                     <div className="flex flex-col gap-2 pt-2 w-full max-w-xs mx-auto">
                       <button
                         onClick={handleStartOver}
-                        className="w-full h-10 bg-gradient-to-tr from-[#0F4C81] to-[#38BDF8] hover:from-[#0d3f6b] hover:to-[#22aae6] hover:-translate-y-0.5 active:translate-y-0 text-white font-bold rounded-xl text-xs uppercase tracking-wider transition-all cursor-pointer shadow-md shadow-blue-500/10 outline-none focus:ring-2 focus:ring-[#38BDF8]"
+                        className="w-full h-10 bg-[#0F4C81] hover:bg-[#0d3f6b] text-white font-bold rounded-xl text-xs uppercase tracking-wider transition-all cursor-pointer shadow-sm hover:shadow outline-none border-none"
                       >
                         {isEs ? 'Iniciar nueva conversación' : 'Start New Conversation'}
                       </button>
@@ -1586,7 +1590,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                           setWindowState('minimized');
                           window.location.href = '/' + locale;
                         }}
-                        className="w-full h-10 border border-slate-700 hover:bg-slate-800/60 text-slate-400 font-bold rounded-xl text-xs uppercase tracking-wider transition-all cursor-pointer outline-none"
+                        className="w-full h-10 border border-slate-200 hover:bg-slate-50 text-slate-605 font-bold rounded-xl text-xs uppercase tracking-wider transition-all cursor-pointer outline-none bg-white"
                       >
                         {isEs ? 'Volver al inicio' : 'Back to Home'}
                       </button>
@@ -1594,7 +1598,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                       {activeFlow !== 'consultation_success' && (
                         <button
                           onClick={() => setActiveFlow('consultation_form')}
-                          className="w-full h-10 border border-slate-700 bg-slate-900/30 hover:bg-slate-800/60 text-blue-400 font-bold rounded-xl text-xs uppercase tracking-wider transition-all cursor-pointer outline-none"
+                          className="w-full h-10 border border-slate-200 bg-[#0F4C81]/5 hover:bg-[#0F4C81]/15 text-[#0F4C81] font-bold rounded-xl text-xs uppercase tracking-wider transition-all cursor-pointer outline-none"
                         >
                           {isEs ? 'Reservar consulta' : 'Book Consultation'}
                         </button>
@@ -1614,9 +1618,9 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 10 }}
                   transition={{ duration: 0.25 }}
-                  className="px-5 mt-4 mb-4 flex flex-col gap-2.5 bg-transparent border-t border-white/5 shrink-0 animate-fadeIn pt-4"
+                  className="px-5 mt-4 mb-4 flex flex-col gap-2.5 bg-transparent border-t border-slate-100 shrink-0 animate-fadeIn pt-4"
                 >
-                  <span className="text-[10px] font-extrabold text-slate-500 uppercase tracking-widest text-left block px-1">
+                  <span className="text-[10px] font-extrabold text-slate-550 uppercase tracking-widest text-left block px-1">
                     {t('suggestedTitle')}
                   </span>
                   <div className="flex flex-wrap gap-2 items-start justify-start">
@@ -1625,7 +1629,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                         key={idx}
                         onClick={() => routeSuggestedPrompt(prompt)}
                         disabled={isSending || isTyping}
-                        className="px-3.5 py-2.5 bg-white/5 hover:bg-[#0F4C81] active:bg-[#0d3f6b] text-slate-200 hover:text-white rounded-2xl text-[11px] font-bold border border-white/10 cursor-pointer max-w-full truncate outline-none transition-all duration-300 min-h-[44px] flex items-center justify-center"
+                        className="px-3.5 py-2.5 bg-slate-50 hover:bg-[#0F4C81] active:bg-[#0d3f6b] text-slate-600 hover:text-white rounded-2xl text-[11px] font-bold border border-slate-200 cursor-pointer max-w-full truncate outline-none transition-all duration-300 min-h-[44px] flex items-center justify-center"
                       >
                         {getCompactChipLabel(prompt, locale)}
                       </button>
@@ -1637,8 +1641,8 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
 
             {/* Sticky Input Bar (shrink-0, sticky, always visible at bottom) */}
             {activeFlow === 'chat' && (
-              <div className="h-[74px] border-t border-white/5 bg-[#07090e]/90 flex items-center px-4 shrink-0 w-full relative">
-                <div className="relative flex items-center w-full h-[56px] bg-slate-900/60 border border-white/10 rounded-full pl-5 pr-1.5 focus-within:border-[#0F4C81] focus-within:ring-2 focus-within:ring-[#0F4C81]/30 transition-all">
+              <div className="h-[74px] border-t border-slate-100 bg-white flex items-center px-4 shrink-0 w-full relative">
+                <div className="relative flex items-center w-full h-[56px] bg-slate-50 border border-slate-200 rounded-full pl-5 pr-1.5 focus-within:border-[#0F4C81] focus-within:ring-2 focus-within:ring-[#0F4C81]/25 transition-all">
                   <input
                     type="text"
                     placeholder={placeholderText}
@@ -1649,13 +1653,13 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                     }}
                     disabled={isSending || isTyping}
                     aria-label="Chat input message"
-                    className="flex-1 bg-transparent text-xs text-white placeholder-slate-550 focus:outline-none py-1.5 outline-none font-semibold"
+                    className="flex-1 bg-transparent text-xs text-slate-800 placeholder-slate-400 focus:outline-none py-1.5 outline-none font-semibold"
                   />
                   <button
                     onClick={() => handleUserSubmit(inputValue)}
                     disabled={!inputValue.trim() || isSending || isTyping}
                     aria-label="Send Message"
-                    className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#0F4C81] to-[#3b82f6] disabled:from-slate-800 disabled:to-slate-800 disabled:text-slate-500 hover:from-[#0d3f6b] hover:to-[#22aae6] text-white flex items-center justify-center shadow-lg shadow-blue-500/10 cursor-pointer transition-all shrink-0 hover:scale-105 active:scale-95 border-none"
+                    className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#0F4C81] to-blue-600 disabled:from-slate-200 disabled:to-slate-200 disabled:text-slate-400 hover:from-[#0d3f6b] hover:to-blue-700 text-white flex items-center justify-center shadow-lg shadow-blue-500/10 cursor-pointer transition-all shrink-0 hover:scale-105 active:scale-95 border-none"
                   >
                     {isSending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
                   </button>

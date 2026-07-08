@@ -59,7 +59,6 @@ try {
 
     // Trigger Email Notification via Resend
     if (resend) {
-      try {
         // A. Email to HyperCode team
         const adminEmailHtml = `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc;">
@@ -212,6 +211,7 @@ console.log('✅ User email sent:', userEmailResult);
       } catch (emailErr) {
         console.error('Resend contact email error:', emailErr);
       }
+    }
  
     return NextResponse.json({ success: true, data: savedData });
      } catch (err) {

@@ -102,7 +102,7 @@ export default async function ContactPage({ params }: Props) {
   const activeTrans = localTrans[locale] || localTrans.en;
 
   return (
-    <main className="relative w-full bg-[#fcfdfe] dark:bg-[#07090e] text-left min-h-screen bg-dot-pattern">
+    <main className="relative w-full bg-white text-left min-h-screen bg-dot-pattern">
       <Navigation />
 
       {/* Contact Reusable Hero Banner */}
@@ -119,7 +119,7 @@ export default async function ContactPage({ params }: Props) {
       />
 
       {/* Contact Split Layout */}
-      <section className="py-24 relative">
+      <section className="section-padding bg-white border-b border-slate-200 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             
@@ -127,70 +127,70 @@ export default async function ContactPage({ params }: Props) {
             <div className="lg:col-span-5 space-y-8">
               
               {/* Welcoming Office Visual */}
-              <div className="relative w-full h-[220px] rounded-3xl overflow-hidden border border-slate-200/50 dark:border-slate-800 shadow-md">
+              <div className="relative w-full h-[220px] rounded-[24px] overflow-hidden border border-slate-200 shadow-md">
                 <Image
                   src="/images/contact-office.png"
                   alt="HyperCode Office Environment"
                   fill
                   className="object-cover object-center hover:scale-105 transition-transform duration-500 select-none pointer-events-none"
                 />
-                <div className="absolute inset-0 bg-slate-950/20" />
+                <div className="absolute inset-0 bg-slate-900/10" />
               </div>
 
               {/* Location Card */}
-              <div className="bg-white dark:bg-[#0b0f19] border border-slate-200/50 dark:border-slate-800/50 rounded-3xl p-7 shadow-sm space-y-5">
+              <div className="premium-card bg-white border border-slate-200 rounded-[24px] p-7 shadow-sm space-y-5">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 flex items-center justify-center text-[#0F4C81] dark:text-blue-400 shadow-sm">
+                  <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-[#0F4C81] shadow-sm">
                     <MapPin size={20} />
                   </div>
-                  <h3 className="font-extrabold text-slate-900 dark:text-white uppercase text-xs tracking-wider">{activeTrans.hq}</h3>
+                  <h3 className="font-extrabold text-slate-900 uppercase text-xs tracking-wider">{activeTrans.hq}</h3>
                 </div>
                 <div className="pl-13 space-y-2">
-                  <p className="text-sm font-bold text-slate-800 dark:text-slate-200">2095 Hammond Dr, Suite C</p>
-                  <p className="text-sm font-bold text-slate-800 dark:text-slate-200">Schaumburg, IL 60173</p>
-                  <p className="text-[10px] text-slate-400 dark:text-slate-500 font-extrabold uppercase tracking-widest">{activeTrans.hqDesc}</p>
+                  <p className="text-[16px] font-bold text-slate-800">2095 Hammond Dr, Suite C</p>
+                  <p className="text-[16px] font-bold text-slate-800">Schaumburg, IL 60173</p>
+                  <p className="text-[10px] text-slate-400 font-extrabold uppercase tracking-widest">{activeTrans.hqDesc}</p>
                 </div>
               </div>
 
               {/* Hours Card */}
-              <div className="bg-white dark:bg-[#0b0f19] border border-slate-200/50 dark:border-slate-800/50 rounded-3xl p-7 shadow-sm space-y-5">
+              <div className="premium-card bg-white border border-slate-200 rounded-[24px] p-7 shadow-sm space-y-5">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 flex items-center justify-center text-[#0F4C81] dark:text-blue-400 shadow-sm">
+                  <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-[#0F4C81] shadow-sm">
                     <Clock size={20} />
                   </div>
-                  <h3 className="font-extrabold text-slate-900 dark:text-white uppercase text-xs tracking-wider">{activeTrans.hours}</h3>
+                  <h3 className="font-extrabold text-slate-900 uppercase text-xs tracking-wider">{activeTrans.hours}</h3>
                 </div>
-                <div className="pl-13 space-y-2 text-sm font-bold text-slate-800 dark:text-slate-200">
+                <div className="pl-13 space-y-2 text-[16px] font-bold text-slate-800">
                   <p>{activeTrans.hoursDesc}</p>
-                  <p className="text-[10px] text-slate-400 dark:text-slate-500 font-extrabold uppercase tracking-widest">{activeTrans.hoursSub}</p>
+                  <p className="text-[10px] text-slate-400 font-extrabold uppercase tracking-widest">{activeTrans.hoursSub}</p>
                 </div>
               </div>
 
               {/* Response Time SLA Card */}
-              <div className="p-7 rounded-3xl border border-slate-200/60 dark:border-slate-800/50 bg-[#0F4C81]/5 dark:bg-slate-900/35 shadow-sm space-y-3">
+              <div className="premium-card p-7 bg-[#0F4C81]/5 border border-slate-200 shadow-sm space-y-3">
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                  <span className="text-[10px] font-extrabold tracking-wider text-slate-400 dark:text-slate-500 uppercase">{activeTrans.slaBadge}</span>
+                  <span className="text-[10px] font-extrabold tracking-wider text-slate-500 uppercase">{activeTrans.slaBadge}</span>
                 </div>
-                <p className="text-3xl font-black text-[#0F4C81] dark:text-blue-400">{activeTrans.slaTitle}</p>
-                <p className="text-xs sm:text-sm text-slate-550 dark:text-slate-400 leading-relaxed font-semibold">
+                <p className="text-3xl font-black text-[#0F4C81]">{activeTrans.slaTitle}</p>
+                <p className="text-[16px] md:text-[17px] text-slate-655 leading-[1.7] font-semibold">
                   {activeTrans.slaDesc}
                 </p>
               </div>
 
               {/* Secure Trust Badge */}
-              <div className="flex items-center gap-3 px-6 py-4 bg-slate-50 dark:bg-slate-900/20 border border-slate-200/40 dark:border-slate-850 rounded-2xl">
-                <Shield size={16} className="text-[#0F4C81] dark:text-blue-400" />
+              <div className="flex items-center gap-3 px-6 py-4 bg-slate-50 border border-slate-200 rounded-[16px]">
+                <Shield size={16} className="text-[#0F4C81]" />
                 <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">SSL Encrypted Intake System</span>
               </div>
 
             </div>
 
             {/* Right Column: Contact Form (7 columns) */}
-            <div className="lg:col-span-7 bg-white dark:bg-[#0b0f19] border border-slate-200/50 dark:border-slate-800/40 rounded-[28px] p-8 sm:p-10 shadow-lg">
+            <div className="lg:col-span-7 bg-white border border-slate-200 rounded-[24px] p-8 sm:p-10 shadow-lg">
               <div className="space-y-2 mb-8">
-                <h2 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">{activeTrans.formTitle}</h2>
-                <p className="text-xs sm:text-sm font-semibold text-slate-500 dark:text-slate-400">Complete the form below to route directly to our solutions directors.</p>
+                <h2 className="text-[28px] sm:text-[32px] font-black text-slate-900 tracking-tight leading-[1.2]">{activeTrans.formTitle}</h2>
+                <p className="text-[16px] font-semibold text-slate-500">Complete the form below to route directly to our solutions directors.</p>
               </div>
               <ContactForm />
             </div>
@@ -200,22 +200,22 @@ export default async function ContactPage({ params }: Props) {
       </section>
 
       {/* Grid of Solutions Specific CTAs */}
-      <section className="py-24 bg-slate-50 dark:bg-slate-950/40 border-t border-b border-slate-100 dark:border-slate-900">
+      <section className="section-padding bg-[#F8FAFC]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             
             {/* Box 1 */}
-            <div className="p-8 rounded-3xl border border-slate-200/60 dark:border-slate-850 bg-white dark:bg-[#0b0f19] shadow-sm space-y-5 flex flex-col justify-between hover:-translate-y-1 hover:border-[#0F4C81] dark:hover:border-blue-500 transition-all duration-300">
+            <div className="premium-card p-8 bg-white border border-slate-200 shadow-sm space-y-5 flex flex-col justify-between hover:-translate-y-1 hover:border-[#0F4C81] transition-all duration-300">
               <div className="space-y-4">
-                <h3 className="text-lg font-bold text-slate-900 dark:text-slate-250">{activeTrans.boxConsultingTitle}</h3>
-                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-semibold">
+                <h3 className="text-[22px] font-bold text-slate-900 leading-[1.2]">{activeTrans.boxConsultingTitle}</h3>
+                <p className="text-[16px] md:text-[17px] text-slate-655 leading-[1.7] font-semibold">
                   {activeTrans.boxConsultingDesc}
                 </p>
               </div>
               <div className="pt-2">
                 <Link
                   href="/consultation"
-                  className="inline-flex items-center text-xs font-bold text-[#0F4C81] dark:text-blue-400 hover:gap-2 transition-all gap-1"
+                  className="inline-flex items-center text-xs font-bold text-[#0F4C81] hover:gap-2 transition-all gap-1"
                 >
                   <span>{activeTrans.boxConsultingLink}</span>
                   <ArrowRight size={14} />
@@ -224,17 +224,17 @@ export default async function ContactPage({ params }: Props) {
             </div>
 
             {/* Box 2 */}
-            <div className="p-8 rounded-3xl border border-slate-200/60 dark:border-slate-850 bg-white dark:bg-[#0b0f19] shadow-sm space-y-5 flex flex-col justify-between hover:-translate-y-1 hover:border-[#0F4C81] dark:hover:border-blue-500 transition-all duration-300">
+            <div className="premium-card p-8 bg-white border border-slate-200 shadow-sm space-y-5 flex flex-col justify-between hover:-translate-y-1 hover:border-[#0F4C81] transition-all duration-300">
               <div className="space-y-4">
-                <h3 className="text-lg font-bold text-slate-900 dark:text-slate-250">{activeTrans.boxStaffingTitle}</h3>
-                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-semibold">
+                <h3 className="text-[22px] font-bold text-slate-900 leading-[1.2]">{activeTrans.boxStaffingTitle}</h3>
+                <p className="text-[16px] md:text-[17px] text-slate-655 leading-[1.7] font-semibold">
                   {activeTrans.boxStaffingDesc}
                 </p>
               </div>
               <div className="pt-2">
                 <Link
                   href="/consultation?service=IT%20Staffing"
-                  className="inline-flex items-center text-xs font-bold text-[#0F4C81] dark:text-blue-400 hover:gap-2 transition-all gap-1"
+                  className="inline-flex items-center text-xs font-bold text-[#0F4C81] hover:gap-2 transition-all gap-1"
                 >
                   <span>{activeTrans.boxStaffingLink}</span>
                   <ArrowRight size={14} />
@@ -243,14 +243,14 @@ export default async function ContactPage({ params }: Props) {
             </div>
 
             {/* Box 3 */}
-            <div className="p-8 rounded-3xl border border-slate-200/60 dark:border-slate-850 bg-white dark:bg-[#0b0f19] shadow-sm space-y-5 flex flex-col justify-between hover:-translate-y-1 hover:border-[#0F4C81] dark:hover:border-blue-500 transition-all duration-300">
+            <div className="premium-card p-8 bg-white border border-slate-200 shadow-sm space-y-5 flex flex-col justify-between hover:-translate-y-1 hover:border-[#0F4C81] transition-all duration-300">
               <div className="space-y-4">
-                <h3 className="text-lg font-bold text-slate-900 dark:text-slate-250">{activeTrans.boxPartnershipTitle}</h3>
-                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-semibold">
+                <h3 className="text-[22px] font-bold text-slate-900 leading-[1.2]">{activeTrans.boxPartnershipTitle}</h3>
+                <p className="text-[16px] md:text-[17px] text-slate-655 leading-[1.7] font-semibold">
                   {activeTrans.boxPartnershipDesc}
                 </p>
               </div>
-              <p className="text-[10px] font-extrabold text-[#0F4C81] dark:text-blue-400 uppercase tracking-wider">
+              <p className="text-[10px] font-extrabold text-[#0F4C81] uppercase tracking-wider">
                 {activeTrans.boxPartnershipFooter}
               </p>
             </div>

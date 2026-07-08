@@ -153,16 +153,16 @@ export function NewsletterForm() {
           disabled={submitting}
           aria-invalid={error ? 'true' : 'false'}
           aria-describedby={error ? 'email-error' : undefined}
-          className={`flex-1 px-4 py-3 rounded-xl border bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] text-sm font-semibold disabled:opacity-70 transition-all ${
-            error ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
+          className={`flex-1 h-14 px-5 rounded-[16px] border bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] text-base font-bold disabled:opacity-70 transition-all ${
+            error ? 'border-red-300 ring-2 ring-red-100' : 'border-slate-200'
           }`}
         />
         <button
           type="submit"
           disabled={submitting}
-          className="h-11 px-6 bg-[#0F4C81] text-white rounded-xl font-semibold text-xs hover:bg-[#0c3c66] transition-colors duration-200 cursor-pointer border-none disabled:opacity-75 disabled:cursor-not-allowed flex items-center justify-center gap-1.5"
+          className="btn-primary h-14 px-8 flex items-center justify-center gap-2"
         >
-          {submitting && <Loader2 size={14} className="animate-spin" />}
+          {submitting && <Loader2 size={16} className="animate-spin" />}
           <span>{t('newsletterButton')}</span>
         </button>
       </form>

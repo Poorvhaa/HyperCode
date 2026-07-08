@@ -293,57 +293,57 @@ function ConsultationFormContent() {
       {/* Primary Contact Block */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('name')}</label>
+          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5">{t('name')}</label>
           <input
             type="text"
             placeholder="John Doe"
             {...register('name')}
             aria-invalid={errors.name ? 'true' : 'false'}
             aria-describedby={errors.name ? 'name-error' : undefined}
-            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${
-              errors.name ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
+            className={`w-full h-14 px-5 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] transition-all text-base text-slate-800 placeholder-slate-400 ${
+              errors.name ? 'border-red-300 ring-2 ring-red-100' : 'border-slate-200'
             }`}
           />
           {errors.name && (
-            <span id="name-error" className="text-xs text-red-500 mt-1 block font-semibold">
+            <span id="name-error" className="text-xs font-semibold text-red-500 mt-1.5 block">
               {errors.name.message}
             </span>
           )}
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('email')}</label>
+          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5">{t('email')}</label>
           <input
             type="email"
             placeholder="john@company.com"
             {...register('email')}
             aria-invalid={errors.email ? 'true' : 'false'}
             aria-describedby={errors.email ? 'email-error' : undefined}
-            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${
-              errors.email ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
+            className={`w-full h-14 px-5 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] transition-all text-base text-slate-800 placeholder-slate-400 ${
+              errors.email ? 'border-red-300 ring-2 ring-red-100' : 'border-slate-200'
             }`}
           />
           {errors.email && (
-            <span id="email-error" className="text-xs text-red-500 mt-1 block font-semibold">
+            <span id="email-error" className="text-xs font-semibold text-red-500 mt-1.5 block">
               {errors.email.message}
             </span>
           )}
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('company')}</label>
+          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5">{t('company')}</label>
           <input
             type="text"
             placeholder="Company Name"
             {...register('company')}
             aria-invalid={errors.company ? 'true' : 'false'}
             aria-describedby={errors.company ? 'company-error' : undefined}
-            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${
-              errors.company ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
+            className={`w-full h-14 px-5 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] transition-all text-base text-slate-800 placeholder-slate-400 ${
+              errors.company ? 'border-red-300 ring-2 ring-red-100' : 'border-slate-200'
             }`}
           />
           {errors.company && (
-            <span id="company-error" className="text-xs text-red-500 mt-1 block font-semibold">
+            <span id="company-error" className="text-xs font-semibold text-red-500 mt-1.5 block">
               {errors.company.message}
             </span>
           )}
@@ -362,7 +362,7 @@ function ConsultationFormContent() {
             }`}
           />
           {errors.phone && (
-            <span id="phone-error" className="text-xs text-red-500 mt-1 block font-semibold">
+            <span id="phone-error" className="text-xs font-semibold text-red-500 mt-1.5 block">
               {errors.phone.message}
             </span>
           )}
@@ -380,8 +380,8 @@ function ConsultationFormContent() {
           aria-invalid={errors.service ? 'true' : 'false'}
           aria-describedby={errors.service ? 'service-error' : undefined}
         />
-        <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-3">{t('preferredServices') || 'Select Service Areas of Interest'}</label>
-        <div className="flex flex-wrap gap-2">
+        <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-3">{t('preferredServices') || 'Select Service Areas of Interest'}</label>
+        <div className="flex flex-wrap gap-2.5">
           {serviceOptions.map((opt) => {
             const active = watchedServices.includes(opt.id);
             return (
@@ -389,9 +389,9 @@ function ConsultationFormContent() {
                 key={opt.id}
                 type="button"
                 onClick={() => togglePreferredService(opt.id)}
-                className={`px-4 py-2 rounded-full border text-sm font-medium transition-all flex items-center gap-2 cursor-pointer ${
+                className={`px-4 py-2.5 rounded-full border text-sm font-bold transition-all flex items-center gap-2 cursor-pointer ${
                   active
-                    ? 'bg-[#0F4C81]/10 border-[#0F4C81] text-[#0F4C81]'
+                    ? 'bg-[#0F4C81]/15 border-[#0F4C81] text-[#0F4C81]'
                     : errors.service
                     ? 'bg-slate-50 border-red-300 ring-1 ring-red-300 text-slate-600 hover:border-slate-300 hover:bg-slate-100'
                     : 'bg-slate-50 border-slate-200 text-slate-600 hover:border-slate-300 hover:bg-slate-100'
@@ -404,7 +404,7 @@ function ConsultationFormContent() {
           })}
         </div>
         {errors.service && (
-          <span id="service-error" className="text-xs text-red-500 mt-1 block font-semibold">
+          <span id="service-error" className="text-xs font-semibold text-red-500 mt-1.5 block">
             {errors.service.message}
           </span>
         )}
@@ -413,13 +413,13 @@ function ConsultationFormContent() {
       {/* Advanced Consulting Intake Fields */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('industry') || 'Industry'}</label>
+          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5">{t('industry') || 'Industry'}</label>
           <select
             {...register('industry')}
             aria-invalid={errors.industry ? 'true' : 'false'}
             aria-describedby={errors.industry ? 'industry-error' : undefined}
-            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700 ${
-              errors.industry ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
+            className={`w-full h-14 px-5 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] transition-all text-base text-slate-800 ${
+              errors.industry ? 'border-red-300 ring-2 ring-red-100' : 'border-slate-200'
             }`}
           >
             <option value="">-- Select Industry --</option>
@@ -428,17 +428,17 @@ function ConsultationFormContent() {
             ))}
           </select>
           {errors.industry && (
-            <span id="industry-error" className="text-xs text-red-500 mt-1 block font-semibold">
+            <span id="industry-error" className="text-xs font-semibold text-red-500 mt-1.5 block">
               {errors.industry.message}
             </span>
           )}
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('companySize') || 'Company Size'}</label>
+          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5">{t('companySize') || 'Company Size'}</label>
           <select
             {...register('companySize')}
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700"
+            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] transition-all text-base text-slate-800"
           >
             <option value="">-- Select Size --</option>
             <option value="1-10">1-10 Employees</option>
@@ -450,10 +450,10 @@ function ConsultationFormContent() {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('meetingType') || 'Preferred Meeting Type'}</label>
+          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5">{t('meetingType') || 'Preferred Meeting Type'}</label>
           <select
             {...register('preferredMeetingType')}
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700"
+            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] transition-all text-base text-slate-800"
           >
             <option value="Video Call">Video Conference (Google Meet/Zoom)</option>
             <option value="Phone Call">Direct Phone Call</option>
@@ -463,12 +463,12 @@ function ConsultationFormContent() {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('currentTechStack') || 'Current Tech Stack / Key Tools'}</label>
+          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5">{t('currentTechStack') || 'Current Tech Stack / Key Tools'}</label>
           <input
             type="text"
             placeholder="e.g. AWS, Postgres, Salesforce, React"
             {...register('currentTechStack')}
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-705 text-slate-700"
+            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] transition-all text-base text-slate-800 placeholder-slate-400"
           />
         </div>
       </div>
@@ -476,32 +476,32 @@ function ConsultationFormContent() {
       {/* Goal, Challenges, Outcomes Fields */}
       <div className="space-y-6">
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('businessGoal') || 'Primary Business Goal'}</label>
+          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5">{t('businessGoal') || 'Primary Business Goal'}</label>
           <input
             type="text"
             placeholder="e.g. Automate support operations, migration to AWS, build a new SaaS product"
             {...register('businessGoal')}
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700"
+            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] transition-all text-base text-slate-800 placeholder-slate-400"
           />
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('currentChallenges') || 'Current Technology Challenges'}</label>
+          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5">{t('currentChallenges') || 'Current Technology Challenges'}</label>
           <textarea
             rows={2}
             placeholder="e.g. Manual process bottleneck, slow dashboard speed, scaling issues, developer recruitment delay"
             {...register('currentChallenges')}
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700"
+            className="w-full px-5 py-4 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] transition-all text-base text-slate-800 placeholder-slate-400"
           />
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('expectedOutcome') || 'Expected Outcome & Success Criteria'}</label>
+          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5">{t('expectedOutcome') || 'Expected Outcome & Success Criteria'}</label>
           <input
             type="text"
             placeholder="e.g. 50% operational cost reduction, sub-second latency, launch MVP by Q3"
             {...register('expectedOutcome')}
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700"
+            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] transition-all text-base text-slate-800 placeholder-slate-400"
           />
         </div>
       </div>
@@ -518,8 +518,8 @@ function ConsultationFormContent() {
             aria-invalid={errors.budget ? 'true' : 'false'}
             aria-describedby={errors.budget ? 'budget-error' : undefined}
           />
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-3">{t('budget')}</label>
-          <div className="flex flex-col gap-2">
+          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-850 mb-3">{t('budget')}</label>
+          <div className="flex flex-col gap-2.5">
             {budgetOptions.map((opt) => {
               const active = watchedBudget === opt.id;
               return (
@@ -527,12 +527,12 @@ function ConsultationFormContent() {
                   key={opt.id}
                   type="button"
                   onClick={() => setValue('budget', opt.id)}
-                  className={`w-full px-4 py-3 rounded-xl border text-sm font-medium transition-all text-left flex items-center justify-between cursor-pointer ${
+                  className={`w-full px-5 py-3.5 rounded-[16px] border text-base font-bold transition-all text-left flex items-center justify-between cursor-pointer ${
                     active
-                      ? 'bg-[#0F4C81] border-[#0F4C81] text-white'
+                      ? 'bg-[#0F4C81] border-[#0F4C81] text-white shadow-sm'
                       : errors.budget
-                      ? 'bg-slate-50 border-red-300 ring-1 ring-red-300 text-slate-650 hover:bg-slate-100'
-                      : 'bg-slate-50 border-slate-200 text-slate-650 hover:bg-slate-100'
+                      ? 'bg-slate-50 border-red-300 ring-2 ring-red-100 text-slate-700 hover:bg-slate-100'
+                      : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
                   }`}
                 >
                   <span>{opt.label}</span>
@@ -542,7 +542,7 @@ function ConsultationFormContent() {
             })}
           </div>
           {errors.budget && (
-            <span id="budget-error" className="text-xs text-red-500 mt-1 block font-semibold">
+            <span id="budget-error" className="text-xs font-semibold text-red-500 mt-1.5 block">
               {errors.budget.message}
             </span>
           )}
@@ -558,8 +558,8 @@ function ConsultationFormContent() {
             aria-invalid={errors.timeline ? 'true' : 'false'}
             aria-describedby={errors.timeline ? 'timeline-error' : undefined}
           />
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-3">{t('timeline')}</label>
-          <div className="flex flex-col gap-2">
+          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-850 mb-3">{t('timeline')}</label>
+          <div className="flex flex-col gap-2.5">
             {timelineOptions.map((opt) => {
               const active = watchedTimeline === opt.id;
               return (
@@ -567,12 +567,12 @@ function ConsultationFormContent() {
                   key={opt.id}
                   type="button"
                   onClick={() => setValue('timeline', opt.id)}
-                  className={`w-full px-4 py-3 rounded-xl border text-sm font-medium transition-all text-left flex items-center justify-between cursor-pointer ${
+                  className={`w-full px-5 py-3.5 rounded-[16px] border text-base font-bold transition-all text-left flex items-center justify-between cursor-pointer ${
                     active
-                      ? 'bg-[#0F4C81] border-[#0F4C81] text-white'
+                      ? 'bg-[#0F4C81] border-[#0F4C81] text-white shadow-sm'
                       : errors.timeline
-                      ? 'bg-slate-50 border-red-300 ring-1 ring-red-300 text-slate-655 hover:bg-slate-100'
-                      : 'bg-slate-50 border-slate-200 text-slate-655 hover:bg-slate-100'
+                      ? 'bg-slate-50 border-red-300 ring-2 ring-red-100 text-slate-700 hover:bg-slate-100'
+                      : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
                   }`}
                 >
                   <span>{opt.label}</span>
@@ -582,7 +582,7 @@ function ConsultationFormContent() {
             })}
           </div>
           {errors.timeline && (
-            <span id="timeline-error" className="text-xs text-red-500 mt-1 block font-semibold">
+            <span id="timeline-error" className="text-xs font-semibold text-red-500 mt-1.5 block">
               {errors.timeline.message}
             </span>
           )}
@@ -591,19 +591,19 @@ function ConsultationFormContent() {
 
       {/* Main message textarea */}
       <div>
-        <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('message')}</label>
+        <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5">{t('message')}</label>
         <textarea
           rows={4}
           placeholder="Please describe your technology requirements, project background, or team augmentation targets..."
           {...register('message')}
           aria-invalid={errors.message ? 'true' : 'false'}
           aria-describedby={errors.message ? 'message-error' : undefined}
-          className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${
-            errors.message ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
+          className={`w-full px-5 py-4 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] transition-all text-base text-slate-800 placeholder-slate-400 ${
+            errors.message ? 'border-red-300 ring-2 ring-red-100' : 'border-slate-200'
           }`}
         />
         {errors.message && (
-          <span id="message-error" className="text-xs text-red-500 mt-1 block font-semibold">
+          <span id="message-error" className="text-xs font-semibold text-red-500 mt-1.5 block">
             {errors.message.message}
           </span>
         )}
@@ -614,11 +614,11 @@ function ConsultationFormContent() {
         <button
           type="submit"
           disabled={submitting}
-          className="px-8 py-4 rounded-xl font-semibold text-white bg-[#0F4C81] hover:bg-[#0D3F6D] transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75 disabled:cursor-not-allowed min-w-[220px]"
+          className="btn-primary min-w-[220px] flex items-center justify-center gap-2"
         >
           {submitting ? (
             <>
-              <Loader2 size={20} className="animate-spin" />
+              <Loader2 size={16} className="animate-spin" />
               <span>{t('submitting')}</span>
             </>
           ) : (

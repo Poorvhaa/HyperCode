@@ -7,6 +7,7 @@ import { Link } from '@/i18n/routing';
 import Image from 'next/image';
 import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
+import { HeroBanner } from '@/components/hero-banner';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   CheckCircle, 
@@ -345,105 +346,36 @@ function SolutionsPageContent() {
   };
 
   return (
-    <main className="relative w-full bg-slate-50 dark:bg-[#07090e] text-left min-h-screen">
+    <main className="relative w-full bg-white text-left min-h-screen bg-dot-pattern">
       <Navigation />
 
-      {/* Redesigned Premium Hero Section */}
-      <section className="relative w-full h-[650px] sm:h-[750px] lg:h-[800px] flex items-center overflow-hidden bg-[#050f1e] border-b border-white/5 text-left">
-        {/* Background Image Container with Slow Zoom */}
-        <div className="absolute inset-0 z-0 overflow-hidden">
-          <motion.div
-            initial={{ scale: 1.08 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 15, ease: 'easeOut' }}
-            className="relative w-full h-full"
-          >
-            <Image
-              src="/images/hero-enterprise.png"
-              alt={t('heroTitle')}
-              fill
-              priority
-              className="object-cover object-center opacity-65 select-none pointer-events-none"
-            />
-          </motion.div>
-          
-          {/* Custom Gradient Overlay with Cool Blue/Slate Brand Tint (45-60% opacity range) */}
-          <div 
-            className="absolute inset-0 z-10" 
-            style={{
-              background: `linear-gradient(to bottom, rgba(5,15,30,0.65), rgba(8,25,45,0.52), rgba(5,10,20,0.60))`
-            }}
-          />
-          
-          {/* Vignette Overlay */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_30%,rgba(0,0,0,0.45))] z-10 pointer-events-none" />
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-20 pt-16">
-          <div className="max-w-3xl space-y-6">
-            {/* Breadcrumb Navigation */}
-            <nav className="flex items-center gap-2 text-[10px] font-bold text-slate-350 tracking-widest uppercase mb-4 drop-shadow-md">
-              <Link href="/" className="hover:text-blue-300 transition-colors">
-                {locale === 'es' ? 'Inicio' : 'Home'}
-              </Link>
-              <span className="text-slate-500">/</span>
-              <span className="text-blue-400 font-extrabold">{locale === 'es' ? 'Soluciones' : 'Solutions'}</span>
-            </nav>
-
-            {/* Headline & Paragraph */}
-            <h1 className="text-4xl sm:text-5xl lg:text-[56px] font-black text-white tracking-tight leading-[1.08] drop-shadow-lg">
-              {t('heroTitle')}
-            </h1>
-            
-            <p className="text-sm sm:text-base text-slate-200 leading-relaxed font-bold max-w-xl drop-shadow-md">
-              {t('heroSubtitle')}
-            </p>
-
-            {/* Two CTA Buttons */}
-            <div className="flex flex-wrap gap-4 pt-4">
-              <Link
-                href="/consultation"
-                className="inline-flex items-center justify-center h-12 px-8 bg-[#0F4C81] hover:bg-[#0D3F6D] text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md hover:shadow-lg cursor-pointer"
-              >
-                {locale === 'es' ? 'Programar Consulta' : 'Schedule Consultation'}
-              </Link>
-              <button
-                onClick={() => scrollToSection('ai-automation')}
-                className="inline-flex items-center justify-center h-12 px-8 bg-white/10 border border-white/10 hover:bg-white/20 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md hover:shadow-lg cursor-pointer"
-              >
-                {locale === 'es' ? 'Explorar Servicios' : 'Explore Services'}
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Animated Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex flex-col items-center gap-2 text-slate-400 text-[10px] font-bold tracking-widest uppercase opacity-75">
-          <span>{locale === 'es' ? 'Desplazar' : 'Scroll'}</span>
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-            className="w-5 h-8 border-2 border-slate-400 rounded-full flex justify-center pt-1"
-          >
-            <div className="w-1 h-2 bg-slate-400 rounded-full" />
-          </motion.div>
-        </div>
-      </section>
+      {/* Reusable Hero Banner */}
+      <HeroBanner
+        bgImage="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1600"
+        categoryLabel={locale === 'es' ? 'NUESTRAS SOLUCIONES' : 'OUR SOLUTIONS'}
+        title={t('heroTitle')}
+        titleHighlight=""
+        subtitle={t('heroSubtitle')}
+        breadcrumbs={[
+          { label: locale === 'es' ? 'Inicio' : 'Home', href: '/' },
+          { label: locale === 'es' ? 'Soluciones' : 'Solutions' }
+        ]}
+      />
 
       {/* Key Statistics Grid Section */}
-      <section className="py-12 bg-white dark:bg-[#0b0f19] border-b border-slate-200/50 dark:border-slate-800/40">
+      <section className="py-12 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
             <div className="space-y-1">
-              <span className="block text-4xl sm:text-5xl font-black text-[#0F4C81] dark:text-blue-400 tracking-tight">{t('stats.retentionNum')}</span>
+              <span className="block text-4xl sm:text-5xl font-black text-[#0F4C81] tracking-tight">{t('stats.retentionNum')}</span>
               <span className="block text-[10px] font-extrabold text-slate-500 uppercase tracking-widest">{t('stats.retentionLabel')}</span>
             </div>
             <div className="space-y-1">
-              <span className="block text-4xl sm:text-5xl font-black text-[#0F4C81] dark:text-blue-400 tracking-tight">{t('stats.deploymentsNum')}</span>
+              <span className="block text-4xl sm:text-5xl font-black text-[#0F4C81] tracking-tight">{t('stats.deploymentsNum')}</span>
               <span className="block text-[10px] font-extrabold text-slate-500 uppercase tracking-widest">{t('stats.deploymentsLabel')}</span>
             </div>
             <div className="space-y-1">
-              <span className="block text-4xl sm:text-5xl font-black text-[#0F4C81] dark:text-blue-400 tracking-tight">{t('stats.onboardingNum')}</span>
+              <span className="block text-4xl sm:text-5xl font-black text-[#0F4C81] tracking-tight">{t('stats.onboardingNum')}</span>
               <span className="block text-[10px] font-extrabold text-slate-500 uppercase tracking-widest">{t('stats.onboardingLabel')}</span>
             </div>
           </div>
@@ -458,10 +390,10 @@ function SolutionsPageContent() {
           <aside className="col-span-3 sticky top-28 h-fit max-h-[80vh] overflow-y-auto pr-4 hidden lg:block scrollbar-thin">
             <div className="space-y-6">
               <div>
-                <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest block mb-1">
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1">
                   {locale === 'es' ? 'Navegación de Soluciones' : 'Solutions Navigation'}
                 </span>
-                <h4 className="text-sm font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">
+                <h4 className="text-sm font-extrabold text-slate-900 uppercase tracking-wider">
                   {locale === 'es' ? 'Áreas de Práctica' : 'Practice Areas'}
                 </h4>
               </div>
@@ -478,22 +410,22 @@ function SolutionsPageContent() {
                       onClick={() => scrollToSection(category.id)}
                       className={`w-full flex items-center justify-between p-3 rounded-xl text-left transition-all group border-none cursor-pointer ${
                         isActive 
-                          ? 'bg-[#0F4C81]/10 text-[#0F4C81] dark:bg-blue-500/10 dark:text-blue-400 font-bold' 
-                          : 'text-slate-500 hover:bg-slate-100/50 dark:text-slate-400 dark:hover:bg-slate-800/40 font-medium'
+                          ? 'bg-[#0F4C81]/10 text-[#0F4C81] font-bold' 
+                          : 'text-slate-600 hover:bg-slate-100/50 font-medium'
                       }`}
                     >
                       <div className="flex items-center gap-3 min-w-0">
                         <div className={`p-1.5 rounded-lg transition-colors ${
                           isActive 
-                            ? 'bg-[#0F4C81] text-white dark:bg-blue-500 dark:text-[#0b0f19]' 
-                            : 'bg-slate-100 text-slate-500 group-hover:bg-slate-200 dark:bg-slate-850 dark:text-slate-400 dark:group-hover:bg-slate-800'
+                            ? 'bg-[#0F4C81] text-white' 
+                            : 'bg-slate-100 text-slate-500 group-hover:bg-slate-200'
                         }`}>
                           <CategoryIcon size={16} />
                         </div>
                         <span className="text-xs truncate tracking-wide">{categoryTitle}</span>
                       </div>
                       <ChevronRight size={14} className={`opacity-0 group-hover:opacity-100 transition-all ${
-                        isActive ? 'opacity-100 text-[#0F4C81] dark:text-blue-400' : 'text-slate-400'
+                        isActive ? 'opacity-100 text-[#0F4C81]' : 'text-slate-400'
                       }`} />
                     </button>
                   );
@@ -587,17 +519,17 @@ function SolutionsPageContent() {
                     </div>
                   )}
 
-                  {/* Section Title Header for desktop & mobile */}
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-slate-100 dark:border-slate-850">
+                  {/* Section Title Header */}
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-slate-150">
                     <div className="flex items-center gap-3">
-                      <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-850 text-[#0F4C81] dark:text-blue-400">
+                      <div className="p-2.5 rounded-xl bg-slate-100 text-[#0F4C81]">
                         <CategoryIcon size={22} />
                       </div>
                       <div>
-                        <span className="block text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">
+                        <span className="block text-[9px] font-bold text-slate-400 uppercase tracking-widest">
                           {category.services.length} {locale === 'es' ? 'Servicios Disponibles' : 'Services Available'}
                         </span>
-                        <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">
+                        <h3 className="text-[28px] font-bold text-slate-900 tracking-tight leading-[1.2]">
                           {categoryTitle}
                         </h3>
                       </div>
@@ -606,7 +538,7 @@ function SolutionsPageContent() {
                     {/* Mobile Toggle Collapse Indicator */}
                     <button
                       onClick={() => toggleMobileCollapse(category.id)}
-                      className="lg:hidden flex items-center justify-between gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-850 text-slate-600 dark:text-slate-350 text-xs font-bold rounded-xl border-none cursor-pointer"
+                      className="lg:hidden flex items-center justify-between gap-2 px-4 py-2 bg-slate-100 text-slate-600 text-xs font-bold rounded-xl border-none cursor-pointer"
                     >
                       <span>{isCollapsed ? (locale === 'es' ? 'Mostrar' : 'Expand') : (locale === 'es' ? 'Ocultar' : 'Collapse')}</span>
                       <ChevronDown size={14} className={`transform transition-transform ${isCollapsed ? '' : 'rotate-180'}`} />
@@ -618,14 +550,14 @@ function SolutionsPageContent() {
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
                       
                       {/* Left: Category Summary Cover Card */}
-                      <div className="lg:col-span-4 bg-white dark:bg-[#0b0f19]/40 border border-slate-200/50 dark:border-slate-850 rounded-3xl p-6 shadow-sm flex flex-col justify-between hover:border-slate-300 dark:hover:border-slate-800 transition-all text-left relative overflow-hidden group">
+                      <div className="lg:col-span-4 bg-white border border-slate-200 rounded-[24px] p-6 shadow-sm flex flex-col justify-between hover:border-slate-355 transition-all text-left relative overflow-hidden group">
                         <div className="space-y-4 relative z-10">
-                          <p className="text-slate-600 dark:text-slate-350 text-sm leading-relaxed font-semibold">
+                          <p className="text-[16px] text-slate-655 leading-[1.7] font-semibold">
                             {categoryDesc}
                           </p>
                           
                           {/* Image Thumbnail */}
-                          <div className="relative w-full h-44 rounded-2xl overflow-hidden mt-4 shadow-inner border border-slate-100 dark:border-slate-800/80">
+                          <div className="relative w-full h-44 rounded-2xl overflow-hidden mt-4 shadow-inner border border-slate-100">
                             <Image
                               src={CATEGORY_IMAGE_MAP[category.id] || '/placeholder.jpg'}
                               alt={categoryTitle}
@@ -633,14 +565,14 @@ function SolutionsPageContent() {
                               sizes="(max-w-768px) 100vw, 300px"
                               className="object-cover group-hover:scale-105 transition-transform duration-500"
                             />
-                            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/10 via-transparent to-transparent" />
                           </div>
                         </div>
 
                         <div className="pt-6 relative z-10">
                           <button
                             onClick={() => setSelectedCategory({ cat: category, catTitle: categoryTitle, IconComponent: CategoryIcon })}
-                            className="w-full inline-flex items-center justify-center gap-1.5 py-3 bg-[#0F4C81]/5 hover:bg-[#0F4C81]/15 text-[#0F4C81] dark:bg-blue-500/5 dark:hover:bg-blue-500/15 dark:text-blue-400 font-bold text-xs uppercase tracking-wider rounded-xl transition-all cursor-pointer border-none"
+                            className="w-full inline-flex items-center justify-center gap-1.5 py-3 bg-[#0F4C81]/5 hover:bg-[#0F4C81]/15 text-[#0F4C81] font-bold text-xs uppercase tracking-wider rounded-xl transition-all cursor-pointer border-none"
                           >
                             <span>{locale === 'es' ? 'Ver Detalles de la Práctica' : 'Explore Category Scope'}</span>
                             <ChevronRight size={14} />
@@ -662,31 +594,31 @@ function SolutionsPageContent() {
                             return (
                               <div
                                 key={srv.id}
-                                className="bg-white dark:bg-[#0b0f19]/70 border border-slate-200/50 dark:border-slate-850 p-6 rounded-2xl flex flex-col justify-between shadow-sm hover:shadow-md hover:border-[#0F4C81]/25 dark:hover:border-slate-800 transition-all duration-300 h-full text-left group"
+                                className="premium-card bg-white border border-slate-200 p-6 rounded-2xl flex flex-col justify-between shadow-sm hover:shadow-md hover:border-[#0F4C81]/25 transition-all duration-300 h-full text-left group"
                               >
                                 <div className="space-y-4">
                                   <div className="flex items-center justify-between">
-                                    <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800/80 text-[#0F4C81] dark:text-blue-400 group-hover:scale-105 transition-transform duration-300">
+                                    <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-100 text-[#0F4C81] group-hover:scale-105 transition-transform duration-300">
                                       <ServiceIcon size={18} />
                                     </div>
-                                    <span className="text-[9px] font-bold text-slate-400 dark:text-slate-500 tracking-wider uppercase">
+                                    <span className="text-[9px] font-bold text-slate-400 tracking-wider uppercase">
                                       {srv.tech[0] || 'Core Tech'}
                                     </span>
                                   </div>
 
-                                  <h4 className="font-extrabold text-slate-900 dark:text-white text-base leading-snug group-hover:text-[#0F4C81] dark:group-hover:text-blue-400 transition-colors">
+                                  <h4 className="text-[22px] font-bold text-slate-900 leading-[1.2] group-hover:text-[#0F4C81] transition-colors">
                                     {srvTitle}
                                   </h4>
 
-                                  <p className="text-slate-500 dark:text-slate-400 text-xs leading-relaxed line-clamp-3">
+                                  <p className="text-[16px] text-slate-655 leading-[1.7] font-semibold line-clamp-3">
                                     {srvDesc}
                                   </p>
 
                                   {/* Outcomes Highlights */}
                                   {srvDetails?.features && srvDetails.features.length > 0 && (
-                                    <ul className="space-y-1.5 pt-2 border-t border-slate-50 dark:border-slate-900/60">
+                                    <ul className="space-y-1.5 pt-2 border-t border-slate-100">
                                       {srvDetails.features.slice(0, 2).map((feat: any, idx: number) => (
-                                        <li key={idx} className="flex items-start gap-1.5 text-[11px] text-slate-600 dark:text-slate-350">
+                                        <li key={idx} className="flex items-start gap-1.5 text-[11px] text-slate-600">
                                           <CheckCircle size={11} className="text-emerald-500 shrink-0 mt-0.5" />
                                           <span className="font-medium line-clamp-1">{feat.title}</span>
                                         </li>
@@ -697,29 +629,29 @@ function SolutionsPageContent() {
                                   {/* Technologies Stack Tags */}
                                   <div className="flex flex-wrap gap-1 pt-2">
                                     {srv.tech.slice(0, 3).map((techItem, idx) => (
-                                      <span key={idx} className="px-2 py-0.5 bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-slate-850 text-slate-550 dark:text-slate-400 rounded-md text-[10px] font-semibold">
+                                      <span key={idx} className="px-2 py-0.5 bg-slate-50 border border-slate-200 text-slate-600 rounded-md text-[10px] font-semibold">
                                         {techItem}
                                       </span>
                                     ))}
                                     {srv.tech.length > 3 && (
-                                      <span className="px-2 py-0.5 bg-slate-50 dark:bg-slate-900/60 text-slate-400 rounded-md text-[10px] font-semibold">
+                                      <span className="px-2 py-0.5 bg-slate-50 text-slate-400 rounded-md text-[10px] font-semibold">
                                         +{srv.tech.length - 3}
                                       </span>
                                     )}
                                   </div>
                                 </div>
 
-                                <div className="pt-5 mt-6 border-t border-slate-50 dark:border-slate-900/60 flex items-center justify-between">
+                                <div className="pt-5 mt-6 border-t border-slate-100 flex items-center justify-between">
                                   <Link
                                     href={srvPath}
-                                    className="text-[11px] font-bold text-[#0F4C81] dark:text-blue-400 hover:underline tracking-wider uppercase flex items-center gap-1.5"
+                                    className="text-[11px] font-bold text-[#0F4C81] hover:underline tracking-wider uppercase flex items-center gap-1.5"
                                   >
                                     <span>{locale === 'es' ? 'Ver Detalles' : 'Learn More'}</span>
                                     <ArrowRight size={12} />
                                   </Link>
                                   <Link
                                     href={`/contact?service=${encodeURIComponent(srvTitle)}`}
-                                    className="p-1.5 bg-slate-50 hover:bg-[#0F4C81]/10 text-slate-400 hover:text-[#0F4C81] dark:bg-slate-900 dark:hover:bg-[#0F4C81]/25 dark:text-slate-500 dark:hover:text-blue-400 rounded-lg transition-colors border-none"
+                                    className="p-1.5 bg-slate-50 hover:bg-[#0F4C81]/10 text-slate-400 hover:text-[#0F4C81] rounded-lg transition-colors border-none"
                                   >
                                     <ArrowUpRight size={14} />
                                   </Link>
@@ -741,46 +673,46 @@ function SolutionsPageContent() {
                             return (
                               <div
                                 key={srv.id}
-                                className="snap-center shrink-0 w-[80vw] max-w-[280px] bg-white dark:bg-[#0b0f19]/70 border border-slate-200/50 dark:border-slate-850 p-5 rounded-2xl flex flex-col justify-between shadow-sm text-left"
+                                className="snap-center shrink-0 w-[80vw] max-w-[280px] bg-white border border-slate-200 p-5 rounded-2xl flex flex-col justify-between shadow-sm text-left"
                               >
                                 <div className="space-y-4">
                                   <div className="flex items-center justify-between">
-                                    <div className="p-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 text-[#0F4C81] dark:text-blue-400">
+                                    <div className="p-2 rounded-xl bg-slate-50 border border-slate-100 text-[#0F4C81]">
                                       <ServiceIcon size={16} />
                                     </div>
-                                    <span className="text-[9px] font-bold text-slate-400 dark:text-slate-500 tracking-wider uppercase">
+                                    <span className="text-[9px] font-bold text-slate-400 tracking-wider uppercase">
                                       {srv.tech[0] || 'Core Tech'}
                                     </span>
                                   </div>
 
-                                  <h4 className="font-extrabold text-slate-900 dark:text-white text-sm leading-snug">
+                                  <h4 className="text-[22px] font-bold text-slate-900 leading-[1.2]">
                                     {srvTitle}
                                   </h4>
 
-                                  <p className="text-slate-500 dark:text-slate-400 text-xs leading-relaxed line-clamp-3">
+                                  <p className="text-slate-655 text-[16px] leading-[1.7] font-semibold line-clamp-3">
                                     {srvDesc}
                                   </p>
 
                                   <div className="flex flex-wrap gap-1 pt-1">
                                     {srv.tech.slice(0, 2).map((techItem, idx) => (
-                                      <span key={idx} className="px-2 py-0.5 bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-850 text-slate-500 dark:text-slate-400 rounded text-[9px] font-semibold">
+                                      <span key={idx} className="px-2 py-0.5 bg-slate-50 border border-slate-200 text-slate-600 rounded text-[9px] font-semibold">
                                         {techItem}
                                       </span>
                                     ))}
                                   </div>
                                 </div>
 
-                                <div className="pt-4 mt-5 border-t border-slate-50 dark:border-slate-900/60 flex items-center justify-between">
+                                <div className="pt-4 mt-5 border-t border-slate-100 flex items-center justify-between">
                                   <Link
                                     href={srvPath}
-                                    className="text-[10px] font-bold text-[#0F4C81] dark:text-blue-400 hover:underline tracking-wider uppercase flex items-center gap-1"
+                                    className="text-[10px] font-bold text-[#0F4C81] hover:underline tracking-wider uppercase flex items-center gap-1"
                                   >
                                     <span>{locale === 'es' ? 'Ver Detalles' : 'Learn More'}</span>
                                     <ArrowRight size={10} />
                                   </Link>
                                   <Link
                                     href={`/contact?service=${encodeURIComponent(srvTitle)}`}
-                                    className="p-1.5 bg-slate-50 hover:bg-[#0F4C81]/10 text-slate-400 hover:text-[#0F4C81] dark:bg-slate-900 dark:hover:bg-[#0F4C81]/25 dark:text-slate-500 dark:hover:text-blue-400 rounded-lg transition-colors border-none"
+                                    className="p-1.5 bg-slate-50 hover:bg-[#0F4C81]/10 text-slate-400 hover:text-[#0F4C81] rounded-lg transition-colors border-none"
                                   >
                                     <ArrowUpRight size={12} />
                                   </Link>
@@ -794,9 +726,9 @@ function SolutionsPageContent() {
                     </div>
 
                     {/* Related Services Chips Footer inside Category */}
-                    <div className="pt-8 border-t border-slate-100 dark:border-slate-850 mt-8 text-left">
+                    <div className="pt-8 border-t border-slate-100 mt-8 text-left">
                       <div className="flex flex-wrap items-center gap-2">
-                        <span className="text-[10px] font-bold text-slate-450 dark:text-slate-500 uppercase tracking-widest mr-2">
+                        <span className="text-[10px] font-bold text-slate-450 uppercase tracking-widest mr-2">
                           {locale === 'es' ? 'Relacionado:' : 'Related:'}
                         </span>
                         
@@ -810,14 +742,15 @@ function SolutionsPageContent() {
                             <Link
                               key={idx}
                               href={relPath}
-                              className="px-3 py-1 bg-slate-100 hover:bg-[#0F4C81]/10 text-slate-650 hover:text-[#0F4C81] dark:bg-slate-850 dark:hover:bg-[#0F4C81]/20 dark:text-slate-400 dark:hover:text-blue-400 rounded-full text-xs font-semibold transition-all"
+                              className="px-3 py-1 bg-slate-100 hover:bg-[#0F4C81]/10 text-slate-650 hover:text-[#0F4C81] rounded-full text-xs font-semibold transition-all"
                             >
                               {getRelatedName(relSlug)}
                             </Link>
                           );
                         })}
-                      </div>
                     </div>
+
+                  </div>
 
                   </div>
 
@@ -825,25 +758,24 @@ function SolutionsPageContent() {
               );
             })}
           </div>
-
         </div>
       </section>
 
       {/* Technology Ecosystem Section */}
-      <section className="py-24 bg-white dark:bg-[#0b0f19]/40 relative z-10 border-t border-b border-slate-200/50 dark:border-slate-800/40">
+      <section className="py-24 bg-white relative z-10 border-t border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
           <div className="max-w-3xl space-y-4">
-            <span className="text-xs font-bold text-[#0F4C81] dark:text-blue-400 uppercase tracking-widest">{t('techEcosystemTitle')}</span>
-            <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">{t('techEcosystemSubtitle')}</h3>
+            <span className="text-xs font-bold text-[#0F4C81] uppercase tracking-widest">{t('techEcosystemTitle')}</span>
+            <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">{t('techEcosystemSubtitle')}</h3>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {techEcosystem.map((group, idx) => (
-              <div key={idx} className="p-7 bg-slate-50 dark:bg-[#0b0f19]/60 border border-slate-200/40 dark:border-slate-800/55 rounded-2xl text-left space-y-4 shadow-sm">
-                <h4 className="text-sm font-bold text-slate-850 dark:text-white uppercase tracking-wider border-b border-slate-200/60 dark:border-slate-800/60 pb-2">{group.name}</h4>
+              <div key={idx} className="premium-card p-7 bg-[#F8FAFC] border border-slate-200 rounded-2xl text-left space-y-4 shadow-sm">
+                <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider border-b border-slate-200 pb-2">{group.name}</h4>
                 <div className="flex flex-wrap gap-1.5">
                   {group.items.map((item, itemIdx) => (
-                    <span key={itemIdx} className="px-2.5 py-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-850 text-slate-650 dark:text-slate-350 rounded-lg text-xs font-semibold">
+                    <span key={itemIdx} className="px-2.5 py-1 bg-white border border-slate-200 text-slate-655 rounded-lg text-xs font-semibold">
                       {item}
                     </span>
                   ))}
@@ -855,14 +787,13 @@ function SolutionsPageContent() {
       </section>
 
       {/* Industries We Serve Section */}
-      <section className="relative bg-slate-900 text-white py-28 z-10 overflow-hidden">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#0F4C81]/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-slate-850 rounded-full blur-2xl pointer-events-none" />
+      <section className="relative bg-[#0F4C81] text-white py-28 z-10 overflow-hidden">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-3xl pointer-events-none" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-16">
           <div className="max-w-3xl space-y-4 text-left">
-            <span className="text-xs font-bold text-[#0F4C81] uppercase tracking-widest">{t('industriesTitle')}</span>
-            <h3 className="text-3xl sm:text-4xl font-extrabold tracking-tight">{t('industriesSubtitle')}</h3>
+            <span className="text-xs font-bold text-blue-200 uppercase tracking-widest">{t('industriesTitle')}</span>
+            <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black tracking-tight leading-[1.2]">{t('industriesSubtitle')}</h3>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -872,13 +803,13 @@ function SolutionsPageContent() {
               const indDesc = t(`industriesList.${ind.key}.desc`);
 
               return (
-                <div key={ind.id} className="p-8 rounded-[24px] bg-slate-950 border border-slate-800/80 shadow-sm flex flex-col justify-between hover:border-slate-700/65 transition-all duration-300 group text-left">
+                <div key={ind.id} className="p-8 rounded-[24px] bg-white/10 border border-white/10 shadow-sm flex flex-col justify-between hover:bg-white/15 transition-all duration-300 group text-left">
                   <div className="space-y-4">
-                    <div className="p-3 w-fit rounded-xl bg-slate-900 border border-slate-800/85 text-[#0F4C81] group-hover:bg-[#0F4C81]/10 group-hover:scale-105 transition-all">
+                    <div className="p-3 w-fit rounded-xl bg-white/10 border border-white/5 text-blue-200 group-hover:scale-105 transition-all">
                       <IndIcon size={20} />
                     </div>
                     <h4 className="text-lg font-bold text-white tracking-tight">{indTitle}</h4>
-                    <p className="text-xs text-slate-400 leading-relaxed font-medium">{indDesc}</p>
+                    <p className="text-xs text-blue-100 leading-relaxed font-medium">{indDesc}</p>
                   </div>
                 </div>
               );
@@ -888,23 +819,23 @@ function SolutionsPageContent() {
       </section>
 
       {/* Why Choose HyperCode Section */}
-      <section className="py-28 bg-slate-50 dark:bg-[#07090e] relative z-10 border-b border-slate-200/50 dark:border-slate-900/60">
+      <section className="py-28 bg-[#F8FAFC] relative z-10 border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
           <div className="text-center max-w-2xl mx-auto space-y-4">
-            <span className="text-xs font-bold text-[#0F4C81] dark:text-blue-400 uppercase tracking-widest">{t('why.title')}</span>
-            <h3 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">{t('why.subtitle')}</h3>
+            <span className="text-xs font-bold text-[#0F4C81] uppercase tracking-widest">{t('why.title')}</span>
+            <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">{t('why.subtitle')}</h3>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {advantagesList.map((adv, idx) => {
               const AdvIcon = adv.icon;
               return (
-                <div key={idx} className="bg-white dark:bg-[#0b0f19]/70 p-8 rounded-[24px] border border-slate-200/60 dark:border-slate-850 shadow-sm space-y-4 text-left hover:border-slate-350 dark:hover:border-slate-800 transition-colors duration-300">
-                  <div className="p-3 rounded-xl bg-[#0F4C81]/10 dark:bg-[#0F4C81]/25 text-[#0F4C81] dark:text-blue-400 w-fit">
+                <div key={idx} className="premium-card bg-white p-8 rounded-[24px] border border-slate-200 shadow-sm space-y-4 text-left hover:border-slate-355 transition-colors duration-300">
+                  <div className="p-3 rounded-xl bg-[#0F4C81]/10 text-[#0F4C81] w-fit">
                     <AdvIcon size={20} />
                   </div>
-                  <h4 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">{t(adv.titleKey)}</h4>
-                  <p className="text-sm text-slate-650 dark:text-slate-450 leading-relaxed font-medium">{t(adv.descKey)}</p>
+                  <h4 className="text-[22px] font-bold text-slate-900 tracking-tight leading-[1.2]">{t(adv.titleKey)}</h4>
+                  <p className="text-[16px] text-slate-655 leading-[1.7] font-semibold">{t(adv.descKey)}</p>
                 </div>
               );
             })}
@@ -912,12 +843,12 @@ function SolutionsPageContent() {
         </div>
       </section>
 
-      {/* FAQ Accordion Section */}
-      <section className="py-24 bg-white dark:bg-[#0b0f19]/40 relative z-10">
+        {/* FAQ Accordion Section */}
+        <section className="py-24 bg-white relative z-10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
-            <h2 className="text-xs font-bold text-[#0F4C81] dark:text-blue-400 uppercase tracking-widest">{t('faqTitle')}</h2>
-            <h3 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">{t('faqSubtitle')}</h3>
+            <h2 className="text-xs font-bold text-[#0F4C81] uppercase tracking-widest">{t('faqTitle')}</h2>
+            <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">{t('faqSubtitle')}</h3>
           </div>
 
           <div className="space-y-4">
@@ -926,13 +857,13 @@ function SolutionsPageContent() {
               { q: tSolutions('faqQ2'), a: tSolutions('faqA2') },
               { q: tSolutions('faqQ3'), a: tSolutions('faqA3') }
             ].map((faq, idx) => (
-              <div key={idx} className="border border-slate-200 dark:border-slate-850 rounded-2xl overflow-hidden bg-slate-50/20 dark:bg-slate-900/10">
+              <div key={idx} className="border border-slate-200 rounded-2xl overflow-hidden bg-[#F8FAFC]">
                 <details className="group">
-                  <summary className="flex items-center justify-between p-6 font-bold text-slate-800 dark:text-slate-250 cursor-pointer list-none text-sm md:text-base hover:bg-slate-50 dark:hover:bg-slate-900/60 select-none">
+                  <summary className="flex items-center justify-between p-6 font-bold text-slate-800 cursor-pointer list-none text-sm md:text-base hover:bg-slate-50 select-none">
                     <span>{faq.q}</span>
-                    <ChevronRight size={18} className="transform transition-transform group-open:rotate-90 text-slate-400 dark:text-slate-500" />
+                    <ChevronRight size={18} className="transform transition-transform group-open:rotate-90 text-slate-450" />
                   </summary>
-                  <div className="px-6 pb-6 pt-2 text-sm text-slate-500 dark:text-slate-400 leading-relaxed border-t border-slate-100 dark:border-slate-850 text-left">
+                  <div className="px-6 pb-6 pt-2 text-[16px] text-slate-655 leading-[1.7] font-semibold border-t border-slate-100 text-left">
                     {faq.a}
                   </div>
                 </details>
@@ -943,16 +874,16 @@ function SolutionsPageContent() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 bg-white dark:bg-[#07090e] relative z-10 border-t border-slate-200/50 dark:border-slate-900/60">
+      <section className="py-24 bg-white relative z-10 border-t border-slate-200">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
-          <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">{t('ctaSectionTitle')}</h3>
-          <p className="text-base sm:text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto font-medium leading-relaxed">
+          <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">{t('ctaSectionTitle')}</h3>
+          <p className="text-[16px] md:text-[17px] text-slate-655 max-w-2xl mx-auto font-semibold leading-[1.7]">
             {t('ctaSectionSubtitle')}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
             <Link
               href="/consultation"
-              className="inline-flex items-center justify-center h-12 px-8 bg-[#0F4C81] hover:bg-[#0D3F6D] text-white font-bold text-sm uppercase tracking-wider rounded-xl transition-all shadow-md hover:shadow-lg cursor-pointer w-full sm:w-auto"
+              className="btn-primary w-full sm:w-auto"
             >
               {t('ctaBtn')}
             </Link>
@@ -1023,25 +954,25 @@ function SolutionsPageContent() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 26, stiffness: 180 }}
-              className="fixed right-0 top-0 bottom-0 w-full max-w-2xl bg-white dark:bg-[#0b0f19] shadow-2xl z-50 overflow-y-auto border-l border-slate-200 dark:border-slate-850 p-8 md:p-12 flex flex-col justify-between"
+              className="fixed right-0 top-0 bottom-0 w-full max-w-2xl bg-white shadow-2xl z-50 overflow-y-auto border-l border-slate-200 p-8 md:p-12 flex flex-col justify-between"
             >
               <div className="space-y-8 text-left">
                 {/* Header block */}
-                <div className="flex items-center justify-between pb-6 border-b border-slate-200 dark:border-slate-850">
+                <div className="flex items-center justify-between pb-6 border-b border-slate-200">
                   <div className="flex items-center gap-3">
-                    <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 text-[#0F4C81] dark:text-blue-400">
+                    <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-100 text-[#0F4C81]">
                       <selectedCategory.IconComponent size={22} />
                     </div>
                     <div>
-                      <span className="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">{t('drawerTitle')}</span>
-                      <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-snug">
+                      <span className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest">{t('drawerTitle')}</span>
+                      <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight leading-snug">
                         {selectedCategory.catTitle}
                       </h3>
                     </div>
                   </div>
                   <button 
                     onClick={() => setSelectedCategory(null)}
-                    className="p-2 rounded-xl bg-slate-50 hover:bg-slate-100 dark:bg-slate-900 dark:hover:bg-slate-850 text-slate-400 hover:text-slate-800 dark:text-slate-500 dark:hover:text-slate-350 transition-colors border-none cursor-pointer"
+                    className="p-2 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-400 hover:text-slate-800 transition-colors border-none cursor-pointer"
                   >
                     <X size={20} />
                   </button>
@@ -1049,15 +980,15 @@ function SolutionsPageContent() {
 
                 {/* Section 1: Overview */}
                 <div className="space-y-3">
-                  <h4 className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">{t('businessValue')}</h4>
-                  <p className="text-slate-700 dark:text-slate-300 text-sm font-semibold leading-relaxed bg-slate-50 dark:bg-slate-900/50 border border-slate-200/60 dark:border-slate-850 p-5 rounded-2xl shadow-sm">
+                  <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest">{t('drawerTitle')}</h4>
+                  <p className="text-slate-700 text-sm font-semibold leading-relaxed bg-slate-50 border border-slate-200 p-5 rounded-2xl shadow-sm">
                     {t(`categories.${selectedCategory.cat.id}.desc`)}
                   </p>
                 </div>
 
                 {/* Section 2: Specific capabilities */}
                 <div className="space-y-4">
-                  <h4 className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">{tc('detailedCapabilities')}</h4>
+                  <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest">{tc('detailedCapabilities')}</h4>
                   <div className="space-y-4">
                     {selectedCategory.cat.services.map((srv: any) => {
                       const srvDetails = getServiceDetails(srv.id, locale);
@@ -1066,16 +997,16 @@ function SolutionsPageContent() {
                       const srvPath = srvDetails ? `/solutions/${srv.id}` : srv.path;
 
                       return (
-                        <div key={srv.id} className="p-5 rounded-2xl border border-slate-100 dark:border-slate-850 bg-white dark:bg-[#0b0f19]/60 shadow-sm space-y-3 text-left">
-                          <h5 className="font-bold text-slate-900 dark:text-white text-sm sm:text-base">{srvTitle}</h5>
-                          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-450 leading-relaxed">{srvDesc}</p>
+                        <div key={srv.id} className="p-5 rounded-2xl border border-slate-100 bg-white shadow-sm space-y-3 text-left">
+                          <h5 className="font-bold text-slate-900 text-sm sm:text-base">{srvTitle}</h5>
+                          <p className="text-xs sm:text-sm text-slate-550 leading-relaxed">{srvDesc}</p>
                           
                           {/* Link to dedicated landing page */}
-                          <div className="pt-2 border-t border-slate-100/50 dark:border-slate-900/40 mt-1 flex items-center justify-between">
+                          <div className="pt-2 border-t border-slate-100/50 mt-1 flex items-center justify-between">
                             <Link 
                               href={srvPath}
                               onClick={() => setSelectedCategory(null)}
-                              className="text-xs font-bold text-[#0F4C81] dark:text-blue-400 hover:underline flex items-center gap-1"
+                              className="text-xs font-bold text-[#0F4C81] hover:underline flex items-center gap-1"
                             >
                               <span>{t('viewServiceDetails')}</span>
                               <ArrowRight size={12} />
@@ -1089,14 +1020,14 @@ function SolutionsPageContent() {
 
                 {/* Section 3: Technologies Used */}
                 <div className="space-y-3">
-                  <h4 className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">{tc('technologies')}</h4>
+                  <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest">{tc('technologies')}</h4>
                   <div className="flex flex-wrap gap-1.5">
                     {useMemo(() => {
                       const techs = new Set<string>();
                       selectedCategory.cat.services.forEach((srv: any) => srv.tech.forEach((tech: string) => techs.add(tech)));
                       return Array.from(techs);
                     }, [selectedCategory]).map((tech, idx) => (
-                      <span key={idx} className="px-3 py-1.5 bg-slate-900 border border-slate-850 text-slate-200 rounded-lg text-xs font-bold uppercase tracking-wider">
+                      <span key={idx} className="px-3 py-1.5 bg-[#0F4C81]/5 border border-[#0F4C81]/15 text-[#0F4C81] rounded-lg text-xs font-bold uppercase tracking-wider">
                         {tech}
                       </span>
                     ))}
@@ -1105,7 +1036,7 @@ function SolutionsPageContent() {
 
                 {/* Section 4: Target Industries */}
                 <div className="space-y-3">
-                  <h4 className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">{tc('industries')}</h4>
+                  <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest">{tc('industries')}</h4>
                   <div className="flex flex-wrap gap-1.5">
                     {useMemo(() => {
                       const inds = new Set<string>();
@@ -1115,7 +1046,7 @@ function SolutionsPageContent() {
                       });
                       return Array.from(inds);
                     }, [selectedCategory]).map((ind, idx) => (
-                      <span key={idx} className="px-3 py-1.5 bg-[#0F4C81]/5 border border-[#0F4C81]/15 text-[#0F4C81] dark:text-blue-400 dark:bg-blue-500/5 rounded-lg text-xs font-bold">
+                      <span key={idx} className="px-3 py-1.5 bg-[#0F4C81]/5 border border-[#0F4C81]/15 text-[#0F4C81] rounded-lg text-xs font-bold">
                         {ind}
                       </span>
                     ))}
@@ -1123,13 +1054,13 @@ function SolutionsPageContent() {
                 </div>
 
                 {/* Section 5: Case Study Success */}
-                <div className="p-6.5 rounded-2xl bg-slate-950 text-white relative overflow-hidden border border-slate-850 shadow-md text-left">
+                <div className="p-6.5 rounded-2xl bg-slate-900 text-white relative overflow-hidden border border-slate-800 shadow-md text-left">
                   <div className="absolute top-0 right-0 w-24 h-24 bg-[#0F4C81]/25 rounded-full blur-xl pointer-events-none" />
                   <div className="space-y-3">
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#0F4C81]/30 text-[10px] font-extrabold text-[#74C3FF] uppercase tracking-wider">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#0F4C81]/30 text-[10px] font-extrabold text-blue-200 uppercase tracking-wider">
                       {t('caseStudyLabel')}
                     </span>
-                    <p className="text-xs sm:text-sm text-slate-350 leading-relaxed font-semibold">
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-semibold">
                       {getCaseStudySummary(selectedCategory.cat.id, locale === 'es')}
                     </p>
                   </div>
@@ -1137,7 +1068,7 @@ function SolutionsPageContent() {
               </div>
 
               {/* Drawer footer actions */}
-              <div className="flex items-center gap-4 pt-8 border-t border-slate-200 dark:border-slate-850 mt-10">
+              <div className="flex items-center gap-4 pt-8 border-t border-slate-200 mt-10">
                 <Link
                   href={`/consultation?service=${encodeURIComponent(selectedCategory.catTitle)}`}
                   className="flex-1 inline-flex items-center justify-center h-12 bg-[#0F4C81] hover:bg-[#0D3F6D] text-white font-bold text-sm uppercase tracking-wider rounded-xl transition-all shadow-md cursor-pointer"
@@ -1147,7 +1078,7 @@ function SolutionsPageContent() {
                 </Link>
                 <button
                   onClick={() => setSelectedCategory(null)}
-                  className="px-6 h-12 bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-850 text-slate-700 dark:text-slate-300 font-bold text-sm uppercase tracking-wider rounded-xl transition-all cursor-pointer border-none"
+                  className="px-6 h-12 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm uppercase tracking-wider rounded-xl transition-all cursor-pointer border-none"
                 >
                   {tc('close')}
                 </button>
@@ -1163,8 +1094,8 @@ function SolutionsPageContent() {
 export default function SolutionsPage() {
   return (
     <Suspense fallback={
-      <div className="flex h-screen items-center justify-center bg-slate-50 dark:bg-[#07090e]">
-        <Loader2 className="animate-spin text-[#0F4C81] dark:text-blue-400" size={40} />
+      <div className="flex h-screen items-center justify-center bg-slate-50">
+        <Loader2 className="animate-spin text-[#0F4C81]" size={40} />
       </div>
     }>
       <SolutionsPageContent />

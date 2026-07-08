@@ -6,6 +6,7 @@ import { InsightsList } from '@/components/insights-list';
 import { NewsletterForm } from '@/components/newsletter-form';
 import { db } from '@/lib/db';
 import { Suspense } from 'react';
+import { HeroBanner } from '@/components/hero-banner';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -91,28 +92,24 @@ export default async function InsightsPage({ params }: Props) {
   localizedCategories.splice(1, 0, caseStudiesCat);
 
   return (
-    <main className="relative w-full bg-white text-left">
+    <main className="relative w-full bg-white text-left min-h-screen bg-dot-pattern">
       <Navigation />
 
       {/* Hero Section */}
-      <section className="bg-slate-50 pt-36 pb-20 border-b border-slate-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="max-w-3xl space-y-4">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
-              {locale === 'es' ? 'Liderazgo' : locale === 'fr' ? 'Leadership' : locale === 'de' ? 'Vordenkertum' : locale === 'ja' ? '思想的' : locale === 'ko' ? '사상적' : locale === 'zh' ? '思想' : locale === 'ar' ? 'فكر' : 'Thought'}{' '}
-              <span className="text-[#0F4C81]">
-                {locale === 'es' ? 'Pensamiento' : locale === 'fr' ? 'd\'Opinion' : locale === 'de' ? 'für IT' : locale === 'ja' ? 'リーダーシップ' : locale === 'ko' ? '리더십' : locale === 'zh' ? '领导力' : locale === 'ar' ? 'الريادة' : 'Leadership'}
-              </span>
-            </h1>
-            <p className="text-lg sm:text-xl text-slate-600 font-medium leading-relaxed">
-              {t('subtitle')}
-            </p>
-          </div>
-        </div>
-      </section>
+      <HeroBanner
+        bgImage="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1600"
+        categoryLabel={locale === 'es' ? 'INSIGHTS Y ANÁLISIS' : 'INSIGHTS & ANALYSIS'}
+        title={locale === 'es' ? 'Liderazgo de Pensamiento' : 'Thought Leadership'}
+        titleHighlight=""
+        subtitle={t('subtitle')}
+        breadcrumbs={[
+          { label: locale === 'es' ? 'Inicio' : 'Home', href: '/' },
+          { label: locale === 'es' ? 'Insights' : 'Insights' }
+        ]}
+      />
 
       {/* Main Insights Panel */}
-      <section className="py-20 bg-white">
+      <section className="section-padding bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Suspense fallback={<div className="text-center py-12 text-slate-500">Loading articles...</div>}>
             <InsightsList initialArticles={mergedArticles} translatedCategories={localizedCategories} />
@@ -121,13 +118,13 @@ export default async function InsightsPage({ params }: Props) {
       </section>
 
       {/* Newsletter Signup */}
-      <section className="py-24 bg-slate-50 border-t border-b border-slate-100">
+      <section className="section-padding bg-[#F8FAFC]">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="p-8 sm:p-12 rounded-3xl border border-slate-200 bg-white shadow-sm space-y-6 text-center">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight leading-none">
+          <div className="premium-card p-8 sm:p-12 bg-white border border-slate-200 shadow-sm space-y-6 text-center">
+            <h2 className="text-[28px] sm:text-[32px] font-black text-slate-900 tracking-tight leading-[1.2]">
               {t('newsletterTitle')}
             </h2>
-            <p className="text-sm sm:text-base text-slate-500 font-medium">
+            <p className="text-[16px] text-slate-655 leading-[1.7] font-semibold">
               {t('newsletterSubtitle')}
             </p>
 

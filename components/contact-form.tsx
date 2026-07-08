@@ -267,62 +267,62 @@ function ContactFormContent() {
       {/* Grid for Name, Email, Company, Phone */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('name')}</label>
+          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-850 mb-2.5">{t('name')}</label>
           <input
             type="text"
             placeholder="John Doe"
             {...register('name')}
-            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${
-              errors.name ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
+            className={`w-full h-14 px-5 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] transition-all text-base text-slate-800 placeholder-slate-400 ${
+              errors.name ? 'border-red-300 ring-2 ring-red-100' : 'border-slate-200'
             }`}
           />
-          {errors.name && <span className="text-xs text-red-500 mt-1 block">{errors.name.message}</span>}
+          {errors.name && <span className="text-xs font-semibold text-red-500 mt-1.5 block">{errors.name.message}</span>}
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('email')}</label>
+          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-850 mb-2.5">{t('email')}</label>
           <input
             type="email"
             placeholder="john@company.com"
             {...register('email')}
-            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${
-              errors.email ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
+            className={`w-full h-14 px-5 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] transition-all text-base text-slate-800 placeholder-slate-400 ${
+              errors.email ? 'border-red-300 ring-2 ring-red-100' : 'border-slate-200'
             }`}
           />
-          {errors.email && <span className="text-xs text-red-500 mt-1 block">{errors.email.message}</span>}
+          {errors.email && <span className="text-xs font-semibold text-red-500 mt-1.5 block">{errors.email.message}</span>}
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('company')}</label>
+          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-850 mb-2.5">{t('company')}</label>
           <input
             type="text"
             placeholder="Enter company name"
             {...register('company')}
-            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${
-              errors.company ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
+            className={`w-full h-14 px-5 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] transition-all text-base text-slate-800 placeholder-slate-400 ${
+              errors.company ? 'border-red-300 ring-2 ring-red-100' : 'border-slate-200'
             }`}
           />
-          {errors.company && <span className="text-xs text-red-500 mt-1 block">{errors.company.message}</span>}
+          {errors.company && <span className="text-xs font-semibold text-red-500 mt-1.5 block">{errors.company.message}</span>}
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('phone')}</label>
+          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-850 mb-2.5">{t('phone')}</label>
           <input
             type="tel"
             placeholder="+1 (555) 012-3456"
             {...register('phone')}
-            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${
-              errors.phone ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
+            className={`w-full h-14 px-5 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] transition-all text-base text-slate-800 placeholder-slate-400 ${
+              errors.phone ? 'border-red-300 ring-2 ring-red-100' : 'border-slate-200'
             }`}
           />
-          {errors.phone && <span className="text-xs text-red-500 mt-1 block">{errors.phone.message}</span>}
+          {errors.phone && <span className="text-xs font-semibold text-red-500 mt-1.5 block">{errors.phone.message}</span>}
         </div>
       </div>
 
       {/* Multi-Select Services Chips */}
       <div>
-        <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-3">{t('services') || 'Services Needed'}</label>
-        <div className="flex flex-wrap gap-2">
+        <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-3">{t('services') || 'Services Needed'}</label>
+        <div className="flex flex-wrap gap-2.5">
           {serviceOptions.map((opt) => {
             const active = selectedServices.includes(opt.id);
             return (
@@ -330,9 +330,9 @@ function ContactFormContent() {
                 key={opt.id}
                 type="button"
                 onClick={() => toggleService(opt.id)}
-                className={`px-4 py-2 rounded-full border text-sm font-medium transition-all flex items-center gap-2 cursor-pointer ${
+                className={`px-4 py-2.5 rounded-full border text-sm font-bold transition-all flex items-center gap-2 cursor-pointer ${
                   active
-                    ? 'bg-[#0F4C81]/10 border-[#0F4C81] text-[#0F4C81]'
+                    ? 'bg-[#0F4C81]/15 border-[#0F4C81] text-[#0F4C81]'
                     : 'bg-slate-50 border-slate-200 text-slate-600 hover:border-slate-350 hover:bg-slate-100'
                 }`}
               >
@@ -347,11 +347,11 @@ function ContactFormContent() {
       {/* Grid for Select Options */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('industry')}</label>
+          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-850 mb-2.5">{t('industry')}</label>
           <select
             {...register('industry')}
-            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700 ${
-              errors.industry ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
+            className={`w-full h-14 px-5 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] transition-all text-base text-slate-800 ${
+              errors.industry ? 'border-red-300 ring-2 ring-red-100' : 'border-slate-200'
             }`}
           >
             <option value="">-- Select Industry --</option>
@@ -359,14 +359,14 @@ function ContactFormContent() {
               <option key={key} value={val as string}>{val as string}</option>
             ))}
           </select>
-          {errors.industry && <span className="text-xs text-red-500 mt-1 block">{errors.industry.message}</span>}
+          {errors.industry && <span className="text-xs font-semibold text-red-500 mt-1.5 block">{errors.industry.message}</span>}
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('companySize') || 'Company Size'}</label>
+          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5">{t('companySize') || 'Company Size'}</label>
           <select
             {...register('companySize')}
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700"
+            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] transition-all text-base text-slate-800"
           >
             <option value="">-- Select Size --</option>
             <option value="1-10">1-10 Employees</option>
@@ -378,11 +378,11 @@ function ContactFormContent() {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('budget')}</label>
+          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-850 mb-2.5">{t('budget')}</label>
           <select
             {...register('budget')}
-            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700 ${
-              errors.budget ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
+            className={`w-full h-14 px-5 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] transition-all text-base text-slate-800 ${
+              errors.budget ? 'border-red-300 ring-2 ring-red-100' : 'border-slate-200'
             }`}
           >
             <option value="">-- Select Budget --</option>
@@ -390,15 +390,15 @@ function ContactFormContent() {
               <option key={key} value={val as string}>{val as string}</option>
             ))}
           </select>
-          {errors.budget && <span className="text-xs text-red-500 mt-1 block">{errors.budget.message}</span>}
+          {errors.budget && <span className="text-xs font-semibold text-red-500 mt-1.5 block">{errors.budget.message}</span>}
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('timeline')}</label>
+          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-850 mb-2.5">{t('timeline')}</label>
           <select
             {...register('timeline')}
-            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700 ${
-              errors.timeline ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
+            className={`w-full h-14 px-5 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] transition-all text-base text-slate-800 ${
+              errors.timeline ? 'border-red-300 ring-2 ring-red-100' : 'border-slate-200'
             }`}
           >
             <option value="">-- Select Timeline --</option>
@@ -406,24 +406,24 @@ function ContactFormContent() {
               <option key={key} value={val as string}>{val as string}</option>
             ))}
           </select>
-          {errors.timeline && <span className="text-xs text-red-500 mt-1 block">{errors.timeline.message}</span>}
+          {errors.timeline && <span className="text-xs font-semibold text-red-500 mt-1.5 block">{errors.timeline.message}</span>}
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('country') || 'Country / Region'}</label>
+          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5">{t('country') || 'Country / Region'}</label>
           <input
             type="text"
             placeholder="e.g. United States, United Kingdom"
             {...register('country')}
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700"
+            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] transition-all text-base text-slate-800 placeholder-slate-400"
           />
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('contactMethod') || 'Preferred Contact Method'}</label>
+          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5">{t('contactMethod') || 'Preferred Contact Method'}</label>
           <select
             {...register('preferredContactMethod')}
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700"
+            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] transition-all text-base text-slate-800"
           >
             <option value="Email">Email</option>
             <option value="Phone Call">Phone Call</option>
@@ -433,10 +433,10 @@ function ContactFormContent() {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('projectType') || 'Project Type'}</label>
+          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5">{t('projectType') || 'Project Type'}</label>
           <select
             {...register('projectType')}
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700"
+            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] transition-all text-base text-slate-800"
           >
             <option value="">-- Select Project Type --</option>
             <option value="New Product from Scratch">New Product from Scratch</option>
@@ -448,11 +448,11 @@ function ContactFormContent() {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('subject')}</label>
+          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-850 mb-2.5">{t('subject')}</label>
           <select
             {...register('subject')}
-            className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-700 ${
-              errors.subject ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
+            className={`w-full h-14 px-5 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] transition-all text-base text-slate-800 ${
+              errors.subject ? 'border-red-300 ring-2 ring-red-100' : 'border-slate-200'
             }`}
           >
             {subjectOptions.map((opt) => (
@@ -464,8 +464,8 @@ function ContactFormContent() {
 
       {/* Multi-Select Required Tech Chips */}
       <div>
-        <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-3">{t('requiredTech') || 'Preferred Technologies'}</label>
-        <div className="flex flex-wrap gap-2">
+        <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-3">{t('requiredTech') || 'Preferred Technologies'}</label>
+        <div className="flex flex-wrap gap-2.5">
           {techOptions.map((tech) => {
             const active = selectedTech.includes(tech);
             return (
@@ -473,10 +473,10 @@ function ContactFormContent() {
                 key={tech}
                 type="button"
                 onClick={() => toggleTech(tech)}
-                className={`px-3 py-1.5 rounded-full border text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer ${
+                className={`px-3.5 py-2 rounded-full border text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
                   active
-                    ? 'bg-slate-800 border-slate-800 text-white'
-                    : 'bg-white border-slate-200 text-slate-600 hover:border-slate-300'
+                    ? 'bg-[#0F4C81]/15 border-[#0F4C81] text-[#0F4C81]'
+                    : 'bg-white border-slate-200 text-slate-600 hover:border-slate-300 hover:bg-slate-100'
                 }`}
               >
                 {active && <Check size={12} />}
@@ -489,16 +489,16 @@ function ContactFormContent() {
 
       {/* Message Textarea */}
       <div>
-        <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">{t('message')}</label>
+        <label className="block text-[15px] lg:text-[18px] font-bold text-slate-850 mb-2.5">{t('message')}</label>
         <textarea
           rows={5}
           placeholder="Please describe your technology requirements, key challenges, or hiring profiles..."
           {...register('message')}
-          className={`w-full px-4 py-3 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81] transition-all text-slate-800 ${
-            errors.message ? 'border-red-300 ring-1 ring-red-300' : 'border-slate-200'
+          className={`w-full px-5 py-4 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] transition-all text-base text-slate-800 placeholder-slate-400 ${
+            errors.message ? 'border-red-300 ring-2 ring-red-100' : 'border-slate-200'
           }`}
         />
-        {errors.message && <span className="text-xs text-red-500 mt-1 block">{errors.message.message}</span>}
+        {errors.message && <span className="text-xs font-semibold text-red-500 mt-1.5 block">{errors.message.message}</span>}
       </div>
 
       {/* Submit Button */}
@@ -506,11 +506,11 @@ function ContactFormContent() {
         <button
           type="submit"
           disabled={submitting}
-          className="px-8 py-4 rounded-xl font-semibold text-white bg-[#0F4C81] hover:bg-[#0D3F6D] transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75 disabled:cursor-not-allowed min-w-[200px]"
+          className="btn-primary min-w-[200px] flex items-center justify-center gap-2"
         >
           {submitting ? (
             <>
-              <Loader2 size={20} className="animate-spin" />
+              <Loader2 size={16} className="animate-spin" />
               <span>{t('submitting')}</span>
             </>
           ) : (
