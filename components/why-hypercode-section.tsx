@@ -29,8 +29,6 @@ export function WhyHypercodeSection() {
     r2Title: string; r2Desc: string;
     r3Title: string; r3Desc: string;
     r4Title: string; r4Desc: string;
-    r5Title: string; r5Desc: string;
-    r6Title: string; r6Desc: string;
   }> = {
     en: {
       badge: "WHY PARTNER WITH US",
@@ -44,9 +42,7 @@ export function WhyHypercodeSection() {
       r1Title: "AI-First Innovation", r1Desc: "Infusing generative AI and intelligent agent automation into core business workflows.",
       r2Title: "Enterprise-Grade Delivery", r2Desc: "A proven track record of engineering high-availability, secure, and compliant digital products.",
       r3Title: "Certified Tech Experts", r3Desc: "Top-tier solutions architects and developers skilled in modern cloud and database systems.",
-      r4Title: "Agile Project Execution", r4Desc: "Direct, transparent delivery pipelines that eliminate administrative bloat and cut cycles in half.",
-      r5Title: "Dedicated Success Manager", r5Desc: "A single senior point of contact to align project deliverables with your long-term business goals.",
-      r6Title: "Secure & Scalable Tech", r6Desc: "Security-first custom architectures built for SOC 2, HIPAA, and GDPR compliance."
+      r4Title: "Agile Project Execution", r4Desc: "Direct, transparent delivery pipelines that eliminate administrative bloat and cut cycles in half."
     },
     es: {
       badge: "POR QUÉ ASOCIARSE CON NOSOTROS",
@@ -60,9 +56,7 @@ export function WhyHypercodeSection() {
       r1Title: "Innovación AI-First", r1Desc: "Inyección de IA generativa y agentes inteligentes en los flujos clave de su negocio.",
       r2Title: "Entrega de Clase Empresarial", r2Desc: "Una trayectoria comprobada en la ingeniería de productos digitales seguros y de alta disponibilidad.",
       r3Title: "Expertos Certificados", r3Desc: "Arquitectos de soluciones y desarrolladores de primer nivel en sistemas de datos y nube modernos.",
-      r4Title: "Ejecución de Proyectos Ágil", r4Desc: "Líneas de entrega transparentes y directas que eliminan la burocracia y reducen los tiempos a la mitad.",
-      r5Title: "Gestor de Éxito Dedicado", r5Desc: "Un único punto de contacto senior para alinear las entregas del proyecto con sus objetivos comerciales.",
-      r6Title: "Arquitectura Segura y Escalable", r6Desc: "Arquitecturas personalizadas creadas bajo un enfoque de seguridad y listas para SOC 2, HIPAA y GDPR."
+      r4Title: "Ejecución de Proyectos Ágil", r4Desc: "Líneas de entrega transparentes y directas que eliminan la burocracia y reducen los tiempos a la mitad."
     }
   };
 
@@ -88,16 +82,6 @@ export function WhyHypercodeSection() {
       icon: Zap,
       title: curr.r4Title,
       desc: curr.r4Desc,
-    },
-    {
-      icon: Users,
-      title: curr.r5Title,
-      desc: curr.r5Desc,
-    },
-    {
-      icon: Server,
-      title: curr.r6Title,
-      desc: curr.r6Desc,
     },
   ];
 
@@ -127,10 +111,10 @@ export function WhyHypercodeSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+        <div className="space-y-12 lg:space-y-16">
           
-          {/* Left Column: Timeline & Grid Matrix */}
-          <div className="lg:col-span-6 space-y-8">
+          {/* Timeline & Comparison Table Row */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
             
             {/* Timeline comparison */}
             <div className="bg-[#F8FAFC] border border-slate-200 rounded-[24px] p-8 space-y-6 shadow-sm">
@@ -198,28 +182,28 @@ export function WhyHypercodeSection() {
 
           </div>
 
-          {/* Right Column: Grid of Differentiators */}
-          <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-8">
+          {/* Feature Cards Grid (2x2 on Desktop, 2 cols on Tablet, 1 col on Mobile) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 lg:gap-10">
             {reasons.map((reason, index) => {
               const Icon = reason.icon;
               return (
                 <motion.div
                   key={index}
-                  className="premium-card flex flex-col justify-between"
+                  className="premium-card flex flex-col justify-between p-8 md:p-10 rounded-[24px] bg-white border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-[#0F4C81]/20 transition-all duration-300"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                 >
-                  <div className="space-y-5">
-                    <div className="w-12 h-12 rounded-xl bg-slate-50 border border-slate-200 text-[#0F4C81] flex items-center justify-center">
+                  <div className="flex flex-col h-full space-y-6">
+                    <div className="w-12 h-12 rounded-xl bg-slate-50 border border-slate-200 text-[#0F4C81] flex items-center justify-center flex-shrink-0">
                       <Icon size={24} />
                     </div>
-                    <div className="space-y-2">
+                    <div className="flex flex-col flex-grow space-y-3">
                       <h4 className="text-[22px] font-bold text-slate-900 leading-[1.2]">
                         {reason.title}
                       </h4>
-                      <p className="text-[16px] md:text-[17px] text-slate-600 leading-[1.7] font-medium">
+                      <p className="text-[16px] md:text-[17px] text-slate-600 leading-[1.7] font-medium flex-grow">
                         {reason.desc}
                       </p>
                     </div>

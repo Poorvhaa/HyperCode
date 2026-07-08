@@ -6,6 +6,16 @@ import { useTranslations, useLocale } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useFormValidation } from '@/hooks/use-form-validation';
 import {
+  NAME_REGEX,
+  EMAIL_REGEX,
+  PHONE_REGEX,
+  COMPANY_REGEX,
+  filterPhoneInput,
+  getPhoneDigitCount,
+  isValidDropdownValue,
+  sanitizePayload
+} from '@/lib/validation';
+import {
   MessageSquare,
   X,
   Minus,
@@ -237,6 +247,81 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
     navbarSelector: 'header',
     extraOffset: 12,
   });
+
+  const isLeadFormValid =
+    formName.trim().length >= 2 &&
+    formName.trim().length <= 80 &&
+    NAME_REGEX.test(formName.trim()) &&
+    EMAIL_REGEX.test(formEmail.trim()) &&
+    PHONE_REGEX.test(formPhone.trim()) &&
+    getPhoneDigitCount(formPhone.trim()) >= 7 &&
+    getPhoneDigitCount(formPhone.trim()) <= 15 &&
+    formCompany.trim().length >= 2 &&
+    COMPANY_REGEX.test(formCompany.trim()) &&
+    isValidDropdownValue(formBudget) &&
+    isValidDropdownValue(formTimeline) &&
+    formMessage.trim().length >= 20 &&
+    formMessage.trim().length <= 2000;
+
+  const isConsultationFormValid =
+    formName.trim().length >= 2 &&
+    formName.trim().length <= 80 &&
+    NAME_REGEX.test(formName.trim()) &&
+    EMAIL_REGEX.test(formEmail.trim()) &&
+    PHONE_REGEX.test(formPhone.trim()) &&
+    getPhoneDigitCount(formPhone.trim()) >= 7 &&
+    getPhoneDigitCount(formPhone.trim()) <= 15 &&
+    formCompany.trim().length >= 2 &&
+    COMPANY_REGEX.test(formCompany.trim()) &&
+    formDate.trim().length >= 5 &&
+    formMessage.trim().length >= 20 &&
+    formMessage.trim().length <= 2000;
+
+  const validateNameInput = (val: string) => {
+    const trimmed = val.trim();
+    if (!trimmed) return locale === 'es' ? 'Nombre requerido' : 'Name is required';
+    if (trimmed.length < 2 || trimmed.length > 80) return locale === 'es' ? 'Debe tener entre 2 y 80 caracteres' : 'Must be between 2 and 80 characters';
+    if (!NAME_REGEX.test(trimmed)) return locale === 'es' ? 'Solo letras, espacios, guiones y apóstrofes' : 'Only letters, spaces, hyphens, and apostrophes';
+    return '';
+  };
+
+  const validateEmailInput = (val: string) => {
+    const trimmed = val.trim();
+    if (!trimmed) return locale === 'es' ? 'Correo requerido' : 'Email is required';
+    if (!EMAIL_REGEX.test(trimmed)) return locale === 'es' ? 'Correo inválido' : 'Invalid email address';
+    return '';
+  };
+
+  const validatePhoneInputStr = (val: string) => {
+    const trimmed = val.trim();
+    if (!trimmed) return locale === 'es' ? 'Teléfono requerido' : 'Phone is required';
+    if (!PHONE_REGEX.test(trimmed)) return locale === 'es' ? 'Caracteres inválidos' : 'Invalid characters';
+    const digits = getPhoneDigitCount(trimmed);
+    if (digits < 7 || digits > 15) return locale === 'es' ? 'Debe tener entre 7 y 15 dígitos' : 'Must be between 7 and 15 digits';
+    return '';
+  };
+
+  const validateCompanyInput = (val: string) => {
+    const trimmed = val.trim();
+    if (!trimmed) return locale === 'es' ? 'Empresa requerida' : 'Company name is required';
+    if (trimmed.length < 2) return locale === 'es' ? 'Mínimo 2 caracteres' : 'Minimum 2 characters';
+    if (!COMPANY_REGEX.test(trimmed)) return locale === 'es' ? 'Solo letras, números, espacios, & y .' : 'Only letters, numbers, spaces, & and .';
+    return '';
+  };
+
+  const validateDateInput = (val: string) => {
+    const trimmed = val.trim();
+    if (!trimmed) return locale === 'es' ? 'Fecha requerida' : 'Preferred date is required';
+    if (trimmed.length < 5) return locale === 'es' ? 'Escriba una fecha válida' : 'Write a valid preferred date';
+    return '';
+  };
+
+  const validateMessageInput = (val: string) => {
+    const trimmed = val.trim();
+    if (!trimmed) return locale === 'es' ? 'Mensaje requerido' : 'Message is required';
+    if (trimmed.length < 20 || trimmed.length > 2000) return locale === 'es' ? 'Debe tener entre 20 y 2000 caracteres' : 'Must be between 20 and 2000 characters';
+    return '';
+  };
 
   const handleFieldChange = (field: string, value: string, setter: (val: string) => void) => {
     setter(value);
@@ -945,21 +1030,57 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
     setFieldErrors({});
 
     const newErrors: Record<string, string> = {};
-    if (!formName.trim()) newErrors.name = t('errors.validation');
     
-    if (!formEmail.trim()) {
-      newErrors.email = t('errors.validation');
-    } else if (!formEmail.includes('@') || !formEmail.includes('.')) {
-      newErrors.email = t('errors.email');
+    const trimmedName = formName.trim();
+    if (!trimmedName) {
+      newErrors.name = locale === 'es' ? 'El nombre es requerido.' : 'Name is required.';
+    } else if (trimmedName.length < 2 || trimmedName.length > 80) {
+      newErrors.name = locale === 'es' ? 'El nombre debe tener entre 2 y 80 caracteres.' : 'Name must be between 2 and 80 characters.';
+    } else if (!NAME_REGEX.test(trimmedName)) {
+      newErrors.name = locale === 'es' ? 'El nombre solo puede contener letras, espacios, guiones y apóstrofes.' : 'Name must contain only letters, spaces, hyphens, and apostrophes.';
     }
-    
-    if (!formPhone.trim()) {
-      newErrors.phone = t('errors.validation');
-    } else if (formPhone.replace(/\D/g, '').length < 7) {
-      newErrors.phone = t('errors.phone');
+
+    const trimmedEmail = formEmail.trim();
+    if (!trimmedEmail) {
+      newErrors.email = locale === 'es' ? 'El correo es requerido.' : 'Email is required.';
+    } else if (!EMAIL_REGEX.test(trimmedEmail)) {
+      newErrors.email = t('errors.email') || 'Enter a valid corporate email.';
     }
-    
-    if (!formCompany.trim()) newErrors.company = t('errors.validation');
+
+    const trimmedPhone = formPhone.trim();
+    if (!trimmedPhone) {
+      newErrors.phone = locale === 'es' ? 'El teléfono es requerido.' : 'Phone is required.';
+    } else if (!PHONE_REGEX.test(trimmedPhone)) {
+      newErrors.phone = locale === 'es' ? 'Número de teléfono inválido.' : 'Invalid phone number.';
+    } else {
+      const digits = getPhoneDigitCount(trimmedPhone);
+      if (digits < 7 || digits > 15) {
+        newErrors.phone = locale === 'es' ? 'El teléfono debe tener entre 7 y 15 dígitos.' : 'Phone number must be between 7 and 15 digits.';
+      }
+    }
+
+    const trimmedCompany = formCompany.trim();
+    if (!trimmedCompany) {
+      newErrors.company = locale === 'es' ? 'La empresa es requerida.' : 'Company name is required.';
+    } else if (trimmedCompany.length < 2) {
+      newErrors.company = locale === 'es' ? 'La empresa debe tener al menos 2 caracteres.' : 'Company name must be at least 2 characters.';
+    } else if (!COMPANY_REGEX.test(trimmedCompany)) {
+      newErrors.company = locale === 'es' ? 'El nombre de la empresa solo puede contener letras, números, espacios, & y .' : 'Company name must contain only letters, numbers, spaces, &, and .';
+    }
+
+    if (!isValidDropdownValue(formBudget)) {
+      newErrors.budget = locale === 'es' ? 'Por favor seleccione un presupuesto.' : 'Please select a budget.';
+    }
+    if (!isValidDropdownValue(formTimeline)) {
+      newErrors.timeline = locale === 'es' ? 'Por favor seleccione un plazo.' : 'Please select a timeline.';
+    }
+
+    const trimmedMessage = formMessage.trim();
+    if (!trimmedMessage) {
+      newErrors.message = locale === 'es' ? 'El mensaje es requerido.' : 'Message is required.';
+    } else if (trimmedMessage.length < 20 || trimmedMessage.length > 2000) {
+      newErrors.message = locale === 'es' ? 'El mensaje debe tener entre 20 y 2000 caracteres.' : 'Message must be between 20 and 2000 characters.';
+    }
 
     if (Object.keys(newErrors).length > 0) {
       setFieldErrors(newErrors);
@@ -971,24 +1092,26 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
 
     setIsFormSubmitting(true);
 
+    const sanitizedPayload = sanitizePayload({
+      conversation_id: conversationId,
+      name: trimmedName,
+      email: trimmedEmail,
+      phone: trimmedPhone,
+      company: trimmedCompany,
+      industry: formIndustry,
+      service_interest: selectedService || 'AI & Data Solutions',
+      budget_range: t(`budgets.${formBudget}` as any),
+      timeline: t(`timelines.${formTimeline}` as any),
+      message: trimmedMessage,
+      language: locale,
+      website_url: ''
+    });
+
     try {
       const res = await fetch('/api/chat/lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          conversation_id: conversationId,
-          name: formName,
-          email: formEmail,
-          phone: formPhone,
-          company: formCompany,
-          industry: formIndustry,
-          service_interest: selectedService || 'AI & Data Solutions',
-          budget_range: t(`budgets.${formBudget}` as any),
-          timeline: t(`timelines.${formTimeline}` as any),
-          message: formMessage,
-          language: locale,
-          website_url: ''
-        })
+        body: JSON.stringify(sanitizedPayload)
       });
 
       if (res.ok) {
@@ -1024,23 +1147,57 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
     setFieldErrors({});
 
     const newErrors: Record<string, string> = {};
-    if (!formName.trim()) newErrors.name = t('errors.validation');
     
-    if (!formEmail.trim()) {
-      newErrors.email = t('errors.validation');
-    } else if (!formEmail.includes('@') || !formEmail.includes('.')) {
-      newErrors.email = t('errors.email');
-    }
-    
-    if (!formPhone.trim()) {
-      newErrors.phone = t('errors.validation');
-    } else if (formPhone.replace(/\D/g, '').length < 7) {
-      newErrors.phone = t('errors.phone');
+    const trimmedName = formName.trim();
+    if (!trimmedName) {
+      newErrors.name = locale === 'es' ? 'El nombre es requerido.' : 'Name is required.';
+    } else if (trimmedName.length < 2 || trimmedName.length > 80) {
+      newErrors.name = locale === 'es' ? 'El nombre debe tener entre 2 y 80 caracteres.' : 'Name must be between 2 and 80 characters.';
+    } else if (!NAME_REGEX.test(trimmedName)) {
+      newErrors.name = locale === 'es' ? 'El nombre solo puede contener letras, espacios, guiones y apóstrofes.' : 'Name must contain only letters, spaces, hyphens, and apostrophes.';
     }
 
-    if (!formCompany.trim()) newErrors.company = t('errors.validation');
-    if (!formDate.trim()) newErrors.date = t('errors.validation');
-    if (!formMessage.trim()) newErrors.message = t('errors.validation');
+    const trimmedEmail = formEmail.trim();
+    if (!trimmedEmail) {
+      newErrors.email = locale === 'es' ? 'El correo es requerido.' : 'Email is required.';
+    } else if (!EMAIL_REGEX.test(trimmedEmail)) {
+      newErrors.email = t('errors.email') || 'Enter a valid corporate email.';
+    }
+
+    const trimmedPhone = formPhone.trim();
+    if (!trimmedPhone) {
+      newErrors.phone = locale === 'es' ? 'El teléfono es requerido.' : 'Phone is required.';
+    } else if (!PHONE_REGEX.test(trimmedPhone)) {
+      newErrors.phone = locale === 'es' ? 'Número de teléfono inválido.' : 'Invalid phone number.';
+    } else {
+      const digits = getPhoneDigitCount(trimmedPhone);
+      if (digits < 7 || digits > 15) {
+        newErrors.phone = locale === 'es' ? 'El teléfono debe tener entre 7 y 15 dígitos.' : 'Phone number must be between 7 and 15 digits.';
+      }
+    }
+
+    const trimmedCompany = formCompany.trim();
+    if (!trimmedCompany) {
+      newErrors.company = locale === 'es' ? 'La empresa es requerida.' : 'Company name is required.';
+    } else if (trimmedCompany.length < 2) {
+      newErrors.company = locale === 'es' ? 'La empresa debe tener al menos 2 caracteres.' : 'Company name must be at least 2 characters.';
+    } else if (!COMPANY_REGEX.test(trimmedCompany)) {
+      newErrors.company = locale === 'es' ? 'El nombre de la empresa solo puede contener letras, números, espacios, & y .' : 'Company name must contain only letters, numbers, spaces, &, and .';
+    }
+
+    const trimmedDate = formDate.trim();
+    if (!trimmedDate) {
+      newErrors.date = locale === 'es' ? 'La fecha preferida es requerida.' : 'Preferred date is required.';
+    } else if (trimmedDate.length < 5) {
+      newErrors.date = locale === 'es' ? 'Por favor especifique la fecha preferida.' : 'Please specify a valid preferred date.';
+    }
+
+    const trimmedMessage = formMessage.trim();
+    if (!trimmedMessage) {
+      newErrors.message = locale === 'es' ? 'El mensaje es requerido.' : 'Message is required.';
+    } else if (trimmedMessage.length < 20 || trimmedMessage.length > 2000) {
+      newErrors.message = locale === 'es' ? 'El mensaje debe tener entre 20 y 2000 caracteres.' : 'Message must be between 20 and 2000 characters.';
+    }
 
     if (Object.keys(newErrors).length > 0) {
       setFieldErrors(newErrors);
@@ -1052,20 +1209,22 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
 
     setIsFormSubmitting(true);
 
+    const sanitizedPayload = sanitizePayload({
+      name: trimmedName,
+      email: trimmedEmail,
+      phone: trimmedPhone,
+      company: trimmedCompany,
+      service: selectedService || 'Technology Consulting',
+      message: trimmedMessage,
+      preferred_date: trimmedDate,
+      language: locale
+    });
+
     try {
       const res = await fetch('/api/chat/consultation', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: formName,
-          email: formEmail,
-          phone: formPhone,
-          company: formCompany,
-          service: selectedService || 'Technology Consulting',
-          message: formMessage,
-          preferred_date: formDate,
-          language: locale
-        })
+        body: JSON.stringify(sanitizedPayload)
       });
 
       if (res.ok) {
@@ -1299,6 +1458,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
               <div className="flex-1 overflow-y-auto p-4 space-y-4 flex flex-col custom-scrollbar bg-slate-50 min-h-0">
                 {activeFlow === 'lead_form' && (
                   <motion.form
+                    ref={leadFormRef}
                     initial={{ opacity: 0, x: 15 }}
                     animate={{ opacity: 1, x: 0 }}
                     onSubmit={handleLeadSubmit}
@@ -1324,7 +1484,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                     </p>
 
                     {formError && (
-                      <div className="p-2.5 bg-rose-50 border border-rose-200 rounded-xl text-[10px] font-bold text-rose-600">
+                      <div className="p-2.5 bg-rose-50 border border-rose-200 rounded-xl text-[10px] font-bold text-rose-600" role="alert">
                         {formError}
                       </div>
                     )}
@@ -1332,48 +1492,132 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                     <div className="space-y-3 text-xs">
                       <div>
                         <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.name')}</label>
-                        <input
-                          type="text"
-                          required
-                          value={formName}
-                          onChange={(e) => setFormName(e.target.value)}
-                          className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-slate-800 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none"
-                        />
+                        <div className="relative">
+                          <input
+                            type="text"
+                            required
+                            value={formName}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              setFormName(val);
+                              const err = validateNameInput(val);
+                              setFieldErrors(prev => ({ ...prev, name: err }));
+                            }}
+                            className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none ${
+                              fieldErrors.name
+                                ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                                : (formName.trim().length >= 2 && NAME_REGEX.test(formName.trim()))
+                                ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
+                                : 'border-slate-200 focus:border-[#0F4C81]'
+                            }`}
+                          />
+                          {formName.trim().length >= 2 && NAME_REGEX.test(formName.trim()) && !fieldErrors.name && (
+                            <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-green-500">
+                              <Check size={14} className="stroke-[3px]" />
+                            </span>
+                          )}
+                        </div>
+                        {fieldErrors.name && (
+                          <span className="text-[9px] font-semibold text-red-500 mt-1 block" role="alert">{fieldErrors.name}</span>
+                        )}
                       </div>
 
                       <div className="grid grid-cols-2 gap-3">
                         <div>
                           <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.email')}</label>
-                          <input
-                            type="email"
-                            required
-                            value={formEmail}
-                            onChange={(e) => setFormEmail(e.target.value)}
-                            className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-slate-800 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none"
-                          />
+                          <div className="relative">
+                            <input
+                              type="email"
+                              required
+                              value={formEmail}
+                              onChange={(e) => {
+                                const val = e.target.value;
+                                setFormEmail(val);
+                                const err = validateEmailInput(val);
+                                setFieldErrors(prev => ({ ...prev, email: err }));
+                              }}
+                              className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none ${
+                                fieldErrors.email
+                                  ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                                  : EMAIL_REGEX.test(formEmail.trim())
+                                  ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
+                                  : 'border-slate-200 focus:border-[#0F4C81]'
+                              }`}
+                            />
+                            {EMAIL_REGEX.test(formEmail.trim()) && !fieldErrors.email && (
+                              <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-green-500">
+                                <Check size={14} className="stroke-[3px]" />
+                              </span>
+                            )}
+                          </div>
+                          {fieldErrors.email && (
+                            <span className="text-[9px] font-semibold text-red-500 mt-1 block" role="alert">{fieldErrors.email}</span>
+                          )}
                         </div>
                         <div>
                           <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.phone')}</label>
-                          <input
-                            type="tel"
-                            required
-                            value={formPhone}
-                            onChange={(e) => setFormPhone(e.target.value)}
-                            className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-slate-800 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none"
-                          />
+                          <div className="relative">
+                            <input
+                              type="tel"
+                              required
+                              value={formPhone}
+                              onChange={(e) => {
+                                const val = filterPhoneInput(e.target.value);
+                                setFormPhone(val);
+                                const err = validatePhoneInputStr(val);
+                                setFieldErrors(prev => ({ ...prev, phone: err }));
+                              }}
+                              className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none ${
+                                fieldErrors.phone
+                                  ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                                  : (PHONE_REGEX.test(formPhone.trim()) && getPhoneDigitCount(formPhone.trim()) >= 7 && getPhoneDigitCount(formPhone.trim()) <= 15)
+                                  ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
+                                  : 'border-slate-200 focus:border-[#0F4C81]'
+                              }`}
+                            />
+                            {(PHONE_REGEX.test(formPhone.trim()) && getPhoneDigitCount(formPhone.trim()) >= 7 && getPhoneDigitCount(formPhone.trim()) <= 15) && !fieldErrors.phone && (
+                              <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-green-500">
+                                <Check size={14} className="stroke-[3px]" />
+                              </span>
+                            )}
+                          </div>
+                          {fieldErrors.phone && (
+                            <span className="text-[9px] font-semibold text-red-500 mt-1 block" role="alert">{fieldErrors.phone}</span>
+                          )}
                         </div>
                       </div>
 
                       <div className="grid grid-cols-2 gap-3">
                         <div>
                           <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.company')}</label>
-                          <input
-                            type="text"
-                            required
-                            value={formCompany}
-                            onChange={(e) => setFormCompany(e.target.value)}
-                            className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-slate-800 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none"
-                          />
+                          <div className="relative">
+                            <input
+                              type="text"
+                              required
+                              value={formCompany}
+                              onChange={(e) => {
+                                const val = e.target.value;
+                                setFormCompany(val);
+                                const err = validateCompanyInput(val);
+                                setFieldErrors(prev => ({ ...prev, company: err }));
+                              }}
+                              className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none ${
+                                fieldErrors.company
+                                  ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                                  : (formCompany.trim().length >= 2 && COMPANY_REGEX.test(formCompany.trim()))
+                                  ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
+                                  : 'border-slate-200 focus:border-[#0F4C81]'
+                              }`}
+                            />
+                            {(formCompany.trim().length >= 2 && COMPANY_REGEX.test(formCompany.trim())) && !fieldErrors.company && (
+                              <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-green-500">
+                                <Check size={14} className="stroke-[3px]" />
+                              </span>
+                            )}
+                          </div>
+                          {fieldErrors.company && (
+                            <span className="text-[9px] font-semibold text-red-500 mt-1 block" role="alert">{fieldErrors.company}</span>
+                          )}
                         </div>
                         <div>
                           <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.industry')}</label>
@@ -1398,45 +1642,83 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                           <select
                             value={formBudget}
                             onChange={(e) => setFormBudget(e.target.value)}
-                            className="w-full bg-white border border-slate-200 rounded-xl px-2 py-2 text-slate-700 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#0F4C81]/25 cursor-pointer outline-none"
+                            className={`w-full bg-white border rounded-xl px-2 py-2 text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 cursor-pointer outline-none ${
+                              fieldErrors.budget ? 'border-red-500' : 'border-slate-200'
+                            }`}
                           >
+                            <option value="default">-- Select Budget --</option>
                             <option value="under5k">{t('budgets.under5k')}</option>
                             <option value="between5k10k">{t('budgets.between5k10k')}</option>
                             <option value="between10k25k">{t('budgets.between10k25k')}</option>
                             <option value="between25k50k">{t('budgets.between25k50k')}</option>
                             <option value="over50k">{t('budgets.over50k')}</option>
                           </select>
+                          {fieldErrors.budget && <span className="text-[8px] font-semibold text-red-500 mt-0.5 block" role="alert">{fieldErrors.budget}</span>}
                         </div>
                         <div>
                           <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.timeline')}</label>
                           <select
                             value={formTimeline}
                             onChange={(e) => setFormTimeline(e.target.value)}
-                            className="w-full bg-white border border-slate-200 rounded-xl px-2 py-2 text-slate-700 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#0F4C81]/25 cursor-pointer outline-none"
+                            className={`w-full bg-white border rounded-xl px-2 py-2 text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 cursor-pointer outline-none ${
+                              fieldErrors.timeline ? 'border-red-500' : 'border-slate-200'
+                            }`}
                           >
+                            <option value="default">-- Select Timeline --</option>
                             <option value="immediate">{t('timelines.immediate')}</option>
                             <option value="medium">{t('timelines.medium')}</option>
                             <option value="long">{t('timelines.long')}</option>
                             <option value="norush">{t('timelines.norush')}</option>
                           </select>
+                          {fieldErrors.timeline && <span className="text-[8px] font-semibold text-red-500 mt-0.5 block" role="alert">{fieldErrors.timeline}</span>}
                         </div>
                       </div>
 
                       <div>
                         <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.message')}</label>
-                        <textarea
-                          value={formMessage}
-                          onChange={(e) => setFormMessage(e.target.value)}
-                          rows={2}
-                          className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-slate-800 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#0F4C81]/25 transition-all resize-none outline-none"
-                        />
+                        <div className="relative">
+                          <textarea
+                            value={formMessage}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              setFormMessage(val);
+                              const err = validateMessageInput(val);
+                              setFieldErrors(prev => ({ ...prev, message: err }));
+                            }}
+                            rows={2}
+                            className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all resize-none outline-none ${
+                              fieldErrors.message
+                                ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                                : (formMessage.trim().length >= 20 && formMessage.trim().length <= 2000)
+                                ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
+                                : 'border-slate-200 focus:border-[#0F4C81]'
+                            }`}
+                          />
+                          {(formMessage.trim().length >= 20 && formMessage.trim().length <= 2000) && !fieldErrors.message && (
+                            <span className="absolute right-2.5 top-3.5 text-green-500">
+                              <Check size={14} className="stroke-[3px]" />
+                            </span>
+                          )}
+                        </div>
+                        <div className="flex justify-between items-center mt-0.5">
+                          {fieldErrors.message ? (
+                            <span className="text-[8px] font-semibold text-red-500" role="alert">{fieldErrors.message}</span>
+                          ) : (
+                            <span className="text-[8px] text-slate-400">Min 20 characters</span>
+                          )}
+                          <span className="text-[8px] text-slate-450 font-bold">
+                            {Math.max(0, 2000 - formMessage.trim().length)} chars remaining
+                          </span>
+                        </div>
                       </div>
                     </div>
 
                     <button
                       type="submit"
-                      disabled={isFormSubmitting}
-                      className="w-full h-11 bg-gradient-to-tr from-[#0F4C81] to-blue-600 hover:from-[#0d3f6b] hover:to-blue-700 hover:-translate-y-0.5 active:translate-y-0 transition-all text-white font-extrabold rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-blue-500/10 outline-none focus:ring-2 focus:ring-[#0F4C81]"
+                      disabled={isFormSubmitting || !isLeadFormValid}
+                      className={`w-full h-11 bg-gradient-to-tr from-[#0F4C81] to-blue-600 hover:from-[#0d3f6b] hover:to-blue-700 hover:-translate-y-0.5 active:translate-y-0 transition-all text-white font-extrabold rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-blue-500/10 outline-none focus:ring-2 focus:ring-[#0F4C81] ${
+                        (!isLeadFormValid || isFormSubmitting) ? 'opacity-50 cursor-not-allowed from-slate-400 to-slate-450' : ''
+                      }`}
                     >
                       {isFormSubmitting ? <Loader2 className="w-4.5 h-4.5 animate-spin" /> : <Sparkles className="w-4.5 h-4.5" />}
                       <span>{t('leadQualification.submit')}</span>
@@ -1445,6 +1727,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                 )}
                 {activeFlow === 'consultation_form' && (
                   <motion.form
+                    ref={consultFormRef}
                     initial={{ opacity: 0, x: 15 }}
                     animate={{ opacity: 1, x: 0 }}
                     onSubmit={handleConsultationSubmit}
@@ -1470,7 +1753,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                     </p>
 
                     {formError && (
-                      <div className="p-2.5 bg-rose-50 border border-rose-200 rounded-xl text-[10px] font-bold text-rose-600">
+                      <div className="p-2.5 bg-rose-50 border border-rose-200 rounded-xl text-[10px] font-bold text-rose-600" role="alert">
                         {formError}
                       </div>
                     )}
@@ -1478,78 +1761,213 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                     <div className="space-y-3 text-xs">
                       <div>
                         <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.name')}</label>
-                        <input
-                          type="text"
-                          required
-                          value={formName}
-                          onChange={(e) => setFormName(e.target.value)}
-                          className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-slate-800 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none"
-                        />
+                        <div className="relative">
+                          <input
+                            type="text"
+                            required
+                            value={formName}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              setFormName(val);
+                              const err = validateNameInput(val);
+                              setFieldErrors(prev => ({ ...prev, name: err }));
+                            }}
+                            className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none ${
+                              fieldErrors.name
+                                ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                                : (formName.trim().length >= 2 && NAME_REGEX.test(formName.trim()))
+                                ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
+                                : 'border-slate-200 focus:border-[#0F4C81]'
+                            }`}
+                          />
+                          {formName.trim().length >= 2 && NAME_REGEX.test(formName.trim()) && !fieldErrors.name && (
+                            <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-green-500">
+                              <Check size={14} className="stroke-[3px]" />
+                            </span>
+                          )}
+                        </div>
+                        {fieldErrors.name && (
+                          <span className="text-[9px] font-semibold text-red-500 mt-1 block" role="alert">{fieldErrors.name}</span>
+                        )}
                       </div>
 
                       <div className="grid grid-cols-2 gap-3">
                         <div>
                           <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.email')}</label>
-                          <input
-                            type="email"
-                            required
-                            value={formEmail}
-                            onChange={(e) => setFormEmail(e.target.value)}
-                            className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-slate-800 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none"
-                          />
+                          <div className="relative">
+                            <input
+                              type="email"
+                              required
+                              value={formEmail}
+                              onChange={(e) => {
+                                const val = e.target.value;
+                                setFormEmail(val);
+                                const err = validateEmailInput(val);
+                                setFieldErrors(prev => ({ ...prev, email: err }));
+                              }}
+                              className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none ${
+                                fieldErrors.email
+                                  ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                                  : EMAIL_REGEX.test(formEmail.trim())
+                                  ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
+                                  : 'border-slate-200 focus:border-[#0F4C81]'
+                              }`}
+                            />
+                            {EMAIL_REGEX.test(formEmail.trim()) && !fieldErrors.email && (
+                              <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-green-500">
+                                <Check size={14} className="stroke-[3px]" />
+                              </span>
+                            )}
+                          </div>
+                          {fieldErrors.email && (
+                            <span className="text-[9px] font-semibold text-red-500 mt-1 block" role="alert">{fieldErrors.email}</span>
+                          )}
                         </div>
                         <div>
                           <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.phone')}</label>
-                          <input
-                            type="tel"
-                            required
-                            value={formPhone}
-                            onChange={(e) => setFormPhone(e.target.value)}
-                            className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-slate-800 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none"
-                          />
+                          <div className="relative">
+                            <input
+                              type="tel"
+                              required
+                              value={formPhone}
+                              onChange={(e) => {
+                                const val = filterPhoneInput(e.target.value);
+                                setFormPhone(val);
+                                const err = validatePhoneInputStr(val);
+                                setFieldErrors(prev => ({ ...prev, phone: err }));
+                              }}
+                              className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none ${
+                                fieldErrors.phone
+                                  ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                                  : (PHONE_REGEX.test(formPhone.trim()) && getPhoneDigitCount(formPhone.trim()) >= 7 && getPhoneDigitCount(formPhone.trim()) <= 15)
+                                  ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
+                                  : 'border-slate-200 focus:border-[#0F4C81]'
+                              }`}
+                            />
+                            {(PHONE_REGEX.test(formPhone.trim()) && getPhoneDigitCount(formPhone.trim()) >= 7 && getPhoneDigitCount(formPhone.trim()) <= 15) && !fieldErrors.phone && (
+                              <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-green-500">
+                                <Check size={14} className="stroke-[3px]" />
+                              </span>
+                            )}
+                          </div>
+                          {fieldErrors.phone && (
+                            <span className="text-[9px] font-semibold text-red-500 mt-1 block" role="alert">{fieldErrors.phone}</span>
+                          )}
                         </div>
                       </div>
 
                       <div className="grid grid-cols-2 gap-3">
                         <div>
                           <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.company')}</label>
-                          <input
-                            type="text"
-                            required
-                            value={formCompany}
-                            onChange={(e) => setFormCompany(e.target.value)}
-                            className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-slate-800 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none"
-                          />
+                          <div className="relative">
+                            <input
+                              type="text"
+                              required
+                              value={formCompany}
+                              onChange={(e) => {
+                                const val = e.target.value;
+                                setFormCompany(val);
+                                const err = validateCompanyInput(val);
+                                setFieldErrors(prev => ({ ...prev, company: err }));
+                              }}
+                              className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none ${
+                                fieldErrors.company
+                                  ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                                  : (formCompany.trim().length >= 2 && COMPANY_REGEX.test(formCompany.trim()))
+                                  ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
+                                  : 'border-slate-200 focus:border-[#0F4C81]'
+                              }`}
+                            />
+                            {(formCompany.trim().length >= 2 && COMPANY_REGEX.test(formCompany.trim())) && !fieldErrors.company && (
+                              <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-green-500">
+                                <Check size={14} className="stroke-[3px]" />
+                              </span>
+                            )}
+                          </div>
+                          {fieldErrors.company && (
+                            <span className="text-[9px] font-semibold text-red-500 mt-1 block" role="alert">{fieldErrors.company}</span>
+                          )}
                         </div>
                         <div>
                           <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('consultationFlow.date')}</label>
-                          <input
-                            type="text"
-                            placeholder="e.g. Next Monday 10am EST"
-                            required
-                            value={formDate}
-                            onChange={(e) => setFormDate(e.target.value)}
-                            className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-slate-800 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none"
-                          />
+                          <div className="relative">
+                            <input
+                              type="text"
+                              placeholder="e.g. Next Monday 10am EST"
+                              required
+                              value={formDate}
+                              onChange={(e) => {
+                                const val = e.target.value;
+                                setFormDate(val);
+                                const err = validateDateInput(val);
+                                setFieldErrors(prev => ({ ...prev, date: err }));
+                              }}
+                              className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none ${
+                                fieldErrors.date
+                                  ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                                  : formDate.trim().length >= 5
+                                  ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
+                                  : 'border-slate-200 focus:border-[#0F4C81]'
+                              }`}
+                            />
+                            {formDate.trim().length >= 5 && !fieldErrors.date && (
+                              <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-green-500">
+                                <Check size={14} className="stroke-[3px]" />
+                              </span>
+                            )}
+                          </div>
+                          {fieldErrors.date && (
+                            <span className="text-[9px] font-semibold text-red-500 mt-1 block" role="alert">{fieldErrors.date}</span>
+                          )}
                         </div>
                       </div>
 
                       <div>
                         <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.message')}</label>
-                        <textarea
-                          required
-                          value={formMessage}
-                          onChange={(e) => setFormMessage(e.target.value)}
-                          rows={3}
-                          className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-slate-800 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#0F4C81]/25 transition-all resize-none outline-none"
-                        />
+                        <div className="relative">
+                          <textarea
+                            required
+                            value={formMessage}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              setFormMessage(val);
+                              const err = validateMessageInput(val);
+                              setFieldErrors(prev => ({ ...prev, message: err }));
+                            }}
+                            rows={3}
+                            className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all resize-none outline-none ${
+                              fieldErrors.message
+                                ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                                : (formMessage.trim().length >= 20 && formMessage.trim().length <= 2000)
+                                ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
+                                : 'border-slate-200 focus:border-[#0F4C81]'
+                            }`}
+                          />
+                          {(formMessage.trim().length >= 20 && formMessage.trim().length <= 2000) && !fieldErrors.message && (
+                            <span className="absolute right-2.5 top-3.5 text-green-500">
+                              <Check size={14} className="stroke-[3px]" />
+                            </span>
+                          )}
+                        </div>
+                        <div className="flex justify-between items-center mt-0.5">
+                          {fieldErrors.message ? (
+                            <span className="text-[8px] font-semibold text-red-500" role="alert">{fieldErrors.message}</span>
+                          ) : (
+                            <span className="text-[8px] text-slate-400">Min 20 characters</span>
+                          )}
+                          <span className="text-[8px] text-slate-450 font-bold">
+                            {Math.max(0, 2000 - formMessage.trim().length)} chars remaining
+                          </span>
+                        </div>
                       </div>
                     </div>
 
                     <button
                       type="submit"
-                      disabled={isFormSubmitting}
-                      className="w-full h-11 bg-gradient-to-tr from-[#0F4C81] to-blue-600 hover:from-[#0d3f6b] hover:to-blue-700 hover:-translate-y-0.5 active:translate-y-0 transition-all text-white font-extrabold rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-blue-500/10 outline-none focus:ring-2 focus:ring-[#0F4C81]"
+                      disabled={isFormSubmitting || !isConsultationFormValid}
+                      className={`w-full h-11 bg-gradient-to-tr from-[#0F4C81] to-blue-600 hover:from-[#0d3f6b] hover:to-blue-700 hover:-translate-y-0.5 active:translate-y-0 transition-all text-white font-extrabold rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-blue-500/10 outline-none focus:ring-2 focus:ring-[#0F4C81] ${
+                        (!isConsultationFormValid || isFormSubmitting) ? 'opacity-50 cursor-not-allowed from-slate-400 to-slate-455' : ''
+                      }`}
                     >
                       {isFormSubmitting ? <Loader2 className="w-4.5 h-4.5 animate-spin" /> : <Calendar className="w-4.5 h-4.5" />}
                       <span>{t('consultationFlow.submit')}</span>

@@ -5,10 +5,21 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useLocale } from 'next-intl';
-import { Loader2, Upload, FileText, CheckCircle, AlertCircle, Trash2 } from 'lucide-react';
+import { Loader2, Upload, FileText, CheckCircle, AlertCircle, Trash2, Check } from 'lucide-react';
 import { trackGAEvent } from '@/lib/analytics';
 import { useFormValidation } from '@/hooks/use-form-validation';
-
+import {
+  createNameSchema,
+  createEmailSchema,
+  createPhoneSchema,
+  createCompanySchema,
+  createDropdownSchema,
+  createTextareaSchema,
+  filterPhoneInput,
+  getPhoneDigitCount,
+  sanitizePayload,
+  PHONE_REGEX
+} from '@/lib/validation';
 
 interface CareersFormProps {
   initialPosition?: string;
@@ -101,14 +112,26 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
 
   // Form Validation Schema
   const schema = z.object({
-    name: z.string().min(2, t.nameError),
-    email: z.string().email(t.emailError),
-    phone: z.string().optional(),
-    linkedin: z.string().url().or(z.string().length(0)).optional(),
+    name: createNameSchema(
+      t.nameError,
+      locale === 'es' ? 'El nombre debe tener 80 caracteres o menos' : 'Name must be 80 characters or less',
+      locale === 'es' ? 'El nombre solo puede contener letras, espacios, guiones y apóstrofes' : 'Name must contain only letters, spaces, hyphens, and apostrophes'
+    ),
+    email: createEmailSchema(t.emailError),
+    phone: z.string().trim().optional().or(z.string().length(0)).refine(val => {
+      if (!val) return true;
+      if (!PHONE_REGEX.test(val)) return false;
+      const digits = getPhoneDigitCount(val);
+      return digits >= 7 && digits <= 15;
+    }, locale === 'es' ? 'El teléfono debe tener entre 7 y 15 dígitos' : 'Phone number must be between 7 and 15 digits'),
+    linkedin: z.string().trim().url().or(z.string().length(0)).optional(),
     position: z.string().min(1, t.positionError),
-    yearsExperience: z.number().min(0, t.yearsError),
-    skills: z.string().min(2, t.skillsError),
-    message: z.string().min(10, t.messageError),
+    yearsExperience: z.number({ invalid_type_error: t.yearsError }).min(0, t.yearsError).max(50),
+    skills: z.string().trim().min(2, t.skillsError),
+    message: createTextareaSchema(
+      locale === 'es' ? 'La carta de presentación debe tener al menos 20 caracteres' : 'Cover letter must be at least 20 characters',
+      locale === 'es' ? 'La carta de presentación debe tener como máximo 2000 caracteres' : 'Cover letter must be at most 2000 characters'
+    ),
   });
 
   type FormData = z.infer<typeof schema>;
@@ -117,18 +140,25 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
     register,
     handleSubmit,
     setValue,
-    formState: { errors },
+    watch,
+    formState: { errors, touchedFields, isValid },
     reset
   } = useForm<FormData>({
     resolver: zodResolver(schema) as any,
     mode: 'onChange',
     defaultValues: {
+      name: '',
+      email: '',
+      phone: '',
+      linkedin: '',
       position: 'Business Development Manager',
       yearsExperience: 0,
       skills: '',
       message: '',
     }
   });
+
+  const messageValue = watch('message') || '';
 
   // Handle Drag & Drop Events
   const handleDrag = (e: DragEvent<HTMLDivElement>) => {
@@ -195,16 +225,19 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
     setSubmitting(true);
     setSubmitError('');
 
+    // Sanitize payload recursively on client side before posting
+    const sanitizedData = sanitizePayload(data);
+
     try {
       const payload = new FormData();
-      payload.append('name', data.name);
-      payload.append('email', data.email);
-      payload.append('phone', data.phone || '');
-      payload.append('linkedin', data.linkedin || '');
-      payload.append('position', data.position);
-      payload.append('yearsExperience', String(data.yearsExperience));
-      payload.append('skills', data.skills);
-      payload.append('message', data.message);
+      payload.append('name', sanitizedData.name);
+      payload.append('email', sanitizedData.email);
+      payload.append('phone', sanitizedData.phone || '');
+      payload.append('linkedin', sanitizedData.linkedin || '');
+      payload.append('position', sanitizedData.position);
+      payload.append('yearsExperience', String(sanitizedData.yearsExperience));
+      payload.append('skills', sanitizedData.skills);
+      payload.append('message', sanitizedData.message);
       payload.append('locale', locale);
       payload.append('resume', resumeFile);
 
@@ -221,28 +254,28 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
       trackGAEvent({
         action: 'career_application_submission',
         category: 'Careers',
-        label: data.position
+        label: sanitizedData.position
       });
 
       setSubmitted(true);
       reset();
       setResumeFile(null);
 
-      // If Supabase fails or doesn't exist, we save to localstorage too for visual testing
+      // Save to mock storage if Supabase is offline
       const isConfigured = !!(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
       if (!isConfigured) {
         const currentApps = JSON.parse(localStorage.getItem('hypercode_db_job_applications') || '[]');
         currentApps.push({
           id: 'local-' + Math.random().toString(36).substring(2, 9),
-          name: data.name,
-          email: data.email,
-          phone: data.phone,
-          linkedin: data.linkedin,
+          name: sanitizedData.name,
+          email: sanitizedData.email,
+          phone: sanitizedData.phone,
+          linkedin: sanitizedData.linkedin,
           resume_url: 'https://mock.hypercode.com/resumes/' + resumeFile.name,
-          position: data.position,
-          years_experience: data.yearsExperience,
-          skills: data.skills,
-          message: data.message,
+          position: sanitizedData.position,
+          years_experience: sanitizedData.yearsExperience,
+          skills: sanitizedData.skills,
+          message: sanitizedData.message,
           status: 'New',
           created_at: new Date().toISOString()
         });
@@ -252,13 +285,13 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
         const currentCands = JSON.parse(localStorage.getItem('hypercode_db_candidates') || '[]');
         currentCands.push({
           id: 'local-' + Math.random().toString(36).substring(2, 9),
-          name: data.name,
-          email: data.email,
-          phone: data.phone,
-          linkedin: data.linkedin,
+          name: sanitizedData.name,
+          email: sanitizedData.email,
+          phone: sanitizedData.phone,
+          linkedin: sanitizedData.linkedin,
           resume_url: 'https://mock.hypercode.com/resumes/' + resumeFile.name,
-          skills: data.skills,
-          experience: `${data.yearsExperience} years`,
+          skills: sanitizedData.skills,
+          experience: `${sanitizedData.yearsExperience} years`,
           availability: 'Available',
           location: 'Remote / US',
           status: 'Available',
@@ -273,6 +306,8 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
       setSubmitting(false);
     }
   };
+
+  const remainingChars = Math.max(0, 2000 - messageValue.trim().length);
 
   if (submitted) {
     return (
@@ -289,7 +324,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
         <div className="pt-6">
           <button
             onClick={() => setSubmitted(false)}
-            className="inline-flex h-11 px-6 items-center justify-center bg-[#0F4C81] text-white font-semibold text-xs rounded-xl hover:bg-[#0c3c66] transition-colors cursor-pointer border-none"
+            className="inline-flex h-11 h-11 px-6 items-center justify-center bg-[#0F4C81] text-white font-semibold text-xs rounded-xl hover:bg-[#0c3c66] transition-colors cursor-pointer border-none"
           >
             {t.backToCareers}
           </button>
@@ -306,7 +341,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
         className="space-y-6"
       >
         {submitError && (
-          <div className="p-4 rounded-xl border border-red-200 bg-red-50 flex gap-3">
+          <div className="p-4 rounded-xl border border-red-200 bg-red-50 flex gap-3 animate-fadeIn" role="alert">
             <AlertCircle size={20} className="text-red-655 flex-shrink-0 mt-0.5" />
             <p className="text-red-800 text-sm">{submitError}</p>
           </div>
@@ -315,19 +350,30 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Full Name */}
           <div className="space-y-2">
-            <label className="block text-[15px] lg:text-[18px] font-bold text-slate-850 mb-2.5">{t.fullName}</label>
-            <input
-              {...register('name')}
-              type="text"
-              placeholder="John Doe"
-              aria-invalid={errors.name ? 'true' : 'false'}
-              aria-describedby={errors.name ? 'name-error' : undefined}
-              className={`w-full h-14 px-5 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] transition-all text-base text-slate-800 placeholder-slate-400 ${
-                errors.name ? 'border-red-300 ring-2 ring-red-100' : 'border-slate-200'
-              }`}
-            />
+            <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855" htmlFor="careers-name">{t.fullName}</label>
+            <div className="relative">
+              <input
+                id="careers-name"
+                {...register('name')}
+                type="text"
+                placeholder="John Doe"
+                autoComplete="name"
+                className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
+                  errors.name
+                    ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                    : touchedFields.name
+                    ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
+                    : 'border-slate-200'
+                }`}
+              />
+              {touchedFields.name && !errors.name && (
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-green-500">
+                  <Check size={20} className="stroke-[3px]" />
+                </span>
+              )}
+            </div>
             {errors.name && (
-              <p id="name-error" className="text-xs font-semibold text-red-500 mt-1.5">
+              <p id="name-error" className="text-xs font-semibold text-red-500 mt-1.5" role="alert">
                 {errors.name.message}
               </p>
             )}
@@ -335,19 +381,31 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
 
           {/* Email Address */}
           <div className="space-y-2">
-            <label className="block text-[15px] lg:text-[18px] font-bold text-slate-850 mb-2.5">{t.emailAddress}</label>
-            <input
-              {...register('email')}
-              type="email"
-              placeholder="john@company.com"
-              aria-invalid={errors.email ? 'true' : 'false'}
-              aria-describedby={errors.email ? 'email-error' : undefined}
-              className={`w-full h-14 px-5 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] transition-all text-base text-slate-800 placeholder-slate-400 ${
-                errors.email ? 'border-red-300 ring-2 ring-red-100' : 'border-slate-200'
-              }`}
-            />
+            <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855" htmlFor="careers-email">{t.emailAddress}</label>
+            <div className="relative">
+              <input
+                id="careers-email"
+                {...register('email')}
+                type="email"
+                placeholder="john@company.com"
+                autoComplete="email"
+                inputMode="email"
+                className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
+                  errors.email
+                    ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                    : touchedFields.email
+                    ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
+                    : 'border-slate-200'
+                }`}
+              />
+              {touchedFields.email && !errors.email && (
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-green-500">
+                  <Check size={20} className="stroke-[3px]" />
+                </span>
+              )}
+            </div>
             {errors.email && (
-              <p id="email-error" className="text-xs font-semibold text-red-500 mt-1.5">
+              <p id="email-error" className="text-xs font-semibold text-red-500 mt-1.5" role="alert">
                 {errors.email.message}
               </p>
             )}
@@ -355,19 +413,35 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
 
           {/* Phone Number */}
           <div className="space-y-2">
-            <label className="block text-[15px] lg:text-[18px] font-bold text-slate-850 mb-2.5">{t.phoneNumber}</label>
-            <input
-              {...register('phone')}
-              type="tel"
-              placeholder="+1 (555) 123-4567"
-              aria-invalid={errors.phone ? 'true' : 'false'}
-              aria-describedby={errors.phone ? 'phone-error' : undefined}
-              className={`w-full h-14 px-5 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] transition-all text-base text-slate-800 placeholder-slate-400 ${
-                errors.phone ? 'border-red-300 ring-2 ring-red-100' : 'border-slate-200'
-              }`}
-            />
+            <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855" htmlFor="careers-phone">{t.phoneNumber}</label>
+            <div className="relative">
+              <input
+                id="careers-phone"
+                {...register('phone', {
+                  onChange: (e) => {
+                    e.target.value = filterPhoneInput(e.target.value);
+                  }
+                })}
+                type="tel"
+                placeholder="+1 (555) 123-4567"
+                autoComplete="tel"
+                inputMode="tel"
+                className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
+                  errors.phone
+                    ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                    : touchedFields.phone
+                    ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
+                    : 'border-slate-200'
+                }`}
+              />
+              {touchedFields.phone && !errors.phone && (
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-green-500">
+                  <Check size={20} className="stroke-[3px]" />
+                </span>
+              )}
+            </div>
             {errors.phone && (
-              <p id="phone-error" className="text-xs font-semibold text-red-500 mt-1.5">
+              <p id="phone-error" className="text-xs font-semibold text-red-500 mt-1.5" role="alert">
                 {errors.phone.message}
               </p>
             )}
@@ -375,19 +449,29 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
 
           {/* LinkedIn URL */}
           <div className="space-y-2">
-            <label className="block text-[15px] lg:text-[18px] font-bold text-slate-850 mb-2.5">{t.linkedinUrl}</label>
-            <input
-              {...register('linkedin')}
-              type="text"
-              placeholder="https://linkedin.com/in/username"
-              aria-invalid={errors.linkedin ? 'true' : 'false'}
-              aria-describedby={errors.linkedin ? 'linkedin-error' : undefined}
-              className={`w-full h-14 px-5 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] transition-all text-base text-slate-800 placeholder-slate-400 ${
-                errors.linkedin ? 'border-red-300 ring-2 ring-red-100' : 'border-slate-200'
-              }`}
-            />
+            <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855" htmlFor="careers-linkedin">{t.linkedinUrl}</label>
+            <div className="relative">
+              <input
+                id="careers-linkedin"
+                {...register('linkedin')}
+                type="text"
+                placeholder="https://linkedin.com/in/username"
+                className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
+                  errors.linkedin
+                    ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                    : touchedFields.linkedin
+                    ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
+                    : 'border-slate-200'
+                }`}
+              />
+              {touchedFields.linkedin && !errors.linkedin && (
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-green-500">
+                  <Check size={20} className="stroke-[3px]" />
+                </span>
+              )}
+            </div>
             {errors.linkedin && (
-              <p id="linkedin-error" className="text-xs font-semibold text-red-500 mt-1.5">
+              <p id="linkedin-error" className="text-xs font-semibold text-red-500 mt-1.5" role="alert">
                 {errors.linkedin.message}
               </p>
             )}
@@ -395,7 +479,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
 
           {/* Position Applied For */}
           <div className="space-y-2">
-            <label className="block text-[15px] lg:text-[18px] font-bold text-slate-850 mb-2.5">{t.positionApplied}</label>
+            <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855">{t.positionApplied}</label>
             <div className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50 text-slate-800 text-base font-bold shadow-sm select-none flex items-center">
               Business Development Manager
             </div>
@@ -404,20 +488,30 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
 
           {/* Years of Experience */}
           <div className="space-y-2">
-            <label className="block text-[15px] lg:text-[18px] font-bold text-slate-850 mb-2.5">{t.yearsExp}</label>
-            <input
-              {...register('yearsExperience', { valueAsNumber: true })}
-              type="number"
-              min="0"
-              placeholder="5"
-              aria-invalid={errors.yearsExperience ? 'true' : 'false'}
-              aria-describedby={errors.yearsExperience ? 'yearsExperience-error' : undefined}
-              className={`w-full h-14 px-5 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] transition-all text-base text-slate-800 ${
-                errors.yearsExperience ? 'border-red-300 ring-2 ring-red-100' : 'border-slate-200'
-              }`}
-            />
+            <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855" htmlFor="careers-experience">{t.yearsExp}</label>
+            <div className="relative">
+              <input
+                id="careers-experience"
+                {...register('yearsExperience', { valueAsNumber: true })}
+                type="number"
+                min="0"
+                placeholder="5"
+                className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all text-base text-slate-800 ${
+                  errors.yearsExperience
+                    ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                    : touchedFields.yearsExperience
+                    ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
+                    : 'border-slate-200'
+                }`}
+              />
+              {touchedFields.yearsExperience && !errors.yearsExperience && (
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-green-500">
+                  <Check size={20} className="stroke-[3px]" />
+                </span>
+              )}
+            </div>
             {errors.yearsExperience && (
-              <p id="yearsExperience-error" className="text-xs font-semibold text-red-500 mt-1.5">
+              <p id="yearsExperience-error" className="text-xs font-semibold text-red-500 mt-1.5" role="alert">
                 {errors.yearsExperience.message}
               </p>
             )}
@@ -425,19 +519,29 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
 
           {/* Core Technical Skills */}
           <div className="md:col-span-2 space-y-2">
-            <label className="block text-[15px] lg:text-[18px] font-bold text-slate-850 mb-2.5">{t.skills}</label>
-            <input
-              {...register('skills')}
-              type="text"
-              placeholder={t.skillsPlaceholder}
-              aria-invalid={errors.skills ? 'true' : 'false'}
-              aria-describedby={errors.skills ? 'skills-error' : undefined}
-              className={`w-full h-14 px-5 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] transition-all text-base text-slate-800 placeholder-slate-400 ${
-                errors.skills ? 'border-red-300 ring-2 ring-red-100' : 'border-slate-200'
-              }`}
-            />
+            <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855" htmlFor="careers-skills">{t.skills}</label>
+            <div className="relative">
+              <input
+                id="careers-skills"
+                {...register('skills')}
+                type="text"
+                placeholder={t.skillsPlaceholder}
+                className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
+                  errors.skills
+                    ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                    : touchedFields.skills
+                    ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
+                    : 'border-slate-200'
+                }`}
+              />
+              {touchedFields.skills && !errors.skills && (
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-green-500">
+                  <Check size={20} className="stroke-[3px]" />
+                </span>
+              )}
+            </div>
             {errors.skills && (
-              <p id="skills-error" className="text-xs font-semibold text-red-500 mt-1.5">
+              <p id="skills-error" className="text-xs font-semibold text-red-500 mt-1.5" role="alert">
                 {errors.skills.message}
               </p>
             )}
@@ -445,27 +549,46 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
 
           {/* Cover Message */}
           <div className="md:col-span-2 space-y-2">
-            <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5">{t.coverLetter}</label>
-            <textarea
-              {...register('message')}
-              placeholder={t.coverLetterPlaceholder}
-              rows={4}
-              aria-invalid={errors.message ? 'true' : 'false'}
-              aria-describedby={errors.message ? 'message-error' : undefined}
-              className={`w-full px-5 py-4 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] transition-all text-base text-slate-800 placeholder-slate-400 resize-none ${
-                errors.message ? 'border-red-300 ring-2 ring-red-100' : 'border-slate-200'
-              }`}
-            />
-            {errors.message && (
-              <p id="message-error" className="text-xs font-semibold text-red-500 mt-1.5">
-                {errors.message.message}
-              </p>
-            )}
+            <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855" htmlFor="careers-cover">{t.coverLetter}</label>
+            <div className="relative">
+              <textarea
+                id="careers-cover"
+                {...register('message')}
+                placeholder={t.coverLetterPlaceholder}
+                rows={4}
+                className={`w-full pl-5 pr-11 py-4 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all text-base text-slate-800 placeholder-slate-400 resize-none ${
+                  errors.message
+                    ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                    : touchedFields.message
+                    ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
+                    : 'border-slate-200'
+                }`}
+              />
+              {touchedFields.message && !errors.message && (
+                <span className="absolute right-4 top-6 text-green-500">
+                  <Check size={20} className="stroke-[3px]" />
+                </span>
+              )}
+            </div>
+            <div className="flex justify-between items-center mt-1.5">
+              {errors.message ? (
+                <p id="message-error" className="text-xs font-semibold text-red-500" role="alert">
+                  {errors.message.message}
+                </p>
+              ) : (
+                <p className="text-xs text-slate-400">
+                  {locale === 'es' ? 'La carta de presentación debe tener al menos 20 caracteres' : 'Cover letter must be at least 20 characters'}
+                </p>
+              )}
+              <span className={`text-xs font-bold ${remainingChars < 100 ? 'text-amber-500' : 'text-slate-400'}`}>
+                {remainingChars} {locale === 'es' ? 'caracteres restantes' : 'characters remaining'}
+              </span>
+            </div>
           </div>
 
           {/* File Upload Zone */}
           <div className="md:col-span-2 space-y-2">
-            <label className="block text-[15px] lg:text-[18px] font-bold text-slate-850 mb-2.5">{t.resumeUpload}</label>
+            <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855">{t.resumeUpload}</label>
             
             {!resumeFile ? (
               <div
@@ -515,15 +638,17 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
               </div>
             )}
             
-            {fileError && <p className="text-xs text-red-655 font-semibold mt-1">{fileError}</p>}
+            {fileError && <p className="text-xs text-red-655 font-semibold mt-1" role="alert">{fileError}</p>}
           </div>
         </div>
 
         {/* Submit Button */}
         <button
           type="submit"
-          disabled={submitting}
-          className="btn-primary w-full flex items-center justify-center gap-2"
+          disabled={submitting || !isValid || !resumeFile}
+          className={`btn-primary w-full flex items-center justify-center gap-2 transition-all ${
+            (!isValid || !resumeFile || submitting) ? 'opacity-50 cursor-not-allowed bg-slate-400 hover:bg-slate-400 border-slate-400' : ''
+          }`}
         >
           {submitting ? (
             <>

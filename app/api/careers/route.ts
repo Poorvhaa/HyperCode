@@ -1,11 +1,36 @@
 import { NextResponse } from 'next/server';
+import { z } from 'zod';
 import { getSupabaseServer } from '@/lib/supabase-server';
 import { Resend } from 'resend';
+import {
+  NAME_REGEX,
+  EMAIL_REGEX,
+  PHONE_REGEX,
+  getPhoneDigitCount,
+  sanitizePayload
+} from '@/lib/validation';
 
 // Initialize Resend
 const resendApiKey = process.env.RESEND_API_KEY || '';
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
 const contactRecipient = process.env.HYPERCODE_CONTACT_EMAIL || 'HR@hypercodeus.com';
+
+const careersSchema = z.object({
+  name: z.string().trim().min(2).max(80).regex(NAME_REGEX),
+  email: z.string().trim().regex(EMAIL_REGEX),
+  phone: z.string().trim().optional().or(z.string().length(0)).refine(val => {
+    if (!val) return true;
+    if (!PHONE_REGEX.test(val)) return false;
+    const digits = getPhoneDigitCount(val);
+    return digits >= 7 && digits <= 15;
+  }),
+  linkedin: z.string().trim().url().optional().or(z.string().length(0)),
+  position: z.string().trim().min(1),
+  yearsExperience: z.number().min(0).max(50),
+  skills: z.string().trim().min(2),
+  message: z.string().trim().min(20).max(2000),
+  locale: z.string().optional().default('en'),
+});
 
 export async function POST(req: Request) {
   console.log('\n========================================');
@@ -25,26 +50,33 @@ export async function POST(req: Request) {
     console.log('[Careers API] Parsing request form data...');
     const formData = await req.formData();
 
-    const name = formData.get('name') as string;
-    const email = formData.get('email') as string;
-    const phone = (formData.get('phone') as string) || '';
-    const linkedin = (formData.get('linkedin') as string) || '';
-    const position = formData.get('position') as string;
-    const yearsExperienceStr = (formData.get('yearsExperience') as string) || '0';
-    const skills = (formData.get('skills') as string) || '';
-    const message = (formData.get('message') as string) || '';
-    const locale = (formData.get('locale') as string) || 'en';
     const resumeFile = formData.get('resume') as File | null;
-
-    console.log(`[Careers API] Form fields parsed: name="${name}", email="${email}", position="${position}", yearsExperience="${yearsExperienceStr}", skills="${skills}"`);
-
-    // Validate fields
-    if (!name || !email || !position || !resumeFile) {
-      console.error('[Careers API] ERROR: Missing required fields: name, email, position, or resume.');
-      return NextResponse.json({ error: 'Missing required fields: name, email, position, and resume are required.' }, { status: 400 });
+    if (!resumeFile) {
+      console.error('[Careers API] ERROR: Missing resume file.');
+      return NextResponse.json({ error: 'Missing required field: resume is required.' }, { status: 400 });
     }
 
-    const yearsExperience = parseInt(yearsExperienceStr, 10) || 0;
+    const rawPayload = {
+      name: (formData.get('name') as string) || '',
+      email: (formData.get('email') as string) || '',
+      phone: (formData.get('phone') as string) || '',
+      linkedin: (formData.get('linkedin') as string) || '',
+      position: (formData.get('position') as string) || '',
+      yearsExperience: parseInt((formData.get('yearsExperience') as string) || '0', 10),
+      skills: (formData.get('skills') as string) || '',
+      message: (formData.get('message') as string) || '',
+      locale: (formData.get('locale') as string) || 'en',
+    };
+
+    // Sanitize payload recursively on server side
+    const sanitizedPayload = sanitizePayload(rawPayload);
+
+    // Validate payload with Zod schema
+    const validated = careersSchema.parse(sanitizedPayload);
+
+    const { name, email, phone, linkedin, position, yearsExperience, skills, message, locale } = validated;
+
+    console.log(`[Careers API] Form fields parsed and validated: name="${name}", email="${email}", position="${position}", yearsExperience="${yearsExperience}"`);
 
     // Validate file type & size (max 5MB)
     console.log(`[Careers API] Validating resume file: name="${resumeFile.name}", type="${resumeFile.type}", size=${resumeFile.size} bytes`);
@@ -277,6 +309,10 @@ export async function POST(req: Request) {
     console.log('[Careers API] E2E Careers Application Workflow Completed Successfully.');
     return NextResponse.json({ success: true, data: appData });
   } catch (err: any) {
+    console.log('[Careers API] catch block triggered:', err);
+    if (err instanceof z.ZodError) {
+      return NextResponse.json({ error: 'Validation failed', details: err.issues }, { status: 400 });
+    }
     console.error('[Careers API] CRITICAL: Unexpected route error:', err);
     return NextResponse.json({ error: `Internal server error: ${err.message || err}` }, { status: 500 });
   }

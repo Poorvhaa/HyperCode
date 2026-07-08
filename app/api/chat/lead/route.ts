@@ -2,18 +2,29 @@ import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { db } from '@/lib/db';
 import { isRateLimited, getClientIp, sanitizeInput, verifyHoneypot } from '@/lib/security';
+import {
+  NAME_REGEX,
+  EMAIL_REGEX,
+  PHONE_REGEX,
+  COMPANY_REGEX,
+  getPhoneDigitCount,
+  sanitizePayload
+} from '@/lib/validation';
 
 const schema = z.object({
   conversation_id: z.string().min(8).max(100),
-  name: z.string().min(2).max(100),
-  email: z.string().email(),
-  phone: z.string().min(7).max(30),
-  company: z.string().min(2).max(100),
+  name: z.string().trim().min(2).max(80).regex(NAME_REGEX),
+  email: z.string().trim().regex(EMAIL_REGEX),
+  phone: z.string().trim().regex(PHONE_REGEX).refine(val => {
+    const digits = getPhoneDigitCount(val);
+    return digits >= 7 && digits <= 15;
+  }),
+  company: z.string().trim().min(2).regex(COMPANY_REGEX),
   industry: z.string().min(2).max(100),
   service_interest: z.string().min(2).max(100),
   budget_range: z.string().min(2).max(100),
   timeline: z.string().min(2).max(100),
-  message: z.string().max(2000).optional().default(''),
+  message: z.string().trim().min(20).max(2000),
   language: z.enum(['en', 'es']),
   website_url: z.string().optional().default(''), // Honeypot field
 });
@@ -98,7 +109,8 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: true, message: 'Submission successfully received (spam filtered)' });
     }
 
-    const parsed = schema.parse(body);
+    const sanitizedBody = sanitizePayload(body);
+    const parsed = schema.parse(sanitizedBody);
 
     const conversationId = parsed.conversation_id;
     const name = sanitizeInput(parsed.name);

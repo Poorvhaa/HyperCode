@@ -3,6 +3,14 @@ import { z } from 'zod';
 import { db } from '@/lib/db';
 import { Resend } from 'resend';
 import { isRateLimited, getClientIp, sanitizeInput } from '@/lib/security';
+import {
+  NAME_REGEX,
+  EMAIL_REGEX,
+  PHONE_REGEX,
+  COMPANY_REGEX,
+  getPhoneDigitCount,
+  sanitizePayload
+} from '@/lib/validation';
 
 // Initialize Resend
 const resendApiKey = process.env.RESEND_API_KEY || '';
@@ -10,13 +18,16 @@ const resend = resendApiKey ? new Resend(resendApiKey) : null;
 const contactRecipient = process.env.HYPERCODE_CONTACT_EMAIL || 'HR@hypercodeus.com';
 
 const schema = z.object({
-  name: z.string().min(2).max(100),
-  email: z.string().email(),
-  phone: z.string().min(7).max(30),
-  company: z.string().min(2).max(100),
-  service: z.string().min(2).max(100),
-  message: z.string().min(5).max(2000),
-  preferred_date: z.string().min(5).max(100),
+  name: z.string().trim().min(2).max(80).regex(NAME_REGEX),
+  email: z.string().trim().regex(EMAIL_REGEX),
+  phone: z.string().trim().regex(PHONE_REGEX).refine(val => {
+    const digits = getPhoneDigitCount(val);
+    return digits >= 7 && digits <= 15;
+  }),
+  company: z.string().trim().min(2).regex(COMPANY_REGEX),
+  service: z.string().trim().min(1),
+  message: z.string().trim().min(20).max(2000),
+  preferred_date: z.string().trim().min(5).max(100),
   language: z.enum(['en', 'es']),
 });
 
@@ -33,7 +44,8 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json();
-    const parsed = schema.parse(body);
+    const sanitizedBody = sanitizePayload(body);
+    const parsed = schema.parse(sanitizedBody);
 
     const name = sanitizeInput(parsed.name);
     const email = sanitizeInput(parsed.email);

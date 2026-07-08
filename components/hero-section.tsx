@@ -311,16 +311,28 @@ export function HeroSection() {
                     <AnimatePresence>
                       {isHovered && (
                         <motion.div
-                          initial={{ opacity: 0, y: 8, scale: 0.95 }}
+                          initial={{ opacity: 0, y: 4, scale: 0.98 }}
                           animate={{ opacity: 1, y: 0, scale: 1 }}
-                          exit={{ opacity: 0, y: 5, scale: 0.95 }}
-                          transition={{ duration: 0.15 }}
-                          className="absolute z-35 top-[115%] left-1/2 -translate-x-1/2 w-[230px] bg-white border border-slate-200 shadow-2xl p-4 rounded-2xl text-left pointer-events-none"
+                          exit={{ opacity: 0, y: 4, scale: 0.98 }}
+                          transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+                          className="absolute z-35 top-[115%] left-1/2 -translate-x-1/2 w-[290px] lg:w-[350px] bg-white border border-slate-200 shadow-2xl p-[22px_24px] lg:p-[28px_32px] rounded-2xl text-left pointer-events-none flex flex-col justify-center h-auto min-h-[140px] lg:min-h-[180px]"
                         >
-                          <div className="absolute -top-1 left-1/2 -translate-x-1/2 rotate-45 w-2 h-2 bg-white border-t border-l border-slate-200" />
-                          <p className="text-[11px] font-bold text-slate-600 leading-relaxed">
-                            {node.description}
-                          </p>
+                          <div className="absolute -top-1 left-1/2 -translate-x-1/2 rotate-45 w-2.5 h-2.5 bg-white border-t border-l border-slate-200" />
+                          
+                          <div className="flex flex-col space-y-4">
+                            <div className="space-y-1.5">
+                              <h4 className="text-[17px] lg:text-[19px] font-bold text-slate-900 tracking-tight leading-snug">
+                                {node.label}
+                              </h4>
+                              <span className="text-[10px] lg:text-[11px] font-extrabold text-[#0F4C81] tracking-wider uppercase block">
+                                {locale === 'es' ? 'Paso' : 'Step'} 0{node.id + 1}
+                              </span>
+                            </div>
+                            
+                            <p className="text-[15px] lg:text-[17px] font-medium text-slate-700 leading-[1.75] tracking-normal">
+                              {node.description}
+                            </p>
+                          </div>
                         </motion.div>
                       )}
                     </AnimatePresence>
@@ -337,15 +349,17 @@ export function HeroSection() {
                 const Icon = node.icon;
                 return (
                   <div key={node.id} className="relative flex items-start gap-4">
-                    <div className="w-8 h-8 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-[#0F4C81] z-10 flex-shrink-0">
+                    <div className="w-8 h-8 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-[#0F4C81] z-10 flex-shrink-0 mt-3.5">
                       <Icon size={16} />
                     </div>
-                    <div className="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm text-left flex-1">
-                      <div className="flex justify-between items-center mb-1">
-                        <h4 className="text-xs font-bold text-slate-800">{node.label}</h4>
-                        <span className="text-[9px] text-[#0F4C81] font-extrabold uppercase tracking-wider">0{node.id + 1}</span>
+                    <div className="bg-white border border-slate-200 p-[22px_24px] rounded-2xl shadow-sm text-left flex-1 flex flex-col justify-center min-h-[130px]">
+                      <div className="space-y-1 mb-3.5">
+                        <h4 className="text-base font-bold text-slate-800 tracking-tight leading-tight">{node.label}</h4>
+                        <span className="text-[10px] text-[#0F4C81] font-extrabold uppercase tracking-wider block">
+                          {locale === 'es' ? 'Paso' : 'Step'} 0{node.id + 1}
+                        </span>
                       </div>
-                      <p className="text-[11px] text-slate-500 font-semibold leading-relaxed">
+                      <p className="text-[15px] sm:text-[16px] text-slate-700 font-medium leading-[1.75]">
                         {node.description}
                       </p>
                     </div>

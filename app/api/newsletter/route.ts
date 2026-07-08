@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { getSupabaseServer } from '@/lib/supabase-server';
 import { Resend } from 'resend';
+import { EMAIL_REGEX, sanitizePayload } from '@/lib/validation';
 
 // Startup validation for Supabase configuration
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -21,7 +22,7 @@ const resendApiKey = process.env.RESEND_API_KEY || '';
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
 const emailSchema = z.object({
-  email: z.string().email(),
+  email: z.string().trim().regex(EMAIL_REGEX),
   language: z.enum(['en', 'es']).optional().default('en'),
   sourcePage: z.string().optional(),
   honeypot: z.string().optional(),
@@ -30,7 +31,8 @@ const emailSchema = z.object({
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const validated = emailSchema.parse(body);
+    const sanitizedBody = sanitizePayload(body);
+    const validated = emailSchema.parse(sanitizedBody);
 
     // Honeypot spam check
     if (validated.honeypot && validated.honeypot.trim() !== '') {

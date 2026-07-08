@@ -331,14 +331,14 @@ export function Navigation() {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 10, scale: 0.98 }}
                       transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                      className={`fixed left-1/2 -translate-x-1/2 w-full max-w-6xl px-4 sm:px-6 lg:px-8 z-50 pointer-events-auto transition-all duration-300 ${
+                      className={`fixed left-1/2 -translate-x-1/2 w-full max-w-[1600px] px-4 sm:px-6 lg:px-8 z-50 pointer-events-auto transition-all duration-300 ${
                         isScrolled ? 'top-[88px]' : 'top-[120px]'
                       }`}
                     >
-                      <div className="bg-white backdrop-blur-xl border border-slate-200/80 rounded-[24px] shadow-2xl shadow-slate-900/5 p-8 flex gap-8 text-left mt-2">
+                      <div className="bg-white backdrop-blur-xl border border-slate-200/80 rounded-[32px] shadow-[0_25px_50px_-12px_rgba(15,76,129,0.08)] p-10 flex gap-10 text-left mt-2 min-h-[640px]">
                         
                         {/* Left Panel: Categories Selection */}
-                        <div className="w-1/3 border-r border-slate-200 pr-6 space-y-1 max-h-[500px] overflow-y-auto scrollbar-thin">
+                        <div className="w-[33%] xl:w-[32%] min-w-[340px] flex-shrink-0 border-r border-slate-100 pr-8 space-y-1.5 max-h-[540px] overflow-y-auto custom-menu-scrollbar">
                           {solutionsMegaMenu.map((cat) => {
                             const CatIcon = cat.icon;
                             const isCatActive = activeCategory === cat.id;
@@ -346,19 +346,19 @@ export function Navigation() {
                               <button
                                 key={cat.id}
                                 onMouseEnter={() => setActiveCategory(cat.id)}
-                                className={`w-full flex items-center justify-between p-3 rounded-2xl text-left transition-all duration-200 cursor-pointer border-none outline-none ${
+                                className={`w-full flex items-center justify-between p-3 rounded-2xl text-left transition-all duration-300 cursor-pointer border-none outline-none ${
                                   isCatActive 
-                                    ? 'bg-[#F1F5F9] text-[#0F4C81] font-extrabold shadow-sm'
-                                    : 'text-slate-600 hover:bg-slate-50'
+                                    ? 'bg-[#F1F5F9] text-[#0F4C81] shadow-sm scale-[1.01]'
+                                    : 'text-slate-600 hover:bg-slate-50 hover:text-[#0F4C81]'
                                 }`}
                               >
-                                <div className="flex items-center gap-3">
-                                  <div className={`p-1.5 rounded-lg ${isCatActive ? 'bg-[#0F4C81]/10 text-[#0F4C81]' : 'bg-slate-100/85 text-slate-405'}`}>
-                                    <CatIcon size={16} />
+                                <div className="flex items-center gap-4 min-w-0">
+                                  <div className={`p-2.5 rounded-xl transition-all duration-300 flex items-center justify-center flex-shrink-0 ${isCatActive ? 'bg-[#0F4C81]/10 text-[#0F4C81]' : 'bg-slate-100/80 text-slate-400'}`}>
+                                    <CatIcon size={24} />
                                   </div>
-                                  <span className="text-xs font-bold tracking-tight">{cat.title}</span>
+                                  <span className="text-[18px] xl:text-[20px] font-semibold tracking-tight leading-[1.4]">{cat.title}</span>
                                 </div>
-                                <ArrowRight size={12} className={`opacity-0 transition-opacity ${isCatActive ? 'opacity-100' : ''}`} />
+                                <ArrowRight size={18} className={`opacity-0 transition-all duration-300 flex-shrink-0 ${isCatActive ? 'opacity-100 translate-x-0.5' : ''}`} />
                               </button>
                             );
                           })}
@@ -369,50 +369,50 @@ export function Navigation() {
                           const activeCatObj = solutionsMegaMenu.find(c => c.id === activeCategory) || solutionsMegaMenu[0];
                           const ActiveCatIcon = activeCatObj.icon;
                           return (
-                            <div className="w-2/3 pl-6 flex flex-col justify-between h-[480px]">
+                            <div className="flex-1 pl-10 flex flex-col justify-between min-h-[540px]">
                               <div className="space-y-6">
                                 <div className="flex items-start gap-4">
-                                  <div className="p-3 bg-[#0F4C81]/5 border border-[#0F4C81]/15 text-[#0F4C81] rounded-2xl">
-                                    <ActiveCatIcon size={24} />
+                                  <div className="p-4 bg-[#0F4C81]/5 border border-[#0F4C81]/15 text-[#0F4C81] rounded-2xl shadow-sm flex-shrink-0">
+                                    <ActiveCatIcon size={32} />
                                   </div>
-                                  <div className="space-y-1">
-                                    <h4 className="text-base font-extrabold text-slate-800">{activeCatObj.title}</h4>
-                                    <p className="text-xs text-slate-500 leading-relaxed max-w-lg">{activeCatObj.desc}</p>
+                                  <div className="space-y-2">
+                                    <h4 className="text-2xl lg:text-[36px] xl:text-[40px] font-bold text-slate-800 leading-[1.2] tracking-tight">{activeCatObj.title}</h4>
+                                    <p className="text-base lg:text-[18px] font-medium text-slate-600 leading-[1.6] max-w-[650px]">{activeCatObj.desc}</p>
                                   </div>
                                 </div>
 
-                                <div className="grid grid-cols-2 gap-4">
+                                <div className="grid grid-cols-2 gap-5">
                                   {activeCatObj.items.map((item, idx) => (
                                     <Link
                                       key={idx}
                                       href={`/solutions/${item.slug}`}
                                       onClick={closeDropdowns}
-                                      className="group flex items-center justify-between p-3 rounded-2xl border border-slate-100 bg-slate-50/30 hover:border-[#0F4C81]/30 hover:bg-slate-50 transition-all"
+                                      className="group flex items-center justify-between p-5 px-6 rounded-2xl border border-slate-200/50 bg-slate-50/20 shadow-[0_2px_8px_rgba(0,0,0,0.01)] hover:border-[#0F4C81]/20 hover:bg-slate-50/50 hover:shadow-[0_12px_28px_rgba(15,76,129,0.04)] hover:-translate-y-0.5 transition-all duration-300 ease-out h-auto"
                                     >
-                                      <span className="text-xs font-bold text-slate-700 group-hover:text-[#0F4C81] transition-colors">
+                                      <span className="text-[18px] lg:text-[20px] font-semibold text-slate-700 group-hover:text-[#0F4C81] transition-colors leading-snug">
                                         {item.name}
                                       </span>
-                                      <ChevronDown size={14} className="text-slate-400 group-hover:text-[#0F4C81] transform -rotate-90 group-hover:translate-x-1 transition-all" />
+                                      <ChevronDown size={18} className="text-slate-400 group-hover:text-[#0F4C81] transform -rotate-90 group-hover:translate-x-1.5 transition-all duration-300" />
                                     </Link>
                                   ))}
                                 </div>
                               </div>
 
-                              <div className="border-t border-slate-100 pt-4 flex items-center justify-between">
+                              <div className="border-t border-slate-100 pt-6 mt-6 flex items-center justify-between">
                                 <Link
                                   href="/solutions"
                                   onClick={closeDropdowns}
-                                  className="inline-flex items-center gap-2 text-xs font-extrabold text-[#0F4C81] hover:underline"
+                                  className="inline-flex items-center gap-2.5 text-sm font-extrabold text-[#0F4C81] hover:underline transition-all"
                                 >
                                   <span>{t('viewAllSolutions')}</span>
-                                  <ArrowRight size={14} />
+                                  <ArrowRight size={16} />
                                 </Link>
                                 <button
                                   onClick={triggerOpenChat}
-                                  className="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-[#0F4C81] bg-transparent border-none cursor-pointer"
+                                  className="inline-flex items-center gap-2.5 text-sm font-bold text-slate-500 hover:text-[#0F4C81] bg-transparent border-none cursor-pointer transition-colors"
                                 >
                                   <span>{t('talkToAI')}</span>
-                                  <Sparkles size={12} className="text-blue-500 animate-pulse" />
+                                  <Sparkles size={14} className="text-blue-500 animate-pulse" />
                                 </button>
                               </div>
                             </div>
@@ -557,23 +557,23 @@ export function Navigation() {
                           <div key={catIdx} className="space-y-1">
                             <button
                               onClick={() => setMobileExpandedCat(isMobileCatExpanded ? null : cat.id)}
-                              className="w-full flex items-center justify-between py-2 text-xs font-bold text-slate-600 hover:text-[#0F4C81] text-left bg-transparent border-none outline-none cursor-pointer"
+                              className="w-full flex items-center justify-between py-3 text-base font-bold text-slate-700 hover:text-[#0F4C81] text-left bg-transparent border-none outline-none cursor-pointer"
                             >
-                              <div className="flex items-center gap-2">
-                                <CatIcon size={14} className="text-slate-400" />
+                              <div className="flex items-center gap-4">
+                                <CatIcon size={24} className="text-slate-400" />
                                 <span>{cat.title}</span>
                               </div>
-                              <ChevronDown size={12} className={`transform transition-transform ${isMobileCatExpanded ? 'rotate-180' : ''}`} />
+                              <ChevronDown size={14} className={`transform transition-transform ${isMobileCatExpanded ? 'rotate-180' : ''}`} />
                             </button>
                             
                             {isMobileCatExpanded && (
-                              <div className="pl-6 space-y-2.5 py-1 border-l border-slate-100">
+                              <div className="pl-8 space-y-3 py-1.5 border-l border-slate-100">
                                 {cat.items.map((item, idx) => (
                                   <Link
                                     key={idx}
                                     href={`/solutions/${item.slug}`}
                                     onClick={() => setIsOpen(false)}
-                                    className="block text-xs font-semibold text-slate-500 hover:text-[#0F4C81]"
+                                    className="block text-sm font-semibold text-slate-500 hover:text-[#0F4C81] py-1"
                                   >
                                     {item.name}
                                   </Link>
@@ -581,7 +581,7 @@ export function Navigation() {
                                 <Link
                                     href="/solutions"
                                     onClick={() => setIsOpen(false)}
-                                    className="block text-xs font-extrabold text-[#0F4C81] pt-1"
+                                    className="block text-sm font-extrabold text-[#0F4C81] pt-2"
                                   >
                                     {t('viewAll')}
                                   </Link>

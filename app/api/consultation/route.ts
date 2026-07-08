@@ -2,6 +2,14 @@ import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { db } from '@/lib/db';
 import { Resend } from 'resend';
+import {
+  NAME_REGEX,
+  EMAIL_REGEX,
+  PHONE_REGEX,
+  COMPANY_REGEX,
+  getPhoneDigitCount,
+  sanitizePayload
+} from '@/lib/validation';
 
 // Initialize Resend
 const resendApiKey = process.env.RESEND_API_KEY || '';
@@ -9,14 +17,17 @@ const resend = resendApiKey ? new Resend(resendApiKey) : null;
 const contactRecipient = process.env.HYPERCODE_CONTACT_EMAIL || 'HR@hypercodeus.com';
 
 const consultationSchema = z.object({
-  name: z.string().min(2),
-  email: z.string().email(),
-  company: z.string().min(2),
-  phone: z.string().min(10),
-  service: z.string().min(1),
-  budget: z.string().min(1),
-  timeline: z.string().min(1),
-  message: z.string().min(10),
+  name: z.string().trim().min(2).max(80).regex(NAME_REGEX),
+  email: z.string().trim().regex(EMAIL_REGEX),
+  company: z.string().trim().min(2).regex(COMPANY_REGEX),
+  phone: z.string().trim().regex(PHONE_REGEX).refine(val => {
+    const digits = getPhoneDigitCount(val);
+    return digits >= 7 && digits <= 15;
+  }),
+  service: z.string().trim().min(1),
+  budget: z.string().trim().min(1),
+  timeline: z.string().trim().min(1),
+  message: z.string().trim().min(20).max(2000),
   locale: z.string().optional().default('en'),
   businessGoal: z.string().optional().default(''),
   currentChallenges: z.string().optional().default(''),
@@ -31,7 +42,8 @@ const consultationSchema = z.object({
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const validated = consultationSchema.parse(body);
+    const sanitizedBody = sanitizePayload(body);
+    const validated = consultationSchema.parse(sanitizedBody);
 
     // Save to Supabase using db client
     const savedData = await db.saveConsultationRequest(

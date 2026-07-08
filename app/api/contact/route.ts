@@ -2,6 +2,14 @@ import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { db } from '@/lib/db';
 import { Resend } from 'resend';
+import {
+  NAME_REGEX,
+  EMAIL_REGEX,
+  PHONE_REGEX,
+  COMPANY_REGEX,
+  getPhoneDigitCount,
+  sanitizePayload
+} from '@/lib/validation';
 
 // Initialize Resend
 const resendApiKey = process.env.RESEND_API_KEY || '';
@@ -11,12 +19,15 @@ console.log('HYPERCODE_CONTACT_EMAIL:', process.env.HYPERCODE_CONTACT_EMAIL);
 console.log('Resolved contactRecipient:', contactRecipient);
 
 const contactSchema = z.object({
-  name: z.string().min(2),
-  email: z.string().email(),
-  company: z.string().min(2),
-  phone: z.string().min(10),
-  subject: z.string().min(1),
-  message: z.string().min(10),
+  name: z.string().trim().min(2).max(80).regex(NAME_REGEX),
+  email: z.string().trim().regex(EMAIL_REGEX),
+  company: z.string().trim().min(2).regex(COMPANY_REGEX),
+  phone: z.string().trim().regex(PHONE_REGEX).refine(val => {
+    const digits = getPhoneDigitCount(val);
+    return digits >= 7 && digits <= 15;
+  }),
+  subject: z.string().trim().min(1).max(200),
+  message: z.string().trim().min(20).max(2000),
   source: z.string().optional().default('website'),
   locale: z.string().optional().default('en'),
   services: z.array(z.string()).optional().default([]),
@@ -31,9 +42,10 @@ const contactSchema = z.object({
 });
 
 export async function POST(req: Request) {
-try {
+  try {
     const body = await req.json();
-    const validated = contactSchema.parse(body);
+    const sanitizedBody = sanitizePayload(body);
+    const validated = contactSchema.parse(sanitizedBody);
 
     // Save to Supabase using db client
     const savedData = await db.saveContactInquiry(

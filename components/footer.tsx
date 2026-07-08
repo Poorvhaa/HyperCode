@@ -1,9 +1,10 @@
 'use client';
 
 import { Link } from '@/i18n/routing';
-import { Mail, Phone, MapPin, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Mail, Phone, MapPin, ArrowRight, ShieldCheck, Check, AlertCircle } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 import { useState, type FormEvent } from 'react';
+import { EMAIL_REGEX } from '@/lib/validation';
 
 export function Footer() {
   const tNav = useTranslations('Navigation');
@@ -14,20 +15,28 @@ export function Footer() {
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [touched, setTouched] = useState(false);
+
+  const isValidEmail = EMAIL_REGEX.test(email.trim());
 
   const handleSubscribe = async (e: FormEvent) => {
     e.preventDefault();
-    if (!email) return;
+    setTouched(true);
+    if (!email || !isValidEmail) return;
     setSubmitting(true);
+    
+    const cleanEmail = email.trim().replace(/<[^>]*>/g, '');
+
     try {
       const res = await fetch('/api/newsletter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, locale, sourcePage: 'footer' })
+        body: JSON.stringify({ email: cleanEmail, locale, sourcePage: 'footer' })
       });
       if (res.ok) {
         setSubscribed(true);
         setEmail('');
+        setTouched(false);
         setTimeout(() => setSubscribed(false), 5000);
       }
     } catch (err) {
@@ -85,23 +94,53 @@ export function Footer() {
                 <span>{tf('newsletterSuccess') || 'Thank you for subscribing!'}</span>
               </div>
             ) : (
-              <form onSubmit={handleSubscribe} className="flex gap-2">
-                <input
-                  type="email"
-                  required
-                  placeholder={tf('newsletterPlaceholder') || 'email@company.com'}
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="flex-1 bg-white border border-slate-200 rounded-2xl px-5 py-3.5 text-sm text-slate-800 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none"
-                  disabled={submitting}
-                />
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="bg-[#0F4C81] hover:bg-[#0D3F6D] active:scale-95 text-white px-6 rounded-2xl text-sm font-bold transition-all flex items-center justify-center cursor-pointer border-none shadow-md shadow-blue-500/10"
-                >
-                  <ArrowRight size={18} />
-                </button>
+              <form onSubmit={handleSubscribe} className="w-full">
+                <div className="flex gap-2">
+                  <div className="relative flex-1">
+                    <input
+                      type="email"
+                      required
+                      placeholder={tf('newsletterPlaceholder') || 'email@company.com'}
+                      value={email}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                        if (e.target.value.length > 5) setTouched(true);
+                      }}
+                      onBlur={() => setTouched(true)}
+                      autoComplete="email"
+                      inputMode="email"
+                      className={`w-full bg-white border rounded-2xl pl-5 pr-10 py-3.5 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none ${
+                        touched && !isValidEmail
+                          ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                          : touched && isValidEmail
+                          ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
+                          : 'border-slate-200 focus:border-[#0F4C81]'
+                      }`}
+                      disabled={submitting}
+                      aria-label="Email address"
+                    />
+                    {touched && isValidEmail && (
+                      <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-green-500">
+                        <Check size={18} className="stroke-[3px]" />
+                      </span>
+                    )}
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={submitting || !isValidEmail}
+                    className={`bg-[#0F4C81] hover:bg-[#0D3F6D] active:scale-95 text-white px-6 rounded-2xl text-sm font-bold transition-all flex items-center justify-center cursor-pointer border-none shadow-md shadow-blue-500/10 ${
+                      (!isValidEmail || submitting) ? 'opacity-50 cursor-not-allowed bg-slate-400 hover:bg-slate-400' : ''
+                    }`}
+                  >
+                    <ArrowRight size={18} />
+                  </button>
+                </div>
+                {touched && !isValidEmail && (
+                  <p className="text-xs font-semibold text-red-500 text-left pl-1 mt-1 flex items-center gap-1 animate-fadeIn" role="alert">
+                    <AlertCircle size={14} className="flex-shrink-0" />
+                    <span>{locale === 'es' ? 'Por favor introduzca un correo válido.' : 'Please enter a valid email address.'}</span>
+                  </p>
+                )}
               </form>
             )}
           </div>
