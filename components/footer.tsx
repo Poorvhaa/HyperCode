@@ -113,8 +113,8 @@ export function Footer() {
           {/* Column 1: Company Info & Contact Details */}
           <div className="space-y-8 lg:col-span-1">
             <Link href="/" className="flex items-center">
-              <span className="text-2xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2.5">
-                <span className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#0F4C81] to-[#1e6cb3] flex items-center justify-center text-white font-black text-base shadow-lg shadow-blue-500/20">H</span>
+              <span className="text-3xl font-black text-slate-900 tracking-tight flex items-center gap-3">
+                <span className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#0F4C81] to-[#1e6cb3] flex items-center justify-center text-white font-black text-lg shadow-lg shadow-blue-500/20">H</span>
                 HyperCode
               </span>
             </Link>

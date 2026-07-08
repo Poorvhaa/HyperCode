@@ -272,7 +272,7 @@ export function Navigation() {
     <>
       <motion.nav
         className={`fixed z-50 transition-all duration-300 ease-in-out top-0 left-0 right-0 w-full bg-white/95 backdrop-blur-md border-b border-slate-200/60 shadow-sm ${
-          isScrolled ? 'h-20 shadow-md' : 'h-[88px]'
+          isScrolled ? 'h-20 lg:h-[88px] shadow-md' : 'h-20 lg:h-[120px]'
         }`}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
@@ -288,7 +288,11 @@ export function Navigation() {
                   width={729}
                   height={950}
                   priority
-                  className="h-14 lg:h-16 w-auto object-contain py-1 transition-all duration-300"
+                  className={`w-auto object-contain transition-all duration-300 ${
+                    isScrolled 
+                      ? 'h-[72px] lg:h-[76px] py-1' 
+                      : 'h-[72px] lg:h-[104px] py-1.5'
+                  }`}
                 />
               </Link>
             </div>
@@ -298,6 +302,9 @@ export function Navigation() {
               <Link href="/" className={`${getLinkClass('/')} group`}>
                 <span className="relative py-1">
                   {t('home')}
+                  <span className={`absolute bottom-0 left-0 w-full h-[2px] bg-[#0F4C81] transform transition-transform duration-300 origin-left ${
+                    isActive('/') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                  }`} />
                 </span>
               </Link>
 
@@ -311,6 +318,9 @@ export function Navigation() {
                   <span className="relative py-1 flex items-center">
                     <span>{tc('solutions')}</span>
                     <ChevronDown size={12} className={`ml-1 transition-transform duration-300 ${activeDropdown === 'solutions' ? 'rotate-180 text-[#0F4C81]' : ''}`} />
+                    <span className={`absolute bottom-0 left-0 w-full h-[2px] bg-[#0F4C81] transform transition-transform duration-300 origin-left ${
+                      isActive('/solutions') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                    }`} />
                   </span>
                 </button>
 
@@ -321,7 +331,9 @@ export function Navigation() {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 10, scale: 0.98 }}
                       transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                      className="fixed top-20 left-1/2 -translate-x-1/2 w-full max-w-6xl px-4 sm:px-6 lg:px-8 z-50 pointer-events-auto"
+                      className={`fixed left-1/2 -translate-x-1/2 w-full max-w-6xl px-4 sm:px-6 lg:px-8 z-50 pointer-events-auto transition-all duration-300 ${
+                        isScrolled ? 'top-[88px]' : 'top-[120px]'
+                      }`}
                     >
                       <div className="bg-white backdrop-blur-xl border border-slate-200/80 rounded-[24px] shadow-2xl shadow-slate-900/5 p-8 flex gap-8 text-left mt-2">
                         
@@ -416,18 +428,27 @@ export function Navigation() {
               <Link href="/about" className={`${getLinkClass('/about')} group`}>
                 <span className="relative py-1">
                   {t('about')}
+                  <span className={`absolute bottom-0 left-0 w-full h-[2px] bg-[#0F4C81] transform transition-transform duration-300 origin-left ${
+                    isActive('/about') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                  }`} />
                 </span>
               </Link>
 
               <Link href="/careers" className={`${getLinkClass('/careers')} group`}>
                 <span className="relative py-1">
                   {t('careers')}
+                  <span className={`absolute bottom-0 left-0 w-full h-[2px] bg-[#0F4C81] transform transition-transform duration-300 origin-left ${
+                    isActive('/careers') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                  }`} />
                 </span>
               </Link>
 
               <Link href="/contact" className={`${getLinkClass('/contact')} group`}>
                 <span className="relative py-1">
                   {t('contact')}
+                  <span className={`absolute bottom-0 left-0 w-full h-[2px] bg-[#0F4C81] transform transition-transform duration-300 origin-left ${
+                    isActive('/contact') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                  }`} />
                 </span>
               </Link>
             </div>
