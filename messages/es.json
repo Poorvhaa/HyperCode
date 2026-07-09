@@ -110,7 +110,9 @@
     "newsletterPlaceholder": "Correo Corporativo",
     "newsletterSuccess": "¡Gracias por suscribirse!",
     "corporateHq": "Sede Central",
-    "unitedStates": "Estados Unidos"
+    "unitedStates": "Estados Unidos",
+    "cookiePolicy": "Política de cookies",
+    "cookieSettings": "Configuración de cookies"
   },
   "Hero": {
     "badge": "Socio de Transformación Digital Empresarial",
@@ -271,7 +273,25 @@
       "validation": "Por favor complete todos los campos requeridos.",
       "email": "Introduzca un correo corporativo válido.",
       "phone": "Introduzca un número de teléfono válido.",
-      "generic": "Error de servicio. Inténtelo de nuevo."
+      "generic": "Error de servicio. Inténtelo de nuevo.",
+      "validationName": "El nombre es requerido.",
+      "validationNameLength": "El nombre debe tener entre 2 y 80 caracteres.",
+      "validationNameChars": "El nombre solo puede contener letras, espacios, guiones y apóstrofes.",
+      "validationEmail": "El correo es requerido.",
+      "validationPhone": "El teléfono es requerido.",
+      "validationPhoneChars": "Número de teléfono inválido.",
+      "validationPhoneDigits": "El teléfono debe tener entre 7 y 15 dígitos.",
+      "validationCompany": "La empresa es requerida.",
+      "validationCompanyLength": "La empresa debe tener al menos 2 caracteres.",
+      "validationCompanyChars": "El nombre de la empresa solo puede contener letras, números, espacios, & y .",
+      "validationBudget": "Por favor seleccione un presupuesto.",
+      "validationTimeline": "Por favor seleccione un plazo.",
+      "validationMessage": "El mensaje es requerido.",
+      "validationMessageLength": "El mensaje debe tener entre 20 y 2000 caracteres.",
+      "validationDate": "La fecha preferida es requerida.",
+      "validationDateLength": "Por favor especifique la fecha preferida.",
+      "validationEmailPrompt": "Por favor, introduzca una dirección de correo electrónico válida (ej. nombre@empresa.com):",
+      "validationPhonePrompt": "Por favor, introduzca un número de teléfono válido (ej. +1 555-0199):"
     },
     "consultationFlow": {
       "title": "Configurar Sesión de Consulta",
@@ -1163,7 +1183,7 @@
       },
       "rights": {
         "title": "7. Sus Derechos y Opciones",
-        "content": "Dependiendo de su ubicación (como la UE bajo el RGPD o California bajo la CCPA), puede poseer derechos específicos con respecto a su información personal, incluido el derecho a acceder, corregir, eliminar o limitar el que usemos sus datos. Para ejercer cualquiera de estos derechos, póngase en contacto con nosotros en privacy@hypercodeus.com."
+        "content": "Dependiendo de su ubicación (como la UE bajo el RGPD o California bajo la CCPA), puede poseer derechos específicos con respecto a su información personal, incluido el derecho a acceder, corregir, eliminar o limitar el que usemos sus datos. Para ejercer cualquiera de estos derechos, póngase en contacto con nosotros en HR@hypercodeus.com."
       },
       "changes": {
         "title": "8. Cambios en esta Política",
@@ -1171,7 +1191,7 @@
       },
       "contact": {
         "title": "9. Contáctenos",
-        "content": "Si tiene alguna pregunta o inquietud con respecto a esta Política de Privacidad, póngase en contacto con nosotros:\n\n• Por correo electrónico: privacy@hypercodeus.com\n\n• Por correo postal: 2095 Hammond Dr Suite B, Schaumburg, IL 60173"
+        "content": "Si tiene alguna pregunta o inquietud con respecto a esta Política de Privacidad, póngase en contacto con nosotros:\n\n• Por correo electrónico: HR@hypercodeus.com\n\n• Por correo postal: 2095 Hammond Dr Suite B, Schaumburg, IL 60173"
       }
     }
   },
@@ -1367,5 +1387,92 @@
     "description": "Asóciese con nuestros equipos de ingeniería de élite y consultores tecnológicos para crear sistemas seguros, escalables y orientados a la IA.",
     "primaryButton": "PROGRAMAR CONSULTA",
     "secondaryButton": "CONTACTAR A HYPERCODE"
+  },
+  "CookieConsent": {
+    "banner": {
+      "text": "Utilizamos cookies para mejorar su experiencia de navegación, ofrecer contenido personalizado y analizar nuestro tráfico. Al hacer clic en \"Aceptar todo\", usted acepta nuestro uso de todas las cookies.",
+      "acceptAll": "Aceptar todo",
+      "rejectNonEssential": "Rechazar no esenciales",
+      "managePreferences": "Administrar preferencias",
+      "policyLink": "Política de cookies"
+    },
+    "modal": {
+      "title": "Centro de Preferencias de Cookies Centre",
+      "description": "Cuando visita cualquier sitio web, este puede almacenar o recuperar información en su navegador, principalmente en forma de cookies. Esta información puede ser sobre usted, sus preferencias o su dispositivo y se utiliza principalmente para que el sitio funcione como espera. Debido a que respetamos su derecho a la privacidad, puede optar por no permitir algunos tipos de cookies.",
+      "savePreferences": "Guardar preferencias",
+      "acceptAll": "Aceptar todo",
+      "rejectAll": "Rechazar todo",
+      "close": "Cerrar",
+      "necessary": {
+        "title": "Cookies estrictamente necesarias",
+        "description": "Estas cookies son necesarias para que el sitio web funcione y no se pueden desactivar en nuestros sistemas. Por lo general, solo se configuran en respuesta a acciones realizadas por usted que equivalen a una solicitud de servicios, como establecer sus preferencias de privacidad, iniciar sesión o completar formularios."
+      },
+      "analytics": {
+        "title": "Cookies de analítica",
+        "description": "Estas cookies nos permiten contar las visitas y las fuentes de tráfico para que podamos medir y mejorar el rendimiento de nuestro sitio. Nos ayudan a saber qué páginas son las más y menos populares y a ver cómo se mueven los visitantes por el sitio."
+      },
+      "functional": {
+        "title": "Cookies funcionales",
+        "description": "Estas cookies permiten que el sitio web proporcione una funcionalidad y personalización mejoradas. Pueden ser establecidas por nosotros o por proveedores externos cuyos servicios hayamos agregado a nuestras páginas."
+      },
+      "marketing": {
+        "title": "Cookies de marketing",
+        "description": "Estas cookies pueden ser establecidas a través de nuestro sitio por nuestros socios publicitarios. Estas empresas pueden utilizarlas para crear un perfil de sus intereses y mostrarle anuncios relevantes en otros sitios."
+      }
+    }
+  },
+  "CookiePolicy": {
+    "legal": "HyperCode Legal",
+    "title": "Política de cookies",
+    "subtitle": "Esta política explica cómo utilizamos las cookies y tecnologías de seguimiento para optimizar su experiencia.",
+    "lastUpdated": "Última actualización: 9 de julio de 2026",
+    "downloadPdf": "Descargar versión PDF",
+    "toc": "Tabla de contenidos",
+    "tableHeaderCookie": "Cookie",
+    "tableHeaderPurpose": "Propósito",
+    "tableHeaderDuration": "Duración",
+    "tableHeaderType": "Tipo",
+    "tableHeaderProvider": "Proveedor",
+    "tableTypeNecessary": "Necesaria",
+    "tableTypeFunctional": "Funcional",
+    "tableTypeAnalytics": "Analítica",
+    "tableTypeMarketing": "Marketing",
+    "tableConsentPurpose": "Almacena el estado de consentimiento de cookies del usuario y la marca de tiempo.",
+    "tableLanguagePurpose": "Recuerda el idioma seleccionado para el enrutamiento localizado.",
+    "tableGaPurpose": "Utilizada por Google Analytics para distinguir usuarios únicos.",
+    "tableGidPurpose": "Utilizada por Google Analytics para almacenar y registrar visitas a páginas.",
+    "tableClarityPurpose": "Utilizada por Microsoft Clarity para almacenar el comportamiento de la sesión del usuario.",
+    "tableLinkedInPurpose": "Utilizada por LinkedIn Insight para realizar un seguimiento del rendimiento de las conversiones.",
+    "tableMetaPurpose": "Utilizada por Meta Pixel para rastrear interacciones con anuncios.",
+    "sections": {
+      "introduction": {
+        "title": "1. ¿Qué son las cookies?",
+        "content": "Las cookies son pequeños archivos de texto que se colocan en su ordenador o dispositivo móvil cuando navega por sitios web. Se utilizan ampliamente para hacer que los sitios web funcionen, o funcionen de manera más eficiente, así como para proporcionar información de informes. Las cookies establecidas por el propietario del sitio web (en este caso, HyperCode LLC) se denominan \"cookies de origen\". Las cookies establecidas por partes distintas al propietario del sitio web se denominan \"cookies de terceros\". Las cookies de terceros permiten que se proporcionen características o funcionalidades de terceros en el sitio web o a través de él (por ejemplo, análisis, contenido interactivo y publicidad)."
+      },
+      "whyWeUse": {
+        "title": "2. ¿Por qué usamos cookies?",
+        "content": "Utilizamos cookies de origen y de terceros por varias razones. Algunas cookies son necesarias por razones técnicas para que nuestro sitio web funcione, y nos referimos a estas como cookies \"estrictamente necesarias\". Otras cookies nos permiten rastrear y dirigirnos a los intereses de nuestros usuarios para mejorar la experiencia en nuestro sitio web. Los terceros sirven cookies a través de nuestro sitio web para análisis y rendimiento (como Google Analytics y Microsoft Clarity) o integraciones de marketing."
+      },
+      "categories": {
+        "title": "3. Tipos de cookies que usamos",
+        "content": "Clasificamos nuestras cookies en cuatro niveles distintos:\n\n• Cookies estrictamente necesarias: Esenciales para el funcionamiento y la seguridad.\n\n• Cookies de analítica: Nos ayudan a medir y mejorar el rendimiento y la estructura.\n\n• Cookies funcionales: Permiten configuraciones avanzadas de la interfaz de usuario, como guardar el idioma preferido.\n\n• Cookies de marketing: Soportan campañas publicitarias y de remarketing (por ejemplo, píxeles de LinkedIn y Meta)."
+      },
+      "table": {
+        "title": "4. Inventario activo de cookies",
+        "content": "La siguiente tabla enumera las cookies activas implementadas actualmente en el dominio de HyperCode. Esta lista se actualiza periódicamente para garantizar el pleno cumplimiento de las normativas GDPR y CCPA:"
+      },
+      "managing": {
+        "title": "5. Cómo gestionar el consentimiento",
+        "content": "Puede modificar sus opciones de consentimiento de cookies en cualquier momento haciendo clic en el botón \"Configuración de cookies\" en nuestro pie de página. Alternativamente, puede utilizar la configuración de su navegador para aceptar, rechazar o eliminar cookies. Tenga en cuenta que deshabilitar las cookies estrictamente necesarias puede afectar la usabilidad de ciertas partes de nuestro sitio."
+      },
+      "updates": {
+        "title": "6. Actualizaciones de esta política",
+        "content": "Es posible que actualicemos esta Política de cookies de vez en cuando para reflejar los cambios en las cookies que utilizamos o por otras razones operativas, legales o reglamentarias. Revise esta Política de cookies con regularidad para mantenerse informado sobre nuestro uso de las cookies."
+      },
+      "contact": {
+        "title": "7. Contacto",
+        "content": "Si tiene preguntas sobre nuestro uso de cookies u otras tecnologías de seguimiento, póngase en contacto con nosotros:\n\n• Por correo electrónico: HR@hypercodeus.com\n\n• Por correo postal: 2095 Hammond Dr Suite B, Schaumburg, IL 60173"
+      }
+    }
   }
 }

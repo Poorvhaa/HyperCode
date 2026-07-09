@@ -6,7 +6,9 @@ import { notFound } from 'next/navigation'
 import { getMessages, setRequestLocale, getTranslations } from 'next-intl/server'
 import { NextIntlClientProvider } from 'next-intl'
 import AIConsultant from '@/components/ai-consultant'
-import GoogleAnalytics from '@/components/google-analytics'
+import { CookieProvider } from '@/components/CookieProvider'
+import { CookieBanner } from '@/components/CookieBanner'
+import { CookiePreferencesModal } from '@/components/CookiePreferencesModal'
 
 // Local font variable definitions to prevent build-time network font downloads failing offline/in restricted environments.
 const geistSans = { variable: 'font-geist-sans' };
@@ -208,14 +210,17 @@ export default async function RootLayout({ children, params }: LayoutProps) {
         <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap" rel="stylesheet" />
       </head>
       <body className="font-sans antialiased bg-background">
-        <GoogleAnalytics />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <NextIntlClientProvider messages={messages} locale={locale}>
-          {children}
-          <AIConsultant />
+          <CookieProvider>
+            {children}
+            <AIConsultant />
+            <CookieBanner />
+            <CookiePreferencesModal />
+          </CookieProvider>
         </NextIntlClientProvider>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

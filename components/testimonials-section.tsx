@@ -170,7 +170,7 @@ export function TestimonialsSection() {
             {/* Background Thumbnail Image */}
             <div className="absolute inset-0 opacity-80 group-hover:scale-105 transition-transform duration-500">
               <Image
-                src="/images/contact-office.png"
+                src="https://images.unsplash.com/photo-1542744094-2ab25be78b90?q=80&w=1200"
                 alt="Executive Interview video thumbnail"
                 fill
                 className="object-cover"

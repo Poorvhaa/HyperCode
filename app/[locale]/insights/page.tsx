@@ -97,7 +97,7 @@ export default async function InsightsPage({ params }: Props) {
 
       {/* Hero Section */}
       <HeroBanner
-        bgImage="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1600"
+        bgImage="https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1600"
         categoryLabel={locale === 'es' ? 'INSIGHTS Y ANÁLISIS' : 'INSIGHTS & ANALYSIS'}
         title={locale === 'es' ? 'Liderazgo de Pensamiento' : 'Thought Leadership'}
         titleHighlight=""

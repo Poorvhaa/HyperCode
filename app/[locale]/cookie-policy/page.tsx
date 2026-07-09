@@ -1,8 +1,9 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
-import { FileDown, Calendar, ChevronRight, FileText } from 'lucide-react';
+import { FileDown, ChevronRight } from 'lucide-react';
 import { HeroBanner } from '@/components/hero-banner';
+import { CookieTable } from '@/components/CookieTable';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -10,54 +11,53 @@ interface Props {
 
 export async function generateMetadata({ params }: Props) {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'TermsAndConditions' });
-  
+  const t = await getTranslations({ locale, namespace: 'CookiePolicy' });
+
   return {
     title: `HyperCode | ${t('title')}`,
     description: t('subtitle'),
     alternates: {
-      canonical: `https://www.hypercodeus.com/${locale}/TnC`,
+      canonical: `https://www.hypercodeus.com/${locale}/cookie-policy`,
     },
   };
 }
 
-export default async function TermsAndConditionsPage({ params }: Props) {
+export default async function CookiePolicyPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const t = await getTranslations('TermsAndConditions');
+  const t = await getTranslations('CookiePolicy');
 
   const pdfUrl =
     locale === 'es'
-      ? '/legal/es/TnC.pdf'
-      : '/legal/en/TnC.pdf';
+      ? '/legal/es/cookie-policy.pdf'
+      : '/legal/en/cookie-policy.pdf';
 
   const sectionKeys = [
-    'agreement',
-    'intellectual',
-    'user',
-    'prohibited',
-    'services',
-    'termination',
-    'liability',
-    'governing',
-    'contact'
+    'introduction',
+    'whyWeUse',
+    'categories',
+    'table',
+    'managing',
+    'updates',
+    'contact',
   ] as const;
 
   return (
     <main className="relative w-full bg-white text-left">
       <Navigation />
 
-      {/* Terms & Conditions Reusable Hero Banner */}
+      {/* Hero Banner */}
       <HeroBanner
-        bgImage="https://images.unsplash.com/photo-1457369804613-52c61a468e7d?q=80&w=1600"
+        bgImage="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1600"
         categoryLabel={t('legal')}
         title={t('title')}
         subtitle={`${t('subtitle')} • ${t('lastUpdated')}`}
         breadcrumbs={[
           { label: locale === 'es' ? 'Inicio' : 'Home', href: '/' },
-          { label: t('title') }
+          { label: t('title') },
         ]}
+
       />
 
       {/* Content Layout */}
@@ -100,6 +100,9 @@ export default async function TermsAndConditionsPage({ params }: Props) {
                   <p className="text-slate-600 leading-relaxed whitespace-pre-line font-medium text-[15px]">
                     {t(`sections.${key}.content`)}
                   </p>
+
+                  {/* Render Cookie Table inside the Active Cookie Inventory section */}
+                  {key === 'table' && <CookieTable />}
                 </section>
               ))}
             </div>

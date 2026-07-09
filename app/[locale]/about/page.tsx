@@ -56,7 +56,7 @@ export default async function AboutPage({ params }: Props) {
 
       {/* About Reusable Hero Banner */}
       <HeroBanner
-        bgImage="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1600"
+        bgImage="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=1600"
         categoryLabel={locale === 'es' ? 'CONÓCENOS' : 'ABOUT US'}
         title={t('title')}
         titleHighlight={t('titleHighlight')}
@@ -82,7 +82,7 @@ export default async function AboutPage({ params }: Props) {
 
             <div className="lg:col-span-5 relative w-full h-[360px] rounded-[24px] overflow-hidden border border-slate-200 shadow-xl">
               <Image
-                src="/images/staffing-team.png"
+                src="https://images.unsplash.com/photo-1531538606174-0f90ff5dce83?q=80&w=1200"
                 alt="HyperCode Team Collaboration"
                 fill
                 className="object-cover object-center hover:scale-105 transition-transform duration-500"
@@ -122,7 +122,7 @@ export default async function AboutPage({ params }: Props) {
             {/* Image left */}
             <div className="lg:col-span-5 relative w-full h-[400px] rounded-[24px] overflow-hidden border border-slate-200 shadow-xl order-last lg:order-first">
               <Image
-                src="/images/hero-enterprise.png"
+                src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200"
                 alt="HyperCode Digital Transformation Systems"
                 fill
                 className="object-cover object-center hover:scale-105 transition-transform duration-500"

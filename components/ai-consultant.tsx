@@ -44,6 +44,45 @@ interface AIConsultantProps {
   outsideClickAction?: 'minimize' | 'close' | 'none';
 }
 
+const MarkdownRenderer = ({ text, locale }: { text: string; locale: string }) => {
+  const tokenRegex = /(\*\*.*?\*\*|\[.*?\]\(.*?\))/g;
+  const matches = text.split(tokenRegex);
+  return (
+    <>
+      {matches.map((part, i) => {
+        if (part.startsWith('**') && part.endsWith('**')) {
+          return (
+            <strong key={i} className="font-extrabold text-slate-950">
+              {part.slice(2, -2)}
+            </strong>
+          );
+        }
+        if (part.startsWith('[') && part.includes('](')) {
+          const closeBracket = part.indexOf(']');
+          const openParen = part.indexOf('(');
+          const label = part.slice(1, closeBracket);
+          let url = part.slice(openParen + 1, -1);
+          if (url.startsWith('/')) {
+            url = `/${locale}${url}`;
+          }
+          return (
+            <a
+              key={i}
+              href={url}
+              target={url.startsWith('http') ? '_blank' : '_self'}
+              rel="noopener noreferrer"
+              className="text-[#0F4C81] hover:text-blue-600 underline font-extrabold transition-all"
+            >
+              {label}
+            </a>
+          );
+        }
+        return part;
+      })}
+    </>
+  );
+};
+
 const getCompactChipLabel = (prompt: string, locale: string): string => {
   const p = prompt.toLowerCase();
   const isEs = locale === 'es';
@@ -99,6 +138,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
   const [isTyping, setIsTyping] = useState(false);
   const [isSending, setIsSending] = useState(false);
   const [suggestedPrompts, setSuggestedPrompts] = useState<string[]>([]);
+  const [lastFailedMessage, setLastFailedMessage] = useState<string | null>(null);
   
   // Interactive Flow States: 'chat' | 'lead_form' | 'consultation_form' | 'lead_success' | 'consultation_success'
   const [activeFlow, setActiveFlow] = useState<'chat' | 'lead_form' | 'consultation_form' | 'lead_success' | 'consultation_success'>('chat');
@@ -279,47 +319,47 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
 
   const validateNameInput = (val: string) => {
     const trimmed = val.trim();
-    if (!trimmed) return locale === 'es' ? 'Nombre requerido' : 'Name is required';
-    if (trimmed.length < 2 || trimmed.length > 80) return locale === 'es' ? 'Debe tener entre 2 y 80 caracteres' : 'Must be between 2 and 80 characters';
-    if (!NAME_REGEX.test(trimmed)) return locale === 'es' ? 'Solo letras, espacios, guiones y apóstrofes' : 'Only letters, spaces, hyphens, and apostrophes';
+    if (!trimmed) return t('errors.validationName');
+    if (trimmed.length < 2 || trimmed.length > 80) return t('errors.validationNameLength');
+    if (!NAME_REGEX.test(trimmed)) return t('errors.validationNameChars');
     return '';
   };
 
   const validateEmailInput = (val: string) => {
     const trimmed = val.trim();
-    if (!trimmed) return locale === 'es' ? 'Correo requerido' : 'Email is required';
-    if (!EMAIL_REGEX.test(trimmed)) return locale === 'es' ? 'Correo inválido' : 'Invalid email address';
+    if (!trimmed) return t('errors.validationEmail');
+    if (!EMAIL_REGEX.test(trimmed)) return t('errors.email');
     return '';
   };
 
   const validatePhoneInputStr = (val: string) => {
     const trimmed = val.trim();
-    if (!trimmed) return locale === 'es' ? 'Teléfono requerido' : 'Phone is required';
-    if (!PHONE_REGEX.test(trimmed)) return locale === 'es' ? 'Caracteres inválidos' : 'Invalid characters';
+    if (!trimmed) return t('errors.validationPhone');
+    if (!PHONE_REGEX.test(trimmed)) return t('errors.validationPhoneChars');
     const digits = getPhoneDigitCount(trimmed);
-    if (digits < 7 || digits > 15) return locale === 'es' ? 'Debe tener entre 7 y 15 dígitos' : 'Must be between 7 and 15 digits';
+    if (digits < 7 || digits > 15) return t('errors.validationPhoneDigits');
     return '';
   };
 
   const validateCompanyInput = (val: string) => {
     const trimmed = val.trim();
-    if (!trimmed) return locale === 'es' ? 'Empresa requerida' : 'Company name is required';
-    if (trimmed.length < 2) return locale === 'es' ? 'Mínimo 2 caracteres' : 'Minimum 2 characters';
-    if (!COMPANY_REGEX.test(trimmed)) return locale === 'es' ? 'Solo letras, números, espacios, & y .' : 'Only letters, numbers, spaces, & and .';
+    if (!trimmed) return t('errors.validationCompany');
+    if (trimmed.length < 2) return t('errors.validationCompanyLength');
+    if (!COMPANY_REGEX.test(trimmed)) return t('errors.validationCompanyChars');
     return '';
   };
 
   const validateDateInput = (val: string) => {
     const trimmed = val.trim();
-    if (!trimmed) return locale === 'es' ? 'Fecha requerida' : 'Preferred date is required';
-    if (trimmed.length < 5) return locale === 'es' ? 'Escriba una fecha válida' : 'Write a valid preferred date';
+    if (!trimmed) return t('errors.validationDate');
+    if (trimmed.length < 5) return t('errors.validationDateLength');
     return '';
   };
 
   const validateMessageInput = (val: string) => {
     const trimmed = val.trim();
-    if (!trimmed) return locale === 'es' ? 'Mensaje requerido' : 'Message is required';
-    if (trimmed.length < 20 || trimmed.length > 2000) return locale === 'es' ? 'Debe tener entre 20 y 2000 caracteres' : 'Must be between 20 and 2000 characters';
+    if (!trimmed) return t('errors.validationMessage');
+    if (trimmed.length < 20 || trimmed.length > 2000) return t('errors.validationMessageLength');
     return '';
   };
 
@@ -689,9 +729,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
       simulateAssistantResponse(text, question, []);
     } else if (staffingStep === 7) {
       if (!text.includes('@') || !text.includes('.')) {
-        const errorMsg = isEs
-          ? "Por favor, introduzca una dirección de correo electrónico válida (ej. nombre@empresa.com):"
-          : "Please enter a valid email address (e.g., name@company.com):";
+        const errorMsg = t('errors.validationEmailPrompt');
         const userMsgId = 'user_' + Date.now();
         setMessages(prev => [...prev, { id: userMsgId, sender: 'user', message: text, created_at: new Date().toISOString() }]);
         setIsTyping(true);
@@ -869,64 +907,194 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
   const routeSuggestedPrompt = (prompt: string) => {
     const p = prompt.toLowerCase().trim();
 
-    // Map AI Solutions
+    // 1. Start Over Trigger
     if (
-      p.includes('ai solutions') || 
-      p.includes('soluciones de ia') || 
-      p.includes('artificial intelligence') || 
-      p.includes('inteligencia artificial') ||
-      p === 'ai solutions' ||
-      p === 'soluciones de ia'
+      p.includes('back to start') ||
+      p.includes('volver al inicio') ||
+      p.includes('volver a servicios') ||
+      p.includes('go back to services')
     ) {
-      startAISolutionsFlow();
+      handleStartOver();
       return;
     }
 
-    // Map Hire Talent
+    // 2. Explicit Form Triggers
     if (
-      p.includes('hire talent') || 
-      p.includes('contratar talento') || 
-      p.includes('staffing') || 
-      p.includes('personal') ||
-      p === 'hire talent' ||
-      p === 'contratar' ||
-      p.includes('hire developers') ||
-      p.includes('hire a developer')
-    ) {
-      startStaffingFlow();
-      return;
-    }
-
-    // Map Website Development
-    if (
-      p.includes('website development') || 
-      p.includes('desarrollo web') || 
-      p.includes('web development') || 
-      p === 'website development' ||
-      p === 'desarrollo web' ||
-      p.includes('web development team') ||
-      p.includes('web dev')
-    ) {
-      startWebDevelopmentFlow();
-      return;
-    }
-
-    // Map Consultation
-    if (
-      p.includes('consultation') || 
-      p.includes('consulta') || 
-      p.includes('schedule') || 
-      p.includes('programar') ||
+      p.includes('contact an expert') ||
+      p.includes('contactar un experto') ||
+      p.includes('schedule a consultation') ||
+      p.includes('quiero una consulta') ||
+      p.includes('schedule consultation') ||
+      p.includes('schedule call now') ||
+      p.includes('agendar llamada ahora') ||
+      p.includes('programar una consulta') ||
+      p.includes('agendar llamada') ||
       p === 'consultation' ||
-      p === 'consulta' ||
-      p.includes('book') ||
-      p.includes('schedule')
+      p === 'consulta'
     ) {
       startConsultationFlow();
       return;
     }
 
-    // Fallback: send as regular chat message
+    if (
+      p.includes('qualify my project') ||
+      p.includes('calificar mi proyecto') ||
+      p.includes('qualify project blueprint') ||
+      p.includes('calificar plan de proyecto')
+    ) {
+      setSelectedService(locale === 'es' ? 'Soluciones de IA' : 'AI Solutions');
+      setActiveFlow('lead_form');
+      return;
+    }
+
+    if (
+      p.includes('get staffing quote') ||
+      p.includes('cotizar personal') ||
+      p.includes('solicitar presupuesto') ||
+      p.includes('cotizar presupuesto')
+    ) {
+      startStaffingFlow();
+      return;
+    }
+
+    // 3. Navigation Triggers (Only navigate when they explicitly choose to do so by clicking)
+    // Cloud & DevOps / Cloud Migration
+    if (
+      p.includes('cloud assessment') ||
+      p.includes('evaluación cloud') ||
+      p.includes('migration strategy') ||
+      p.includes('estrategia de migración') ||
+      p.includes('devops & ci/cd') ||
+      p.includes('devops y ci/cd')
+    ) {
+      window.location.href = `/${locale}/solutions/cloud-migration`;
+      return;
+    }
+
+    // AI & Automation
+    if (
+      p.includes('ai strategy') ||
+      p.includes('estrategia de ia') ||
+      p.includes('process automation') ||
+      p.includes('automatización') ||
+      p.includes('ai chatbot dev') ||
+      p.includes('desarrollo chatbots')
+    ) {
+      window.location.href = `/${locale}/solutions/ai-consulting`;
+      return;
+    }
+
+    // Business Intelligence
+    if (
+      p.includes('bi dashboard setup') ||
+      p.includes('configurar tablero bi') ||
+      p.includes('kpi tracking') ||
+      p.includes('métricas kpi') ||
+      p.includes('data warehousing') ||
+      p.includes('almacén de datos') ||
+      p.includes('reporting & etl') ||
+      p.includes('reportes y etl')
+    ) {
+      window.location.href = `/${locale}/solutions/business-intelligence`;
+      return;
+    }
+
+    // Data Analytics
+    if (
+      p.includes('predictive models') ||
+      p.includes('modelos predictivos') ||
+      p.includes('data engineering') ||
+      p.includes('ingeniería de datos') ||
+      p.includes('bigquery / snowflake')
+    ) {
+      window.location.href = `/${locale}/solutions/data-analytics-services`;
+      return;
+    }
+
+    // Web Development
+    if (
+      p.includes('saas development') ||
+      p.includes('desarrollo saas') ||
+      p.includes('next.js & react dev') ||
+      p.includes('desarrollo next.js')
+    ) {
+      window.location.href = `/${locale}/solutions/web-development-services`;
+      return;
+    }
+
+    // Software Development / ERP
+    if (
+      p.includes('custom erp dev') ||
+      p.includes('desarrollo erp') ||
+      p.includes('enterprise crm') ||
+      p.includes('crm empresarial') ||
+      p.includes('database architecture') ||
+      p.includes('arquitectura de bd') ||
+      p.includes('software audit') ||
+      p.includes('auditoría de software')
+    ) {
+      window.location.href = `/${locale}/solutions/custom-software-development`;
+      return;
+    }
+
+    // Mobile Development
+    if (
+      p.includes('react native') ||
+      p.includes('soluciones flutter') ||
+      p.includes('flutter solutions') ||
+      p.includes('apps ios/android') ||
+      p.includes('ios/android apps') ||
+      p.includes('diseño ux móvil') ||
+      p.includes('mobile ux design')
+    ) {
+      window.location.href = `/${locale}/solutions/cross-platform-apps`;
+      return;
+    }
+
+    // Digital Transformation
+    if (
+      p.includes('digital audit') ||
+      p.includes('auditoría digital') ||
+      p.includes('legacy modernization') ||
+      p.includes('modernización legada') ||
+      p.includes('cto advisory') ||
+      p.includes('asesoría de cto')
+    ) {
+      window.location.href = `/${locale}/solutions/digital-transformation-consulting`;
+      return;
+    }
+
+    // Shopify / E-commerce
+    if (
+      p.includes('shopify custom themes') ||
+      p.includes('temas shopify') ||
+      p.includes('stripe integration') ||
+      p.includes('integración stripe') ||
+      p.includes('headless e-commerce') ||
+      p.includes('e-commerce headless') ||
+      p.includes('conversion audit') ||
+      p.includes('auditoría de conversión')
+    ) {
+      window.location.href = `/${locale}/solutions/ecommerce-websites`;
+      return;
+    }
+
+    // Security
+    if (
+      p.includes('penetration testing') ||
+      p.includes('pruebas de penetración') ||
+      p.includes('soc2 compliance') ||
+      p.includes('cumplimiento soc2') ||
+      p.includes('iam security audit') ||
+      p.includes('auditoría de iam') ||
+      p.includes('software security') ||
+      p.includes('seguridad de software')
+    ) {
+      window.location.href = `/${locale}/solutions/security-assessment`;
+      return;
+    }
+
+    // 4. Default: Send as regular chat message
     handleSendMessage(prompt);
   };
 
@@ -945,10 +1113,22 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
     }
   };
 
+  const handleRetrySendMessage = () => {
+    if (lastFailedMessage) {
+      const msg = lastFailedMessage;
+      setLastFailedMessage(null);
+      // Remove previous error messages
+      setMessages(prev => prev.filter(m => !m.id.startsWith('error_')));
+      handleSendMessage(msg);
+    }
+  };
+
   // Send Message Handler
   const handleSendMessage = async (textToSend: string) => {
     if (!textToSend.trim() || isSending || isTyping) return;
     
+    setLastFailedMessage(null);
+
     trackGAEvent({
       action: 'chatbot_message_sent',
       category: 'Chatbot',
@@ -968,6 +1148,11 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
     setIsSending(true);
     setIsTyping(true);
 
+    const historyPayload = messages.map(m => ({
+      sender: m.sender,
+      message: m.message
+    }));
+
     try {
       const response = await fetch('/api/chat/message', {
         method: 'POST',
@@ -976,42 +1161,50 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
           conversation_id: conversationId || sessionId,
           sender: 'user',
           message: textToSend,
-          language: locale
+          language: locale,
+          history: historyPayload
         })
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        if (data.success) {
-          if (!conversationId && data.userMessage?.conversation_id) {
-            setConversationId(data.userMessage.conversation_id);
-          }
-
-          setTimeout(() => {
-            setIsTyping(false);
-            setMessages(prev => [...prev, {
-              id: data.assistantMessage.id,
-              sender: 'assistant',
-              message: data.assistantMessage.message,
-              created_at: data.assistantMessage.created_at
-            }]);
-
-            if (data.suggestedPrompts && data.suggestedPrompts.length > 0) {
-              setSuggestedPrompts(data.suggestedPrompts);
-            }
-
-            if (data.flowTrigger === 'lead_form') {
-              setSelectedService(textToSend);
-              setActiveFlow('lead_form');
-            } else if (data.flowTrigger === 'consultation_form') {
-              setActiveFlow('consultation_form');
-            }
-          }, 800);
-        }
+      if (!response.ok) {
+        throw new Error(`Server error: status ${response.status}`);
       }
+
+      const data = await response.json();
+      if (!data.success) {
+        throw new Error(data.error || 'Server processed request with failure status');
+      }
+
+      if (!conversationId && data.userMessage?.conversation_id) {
+        setConversationId(data.userMessage.conversation_id);
+      }
+
+      setTimeout(() => {
+        setIsTyping(false);
+        setMessages(prev => [...prev, {
+          id: data.assistantMessage.id,
+          sender: 'assistant',
+          message: data.assistantMessage.message,
+          created_at: data.assistantMessage.created_at
+        }]);
+
+        if (data.suggestedPrompts && data.suggestedPrompts.length > 0) {
+          setSuggestedPrompts(data.suggestedPrompts);
+        }
+
+        if (data.flowTrigger === 'lead_form') {
+          setSelectedService(textToSend);
+          setActiveFlow('lead_form');
+        } else if (data.flowTrigger === 'consultation_form') {
+          setActiveFlow('consultation_form');
+        } else if (data.flowTrigger === 'staffing_form') {
+          startStaffingFlow();
+        }
+      }, 800);
     } catch (err) {
       console.error('Failed to send message:', err);
       setIsTyping(false);
+      setLastFailedMessage(textToSend);
       setMessages(prev => [...prev, {
         id: 'error_' + Date.now(),
         sender: 'assistant',
@@ -1033,53 +1226,53 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
     
     const trimmedName = formName.trim();
     if (!trimmedName) {
-      newErrors.name = locale === 'es' ? 'El nombre es requerido.' : 'Name is required.';
+      newErrors.name = t('errors.validationName');
     } else if (trimmedName.length < 2 || trimmedName.length > 80) {
-      newErrors.name = locale === 'es' ? 'El nombre debe tener entre 2 y 80 caracteres.' : 'Name must be between 2 and 80 characters.';
+      newErrors.name = t('errors.validationNameLength');
     } else if (!NAME_REGEX.test(trimmedName)) {
-      newErrors.name = locale === 'es' ? 'El nombre solo puede contener letras, espacios, guiones y apóstrofes.' : 'Name must contain only letters, spaces, hyphens, and apostrophes.';
+      newErrors.name = t('errors.validationNameChars');
     }
 
     const trimmedEmail = formEmail.trim();
     if (!trimmedEmail) {
-      newErrors.email = locale === 'es' ? 'El correo es requerido.' : 'Email is required.';
+      newErrors.email = t('errors.validationEmail');
     } else if (!EMAIL_REGEX.test(trimmedEmail)) {
-      newErrors.email = t('errors.email') || 'Enter a valid corporate email.';
+      newErrors.email = t('errors.email');
     }
 
     const trimmedPhone = formPhone.trim();
     if (!trimmedPhone) {
-      newErrors.phone = locale === 'es' ? 'El teléfono es requerido.' : 'Phone is required.';
+      newErrors.phone = t('errors.validationPhone');
     } else if (!PHONE_REGEX.test(trimmedPhone)) {
-      newErrors.phone = locale === 'es' ? 'Número de teléfono inválido.' : 'Invalid phone number.';
+      newErrors.phone = t('errors.validationPhoneChars');
     } else {
       const digits = getPhoneDigitCount(trimmedPhone);
       if (digits < 7 || digits > 15) {
-        newErrors.phone = locale === 'es' ? 'El teléfono debe tener entre 7 y 15 dígitos.' : 'Phone number must be between 7 and 15 digits.';
+        newErrors.phone = t('errors.validationPhoneDigits');
       }
     }
 
     const trimmedCompany = formCompany.trim();
     if (!trimmedCompany) {
-      newErrors.company = locale === 'es' ? 'La empresa es requerida.' : 'Company name is required.';
+      newErrors.company = t('errors.validationCompany');
     } else if (trimmedCompany.length < 2) {
-      newErrors.company = locale === 'es' ? 'La empresa debe tener al menos 2 caracteres.' : 'Company name must be at least 2 characters.';
+      newErrors.company = t('errors.validationCompanyLength');
     } else if (!COMPANY_REGEX.test(trimmedCompany)) {
-      newErrors.company = locale === 'es' ? 'El nombre de la empresa solo puede contener letras, números, espacios, & y .' : 'Company name must contain only letters, numbers, spaces, &, and .';
+      newErrors.company = t('errors.validationCompanyChars');
     }
 
     if (!isValidDropdownValue(formBudget)) {
-      newErrors.budget = locale === 'es' ? 'Por favor seleccione un presupuesto.' : 'Please select a budget.';
+      newErrors.budget = t('errors.validationBudget');
     }
     if (!isValidDropdownValue(formTimeline)) {
-      newErrors.timeline = locale === 'es' ? 'Por favor seleccione un plazo.' : 'Please select a timeline.';
+      newErrors.timeline = t('errors.validationTimeline');
     }
 
     const trimmedMessage = formMessage.trim();
     if (!trimmedMessage) {
-      newErrors.message = locale === 'es' ? 'El mensaje es requerido.' : 'Message is required.';
+      newErrors.message = t('errors.validationMessage');
     } else if (trimmedMessage.length < 20 || trimmedMessage.length > 2000) {
-      newErrors.message = locale === 'es' ? 'El mensaje debe tener entre 20 y 2000 caracteres.' : 'Message must be between 20 and 2000 characters.';
+      newErrors.message = t('errors.validationMessageLength');
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -1150,53 +1343,53 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
     
     const trimmedName = formName.trim();
     if (!trimmedName) {
-      newErrors.name = locale === 'es' ? 'El nombre es requerido.' : 'Name is required.';
+      newErrors.name = t('errors.validationName');
     } else if (trimmedName.length < 2 || trimmedName.length > 80) {
-      newErrors.name = locale === 'es' ? 'El nombre debe tener entre 2 y 80 caracteres.' : 'Name must be between 2 and 80 characters.';
+      newErrors.name = t('errors.validationNameLength');
     } else if (!NAME_REGEX.test(trimmedName)) {
-      newErrors.name = locale === 'es' ? 'El nombre solo puede contener letras, espacios, guiones y apóstrofes.' : 'Name must contain only letters, spaces, hyphens, and apostrophes.';
+      newErrors.name = t('errors.validationNameChars');
     }
 
     const trimmedEmail = formEmail.trim();
     if (!trimmedEmail) {
-      newErrors.email = locale === 'es' ? 'El correo es requerido.' : 'Email is required.';
+      newErrors.email = t('errors.validationEmail');
     } else if (!EMAIL_REGEX.test(trimmedEmail)) {
-      newErrors.email = t('errors.email') || 'Enter a valid corporate email.';
+      newErrors.email = t('errors.email');
     }
 
     const trimmedPhone = formPhone.trim();
     if (!trimmedPhone) {
-      newErrors.phone = locale === 'es' ? 'El teléfono es requerido.' : 'Phone is required.';
+      newErrors.phone = t('errors.validationPhone');
     } else if (!PHONE_REGEX.test(trimmedPhone)) {
-      newErrors.phone = locale === 'es' ? 'Número de teléfono inválido.' : 'Invalid phone number.';
+      newErrors.phone = t('errors.validationPhoneChars');
     } else {
       const digits = getPhoneDigitCount(trimmedPhone);
       if (digits < 7 || digits > 15) {
-        newErrors.phone = locale === 'es' ? 'El teléfono debe tener entre 7 y 15 dígitos.' : 'Phone number must be between 7 and 15 digits.';
+        newErrors.phone = t('errors.validationPhoneDigits');
       }
     }
 
     const trimmedCompany = formCompany.trim();
     if (!trimmedCompany) {
-      newErrors.company = locale === 'es' ? 'La empresa es requerida.' : 'Company name is required.';
+      newErrors.company = t('errors.validationCompany');
     } else if (trimmedCompany.length < 2) {
-      newErrors.company = locale === 'es' ? 'La empresa debe tener al menos 2 caracteres.' : 'Company name must be at least 2 characters.';
+      newErrors.company = t('errors.validationCompanyLength');
     } else if (!COMPANY_REGEX.test(trimmedCompany)) {
-      newErrors.company = locale === 'es' ? 'El nombre de la empresa solo puede contener letras, números, espacios, & y .' : 'Company name must contain only letters, numbers, spaces, &, and .';
+      newErrors.company = t('errors.validationCompanyChars');
     }
 
     const trimmedDate = formDate.trim();
     if (!trimmedDate) {
-      newErrors.date = locale === 'es' ? 'La fecha preferida es requerida.' : 'Preferred date is required.';
+      newErrors.date = t('errors.validationDate');
     } else if (trimmedDate.length < 5) {
-      newErrors.date = locale === 'es' ? 'Por favor especifique la fecha preferida.' : 'Please specify a valid preferred date.';
+      newErrors.date = t('errors.validationDateLength');
     }
 
     const trimmedMessage = formMessage.trim();
     if (!trimmedMessage) {
-      newErrors.message = locale === 'es' ? 'El mensaje es requerido.' : 'Message is required.';
+      newErrors.message = t('errors.validationMessage');
     } else if (trimmedMessage.length < 20 || trimmedMessage.length > 2000) {
-      newErrors.message = locale === 'es' ? 'El mensaje debe tener entre 20 y 2000 caracteres.' : 'Message must be between 20 and 2000 characters.';
+      newErrors.message = t('errors.validationMessageLength');
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -1307,7 +1500,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
             transition={{ duration: 0.25, ease: 'easeOut' }}
             role="dialog"
             aria-label="AI Consultant Chat Window"
-            className="w-full sm:w-[380px] lg:w-[400px] xl:w-[420px] xl:max-w-[450px] xl:min-w-[390px] h-[min(80vh,calc(100vh-20px))] sm:h-[min(75vh,calc(100vh-40px))] lg:h-[min(620px,calc(100vh-48px))] xl:h-[min(650px,calc(100vh-48px))] bg-white/95 backdrop-blur-xl border border-slate-200 rounded-[28px] shadow-[0_24px_60px_rgba(15,76,129,0.15)] overflow-hidden flex flex-col pointer-events-auto mb-0"
+            className="w-full sm:w-[380px] lg:w-[400px] xl:w-[420px] xl:max-w-[450px] xl:min-w-[390px] h-[min(80dvh,calc(100dvh-20px))] sm:h-[min(75vh,calc(100vh-40px))] lg:h-[min(620px,calc(100vh-48px))] xl:h-[min(650px,calc(100vh-48px))] bg-white/95 backdrop-blur-xl border border-slate-200 rounded-[28px] shadow-[0_24px_60px_rgba(15,76,129,0.15)] overflow-hidden flex flex-col pointer-events-auto mb-0"
           >
             {/* Header bar (shrink-0 prevents squash) */}
             <div className="h-[76px] px-5 border-b border-slate-100 flex justify-between items-center bg-slate-50 shrink-0">
@@ -1337,7 +1530,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                   onClick={() => setWindowState('minimized')}
                   title={t('actions.minimize')}
                   aria-label="Minimize AI Consultant"
-                  className="w-8 h-8 hover:bg-slate-100 text-slate-500 rounded-xl transition-colors cursor-pointer outline-none flex items-center justify-center shrink-0 border-none"
+                  className="w-8 h-8 hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-[#0F4C81] text-slate-500 rounded-xl transition-colors cursor-pointer outline-none flex items-center justify-center shrink-0 border-none"
                 >
                   <Minus className="w-4 h-4" />
                 </button>
@@ -1345,7 +1538,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                   onClick={() => setWindowState('closed')}
                   title={t('actions.close')}
                   aria-label="Close AI Consultant"
-                  className="w-8 h-8 bg-slate-100 hover:bg-rose-50 hover:text-rose-600 text-slate-500 rounded-xl transition-colors cursor-pointer outline-none flex items-center justify-center shrink-0 border-none"
+                  className="w-8 h-8 bg-slate-100 hover:bg-rose-50 hover:text-rose-600 focus-visible:ring-2 focus-visible:ring-[#0F4C81] text-slate-500 rounded-xl transition-colors cursor-pointer outline-none flex items-center justify-center shrink-0 border-none"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -1388,7 +1581,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                               key={idx}
                               onClick={() => routeSuggestedPrompt(prompt)}
                               disabled={isSending || isTyping}
-                              className="px-3.5 py-2 bg-slate-50 hover:bg-[#0F4C81] hover:border-[#0F4C81] text-slate-600 hover:text-white rounded-2xl text-[11px] font-bold border border-slate-200 transition-all duration-300 cursor-pointer shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 shrink-0"
+                              className="px-3.5 py-2 bg-slate-50 hover:bg-[#0F4C81] hover:border-[#0F4C81] focus-visible:ring-2 focus-visible:ring-[#0F4C81] focus-visible:ring-offset-1 outline-none text-slate-600 hover:text-white rounded-2xl text-[11px] font-bold border border-slate-200 transition-all duration-300 cursor-pointer shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 shrink-0"
                             >
                               {getCompactChipLabel(prompt, locale)}
                             </button>
@@ -1429,7 +1622,22 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                               : 'bg-slate-50 border border-slate-200 text-slate-800 rounded-tl-none shadow-sm'
                           }`}
                         >
-                          {msg.message}
+                          {msg.sender === 'user' ? (
+                            msg.message
+                          ) : (
+                            <>
+                              <MarkdownRenderer text={msg.message} locale={locale} />
+                              {msg.id.startsWith('error_') && lastFailedMessage && (
+                                <button
+                                  type="button"
+                                  onClick={handleRetrySendMessage}
+                                  className="mt-2 block text-[10px] text-rose-600 hover:text-rose-800 font-extrabold underline cursor-pointer bg-transparent border-none p-0 outline-none"
+                                >
+                                  {locale === 'es' ? 'Reintentar' : 'Retry'}
+                                </button>
+                              )}
+                            </>
+                          )}
                         </div>
                         <span className="text-[8px] text-slate-400 font-extrabold uppercase mt-1 px-1 tracking-wider">
                           {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
@@ -2047,7 +2255,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                         key={idx}
                         onClick={() => routeSuggestedPrompt(prompt)}
                         disabled={isSending || isTyping}
-                        className="px-3.5 py-2.5 bg-slate-50 hover:bg-[#0F4C81] active:bg-[#0d3f6b] text-slate-600 hover:text-white rounded-2xl text-[11px] font-bold border border-slate-200 cursor-pointer max-w-full truncate outline-none transition-all duration-300 min-h-[44px] flex items-center justify-center"
+                        className="px-3.5 py-2.5 bg-slate-50 hover:bg-[#0F4C81] active:bg-[#0d3f6b] focus-visible:ring-2 focus-visible:ring-[#0F4C81] focus-visible:ring-offset-1 text-slate-600 hover:text-white rounded-2xl text-[11px] font-bold border border-slate-200 cursor-pointer max-w-full truncate outline-none transition-all duration-300 min-h-[44px] flex items-center justify-center"
                       >
                         {getCompactChipLabel(prompt, locale)}
                       </button>

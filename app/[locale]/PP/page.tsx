@@ -58,19 +58,6 @@ export default async function PrivacyPolicyPage({ params }: Props) {
           { label: locale === 'es' ? 'Inicio' : 'Home', href: '/' },
           { label: t('title') }
         ]}
-        ctaButtons={
-          <div className="flex-shrink-0 z-20">
-            <a
-              href={pdfUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#0F4C81] hover:bg-[#0c3c66] text-white font-bold rounded-xl text-xs uppercase tracking-wider transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 cursor-pointer"
-            >
-              <FileDown className="w-4 h-4" />
-              <span>{t('downloadPdf')}</span>
-            </a>
-          </div>
-        }
       />
 
       {/* Content Layout */}

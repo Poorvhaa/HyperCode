@@ -9,6 +9,10 @@ const schema = z.object({
   sender: z.literal('user'),
   message: z.string().min(1).max(2000),
   language: z.enum(['en', 'es']),
+  history: z.array(z.object({
+    sender: z.enum(['user', 'assistant']),
+    message: z.string()
+  })).optional()
 });
 
 export async function POST(req: Request) {
@@ -30,6 +34,17 @@ export async function POST(req: Request) {
     const sanitizedMsg = sanitizeInput(parsed.message);
     const language = parsed.language;
 
+    // Load Chat History for Context
+    let history = parsed.history;
+    if (!history) {
+      try {
+        history = await db.getChatMessages(conversationId);
+      } catch (dbError) {
+        console.warn('[DB Warning] Could not fetch chat messages history:', dbError);
+        history = [];
+      }
+    }
+
     // A. Log User Message to Database
     let savedUserMsg = null;
     try {
@@ -47,7 +62,7 @@ export async function POST(req: Request) {
     }
 
     // B. Generate Advisor Response
-    const advisorResult = generateAdvisorResponse(sanitizedMsg, language);
+    const advisorResult = generateAdvisorResponse(sanitizedMsg, language, history);
 
     // C. Log Advisor Message to Database
     let savedAssistantMsg = null;

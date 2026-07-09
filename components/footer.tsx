@@ -5,12 +5,14 @@ import { Mail, Phone, MapPin, ArrowRight, ShieldCheck, Check, AlertCircle } from
 import { useTranslations, useLocale } from 'next-intl';
 import { useState, type FormEvent } from 'react';
 import { EMAIL_REGEX } from '@/lib/validation';
+import { useCookieConsent } from '@/hooks/useCookieConsent';
 
 export function Footer() {
   const tNav = useTranslations('Navigation');
   const tf = useTranslations('Footer');
   const tc = useTranslations('Common');
   const locale = useLocale();
+  const { openPreferences } = useCookieConsent();
 
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
@@ -260,12 +262,19 @@ export function Footer() {
         </div>
 
         {/* Bottom Section: Legal & Copyright */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-6 pt-12 text-xs font-semibold text-slate-400 uppercase tracking-widest">
-          <p>{tf('copyright')}</p>
-          <div className="flex space-x-6">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-6 pt-12 text-xs font-semibold text-slate-400 uppercase tracking-widest w-full">
+          <p className="text-center sm:text-left">{tf('copyright')}</p>
+          <div className="flex flex-wrap justify-center sm:justify-end gap-x-6 gap-y-2.5">
             <Link href="/PP" className="hover:text-slate-900 transition-colors duration-200">{tf('privacy')}</Link>
             <Link href="/TnC" className="hover:text-slate-900 transition-colors duration-200">{tf('terms')}</Link>
-            <Link href="/sitemap" className="hover:text-slate-900 transition-colors duration-200">{tf('sitemap') || 'Sitemap'}</Link>
+            <Link href="/cookie-policy" className="hover:text-slate-900 transition-colors duration-200">{tf('cookiePolicy')}</Link>
+            <button
+              type="button"
+              onClick={openPreferences}
+              className="hover:text-slate-900 transition-colors duration-200 cursor-pointer bg-transparent border-none p-0 text-left uppercase tracking-widest text-xs font-semibold text-slate-400 outline-none"
+            >
+              {tf('cookieSettings')}
+            </button>
           </div>
         </div>
       </div>

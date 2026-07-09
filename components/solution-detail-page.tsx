@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
-import { CaseStudiesSection } from '@/components/case-studies-section';
 import { getServiceDetails } from '@/lib/services-details';
 import { HeroBanner } from '@/components/hero-banner';
 import { Link } from '@/i18n/routing';
@@ -386,9 +385,6 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
           </div>
         </div>
       </section>
-
-      {/* 8. Related Case Studies (Filtered Automatically) */}
-      <CaseStudiesSection categoryFilter={activeTrans.categoryId} />
 
       {/* 9. FAQs Section (Accordion) */}
       <section className="section-padding bg-white border-b border-slate-200">
