@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { Settings, Mail, Shield, User, X, AlertCircle, Save, CheckCircle, Globe } from 'lucide-react';
+import { Settings, Mail, Shield, User, X, AlertCircle, Save, CheckCircle, Globe, ArrowLeft } from 'lucide-react';
 import { supabase, db, CompanySettings, EmailTemplate, UserProfile } from '@/lib/db';
 import AdminSidebar from '@/components/admin/Sidebar';
 

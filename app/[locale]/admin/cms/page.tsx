@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { Plus, Trash2, Edit2, CheckCircle, AlertCircle, Eye, ArrowLeft, Globe, Award, FileText } from 'lucide-react';
+import { Plus, Trash2, Edit2, CheckCircle, AlertCircle, Eye, ArrowLeft, Globe, Award, FileText, Search, X } from 'lucide-react';
 import { supabase, db, Article, CaseStudy, UserProfile } from '@/lib/db';
 import AdminSidebar from '@/components/admin/Sidebar';
 

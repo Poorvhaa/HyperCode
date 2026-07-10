@@ -28,7 +28,8 @@ import {
   Maximize2,
   Bot,
   User,
-  ChevronRight
+  ChevronRight,
+  Check
 } from 'lucide-react';
 import { trackGAEvent } from '@/lib/analytics';
 
@@ -149,6 +150,113 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  // Stateful AI Consultant Engine
+  const [chatbotState, setChatbotState] = useState<{
+    detectedIntent: string;
+    conversationStage: string;
+    currentQuestion: string | null;
+    leadData: Record<string, any>;
+    projectData: Record<string, any>;
+    recommendations: any;
+    leadSubmitted: boolean;
+  }>({
+    detectedIntent: 'DEFAULT',
+    conversationStage: 'Greeting',
+    currentQuestion: null,
+    leadData: {},
+    projectData: {},
+    recommendations: null,
+    leadSubmitted: false
+  });
+
+  const getInputAttributes = () => {
+    const cq = chatbotState.currentQuestion;
+    if (cq === 'lead_email') {
+      return {
+        type: 'email',
+        inputMode: 'email' as const,
+        maxLength: 254,
+        autoComplete: 'email'
+      };
+    }
+    if (cq === 'lead_phone') {
+      return {
+        type: 'tel',
+        inputMode: 'tel' as const,
+        maxLength: 20,
+        autoComplete: 'tel'
+      };
+    }
+    if (cq === 'lead_name') {
+      return {
+        type: 'text',
+        inputMode: 'text' as const,
+        maxLength: 80,
+        autoComplete: 'name'
+      };
+    }
+    if (cq === 'lead_company') {
+      return {
+        type: 'text',
+        inputMode: 'text' as const,
+        maxLength: 120,
+        autoComplete: 'organization'
+      };
+    }
+    return {
+      type: 'text',
+      inputMode: 'text' as const,
+      maxLength: 1000,
+      autoComplete: 'off'
+    };
+  };
+
+  const handleInputChange = (val: string) => {
+    const cq = chatbotState.currentQuestion;
+    if (cq === 'lead_phone') {
+      const cleaned = val.replace(/[^0-9+\-()\s]/g, '');
+      setInputValue(cleaned);
+    } else if (cq === 'lead_name') {
+      const cleaned = val.replace(/[^A-Za-zÀ-ÿ .'-]/g, '');
+      setInputValue(cleaned);
+    } else {
+      setInputValue(val);
+    }
+  };
+  const getInputValidation = () => {
+  switch (chatbotState.currentQuestion) {
+    case 'lead_name':
+      return {
+        maxLength: 80,
+        pattern: "[A-Za-zÀ-ÿ .'-]+"
+      };
+
+    case 'lead_company':
+      return {
+        maxLength: 120
+      };
+
+    case 'lead_email':
+      return {
+        type: 'email',
+        maxLength: 254
+      };
+
+    case 'lead_phone':
+      return {
+        type: 'tel',
+        inputMode: 'tel',
+        maxLength: 20,
+        pattern: "[0-9()+\\- ]*"
+      };
+
+    default:
+      return {};
+  }
+};
+
+  const [isInitializing, setIsInitializing] = useState(true);
+
   // Mount effect with state restoration
   useEffect(() => {
     setMounted(true);
@@ -189,6 +297,13 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
     if (savedPrompts) {
       try {
         setSuggestedPrompts(JSON.parse(savedPrompts));
+      } catch (e) {}
+    }
+
+    const savedChatbotState = localStorage.getItem('hypercode_ai_consult_chatbot_state');
+    if (savedChatbotState) {
+      try {
+        setChatbotState(JSON.parse(savedChatbotState));
       } catch (e) {}
     }
   }, []);
@@ -241,6 +356,37 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
       localStorage.setItem('hypercode_ai_consult_suggested_prompts', JSON.stringify(suggestedPrompts));
     }
   }, [suggestedPrompts, mounted]);
+
+  useEffect(() => {
+    if (mounted) {
+      localStorage.setItem('hypercode_ai_consult_chatbot_state', JSON.stringify(chatbotState));
+    }
+  }, [chatbotState, mounted]);
+
+  // Pre-fill manual forms from conversational leadData context for premium experience
+  useEffect(() => {
+    if (chatbotState.leadData) {
+      if (chatbotState.leadData.name && !formName) setFormName(chatbotState.leadData.name);
+      if (chatbotState.leadData.email && !formEmail) setFormEmail(chatbotState.leadData.email);
+      if (chatbotState.leadData.company && !formCompany) setFormCompany(chatbotState.leadData.company);
+      if (chatbotState.leadData.phone && !formPhone) setFormPhone(chatbotState.leadData.phone);
+      if (chatbotState.leadData.projectDescription && !formMessage) setFormMessage(chatbotState.leadData.projectDescription);
+      if (chatbotState.leadData.industry) {
+        const ind = chatbotState.leadData.industry.toLowerCase();
+        if (ind.includes('health')) setFormIndustry('healthcare');
+        else if (ind.includes('finan') || ind.includes('bank')) setFormIndustry('finance');
+        else if (ind.includes('retail') || ind.includes('shop') || ind.includes('e-com')) setFormIndustry('retail');
+        else if (ind.includes('manufact')) setFormIndustry('manufacturing');
+        else if (ind.includes('edu')) setFormIndustry('education');
+        else if (ind.includes('gov')) setFormIndustry('government');
+        else if (ind.includes('real')) setFormIndustry('realestate');
+        else if (ind.includes('logis')) setFormIndustry('logistics');
+        else if (ind.includes('legal')) setFormIndustry('legal');
+        else if (ind.includes('tech')) setFormIndustry('technology');
+      }
+    }
+  }, [chatbotState.leadData]);
+
   const [staffingStep, setStaffingStep] = useState<number>(0);
   const [staffingData, setStaffingData] = useState({
     role: '',
@@ -401,14 +547,67 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
 
   // 1. Initialize Session ID and Load Chat
   useEffect(() => {
-    let savedSessionId = localStorage.getItem('hypercode_ai_consult_session_id');
+    let savedSessionId = localStorage.getItem('hypercode_ai_session');
     if (!savedSessionId) {
-      savedSessionId = 'session_' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-      localStorage.setItem('hypercode_ai_consult_session_id', savedSessionId);
+      if (typeof window !== 'undefined' && window.crypto && window.crypto.randomUUID) {
+        savedSessionId = window.crypto.randomUUID();
+      } else {
+        savedSessionId = 'session_' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+      }
+      localStorage.setItem('hypercode_ai_session', savedSessionId);
     }
     setSessionId(savedSessionId);
     setSuggestedPrompts(getDefaultPrompts());
-  }, [t]);
+
+    // Call POST /api/chat/session to create/fetch conversation row
+    const initSession = async () => {
+      try {
+        const res = await fetch('/api/chat/session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            session_id: savedSessionId,
+            language: locale
+          })
+        });
+        const data = await res.json().catch(() => null);
+
+if (!res.ok || !data?.success || !data?.conversation?.id) {
+  console.error('[AI Consultant Session Error]', {
+    status: res.status,
+    response: data
+  });
+
+  throw new Error(
+    data?.error || 'Unable to initialize AI Consultant session.'
+  );
+}
+
+setConversationId(data.conversation.id);
+
+setMessages(prev => {
+  if (prev.length > 0) {
+    return prev;
+  }
+
+  return [
+    {
+      id: 'greeting',
+      sender: 'assistant',
+      message: t('welcomeMessage'),
+      created_at: new Date().toISOString()
+    }
+  ];
+});
+      } catch (err) {
+        console.error('Failed to initialize AI Consultant session:', err);
+      } finally {
+        setIsInitializing(false);
+      }
+    };
+
+    initSession();
+  }, [t, locale]);
 
   // 2. Keyboard ESC Support & Custom Open Event
   useEffect(() => {
@@ -454,46 +653,14 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
   }, [messages, isTyping, activeFlow]);
 
   // Initialize Conversation in remote DB
-  const initializeConversation = async (sessId: string, currentLocale: string) => {
-    try {
-      const res = await fetch('/api/chat/conversation', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          session_id: sessId,
-          language: currentLocale
-        })
-      });
-      if (res.ok) {
-        const data = await res.json();
-        if (data.success && data.conversation) {
-          setConversationId(data.conversation.id);
-          if (messages.length === 0) {
-            setMessages([
-              {
-                id: 'greeting',
-                sender: 'assistant',
-                message: t('welcomeMessage'),
-                created_at: new Date().toISOString()
-              }
-            ]);
-          }
-        }
-      }
-    } catch (err) {
-      console.error('Failed to initialize AI conversation:', err);
-    }
-  };
+  
 
   // Trigger initialization when opening the chat
   useEffect(() => {
     if (windowState === 'open') {
       trackGAEvent({ action: 'chatbot_opened', category: 'Chatbot' });
-      if (sessionId && !conversationId) {
-        initializeConversation(sessionId, locale);
-      }
     }
-  }, [windowState, sessionId]);
+  }, [windowState]);
 
   // Handle language switch synchronization with DB
   useEffect(() => {
@@ -530,24 +697,6 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
     setIsTyping(true);
 
     // Async sync user message to backend database
-    fetch('/api/chat/message', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        conversation_id: conversationId || sessionId,
-        sender: 'user',
-        message: userMsg,
-        language: locale
-      })
-    }).then(res => {
-      if (res.ok) {
-        res.json().then(data => {
-          if (data.success && !conversationId && data.userMessage?.conversation_id) {
-            setConversationId(data.userMessage.conversation_id);
-          }
-        });
-      }
-    }).catch(err => console.warn('User message sync failed:', err));
 
     setTimeout(() => {
       setIsTyping(false);
@@ -561,18 +710,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
       setSuggestedPrompts(nextPrompts);
 
       // Async sync assistant message to backend database
-      if (conversationId || sessionId) {
-        fetch('/api/chat/message', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            conversation_id: conversationId || sessionId,
-            sender: 'assistant',
-            message: assistantMsg,
-            language: locale
-          })
-        }).catch(err => console.warn('Assistant message sync failed:', err));
-      }
+      
     }, delay);
   };
 
@@ -907,6 +1045,11 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
   const routeSuggestedPrompt = (prompt: string) => {
     const p = prompt.toLowerCase().trim();
 
+    if (chatbotState.detectedIntent !== 'DEFAULT') {
+      handleSendMessage(prompt);
+      return;
+    }
+
     // 1. Start Over Trigger
     if (
       p.includes('back to start') ||
@@ -1101,16 +1244,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
   // Central User Submit Interceptor
   const handleUserSubmit = (text: string) => {
     if (!text.trim()) return;
-
-    if (chatState === 'STAFFING') {
-      handleStaffingInput(text);
-    } else if (chatState === 'WEB_DEVELOPMENT') {
-      handleWebDevInput(text);
-    } else if (chatState === 'AI_SOLUTIONS') {
-      handleAISolutionsInput(text);
-    } else {
-      routeSuggestedPrompt(text);
-    }
+    routeSuggestedPrompt(text);
   };
 
   const handleRetrySendMessage = () => {
@@ -1125,7 +1259,15 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
 
   // Send Message Handler
   const handleSendMessage = async (textToSend: string) => {
-    if (!textToSend.trim() || isSending || isTyping) return;
+    if (
+  !textToSend.trim() ||
+  isSending ||
+  isTyping ||
+  isInitializing ||
+  !sessionId
+) {
+  return;
+}
     
     setLastFailedMessage(null);
 
@@ -1158,25 +1300,51 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          conversation_id: conversationId || sessionId,
+          conversation_id: conversationId || undefined,
+          session_id: sessionId,
           sender: 'user',
           message: textToSend,
           language: locale,
-          history: historyPayload
+          history: historyPayload,
+          timestamp: new Date().toISOString(),
+          state: chatbotState
         })
       });
 
-      if (!response.ok) {
-        throw new Error(`Server error: status ${response.status}`);
-      }
+      const data = await response.json().catch(() => null);
 
-      const data = await response.json();
+if (!response.ok) {
+  const errorMessage =
+    data?.error ||
+    data?.details?.[0]?.message ||
+    `Server error: status ${response.status}`;
+
+  console.error('[AI Consultant API Error]', {
+    status: response.status,
+    response: data
+  });
+
+  throw new Error(errorMessage);
+}
       if (!data.success) {
         throw new Error(data.error || 'Server processed request with failure status');
       }
 
       if (!conversationId && data.userMessage?.conversation_id) {
         setConversationId(data.userMessage.conversation_id);
+      }
+
+      if (data.state) {
+        setChatbotState(prev => ({
+          ...prev,
+          detectedIntent: data.state.detectedIntent,
+          conversationStage: data.state.conversationStage,
+          currentQuestion: data.state.currentQuestion,
+          leadData: data.state.leadData || {},
+          projectData: data.state.projectData || {},
+          recommendations: data.state.recommendations || null,
+          leadSubmitted: data.state.leadSubmitted || false
+        }));
       }
 
       setTimeout(() => {
@@ -1449,6 +1617,15 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
   const handleStartOver = () => {
     setActiveFlow('chat');
     setChatState('DEFAULT');
+    setChatbotState({
+      detectedIntent: 'DEFAULT',
+      conversationStage: 'Greeting',
+      currentQuestion: null,
+      leadData: {},
+      projectData: {},
+      recommendations: null,
+      leadSubmitted: false
+    });
     setMessages([
       {
         id: 'greeting',
@@ -1476,9 +1653,11 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
   const questionText = isEs ? '¿Cómo puedo ayudarle con sus objetivos comerciales hoy?' : 'How can I help your business today?';
   
   // Localized placeholder
-  const placeholderText = isEs
-    ? 'Pregunte sobre IA, contratación, automatización o transformación digital...'
-    : 'Ask anything about AI, hiring, automation or digital transformation...';
+  const placeholderText = isInitializing
+    ? (isEs ? 'Preparando su Consultor de IA...' : 'Preparing your AI Consultant...')
+    : (isEs
+      ? 'Pregunte sobre IA, contratación, automatización o transformación digital...'
+      : 'Ask anything about AI, hiring, automation or digital transformation...');
 
   if (!mounted) return null;
 
@@ -1547,7 +1726,23 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
 
             {/* Scrollable Content or Forms */}
             {activeFlow === 'chat' ? (
-              isChatEmpty ? (
+              isInitializing ? (
+                /* Preparing state */
+                <div className="flex-1 flex flex-col justify-center items-center p-5 bg-transparent min-h-0">
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="flex flex-col items-center max-w-[90%] text-center my-auto py-4 animate-pulse"
+                  >
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#0F4C81] to-blue-600 flex items-center justify-center text-white shadow-xl shadow-blue-500/25 mb-4 animate-spin">
+                      <Loader2 className="w-7 h-7" />
+                    </div>
+                    <p className="text-[10px] text-slate-500 font-bold tracking-widest mt-4 uppercase">
+                      {isEs ? 'Preparando su Consultor de IA...' : 'Preparing your AI Consultant...'}
+                    </p>
+                  </motion.div>
+                </div>
+              ) : isChatEmpty ? (
                 /* Empty state: welcome & suggested queries */
                 <div className="flex-1 flex flex-col justify-center items-center p-5 bg-transparent min-h-0 overflow-y-auto">
                   <motion.div
@@ -1658,6 +1853,107 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                       </div>
                     </div>
                   )}
+
+                  {chatbotState.recommendations && (
+                    <div className="mt-4 p-4 bg-slate-50 border border-slate-200 rounded-2xl text-slate-800 space-y-3 shadow-inner text-left">
+                      <div className="flex items-center gap-2 pb-2 border-b border-slate-200">
+                        <Sparkles className="w-4 h-4 text-[#0F4C81]" />
+                        <span className="text-xs font-black uppercase text-slate-900 tracking-wider">
+                          {locale === 'es' ? 'Recomendación Técnica' : 'Technical Recommendation'}
+                        </span>
+                      </div>
+                      
+                      {chatbotState.recommendations.techStack && chatbotState.recommendations.techStack.length > 0 && (
+                        <div>
+                          <span className="text-[10px] font-bold text-slate-500 uppercase block">
+                            {locale === 'es' ? 'Stack Tecnológico' : 'Tech Stack'}
+                          </span>
+                          <div className="flex flex-wrap gap-1 mt-1">
+                            {chatbotState.recommendations.techStack.map((tech: string, i: number) => (
+                              <span key={i} className="text-[10px] bg-slate-200 text-slate-800 font-bold px-2 py-0.5 rounded-md" style={{ display: 'inline-block' }}>
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {chatbotState.recommendations.architecture && (
+                        <div>
+                          <span className="text-[10px] font-bold text-slate-500 uppercase block">
+                            {locale === 'es' ? 'Arquitectura Propuesta' : 'Proposed Architecture'}
+                          </span>
+                          <p className="text-[11px] text-slate-700 font-semibold mt-0.5">
+                            {chatbotState.recommendations.architecture}
+                          </p>
+                        </div>
+                      )}
+
+                      <div className="grid grid-cols-2 gap-2 text-left">
+                        {chatbotState.recommendations.timelineEstimate && (
+                          <div>
+                            <span className="text-[10px] font-bold text-slate-500 uppercase block">
+                              {locale === 'es' ? 'Plazo Estimado' : 'Est. Timeline'}
+                            </span>
+                            <p className="text-[11px] text-slate-900 font-bold mt-0.5">
+                              {chatbotState.recommendations.timelineEstimate}
+                            </p>
+                          </div>
+                        )}
+                        {chatbotState.recommendations.teamSizeEstimate && (
+                          <div>
+                            <span className="text-[10px] font-bold text-slate-500 uppercase block">
+                              {locale === 'es' ? 'Equipo Recomendado' : 'Est. Team Size'}
+                            </span>
+                            <p className="text-[11px] text-slate-900 font-bold mt-0.5">
+                              {chatbotState.recommendations.teamSizeEstimate}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+
+                      {chatbotState.recommendations.potentialRisks && chatbotState.recommendations.potentialRisks.length > 0 && (
+                        <div>
+                          <span className="text-[10px] font-bold text-slate-500 uppercase block">
+                            {locale === 'es' ? 'Riesgos Potenciales' : 'Potential Risks'}
+                          </span>
+                          <ul className="list-disc pl-4 text-[10px] text-slate-650 font-semibold space-y-0.5 mt-1">
+                            {chatbotState.recommendations.potentialRisks.map((risk: string, i: number) => (
+                              <li key={i}>{risk}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+
+                      {chatbotState.recommendations.nextSteps && (
+                        <div className="pt-2 border-t border-slate-150">
+                          <span className="text-[10px] font-bold text-slate-500 uppercase block">
+                            {locale === 'es' ? 'Próximos Pasos' : 'Next Steps'}
+                          </span>
+                          <p className="text-[11px] text-indigo-700 font-extrabold mt-0.5">
+                            {chatbotState.recommendations.nextSteps}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {chatbotState.leadSubmitted && (
+                    <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl text-emerald-800 space-y-2 mt-4 text-left">
+                      <div className="flex items-center gap-2">
+                        <CheckCircle className="w-5 h-5 text-emerald-600" />
+                        <span className="text-xs font-black uppercase text-emerald-900 tracking-wider">
+                          {locale === 'es' ? '¡Proyecto Calificado!' : 'Project Qualified!'}
+                        </span>
+                      </div>
+                      <p className="text-[11px] font-semibold text-emerald-700 leading-relaxed">
+                        {locale === 'es' 
+                          ? 'Su proyecto ha sido registrado con éxito en nuestro sistema de prioridades de HyperCode. Un Director de Prácticas le enviará su propuesta de arquitectura personalizada por correo electrónico.'
+                          : 'Your project has been successfully logged with HyperCode. A practice director is reviewing your requirements and will email your custom architecture blueprint shortly.'}
+                      </p>
+                    </div>
+                  )}
+
                   <div ref={messagesEndRef} className="pb-4" />
                 </div>
               )
@@ -2238,7 +2534,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
 
             {/* Suggested Queries Container (placed outside scrollable message area for active chat) */}
             <AnimatePresence>
-              {activeFlow === 'chat' && !isChatEmpty && showChips && suggestedPrompts.length > 0 && (
+              {activeFlow === 'chat' && !isChatEmpty && suggestedPrompts.length > 0 && (
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -2254,8 +2550,8 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
                       <button
                         key={idx}
                         onClick={() => routeSuggestedPrompt(prompt)}
-                        disabled={isSending || isTyping}
-                        className="px-3.5 py-2.5 bg-slate-50 hover:bg-[#0F4C81] active:bg-[#0d3f6b] focus-visible:ring-2 focus-visible:ring-[#0F4C81] focus-visible:ring-offset-1 text-slate-600 hover:text-white rounded-2xl text-[11px] font-bold border border-slate-200 cursor-pointer max-w-full truncate outline-none transition-all duration-300 min-h-[44px] flex items-center justify-center"
+                        disabled={isSending || isTyping || isInitializing}
+                        className="px-3.5 py-2.5 bg-slate-50 hover:bg-[#0F4C81] active:bg-[#0d3f6b] focus-visible:ring-2 focus-visible:ring-[#0F4C81] focus-visible:ring-offset-1 text-slate-600 hover:text-white rounded-2xl text-[11px] font-bold border border-slate-200 cursor-pointer max-w-full truncate outline-none transition-all duration-300 min-h-[44px] flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         {getCompactChipLabel(prompt, locale)}
                       </button>
@@ -2270,22 +2566,31 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
               <div className="h-[74px] border-t border-slate-100 bg-white flex items-center px-4 shrink-0 w-full relative">
                 <div className="relative flex items-center w-full h-[56px] bg-slate-50 border border-slate-200 rounded-full pl-5 pr-1.5 focus-within:border-[#0F4C81] focus-within:ring-2 focus-within:ring-[#0F4C81]/25 transition-all">
                   <input
-                    type="text"
+                    type={getInputAttributes().type}
+                    inputMode={getInputAttributes().inputMode}
+                    maxLength={getInputAttributes().maxLength}
+                    autoComplete={getInputAttributes().autoComplete}
                     placeholder={placeholderText}
                     value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
+                    onChange={(e) => handleInputChange(e.target.value)}
                     onKeyDown={(e) => {
                       if (e.key === 'Enter' && inputValue.trim()) handleUserSubmit(inputValue);
                     }}
-                    disabled={isSending || isTyping}
+                    disabled={isSending || isTyping || isInitializing}
                     aria-label="Chat input message"
-                    className="flex-1 bg-transparent text-xs text-slate-800 placeholder-slate-400 focus:outline-none py-1.5 outline-none font-semibold"
+                    className="flex-1 bg-transparent text-xs text-slate-800 placeholder-slate-400 focus:outline-none py-1.5 outline-none font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
                   />
                   <button
                     onClick={() => handleUserSubmit(inputValue)}
-                    disabled={!inputValue.trim() || isSending || isTyping}
+                    disabled={
+  !inputValue.trim() ||
+  isSending ||
+  isTyping ||
+  isInitializing ||
+  !sessionId
+}
                     aria-label="Send Message"
-                    className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#0F4C81] to-blue-600 disabled:from-slate-200 disabled:to-slate-200 disabled:text-slate-400 hover:from-[#0d3f6b] hover:to-blue-700 text-white flex items-center justify-center shadow-lg shadow-blue-500/10 cursor-pointer transition-all shrink-0 hover:scale-105 active:scale-95 border-none"
+                    className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#0F4C81] to-blue-600 disabled:from-slate-200 disabled:to-slate-200 disabled:text-slate-400 hover:from-[#0d3f6b] hover:to-blue-700 text-white flex items-center justify-center shadow-lg shadow-blue-500/10 cursor-pointer transition-all shrink-0 hover:scale-105 active:scale-95 border-none outline-none disabled:cursor-not-allowed"
                   >
                     {isSending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
                   </button>

@@ -188,7 +188,15 @@ export default function AnalyticsPage() {
 
   // Helper for generating monthly data points over last 6 months
   const getMonthlyData = () => {
-    const months = [];
+    interface MonthData {
+      label: string;
+      year: number;
+      monthNum: number;
+      leads: number;
+      applications: number;
+      subscribers: number;
+    }
+    const months: MonthData[] = [];
     const date = new Date();
     for (let i = 5; i >= 0; i--) {
       const d = new Date(date.getFullYear(), date.getMonth() - i, 1);

@@ -126,7 +126,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
     }, locale === 'es' ? 'El teléfono debe tener entre 7 y 15 dígitos' : 'Phone number must be between 7 and 15 digits'),
     linkedin: z.string().trim().url().or(z.string().length(0)).optional(),
     position: z.string().min(1, t.positionError),
-    yearsExperience: z.number({ invalid_type_error: t.yearsError }).min(0, t.yearsError).max(50),
+    yearsExperience: z.number({ message: t.yearsError }).min(0, t.yearsError).max(50),
     skills: z.string().trim().min(2, t.skillsError),
     message: createTextareaSchema(
       locale === 'es' ? 'La carta de presentación debe tener al menos 20 caracteres' : 'Cover letter must be at least 20 characters',

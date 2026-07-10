@@ -143,9 +143,12 @@ export function focusAndScrollToError(
 
             errorEl.classList.add('animate-pulse');
 
-setTimeout(() => {
-  errorEl.classList.remove('animate-pulse');
-}, 1000);
+            const elToPulse = errorEl;
+            setTimeout(() => {
+              if (elToPulse) {
+                elToPulse.classList.remove('animate-pulse');
+              }
+            }, 1000);
           }
         }
       }

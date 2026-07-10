@@ -520,9 +520,6 @@ export async function runDbHealthCheck(): Promise<HealthCheckReport> {
   });
 
   const warnings: string[] = [];
-  if (connectionStatus === 'red') {
-    warnings.push('Database connection is down');
-  }
 
   const policies: string[] = [];
   rlsRead.forEach(r => {

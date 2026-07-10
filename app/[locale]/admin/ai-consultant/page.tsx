@@ -163,10 +163,12 @@ export default function AIConsultantDashboard() {
       .subscribe();
 
     return () => {
-      supabase.removeChannel(chatConvsChannel);
-      supabase.removeChannel(chatMessagesChannel);
-      supabase.removeChannel(chatLeadsChannel);
-      supabase.removeChannel(consultRequestsChannel);
+      if (supabase) {
+        supabase.removeChannel(chatConvsChannel);
+        supabase.removeChannel(chatMessagesChannel);
+        supabase.removeChannel(chatLeadsChannel);
+        supabase.removeChannel(consultRequestsChannel);
+      }
     };
   }, [session]);
 

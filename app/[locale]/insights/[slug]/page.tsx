@@ -25,11 +25,13 @@ async function fetchArticle(slug: string, locale: string) {
         author: dbArt.author ? {
           name: dbArt.author.name,
           role: dbArt.author.role,
-          avatar: dbArt.author.avatar || '/placeholder-user.jpg'
+          avatar: dbArt.author.avatar || '/placeholder-user.jpg',
+          bio: dbArt.author.bio || ''
         } : {
           name: 'HyperCode Consultant',
           role: 'Technical Advisor',
-          avatar: '/placeholder-user.jpg'
+          avatar: '/placeholder-user.jpg',
+          bio: ''
         },
         related: []
       };
@@ -79,7 +81,8 @@ async function fetchArticle(slug: string, locale: string) {
         author: {
           name: 'HyperCode Solutions',
           role: dbCS.client_type || 'Case Study',
-          avatar: '/placeholder-user.jpg'
+          avatar: '/placeholder-user.jpg',
+          bio: ''
         },
         related: []
       };

@@ -1153,16 +1153,20 @@ export const db = {
   },
 
   async updateChatConversationLanguage(
-  sessionId: string,
-  language: 'en' | 'es'
-): Promise<void> {
-  const { error } = await supabase
-    .from('chat_conversations')
-    .update({
-      language,
-      updated_at: new Date().toISOString(),
-    })
-    .eq('session_id', sessionId);
+    sessionId: string,
+    language: 'en' | 'es'
+  ): Promise<void> {
+    if (!supabase) {
+      throw new Error('Database service unavailable: Supabase client is not configured.');
+    }
+
+    const { error } = await supabase
+      .from('chat_conversations')
+      .update({
+        language,
+        updated_at: new Date().toISOString(),
+      })
+      .eq('session_id', sessionId);
 
   if (error) {
     console.error(
