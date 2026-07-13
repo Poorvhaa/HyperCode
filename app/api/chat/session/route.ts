@@ -85,7 +85,7 @@ export async function POST(req: Request) {
     { status: 503 }
   );
 }
-
+console.log('[Session API] Final conversation object:', conversation);
     return NextResponse.json({
       success: true,
       conversation

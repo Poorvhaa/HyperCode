@@ -7,7 +7,6 @@ import { z } from 'zod';
 import { useSearchParams } from 'next/navigation';
 import { Loader2, AlertCircle, CheckCircle, Check } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
-import { db } from '@/lib/db';
 import { trackGAEvent } from '@/lib/analytics';
 import { motion } from 'framer-motion';
 import { useFormValidation } from '@/hooks/use-form-validation';
@@ -197,9 +196,13 @@ function ContactFormContent() {
         }),
       });
 
-      if (!res.ok) {
-        throw new Error('Contact submission API returned an error');
-      }
+      const result = await res.json().catch(() => null);
+
+if (!res.ok || !result?.success) {
+  throw new Error(
+    result?.error || 'Contact submission API returned an error'
+  );
+}
 
       trackGAEvent({
         action: 'contact_form_submission',
@@ -211,34 +214,9 @@ function ContactFormContent() {
       reset();
       setTimeout(() => setSubmitted(false), 5000);
     } catch (err) {
-      setError(t('errorSubmit'));
-      console.error('Contact form error:', err);
-      // Fallback save in offline / fallback database modes
-      try {
-        await db.saveContactInquiry(
-          sanitizedData.name,
-          sanitizedData.company,
-          sanitizedData.email,
-          sanitizedData.phone,
-          sanitizedData.subject,
-          sanitizedData.message,
-          'website',
-          {
-            services: sanitizedData.services,
-            industry: sanitizedData.industry,
-            company_size: sanitizedData.companySize,
-            budget: sanitizedData.budget,
-            timeline: sanitizedData.timeline,
-            country: sanitizedData.country,
-            preferred_contact_method: sanitizedData.preferredContactMethod,
-            project_type: sanitizedData.projectType,
-            required_technologies: sanitizedData.requiredTechnologies,
-          }
-        );
-      } catch (localErr) {
-        console.error('Local fallback contact save failed:', localErr);
-      }
-    } finally {
+  setError(t('errorSubmit'));
+  console.error('Contact form error:', err);
+} finally {
       setSubmitting(false);
     }
   };

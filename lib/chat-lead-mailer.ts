@@ -1,9 +1,12 @@
-import { db } from '@/lib/db';
+import { getSupabaseServer } from '@/lib/supabase-server';
 import { Resend } from 'resend';
 
 const resendApiKey = process.env.RESEND_API_KEY || '';
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
 const contactRecipient = process.env.HYPERCODE_CONTACT_EMAIL || 'HR@hypercodeus.com';
+const resendFromEmail =
+  process.env.RESEND_FROM_EMAIL ||
+  'HyperCode <HR@hypercodeit.com>';
 
 interface LeadInput {
   conversation_id: string;
@@ -92,45 +95,55 @@ export async function submitChatLead(lead: LeadInput) {
 
   const leadScore = calculateLeadScore(company, industry, email, budgetRange, timeline);
 
-  // 1. Save to Supabase
-  let savedLead = null;
-  try {
-    savedLead = await db.saveChatLead({
+  // 1. Save to Supabase (using server-only client, throwing on failure)
+  const supabase = getSupabaseServer();
+  if (!supabase) {
+    console.error('[Chat Lead Mailer] Supabase server configuration is missing.');
+    throw new Error('Database service unavailable: Supabase client is not configured.');
+  }
+
+  const { data: savedLead, error: saveError } = await supabase
+    .from('chat_leads')
+    .insert([{
       conversation_id: lead.conversation_id,
       name,
       email,
-      phone,
+      phone: phone || null,
       company,
       industry,
       service_interest: serviceInterest,
       budget_range: budgetRange,
       timeline,
-      message,
+      message: message || null,
       lead_score: leadScore,
       language
-    });
-  } catch (dbError) {
-    console.warn('[DB Warning] Fallback database lead entry:', dbError);
-    savedLead = {
-      id: 'mock-lead-id-' + Math.random().toString(36).substring(2, 9),
-      conversation_id: lead.conversation_id,
-      name,
-      email,
-      phone,
-      company,
-      industry,
-      service_interest: serviceInterest,
-      budget_range: budgetRange,
-      timeline,
-      message,
-      lead_score: leadScore,
-      status: 'New' as const,
-      language,
-      created_at: new Date().toISOString()
-    };
+    }])
+    .select()
+    .single();
+
+  if (saveError || !savedLead) {
+    console.error('[Chat Lead Mailer] Database save failed:', saveError);
+    throw new Error(saveError?.message || 'Database insert failed for chat_leads');
+  }
+
+  // Update conversation
+  const { error: updateError } = await supabase
+    .from('chat_conversations')
+    .update({
+      visitor_name: name,
+      visitor_email: email,
+      updated_at: new Date().toISOString()
+    })
+    .eq('id', lead.conversation_id);
+
+  if (updateError) {
+    console.warn('[Chat Lead Mailer] Conversation visitor info update failed:', updateError);
   }
 
   // 2. Dispatch Emails via Resend
+  let adminEmailSent = false;
+  let userEmailSent = false;
+
   if (resend) {
     try {
       // Admin Alert Email HTML
@@ -190,12 +203,27 @@ export async function submitChatLead(lead: LeadInput) {
         </div>
       `;
 
-      await resend.emails.send({
-        from: 'HyperCode AI Consultant <HR@hypercodeus.com>',
-        to: contactRecipient,
-        subject: `[AI Consultant Lead] ${company} - ${serviceInterest}`,
-        html: adminEmailHtml,
-      });
+      try {
+        const { data: adminEmailData, error: adminEmailError } = await resend.emails.send({
+          from: resendFromEmail,
+          to: contactRecipient,
+          replyTo: email,
+          subject: `[AI Consultant Lead] ${company} - ${serviceInterest}`,
+          html: adminEmailHtml,
+        });
+
+        if (adminEmailError) {
+          console.error('[Chat Lead Mailer] Admin email failed:', {
+            name: adminEmailError.name,
+            message: adminEmailError.message
+          });
+        } else {
+          adminEmailSent = true;
+          console.log('[Chat Lead Mailer] Admin email sent successfully.');
+        }
+      } catch (adminErr) {
+        console.error('[Chat Lead Mailer] Admin email exception:', adminErr);
+      }
 
       // Visitor Confirmation Email
       const isSpanish = language === 'es';
@@ -253,16 +281,34 @@ export async function submitChatLead(lead: LeadInput) {
         </div>
       `;
 
-      await resend.emails.send({
-        from: 'HyperCode AI Consultant <HR@hypercodeus.com>',
-        to: email,
-        subject: userSubject,
-        html: userEmailHtml,
-      });
+      try {
+        const { data: userEmailData, error: userEmailError } = await resend.emails.send({
+          from: resendFromEmail,
+          to: email,
+          subject: userSubject,
+          html: userEmailHtml,
+        });
+
+        if (userEmailError) {
+          console.error('[Chat Lead Mailer] Confirmation email failed:', {
+            name: userEmailError.name,
+            message: userEmailError.message
+          });
+        } else {
+          userEmailSent = true;
+          console.log('[Chat Lead Mailer] Confirmation email sent successfully.');
+        }
+      } catch (userErr) {
+        console.error('[Chat Lead Mailer] Confirmation email exception:', userErr);
+      }
     } catch (emailErr) {
       console.error('[Resend Error] Failed to send chat lead emails:', emailErr);
     }
   }
 
-  return savedLead;
+  return {
+    ...savedLead,
+    adminEmailSent,
+    userEmailSent
+  };
 }

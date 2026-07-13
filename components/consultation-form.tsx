@@ -7,7 +7,7 @@ import { z } from 'zod';
 import { useSearchParams } from 'next/navigation';
 import { Loader2, AlertCircle, CheckCircle, Check } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
-import { db } from '@/lib/db';
+
 import { trackGAEvent } from '@/lib/analytics';
 import { motion } from 'framer-motion';
 import { useFormValidation } from '@/hooks/use-form-validation';
@@ -160,113 +160,72 @@ function ConsultationFormContent() {
     }
   }, [searchParams, setValue]);
 
-  const onSubmit = async (data: ConsultationFormData) => {
-    setSubmitting(true);
-    setError('');
+const onSubmit = async (data: ConsultationFormData) => {
+  setSubmitting(true);
+  setError('');
 
-    // 1. Sanitize the payload recursively
-    const sanitized = sanitizePayload({
-      ...data,
-      locale
+  const sanitized = sanitizePayload({
+    ...data,
+    locale
+  });
+
+  console.log({
+    step: 'consultation_form_submission_start',
+    payload: sanitized
+  });
+
+  try {
+    const res = await fetch('/api/consultation', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(sanitized)
     });
+
+    const result = await res.json().catch(() => null);
 
     console.log({
-      step: 'consultation_form_submission_start',
-      payload: sanitized
+      step: 'consultation_api_response',
+      status: res.status,
+      ok: res.ok,
+      result
     });
 
-    try {
-      const res = await fetch('/api/consultation', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(sanitized),
-      });
-
-      console.log({
-        step: 'consultation_api_response',
-        status: res.status,
-        ok: res.ok
-      });
-
-      if (!res.ok) {
-        throw new Error(`Consultation API returned status code ${res.status}`);
-      }
-
-      trackGAEvent({
-        action: 'consultation_request_submission',
-        category: 'Leads',
-        label: sanitized.service,
-      });
-
-      setSubmitted(true);
-      reset();
-      setTimeout(() => setSubmitted(false), 5000);
-    } catch (err: any) {
-      console.error({
-        step: 'consultation_api_failed',
-        payload: sanitized,
-        error: err,
-        message: err?.message || 'API request exception',
-        stack: err?.stack
-      });
-
-      // 2. Attempt fallback save
-      try {
-        const savedLocal = await db.saveConsultationRequest(
-          sanitized.name,
-          sanitized.company,
-          sanitized.email,
-          sanitized.phone,
-          sanitized.service,
-          sanitized.budget,
-          sanitized.timeline,
-          sanitized.message,
-          {
-            business_goal: sanitized.businessGoal,
-            current_challenges: sanitized.currentChallenges,
-            expected_outcome: sanitized.expectedOutcome,
-            preferred_services: sanitized.preferredServices,
-            industry: sanitized.industry,
-            company_size: sanitized.companySize,
-            current_tech_stack: sanitized.currentTechStack,
-            preferred_meeting_type: sanitized.preferredMeetingType,
-          }
-        );
-
-        console.log({
-          step: 'consultation_local_fallback_success',
-          savedObject: savedLocal
-        });
-
-        trackGAEvent({
-          action: 'consultation_request_fallback_submission',
-          category: 'Leads',
-          label: sanitized.service,
-        });
-
-        setSubmitted(true);
-        reset();
-        setTimeout(() => setSubmitted(false), 5000);
-      } catch (localErr: any) {
-        console.error({
-          step: 'consultation_local_fallback_failed',
-          payload: sanitized,
-          error: localErr,
-          message: localErr?.message || 'Local storage save failed',
-          stack: localErr?.stack
-        });
-
-        setError(locale === 'es'
-          ? 'Error de envío: El servidor no está disponible y el almacenamiento local está deshabilitado o lleno.'
-          : 'Submission error: The server is unavailable and local storage is disabled or full.'
-        );
-      }
-    } finally {
-      setSubmitting(false);
+    if (!res.ok || !result?.success || !result?.saved) {
+      throw new Error(
+        result?.error ||
+          `Consultation API returned status code ${res.status}`
+      );
     }
-  };
+
+    trackGAEvent({
+      action: 'consultation_request_submission',
+      category: 'Leads',
+      label: sanitized.service
+    });
+
+    setSubmitted(true);
+    reset();
+
+    setTimeout(() => {
+      setSubmitted(false);
+    }, 5000);
+  } catch (err: unknown) {
+  const message =
+    err instanceof Error
+      ? err.message
+      : locale === 'es'
+        ? 'No se pudo enviar su solicitud de consulta. Inténtelo de nuevo.'
+        : 'Unable to submit your consultation request. Please try again.';
+
+  console.warn('[Consultation Form] Submission failed:', message);
+
+  setError(message);
+} finally {
+  setSubmitting(false);
+}
+};
 
   const togglePreferredService = (serviceId: string) => {
     const current = [...watchedServices];

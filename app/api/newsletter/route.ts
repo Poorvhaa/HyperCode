@@ -20,6 +20,9 @@ if (!supabaseUrl || !supabaseAnonKey || !supabaseServiceKey) {
 // Initialize Resend
 const resendApiKey = process.env.RESEND_API_KEY || '';
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
+const resendFromEmail =
+  process.env.RESEND_FROM_EMAIL ||
+  'HyperCode <HR@hypercodeit.com>';
 
 const emailSchema = z.object({
   email: z.string().trim().regex(EMAIL_REGEX),
@@ -42,35 +45,45 @@ export async function POST(req: Request) {
 
     const supabaseServer = getSupabaseServer();
 
-    // 1. Save to Supabase
-    if (supabaseServer) {
-      const { error } = await supabaseServer
-        .from('newsletter_subscribers')
-        .insert([{
-          email: validated.email,
-          status: 'subscribed',
-          language: validated.language,
-          source_page: validated.sourcePage || null
-        }]);
+    if (!supabaseServer) {
+      console.error('[Newsletter API] Supabase server configuration is missing.');
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'The newsletter service is temporarily unavailable.',
+          code: 'SUPABASE_CONFIGURATION_MISSING'
+        },
+        { status: 503 }
+      );
+    }
 
-      if (error) {
-        if (error.code === '23505') {
-          return NextResponse.json(
-            { success: false, error: 'You are already subscribed' },
-            { status: 400 }
-          );
-        }
-        console.error('Supabase newsletter insert error:', error);
+    // 1. Save to Supabase
+    const { error: saveError } = await supabaseServer
+      .from('newsletter_subscribers')
+      .insert([{
+        email: validated.email,
+        status: 'subscribed',
+        language: validated.language,
+        source_page: validated.sourcePage || null
+      }]);
+
+    if (saveError) {
+      if (saveError.code === '23505') {
         return NextResponse.json(
-          { success: false, error: 'Database insert failed' },
-          { status: 500 }
+          { success: false, error: 'You are already subscribed', code: 'DUPLICATE_SUBSCRIBER' },
+          { status: 400 }
         );
       }
-    } else {
-      console.warn('Supabase is not configured. Running in mock newsletter mode.');
+      console.error('Supabase newsletter insert error:', saveError);
+      return NextResponse.json(
+        { success: false, error: 'Unable to save your newsletter subscription.', code: 'NEWSLETTER_INSERT_FAILED' },
+        { status: 500 }
+      );
     }
 
     // 2. Send confirmation email via Resend
+    let userEmailSent = false;
+
     if (resend) {
       try {
         const isSpanish = validated.language === 'es';
@@ -112,21 +125,33 @@ export async function POST(req: Request) {
           </div>
         `;
 
-        const customerEmailResult = await resend.emails.send({
-          from: 'HyperCode Editorial <HR@hypercodeus.com>',
+        const { data: customerEmailData, error: customerEmailError } = await resend.emails.send({
+          from: resendFromEmail,
           to: validated.email,
           subject: subject,
           html: confirmEmailHtml,
         });
 
-        console.log('✅ Customer email:', validated.email);
-        console.log('✅ Customer email result:', customerEmailResult); 
+        if (customerEmailError) {
+          console.error('[Newsletter API] User confirmation email failed:', {
+            name: customerEmailError.name,
+            message: customerEmailError.message
+          });
+        } else {
+          userEmailSent = true;
+          console.log('[Newsletter API] User confirmation email sent to:', validated.email);
+        }
       } catch (emailErr) {
         console.error('Resend newsletter email error:', emailErr);
       }
     }
 
-    return NextResponse.json({ success: true, message: 'Subscription successful' });
+    return NextResponse.json({
+      success: true,
+      saved: true,
+      userEmailSent,
+      warning: userEmailSent ? undefined : 'Your subscription was saved, but the confirmation email could not be sent.'
+    });
   } catch (err) {
     console.error('Newsletter route error:', err);
     if (err instanceof z.ZodError) {

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
-import { db } from '@/lib/db';
+import { getSupabaseServer } from '@/lib/supabase-server';
 import { Resend } from 'resend';
 import { isRateLimited, getClientIp, sanitizeInput } from '@/lib/security';
 import {
@@ -16,6 +16,9 @@ import {
 const resendApiKey = process.env.RESEND_API_KEY || '';
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
 const contactRecipient = process.env.HYPERCODE_CONTACT_EMAIL || 'HR@hypercodeus.com';
+const resendFromEmail =
+  process.env.RESEND_FROM_EMAIL ||
+  'HyperCode <HR@hypercodeit.com>';
 
 const schema = z.object({
   name: z.string().trim().min(2).max(80).regex(NAME_REGEX),
@@ -56,36 +59,59 @@ export async function POST(req: Request) {
     const preferredDate = sanitizeInput(parsed.preferred_date);
     const language = parsed.language;
 
-    let savedRequest = null;
-    try {
-      savedRequest = await db.saveChatConsultation(
-        name,
-        email,
-        phone,
-        company,
-        service,
-        message,
-        preferredDate,
-        language
+    const supabase = getSupabaseServer();
+
+    if (!supabase) {
+      console.error('[Chat Consultation API] Supabase server configuration is missing.');
+      return NextResponse.json(
+        {
+          success: false,
+          saved: false,
+          error: 'The consultation service is temporarily unavailable.',
+          code: 'SUPABASE_CONFIGURATION_MISSING'
+        },
+        { status: 503 }
       );
-    } catch (dbError) {
-      console.warn('[DB Warning] Fallback database consultation entry:', dbError);
-      savedRequest = {
-        id: 'mock-consultation-id-' + Math.random().toString(36).substring(2, 9),
-        created_at: new Date().toISOString(),
-        name,
+    }
+
+    const { data: savedRequest, error: saveError } = await supabase
+      .from('consultation_requests')
+      .insert({
+        full_name: name,
+        company: company || null,
         email,
-        phone,
-        company,
+        phone: phone || null,
+        service_interest: service,
+        project_description: message,
+        budget: 'Chat Consultant',
+        timeline: 'Chat',
+        status: 'New', // Capitalized to pass database CHECK constraint
+        name,
         service,
         message,
-        preferred_date: preferredDate,
-        language,
-        status: 'New'
-      };
+        preferred_date: preferredDate || null,
+        language
+      })
+      .select()
+      .single();
+
+    if (saveError || !savedRequest) {
+      console.error('[Chat Consultation API] Consultation insert failed:', saveError);
+      return NextResponse.json(
+        {
+          success: false,
+          saved: false,
+          error: 'Unable to save your consultation request.',
+          code: 'CONSULTATION_INSERT_FAILED'
+        },
+        { status: 500 }
+      );
     }
 
     // 2. Send Emails via Resend (reusing main consultation logic)
+    let adminEmailSent = false;
+    let userEmailSent = false;
+
     if (resend) {
       try {
         // Admin Alert Email HTML
@@ -128,20 +154,32 @@ export async function POST(req: Request) {
               </div>
             </div>
             <div style="text-align: center; font-size: 11px; color: #94a3b8; margin-top: 20px; border-top: 1px solid #e2e8f0; padding-top: 15px;">
-              This is an automated alert from the HyperCode AI Consultant Platform.
+              This is an automated alert from the HyperCode AI Platform.
             </div>
           </div>
         `;
-console.log("Admin recipient:", contactRecipient);
 
-        const adminResult = await resend.emails.send({
-  from: 'HyperCode AI Consultant <HR@hypercodeus.com>',
-  to: contactRecipient,
-  subject: `[AI Consultant Call] ${company} - ${service}`,
-  html: adminEmailHtml,
-});
+        try {
+          const { data: adminEmailData, error: adminEmailError } = await resend.emails.send({
+            from: resendFromEmail,
+            to: contactRecipient,
+            replyTo: email,
+            subject: `[AI Consultant Call] ${company} - ${service}`,
+            html: adminEmailHtml,
+          });
 
-console.log("Admin email result:", adminResult);
+          if (adminEmailError) {
+            console.error('[Chat Consultation API] Admin email failed:', {
+              name: adminEmailError.name,
+              message: adminEmailError.message
+            });
+          } else {
+            adminEmailSent = true;
+            console.log('[Chat Consultation API] Admin email sent successfully.');
+          }
+        } catch (adminErr) {
+          console.error('[Chat Consultation API] Admin email exception:', adminErr);
+        }
 
         // Visitor Confirmation Email
         const isSpanish = language === 'es';
@@ -190,21 +228,32 @@ console.log("Admin email result:", adminResult);
               </div>
               <p>We will contact you within 24 business hours with custom videoconference calendar invites.</p>
               <p>We look forward to working on this initiative.</p>
-              <p>Best regards,</p>
               <p style="margin: 0; font-weight: bold; color: #0f4c81;">HyperCode Consulting Practice</p>
               <p style="margin: 0; font-size: 12px; color: #64748b;">Schaumburg, IL</p>
             </div>
           </div>
         `;
 
-      const userEmailResult = await resend.emails.send({
-  from: 'HyperCode AI Consultant <HR@hypercodeus.com>',
-  to: email,
-  subject: userSubject,
-  html: userEmailHtml,
-});
+        try {
+          const { data: userEmailData, error: userEmailError } = await resend.emails.send({
+            from: resendFromEmail,
+            to: email,
+            subject: userSubject,
+            html: userEmailHtml,
+          });
 
-console.log("User email result:", userEmailResult);
+          if (userEmailError) {
+            console.error('[Chat Consultation API] Confirmation email failed:', {
+              name: userEmailError.name,
+              message: userEmailError.message
+            });
+          } else {
+            userEmailSent = true;
+            console.log('[Chat Consultation API] Confirmation email sent successfully.');
+          }
+        } catch (userErr) {
+          console.error('[Chat Consultation API] Confirmation email exception:', userErr);
+        }
       } catch (emailErr) {
         console.error('Resend chat consultation email error:', emailErr);
       }
@@ -212,13 +261,20 @@ console.log("User email result:", userEmailResult);
 
     return NextResponse.json({
       success: true,
-      consultation: savedRequest
+      saved: true,
+      adminEmailSent,
+      userEmailSent,
+      data: savedRequest,
+      warning:
+        adminEmailSent && userEmailSent
+          ? undefined
+          : 'Your consultation request was saved, but one or more emails could not be sent.'
     });
   } catch (err) {
     console.error('Save chat consultation route error:', err);
     if (err instanceof z.ZodError) {
-      return NextResponse.json({ error: 'Validation failed', details: err.issues }, { status: 400 });
+      return NextResponse.json({ success: false, error: 'Validation failed', details: err.issues }, { status: 400 });
     }
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ success: false, error: 'Internal server error' }, { status: 500 });
   }
 }

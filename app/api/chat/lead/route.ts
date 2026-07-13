@@ -64,7 +64,7 @@ export async function POST(req: Request) {
     const message = parsed.message ? sanitizeInput(parsed.message) : '';
     const language = parsed.language;
 
-    const savedLead = await submitChatLead({
+    const result = await submitChatLead({
       conversation_id: conversationId,
       name,
       email,
@@ -80,13 +80,20 @@ export async function POST(req: Request) {
 
     return NextResponse.json({
       success: true,
-      lead: savedLead
+      saved: true,
+      adminEmailSent: result.adminEmailSent,
+      userEmailSent: result.userEmailSent,
+      data: result,
+      warning:
+        result.adminEmailSent && result.userEmailSent
+          ? undefined
+          : 'Your lead details were saved, but one or more emails could not be sent.'
     });
   } catch (err) {
     console.error('Save lead route error:', err);
     if (err instanceof z.ZodError) {
-      return NextResponse.json({ error: 'Validation failed', details: err.issues }, { status: 400 });
+      return NextResponse.json({ success: false, error: 'Validation failed', details: err.issues }, { status: 400 });
     }
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ success: false, error: 'Internal server error' }, { status: 500 });
   }
 }

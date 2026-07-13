@@ -14,6 +14,9 @@ import {
 const resendApiKey = process.env.RESEND_API_KEY || '';
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
 const contactRecipient = process.env.HYPERCODE_CONTACT_EMAIL || 'HR@hypercodeus.com';
+const resendFromEmail =
+  process.env.RESEND_FROM_EMAIL ||
+  'HyperCode <HR@hypercodeit.com>';
 
 const careersSchema = z.object({
   name: z.string().trim().min(2).max(80).regex(NAME_REGEX),
@@ -146,7 +149,14 @@ export async function POST(req: Request) {
 
     if (appError) {
       console.error('[Careers API] ERROR: Database save failed for job_applications:', appError);
-      return NextResponse.json({ error: `Database save failed for job_applications: ${appError.message}` }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Unable to save your job application.',
+          code: 'CAREERS_INSERT_FAILED'
+        },
+        { status: 500 }
+      );
     }
     console.log('[Careers API] SUCCESS: Application saved successfully. ID:', appData.id);
 
@@ -176,6 +186,9 @@ export async function POST(req: Request) {
     }
 
     // 7. Trigger Email Notifications via Resend
+    let adminEmailSent = false;
+    let userEmailSent = false;
+
     if (resend) {
       console.log('[Careers API] Resend configured. Preparing notification emails...');
       try {
@@ -282,23 +295,48 @@ export async function POST(req: Request) {
           </div>
         `;
 
-        console.log('[Careers API] Sending recruiter and candidate notification emails in parallel...');
-        await Promise.all([
-          resend.emails.send({
-            from: 'HyperCode Careers <HR@hypercodeus.com>',
+        try {
+          const { data: adminEmailData, error: adminEmailError } = await resend.emails.send({
+            from: resendFromEmail,
             to: contactRecipient,
+            replyTo: email,
             subject: `[Applicant Alert] New Application: ${name} - ${position}`,
             html: adminEmailHtml,
-          }),
-          resend.emails.send({
-            from: 'HyperCode Careers <HR@hypercodeus.com>>',
+          });
+
+          if (adminEmailError) {
+            console.error('[Careers API] Recruiter email failed:', {
+              name: adminEmailError.name,
+              message: adminEmailError.message
+            });
+          } else {
+            console.log('[Careers API] Recruiter alert email sent to:', contactRecipient);
+            adminEmailSent = true;
+          }
+        } catch (adminEmailErr) {
+          console.error('[Careers API] Recruiter email exception:', adminEmailErr);
+        }
+
+        try {
+          const { data: userEmailData, error: userEmailError } = await resend.emails.send({
+            from: resendFromEmail,
             to: email,
             subject: userSubject,
             html: userEmailHtml,
-          })
-        ]);
-        console.log('[Careers API] Recruiter alert email sent to:', contactRecipient);
-        console.log('[Careers API] Candidate confirmation email sent to:', email);
+          });
+
+          if (userEmailError) {
+            console.error('[Careers API] Candidate confirmation email failed:', {
+              name: userEmailError.name,
+              message: userEmailError.message
+            });
+          } else {
+            console.log('[Careers API] Candidate confirmation email sent to:', email);
+            userEmailSent = true;
+          }
+        } catch (userEmailErr) {
+          console.error('[Careers API] Candidate confirmation email exception:', userEmailErr);
+        }
       } catch (emailErr) {
         console.error('[Careers API] ERROR: Resend careers email failed:', emailErr);
       }
@@ -307,13 +345,23 @@ export async function POST(req: Request) {
     }
 
     console.log('[Careers API] E2E Careers Application Workflow Completed Successfully.');
-    return NextResponse.json({ success: true, data: appData });
+    return NextResponse.json({
+      success: true,
+      saved: true,
+      adminEmailSent,
+      userEmailSent,
+      data: appData,
+      warning:
+        adminEmailSent && userEmailSent
+          ? undefined
+          : 'Your application was saved, but one or more emails could not be sent.'
+    });
   } catch (err: any) {
     console.log('[Careers API] catch block triggered:', err);
     if (err instanceof z.ZodError) {
-      return NextResponse.json({ error: 'Validation failed', details: err.issues }, { status: 400 });
+      return NextResponse.json({ success: false, error: 'Validation failed', details: err.issues }, { status: 400 });
     }
     console.error('[Careers API] CRITICAL: Unexpected route error:', err);
-    return NextResponse.json({ error: `Internal server error: ${err.message || err}` }, { status: 500 });
+    return NextResponse.json({ success: false, error: `Internal server error: ${err.message || err}` }, { status: 500 });
   }
 }

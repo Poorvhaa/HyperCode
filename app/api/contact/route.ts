@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
-import { db } from '@/lib/db';
+import { getSupabaseServer } from '@/lib/supabase-server';
 import { Resend } from 'resend';
 import {
   NAME_REGEX,
@@ -15,9 +15,16 @@ import {
 const resendApiKey = process.env.RESEND_API_KEY || '';
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
 const contactRecipient = process.env.HYPERCODE_CONTACT_EMAIL || 'HR@hypercodeus.com';
-console.log('HYPERCODE_CONTACT_EMAIL:', process.env.HYPERCODE_CONTACT_EMAIL);
-console.log('Resolved contactRecipient:', contactRecipient);
-
+const resendFromEmail =
+  process.env.RESEND_FROM_EMAIL ||
+  'HyperCode <HR@hypercodeit.com>';
+console.log('[Contact API] Email configuration:', {
+  resendConfigured: Boolean(process.env.RESEND_API_KEY),
+  senderConfigured: Boolean(process.env.RESEND_FROM_EMAIL),
+  recipientConfigured: Boolean(process.env.HYPERCODE_CONTACT_EMAIL),
+  sender: resendFromEmail,
+  recipient: contactRecipient
+});
 const contactSchema = z.object({
   name: z.string().trim().min(2).max(80).regex(NAME_REGEX),
   email: z.string().trim().regex(EMAIL_REGEX),
@@ -47,30 +54,70 @@ export async function POST(req: Request) {
     const sanitizedBody = sanitizePayload(body);
     const validated = contactSchema.parse(sanitizedBody);
 
-    // Save to Supabase using db client
-    const savedData = await db.saveContactInquiry(
-      validated.name,
-      validated.company,
-      validated.email,
-      validated.phone,
-      validated.subject,
-      validated.message,
-      validated.source,
-      {
-        services: validated.services,
-        industry: validated.industry,
-        company_size: validated.companySize,
-        budget: validated.budget,
-        timeline: validated.timeline,
-        country: validated.country,
-        preferred_contact_method: validated.preferredContactMethod,
-        project_type: validated.projectType,
-        required_technologies: validated.requiredTechnologies
-      }
-    );
+    // Save the inquiry directly through the server-only Supabase client
+const supabase = getSupabaseServer();
+
+if (!supabase) {
+  console.error('[Contact API] Supabase server configuration is missing.');
+
+  return NextResponse.json(
+    {
+      success: false,
+      error: 'The contact service is temporarily unavailable.',
+      code: 'SUPABASE_CONFIGURATION_MISSING'
+    },
+    { status: 503 }
+  );
+}
+
+const { data: savedData, error: saveError } = await supabase
+  .from('contact_inquiries')
+  .insert({
+    full_name: validated.name,
+    company: validated.company || null,
+    email: validated.email,
+    phone: validated.phone || null,
+    subject: validated.subject,
+    message: validated.message,
+    status: 'New',
+    source: validated.source,
+    services: validated.services,
+    industry: validated.industry || null,
+    company_size: validated.companySize || null,
+    budget: validated.budget || null,
+    timeline: validated.timeline || null,
+    country: validated.country || null,
+    preferred_contact_method:
+      validated.preferredContactMethod || null,
+    project_type: validated.projectType || null,
+    required_technologies: validated.requiredTechnologies
+  })
+  .select()
+  .single();
+
+if (saveError || !savedData) {
+  console.error('[Contact API] Contact inquiry insert failed:', {
+    code: saveError?.code,
+    message: saveError?.message,
+    details: saveError?.details,
+    hint: saveError?.hint
+  });
+
+  return NextResponse.json(
+    {
+      success: false,
+      error: 'Unable to save your contact inquiry.',
+      code: 'CONTACT_INSERT_FAILED'
+    },
+    { status: 500 }
+  );
+}
 
     // Trigger Email Notification via Resend
-    if (resend) {
+let adminEmailSent = false;
+let userEmailSent = false;
+
+if (resend) {
         // A. Email to HyperCode team
         const adminEmailHtml = `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc;">
@@ -144,17 +191,30 @@ export async function POST(req: Request) {
         `;
 
         try {
-  const adminEmailResult = await resend.emails.send({
-    from: 'HyperCode Platform <HR@hypercodeus.com>',
+  const {
+    data: adminEmailData,
+    error: adminEmailError
+  } = await resend.emails.send({
+    from: resendFromEmail,
     to: contactRecipient,
+    replyTo: validated.email,
     subject: `[Lead Alert] New Contact Inquiry: ${validated.subject}`,
-    html: adminEmailHtml,
+    html: adminEmailHtml
   });
 
-  console.log('✅ Admin recipient:', contactRecipient);
-  console.log('✅ Admin email result:', adminEmailResult);
+  if (adminEmailError) {
+    console.error('[Contact API] Admin email failed:', {
+      name: adminEmailError.name,
+      message: adminEmailError.message
+    });
+  } else {
+    console.log('[Contact API] Admin email sent:', {
+      emailId: adminEmailData?.id
+    });
+    adminEmailSent = true;
+  }
 } catch (err) {
-  console.error('❌ Admin email failed:', err);
+  console.error('[Contact API] Admin email exception:', err);
 }
 
         // B. Confirmation Email to User
@@ -211,26 +271,75 @@ United States, CA</p>
           </div>
         `;
 
-        try {
-  const userEmailResult = await resend.emails.send({
-  from: 'HyperCode Team <HR@hypercodeus.com>',
-  to: validated.email,
-  subject: userSubject,
-  html: userEmailHtml,
-});
+try {
+    const {
+      data: userEmailData,
+      error: userEmailError
+    } = await resend.emails.send({
+      from: resendFromEmail,
+      to: validated.email,
+      subject: userSubject,
+      html: userEmailHtml
+    });
 
-console.log('✅ User email sent:', userEmailResult);
-      } catch (emailErr) {
-        console.error('Resend contact email error:', emailErr);
-      }
+    if (userEmailError) {
+      console.error(
+        '[Contact API] User confirmation email failed:',
+        {
+          name: userEmailError.name,
+          message: userEmailError.message
+        }
+      );
+    } else {
+      userEmailSent = true;
+
+      console.log(
+        '[Contact API] User confirmation email sent:',
+        {
+          emailId: userEmailData?.id
+        }
+      );
     }
- 
-    return NextResponse.json({ success: true, data: savedData });
-     } catch (err) {
-    console.error('Contact route error:', err);
-    if (err instanceof z.ZodError) {
-      return NextResponse.json({ error: 'Validation failed', details: err.issues }, { status: 400 });
-    }
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    } catch (emailErr) {
+    console.error(
+      '[Contact API] User confirmation email exception:',
+      emailErr
+    );
   }
+} else {
+  console.error('[Contact API] Resend is not configured.');
+}
+return NextResponse.json({
+  success: true,
+  saved: true,
+  adminEmailSent,
+  userEmailSent,
+  data: savedData,
+  warning:
+    adminEmailSent && userEmailSent
+      ? undefined
+      : 'Your inquiry was saved, but one or more emails could not be sent.'
+});
+} catch (err) {
+  console.error('Contact route error:', err);
+
+  if (err instanceof z.ZodError) {
+    return NextResponse.json(
+      {
+        success: false,
+        error: 'Validation failed',
+        details: err.issues
+      },
+      { status: 400 }
+    );
+  }
+
+  return NextResponse.json(
+    {
+      success: false,
+      error: 'Internal server error'
+    },
+    { status: 500 }
+  );
+}
 }

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
-import { db } from '@/lib/db';
+import { getSupabaseServer } from '@/lib/supabase-server';
 import { Resend } from 'resend';
 import {
   NAME_REGEX,
@@ -15,6 +15,9 @@ import {
 const resendApiKey = process.env.RESEND_API_KEY || '';
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
 const contactRecipient = process.env.HYPERCODE_CONTACT_EMAIL || 'HR@hypercodeus.com';
+const resendFromEmail =
+  process.env.RESEND_FROM_EMAIL ||
+  'HyperCode <HR@hypercodeit.com>';
 
 const consultationSchema = z.object({
   name: z.string().trim().min(2).max(80).regex(NAME_REGEX),
@@ -45,29 +48,68 @@ export async function POST(req: Request) {
     const sanitizedBody = sanitizePayload(body);
     const validated = consultationSchema.parse(sanitizedBody);
 
-    // Save to Supabase using db client
-    const savedData = await db.saveConsultationRequest(
-      validated.name,
-      validated.company,
-      validated.email,
-      validated.phone,
-      validated.service,
-      validated.budget,
-      validated.timeline,
-      validated.message,
-      {
-        business_goal: validated.businessGoal,
-        current_challenges: validated.currentChallenges,
-        expected_outcome: validated.expectedOutcome,
-        preferred_services: validated.preferredServices,
-        industry: validated.industry,
-        company_size: validated.companySize,
-        current_tech_stack: validated.currentTechStack,
-        preferred_meeting_type: validated.preferredMeetingType
-      }
-    );
+    // Save the consultation directly through the server-only Supabase client
+const supabase = getSupabaseServer();
+
+if (!supabase) {
+  console.error(
+    '[Consultation API] Supabase server configuration is missing.'
+  );
+
+  return NextResponse.json(
+    {
+      success: false,
+      saved: false,
+      error: 'The consultation service is temporarily unavailable.',
+      code: 'SUPABASE_CONFIGURATION_MISSING'
+    },
+    { status: 503 }
+  );
+}
+
+const { data: savedData, error: saveError } = await supabase
+  .from('consultation_requests')
+  .insert({
+    full_name: validated.name,
+    company: validated.company,
+    email: validated.email,
+    phone: validated.phone,
+    service_interest: validated.service,
+    budget: validated.budget,
+    timeline: validated.timeline,
+    status: 'New',
+    project_description: validated.message,
+  })
+  .select()
+  .single();
+
+if (saveError || !savedData) {
+  console.error('[Consultation API] Consultation insert failed:', {
+    code: saveError?.code || 'NO_CODE',
+    message: saveError?.message || 'No data returned',
+    details: saveError?.details || null,
+    hint: saveError?.hint || null
+  });
+
+  return NextResponse.json(
+    {
+      success: false,
+      saved: false,
+      error:
+        saveError?.message ||
+        'Supabase did not return the saved consultation.',
+      code: saveError?.code || 'CONSULTATION_INSERT_FAILED',
+      details: saveError?.details || null,
+      hint: saveError?.hint || null
+    },
+    { status: 500 }
+  );
+}
 
     // Send Emails via Resend
+    let adminEmailSent = false;
+    let userEmailSent = false;
+
     if (resend) {
       try {
         // A. Admin Alert Email
@@ -146,15 +188,29 @@ export async function POST(req: Request) {
           </div>
         `;
 
-        const adminEmailResult = await resend.emails.send({
-  from: 'HyperCode Platform <HR@hypercodeus.com>',
-  to: contactRecipient,
-  subject: `[Consultation Intake] New Request from ${validated.company}`,
-  html: adminEmailHtml,
-});
+        try {
+          const { data: adminEmailData, error: adminEmailError } = await resend.emails.send({
+            from: resendFromEmail,
+            to: contactRecipient,
+            replyTo: validated.email,
+            subject: `[Consultation Intake] New Request from ${validated.company}`,
+            html: adminEmailHtml,
+          });
 
-console.log('Admin recipient:', contactRecipient);
-console.log('Admin email result:', adminEmailResult);
+          if (adminEmailError) {
+            console.error('[Consultation API] Admin email failed:', {
+              name: adminEmailError.name,
+              message: adminEmailError.message
+            });
+          } else {
+            console.log('[Consultation API] Admin email sent:', {
+              emailId: adminEmailData?.id
+            });
+            adminEmailSent = true;
+          }
+        } catch (err) {
+          console.error('[Consultation API] Admin email exception:', err);
+        }
 
         // B. Client Confirmation Email
         const isSpanish = validated.locale === 'es';
@@ -204,25 +260,59 @@ console.log('Admin email result:', adminEmailResult);
           </div>
         `;
 
-        const clientEmailResult = await resend.emails.send({
-  from: 'HyperCode Team <HR@hypercodeus.com>',
-  to: validated.email,
-  subject: clientSubject,
-  html: clientEmailHtml,
-});
+        try {
+          const { data: clientEmailData, error: clientEmailError } = await resend.emails.send({
+            from: resendFromEmail,
+            to: validated.email,
+            subject: clientSubject,
+            html: clientEmailHtml,
+          });
 
-console.log('Client email sent:', clientEmailResult);
+          if (clientEmailError) {
+            console.error('[Consultation API] Client confirmation email failed:', {
+              name: clientEmailError.name,
+              message: clientEmailError.message
+            });
+          } else {
+            console.log('[Consultation API] Client confirmation email sent:', {
+              emailId: clientEmailData?.id
+            });
+            userEmailSent = true;
+          }
+        } catch (emailErr) {
+          console.error('[Consultation API] Client confirmation email exception:', emailErr);
+        }
       } catch (emailErr) {
         console.error('Resend consultation email error:', emailErr);
       }
     }
 
-    return NextResponse.json({ success: true, data: savedData });
-  } catch (err) {
-    console.error('Consultation route error:', err);
-    if (err instanceof z.ZodError) {
-      return NextResponse.json({ error: 'Validation failed', details: err.issues }, { status: 400 });
-    }
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
-  }
+    return NextResponse.json({
+      success: true,
+      saved: true,
+      adminEmailSent,
+      userEmailSent,
+      data: savedData,
+      warning:
+        adminEmailSent && userEmailSent
+          ? undefined
+          : 'Your inquiry was saved, but one or more emails could not be sent.'
+    });
+  } catch (err: any) {
+  console.error('[Consultation API Error]', {
+    message: err?.message,
+    stack: err?.stack,
+    error: err
+  });
+
+  return NextResponse.json(
+    {
+      success: false,
+      saved: false,
+      error: err?.message || 'Internal server error'
+    },
+    { status: 500 }
+  );
+
+}
 }
