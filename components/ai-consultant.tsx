@@ -132,6 +132,8 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
   const [windowState, setWindowState] = useState<'closed' | 'minimized' | 'open'>('closed');
   
   // Chat States
+  const sessionIdRef = useRef<string | null>(null);
+  const initializedRef = useRef(false);
   const [sessionId, setSessionId] = useState<string>('');
   const [conversationId, setConversationId] = useState<string>('');
   const [messages, setMessages] = useState<Message[]>([]);
@@ -257,7 +259,7 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
 
   const [isInitializing, setIsInitializing] = useState(true);
 
-  // Mount effect with state restoration
+  // Mount effect with state initialization (no restoration of chat history/session/conversation)
   useEffect(() => {
     setMounted(true);
     
@@ -266,46 +268,21 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
       setWindowState(savedWindowState);
     }
     
-    const savedConvoId = localStorage.getItem('hypercode_ai_consult_conversation_id');
-    if (savedConvoId) {
-      setConversationId(savedConvoId);
-    }
-
-    const savedMessagesStr = localStorage.getItem('hypercode_ai_consult_messages');
-    if (savedMessagesStr) {
-      try {
-        const parsed = JSON.parse(savedMessagesStr);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          setMessages(parsed);
-        }
-      } catch (e) {
-        console.warn('Failed to parse saved chat messages:', e);
-      }
-    }
-
-    const savedChatState = localStorage.getItem('hypercode_ai_consult_chat_state');
-    if (savedChatState) {
-      setChatState(savedChatState as any);
-    }
-
-    const savedActiveFlow = localStorage.getItem('hypercode_ai_consult_active_flow');
-    if (savedActiveFlow) {
-      setActiveFlow(savedActiveFlow as any);
-    }
-
-    const savedPrompts = localStorage.getItem('hypercode_ai_consult_suggested_prompts');
-    if (savedPrompts) {
-      try {
-        setSuggestedPrompts(JSON.parse(savedPrompts));
-      } catch (e) {}
-    }
-
-    const savedChatbotState = localStorage.getItem('hypercode_ai_consult_chatbot_state');
-    if (savedChatbotState) {
-      try {
-        setChatbotState(JSON.parse(savedChatbotState));
-      } catch (e) {}
-    }
+    // Explicitly initialize chat states to clear any existing browser caches
+    setConversationId('');
+    setMessages([]);
+    setSelectedService('');
+    setActiveFlow('chat');
+    setChatState('DEFAULT');
+    setChatbotState({
+      detectedIntent: 'DEFAULT',
+      conversationStage: 'Greeting',
+      currentQuestion: null,
+      leadData: {},
+      projectData: {},
+      recommendations: null,
+      leadSubmitted: false
+    });
   }, []);
 
   // Listen to mobile menu events to hide launcher
@@ -320,48 +297,12 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
     };
   }, []);
 
-  // Persist state effects
+  // Persist only windowState to maintain layout state during internal navigation
   useEffect(() => {
     if (mounted) {
       localStorage.setItem('hypercode_ai_consult_window_state', windowState);
     }
   }, [windowState, mounted]);
-
-  useEffect(() => {
-    if (mounted && conversationId) {
-      localStorage.setItem('hypercode_ai_consult_conversation_id', conversationId);
-    }
-  }, [conversationId, mounted]);
-
-  useEffect(() => {
-    if (mounted) {
-      localStorage.setItem('hypercode_ai_consult_messages', JSON.stringify(messages));
-    }
-  }, [messages, mounted]);
-
-  useEffect(() => {
-    if (mounted) {
-      localStorage.setItem('hypercode_ai_consult_chat_state', chatState);
-    }
-  }, [chatState, mounted]);
-
-  useEffect(() => {
-    if (mounted) {
-      localStorage.setItem('hypercode_ai_consult_active_flow', activeFlow);
-    }
-  }, [activeFlow, mounted]);
-
-  useEffect(() => {
-    if (mounted) {
-      localStorage.setItem('hypercode_ai_consult_suggested_prompts', JSON.stringify(suggestedPrompts));
-    }
-  }, [suggestedPrompts, mounted]);
-
-  useEffect(() => {
-    if (mounted) {
-      localStorage.setItem('hypercode_ai_consult_chatbot_state', JSON.stringify(chatbotState));
-    }
-  }, [chatbotState, mounted]);
 
   // Pre-fill manual forms from conversational leadData context for premium experience
   useEffect(() => {
@@ -547,16 +488,18 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
 
   // 1. Initialize Session ID and Load Chat
   useEffect(() => {
-    let savedSessionId = localStorage.getItem('hypercode_ai_session');
-    if (!savedSessionId) {
-      if (typeof window !== 'undefined' && window.crypto && window.crypto.randomUUID) {
-        savedSessionId = window.crypto.randomUUID();
-      } else {
-        savedSessionId = 'session_' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-      }
-      localStorage.setItem('hypercode_ai_session', savedSessionId);
+    if (initializedRef.current) return;
+    initializedRef.current = true;
+
+    let freshSessionId;
+    if (typeof window !== 'undefined' && window.crypto && window.crypto.randomUUID) {
+      freshSessionId = window.crypto.randomUUID();
+    } else {
+      freshSessionId = 'session_' + Math.random().toString(36).substring(2, 15) + '-' + Math.random().toString(36).substring(2, 15);
     }
-    setSessionId(savedSessionId);
+    
+    sessionIdRef.current = freshSessionId;
+    setSessionId(freshSessionId);
     setSuggestedPrompts(getDefaultPrompts());
 
     // Call POST /api/chat/session to create/fetch conversation row
@@ -566,41 +509,35 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            session_id: savedSessionId,
+            session_id: freshSessionId,
             language: locale
           })
         });
         const data = await res.json().catch(() => null);
 
-if (!res.ok || !data?.success || !data?.conversation?.id) {
-  console.error('[AI Consultant Session Error]', {
-    status: res.status,
-    response: data
-  });
+        if (!res.ok || !data?.success || !data?.conversation?.id) {
+          console.warn('[AI Consultant Session Error]', {
+            status: res.status,
+            response: data
+          });
 
-  throw new Error(
-    data?.error || 'Unable to initialize AI Consultant session.'
-  );
-}
+          throw new Error(
+            data?.error || 'Unable to initialize AI Consultant session.'
+          );
+        }
 
-setConversationId(data.conversation.id);
+        setConversationId(data.conversation.id);
 
-setMessages(prev => {
-  if (prev.length > 0) {
-    return prev;
-  }
-
-  return [
-    {
-      id: 'greeting',
-      sender: 'assistant',
-      message: t('welcomeMessage'),
-      created_at: new Date().toISOString()
-    }
-  ];
-});
+        setMessages([
+          {
+            id: 'greeting',
+            sender: 'assistant',
+            message: t('welcomeMessage'),
+            created_at: new Date().toISOString()
+          }
+        ]);
       } catch (err) {
-        console.error('Failed to initialize AI Consultant session:', err);
+        console.warn('Failed to initialize AI Consultant session:', err);
       } finally {
         setIsInitializing(false);
       }

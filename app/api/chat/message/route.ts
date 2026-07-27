@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import OpenAI from 'openai';
 import { processConsultantMessage } from '@/lib/chat-conversation';
-import { db, supabase } from '@/lib/db';
+import { getSupabaseServer, verifySupabaseConnectivity } from '@/lib/supabase-server';
 import { isRateLimited, getClientIp, sanitizeInput } from '@/lib/security';
 import { submitChatLead } from '@/lib/chat-lead-mailer';
 
@@ -95,7 +95,37 @@ export async function POST(req: Request) {
     const sanitizedMsg = sanitizeInput(parsed.message);
     const language = parsed.language;
 
-    // 4. Resolve or verify conversation ID from Supabase
+    // Verify Hostname and Connection
+    try {
+      await verifySupabaseConnectivity();
+    } catch (connErr: any) {
+      console.error('[API Message Error] Supabase hostname unreachable:', connErr.message);
+      return NextResponse.json(
+        {
+          success: false,
+          code: 'SUPABASE_CONNECTION_FAILED',
+          error: 'Unable to connect to the database service.'
+        },
+        { status: 503 }
+      );
+    }
+
+    // 4. Server-only Supabase Client
+    let supabase;
+    try {
+      supabase = getSupabaseServer();
+    } catch (configErr: any) {
+      console.error('[API Message Error] Supabase server client initialization failed:', configErr.message);
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Supabase server configuration is missing or invalid.'
+        },
+        { status: 503 }
+      );
+    }
+
+    // 5. Resolve or verify conversation ID from Supabase
     if (!conversationId) {
       if (!sessionId) {
         return NextResponse.json(
@@ -104,34 +134,78 @@ export async function POST(req: Request) {
         );
       }
 
-      if (supabase) {
-        try {
-          const { data, error } = await supabase
-            .from('chat_conversations')
-            .select('*')
-            .eq('session_id', sessionId)
-            .maybeSingle();
+      // Query Existing Conversation
+      const { data: existingConvo, error: lookupError } = await supabase
+        .from('chat_conversations')
+        .select('*')
+        .eq('session_id', sessionId)
+        .maybeSingle();
 
-          if (data) {
-            conversationId = data.id;
-          } else {
-            const newConvo = await db.createChatConversation(sessionId, language);
-            conversationId = newConvo.id;
-          }
-        } catch (dbErr: any) {
-          console.error('[API Message] Database conversation lookup/creation failed:', dbErr.message);
+      if (lookupError) {
+        console.error('[API Message] Database conversation lookup failed:', lookupError);
+        const isConnErr =
+          lookupError.message?.includes('fetch failed') ||
+          lookupError.message?.includes('ENOTFOUND') ||
+          lookupError.message?.includes('EAI_AGAIN');
+
+        if (isConnErr) {
+          return NextResponse.json(
+            {
+              success: false,
+              code: 'SUPABASE_CONNECTION_FAILED',
+              error: 'Unable to connect to the database service.'
+            },
+            { status: 503 }
+          );
         }
+        return NextResponse.json(
+          { success: false, error: lookupError.message || 'Database lookup failed.' },
+          { status: 500 }
+        );
       }
 
-      if (!conversationId) {
-        return NextResponse.json(
-          { success: false, error: 'Unable to resolve the conversation. Please verify the Supabase configuration.' },
-          { status: 503 }
-        );
+      if (existingConvo) {
+        conversationId = existingConvo.id;
+      } else {
+        // Create conversation
+        const { data: newConvo, error: insertError } = await supabase
+          .from('chat_conversations')
+          .insert({
+            session_id: sessionId,
+            language,
+            updated_at: new Date().toISOString()
+          })
+          .select()
+          .single();
+
+        if (insertError) {
+          console.error('[API Message] Database conversation creation failed:', insertError);
+          const isConnErr =
+            insertError.message?.includes('fetch failed') ||
+            insertError.message?.includes('ENOTFOUND') ||
+            insertError.message?.includes('EAI_AGAIN');
+
+          if (isConnErr) {
+            return NextResponse.json(
+              {
+                success: false,
+                code: 'SUPABASE_CONNECTION_FAILED',
+                error: 'Unable to connect to the database service.'
+              },
+              { status: 503 }
+            );
+          }
+          return NextResponse.json(
+            { success: false, error: insertError.message || 'Database creation failed.' },
+            { status: 500 }
+          );
+        }
+
+        conversationId = newConvo.id;
       }
     }
 
-    // 5. Load/Initialize state
+    // 6. Load/Initialize state
     const currentState: ChatbotState = {
       detectedIntent: (parsed.state?.detectedIntent as any) || 'DEFAULT',
       conversationStage: (parsed.state?.conversationStage as any) || 'Greeting',
@@ -142,33 +216,62 @@ export async function POST(req: Request) {
       leadSubmitted: parsed.state?.leadSubmitted || false
     };
 
-    // 6. Save User Message to Supabase
-    let savedUserMsg = null;
-    try {
-      savedUserMsg = await db.addChatMessage(conversationId, 'user', sanitizedMsg, language);
-    } catch (dbError: any) {
-      console.warn('[API Message] Supabase user message save failed, creating fallback:', dbError.message);
-      savedUserMsg = {
-        id: 'mock-user-msg-' + Math.random().toString(36).substring(2, 9),
+    // 7. Save User Message to Supabase
+    const { data: savedUserMsg, error: userMsgError } = await supabase
+      .from('chat_messages')
+      .insert({
         conversation_id: conversationId,
-        sender: 'user' as const,
+        sender: 'user',
         message: sanitizedMsg,
-        language,
-        created_at: new Date().toISOString()
-      };
+        language
+      })
+      .select()
+      .single();
+
+    if (userMsgError) {
+      console.error('[API Message] Supabase user message save failed:', userMsgError);
+      const isConnErr =
+        userMsgError.message?.includes('fetch failed') ||
+        userMsgError.message?.includes('ENOTFOUND') ||
+        userMsgError.message?.includes('EAI_AGAIN');
+
+      if (isConnErr) {
+        return NextResponse.json(
+          {
+            success: false,
+            code: 'SUPABASE_CONNECTION_FAILED',
+            error: 'Unable to connect to the database service.'
+          },
+          { status: 503 }
+        );
+      }
+      return NextResponse.json(
+        { success: false, error: userMsgError.message || 'Failed to save user message.' },
+        { status: 500 }
+      );
     }
 
-    // 7. Run primary deterministic conversation engine
+    // Update conversation timestamp
+    const { error: updateConvoError } = await supabase
+      .from('chat_conversations')
+      .update({ updated_at: new Date().toISOString() })
+      .eq('id', conversationId);
+
+    if (updateConvoError) {
+      console.warn('[API Message Warning] Failed to update conversation timestamp:', updateConvoError.message);
+    }
+
+    // 8. Run primary deterministic conversation engine
     const advisorResult = processConsultantMessage(
       sanitizedMsg,
       currentState,
       language
     );
 
-    // 8. Optional OpenAI enrichment for technical recommendations
+    // 9. Optional OpenAI enrichment for technical recommendations
     // Trigger when we transition to Lead Qualification and have collected the required project details
-    const transitionedToLeadQual = 
-      currentState.conversationStage !== 'Lead Qualification' && 
+    const transitionedToLeadQual =
+      currentState.conversationStage !== 'Lead Qualification' &&
       advisorResult.conversationStage === 'Lead Qualification';
 
     if (transitionedToLeadQual && openai) {
@@ -209,7 +312,7 @@ Language: ${language === 'es' ? 'Spanish' : 'English'}
 
         const rawText = response.choices[0]?.message?.content || '{}';
         const parsedRecommendations = JSON.parse(rawText.trim().replace(/^```json\s*/, '').replace(/```$/, ''));
-        
+
         if (parsedRecommendations.techStack && parsedRecommendations.architecture) {
           advisorResult.recommendations = parsedRecommendations;
           console.log('[API Message] OpenAI recommendations generated successfully.');
@@ -219,7 +322,7 @@ Language: ${language === 'es' ? 'Spanish' : 'English'}
       }
     }
 
-    // 9. Sync leadData updates safely
+    // 10. Sync leadData updates safely
     const updatedLeadData = {
       ...currentState.leadData,
       ...advisorResult.extractedLeadData
@@ -228,14 +331,14 @@ Language: ${language === 'es' ? 'Spanish' : 'English'}
     let leadSubmitted = currentState.leadSubmitted || false;
     let flowTrigger = null;
 
-    // 10. Auto-qualification & Resend Mailer invocation
+    // 11. Auto-qualification & Resend Mailer invocation
     // Triggered when lead qualification is finished and conversationStage becomes Consultation
     if (!leadSubmitted && advisorResult.conversationStage === 'Consultation') {
       const hasRequiredLeadInfo = updatedLeadData.name && updatedLeadData.email && updatedLeadData.company;
       if (hasRequiredLeadInfo) {
         try {
           console.log('[API Message] Executing lead qualification mailer...');
-          
+
           // Formulate project details string
           const projectDetails = Object.entries(advisorResult.projectData)
             .map(([k, v]) => `${k}: ${v}`)
@@ -277,25 +380,49 @@ Language: ${language === 'es' ? 'Spanish' : 'English'}
       leadSubmitted
     };
 
-    // 11. Save Advisor Response to Supabase
-    let savedAssistantMsg = null;
-    try {
-      savedAssistantMsg = await db.addChatMessage(
-        conversationId,
-        'assistant',
-        advisorResult.responseMessage,
-        language
-      );
-    } catch (dbError: any) {
-      console.warn('[API Message] Supabase assistant message save failed, creating fallback:', dbError.message);
-      savedAssistantMsg = {
-        id: 'mock-assistant-msg-' + Math.random().toString(36).substring(2, 9),
+    // 12. Save Advisor Response to Supabase
+    const { data: savedAssistantMsg, error: assistantMsgError } = await supabase
+      .from('chat_messages')
+      .insert({
         conversation_id: conversationId,
-        sender: 'assistant' as const,
+        sender: 'assistant',
         message: advisorResult.responseMessage,
-        language,
-        created_at: new Date().toISOString()
-      };
+        language
+      })
+      .select()
+      .single();
+
+    if (assistantMsgError) {
+      console.error('[API Message] Supabase assistant message save failed:', assistantMsgError);
+      const isConnErr =
+        assistantMsgError.message?.includes('fetch failed') ||
+        assistantMsgError.message?.includes('ENOTFOUND') ||
+        assistantMsgError.message?.includes('EAI_AGAIN');
+
+      if (isConnErr) {
+        return NextResponse.json(
+          {
+            success: false,
+            code: 'SUPABASE_CONNECTION_FAILED',
+            error: 'Unable to connect to the database service.'
+          },
+          { status: 503 }
+        );
+      }
+      return NextResponse.json(
+        { success: false, error: assistantMsgError.message || 'Failed to save assistant message.' },
+        { status: 500 }
+      );
+    }
+
+    // Update conversation timestamp again
+    const { error: updateConvoError2 } = await supabase
+      .from('chat_conversations')
+      .update({ updated_at: new Date().toISOString() })
+      .eq('id', conversationId);
+
+    if (updateConvoError2) {
+      console.warn('[API Message Warning] Failed to update conversation timestamp:', updateConvoError2.message);
     }
 
     return NextResponse.json({
@@ -309,6 +436,28 @@ Language: ${language === 'es' ? 'Spanish' : 'English'}
 
   } catch (err: any) {
     console.error('[API Message Critical Error] Fatal route crash:', err.message || err);
+
+    const cause =
+      err instanceof Error && 'cause' in err
+        ? err.cause
+        : undefined;
+
+    const isConnErr =
+      err?.message?.includes('fetch failed') ||
+      (cause && typeof cause === 'object' && 'code' in cause &&
+        (cause.code === 'ENOTFOUND' || cause.code === 'EAI_AGAIN' || cause.code === 'ECONNREFUSED' || cause.code === 'ETIMEDOUT'));
+
+    if (isConnErr) {
+      return NextResponse.json(
+        {
+          success: false,
+          code: 'SUPABASE_CONNECTION_FAILED',
+          error: 'Unable to connect to the database service.'
+        },
+        { status: 503 }
+      );
+    }
+
     return NextResponse.json(
       { success: false, error: 'An internal server error occurred while processing your message.' },
       { status: 500 }

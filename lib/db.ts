@@ -1,15 +1,30 @@
 import { createClient } from '@supabase/supabase-js';
 import * as DBTypes from '@/types/database';
+import { getSupabaseServer } from './supabase-server';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
+const supabaseUrl = (process.env.NEXT_PUBLIC_SUPABASE_URL || '')
+  .trim()
+  .replace(/^["']|["']$/g, '')
+  .replace(/\s/g, '');
+const supabaseAnonKey = (process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '')
+  .trim()
+  .replace(/^["']|["']$/g, '')
+  .replace(/\s/g, '');
 
 const isSupabaseConfigured = !!(supabaseUrl && supabaseAnonKey);
 
-const activeKey = (typeof window === 'undefined' && supabaseServiceKey) ? supabaseServiceKey : supabaseAnonKey;
+let serverClient: any = null;
+if (typeof window === 'undefined') {
+  try {
+    serverClient = getSupabaseServer();
+  } catch (e: any) {
+    console.warn('[DB] Supabase server client not initialized at module load:', e.message);
+  }
+}
 
-export const supabase = isSupabaseConfigured ? createClient(supabaseUrl, activeKey) : null;
+export const supabase = typeof window === 'undefined'
+  ? serverClient
+  : (isSupabaseConfigured ? createClient(supabaseUrl, supabaseAnonKey) : null);
 
 export function sanitizePayload(val: any, seen = new WeakSet()): any {
   if (val === null || val === undefined) return null;

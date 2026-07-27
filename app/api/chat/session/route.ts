@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
-import { db, supabase } from '@/lib/db';
+import { getSupabaseServer, verifySupabaseConnectivity } from '@/lib/supabase-server';
 import { isRateLimited, getClientIp, sanitizeInput } from '@/lib/security';
 
 const schema = z.object({
@@ -42,56 +42,159 @@ export async function POST(req: Request) {
     const sessionId = sanitizeInput(parsed.session_id);
     const language = parsed.language;
 
-    let conversation = null;
-
-    // 4. Safe conversation lookup or insertion
-    if (supabase) {
-      try {
-        const { data, error } = await supabase
-          .from('chat_conversations')
-          .select('*')
-          .eq('session_id', sessionId)
-          .maybeSingle();
-
-        if (error) {
-          console.warn('[Session API Warning] Error checking conversation existence:', error.message || error);
-        }
-
-        if (data) {
-          conversation = data;
-          console.log('[Session API] Found existing conversation:', conversation.id);
-        } else {
-          conversation = await db.createChatConversation(sessionId, language);
-          console.log('[Session API] Created new conversation:', conversation.id);
-        }
-      } catch (dbErr: any) {
-        console.error('[Session API Error] Safe database fallback triggered:', dbErr.message || dbErr);
-      }
+    // 4. Verify Hostname and Connection
+    try {
+      await verifySupabaseConnectivity();
+    } catch (connErr: any) {
+      console.error('[Session API Error] Supabase hostname unreachable:', connErr.message);
+      return NextResponse.json(
+        {
+          success: false,
+          code: 'SUPABASE_CONNECTION_FAILED',
+          error: 'Unable to connect to the database service.'
+        },
+        { status: 503 }
+      );
     }
 
-    // Fail-safe fallback mock conversation in case DB is not available
-    if (!conversation) {
-  console.error('[Chat Session API] Unable to create conversation', {
-    sessionId,
-    language
-  });
+    // 5. Server-only Supabase Client
+    let supabase;
+    try {
+      supabase = getSupabaseServer();
+    } catch (configErr: any) {
+      console.error('[Session API Error] Supabase server client initialization failed:', configErr.message);
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Supabase server configuration is missing or invalid.'
+        },
+        { status: 503 }
+      );
+    }
 
-  return NextResponse.json(
-    {
-      success: false,
-      error:
-        'Unable to create the conversation. Please verify the Supabase configuration and chat_conversations table.'
-    },
-    { status: 503 }
-  );
-}
-console.log('[Session API] Final conversation object:', conversation);
+    // 6. Query Existing Conversation
+    const { data: existingConversation, error: lookupError } = await supabase
+      .from('chat_conversations')
+      .select('*')
+      .eq('session_id', sessionId)
+      .maybeSingle();
+
+    if (lookupError) {
+      console.error('[Session API] Conversation lookup failed', {
+        code: lookupError.code,
+        message: lookupError.message,
+        details: lookupError.details,
+        hint: lookupError.hint
+      });
+
+      const isConnErr =
+        lookupError.message?.includes('fetch failed') ||
+        lookupError.message?.includes('ENOTFOUND') ||
+        lookupError.message?.includes('EAI_AGAIN');
+
+      if (isConnErr) {
+        return NextResponse.json(
+          {
+            success: false,
+            code: 'SUPABASE_CONNECTION_FAILED',
+            error: 'Unable to connect to the database service.'
+          },
+          { status: 503 }
+        );
+      }
+
+      return NextResponse.json(
+        {
+          success: false,
+          error: lookupError.message || 'Error looking up conversation.',
+          code: lookupError.code || 'CHAT_CONVERSATION_LOOKUP_FAILED'
+        },
+        { status: 500 }
+      );
+    }
+
+    if (existingConversation) {
+      console.log('[Session API] Found existing conversation:', existingConversation.id);
+      return NextResponse.json({
+        success: true,
+        conversation: existingConversation
+      });
+    }
+
+    // 7. Create New Conversation
+    const { data: createdConversation, error: insertError } = await supabase
+      .from('chat_conversations')
+      .insert({
+        session_id: sessionId,
+        language
+      })
+      .select()
+      .single();
+
+    if (insertError) {
+      console.error('[Session API] Conversation insert failed', {
+        code: insertError.code,
+        message: insertError.message,
+        details: insertError.details,
+        hint: insertError.hint
+      });
+
+      const isConnErr =
+        insertError.message?.includes('fetch failed') ||
+        insertError.message?.includes('ENOTFOUND') ||
+        insertError.message?.includes('EAI_AGAIN');
+
+      if (isConnErr) {
+        return NextResponse.json(
+          {
+            success: false,
+            code: 'SUPABASE_CONNECTION_FAILED',
+            error: 'Unable to connect to the database service.'
+          },
+          { status: 503 }
+        );
+      }
+
+      return NextResponse.json(
+        {
+          success: false,
+          error: insertError.message || 'Unable to create conversation.',
+          code: insertError.code || 'CHAT_CONVERSATION_INSERT_FAILED'
+        },
+        { status: 500 }
+      );
+    }
+
+    console.log('[Session API] Created new conversation:', createdConversation.id);
     return NextResponse.json({
       success: true,
-      conversation
+      conversation: createdConversation
     });
+
   } catch (err: any) {
     console.error('[Session API Critical Error] Fatal crash:', err.message || err);
+
+    const cause =
+      err instanceof Error && 'cause' in err
+        ? err.cause
+        : undefined;
+
+    const isConnErr =
+      err?.message?.includes('fetch failed') ||
+      (cause && typeof cause === 'object' && 'code' in cause &&
+        (cause.code === 'ENOTFOUND' || cause.code === 'EAI_AGAIN' || cause.code === 'ECONNREFUSED' || cause.code === 'ETIMEDOUT'));
+
+    if (isConnErr) {
+      return NextResponse.json(
+        {
+          success: false,
+          code: 'SUPABASE_CONNECTION_FAILED',
+          error: 'Unable to connect to the database service.'
+        },
+        { status: 503 }
+      );
+    }
+
     return NextResponse.json(
       { success: false, error: 'An internal server error occurred while preparing your session.' },
       { status: 500 }
