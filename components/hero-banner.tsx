@@ -64,10 +64,10 @@ export function HeroBanner({
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-20 pt-12">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+        <div className={ctaButtons ? "flex flex-col md:flex-row md:items-center md:justify-between gap-8" : "w-full"}>
           
           {/* Content Block */}
-          <div className="max-w-3xl space-y-5">
+          <div className={ctaButtons ? "max-w-3xl space-y-5" : "max-w-4xl space-y-5"}>
             {/* Breadcrumbs */}
             {breadcrumbs && breadcrumbs.length > 0 && (
               <nav className="flex items-center gap-1.5 text-[10px] font-extrabold text-slate-500 tracking-widest uppercase mb-2">
@@ -103,7 +103,7 @@ export function HeroBanner({
               )}
             </h1>
             
-            <p className="text-[16px] md:text-[17px] lg:text-[18px] text-slate-600 leading-[1.7] max-w-xl font-medium">
+            <p className={ctaButtons ? "text-[16px] md:text-[17px] lg:text-[18px] text-slate-600 leading-[1.7] max-w-xl font-medium" : "text-[16px] md:text-[17px] lg:text-[18px] text-slate-600 leading-[1.7] max-w-2xl md:max-w-3xl font-medium"}>
               {subtitle}
             </p>
           </div>

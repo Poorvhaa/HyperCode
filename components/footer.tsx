@@ -7,6 +7,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { useState, type FormEvent } from 'react';
 import { EMAIL_REGEX } from '@/lib/validation';
 import { useCookieConsent } from '@/hooks/useCookieConsent';
+import { useFormValidation } from '@/hooks/use-form-validation';
 
 export function Footer() {
   const tNav = useTranslations('Navigation');
@@ -19,30 +20,52 @@ export function Footer() {
   const [subscribed, setSubscribed] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [touched, setTouched] = useState(false);
+  const [error, setError] = useState('');
+
+  const { formRef, focusAndScrollToError } = useFormValidation();
 
   const isValidEmail = EMAIL_REGEX.test(email.trim());
+  const hasEmailError = (touched && !isValidEmail) || Boolean(error);
 
   const handleSubscribe = async (e: FormEvent) => {
     e.preventDefault();
     setTouched(true);
-    if (!email || !isValidEmail) return;
+    setError('');
+
+    if (!email.trim() || !isValidEmail) {
+      setError(locale === 'es' ? 'Por favor introduzca un correo válido.' : 'Please enter a valid email address.');
+      setTimeout(() => {
+        focusAndScrollToError({ email: true });
+      }, 0);
+      return;
+    }
+
     setSubmitting(true);
-    
     const cleanEmail = email.trim().replace(/<[^>]*>/g, '');
 
     try {
       const res = await fetch('/api/newsletter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: cleanEmail, locale, sourcePage: 'footer' })
+        body: JSON.stringify({ email: cleanEmail, language: locale === 'es' ? 'es' : 'en', sourcePage: 'footer' })
       });
-      if (res.ok) {
+      const result = await res.json().catch(() => null);
+      if (res.ok && result?.success) {
         setSubscribed(true);
         setEmail('');
         setTouched(false);
+      } else {
+        setError(result?.error || (locale === 'es' ? 'Error al suscribirse.' : 'Failed to subscribe.'));
+        setTimeout(() => {
+          focusAndScrollToError({ email: true });
+        }, 0);
       }
     } catch (err) {
       console.error(err);
+      setError(locale === 'es' ? 'Error al suscribirse.' : 'Failed to subscribe.');
+      setTimeout(() => {
+        focusAndScrollToError({ email: true });
+      }, 0);
     } finally {
       setSubmitting(false);
     }
@@ -102,32 +125,35 @@ export function Footer() {
                 <span>{tf('newsletterSuccess') || 'Thank you for subscribing!'}</span>
               </div>
             ) : (
-              <form onSubmit={handleSubscribe} className="w-full">
+              <form ref={formRef} onSubmit={handleSubscribe} className="w-full">
                 <div className="flex gap-2">
                   <div className="relative flex-1">
                     <input
                       type="email"
+                      name="email"
                       required
                       placeholder={tf('newsletterPlaceholder') || 'email@company.com'}
                       value={email}
                       onChange={(e) => {
                         setEmail(e.target.value);
+                        if (error) setError('');
                         if (e.target.value.length > 5) setTouched(true);
                       }}
                       onBlur={() => setTouched(true)}
                       autoComplete="email"
                       inputMode="email"
+                      aria-invalid={hasEmailError}
+                      aria-describedby={hasEmailError ? 'footer-email-error' : undefined}
                       className={`w-full bg-white/5 border rounded-2xl pl-5 pr-10 py-3.5 text-sm text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#35C7F4]/25 transition-all outline-none ${
-                        touched && !isValidEmail
-                          ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                        hasEmailError
+                          ? 'border-red-500 bg-red-50/10 focus:border-red-600 focus:ring-2 focus:ring-red-200/50'
                           : touched && isValidEmail
                           ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                           : 'border-white/10 focus:border-[#35C7F4]'
                       }`}
                       disabled={submitting}
-                      aria-label="Email address"
                     />
-                    {touched && isValidEmail && (
+                    {touched && isValidEmail && !error && (
                       <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-green-400">
                         <Check size={18} className="stroke-[3px]" />
                       </span>
@@ -135,18 +161,18 @@ export function Footer() {
                   </div>
                   <button
                     type="submit"
-                    disabled={submitting || !isValidEmail}
+                    disabled={submitting}
                     className={`bg-gradient-to-r from-royal-blue to-green hover:from-royal-blue hover:to-bright-lime hover:shadow-[0_0_15px_rgba(20,91,255,0.4)] active:scale-95 text-white px-6 rounded-2xl text-sm font-bold transition-all flex items-center justify-center cursor-pointer border-none shadow-md ${
-                      (!isValidEmail || submitting) ? 'opacity-50 cursor-not-allowed bg-slate-700 hover:bg-slate-700' : ''
+                      submitting ? 'opacity-50 cursor-not-allowed bg-slate-700 hover:bg-slate-700' : ''
                     }`}
                   >
                     <ArrowRight size={18} />
                   </button>
                 </div>
-                {touched && !isValidEmail && (
-                  <p className="text-xs font-semibold text-red-400 text-left pl-1 mt-1 flex items-center gap-1 animate-fadeIn" role="alert">
+                {error && (
+                  <p id="footer-email-error" className="text-xs font-semibold text-red-400 text-left pl-1 mt-1 flex items-center gap-1 animate-fadeIn" role="alert">
                     <AlertCircle size={14} className="flex-shrink-0" />
-                    <span>{locale === 'es' ? 'Por favor introduzca un correo válido.' : 'Please enter a valid email address.'}</span>
+                    <span>{error}</span>
                   </p>
                 )}
               </form>

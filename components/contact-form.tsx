@@ -27,9 +27,22 @@ function ContactFormContent() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
 
+  const contactFieldOrder = [
+    'name',
+    'email',
+    'company',
+    'phone',
+    'industry',
+    'budget',
+    'timeline',
+    'subject',
+    'message'
+  ];
+
   const { formRef, focusAndScrollToError } = useFormValidation({
     navbarSelector: 'header',
     extraOffset: 24,
+    fieldOrder: contactFieldOrder,
   });
 
   const t = useTranslations('Contact.form');
@@ -124,11 +137,13 @@ function ContactFormContent() {
     handleSubmit,
     setValue,
     watch,
-    formState: { errors, touchedFields, isValid },
+    formState: { errors, touchedFields, submitCount },
     reset,
+    setError: setFieldError,
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema) as any,
-    mode: 'onChange',
+    mode: 'onSubmit',
+    reValidateMode: 'onChange',
     defaultValues: {
       name: '',
       email: '',
@@ -198,11 +213,23 @@ function ContactFormContent() {
 
       const result = await res.json().catch(() => null);
 
-if (!res.ok || !result?.success) {
-  throw new Error(
-    result?.error || 'Contact submission API returned an error'
-  );
-}
+      if (!res.ok || !result?.success) {
+        if (result?.code === 'VALIDATION_ERROR' && result?.fieldErrors) {
+          Object.entries(result.fieldErrors).forEach(([field, msg]) => {
+            setFieldError(field as any, {
+              type: 'server',
+              message: msg as string,
+            });
+          });
+          setTimeout(() => {
+            focusAndScrollToError(result.fieldErrors);
+          }, 50);
+          return;
+        }
+        throw new Error(
+          result?.error || 'Contact submission API returned an error'
+        );
+      }
 
       trackGAEvent({
         action: 'contact_form_submission',
@@ -214,9 +241,9 @@ if (!res.ok || !result?.success) {
       reset();
       setTimeout(() => setSubmitted(false), 5000);
     } catch (err) {
-  setError(t('errorSubmit'));
-  console.error('Contact form error:', err);
-} finally {
+      setError(t('errorSubmit'));
+      console.error('Contact form error:', err);
+    } finally {
       setSubmitting(false);
     }
   };
@@ -274,6 +301,17 @@ if (!res.ok || !result?.success) {
         </div>
       )}
 
+      {submitCount > 0 && Object.keys(errors).length > 0 && (
+        <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 flex gap-3 text-sm animate-fadeIn" role="alert" aria-live="assertive">
+          <AlertCircle size={20} className="flex-shrink-0" />
+          <span>
+            {locale === 'es' 
+              ? 'Por favor, corrija los campos resaltados.' 
+              : 'Please correct the highlighted fields.'}
+          </span>
+        </div>
+      )}
+
       {/* Grid for Name, Email, Company, Phone */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
@@ -285,9 +323,11 @@ if (!res.ok || !result?.success) {
               placeholder="John Doe"
               autoComplete="name"
               {...register('name')}
+              aria-invalid={Boolean(errors.name)}
+              aria-describedby={errors.name ? 'contact-name-error' : undefined}
               className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
                 errors.name
-                  ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                   : touchedFields.name
                   ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                   : 'border-slate-200'
@@ -299,7 +339,7 @@ if (!res.ok || !result?.success) {
               </span>
             )}
           </div>
-          {errors.name && <span id="name-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">{errors.name.message}</span>}
+          {errors.name && <span id="contact-name-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">{errors.name.message}</span>}
         </div>
 
         <div>
@@ -312,9 +352,11 @@ if (!res.ok || !result?.success) {
               autoComplete="email"
               inputMode="email"
               {...register('email')}
+              aria-invalid={Boolean(errors.email)}
+              aria-describedby={errors.email ? 'contact-email-error' : undefined}
               className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
                 errors.email
-                  ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                   : touchedFields.email
                   ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                   : 'border-slate-200'
@@ -326,7 +368,7 @@ if (!res.ok || !result?.success) {
               </span>
             )}
           </div>
-          {errors.email && <span id="email-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">{errors.email.message}</span>}
+          {errors.email && <span id="contact-email-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">{errors.email.message}</span>}
         </div>
 
         <div>
@@ -338,9 +380,11 @@ if (!res.ok || !result?.success) {
               placeholder="Enter company name"
               autoComplete="organization"
               {...register('company')}
+              aria-invalid={Boolean(errors.company)}
+              aria-describedby={errors.company ? 'contact-company-error' : undefined}
               className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
                 errors.company
-                  ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                   : touchedFields.company
                   ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                   : 'border-slate-200'
@@ -352,7 +396,7 @@ if (!res.ok || !result?.success) {
               </span>
             )}
           </div>
-          {errors.company && <span id="company-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">{errors.company.message}</span>}
+          {errors.company && <span id="contact-company-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">{errors.company.message}</span>}
         </div>
 
         <div>
@@ -369,9 +413,11 @@ if (!res.ok || !result?.success) {
                   e.target.value = filterPhoneInput(e.target.value);
                 }
               })}
+              aria-invalid={Boolean(errors.phone)}
+              aria-describedby={errors.phone ? 'contact-phone-error' : undefined}
               className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
                 errors.phone
-                  ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                   : touchedFields.phone
                   ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                   : 'border-slate-200'
@@ -383,7 +429,7 @@ if (!res.ok || !result?.success) {
               </span>
             )}
           </div>
-          {errors.phone && <span id="phone-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">{errors.phone.message}</span>}
+          {errors.phone && <span id="contact-phone-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">{errors.phone.message}</span>}
         </div>
       </div>
 
@@ -420,9 +466,11 @@ if (!res.ok || !result?.success) {
             <select
               id="contact-industry"
               {...register('industry')}
+              aria-invalid={Boolean(errors.industry)}
+              aria-describedby={errors.industry ? 'contact-industry-error' : undefined}
               className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 cursor-pointer ${
                 errors.industry
-                  ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                   : touchedFields.industry
                   ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                   : 'border-slate-200'
@@ -439,7 +487,7 @@ if (!res.ok || !result?.success) {
               </span>
             )}
           </div>
-          {errors.industry && <span id="industry-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">{errors.industry.message}</span>}
+          {errors.industry && <span id="contact-industry-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">{errors.industry.message}</span>}
         </div>
 
         <div>
@@ -464,9 +512,11 @@ if (!res.ok || !result?.success) {
             <select
               id="contact-budget"
               {...register('budget')}
+              aria-invalid={Boolean(errors.budget)}
+              aria-describedby={errors.budget ? 'contact-budget-error' : undefined}
               className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 cursor-pointer ${
                 errors.budget
-                  ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                   : touchedFields.budget
                   ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                   : 'border-slate-200'
@@ -483,7 +533,7 @@ if (!res.ok || !result?.success) {
               </span>
             )}
           </div>
-          {errors.budget && <span id="budget-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">{errors.budget.message}</span>}
+          {errors.budget && <span id="contact-budget-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">{errors.budget.message}</span>}
         </div>
 
         <div>
@@ -492,9 +542,11 @@ if (!res.ok || !result?.success) {
             <select
               id="contact-timeline"
               {...register('timeline')}
+              aria-invalid={Boolean(errors.timeline)}
+              aria-describedby={errors.timeline ? 'contact-timeline-error' : undefined}
               className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 cursor-pointer ${
                 errors.timeline
-                  ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                   : touchedFields.timeline
                   ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                   : 'border-slate-200'
@@ -511,7 +563,7 @@ if (!res.ok || !result?.success) {
               </span>
             )}
           </div>
-          {errors.timeline && <span id="timeline-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">{errors.timeline.message}</span>}
+          {errors.timeline && <span id="contact-timeline-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">{errors.timeline.message}</span>}
         </div>
 
         <div>
@@ -561,9 +613,11 @@ if (!res.ok || !result?.success) {
             <select
               id="contact-subject"
               {...register('subject')}
+              aria-invalid={Boolean(errors.subject)}
+              aria-describedby={errors.subject ? 'contact-subject-error' : undefined}
               className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 cursor-pointer ${
                 errors.subject
-                  ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                   : touchedFields.subject
                   ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                   : 'border-slate-200'
@@ -580,7 +634,7 @@ if (!res.ok || !result?.success) {
               </span>
             )}
           </div>
-          {errors.subject && <span id="subject-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">{errors.subject.message}</span>}
+          {errors.subject && <span id="contact-subject-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">{errors.subject.message}</span>}
         </div>
       </div>
 
@@ -618,9 +672,11 @@ if (!res.ok || !result?.success) {
             rows={5}
             placeholder="Please describe your technology requirements, key challenges, or hiring profiles..."
             {...register('message')}
+            aria-invalid={Boolean(errors.message)}
+            aria-describedby={errors.message ? 'contact-message-error' : undefined}
             className={`w-full pl-5 pr-11 py-4 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
               errors.message
-                ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                 : touchedFields.message
                 ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                 : 'border-slate-200'
@@ -634,7 +690,7 @@ if (!res.ok || !result?.success) {
         </div>
         <div className="flex justify-between items-center mt-1.5">
           {errors.message ? (
-            <span id="message-error" className="text-xs font-semibold text-red-500" role="alert">{errors.message.message}</span>
+            <span id="contact-message-error" className="text-xs font-semibold text-red-500" role="alert">{errors.message.message}</span>
           ) : (
             <span className="text-xs text-slate-400">
               {locale === 'es' ? 'El mensaje debe tener al menos 20 caracteres' : 'Message must be at least 20 characters'}
@@ -650,9 +706,9 @@ if (!res.ok || !result?.success) {
       <div className="flex justify-end">
         <button
           type="submit"
-          disabled={submitting || !isValid}
+          disabled={submitting}
           className={`btn-primary min-w-[200px] flex items-center justify-center gap-2 transition-all ${
-            (!isValid || submitting) ? 'opacity-50 cursor-not-allowed bg-slate-400 hover:bg-slate-400 border-slate-400' : ''
+            submitting ? 'opacity-50 cursor-not-allowed bg-slate-400 hover:bg-slate-400 border-slate-400' : ''
           }`}
         >
           {submitting ? (

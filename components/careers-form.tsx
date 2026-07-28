@@ -54,7 +54,8 @@ const formTranslations = {
     yearsError: "Please enter your years of experience.",
     requiredResume: "Please upload your resume.",
     errorSubmit: "An error occurred during submission. Please try again.",
-    backToCareers: "Back to Careers"
+    backToCareers: "Back to Careers",
+    pleaseCorrect: "Please correct the highlighted fields."
   },
   es: {
     fullName: "Nombre Completo",
@@ -84,7 +85,8 @@ const formTranslations = {
     yearsError: "Por favor introduzca los años de experiencia.",
     requiredResume: "Por favor suba su currículum.",
     errorSubmit: "Ocurrió un error en el envío. Intente de nuevo.",
-    backToCareers: "Volver a Carreras"
+    backToCareers: "Volver a Carreras",
+    pleaseCorrect: "Por favor, corrija los campos resaltados."
   }
 };
 
@@ -96,9 +98,21 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
   const locale = useLocale() as 'en' | 'es';
   const t = formTranslations[locale] || formTranslations.en;
 
+  const careersFieldOrder = [
+    'name',
+    'email',
+    'phone',
+    'linkedin',
+    'yearsExperience',
+    'skills',
+    'message',
+    'resume'
+  ];
+
   const { formRef, focusAndScrollToError } = useFormValidation({
     navbarSelector: 'header',
     extraOffset: 24,
+    fieldOrder: careersFieldOrder,
   });
 
   const [submitting, setSubmitting] = useState(false);
@@ -141,11 +155,13 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
     handleSubmit,
     setValue,
     watch,
-    formState: { errors, touchedFields, isValid },
-    reset
+    formState: { errors, touchedFields, submitCount },
+    reset,
+    setError: setFieldError,
   } = useForm<FormData>({
     resolver: zodResolver(schema) as any,
-    mode: 'onChange',
+    mode: 'onSubmit',
+    reValidateMode: 'onChange',
     defaultValues: {
       name: '',
       email: '',
@@ -219,6 +235,14 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
   const onSubmit = async (data: FormData) => {
     if (!resumeFile) {
       setFileError(t.requiredResume);
+      const element = document.querySelector<HTMLElement>('[data-field-name="resume"]');
+      if (element) {
+        element.style.scrollMarginTop = '120px';
+        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        requestAnimationFrame(() => {
+          element.focus({ preventScroll: true });
+        });
+      }
       return;
     }
 
@@ -246,9 +270,22 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
         body: payload,
       });
 
-      if (!res.ok) {
-        const errJson = await res.json();
-        throw new Error(errJson.error || t.errorSubmit);
+      const result = await res.json().catch(() => null);
+
+      if (!res.ok || !result?.success) {
+        if (result?.code === 'VALIDATION_ERROR' && result?.fieldErrors) {
+          Object.entries(result.fieldErrors).forEach(([field, msg]) => {
+            setFieldError(field as any, {
+              type: 'server',
+              message: msg as string,
+            });
+          });
+          setTimeout(() => {
+            focusAndScrollToError(result.fieldErrors);
+          }, 50);
+          return;
+        }
+        throw new Error(result?.error || t.errorSubmit);
       }
 
       trackGAEvent({
@@ -324,7 +361,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
         <div className="pt-6">
           <button
             onClick={() => setSubmitted(false)}
-            className="inline-flex h-11 h-11 px-6 items-center justify-center bg-royal-blue text-white font-semibold text-xs rounded-xl hover:bg-[#0c3c66] transition-colors cursor-pointer border-none"
+            className="inline-flex h-11 px-6 items-center justify-center bg-royal-blue text-white font-semibold text-xs rounded-xl hover:bg-[#0c3c66] transition-colors cursor-pointer border-none"
           >
             {t.backToCareers}
           </button>
@@ -333,17 +370,31 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
     );
   }
 
+  const hasFormErrors = Object.keys(errors).length > 0 || Boolean(fileError);
+
   return (
     <div className="space-y-6 text-left max-w-3xl mx-auto bg-white p-6 sm:p-10 border border-slate-200 rounded-3xl shadow-sm">
       <form
         ref={formRef}
-        onSubmit={handleSubmit(onSubmit, (errs) => focusAndScrollToError(errs))}
+        onSubmit={handleSubmit(onSubmit, (errs) => {
+          if (!resumeFile) {
+            setFileError(t.requiredResume);
+          }
+          focusAndScrollToError(errs);
+        })}
         className="space-y-6"
       >
         {submitError && (
           <div className="p-4 rounded-xl border border-red-200 bg-red-50 flex gap-3 animate-fadeIn" role="alert">
             <AlertCircle size={20} className="text-red-655 flex-shrink-0 mt-0.5" />
             <p className="text-red-800 text-sm">{submitError}</p>
+          </div>
+        )}
+
+        {submitCount > 0 && hasFormErrors && (
+          <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 flex gap-3 text-sm animate-fadeIn" role="alert" aria-live="assertive">
+            <AlertCircle size={20} className="flex-shrink-0" />
+            <span>{t.pleaseCorrect}</span>
           </div>
         )}
 
@@ -358,9 +409,11 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
                 type="text"
                 placeholder="John Doe"
                 autoComplete="name"
+                aria-invalid={Boolean(errors.name)}
+                aria-describedby={errors.name ? 'careers-name-error' : undefined}
                 className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
                   errors.name
-                    ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                    ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                     : touchedFields.name
                     ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                     : 'border-slate-200'
@@ -373,7 +426,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
               )}
             </div>
             {errors.name && (
-              <p id="name-error" className="text-xs font-semibold text-red-500 mt-1.5" role="alert">
+              <p id="careers-name-error" className="text-xs font-semibold text-red-500 mt-1.5" role="alert">
                 {errors.name.message}
               </p>
             )}
@@ -390,9 +443,11 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
                 placeholder="john@company.com"
                 autoComplete="email"
                 inputMode="email"
+                aria-invalid={Boolean(errors.email)}
+                aria-describedby={errors.email ? 'careers-email-error' : undefined}
                 className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
                   errors.email
-                    ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                    ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                     : touchedFields.email
                     ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                     : 'border-slate-200'
@@ -405,7 +460,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
               )}
             </div>
             {errors.email && (
-              <p id="email-error" className="text-xs font-semibold text-red-500 mt-1.5" role="alert">
+              <p id="careers-email-error" className="text-xs font-semibold text-red-500 mt-1.5" role="alert">
                 {errors.email.message}
               </p>
             )}
@@ -426,9 +481,11 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
                 placeholder="+1 (555) 123-4567"
                 autoComplete="tel"
                 inputMode="tel"
+                aria-invalid={Boolean(errors.phone)}
+                aria-describedby={errors.phone ? 'careers-phone-error' : undefined}
                 className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
                   errors.phone
-                    ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                    ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                     : touchedFields.phone
                     ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                     : 'border-slate-200'
@@ -441,7 +498,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
               )}
             </div>
             {errors.phone && (
-              <p id="phone-error" className="text-xs font-semibold text-red-500 mt-1.5" role="alert">
+              <p id="careers-phone-error" className="text-xs font-semibold text-red-500 mt-1.5" role="alert">
                 {errors.phone.message}
               </p>
             )}
@@ -456,9 +513,11 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
                 {...register('linkedin')}
                 type="text"
                 placeholder="https://linkedin.com/in/username"
+                aria-invalid={Boolean(errors.linkedin)}
+                aria-describedby={errors.linkedin ? 'careers-linkedin-error' : undefined}
                 className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
                   errors.linkedin
-                    ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                    ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                     : touchedFields.linkedin
                     ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                     : 'border-slate-200'
@@ -471,7 +530,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
               )}
             </div>
             {errors.linkedin && (
-              <p id="linkedin-error" className="text-xs font-semibold text-red-500 mt-1.5" role="alert">
+              <p id="careers-linkedin-error" className="text-xs font-semibold text-red-500 mt-1.5" role="alert">
                 {errors.linkedin.message}
               </p>
             )}
@@ -496,9 +555,11 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
                 type="number"
                 min="0"
                 placeholder="5"
+                aria-invalid={Boolean(errors.yearsExperience)}
+                aria-describedby={errors.yearsExperience ? 'careers-yearsExperience-error' : undefined}
                 className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 ${
                   errors.yearsExperience
-                    ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                    ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                     : touchedFields.yearsExperience
                     ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                     : 'border-slate-200'
@@ -511,7 +572,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
               )}
             </div>
             {errors.yearsExperience && (
-              <p id="yearsExperience-error" className="text-xs font-semibold text-red-500 mt-1.5" role="alert">
+              <p id="careers-yearsExperience-error" className="text-xs font-semibold text-red-500 mt-1.5" role="alert">
                 {errors.yearsExperience.message}
               </p>
             )}
@@ -526,9 +587,11 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
                 {...register('skills')}
                 type="text"
                 placeholder={t.skillsPlaceholder}
+                aria-invalid={Boolean(errors.skills)}
+                aria-describedby={errors.skills ? 'careers-skills-error' : undefined}
                 className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
                   errors.skills
-                    ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                    ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                     : touchedFields.skills
                     ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                     : 'border-slate-200'
@@ -541,7 +604,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
               )}
             </div>
             {errors.skills && (
-              <p id="skills-error" className="text-xs font-semibold text-red-500 mt-1.5" role="alert">
+              <p id="careers-skills-error" className="text-xs font-semibold text-red-500 mt-1.5" role="alert">
                 {errors.skills.message}
               </p>
             )}
@@ -556,9 +619,11 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
                 {...register('message')}
                 placeholder={t.coverLetterPlaceholder}
                 rows={4}
+                aria-invalid={Boolean(errors.message)}
+                aria-describedby={errors.message ? 'careers-message-error' : undefined}
                 className={`w-full pl-5 pr-11 py-4 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 resize-none ${
                   errors.message
-                    ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                    ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                     : touchedFields.message
                     ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                     : 'border-slate-200'
@@ -572,7 +637,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
             </div>
             <div className="flex justify-between items-center mt-1.5">
               {errors.message ? (
-                <p id="message-error" className="text-xs font-semibold text-red-500" role="alert">
+                <p id="careers-message-error" className="text-xs font-semibold text-red-500" role="alert">
                   {errors.message.message}
                 </p>
               ) : (
@@ -597,9 +662,15 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
                 onDragLeave={handleDrag}
                 onDrop={handleDrop}
                 onClick={() => fileInputRef.current?.click()}
-                className={`w-full p-8 border-2 border-dashed rounded-[20px] flex flex-col items-center justify-center gap-2 cursor-pointer transition-all ${
+                data-field-name="resume"
+                tabIndex={0}
+                aria-invalid={Boolean(fileError)}
+                aria-describedby={fileError ? 'careers-file-error' : undefined}
+                className={`w-full p-8 border-2 border-dashed rounded-[20px] flex flex-col items-center justify-center gap-2 cursor-pointer transition-all outline-none focus:ring-2 focus:ring-royal-blue/20 ${
                   isDragActive 
                     ? 'border-royal-blue bg-royal-blue/5 text-royal-blue' 
+                    : fileError
+                    ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200 text-slate-500'
                     : 'border-slate-200 hover:border-slate-350 hover:bg-slate-50 text-slate-500'
                 }`}
               >
@@ -638,16 +709,16 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
               </div>
             )}
             
-            {fileError && <p className="text-xs text-red-655 font-semibold mt-1" role="alert">{fileError}</p>}
+            {fileError && <p id="careers-file-error" className="text-xs text-red-655 font-semibold mt-1" role="alert">{fileError}</p>}
           </div>
         </div>
 
         {/* Submit Button */}
         <button
           type="submit"
-          disabled={submitting || !isValid || !resumeFile}
+          disabled={submitting}
           className={`btn-primary w-full flex items-center justify-center gap-2 transition-all ${
-            (!isValid || !resumeFile || submitting) ? 'opacity-50 cursor-not-allowed bg-slate-400 hover:bg-slate-400 border-slate-400' : ''
+            submitting ? 'opacity-50 cursor-not-allowed bg-slate-400 hover:bg-slate-400 border-slate-400' : ''
           }`}
         >
           {submitting ? (

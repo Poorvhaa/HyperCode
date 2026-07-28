@@ -51,6 +51,11 @@ export interface UseFormValidationOptions {
    * @default '.text-red-500, .text-red-655, [role="alert"], .error-message'
    */
   errorSelector?: string;
+
+  /**
+   * Explicit order of fields matching the visible top-to-bottom order of the form.
+   */
+  fieldOrder?: string[];
 }
 
 /**
@@ -67,11 +72,8 @@ export function focusAndScrollToError(
   options: UseFormValidationOptions = {}
 ): void {
   const {
-    extraOffset = 24,
-    navbarOffset = 100,
     navbarSelector = 'header, nav, [class*="navbar"], [class*="header"]',
-    scrollBehavior = 'smooth',
-    errorSelector = '.text-red-500, .text-red-655, [role="alert"], .error-message',
+    fieldOrder = [],
   } = options;
 
   // Flatten error keys to support nested structures (e.g., "address.street")
@@ -98,7 +100,7 @@ export function focusAndScrollToError(
   };
 
   const errorPaths = getErrorPaths(errors);
-  if (errorPaths.length === 0) return;
+  if (errorPaths.length === 0 && Object.keys(errors).length === 0) return;
 
   // Query all standard interactive controls in DOM order
   const selectors = [
@@ -111,146 +113,68 @@ export function focusAndScrollToError(
 
   const controls = Array.from(form.querySelectorAll<HTMLElement>(selectors));
 
-  // Keep track of which controls we've marked to clear/update
-  controls.forEach((control) => {
-    // Check if this control has an error
-    const name = control.getAttribute('name');
-    const hasError = name && errorPaths.includes(name);
+  // Determine the first invalid field by visual order
+  let firstInvalidControl: HTMLElement | null = null;
 
-    if (hasError) {
-      control.setAttribute('aria-invalid', 'true');
-      
-      // Apply shake-error class to trigger the visual shake animation
-      control.classList.add('shake-error');
-      control.classList.add('ring-2');
-      control.classList.add('ring-red-500');
-      control.classList.add('border-red-500');
-      control.classList.add('bg-red-50');
-      setTimeout(() => {
-        control.classList.remove('shake-error');
-      }, 500);
-
-      // Try to find the associated error display element to link via aria-describedby
-      let errorEl = form.querySelector(`#${name}-error`);
-      
-      if (!errorEl) {
-        // Look within the control's parent container for an error-like element
-        const parent = control.parentElement;
-        if (parent) {
-          errorEl = parent.querySelector(errorSelector);
-          if (errorEl && !errorEl.id) {
-            errorEl.id = `${name}-error`;
-
-            errorEl.classList.add('animate-pulse');
-
-            const elToPulse = errorEl;
-            setTimeout(() => {
-              if (elToPulse) {
-                elToPulse.classList.remove('animate-pulse');
-              }
-            }, 1000);
-          }
+  if (fieldOrder.length > 0) {
+    const getNestedValue = (obj: any, path: string): any => {
+      const parts = path.split('.');
+      let current = obj;
+      for (const part of parts) {
+        if (current && typeof current === 'object' && part in current) {
+          current = current[part];
+        } else {
+          return undefined;
         }
       }
+      return current;
+    };
 
-      if (errorEl && errorEl.id) {
-        control.setAttribute('aria-describedby', errorEl.id);
-      } else {
-        // Fallback standard naming
-        control.setAttribute('aria-describedby', `${name}-error`);
-      }
-    } else {
-      // Clear accessibility attributes if no error present
-      control.removeAttribute('aria-invalid');
-      control.classList.remove('shake-error');
-      const describedBy = control.getAttribute('aria-describedby');
-      if (describedBy && (describedBy === `${name}-error` || describedBy.endsWith('-error'))) {
-        control.removeAttribute('aria-describedby');
-      }
+    const firstInvalidField = fieldOrder.find((field) => {
+      const val = getNestedValue(errors, field);
+      return val !== undefined && val !== null;
+    });
+
+    if (firstInvalidField) {
+      firstInvalidControl = form.querySelector<HTMLElement>(
+        `[name="${firstInvalidField}"], [data-field-name="${firstInvalidField}"], #${firstInvalidField}`
+      );
     }
+  }
 
-    const clearError = () => {
-  control.classList.remove(
-    'ring-2',
-    'ring-red-500',
-    'border-red-500',
-    'bg-red-50'
-  );
-
-  control.removeAttribute('aria-invalid');
-
-  control.removeEventListener('input', clearError);
-  control.removeEventListener('change', clearError);
-};
-
-control.addEventListener('input', clearError);
-control.addEventListener('change', clearError);
-  });
-
-  // Find the first control that has an error
-  const firstInvalidControl = controls.find((control) => {
-    const name = control.getAttribute('name');
-    return (
-      (name && errorPaths.includes(name)) ||
-      control.getAttribute('aria-invalid') === 'true'
-    );
-  });
+  // Fallback to DOM order of controls if not found via fieldOrder
+  if (!firstInvalidControl) {
+    firstInvalidControl = controls.find((control) => {
+      const name = control.getAttribute('name');
+      return (
+        (name && errorPaths.includes(name)) ||
+        control.getAttribute('aria-invalid') === 'true'
+      );
+    }) || null;
+  }
 
   if (!firstInvalidControl) return;
 
-  // Calculate navbar height dynamically
-  let detectedNavbarHeight = 0;
-  try {
-    const navbar = document.querySelector(navbarSelector);
-    if (navbar) {
-      const rect = navbar.getBoundingClientRect();
-      const style = window.getComputedStyle(navbar);
-      // Only use height if the navbar is fixed or sticky
-      const isStickyOrFixed =
-        style.position === 'fixed' ||
-        style.position === 'sticky' ||
-        window.scrollY > 0 && rect.top <= 1; // logical sticky detection
+  // Set scroll margin top to 120px to prevent header overlap
+  firstInvalidControl.style.scrollMarginTop = '120px';
 
-      if (isStickyOrFixed && rect.height > 0) {
-        detectedNavbarHeight = rect.height;
-      }
-    }
-  } catch (e) {
-    console.warn('Error detecting navbar height:', e);
-  }
-
-  const finalOffset = (detectedNavbarHeight || navbarOffset) + extraOffset;
-
-  // Calculate target scroll position
-  const controlRect = firstInvalidControl.getBoundingClientRect();
-  const scrollTopFallback = window.pageYOffset || document.documentElement.scrollTop;
-  const absoluteControlTop = controlRect.top + scrollTopFallback;
-  const viewportCenter = window.innerHeight * 0.25;
-
-const targetScrollTop = Math.max(
-  0,
-  absoluteControlTop - finalOffset - viewportCenter
-);
-
-  // Smoothly scroll to the target top position
+  // Smoothly scroll to the target top position centered in viewport
   firstInvalidControl.scrollIntoView({
-  behavior: 'smooth',
-  block: 'center',
-});
-window.scrollBy({
-  top: -finalOffset,
-  behavior: 'instant',
-});
+    behavior: 'smooth',
+    block: 'center',
+    inline: 'nearest'
+  });
 
-  // Focus the element after a microtask, ensuring layout handles scroll correctly.
-  // Also handle visual controls (like Radix UI Select triggers) where native input is hidden.
-  setTimeout(() => {
+  // Focus the interactive control via requestAnimationFrame with preventScroll: true
+  requestAnimationFrame(() => {
+    if (!firstInvalidControl) return;
+
+    // Check if the element is hidden (e.g. Radix UI hidden inputs)
     const isHidden =
       firstInvalidControl.offsetWidth === 0 &&
       firstInvalidControl.offsetHeight === 0;
 
     if (isHidden) {
-      // Find the nearest visible focusable sibling/descendant in its parent container
       const parent = firstInvalidControl.parentElement;
       if (parent) {
         const visibleFocusable = parent.querySelector<HTMLElement>(
@@ -264,7 +188,7 @@ window.scrollBy({
     }
 
     firstInvalidControl.focus({ preventScroll: true });
-  }, 250);
+  });
 }
 
 /**

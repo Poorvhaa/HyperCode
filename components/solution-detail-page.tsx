@@ -174,16 +174,6 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
           { label: isEs ? 'Soluciones' : 'Solutions', href: `/${locale}/solutions` },
           { label: activeTrans.title }
         ]}
-        ctaButtons={
-          <div className="flex flex-wrap gap-4 pt-2">
-            <Link
-              href={`/${locale}/consultation`}
-              className="btn-primary"
-            >
-              {activeTrans.ctaBtn}
-            </Link>
-          </div>
-        }
       />
 
       {/* 2. Service Overview Section */}

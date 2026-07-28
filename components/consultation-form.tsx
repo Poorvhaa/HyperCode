@@ -28,9 +28,22 @@ function ConsultationFormContent() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
 
+  const consultationFieldOrder = [
+    'name',
+    'email',
+    'company',
+    'phone',
+    'service',
+    'industry',
+    'budget',
+    'timeline',
+    'message'
+  ];
+
   const { formRef, focusAndScrollToError } = useFormValidation({
     navbarSelector: 'header',
     extraOffset: 24,
+    fieldOrder: consultationFieldOrder,
   });
 
   const t = useTranslations('Consultation.form');
@@ -115,11 +128,13 @@ function ConsultationFormContent() {
     handleSubmit,
     setValue,
     watch,
-    formState: { errors, touchedFields, isValid },
+    formState: { errors, touchedFields, submitCount },
     reset,
+    setError: setFieldError,
   } = useForm<ConsultationFormData>({
     resolver: zodResolver(consultationSchema) as any,
-    mode: 'onChange',
+    mode: 'onSubmit',
+    reValidateMode: 'onChange',
     defaultValues: {
       name: '',
       email: '',
@@ -160,72 +175,83 @@ function ConsultationFormContent() {
     }
   }, [searchParams, setValue]);
 
-const onSubmit = async (data: ConsultationFormData) => {
-  setSubmitting(true);
-  setError('');
+  const onSubmit = async (data: ConsultationFormData) => {
+    setSubmitting(true);
+    setError('');
 
-  const sanitized = sanitizePayload({
-    ...data,
-    locale
-  });
-
-  console.log({
-    step: 'consultation_form_submission_start',
-    payload: sanitized
-  });
-
-  try {
-    const res = await fetch('/api/consultation', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(sanitized)
+    const sanitized = sanitizePayload({
+      ...data,
+      locale
     });
-
-    const result = await res.json().catch(() => null);
 
     console.log({
-      step: 'consultation_api_response',
-      status: res.status,
-      ok: res.ok,
-      result
+      step: 'consultation_form_submission_start',
+      payload: sanitized
     });
 
-    if (!res.ok || !result?.success || !result?.saved) {
-      throw new Error(
-        result?.error ||
-          `Consultation API returned status code ${res.status}`
-      );
+    try {
+      const res = await fetch('/api/consultation', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(sanitized)
+      });
+
+      const result = await res.json().catch(() => null);
+
+      console.log({
+        step: 'consultation_api_response',
+        status: res.status,
+        ok: res.ok,
+        result
+      });
+
+      if (!res.ok || !result?.success || !result?.saved) {
+        if (result?.code === 'VALIDATION_ERROR' && result?.fieldErrors) {
+          Object.entries(result.fieldErrors).forEach(([field, msg]) => {
+            setFieldError(field as any, {
+              type: 'server',
+              message: msg as string,
+            });
+          });
+          setTimeout(() => {
+            focusAndScrollToError(result.fieldErrors);
+          }, 50);
+          return;
+        }
+        throw new Error(
+          result?.error ||
+            `Consultation API returned status code ${res.status}`
+        );
+      }
+
+      trackGAEvent({
+        action: 'consultation_request_submission',
+        category: 'Leads',
+        label: sanitized.service
+      });
+
+      setSubmitted(true);
+      reset();
+
+      setTimeout(() => {
+        setSubmitted(false);
+      }, 5000);
+    } catch (err: unknown) {
+      const message =
+        err instanceof Error
+          ? err.message
+          : locale === 'es'
+            ? 'No se pudo enviar su solicitud de consulta. Inténtelo de nuevo.'
+            : 'Unable to submit your consultation request. Please try again.';
+
+      console.warn('[Consultation Form] Submission failed:', message);
+      setError(message);
+    } finally {
+      setSubmitting(false);
     }
-
-    trackGAEvent({
-      action: 'consultation_request_submission',
-      category: 'Leads',
-      label: sanitized.service
-    });
-
-    setSubmitted(true);
-    reset();
-
-    setTimeout(() => {
-      setSubmitted(false);
-    }, 5000);
-  } catch (err: unknown) {
-  const message =
-    err instanceof Error
-      ? err.message
-      : locale === 'es'
-        ? 'No se pudo enviar su solicitud de consulta. Inténtelo de nuevo.'
-        : 'Unable to submit your consultation request. Please try again.';
-
-  console.warn('[Consultation Form] Submission failed:', message);
-
-  setError(message);
-} finally {
-  setSubmitting(false);
-}
-};
+  };
 
   const togglePreferredService = (serviceId: string) => {
     const current = [...watchedServices];
@@ -274,6 +300,17 @@ const onSubmit = async (data: ConsultationFormData) => {
         </div>
       )}
 
+      {submitCount > 0 && Object.keys(errors).length > 0 && (
+        <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 flex gap-3 text-sm animate-fadeIn" role="alert" aria-live="assertive">
+          <AlertCircle size={20} className="flex-shrink-0" />
+          <span>
+            {locale === 'es' 
+              ? 'Por favor, corrija los campos resaltados.' 
+              : 'Please correct the highlighted fields.'}
+          </span>
+        </div>
+      )}
+
       {/* Primary Contact Block */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
@@ -285,9 +322,11 @@ const onSubmit = async (data: ConsultationFormData) => {
               placeholder="John Doe"
               autoComplete="name"
               {...register('name')}
+              aria-invalid={Boolean(errors.name)}
+              aria-describedby={errors.name ? 'consultation-name-error' : undefined}
               className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
                 errors.name
-                  ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                   : touchedFields.name
                   ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                   : 'border-slate-200'
@@ -300,7 +339,7 @@ const onSubmit = async (data: ConsultationFormData) => {
             )}
           </div>
           {errors.name && (
-            <span id="name-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">
+            <span id="consultation-name-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">
               {errors.name.message}
             </span>
           )}
@@ -316,9 +355,11 @@ const onSubmit = async (data: ConsultationFormData) => {
               autoComplete="email"
               inputMode="email"
               {...register('email')}
+              aria-invalid={Boolean(errors.email)}
+              aria-describedby={errors.email ? 'consultation-email-error' : undefined}
               className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
                 errors.email
-                  ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                   : touchedFields.email
                   ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                   : 'border-slate-200'
@@ -331,7 +372,7 @@ const onSubmit = async (data: ConsultationFormData) => {
             )}
           </div>
           {errors.email && (
-            <span id="email-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">
+            <span id="consultation-email-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">
               {errors.email.message}
             </span>
           )}
@@ -346,9 +387,11 @@ const onSubmit = async (data: ConsultationFormData) => {
               placeholder="Company Name"
               autoComplete="organization"
               {...register('company')}
+              aria-invalid={Boolean(errors.company)}
+              aria-describedby={errors.company ? 'consultation-company-error' : undefined}
               className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
                 errors.company
-                  ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                   : touchedFields.company
                   ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                   : 'border-slate-200'
@@ -361,7 +404,7 @@ const onSubmit = async (data: ConsultationFormData) => {
             )}
           </div>
           {errors.company && (
-            <span id="company-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">
+            <span id="consultation-company-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">
               {errors.company.message}
             </span>
           )}
@@ -381,9 +424,11 @@ const onSubmit = async (data: ConsultationFormData) => {
                   e.target.value = filterPhoneInput(e.target.value);
                 }
               })}
+              aria-invalid={Boolean(errors.phone)}
+              aria-describedby={errors.phone ? 'consultation-phone-error' : undefined}
               className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
                 errors.phone
-                  ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                   : touchedFields.phone
                   ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                   : 'border-slate-200'
@@ -396,7 +441,7 @@ const onSubmit = async (data: ConsultationFormData) => {
             )}
           </div>
           {errors.phone && (
-            <span id="phone-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">
+            <span id="consultation-phone-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">
               {errors.phone.message}
             </span>
           )}
@@ -414,18 +459,21 @@ const onSubmit = async (data: ConsultationFormData) => {
         />
         <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-3">{t('preferredServices') || 'Select Service Areas of Interest'}</label>
         <div className="flex flex-wrap gap-2.5">
-          {serviceOptions.map((opt) => {
+          {serviceOptions.map((opt, index) => {
             const active = watchedServices.includes(opt.id);
             return (
               <button
                 key={opt.id}
                 type="button"
                 onClick={() => togglePreferredService(opt.id)}
+                aria-invalid={Boolean(errors.service)}
+                aria-describedby={errors.service ? 'consultation-service-error' : undefined}
+                data-field-name={index === 0 ? 'service' : undefined}
                 className={`px-4 py-2.5 rounded-full border text-sm font-bold transition-all flex items-center gap-2 cursor-pointer ${
                   active
                     ? 'bg-royal-blue/15 border-royal-blue text-royal-blue'
                     : errors.service
-                    ? 'bg-slate-50 border-red-300 ring-1 ring-red-300 text-slate-600 hover:border-slate-350 hover:bg-slate-100'
+                    ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200 text-slate-600'
                     : 'bg-slate-50 border-slate-200 text-slate-600 hover:border-slate-350 hover:bg-slate-100'
                 }`}
               >
@@ -436,7 +484,7 @@ const onSubmit = async (data: ConsultationFormData) => {
           })}
         </div>
         {errors.service && (
-          <span id="service-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">
+          <span id="consultation-service-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">
             {errors.service.message}
           </span>
         )}
@@ -450,9 +498,11 @@ const onSubmit = async (data: ConsultationFormData) => {
             <select
               id="consultation-industry"
               {...register('industry')}
+              aria-invalid={Boolean(errors.industry)}
+              aria-describedby={errors.industry ? 'consultation-industry-error' : undefined}
               className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 cursor-pointer ${
                 errors.industry
-                  ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                   : touchedFields.industry
                   ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                   : 'border-slate-200'
@@ -470,7 +520,7 @@ const onSubmit = async (data: ConsultationFormData) => {
             )}
           </div>
           {errors.industry && (
-            <span id="industry-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">
+            <span id="consultation-industry-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">
               {errors.industry.message}
             </span>
           )}
@@ -564,20 +614,23 @@ const onSubmit = async (data: ConsultationFormData) => {
             tabIndex={-1}
             aria-hidden="true"
           />
-          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-850 mb-3">{t('budget')}</label>
+          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-3">{t('budget')}</label>
           <div className="flex flex-col gap-2.5">
-            {budgetOptions.map((opt) => {
+            {budgetOptions.map((opt, index) => {
               const active = watchedBudget === opt.id;
               return (
                 <button
                   key={opt.id}
                   type="button"
                   onClick={() => setValue('budget', opt.id, { shouldValidate: true, shouldDirty: true })}
+                  aria-invalid={Boolean(errors.budget)}
+                  aria-describedby={errors.budget ? 'consultation-budget-error' : undefined}
+                  data-field-name={index === 0 ? 'budget' : undefined}
                   className={`w-full px-5 py-3.5 rounded-[16px] border text-base font-bold transition-all text-left flex items-center justify-between cursor-pointer ${
                     active
                       ? 'bg-royal-blue border-royal-blue text-white shadow-sm'
                       : errors.budget
-                      ? 'bg-slate-50 border-red-300 ring-2 ring-red-100 text-slate-700 hover:bg-slate-100'
+                      ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200 text-slate-700'
                       : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
                   }`}
                 >
@@ -588,7 +641,7 @@ const onSubmit = async (data: ConsultationFormData) => {
             })}
           </div>
           {errors.budget && (
-            <span id="budget-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">
+            <span id="consultation-budget-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">
               {errors.budget.message}
             </span>
           )}
@@ -604,18 +657,21 @@ const onSubmit = async (data: ConsultationFormData) => {
           />
           <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-3">{t('timeline')}</label>
           <div className="flex flex-col gap-2.5">
-            {timelineOptions.map((opt) => {
+            {timelineOptions.map((opt, index) => {
               const active = watchedTimeline === opt.id;
               return (
                 <button
                   key={opt.id}
                   type="button"
                   onClick={() => setValue('timeline', opt.id, { shouldValidate: true, shouldDirty: true })}
+                  aria-invalid={Boolean(errors.timeline)}
+                  aria-describedby={errors.timeline ? 'consultation-timeline-error' : undefined}
+                  data-field-name={index === 0 ? 'timeline' : undefined}
                   className={`w-full px-5 py-3.5 rounded-[16px] border text-base font-bold transition-all text-left flex items-center justify-between cursor-pointer ${
                     active
                       ? 'bg-royal-blue border-royal-blue text-white shadow-sm'
                       : errors.timeline
-                      ? 'bg-slate-50 border-red-300 ring-2 ring-red-100 text-slate-700 hover:bg-slate-100'
+                      ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200 text-slate-700'
                       : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
                   }`}
                 >
@@ -626,7 +682,7 @@ const onSubmit = async (data: ConsultationFormData) => {
             })}
           </div>
           {errors.timeline && (
-            <span id="timeline-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">
+            <span id="consultation-timeline-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">
               {errors.timeline.message}
             </span>
           )}
@@ -642,9 +698,11 @@ const onSubmit = async (data: ConsultationFormData) => {
             rows={4}
             placeholder="Please describe your technology requirements, project background, or team augmentation targets..."
             {...register('message')}
+            aria-invalid={Boolean(errors.message)}
+            aria-describedby={errors.message ? 'consultation-message-error' : undefined}
             className={`w-full pl-5 pr-11 py-4 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
               errors.message
-                ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                 : touchedFields.message
                 ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                 : 'border-slate-200'
@@ -658,7 +716,7 @@ const onSubmit = async (data: ConsultationFormData) => {
         </div>
         <div className="flex justify-between items-center mt-1.5">
           {errors.message ? (
-            <span id="message-error" className="text-xs font-semibold text-red-500" role="alert">{errors.message.message}</span>
+            <span id="consultation-message-error" className="text-xs font-semibold text-red-500" role="alert">{errors.message.message}</span>
           ) : (
             <span className="text-xs text-slate-400">
               {locale === 'es' ? 'El mensaje debe tener al menos 20 caracteres' : 'Message must be at least 20 characters'}
@@ -674,9 +732,9 @@ const onSubmit = async (data: ConsultationFormData) => {
       <div className="flex justify-end border-t border-slate-100 pt-6">
         <button
           type="submit"
-          disabled={submitting || !isValid}
+          disabled={submitting}
           className={`btn-primary min-w-[220px] flex items-center justify-center gap-2 transition-all ${
-            (!isValid || submitting) ? 'opacity-50 cursor-not-allowed bg-slate-400 hover:bg-slate-400 border-slate-400' : ''
+            submitting ? 'opacity-50 cursor-not-allowed bg-slate-400 hover:bg-slate-400 border-slate-400' : ''
           }`}
         >
           {submitting ? (

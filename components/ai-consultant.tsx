@@ -365,14 +365,19 @@ export default function AIConsultant({ outsideClickAction = 'minimize' }: AICons
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [isFormSubmitting, setIsFormSubmitting] = useState(false);
 
+  const chatLeadFieldOrder = ['name', 'email', 'phone', 'company', 'industry', 'budget', 'timeline', 'message'];
+  const chatConsultationFieldOrder = ['name', 'email', 'phone', 'company', 'date', 'message'];
+
   const { formRef: leadFormRef, focusAndScrollToError: focusAndScrollToLeadError } = useFormValidation({
     navbarSelector: 'header',
     extraOffset: 12,
+    fieldOrder: chatLeadFieldOrder,
   });
 
   const { formRef: consultFormRef, focusAndScrollToError: focusAndScrollToConsultError } = useFormValidation({
     navbarSelector: 'header',
     extraOffset: 12,
+    fieldOrder: chatConsultationFieldOrder,
   });
 
   const isLeadFormValid =
@@ -1936,6 +1941,7 @@ if (!response.ok) {
                         <div className="relative">
                           <input
                             type="text"
+                            name="name"
                             required
                             value={formName}
                             onChange={(e) => {
@@ -1944,9 +1950,11 @@ if (!response.ok) {
                               const err = validateNameInput(val);
                               setFieldErrors(prev => ({ ...prev, name: err }));
                             }}
+                            aria-invalid={Boolean(fieldErrors.name)}
+                            aria-describedby={fieldErrors.name ? 'chat-lead-name-error' : undefined}
                             className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all outline-none ${
                               fieldErrors.name
-                                ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                                ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                                 : (formName.trim().length >= 2 && NAME_REGEX.test(formName.trim()))
                                 ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                                 : 'border-slate-200 focus:border-royal-blue'
@@ -1959,7 +1967,7 @@ if (!response.ok) {
                           )}
                         </div>
                         {fieldErrors.name && (
-                          <span className="text-[9px] font-semibold text-red-500 mt-1 block" role="alert">{fieldErrors.name}</span>
+                          <span id="chat-lead-name-error" className="text-[9px] font-semibold text-red-500 mt-1 block" role="alert">{fieldErrors.name}</span>
                         )}
                       </div>
 
@@ -1969,6 +1977,7 @@ if (!response.ok) {
                           <div className="relative">
                             <input
                               type="email"
+                              name="email"
                               required
                               value={formEmail}
                               onChange={(e) => {
@@ -1977,9 +1986,11 @@ if (!response.ok) {
                                 const err = validateEmailInput(val);
                                 setFieldErrors(prev => ({ ...prev, email: err }));
                               }}
+                              aria-invalid={Boolean(fieldErrors.email)}
+                              aria-describedby={fieldErrors.email ? 'chat-lead-email-error' : undefined}
                               className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all outline-none ${
                                 fieldErrors.email
-                                  ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                                   : EMAIL_REGEX.test(formEmail.trim())
                                   ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                                   : 'border-slate-200 focus:border-royal-blue'
@@ -1992,7 +2003,7 @@ if (!response.ok) {
                             )}
                           </div>
                           {fieldErrors.email && (
-                            <span className="text-[9px] font-semibold text-red-500 mt-1 block" role="alert">{fieldErrors.email}</span>
+                            <span id="chat-lead-email-error" className="text-[9px] font-semibold text-red-500 mt-1 block" role="alert">{fieldErrors.email}</span>
                           )}
                         </div>
                         <div>
@@ -2000,6 +2011,7 @@ if (!response.ok) {
                           <div className="relative">
                             <input
                               type="tel"
+                              name="phone"
                               required
                               value={formPhone}
                               onChange={(e) => {
@@ -2008,9 +2020,11 @@ if (!response.ok) {
                                 const err = validatePhoneInputStr(val);
                                 setFieldErrors(prev => ({ ...prev, phone: err }));
                               }}
+                              aria-invalid={Boolean(fieldErrors.phone)}
+                              aria-describedby={fieldErrors.phone ? 'chat-lead-phone-error' : undefined}
                               className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all outline-none ${
                                 fieldErrors.phone
-                                  ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                                   : (PHONE_REGEX.test(formPhone.trim()) && getPhoneDigitCount(formPhone.trim()) >= 7 && getPhoneDigitCount(formPhone.trim()) <= 15)
                                   ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                                   : 'border-slate-200 focus:border-royal-blue'
@@ -2023,7 +2037,7 @@ if (!response.ok) {
                             )}
                           </div>
                           {fieldErrors.phone && (
-                            <span className="text-[9px] font-semibold text-red-500 mt-1 block" role="alert">{fieldErrors.phone}</span>
+                            <span id="chat-lead-phone-error" className="text-[9px] font-semibold text-red-500 mt-1 block" role="alert">{fieldErrors.phone}</span>
                           )}
                         </div>
                       </div>
@@ -2034,6 +2048,7 @@ if (!response.ok) {
                           <div className="relative">
                             <input
                               type="text"
+                              name="company"
                               required
                               value={formCompany}
                               onChange={(e) => {
@@ -2042,9 +2057,11 @@ if (!response.ok) {
                                 const err = validateCompanyInput(val);
                                 setFieldErrors(prev => ({ ...prev, company: err }));
                               }}
+                              aria-invalid={Boolean(fieldErrors.company)}
+                              aria-describedby={fieldErrors.company ? 'chat-lead-company-error' : undefined}
                               className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all outline-none ${
                                 fieldErrors.company
-                                  ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                                   : (formCompany.trim().length >= 2 && COMPANY_REGEX.test(formCompany.trim()))
                                   ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                                   : 'border-slate-200 focus:border-royal-blue'
@@ -2057,12 +2074,13 @@ if (!response.ok) {
                             )}
                           </div>
                           {fieldErrors.company && (
-                            <span className="text-[9px] font-semibold text-red-500 mt-1 block" role="alert">{fieldErrors.company}</span>
+                            <span id="chat-lead-company-error" className="text-[9px] font-semibold text-red-500 mt-1 block" role="alert">{fieldErrors.company}</span>
                           )}
                         </div>
                         <div>
                           <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.industry')}</label>
                           <select
+                            name="industry"
                             value={formIndustry}
                             onChange={(e) => setFormIndustry(e.target.value)}
                             className="w-full bg-white border border-slate-200 rounded-xl px-2 py-2 text-slate-700 focus:outline-none focus:border-royal-blue focus:ring-2 focus:ring-royal-blue/25 cursor-pointer outline-none"
@@ -2081,10 +2099,15 @@ if (!response.ok) {
                         <div>
                           <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.budget')}</label>
                           <select
+                            name="budget"
                             value={formBudget}
                             onChange={(e) => setFormBudget(e.target.value)}
-                            className={`w-full bg-white border rounded-xl px-2 py-2 text-slate-700 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 cursor-pointer outline-none ${
-                              fieldErrors.budget ? 'border-red-500' : 'border-slate-200'
+                            aria-invalid={Boolean(fieldErrors.budget)}
+                            aria-describedby={fieldErrors.budget ? 'chat-lead-budget-error' : undefined}
+                            className={`w-full bg-white border rounded-xl px-2 py-2 text-slate-700 focus:outline-none focus:ring-2 cursor-pointer outline-none ${
+                              fieldErrors.budget
+                                ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
+                                : 'border-slate-200 focus:ring-royal-blue/25'
                             }`}
                           >
                             <option value="default">-- Select Budget --</option>
@@ -2094,15 +2117,20 @@ if (!response.ok) {
                             <option value="between25k50k">{t('budgets.between25k50k')}</option>
                             <option value="over50k">{t('budgets.over50k')}</option>
                           </select>
-                          {fieldErrors.budget && <span className="text-[8px] font-semibold text-red-500 mt-0.5 block" role="alert">{fieldErrors.budget}</span>}
+                          {fieldErrors.budget && <span id="chat-lead-budget-error" className="text-[8px] font-semibold text-red-500 mt-0.5 block" role="alert">{fieldErrors.budget}</span>}
                         </div>
                         <div>
                           <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.timeline')}</label>
                           <select
+                            name="timeline"
                             value={formTimeline}
                             onChange={(e) => setFormTimeline(e.target.value)}
-                            className={`w-full bg-white border rounded-xl px-2 py-2 text-slate-700 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 cursor-pointer outline-none ${
-                              fieldErrors.timeline ? 'border-red-500' : 'border-slate-200'
+                            aria-invalid={Boolean(fieldErrors.timeline)}
+                            aria-describedby={fieldErrors.timeline ? 'chat-lead-timeline-error' : undefined}
+                            className={`w-full bg-white border rounded-xl px-2 py-2 text-slate-700 focus:outline-none focus:ring-2 cursor-pointer outline-none ${
+                              fieldErrors.timeline
+                                ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
+                                : 'border-slate-200 focus:ring-royal-blue/25'
                             }`}
                           >
                             <option value="default">-- Select Timeline --</option>
@@ -2111,7 +2139,7 @@ if (!response.ok) {
                             <option value="long">{t('timelines.long')}</option>
                             <option value="norush">{t('timelines.norush')}</option>
                           </select>
-                          {fieldErrors.timeline && <span className="text-[8px] font-semibold text-red-500 mt-0.5 block" role="alert">{fieldErrors.timeline}</span>}
+                          {fieldErrors.timeline && <span id="chat-lead-timeline-error" className="text-[8px] font-semibold text-red-500 mt-0.5 block" role="alert">{fieldErrors.timeline}</span>}
                         </div>
                       </div>
 
@@ -2119,6 +2147,7 @@ if (!response.ok) {
                         <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.message')}</label>
                         <div className="relative">
                           <textarea
+                            name="message"
                             value={formMessage}
                             onChange={(e) => {
                               const val = e.target.value;
@@ -2127,9 +2156,11 @@ if (!response.ok) {
                               setFieldErrors(prev => ({ ...prev, message: err }));
                             }}
                             rows={2}
+                            aria-invalid={Boolean(fieldErrors.message)}
+                            aria-describedby={fieldErrors.message ? 'chat-lead-message-error' : undefined}
                             className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all resize-none outline-none ${
                               fieldErrors.message
-                                ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                                ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                                 : (formMessage.trim().length >= 20 && formMessage.trim().length <= 2000)
                                 ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                                 : 'border-slate-200 focus:border-royal-blue'
@@ -2143,7 +2174,7 @@ if (!response.ok) {
                         </div>
                         <div className="flex justify-between items-center mt-0.5">
                           {fieldErrors.message ? (
-                            <span className="text-[8px] font-semibold text-red-500" role="alert">{fieldErrors.message}</span>
+                            <span id="chat-lead-message-error" className="text-[8px] font-semibold text-red-500" role="alert">{fieldErrors.message}</span>
                           ) : (
                             <span className="text-[8px] text-slate-400">Min 20 characters</span>
                           )}
@@ -2156,9 +2187,9 @@ if (!response.ok) {
 
                     <button
                       type="submit"
-                      disabled={isFormSubmitting || !isLeadFormValid}
+                      disabled={isFormSubmitting}
                       className={`w-full h-11 bg-gradient-to-tr from-royal-blue to-green hover:from-royal-blue hover:to-bright-lime hover:shadow-[0_0_15px_rgba(20,91,255,0.4)] hover:-translate-y-0.5 active:translate-y-0 transition-all text-white font-extrabold rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-blue-500/10 outline-none focus:ring-2 focus:ring-royal-blue ${
-                        (!isLeadFormValid || isFormSubmitting) ? 'opacity-50 cursor-not-allowed from-slate-400 to-slate-450' : ''
+                        isFormSubmitting ? 'opacity-50 cursor-not-allowed from-slate-400 to-slate-450' : ''
                       }`}
                     >
                       {isFormSubmitting ? <Loader2 className="w-4.5 h-4.5 animate-spin" /> : <Sparkles className="w-4.5 h-4.5" />}
@@ -2205,6 +2236,7 @@ if (!response.ok) {
                         <div className="relative">
                           <input
                             type="text"
+                            name="name"
                             required
                             value={formName}
                             onChange={(e) => {
@@ -2213,9 +2245,11 @@ if (!response.ok) {
                               const err = validateNameInput(val);
                               setFieldErrors(prev => ({ ...prev, name: err }));
                             }}
+                            aria-invalid={Boolean(fieldErrors.name)}
+                            aria-describedby={fieldErrors.name ? 'chat-consult-name-error' : undefined}
                             className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all outline-none ${
                               fieldErrors.name
-                                ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                                ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                                 : (formName.trim().length >= 2 && NAME_REGEX.test(formName.trim()))
                                 ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                                 : 'border-slate-200 focus:border-royal-blue'
@@ -2228,7 +2262,7 @@ if (!response.ok) {
                           )}
                         </div>
                         {fieldErrors.name && (
-                          <span className="text-[9px] font-semibold text-red-500 mt-1 block" role="alert">{fieldErrors.name}</span>
+                          <span id="chat-consult-name-error" className="text-[9px] font-semibold text-red-500 mt-1 block" role="alert">{fieldErrors.name}</span>
                         )}
                       </div>
 
@@ -2238,6 +2272,7 @@ if (!response.ok) {
                           <div className="relative">
                             <input
                               type="email"
+                              name="email"
                               required
                               value={formEmail}
                               onChange={(e) => {
@@ -2246,9 +2281,11 @@ if (!response.ok) {
                                 const err = validateEmailInput(val);
                                 setFieldErrors(prev => ({ ...prev, email: err }));
                               }}
+                              aria-invalid={Boolean(fieldErrors.email)}
+                              aria-describedby={fieldErrors.email ? 'chat-consult-email-error' : undefined}
                               className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all outline-none ${
                                 fieldErrors.email
-                                  ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                                   : EMAIL_REGEX.test(formEmail.trim())
                                   ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                                   : 'border-slate-200 focus:border-royal-blue'
@@ -2261,7 +2298,7 @@ if (!response.ok) {
                             )}
                           </div>
                           {fieldErrors.email && (
-                            <span className="text-[9px] font-semibold text-red-500 mt-1 block" role="alert">{fieldErrors.email}</span>
+                            <span id="chat-consult-email-error" className="text-[9px] font-semibold text-red-500 mt-1 block" role="alert">{fieldErrors.email}</span>
                           )}
                         </div>
                         <div>
@@ -2269,6 +2306,7 @@ if (!response.ok) {
                           <div className="relative">
                             <input
                               type="tel"
+                              name="phone"
                               required
                               value={formPhone}
                               onChange={(e) => {
@@ -2277,9 +2315,11 @@ if (!response.ok) {
                                 const err = validatePhoneInputStr(val);
                                 setFieldErrors(prev => ({ ...prev, phone: err }));
                               }}
+                              aria-invalid={Boolean(fieldErrors.phone)}
+                              aria-describedby={fieldErrors.phone ? 'chat-consult-phone-error' : undefined}
                               className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all outline-none ${
                                 fieldErrors.phone
-                                  ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                                   : (PHONE_REGEX.test(formPhone.trim()) && getPhoneDigitCount(formPhone.trim()) >= 7 && getPhoneDigitCount(formPhone.trim()) <= 15)
                                   ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                                   : 'border-slate-200 focus:border-royal-blue'
@@ -2292,7 +2332,7 @@ if (!response.ok) {
                             )}
                           </div>
                           {fieldErrors.phone && (
-                            <span className="text-[9px] font-semibold text-red-500 mt-1 block" role="alert">{fieldErrors.phone}</span>
+                            <span id="chat-consult-phone-error" className="text-[9px] font-semibold text-red-500 mt-1 block" role="alert">{fieldErrors.phone}</span>
                           )}
                         </div>
                       </div>
@@ -2303,6 +2343,7 @@ if (!response.ok) {
                           <div className="relative">
                             <input
                               type="text"
+                              name="company"
                               required
                               value={formCompany}
                               onChange={(e) => {
@@ -2311,9 +2352,11 @@ if (!response.ok) {
                                 const err = validateCompanyInput(val);
                                 setFieldErrors(prev => ({ ...prev, company: err }));
                               }}
+                              aria-invalid={Boolean(fieldErrors.company)}
+                              aria-describedby={fieldErrors.company ? 'chat-consult-company-error' : undefined}
                               className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all outline-none ${
                                 fieldErrors.company
-                                  ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                                   : (formCompany.trim().length >= 2 && COMPANY_REGEX.test(formCompany.trim()))
                                   ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                                   : 'border-slate-200 focus:border-royal-blue'
@@ -2326,7 +2369,7 @@ if (!response.ok) {
                             )}
                           </div>
                           {fieldErrors.company && (
-                            <span className="text-[9px] font-semibold text-red-500 mt-1 block" role="alert">{fieldErrors.company}</span>
+                            <span id="chat-consult-company-error" className="text-[9px] font-semibold text-red-500 mt-1 block" role="alert">{fieldErrors.company}</span>
                           )}
                         </div>
                         <div>
@@ -2334,6 +2377,7 @@ if (!response.ok) {
                           <div className="relative">
                             <input
                               type="text"
+                              name="date"
                               placeholder="e.g. Next Monday 10am EST"
                               required
                               value={formDate}
@@ -2343,9 +2387,11 @@ if (!response.ok) {
                                 const err = validateDateInput(val);
                                 setFieldErrors(prev => ({ ...prev, date: err }));
                               }}
+                              aria-invalid={Boolean(fieldErrors.date)}
+                              aria-describedby={fieldErrors.date ? 'chat-consult-date-error' : undefined}
                               className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all outline-none ${
                                 fieldErrors.date
-                                  ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                                   : formDate.trim().length >= 5
                                   ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                                   : 'border-slate-200 focus:border-royal-blue'
@@ -2358,7 +2404,7 @@ if (!response.ok) {
                             )}
                           </div>
                           {fieldErrors.date && (
-                            <span className="text-[9px] font-semibold text-red-500 mt-1 block" role="alert">{fieldErrors.date}</span>
+                            <span id="chat-consult-date-error" className="text-[9px] font-semibold text-red-500 mt-1 block" role="alert">{fieldErrors.date}</span>
                           )}
                         </div>
                       </div>
@@ -2367,6 +2413,7 @@ if (!response.ok) {
                         <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.message')}</label>
                         <div className="relative">
                           <textarea
+                            name="message"
                             required
                             value={formMessage}
                             onChange={(e) => {
@@ -2376,9 +2423,11 @@ if (!response.ok) {
                               setFieldErrors(prev => ({ ...prev, message: err }));
                             }}
                             rows={3}
+                            aria-invalid={Boolean(fieldErrors.message)}
+                            aria-describedby={fieldErrors.message ? 'chat-consult-message-error' : undefined}
                             className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all resize-none outline-none ${
                               fieldErrors.message
-                                ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+                                ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                                 : (formMessage.trim().length >= 20 && formMessage.trim().length <= 2000)
                                 ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                                 : 'border-slate-200 focus:border-royal-blue'
@@ -2392,7 +2441,7 @@ if (!response.ok) {
                         </div>
                         <div className="flex justify-between items-center mt-0.5">
                           {fieldErrors.message ? (
-                            <span className="text-[8px] font-semibold text-red-500" role="alert">{fieldErrors.message}</span>
+                            <span id="chat-consult-message-error" className="text-[8px] font-semibold text-red-500" role="alert">{fieldErrors.message}</span>
                           ) : (
                             <span className="text-[8px] text-slate-400">Min 20 characters</span>
                           )}
@@ -2405,9 +2454,9 @@ if (!response.ok) {
 
                     <button
                       type="submit"
-                      disabled={isFormSubmitting || !isConsultationFormValid}
+                      disabled={isFormSubmitting}
                       className={`w-full h-11 bg-gradient-to-tr from-royal-blue to-green hover:from-royal-blue hover:to-bright-lime hover:shadow-[0_0_15px_rgba(20,91,255,0.4)] hover:-translate-y-0.5 active:translate-y-0 transition-all text-white font-extrabold rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-blue-500/10 outline-none focus:ring-2 focus:ring-royal-blue ${
-                        (!isConsultationFormValid || isFormSubmitting) ? 'opacity-50 cursor-not-allowed from-slate-400 to-slate-455' : ''
+                        isFormSubmitting ? 'opacity-50 cursor-not-allowed from-slate-400 to-slate-455' : ''
                       }`}
                     >
                       {isFormSubmitting ? <Loader2 className="w-4.5 h-4.5 animate-spin" /> : <Calendar className="w-4.5 h-4.5" />}

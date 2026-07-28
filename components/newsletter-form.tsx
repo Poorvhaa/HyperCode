@@ -22,13 +22,17 @@ export function NewsletterForm() {
   const { formRef, focusAndScrollToError } = useFormValidation();
 
   const isValidEmail = EMAIL_REGEX.test(email.trim());
+  const hasEmailError = (touched && !isValidEmail) || Boolean(error);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setTouched(true);
 
-    if (!email) {
-      focusAndScrollToError({ email: true });
+    if (!email.trim()) {
+      setError(tContact('emailError') || 'Please enter a valid email address');
+      setTimeout(() => {
+        focusAndScrollToError({ email: true });
+      }, 0);
       return;
     }
 
@@ -60,9 +64,10 @@ export function NewsletterForm() {
         }),
       });
 
-      if (!res.ok) {
-        const errorBody = await res.json();
-        throw new Error(errorBody?.error || errorBody?.message || `Newsletter subscription failed (${res.status})`);
+      const result = await res.json().catch(() => null);
+
+      if (!res.ok || !result?.success) {
+        throw new Error(result?.error || result?.message || `Newsletter subscription failed (${res.status})`);
       }
 
       setSuccess(true);
@@ -136,18 +141,19 @@ export function NewsletterForm() {
             onBlur={() => setTouched(true)}
             autoComplete="email"
             inputMode="email"
+            aria-invalid={hasEmailError}
+            aria-describedby={hasEmailError ? 'email-error' : undefined}
             className={`w-full h-12 pl-4 pr-10 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-sm text-slate-800 placeholder-slate-400 ${
-              touched && !isValidEmail
-                ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
+              hasEmailError
+                ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                 : touched && isValidEmail
                 ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                 : 'border-slate-200'
             }`}
             disabled={submitting}
             required
-            aria-label="Email address"
           />
-          {touched && isValidEmail && (
+          {touched && isValidEmail && !error && (
             <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-green-500">
               <Check size={18} className="stroke-[3px]" />
             </span>
@@ -155,9 +161,9 @@ export function NewsletterForm() {
         </div>
         <button
           type="submit"
-          disabled={submitting || !isValidEmail}
+          disabled={submitting}
           className={`h-12 bg-royal-blue hover:bg-deep-navy active:scale-95 text-white px-6 rounded-xl text-xs font-extrabold uppercase tracking-wider transition-all flex items-center justify-center cursor-pointer border-none shadow-md shadow-blue-500/10 shrink-0 ${
-            (!isValidEmail || submitting) ? 'opacity-50 cursor-not-allowed bg-slate-400 hover:bg-slate-400' : ''
+            submitting ? 'opacity-50 cursor-not-allowed bg-slate-400 hover:bg-slate-400' : ''
           }`}
         >
           {submitting ? (

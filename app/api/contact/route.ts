@@ -324,11 +324,18 @@ return NextResponse.json({
   console.error('Contact route error:', err);
 
   if (err instanceof z.ZodError) {
+    const fieldErrors: Record<string, string> = {};
+    err.errors.forEach((e) => {
+      const path = e.path.join('.');
+      if (path) {
+        fieldErrors[path] = e.message;
+      }
+    });
     return NextResponse.json(
       {
         success: false,
-        error: 'Validation failed',
-        details: err.issues
+        code: 'VALIDATION_ERROR',
+        fieldErrors,
       },
       { status: 400 }
     );

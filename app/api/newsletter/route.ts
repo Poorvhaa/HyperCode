@@ -155,7 +155,21 @@ export async function POST(req: Request) {
   } catch (err) {
     console.error('Newsletter route error:', err);
     if (err instanceof z.ZodError) {
-      return NextResponse.json({ success: false, error: 'Invalid email address' }, { status: 400 });
+      const fieldErrors: Record<string, string> = {};
+      err.errors.forEach((e) => {
+        const path = e.path.join('.');
+        if (path) {
+          fieldErrors[path] = e.message;
+        }
+      });
+      return NextResponse.json(
+        {
+          success: false,
+          code: 'VALIDATION_ERROR',
+          fieldErrors,
+        },
+        { status: 400 }
+      );
     }
     return NextResponse.json({ success: false, error: 'Internal server error' }, { status: 500 });
   }

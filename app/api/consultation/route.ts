@@ -299,20 +299,37 @@ if (saveError || !savedData) {
           : 'Your inquiry was saved, but one or more emails could not be sent.'
     });
   } catch (err: any) {
-  console.error('[Consultation API Error]', {
-    message: err?.message,
-    stack: err?.stack,
-    error: err
-  });
+    if (err instanceof z.ZodError) {
+      const fieldErrors: Record<string, string> = {};
+      err.errors.forEach((e) => {
+        const path = e.path.join('.');
+        if (path) {
+          fieldErrors[path] = e.message;
+        }
+      });
+      return NextResponse.json(
+        {
+          success: false,
+          code: 'VALIDATION_ERROR',
+          fieldErrors,
+        },
+        { status: 400 }
+      );
+    }
 
-  return NextResponse.json(
-    {
-      success: false,
-      saved: false,
-      error: err?.message || 'Internal server error'
-    },
-    { status: 500 }
-  );
+    console.error('[Consultation API Error]', {
+      message: err?.message,
+      stack: err?.stack,
+      error: err
+    });
 
-}
+    return NextResponse.json(
+      {
+        success: false,
+        saved: false,
+        error: err?.message || 'Internal server error'
+      },
+      { status: 500 }
+    );
+  }
 }
