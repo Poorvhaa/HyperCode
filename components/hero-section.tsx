@@ -24,128 +24,140 @@ import {
 } from 'lucide-react';
 
 export function HeroSection() {
-  const [hoveredNode, setHoveredNode] = useState<number | null>(null);
+  const [activeStep, setActiveStep] = useState<string | null>(null);
   const [isTouch, setIsTouch] = useState(false);
+  const [useBottomPlacement, setUseBottomPlacement] = useState(false);
 
   useEffect(() => {
     setIsTouch(window.matchMedia('(hover: none)').matches);
   }, []);
-  
+
   const t = useTranslations('Hero');
   const tc = useTranslations('Common');
   const locale = useLocale();
 
-  const nodes = [
+  const steps = [
     {
-      id: 0,
-      label: t('nodes.sources'),
-      icon: Database,
+      id: 'sources',
+      title: t('nodes.sources'),
+      step: `${locale === 'es' ? 'PASO' : 'STEP'} 01`,
       description: t('nodes.sourcesDesc'),
+      icon: Database,
       x: '14%',
       y: '15%',
     },
     {
-      id: 1,
-      label: t('nodes.engineering'),
-      icon: Cpu,
+      id: 'engineering',
+      title: t('nodes.engineering'),
+      step: `${locale === 'es' ? 'PASO' : 'STEP'} 02`,
       description: t('nodes.engineeringDesc'),
+      icon: Cpu,
       x: '86%',
       y: '15%',
     },
     {
-      id: 2,
-      label: t('nodes.platform'),
-      icon: Server,
+      id: 'platform',
+      title: t('nodes.platform'),
+      step: `${locale === 'es' ? 'PASO' : 'STEP'} 03`,
       description: t('nodes.platformDesc'),
+      icon: Server,
       x: '86%',
       y: '50%',
     },
     {
-      id: 3,
-      label: t('nodes.analytics'),
-      icon: TrendingUp,
+      id: 'analytics',
+      title: t('nodes.analytics'),
+      step: `${locale === 'es' ? 'PASO' : 'STEP'} 04`,
       description: t('nodes.analyticsDesc'),
+      icon: TrendingUp,
       x: '14%',
       y: '50%',
     },
     {
-      id: 4,
-      label: t('nodes.bi'),
-      icon: BarChart3,
+      id: 'bi',
+      title: t('nodes.bi'),
+      step: `${locale === 'es' ? 'PASO' : 'STEP'} 05`,
       description: t('nodes.biDesc'),
+      icon: BarChart3,
       x: '14%',
       y: '85%',
     },
     {
-      id: 5,
-      label: t('nodes.outcomes'),
-      icon: Award,
+      id: 'outcomes',
+      title: t('nodes.outcomes'),
+      step: `${locale === 'es' ? 'PASO' : 'STEP'} 06`,
       description: t('nodes.outcomesDesc'),
+      icon: Award,
       x: '86%',
       y: '85%',
     },
   ];
 
+  useEffect(() => {
+    if (activeStep !== 'sources' && activeStep !== 'engineering') {
+      setUseBottomPlacement(false);
+      return;
+    }
+
+    const checkSpace = () => {
+      const cardEl = document.getElementById(`workflow-card-${activeStep}`);
+      const navEl = document.querySelector('nav');
+      if (!cardEl) return;
+      
+      const cardRect = cardEl.getBoundingClientRect();
+      const navBottom = navEl ? navEl.getBoundingClientRect().bottom : 0;
+      const spaceAbove = cardRect.top - navBottom;
+      
+      if (spaceAbove < 190) {
+        setUseBottomPlacement(true);
+      } else {
+        setUseBottomPlacement(false);
+      }
+    };
+
+    checkSpace();
+    window.addEventListener('scroll', checkSpace);
+    window.addEventListener('resize', checkSpace);
+    return () => {
+      window.removeEventListener('scroll', checkSpace);
+      window.removeEventListener('resize', checkSpace);
+    };
+  }, [activeStep]);
+
   const getActiveFlowPath = () => {
-    if (hoveredNode === null) return null;
-    switch (hoveredNode) {
-      case 0: return 'M 14 15 L 86 15'; 
-      case 1: return 'M 86 15 L 86 50'; 
-      case 2: return 'M 86 50 L 14 50'; 
-      case 3: return 'M 14 50 L 14 85'; 
-      case 4: return 'M 14 85 L 86 85'; 
+    if (activeStep === null) return null;
+    switch (activeStep) {
+      case 'sources': return 'M 14 15 L 86 15'; 
+      case 'engineering': return 'M 86 15 L 86 50'; 
+      case 'platform': return 'M 86 50 L 14 50'; 
+      case 'analytics': return 'M 14 50 L 14 85'; 
+      case 'bi': return 'M 14 85 L 86 85'; 
       default: return null;
     }
   };
 
-  const activeFlowPath = getActiveFlowPath();
-
-  const tooltipPositions = [
-    { // Hover Sources (0) -> Above Engineering (1: 86%, 15%)
-      left: '86%',
-      top: '15%',
-      offsetX: '-50%',
-      offsetY: 'calc(-100% - 52px)',
-      arrowClass: 'bottom-[-6px] left-1/2 -translate-x-1/2'
-    },
-    { // Hover Engineering (1) -> Above Platform (2: 86%, 50%)
-      left: '86%',
-      top: '50%',
-      offsetX: '-50%',
-      offsetY: 'calc(-100% - 52px)',
-      arrowClass: 'bottom-[-6px] left-1/2 -translate-x-1/2'
-    },
-    { // Hover Platform (2) -> Above Analytics (3: 14%, 50%)
-      left: '14%',
-      top: '50%',
-      offsetX: '-50%',
-      offsetY: 'calc(-100% - 52px)',
-      arrowClass: 'bottom-[-6px] left-1/2 -translate-x-1/2'
-    },
-    { // Hover Analytics (3) -> Above BI (4: 14%, 85%)
-      left: '14%',
-      top: '85%',
-      offsetX: '-50%',
-      offsetY: 'calc(-100% - 52px)',
-      arrowClass: 'bottom-[-6px] left-1/2 -translate-x-1/2'
-    },
-    { // Hover BI (4) -> Above Outcomes (5: 86%, 85%)
-      left: '86%',
-      top: '85%',
-      offsetX: '-50%',
-      offsetY: 'calc(-100% - 52px)',
-      arrowClass: 'bottom-[-6px] left-1/2 -translate-x-1/2'
-    },
-    { // Hover Outcomes (5) -> Above/Beside itself (Outcomes: 86%, 85%)
-      left: '86%',
-      top: '85%',
-      offsetX: 'calc(-100% + 50px)',
-      offsetY: 'calc(-100% - 52px)',
-      arrowClass: 'bottom-[-6px] right-[40px]'
+  const getAlignment = (id: string) => {
+    if (id === 'sources' || id === 'analytics' || id === 'bi') {
+      return {
+        translateX: '-25%',
+        arrowLeft: '25%',
+        placement: 'top-left'
+      };
+    } else if (id === 'engineering' || id === 'platform' || id === 'outcomes') {
+      return {
+        translateX: '-75%',
+        arrowLeft: '75%',
+        placement: 'top-right'
+      };
     }
-  ];
+    return {
+      translateX: '-50%',
+      arrowLeft: '50%',
+      placement: 'top'
+    };
+  };
 
-
+  const activeFlowPath = getActiveFlowPath();
 
   const heroStats = [
     { 
@@ -164,11 +176,13 @@ export function HeroSection() {
       icon: Zap
     }
   ] ; return (
-    <section className="relative w-full min-h-screen py-24 sm:py-32 lg:py-40 flex items-center overflow-hidden bg-white text-left bg-dot-pattern border-b border-slate-150">
+    <section className="relative w-full min-h-screen py-24 sm:py-32 lg:py-40 flex items-center overflow-visible bg-white text-left bg-dot-pattern border-b border-slate-150">
       
-      {/* Decorative Orbs */}
-      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-blue-50/50 rounded-full blur-3xl -z-10 pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-slate-50/80 rounded-full blur-3xl -z-10 pointer-events-none" />
+      {/* Decorative Orbs Layer with overflow-hidden */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
+        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-blue-50/50 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-slate-50/80 rounded-full blur-3xl" />
+      </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
@@ -304,40 +318,47 @@ export function HeroSection() {
                 )}
               </svg>
 
-              {/* Floating Above-Next-Step Tooltip */}
-              <AnimatePresence>
-                {hoveredNode !== null && (() => {
-                  const pos = tooltipPositions[hoveredNode];
-                  const activeNode = nodes[hoveredNode];
-                  return (
-                    <div
-                      key={hoveredNode}
-                      style={{
-                        position: 'absolute',
-                        left: pos.left,
-                        top: pos.top,
-                        transform: `translate(${pos.offsetX}, ${pos.offsetY})`,
-                        zIndex: 30,
-                        pointerEvents: 'none'
-                      }}
-                    >
+              {/* Glassmorphic Nodes */}
+              {steps.map((step) => {
+                const Icon = step.icon;
+                const isActive = activeStep === step.id;
+                const align = getAlignment(step.id);
+                
+                return (
+                  <motion.div
+                    key={step.id}
+                    id={`workflow-card-${step.id}`}
+                    style={{ left: step.x, top: step.y }}
+                    className={`absolute -translate-x-1/2 -translate-y-1/2 w-[185px] lg:w-[205px] xl:w-[225px] outline-none group ${
+                      isActive ? 'z-[50]' : 'z-20'
+                    }`}
+                    onMouseEnter={() => setActiveStep(step.id)}
+                    onMouseLeave={() => setActiveStep(null)}
+                    onFocus={() => setActiveStep(step.id)}
+                    onBlur={() => setActiveStep(null)}
+                    onClick={() => setActiveStep(activeStep === step.id ? null : step.id)}
+                    tabIndex={0}
+                    aria-expanded={isActive}
+                    aria-describedby={isActive ? `workflow-description-${step.id}` : undefined}
+                    animate={{
+                      y: [0, -8, 0],
+                    }}
+                    transition={{
+                      duration: 4 + (steps.findIndex(s => s.id === step.id) % 3) * 0.8,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: steps.findIndex(s => s.id === step.id) * 0.4
+                    }}
+                  >
+                    <div className="relative w-full h-full">
+                      {/* Workflow Step Card */}
                       <motion.div
-                        role="tooltip"
-                        id={`workflow-description-${hoveredNode}`}
-                        initial={{
-                          opacity: 0,
-                          y: 8,
-                          scale: 0.98
-                        }}
-                        animate={{
-                          opacity: 1,
+                        animate={isActive ? {
+                          y: -2,
+                          scale: 1.01,
+                        } : {
                           y: 0,
-                          scale: 1
-                        }}
-                        exit={{
-                          opacity: 0,
-                          y: 6,
-                          scale: 0.98
+                          scale: 1,
                         }}
                         transition={{
                           duration: 0.2,
@@ -345,111 +366,124 @@ export function HeroSection() {
                         }}
                         style={{
                           background: '#FFFFFF',
-                          border: '1px solid rgba(23, 105, 245, 0.22)',
-                          borderRadius: '20px',
-                          boxShadow: '0 18px 40px rgba(18, 54, 199, 0.14), 0 8px 18px rgba(10, 166, 58, 0.08)',
-                          pointerEvents: 'none'
+                          backdropFilter: 'blur(24px)',
+                          WebkitBackdropFilter: 'blur(24px)',
+                          transformOrigin: step.id === 'sources' || step.id === 'analytics' || step.id === 'bi' ? 'left center' : 'right center'
                         }}
-                        className="w-[260px] lg:w-[290px] xl:w-[320px] p-5 lg:p-6 text-left flex flex-col justify-center h-auto"
+                        className={`flex items-center gap-3.5 p-4 rounded-2xl border transition-all duration-300 cursor-pointer ${
+                          isActive
+                            ? 'border-royal-blue bg-blue-50/5 shadow-[0_14px_30px_rgba(23,105,245,0.15),0_6px_18px_rgba(45,189,62,0.1)]'
+                            : 'border-slate-200 shadow-lg'
+                        } group-focus-visible:border-royal-blue group-focus-visible:ring-2 group-focus-visible:ring-royal-blue/30`}
                       >
-                        <div className="flex flex-col space-y-2 relative">
-                          <div className="space-y-0.5">
-                            <h4 className="text-sm lg:text-base font-bold text-[#0A1F6B] tracking-tight leading-snug">
-                              {activeNode.label}
-                            </h4>
-                            <span className="text-[9px] xl:text-[10px] font-extrabold text-[#145BFF] tracking-wider uppercase block">
-                              {locale === 'es' ? 'Paso' : 'Step'} 0{activeNode.id + 1}
-                            </span>
-                          </div>
-                          
-                          <p className="text-[11px] lg:text-xs xl:text-sm font-medium text-slate-605 leading-[1.6] tracking-normal">
-                            {activeNode.description}
-                          </p>
+                        <div
+                          className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 ${
+                            isActive 
+                              ? 'bg-royal-blue/15 text-royal-blue rotate-12 scale-110'
+                              : 'bg-slate-100 text-slate-500'
+                          }`}
+                        >
+                          <Icon size={20} />
                         </div>
-
-                        {/* Pointer Arrow */}
-                        <div 
-                          style={{
-                            borderBottom: '1px solid rgba(23, 105, 245, 0.22)',
-                            borderRight: '1px solid rgba(23, 105, 245, 0.22)',
-                          }}
-                          className={`absolute rotate-45 w-3 h-3 bg-white pointer-events-none ${pos.arrowClass}`}
-                        />
+                        
+                        <div className="text-left space-y-0.5">
+                          <span className="text-xs font-bold text-slate-800 leading-tight block">
+                            {step.title}
+                          </span>
+                          <span className="text-[9px] text-royal-blue font-extrabold tracking-wider uppercase block">
+                            {step.step}
+                          </span>
+                        </div>
                       </motion.div>
-                    </div>
-                  );
-                })()}
-              </AnimatePresence>
 
-              {/* Glassmorphic Nodes */}
-              {nodes.map((node) => {
-                const Icon = node.icon;
-                const isHovered = hoveredNode === node.id;
-                
-                return (
-                  <motion.div
-                    key={node.id}
-                    style={{ left: node.x, top: node.y }}
-                    className={`absolute -translate-x-1/2 -translate-y-1/2 w-[185px] lg:w-[205px] xl:w-[225px] outline-none group ${
-                      isHovered ? 'z-30' : 'z-20'
-                    }`}
-                    onMouseEnter={() => setHoveredNode(node.id)}
-                    onMouseLeave={() => setHoveredNode(null)}
-                    onFocus={() => setHoveredNode(node.id)}
-                    onBlur={() => setHoveredNode(null)}
-                    tabIndex={0}
-                    aria-expanded={hoveredNode === node.id}
-                    aria-describedby={hoveredNode === node.id ? `workflow-description-${node.id}` : undefined}
-                    animate={{
-                      y: [0, -8, 0],
-                    }}
-                    transition={{
-                      duration: 4 + (node.id % 3) * 0.8,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      delay: node.id * 0.4
-                    }}
-                  >
-                    <motion.div
-                      whileHover={isTouch ? undefined : {
-                        y: -3,
-                        scale: 1.02
-                      }}
-                      transition={{
-                        duration: 0.22,
-                        ease: "easeOut"
-                      }}
-                      style={{
-                        background: '#FFFFFF',
-                        backdropFilter: 'blur(24px)',
-                        WebkitBackdropFilter: 'blur(24px)',
-                        transformOrigin: node.id === 0 || node.id === 3 || node.id === 4 ? 'left center' : 'right center'
-                      }}
-                      className={`flex items-center gap-3.5 p-4 rounded-2xl border transition-all duration-300 cursor-pointer ${
-                        isHovered
-                          ? 'border-royal-blue bg-blue-50/5 shadow-[0_14px_30px_rgba(18,54,199,0.12),0_6px_18px_rgba(10,166,58,0.08)]'
-                          : 'border-slate-200 shadow-lg'
-                      } group-focus-visible:border-royal-blue group-focus-visible:ring-2 group-focus-visible:ring-royal-blue/30`}
-                    >
-                      <div
-                        className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 ${
-                          isHovered 
-                            ? 'bg-royal-blue/15 text-royal-blue rotate-12 scale-110'
-                            : 'bg-slate-100 text-slate-500'
-                        }`}
-                      >
-                        <Icon size={20} />
-                      </div>
-                      
-                      <div className="text-left space-y-0.5">
-                        <span className="text-xs font-bold text-slate-800 leading-tight block">
-                          {node.label}
-                        </span>
-                        <span className="text-[9px] text-royal-blue font-extrabold tracking-wider uppercase block">
-                          {locale === 'es' ? 'Paso' : 'Step'} 0{node.id + 1}
-                        </span>
-                      </div>
-                    </motion.div>
+                      {/* Floating Popover (above or below card) */}
+                      <AnimatePresence>
+                        {isActive && (
+                          <div
+                            style={{
+                              position: 'absolute',
+                              left: '50%',
+                              ...(useBottomPlacement 
+                                ? { top: 'calc(100% + 20px)' } 
+                                : { bottom: 'calc(100% + 20px)' }
+                              ),
+                              transform: `translateX(${align.translateX})`,
+                              zIndex: 50,
+                              pointerEvents: 'none'
+                            }}
+                          >
+                            <motion.div
+                              role="tooltip"
+                              id={`workflow-description-${step.id}`}
+                              initial={{
+                                opacity: 0,
+                                y: useBottomPlacement ? -8 : 8,
+                                scale: 0.98
+                              }}
+                              animate={{
+                                opacity: 1,
+                                y: 0,
+                                scale: 1
+                              }}
+                              exit={{
+                                opacity: 0,
+                                y: useBottomPlacement ? -6 : 6,
+                                scale: 0.98
+                              }}
+                              transition={{
+                                duration: 0.2,
+                                ease: "easeOut"
+                              }}
+                              style={{
+                                background: '#FFFFFF',
+                                border: '1px solid rgba(23, 105, 245, 0.18)',
+                                borderRadius: '20px',
+                                boxShadow: '0 22px 55px rgba(7, 18, 38, 0.16), 0 10px 26px rgba(23, 105, 245, 0.12), 0 4px 14px rgba(45, 189, 62, 0.06)',
+                                pointerEvents: 'none'
+                              }}
+                              className="w-[340px] md:w-[300px] lg:w-[340px] p-[24px] text-left flex flex-col justify-center h-auto relative"
+                            >
+                              <div className="flex flex-col text-left">
+                                <span className="text-[12px] font-bold text-[#1769F5] uppercase tracking-wider block mb-1">
+                                  {step.step}
+                                </span>
+                                <h4 className="text-[20px] font-bold text-[#071226] tracking-tight leading-snug mb-2">
+                                  {step.title}
+                                </h4>
+                                <p className="text-[15px] font-medium text-[#475569] leading-[1.65]">
+                                  {step.description}
+                                </p>
+                              </div>
+
+                              {/* Pointer Arrow */}
+                              <div 
+                                style={{
+                                  position: 'absolute',
+                                  left: align.arrowLeft,
+                                  transform: 'translateX(-50%) rotate(45deg)',
+                                  width: '12px',
+                                  height: '12px',
+                                  backgroundColor: '#FFFFFF',
+                                  pointerEvents: 'none',
+                                  ...(useBottomPlacement 
+                                    ? {
+                                        top: '-6px',
+                                        borderTop: '1px solid rgba(23, 105, 245, 0.18)',
+                                        borderLeft: '1px solid rgba(23, 105, 245, 0.18)'
+                                      } 
+                                    : {
+                                        bottom: '-6px',
+                                        borderBottom: '1px solid rgba(23, 105, 245, 0.18)',
+                                        borderRight: '1px solid rgba(23, 105, 245, 0.18)'
+                                      }
+                                  )
+                                }}
+                              />
+                            </motion.div>
+                          </div>
+                        )}
+                      </AnimatePresence>
+                    </div>
                   </motion.div>
                 );
               })}
@@ -459,29 +493,31 @@ export function HeroSection() {
             <div className="block md:hidden w-full space-y-4 pl-6 relative py-2">
               <div className="absolute left-[17px] top-4 bottom-4 w-[1px] bg-slate-200" />
 
-              {nodes.map((node) => {
-                const Icon = node.icon;
-                const isOpen = hoveredNode === node.id;
+              {steps.map((step) => {
+                const Icon = step.icon;
+                const isOpen = activeStep === step.id;
                 
                 return (
-                  <div key={node.id} className="relative flex items-start gap-4">
+                  <div key={step.id} className="relative flex items-start gap-4">
                     <button
-                      onClick={() => setHoveredNode(isOpen ? null : node.id)}
+                      onClick={() => setActiveStep(isOpen ? null : step.id)}
                       className="w-8 h-8 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-royal-blue z-10 flex-shrink-0 mt-3.5 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-royal-blue"
+                      aria-expanded={isOpen}
+                      aria-describedby={isOpen ? `workflow-description-${step.id}` : undefined}
                     >
                       <Icon size={16} />
                     </button>
                     <div 
-                      onClick={() => setHoveredNode(isOpen ? null : node.id)}
+                      onClick={() => setActiveStep(isOpen ? null : step.id)}
                       className={`bg-white border p-[18px_20px] rounded-2xl shadow-sm text-left flex-1 flex flex-col justify-center cursor-pointer transition-all duration-300 ${
                         isOpen ? 'border-royal-blue bg-blue-50/5' : 'border-slate-200'
                       }`}
                     >
                       <div className="flex justify-between items-center w-full">
                         <div className="space-y-0.5 text-left">
-                          <h4 className="text-sm sm:text-base font-bold text-slate-800 tracking-tight leading-tight">{node.label}</h4>
+                          <h4 className="text-sm sm:text-base font-bold text-slate-800 tracking-tight leading-tight">{step.title}</h4>
                           <span className="text-[9px] text-royal-blue font-extrabold uppercase tracking-wider block">
-                            {locale === 'es' ? 'Paso' : 'Step'} 0{node.id + 1}
+                            {step.step}
                           </span>
                         </div>
                         <ChevronDown 
@@ -493,7 +529,8 @@ export function HeroSection() {
                       <AnimatePresence initial={false}>
                         {isOpen && (
                           <motion.div
-                            id={`workflow-description-${node.id}`}
+                            id={`workflow-description-${step.id}`}
+                            role="region"
                             initial={{ height: 0, opacity: 0, marginTop: 0 }}
                             animate={{ height: 'auto', opacity: 1, marginTop: 12 }}
                             exit={{ height: 0, opacity: 0, marginTop: 0 }}
@@ -501,7 +538,7 @@ export function HeroSection() {
                             className="overflow-hidden"
                           >
                             <p className="text-xs sm:text-sm text-slate-600 font-medium leading-[1.65]">
-                              {node.description}
+                              {step.description}
                             </p>
                           </motion.div>
                         )}
