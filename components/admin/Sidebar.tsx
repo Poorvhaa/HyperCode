@@ -1,6 +1,7 @@
 'use client';
 
 import { useTransition } from 'react';
+import Image from 'next/image';
 import { useRouter, useParams, usePathname } from 'next/navigation';
 import {
   LayoutDashboard,
@@ -62,15 +63,16 @@ export default function AdminSidebar({ userProfile, activeTab }: SidebarProps) {
 
   return (
     <aside className="w-64 bg-white border-r border-slate-200 flex flex-col min-h-screen">
-      {/* Brand Header */}
-      <div className="p-6 border-b border-slate-100 flex items-center gap-3">
-        <div className="w-9 h-9 rounded-lg bg-[#0F4C81] flex items-center justify-center text-white font-bold text-lg">
-          H
-        </div>
-        <div>
-          <h2 className="font-bold text-slate-800 tracking-tight text-base leading-none">HyperCode</h2>
-          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Admin Portal</span>
-        </div>
+      <div className="p-4 border-b border-slate-100 flex flex-col gap-1.5 items-start justify-center">
+        <Image
+          src="/hypercodeit.logo.png"
+          alt="HyperCode Logo"
+          width={130}
+          height={34}
+          priority
+          className="h-8 w-auto object-contain"
+        />
+        <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest pl-1">Admin Portal</span>
       </div>
 
       {/* Navigation List */}
@@ -82,7 +84,7 @@ export default function AdminSidebar({ userProfile, activeTab }: SidebarProps) {
               onClick={() => handleNav('/admin')}
               className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
                 isRouteActive('/admin')
-                  ? 'bg-blue-50 text-[#0F4C81]'
+                  ? 'bg-blue-50 text-royal-blue'
                   : 'text-slate-600 hover:bg-slate-50'
               }`}
             >
@@ -94,7 +96,7 @@ export default function AdminSidebar({ userProfile, activeTab }: SidebarProps) {
               onClick={() => handleNav('/admin/leads')}
               className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
                 isRouteActive('/admin/leads')
-                  ? 'bg-blue-50 text-[#0F4C81]'
+                  ? 'bg-blue-50 text-royal-blue'
                   : 'text-slate-600 hover:bg-slate-50'
               }`}
             >
@@ -106,7 +108,7 @@ export default function AdminSidebar({ userProfile, activeTab }: SidebarProps) {
               onClick={() => handleNav('/admin/consultations')}
               className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
                 isRouteActive('/admin/consultations')
-                  ? 'bg-blue-50 text-[#0F4C81]'
+                  ? 'bg-blue-50 text-royal-blue'
                   : 'text-slate-600 hover:bg-slate-50'
               }`}
             >
@@ -118,7 +120,7 @@ export default function AdminSidebar({ userProfile, activeTab }: SidebarProps) {
               onClick={() => handleNav('/admin/conversations')}
               className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
                 isRouteActive('/admin/conversations')
-                  ? 'bg-blue-50 text-[#0F4C81]'
+                  ? 'bg-blue-50 text-royal-blue'
                   : 'text-slate-600 hover:bg-slate-50'
               }`}
             >
@@ -130,7 +132,7 @@ export default function AdminSidebar({ userProfile, activeTab }: SidebarProps) {
               onClick={() => handleNav('/admin/messages')}
               className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
                 isRouteActive('/admin/messages')
-                  ? 'bg-blue-50 text-[#0F4C81]'
+                  ? 'bg-blue-50 text-royal-blue'
                   : 'text-slate-600 hover:bg-slate-50'
               }`}
             >
@@ -142,7 +144,7 @@ export default function AdminSidebar({ userProfile, activeTab }: SidebarProps) {
               onClick={() => handleNav('/admin/system-health')}
               className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
                 isRouteActive('/admin/system-health')
-                  ? 'bg-blue-50 text-[#0F4C81]'
+                  ? 'bg-blue-50 text-royal-blue'
                   : 'text-slate-600 hover:bg-slate-50'
               }`}
             >
@@ -158,7 +160,7 @@ export default function AdminSidebar({ userProfile, activeTab }: SidebarProps) {
             onClick={() => handleNav('/admin/careers')}
             className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
               isRouteActive('/admin/careers')
-                ? 'bg-blue-50 text-[#0F4C81]'
+                ? 'bg-blue-50 text-royal-blue'
                 : 'text-slate-600 hover:bg-slate-50'
             }`}
           >
@@ -174,7 +176,7 @@ export default function AdminSidebar({ userProfile, activeTab }: SidebarProps) {
               onClick={() => handleNav('/admin/cms')}
               className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
                 isRouteActive('/admin/cms')
-                  ? 'bg-blue-50 text-[#0F4C81]'
+                  ? 'bg-blue-50 text-royal-blue'
                   : 'text-slate-600 hover:bg-slate-50'
               }`}
             >
@@ -186,7 +188,7 @@ export default function AdminSidebar({ userProfile, activeTab }: SidebarProps) {
               onClick={() => handleNav('/admin/newsletter')}
               className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
                 isRouteActive('/admin/newsletter')
-                  ? 'bg-blue-50 text-[#0F4C81]'
+                  ? 'bg-blue-50 text-royal-blue'
                   : 'text-slate-600 hover:bg-slate-50'
               }`}
             >
@@ -198,7 +200,7 @@ export default function AdminSidebar({ userProfile, activeTab }: SidebarProps) {
               onClick={() => handleNav('/admin/analytics')}
               className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
                 isRouteActive('/admin/analytics')
-                  ? 'bg-blue-50 text-[#0F4C81]'
+                  ? 'bg-blue-50 text-royal-blue'
                   : 'text-slate-600 hover:bg-slate-50'
               }`}
             >
@@ -210,7 +212,7 @@ export default function AdminSidebar({ userProfile, activeTab }: SidebarProps) {
               onClick={() => handleNav('/admin/settings')}
               className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
                 isRouteActive('/admin/settings')
-                  ? 'bg-blue-50 text-[#0F4C81]'
+                  ? 'bg-blue-50 text-royal-blue'
                   : 'text-slate-600 hover:bg-slate-50'
               }`}
             >

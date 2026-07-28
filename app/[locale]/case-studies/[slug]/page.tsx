@@ -146,7 +146,7 @@ export default async function CaseStudyDetailPage({ params }: Props) {
             <div className="mb-10">
               <Link
                 href="/case-studies"
-                className="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-[#0F4C81] transition-colors uppercase tracking-wider"
+                className="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-royal-blue transition-colors uppercase tracking-wider"
               >
                 <ArrowLeft size={14} />
                 <span>{t('backToCaseStudies')}</span>
@@ -182,8 +182,8 @@ export default async function CaseStudyDetailPage({ params }: Props) {
                 </div>
 
                 {/* 3. HyperCode Solution */}
-                <div className="space-y-4 bg-[#0F4C81]/5 border border-[#0F4C81]/10 rounded-3xl p-6 sm:p-8">
-                  <div className="flex items-center gap-3 text-[#0F4C81]">
+                <div className="space-y-4 bg-royal-blue/5 border border-royal-blue/10 rounded-3xl p-6 sm:p-8">
+                  <div className="flex items-center gap-3 text-royal-blue">
                     <Cpu size={26} />
                     <h3 className="text-xl sm:text-2xl font-black tracking-tight text-slate-900">
                       {t('solution')}
@@ -220,7 +220,7 @@ export default async function CaseStudyDetailPage({ params }: Props) {
                         key={idx}
                         className="bg-slate-50 border border-slate-200/60 p-6 rounded-2xl flex flex-col justify-between"
                       >
-                        <span className="text-3xl sm:text-4xl font-black text-[#0F4C81] tracking-tight block mb-2">
+                        <span className="text-3xl sm:text-4xl font-black text-royal-blue tracking-tight block mb-2">
                           {metric.value}
                         </span>
                         <span className="text-[10px] sm:text-[11px] font-black text-slate-400 uppercase tracking-widest leading-normal">
@@ -281,7 +281,7 @@ export default async function CaseStudyDetailPage({ params }: Props) {
                       {study.technologies.map((tech) => (
                         <span
                           key={tech}
-                          className="px-2.5 py-0.5 rounded-lg bg-slate-50 text-[#0F4C81] text-[10px] font-extrabold uppercase tracking-wide border border-slate-200/40"
+                          className="px-2.5 py-0.5 rounded-lg bg-slate-50 text-royal-blue text-[10px] font-extrabold uppercase tracking-wide border border-slate-200/40"
                         >
                           {tech}
                         </span>
@@ -317,12 +317,12 @@ export default async function CaseStudyDetailPage({ params }: Props) {
                       <Link
                         key={idx}
                         href={`/solutions/${service.slug}`}
-                        className="group flex items-center justify-between p-3 rounded-xl border border-slate-150 bg-slate-50/20 hover:border-[#0F4C81]/30 hover:bg-slate-50 transition-all duration-200"
+                        className="group flex items-center justify-between p-3 rounded-xl border border-slate-150 bg-slate-50/20 hover:border-royal-blue/30 hover:bg-slate-50 transition-all duration-200"
                       >
-                        <span className="text-xs font-bold text-slate-700 group-hover:text-[#0F4C81] transition-colors leading-snug">
+                        <span className="text-xs font-bold text-slate-700 group-hover:text-royal-blue transition-colors leading-snug">
                           {service.name}
                         </span>
-                        <ArrowRight size={13} className="text-slate-400 group-hover:text-[#0F4C81] transition-colors" />
+                        <ArrowRight size={13} className="text-slate-400 group-hover:text-royal-blue transition-colors" />
                       </Link>
                     ))}
                   </div>
@@ -340,7 +340,7 @@ export default async function CaseStudyDetailPage({ params }: Props) {
           <section className="section-padding bg-[#F8FAFC] border-b border-slate-200">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="max-w-3xl mb-12 space-y-2 text-left">
-                <span className="text-[10px] font-extrabold text-[#0F4C81] tracking-widest uppercase">
+                <span className="text-[10px] font-extrabold text-royal-blue tracking-widest uppercase">
                   {t('relatedCaseStudies')}
                 </span>
                 <h4 className="text-[22px] font-bold text-slate-900">
@@ -358,7 +358,7 @@ export default async function CaseStudyDetailPage({ params }: Props) {
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-12">
             
             <div className="space-y-4 max-w-2xl mx-auto">
-              <span className="text-[10px] font-extrabold text-[#0F4C81] tracking-widest uppercase">
+              <span className="text-[10px] font-extrabold text-royal-blue tracking-widest uppercase">
                 {t('contactUs')}
               </span>
               <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black tracking-tight leading-[1.2] text-slate-900">

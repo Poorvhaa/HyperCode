@@ -58,8 +58,8 @@ export function Navigation() {
     return pathname.startsWith(href);
   };
   const getLinkClass = (href: string) => {
-    const base = "font-bold text-sm lg:text-[16px] xl:text-[17px] transition-all duration-200 relative py-2 cursor-pointer bg-transparent border-none outline-none flex items-center h-full text-slate-700 hover:text-[#0F4C81]";
-    const activeColor = "text-[#0F4C81] font-extrabold";
+    const base = "font-bold text-sm lg:text-[16px] xl:text-[17px] transition-all duration-200 relative py-2 cursor-pointer bg-transparent border-none outline-none flex items-center h-full text-slate-700 hover:text-royal-blue";
+    const activeColor = "text-royal-blue font-extrabold";
     const inactiveColor = "text-slate-750";
     return `${base} ${isActive(href) ? activeColor : inactiveColor}`;
   };
@@ -283,15 +283,16 @@ export function Navigation() {
             <div className="flex items-center h-full">
               <Link href="/" className="flex items-center flex-shrink-0">
                 <Image
-                  src="/logo.jpg"
+                  src="/hypercodeit.logo.png"
                   alt="HyperCode"
-                  width={729}
-                  height={950}
+                  width={115}
+                  height={80}
                   priority
-                  className={`w-auto object-contain transition-all duration-300 ${
+                  quality={100}
+                  className={`h-auto object-contain transition-all duration-300 ${
                     isScrolled 
-                      ? 'h-[72px] lg:h-[76px] py-1' 
-                      : 'h-[72px] lg:h-[104px] py-1.5'
+                      ? 'w-[92px] sm:w-[100px] lg:w-[112px]' 
+                      : 'w-[102px] sm:w-[118px] lg:w-[135px]'
                   }`}
                 />
               </Link>
@@ -302,7 +303,7 @@ export function Navigation() {
               <Link href="/" className={`${getLinkClass('/')} group`}>
                 <span className="relative py-1">
                   {t('home')}
-                  <span className={`absolute bottom-0 left-0 w-full h-[2px] bg-[#0F4C81] transform transition-transform duration-300 origin-left ${
+                  <span className={`absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-royal-blue to-green transform transition-transform duration-300 origin-left ${
                     isActive('/') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
                   }`} />
                 </span>
@@ -317,8 +318,8 @@ export function Navigation() {
                 <button className={`${getLinkClass('/solutions')} group`}>
                   <span className="relative py-1 flex items-center">
                     <span>{tc('solutions')}</span>
-                    <ChevronDown size={12} className={`ml-1 transition-transform duration-300 ${activeDropdown === 'solutions' ? 'rotate-180 text-[#0F4C81]' : ''}`} />
-                    <span className={`absolute bottom-0 left-0 w-full h-[2px] bg-[#0F4C81] transform transition-transform duration-300 origin-left ${
+                    <ChevronDown size={12} className={`ml-1 transition-transform duration-300 ${activeDropdown === 'solutions' ? 'rotate-180 text-royal-blue' : ''}`} />
+                    <span className={`absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-royal-blue to-green transform transition-transform duration-300 origin-left ${
                       isActive('/solutions') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
                     }`} />
                   </span>
@@ -348,12 +349,12 @@ export function Navigation() {
                                 onMouseEnter={() => setActiveCategory(cat.id)}
                                 className={`w-full flex items-center justify-between p-3 rounded-2xl text-left transition-all duration-300 cursor-pointer border-none outline-none ${
                                   isCatActive 
-                                    ? 'bg-[#F1F5F9] text-[#0F4C81] shadow-sm scale-[1.01]'
-                                    : 'text-slate-600 hover:bg-slate-50 hover:text-[#0F4C81]'
+                                    ? 'bg-[#F1F5F9] text-royal-blue shadow-sm scale-[1.01]'
+                                    : 'text-slate-600 hover:bg-slate-50 hover:text-royal-blue'
                                 }`}
                               >
                                 <div className="flex items-center gap-4 min-w-0">
-                                  <div className={`p-2.5 rounded-xl transition-all duration-300 flex items-center justify-center flex-shrink-0 ${isCatActive ? 'bg-[#0F4C81]/10 text-[#0F4C81]' : 'bg-slate-100/80 text-slate-400'}`}>
+                                  <div className={`p-2.5 rounded-xl transition-all duration-300 flex items-center justify-center flex-shrink-0 ${isCatActive ? 'bg-royal-blue/10 text-royal-blue' : 'bg-slate-100/80 text-slate-400'}`}>
                                     <CatIcon size={24} />
                                   </div>
                                   <span className="text-[18px] xl:text-[20px] font-semibold tracking-tight leading-[1.4]">{cat.title}</span>
@@ -372,7 +373,7 @@ export function Navigation() {
                             <div className="flex-1 pl-10 flex flex-col justify-between min-h-[540px]">
                               <div className="space-y-6">
                                 <div className="flex items-start gap-4">
-                                  <div className="p-4 bg-[#0F4C81]/5 border border-[#0F4C81]/15 text-[#0F4C81] rounded-2xl shadow-sm flex-shrink-0">
+                                  <div className="p-4 bg-royal-blue/5 border border-royal-blue/15 text-royal-blue rounded-2xl shadow-sm flex-shrink-0">
                                     <ActiveCatIcon size={32} />
                                   </div>
                                   <div className="space-y-2">
@@ -387,12 +388,12 @@ export function Navigation() {
                                       key={idx}
                                       href={`/solutions/${item.slug}`}
                                       onClick={closeDropdowns}
-                                      className="group flex items-center justify-between p-5 px-6 rounded-2xl border border-slate-200/50 bg-slate-50/20 shadow-[0_2px_8px_rgba(0,0,0,0.01)] hover:border-[#0F4C81]/20 hover:bg-slate-50/50 hover:shadow-[0_12px_28px_rgba(15,76,129,0.04)] hover:-translate-y-0.5 transition-all duration-300 ease-out h-auto"
+                                      className="group flex items-center justify-between p-5 px-6 rounded-2xl border border-slate-200/50 bg-slate-50/20 shadow-[0_2px_8px_rgba(0,0,0,0.01)] hover:border-royal-blue/20 hover:bg-slate-50/50 hover:shadow-[0_12px_28px_rgba(15,76,129,0.04)] hover:-translate-y-0.5 transition-all duration-300 ease-out h-auto"
                                     >
-                                      <span className="text-[18px] lg:text-[20px] font-semibold text-slate-700 group-hover:text-[#0F4C81] transition-colors leading-snug">
+                                      <span className="text-[18px] lg:text-[20px] font-semibold text-slate-700 group-hover:text-royal-blue transition-colors leading-snug">
                                         {item.name}
                                       </span>
-                                      <ChevronDown size={18} className="text-slate-400 group-hover:text-[#0F4C81] transform -rotate-90 group-hover:translate-x-1.5 transition-all duration-300" />
+                                      <ChevronDown size={18} className="text-slate-400 group-hover:text-royal-blue transform -rotate-90 group-hover:translate-x-1.5 transition-all duration-300" />
                                     </Link>
                                   ))}
                                 </div>
@@ -402,14 +403,14 @@ export function Navigation() {
                                 <Link
                                   href="/solutions"
                                   onClick={closeDropdowns}
-                                  className="inline-flex items-center gap-2.5 text-sm font-extrabold text-[#0F4C81] hover:underline transition-all"
+                                  className="inline-flex items-center gap-2.5 text-sm font-extrabold text-royal-blue hover:underline transition-all"
                                 >
                                   <span>{t('viewAllSolutions')}</span>
                                   <ArrowRight size={16} />
                                 </Link>
                                 <button
                                   onClick={triggerOpenChat}
-                                  className="inline-flex items-center gap-2.5 text-sm font-bold text-slate-500 hover:text-[#0F4C81] bg-transparent border-none cursor-pointer transition-colors"
+                                  className="inline-flex items-center gap-2.5 text-sm font-bold text-slate-500 hover:text-royal-blue bg-transparent border-none cursor-pointer transition-colors"
                                 >
                                   <span>{t('talkToAI')}</span>
                                   <Sparkles size={14} className="text-blue-500 animate-pulse" />
@@ -428,7 +429,7 @@ export function Navigation() {
               <Link href="/about" className={`${getLinkClass('/about')} group`}>
                 <span className="relative py-1">
                   {t('about')}
-                  <span className={`absolute bottom-0 left-0 w-full h-[2px] bg-[#0F4C81] transform transition-transform duration-300 origin-left ${
+                  <span className={`absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-royal-blue to-green transform transition-transform duration-300 origin-left ${
                     isActive('/about') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
                   }`} />
                 </span>
@@ -437,7 +438,7 @@ export function Navigation() {
               <Link href="/careers" className={`${getLinkClass('/careers')} group`}>
                 <span className="relative py-1">
                   {t('careers')}
-                  <span className={`absolute bottom-0 left-0 w-full h-[2px] bg-[#0F4C81] transform transition-transform duration-300 origin-left ${
+                  <span className={`absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-royal-blue to-green transform transition-transform duration-300 origin-left ${
                     isActive('/careers') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
                   }`} />
                 </span>
@@ -446,7 +447,7 @@ export function Navigation() {
               <Link href="/contact" className={`${getLinkClass('/contact')} group`}>
                 <span className="relative py-1">
                   {t('contact')}
-                  <span className={`absolute bottom-0 left-0 w-full h-[2px] bg-[#0F4C81] transform transition-transform duration-300 origin-left ${
+                  <span className={`absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-royal-blue to-green transform transition-transform duration-300 origin-left ${
                     isActive('/contact') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
                   }`} />
                 </span>
@@ -480,7 +481,7 @@ export function Navigation() {
                           key={lang.code}
                           onClick={() => handleLanguageChange(lang.code)}
                           className={`w-full text-left px-4 py-2.5 text-xs font-bold hover:bg-slate-50 cursor-pointer transition-colors ${
-                            locale === lang.code ? 'text-[#0F4C81]' : 'text-slate-700'
+                            locale === lang.code ? 'text-royal-blue' : 'text-slate-700'
                           }`}
                         >
                           {lang.name}
@@ -494,7 +495,7 @@ export function Navigation() {
               {/* Schedule Consultation highlighted CTA */}
               <Link
                 href="/consultation"
-                className="px-6 py-3 rounded-full text-sm font-bold text-white bg-[#0F4C81] hover:bg-[#0c3e69] hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all duration-200 cursor-pointer border-none no-underline shadow-sm flex items-center justify-center gap-2"
+                className="PrimaryBrandButton flex items-center justify-center gap-2"
               >
                 <span>{t('schedule') || 'Schedule Consultation'}</span>
               </Link>
@@ -557,7 +558,7 @@ export function Navigation() {
                           <div key={catIdx} className="space-y-1">
                             <button
                               onClick={() => setMobileExpandedCat(isMobileCatExpanded ? null : cat.id)}
-                              className="w-full flex items-center justify-between py-3 text-base font-bold text-slate-700 hover:text-[#0F4C81] text-left bg-transparent border-none outline-none cursor-pointer"
+                              className="w-full flex items-center justify-between py-3 text-base font-bold text-slate-700 hover:text-royal-blue text-left bg-transparent border-none outline-none cursor-pointer"
                             >
                               <div className="flex items-center gap-4">
                                 <CatIcon size={24} className="text-slate-400" />
@@ -573,7 +574,7 @@ export function Navigation() {
                                     key={idx}
                                     href={`/solutions/${item.slug}`}
                                     onClick={() => setIsOpen(false)}
-                                    className="block text-sm font-semibold text-slate-500 hover:text-[#0F4C81] py-1"
+                                    className="block text-sm font-semibold text-slate-500 hover:text-royal-blue py-1"
                                   >
                                     {item.name}
                                   </Link>
@@ -581,7 +582,7 @@ export function Navigation() {
                                 <Link
                                     href="/solutions"
                                     onClick={() => setIsOpen(false)}
-                                    className="block text-sm font-extrabold text-[#0F4C81] pt-2"
+                                    className="block text-sm font-extrabold text-royal-blue pt-2"
                                   >
                                     {t('viewAll')}
                                   </Link>
@@ -623,7 +624,7 @@ export function Navigation() {
                     <Link
                       href="/consultation"
                       onClick={() => setIsOpen(false)}
-                      className="w-full text-center py-3 rounded-full font-bold text-white bg-[#0F4C81] border-none flex items-center justify-center gap-2 cursor-pointer no-underline"
+                      className="PrimaryBrandButton w-full flex items-center justify-center gap-2"
                     >
                       <span>{t('schedule') || 'Schedule Consultation'}</span>
                     </Link>
@@ -645,7 +646,7 @@ export function Navigation() {
                     key={lang.code}
                     onClick={() => handleLanguageChange(lang.code)}
                     className={`w-full py-3 px-4 rounded-2xl border text-sm font-bold text-left transition-all ${
-                      locale === lang.code ? 'bg-[#0F4C81] border-[#0F4C81] text-white' : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
+                      locale === lang.code ? 'bg-royal-blue border-royal-blue text-white' : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
                     }`}
                   >
                     {lang.name}

@@ -67,7 +67,7 @@ export function InsightsList({ initialArticles, translatedCategories }: Insights
   return (
     <div className="space-y-10">
       {/* Search Bar */}
-      <div className="max-w-md mx-auto flex items-center bg-slate-50 border border-slate-200 px-4 py-3 rounded-2xl gap-2.5 shadow-sm focus-within:ring-2 focus-within:ring-[#0F4C81]/20 focus-within:border-[#0F4C81] transition-all">
+      <div className="max-w-md mx-auto flex items-center bg-slate-50 border border-slate-200 px-4 py-3 rounded-2xl gap-2.5 shadow-sm focus-within:ring-2 focus-within:ring-royal-blue/20 focus-within:border-royal-blue transition-all">
         <Search size={16} className="text-slate-400 flex-shrink-0" />
         <input
           type="text"
@@ -90,7 +90,7 @@ export function InsightsList({ initialArticles, translatedCategories }: Insights
                 onClick={() => handleCategorySelect(category)}
                 className={`px-4 py-2 rounded-xl text-xs font-semibold cursor-pointer transition-all border ${
                   isActive
-                    ? 'border-[#0F4C81] bg-[#0F4C81] text-white shadow-sm'
+                    ? 'border-royal-blue bg-royal-blue text-white shadow-sm'
                     : 'border-slate-200 bg-white text-slate-500 hover:border-slate-300 hover:text-slate-900'
                 }`}
               >
@@ -126,7 +126,7 @@ export function InsightsList({ initialArticles, translatedCategories }: Insights
                 </div>
 
                 {/* Title */}
-                <h3 className="text-lg font-bold text-slate-900 mb-2 leading-snug group-hover:text-[#0F4C81] transition-colors">
+                <h3 className="text-lg font-bold text-slate-900 mb-2 leading-snug group-hover:text-royal-blue transition-colors">
                   <Link href={`/insights/${article.slug}`}>
                     {article.title}
                   </Link>
@@ -159,7 +159,7 @@ export function InsightsList({ initialArticles, translatedCategories }: Insights
                   
                   <Link
                     href={`/insights/${article.slug}`}
-                    className="inline-flex items-center text-[#0F4C81] hover:text-[#0c3c66] gap-1"
+                    className="inline-flex items-center text-royal-blue hover:text-[#0c3c66] gap-1"
                   >
                     <span>{t('readArticle')}</span>
                     <ArrowRight size={12} />

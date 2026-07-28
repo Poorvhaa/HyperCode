@@ -62,8 +62,8 @@ export function TestimonialsSection() {
         
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-20 space-y-4">
-          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C81] tracking-widest uppercase">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#0F4C81]" />
+          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-royal-blue tracking-widest uppercase">
+            <span className="w-1.5 h-1.5 rounded-full bg-royal-blue" />
             TESTIMONIALS
           </span>
           <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">
@@ -122,7 +122,7 @@ export function TestimonialsSection() {
                       {testimonials[activeIndex].name}
                     </cite>
                     <span className="text-xs text-slate-500 font-bold block uppercase tracking-wider">
-                      {testimonials[activeIndex].role} — <span className="text-[#0F4C81]">{testimonials[activeIndex].company}</span>
+                      {testimonials[activeIndex].role} — <span className="text-royal-blue">{testimonials[activeIndex].company}</span>
                     </span>
                   </div>
                 </div>
@@ -153,7 +153,7 @@ export function TestimonialsSection() {
                         key={idx}
                         onClick={() => setActiveIndex(idx)}
                         className={`w-1.5 h-1.5 rounded-full transition-all duration-200 cursor-pointer border-none ${
-                          activeIndex === idx ? 'bg-[#0F4C81] w-3' : 'bg-slate-350'
+                          activeIndex === idx ? 'bg-royal-blue w-3' : 'bg-slate-350'
                         }`}
                       />
                     ))}
@@ -181,11 +181,11 @@ export function TestimonialsSection() {
             {/* Glowing Play Button */}
             <div className="relative z-10 flex flex-col items-center gap-4 text-center px-6">
               <motion.button
-                className="w-16 h-16 rounded-full bg-white text-[#0F4C81] flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-transform duration-300 border-none cursor-pointer"
+                className="w-16 h-16 rounded-full bg-white text-royal-blue flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-transform duration-300 border-none cursor-pointer"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Play size={24} className="ml-1 text-[#0F4C81]" fill="currentColor" />
+                <Play size={24} className="ml-1 text-royal-blue" fill="currentColor" />
               </motion.button>
               <div className="space-y-1">
                 <span className="text-[10px] font-extrabold text-white uppercase tracking-widest block drop-shadow-md">Executive Interview</span>
@@ -195,7 +195,7 @@ export function TestimonialsSection() {
 
             {/* Absolute badge */}
             <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm border border-slate-200 px-3 py-1.5 rounded-xl flex items-center gap-1.5 text-[10px] font-bold text-slate-650 shadow-sm">
-              <Award size={12} className="text-[#0F4C81]" />
+              <Award size={12} className="text-royal-blue" />
               <span>Verified Case Discussion</span>
             </div>
 

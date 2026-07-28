@@ -136,7 +136,7 @@ export function NewsletterForm() {
             onBlur={() => setTouched(true)}
             autoComplete="email"
             inputMode="email"
-            className={`w-full h-12 pl-4 pr-10 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all text-sm text-slate-800 placeholder-slate-400 ${
+            className={`w-full h-12 pl-4 pr-10 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-sm text-slate-800 placeholder-slate-400 ${
               touched && !isValidEmail
                 ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
                 : touched && isValidEmail
@@ -156,7 +156,7 @@ export function NewsletterForm() {
         <button
           type="submit"
           disabled={submitting || !isValidEmail}
-          className={`h-12 bg-[#0F4C81] hover:bg-[#0D3F6D] active:scale-95 text-white px-6 rounded-xl text-xs font-extrabold uppercase tracking-wider transition-all flex items-center justify-center cursor-pointer border-none shadow-md shadow-blue-500/10 shrink-0 ${
+          className={`h-12 bg-royal-blue hover:bg-deep-navy active:scale-95 text-white px-6 rounded-xl text-xs font-extrabold uppercase tracking-wider transition-all flex items-center justify-center cursor-pointer border-none shadow-md shadow-blue-500/10 shrink-0 ${
             (!isValidEmail || submitting) ? 'opacity-50 cursor-not-allowed bg-slate-400 hover:bg-slate-400' : ''
           }`}
         >

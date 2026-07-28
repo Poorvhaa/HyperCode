@@ -108,7 +108,7 @@ export default function AnalyticsPage() {
   if (authLoading || (session && !userProfile)) {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#0F4C81]"></div>
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-royal-blue"></div>
       </div>
     );
   }
@@ -127,7 +127,7 @@ export default function AnalyticsPage() {
           </p>
           <button 
             onClick={() => router.push(`/${locale}/admin`)}
-            className="px-5 py-2.5 bg-[#0F4C81] hover:bg-[#0c3e6b] text-white font-semibold rounded-xl text-sm transition-all flex items-center justify-center gap-2 mx-auto cursor-pointer"
+            className="px-5 py-2.5 bg-royal-blue hover:bg-deep-navy text-white font-semibold rounded-xl text-sm transition-all flex items-center justify-center gap-2 mx-auto cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>{locale === 'es' ? 'Volver al Panel' : 'Back to Dashboard'}</span>
@@ -157,8 +157,8 @@ export default function AnalyticsPage() {
   const getDonutSegments = () => {
     const total = sourceContactCount + sourceConsultationCount + sourceChatbotCount || 1;
     const segments = [
-      { label: locale === 'es' ? 'Formulario de Contacto' : 'Contact Form', count: sourceContactCount, color: '#0F4C81' },
-      { label: locale === 'es' ? 'Consulta Técnica' : 'Consultation', count: sourceConsultationCount, color: '#38BDF8' },
+      { label: locale === 'es' ? 'Formulario de Contacto' : 'Contact Form', count: sourceContactCount, color: '#145BFF' },
+      { label: locale === 'es' ? 'Consulta Técnica' : 'Consultation', count: sourceConsultationCount, color: '#25B5FF' },
       { label: locale === 'es' ? 'Chatbot con IA' : 'AI Chatbot', count: sourceChatbotCount, color: '#34D399' }
     ];
 
@@ -299,7 +299,7 @@ export default function AnalyticsPage() {
               <select
                 value={timeFilter}
                 onChange={(e) => setTimeFilter(e.target.value as any)}
-                className="appearance-none bg-white border border-slate-200 rounded-xl pl-3 pr-8 py-2 text-xs font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 focus:border-[#0F4C81] shadow-sm cursor-pointer"
+                className="appearance-none bg-white border border-slate-200 rounded-xl pl-3 pr-8 py-2 text-xs font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 focus:border-royal-blue shadow-sm cursor-pointer"
               >
                 <option value="monthly">{locale === 'es' ? 'Mensual' : 'Monthly'}</option>
                 <option value="quarterly">{locale === 'es' ? 'Trimestral' : 'Quarterly'}</option>
@@ -312,7 +312,7 @@ export default function AnalyticsPage() {
 
         {loading ? (
           <div className="h-96 flex items-center justify-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#0F4C81]"></div>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-royal-blue"></div>
           </div>
         ) : (
           <div className="space-y-6">
@@ -321,7 +321,7 @@ export default function AnalyticsPage() {
               <div className="bg-white p-5 border border-slate-200 rounded-2xl shadow-sm text-left relative overflow-hidden flex flex-col justify-between h-28">
                 <div className="flex justify-between items-center">
                   <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Leads</span>
-                  <div className="p-1.5 rounded-lg bg-blue-50 text-[#0F4C81]">
+                  <div className="p-1.5 rounded-lg bg-blue-50 text-royal-blue">
                     <FileText className="w-4 h-4" />
                   </div>
                 </div>
@@ -391,8 +391,8 @@ export default function AnalyticsPage() {
                   <svg className="w-full h-48 overflow-visible" viewBox="0 0 500 200">
                     <defs>
                       <linearGradient id="leadGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#0F4C81" stopOpacity="0.2" />
-                        <stop offset="100%" stopColor="#0F4C81" stopOpacity="0.0" />
+                        <stop offset="0%" stopColor="#145BFF" stopOpacity="0.2" />
+                        <stop offset="100%" stopColor="#145BFF" stopOpacity="0.0" />
                       </linearGradient>
                     </defs>
                     
@@ -412,7 +412,7 @@ export default function AnalyticsPage() {
                     <path
                       d={drawLinePath(monthlyPoints.map(m => m.leads), 500, 200)}
                       fill="none"
-                      stroke="#0F4C81"
+                      stroke="#145BFF"
                       strokeWidth="3.5"
                       strokeLinecap="round"
                     />
@@ -424,8 +424,8 @@ export default function AnalyticsPage() {
                       const y = 20 + 160 - (pt.leads / maxVal) * 160;
                       return (
                         <g key={idx} className="group/dot cursor-pointer">
-                          <circle cx={x} cy={y} r="5" fill="#0F4C81" stroke="#FFFFFF" strokeWidth="2" />
-                          <circle cx={x} cy={y} r="10" fill="#0F4C81" opacity="0" className="hover:opacity-20 transition-opacity" />
+                          <circle cx={x} cy={y} r="5" fill="#145BFF" stroke="#FFFFFF" strokeWidth="2" />
+                          <circle cx={x} cy={y} r="10" fill="#145BFF" opacity="0" className="hover:opacity-20 transition-opacity" />
                           {/* Tooltip */}
                           <g className="opacity-0 group-hover/dot:opacity-100 transition-opacity duration-200">
                             <rect x={x - 20} y={y - 32} width="40" height="20" rx="6" fill="#0F172A" />
@@ -518,7 +518,7 @@ export default function AnalyticsPage() {
                   {/* Total Conversion Rate Metric */}
                   <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-sm">
                     <div className="flex items-center gap-2 font-semibold text-slate-600">
-                      <Percent className="w-4 h-4 text-[#0F4C81]" />
+                      <Percent className="w-4 h-4 text-royal-blue" />
                       <span>{locale === 'es' ? 'Tasa de Conversión Total (Visitas -> Clientes)' : 'Total Conversion Rate (Visits -> Clients)'}</span>
                     </div>
                     <span className="font-bold text-slate-900 text-base">
@@ -560,8 +560,8 @@ export default function AnalyticsPage() {
                             width={barWidth}
                             height={barHeight}
                             rx="5"
-                            fill="#38BDF8"
-                            className="transition-all duration-300 hover:fill-[#0F4C81]"
+                            fill="#25B5FF"
+                            className="transition-all duration-300 hover:fill-[#145BFF]"
                           />
                           {/* Tooltip */}
                           <g className="opacity-0 group-hover/bar:opacity-100 transition-opacity duration-200">

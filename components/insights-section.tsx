@@ -50,7 +50,7 @@ export function InsightsSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div className="max-w-2xl">
-            <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">KNOWLEDGE & INSIGHTS</h2>
+            <h2 className="text-xs font-bold text-royal-blue tracking-widest uppercase mb-3">KNOWLEDGE & INSIGHTS</h2>
             <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-none">
               Thought Leadership
             </h3>
@@ -61,7 +61,7 @@ export function InsightsSection() {
           <div>
             <a
               href="/insights"
-              className="inline-flex items-center justify-center h-10 px-5 bg-[#0F4C81] text-white rounded-xl font-bold text-xs hover:bg-[#0c3c66] transition-colors duration-200"
+              className="inline-flex items-center justify-center h-10 px-5 bg-royal-blue text-white rounded-xl font-bold text-xs hover:bg-[#0c3c66] transition-colors duration-200"
             >
               <span>Explore All Insights</span>
             </a>
@@ -73,10 +73,10 @@ export function InsightsSection() {
           {/* Featured Article Card */}
           <div className="lg:col-span-7 rounded-2xl border border-slate-200 bg-slate-50 p-8 sm:p-10 flex flex-col justify-between group">
             <div className="space-y-4">
-              <span className="text-[10px] font-extrabold text-[#0F4C81] uppercase tracking-widest block">
+              <span className="text-[10px] font-extrabold text-royal-blue uppercase tracking-widest block">
                 {featuredArticle.category}
               </span>
-              <h4 className="text-2xl font-extrabold text-slate-900 tracking-tight leading-tight group-hover:text-[#0F4C81] transition-colors">
+              <h4 className="text-2xl font-extrabold text-slate-900 tracking-tight leading-tight group-hover:text-royal-blue transition-colors">
                 <a href={featuredArticle.href}>{featuredArticle.title}</a>
               </h4>
               <p className="text-sm text-slate-600 leading-relaxed font-medium line-clamp-4">
@@ -97,7 +97,7 @@ export function InsightsSection() {
               </div>
               <a
                 href={featuredArticle.href}
-                className="inline-flex items-center text-[#0F4C81] group-hover:text-[#0c3c66]"
+                className="inline-flex items-center text-royal-blue group-hover:text-[#0c3c66]"
               >
                 <span>Read Brief</span>
                 <ArrowRight size={14} className="ml-1" />
@@ -113,10 +113,10 @@ export function InsightsSection() {
                 className="group relative p-6 rounded-2xl border border-slate-200 bg-white hover:border-slate-350 flex flex-col justify-between h-40 shadow-sm"
               >
                 <div>
-                  <span className="text-[9px] font-extrabold text-[#0F4C81] uppercase tracking-widest block mb-2">
+                  <span className="text-[9px] font-extrabold text-royal-blue uppercase tracking-widest block mb-2">
                     {art.category}
                   </span>
-                  <h4 className="text-[15px] font-bold text-slate-900 tracking-tight leading-snug group-hover:text-[#0F4C81] transition-colors line-clamp-2">
+                  <h4 className="text-[15px] font-bold text-slate-900 tracking-tight leading-snug group-hover:text-royal-blue transition-colors line-clamp-2">
                     <a href={art.href}>{art.title}</a>
                   </h4>
                 </div>
@@ -132,7 +132,7 @@ export function InsightsSection() {
                       <span>{art.readTime}</span>
                     </span>
                   </div>
-                  <a href={art.href} className="text-[#0F4C81] group-hover:text-[#0c3c66]">
+                  <a href={art.href} className="text-royal-blue group-hover:text-[#0c3c66]">
                     <ArrowRight size={14} />
                   </a>
                 </div>

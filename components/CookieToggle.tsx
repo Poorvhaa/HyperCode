@@ -24,8 +24,8 @@ export function CookieToggle({
       aria-label={ariaLabel}
       disabled={disabled}
       onClick={() => onChange(!checked)}
-      className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-205 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#0F4C81] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed outline-none ${
-        checked ? 'bg-[#0F4C81]' : 'bg-slate-200'
+      className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-205 ease-in-out focus:outline-none focus:ring-2 focus:ring-royal-blue focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed outline-none ${
+        checked ? 'bg-royal-blue' : 'bg-slate-200'
       }`}
     >
       <span

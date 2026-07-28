@@ -159,8 +159,8 @@ export function ServicesSection() {
         
         {/* Title Block */}
         <div className="max-w-3xl mb-20 space-y-4">
-          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C81] tracking-widest uppercase">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#0F4C81]" />
+          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-royal-blue tracking-widest uppercase">
+            <span className="w-1.5 h-1.5 rounded-full bg-royal-blue" />
             {curr.badge}
           </span>
           <h2 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">
@@ -179,7 +179,7 @@ export function ServicesSection() {
             return (
               <motion.div
                 key={service.key}
-                className="group flex flex-col justify-between rounded-[24px] border border-slate-250 bg-white shadow-sm hover:shadow-xl hover:border-[#0F4C81] transition-all duration-300 overflow-hidden min-h-[420px]"
+                className="group flex flex-col justify-between rounded-[24px] border border-slate-250 bg-white shadow-sm hover:shadow-xl hover:border-royal-blue transition-all duration-300 overflow-hidden min-h-[420px]"
                 whileHover={{ y: -6 }}
               >
                 {/* Header Image & Badge */}
@@ -193,7 +193,7 @@ export function ServicesSection() {
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-slate-900/20 to-transparent" />
                   
                   {/* Floating Icon - 48px Size */}
-                  <div className="absolute top-4 left-4 w-12 h-12 rounded-xl bg-white text-[#0F4C81] flex items-center justify-center shadow-md border border-slate-100 group-hover:scale-110 transition-transform">
+                  <div className="absolute top-4 left-4 w-12 h-12 rounded-xl bg-white text-royal-blue flex items-center justify-center shadow-md border border-slate-100 group-hover:scale-110 transition-transform">
                     <Icon size={24} />
                   </div>
                 </div>
@@ -201,7 +201,7 @@ export function ServicesSection() {
                 {/* Content - 32px Padding */}
                 <div className="p-8 flex-1 flex flex-col justify-between space-y-6">
                   <div className="space-y-3">
-                    <h3 className="text-[22px] font-bold text-slate-900 tracking-tight group-hover:text-[#0F4C81] transition-colors leading-[1.2]">
+                    <h3 className="text-[22px] font-bold text-slate-900 tracking-tight group-hover:text-royal-blue transition-colors leading-[1.2]">
                       {itemTranslation.title}
                     </h3>
                     
@@ -214,7 +214,7 @@ export function ServicesSection() {
                   <div className="pt-2 border-t border-slate-100">
                     <Link
                       href={service.href}
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C81] hover:gap-2.5 transition-all group/link"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-royal-blue hover:gap-2.5 transition-all group/link"
                     >
                       <span>{curr.explore}</span>
                       <ArrowRight size={14} className="group-hover/link:translate-x-0.5 transition-transform" />

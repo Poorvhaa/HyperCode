@@ -178,8 +178,8 @@ export function TechnologyExpertise() {
         
         {/* Section Header */}
         <div className="text-left max-w-3xl mb-16 space-y-4">
-          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C81] tracking-widest uppercase">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#0F4C81]" />
+          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-royal-blue tracking-widest uppercase">
+            <span className="w-1.5 h-1.5 rounded-full bg-royal-blue" />
             {activeTranslation.badge}
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
@@ -201,11 +201,11 @@ export function TechnologyExpertise() {
                 onClick={() => setActiveTab(tabKey)}
                 className={`flex-grow md:flex-initial flex items-center justify-center gap-2 px-5 py-3 text-xs sm:text-sm rounded-xl font-bold transition-all duration-300 cursor-pointer ${
                   isActive
-                    ? "bg-white text-[#0F4C81] border border-slate-200 shadow-md"
+                    ? "bg-white text-royal-blue border border-slate-200 shadow-md"
                     : "text-slate-600 hover:text-slate-900 hover:bg-white/40"
                 }`}
               >
-                <TabIcon size={16} className={isActive ? "text-[#0F4C81]" : "text-slate-400"} />
+                <TabIcon size={16} className={isActive ? "text-royal-blue" : "text-slate-400"} />
                 {activeTranslation.tabs[tabKey]}
               </button>
             );
@@ -217,9 +217,9 @@ export function TechnologyExpertise() {
           {activeBadges.map((badgeText, idx) => (
             <span
               key={idx}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-[10px] sm:text-xs font-bold bg-[#0F4C81]/5 text-[#0F4C81] border border-[#0F4C81]/10"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-[10px] sm:text-xs font-bold bg-royal-blue/5 text-royal-blue border border-royal-blue/10"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#0F4C81]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-royal-blue" />
               {badgeText}
             </span>
           ))}
@@ -242,19 +242,19 @@ export function TechnologyExpertise() {
                 return (
                   <div
                     key={idx}
-                    className="flex items-center gap-4.5 p-6 bg-white border border-slate-200 rounded-2xl transition-all duration-300 shadow-sm hover:-translate-y-1 hover:border-[#0F4C81] hover:shadow-lg group relative overflow-hidden min-h-[110px]"
+                    className="flex items-center gap-4.5 p-6 bg-white border border-slate-200 rounded-2xl transition-all duration-300 shadow-sm hover:-translate-y-1 hover:border-royal-blue hover:shadow-lg group relative overflow-hidden min-h-[110px]"
                   >
                     {/* Hover border glow highlight */}
-                    <div className="absolute inset-x-0 bottom-0 h-[2.5px] bg-[#0F4C81] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute inset-x-0 bottom-0 h-[2.5px] bg-royal-blue opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     
                     {/* Icon Container */}
-                    <div className="w-12 h-12 rounded-xl bg-slate-50 border border-slate-250 flex items-center justify-center text-slate-500 group-hover:text-[#0F4C81] group-hover:bg-[#0F4C81]/5 group-hover:border-[#0F4C81]/15 transition-all duration-300 flex-shrink-0">
+                    <div className="w-12 h-12 rounded-xl bg-slate-50 border border-slate-250 flex items-center justify-center text-slate-500 group-hover:text-royal-blue group-hover:bg-royal-blue/5 group-hover:border-royal-blue/15 transition-all duration-300 flex-shrink-0">
                       <IconComponent size={22} className="group-hover:scale-110 transition-transform duration-300" />
                     </div>
                     
                     {/* Content */}
                     <div className="space-y-1">
-                      <h4 className="text-sm sm:text-base font-bold text-slate-900 group-hover:text-[#0F4C81] transition-colors duration-300">
+                      <h4 className="text-sm sm:text-base font-bold text-slate-900 group-hover:text-royal-blue transition-colors duration-300">
                         {item.name}
                       </h4>
                       <p className="text-xs text-slate-500 font-semibold leading-relaxed">

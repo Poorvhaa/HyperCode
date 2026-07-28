@@ -29,7 +29,7 @@ export function HumanCenteredSection() {
           {/* Left copy column */}
           <div className="lg:col-span-6 space-y-6">
             <div>
-              <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">HUMAN-CENTERED CONSULTING</h2>
+              <h2 className="text-xs font-bold text-royal-blue tracking-widest uppercase mb-3">HUMAN-CENTERED CONSULTING</h2>
               <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-none mb-4">
                 Technology Powered by People
               </h3>
@@ -47,7 +47,7 @@ export function HumanCenteredSection() {
                     key={idx}
                     className="p-5 rounded-2xl border border-slate-200 bg-white shadow-sm flex gap-4"
                   >
-                    <div className="p-2 bg-slate-50 border border-slate-100 rounded-lg text-[#0F4C81] flex-shrink-0 flex items-center justify-center h-10 w-10">
+                    <div className="p-2 bg-slate-50 border border-slate-100 rounded-lg text-royal-blue flex-shrink-0 flex items-center justify-center h-10 w-10">
                       <Icon size={18} />
                     </div>
                     <div>
@@ -83,7 +83,7 @@ export function HumanCenteredSection() {
                   </g>
 
                   {/* Core Node */}
-                  <circle cx="150" cy="100" r="30" fill="#0F4C81" />
+                  <circle cx="150" cy="100" r="30" fill="#145BFF" />
                   
                   {/* Outer Nodes */}
                   <circle cx="50" cy="50" r="20" fill="#f8fafc" stroke="#e2e8f0" strokeWidth="1.5" />

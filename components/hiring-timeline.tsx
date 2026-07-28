@@ -114,7 +114,7 @@ export function HiringTimeline() {
           {/* Connector Line */}
           <div className="absolute left-10 right-10 top-6 h-0.5 bg-slate-200 -z-10">
             <div
-              className="h-full bg-[#0F4C81] transition-all duration-500 ease-in-out"
+              className="h-full bg-royal-blue transition-all duration-500 ease-in-out"
               style={{ width: `${(activeStep / (steps.length - 1)) * 100}%` }}
             />
           </div>
@@ -133,9 +133,9 @@ export function HiringTimeline() {
                 <div
                   className={`w-12 h-12 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
                     isActive
-                      ? 'bg-[#0F4C81] border-[#0F4C81] text-white shadow-md shadow-slate-100 scale-110'
+                      ? 'bg-royal-blue border-royal-blue text-white shadow-md shadow-slate-100 scale-110'
                       : isCompleted
-                      ? 'bg-slate-50 border-[#0F4C81] text-[#0F4C81]'
+                      ? 'bg-slate-50 border-royal-blue text-royal-blue'
                       : 'bg-white border-slate-200 text-slate-400 group-hover:border-slate-300 group-hover:text-slate-600'
                   }`}
                 >
@@ -159,7 +159,7 @@ export function HiringTimeline() {
         {/* Selected Step Detail Display */}
         <div className="max-w-3xl mx-auto">
           <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm flex items-start gap-6 transition-all duration-300 hover:border-slate-300">
-            <div className="w-14 h-14 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-[#0F4C81] flex-shrink-0">
+            <div className="w-14 h-14 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-royal-blue flex-shrink-0">
               {(() => {
                 const ActiveIcon = icons[activeStep] || FileText;
                 return <ActiveIcon size={24} />;
@@ -168,7 +168,7 @@ export function HiringTimeline() {
             
             <div className="space-y-2 text-left">
               <div className="flex items-center gap-2.5">
-                <span className="text-[10px] font-bold text-[#0F4C81] tracking-widest uppercase bg-slate-50 border border-slate-100 px-2.5 py-1 rounded-md">
+                <span className="text-[10px] font-bold text-royal-blue tracking-widest uppercase bg-slate-50 border border-slate-100 px-2.5 py-1 rounded-md">
                   {stepLabel} {steps[activeStep].number}
                 </span>
                 <h4 className="text-lg font-bold text-slate-900">
@@ -203,12 +203,12 @@ export function HiringTimeline() {
               >
                 <div className="flex items-center gap-4">
                   <div className={`w-10 h-10 rounded-lg flex items-center justify-center border ${
-                    isOpen ? 'bg-[#0F4C81] border-[#0F4C81] text-white' : 'bg-slate-50 border-slate-100 text-[#0F4C81]'
+                    isOpen ? 'bg-royal-blue border-royal-blue text-white' : 'bg-slate-50 border-slate-100 text-royal-blue'
                   }`}>
                     <Icon size={16} />
                   </div>
                   <div>
-                    <span className="text-[9px] font-bold text-[#0F4C81] tracking-widest uppercase block">
+                    <span className="text-[9px] font-bold text-royal-blue tracking-widest uppercase block">
                       {stepLabel} {step.number}
                     </span>
                     <span className="text-sm font-bold text-slate-900">{step.title}</span>

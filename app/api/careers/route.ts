@@ -195,7 +195,7 @@ export async function POST(req: Request) {
         // A. Recruiter Alert Email
         const adminEmailHtml = `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc;">
-            <div style="background-color: #0f4c81; color: white; padding: 15px; border-radius: 6px; text-align: center;">
+            <div style="background-color: #145BFF; color: white; padding: 15px; border-radius: 6px; text-align: center;">
               <h2 style="margin: 0; font-size: 20px;">New Candidate Application</h2>
               <p style="margin: 5px 0 0 0; font-size: 13px;">Position: <strong>${position}</strong></p>
             </div>
@@ -223,11 +223,11 @@ export async function POST(req: Request) {
                 </tr>
                 <tr>
                   <td style="padding: 8px 0; font-weight: bold; color: #475569;">Primary Skills:</td>
-                  <td style="padding: 8px 0; font-weight: bold; color: #0f4c81;">${skills || 'Not specified'}</td>
+                  <td style="padding: 8px 0; font-weight: bold; color: #145BFF;">${skills || 'Not specified'}</td>
                 </tr>
                 <tr>
                   <td style="padding: 8px 0; font-weight: bold; color: #475569;">Resume File:</td>
-                  <td style="padding: 8px 0;"><a href="${resumeUrl}" target="_blank" style="background-color: #0f4c81; color: white; padding: 4px 10px; text-decoration: none; border-radius: 4px; font-size: 11px; font-weight: bold;">Download Resume</a></td>
+                  <td style="padding: 8px 0;"><a href="${resumeUrl}" target="_blank" style="background-color: #145BFF; color: white; padding: 4px 10px; text-decoration: none; border-radius: 4px; font-size: 11px; font-weight: bold;">Download Resume</a></td>
                 </tr>
               </table>
               <div style="background-color: white; border: 1px solid #cbd5e1; border-radius: 6px; padding: 15px; margin-top: 10px; white-space: pre-wrap;">
@@ -250,7 +250,7 @@ export async function POST(req: Request) {
         const userEmailHtml = isSpanish ? `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;">
             <div style="text-align: center; padding-bottom: 20px;">
-              <h2 style="color: #0f4c81; margin: 0;">HyperCode</h2>
+              <h2 style="color: #145BFF; margin: 0;">HyperCode</h2>
               <p style="color: #64748b; font-size: 14px; margin: 5px 0 0 0;">Soluciones de Datos, Tecnología y Talento</p>
             </div>
             <div style="color: #1e293b; line-height: 1.6; border-top: 1px solid #e2e8f0; padding-top: 20px;">
@@ -266,14 +266,14 @@ export async function POST(req: Request) {
               </div>
               <p>Agradecemos su interés en formar parte de nuestro equipo de ingeniería.</p>
               <p>Atentamente,</p>
-              <p style="margin: 0; font-weight: bold; color: #0f4c81;">Adquisición de Talento de HyperCode</p>
+              <p style="margin: 0; font-weight: bold; color: #145BFF;">Adquisición de Talento de HyperCode</p>
               <p style="margin: 0; font-size: 12px; color: #64748b;">Schaumburg, IL</p>
             </div>
           </div>
         ` : `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;">
             <div style="text-align: center; padding-bottom: 20px;">
-              <h2 style="color: #0f4c81; margin: 0;">HyperCode</h2>
+              <h2 style="color: #145BFF; margin: 0;">HyperCode</h2>
               <p style="color: #64748b; font-size: 14px; margin: 5px 0 0 0;">Data, Technology, & Talent Solutions</p>
             </div>
             <div style="color: #1e293b; line-height: 1.6; border-top: 1px solid #e2e8f0; padding-top: 20px;">
@@ -289,7 +289,7 @@ export async function POST(req: Request) {
               </div>
               <p>We appreciate your interest in building your career with HyperCode.</p>
               <p>Best regards,</p>
-              <p style="margin: 0; font-weight: bold; color: #0f4c81;">HyperCode Talent Acquisition Squad</p>
+              <p style="margin: 0; font-weight: bold; color: #145BFF;">HyperCode Talent Acquisition Squad</p>
               <p style="margin: 0; font-size: 12px; color: #64748b;">Schaumburg, IL</p>
             </div>
           </div>

@@ -280,7 +280,7 @@ export default async function StaffingPage({ params }: Props) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="max-w-3xl space-y-4">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
-              {activeTrans.title} <span className="text-[#0F4C81]">{activeTrans.titleHighlight}</span>
+              {activeTrans.title} <span className="text-royal-blue">{activeTrans.titleHighlight}</span>
             </h1>
             <p className="text-lg sm:text-xl text-slate-600 font-medium leading-relaxed">
               {activeTrans.subtitle}
@@ -314,7 +314,7 @@ export default async function StaffingPage({ params }: Props) {
                     <div className="pt-4 border-t border-slate-200 space-y-3">
                       {solution.benefits.map((benefit, i) => (
                         <div key={i} className="flex items-center gap-3">
-                          <CheckCircle size={16} className="text-[#0F4C81] flex-shrink-0" />
+                          <CheckCircle size={16} className="text-royal-blue flex-shrink-0" />
                           <span className="text-xs sm:text-sm font-semibold text-slate-600">{benefit}</span>
                         </div>
                       ))}
@@ -324,7 +324,7 @@ export default async function StaffingPage({ params }: Props) {
                   <div className="pt-6">
                     <Link
                       href={solution.path}
-                      className="inline-flex items-center justify-center h-10 px-5 bg-white border border-[#0F4C81] hover:bg-slate-50 text-[#0F4C81] font-bold text-xs uppercase tracking-wider rounded-md transition-colors duration-200 shadow-sm hover:shadow-md"
+                      className="inline-flex items-center justify-center h-10 px-5 bg-white border border-royal-blue hover:bg-slate-50 text-royal-blue font-bold text-xs uppercase tracking-wider rounded-md transition-colors duration-200 shadow-sm hover:shadow-md"
                     >
                       <span>{activeTrans.learnMore}</span>
                       <ArrowRight size={14} className="ml-1.5" />
@@ -341,7 +341,7 @@ export default async function StaffingPage({ params }: Props) {
       <section className="py-24 bg-white border-t border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mb-16">
-            <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">
+            <h2 className="text-xs font-bold text-royal-blue tracking-widest uppercase mb-3">
               {activeTrans.capabilitiesTitle}
             </h2>
             <h3 className="text-3xl font-extrabold text-slate-900 tracking-tight leading-tight">
@@ -355,7 +355,7 @@ export default async function StaffingPage({ params }: Props) {
                 key={idx}
                 className="p-6 rounded-2xl border border-slate-200 bg-white hover:border-slate-350 transition-all duration-300 shadow-sm flex gap-4 items-start"
               >
-                <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 text-[#0F4C81] flex items-center justify-center flex-shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 text-royal-blue flex items-center justify-center flex-shrink-0">
                   <IconComponent name={cap.iconName} size={20} />
                 </div>
                 <div className="space-y-1.5">
@@ -374,7 +374,7 @@ export default async function StaffingPage({ params }: Props) {
       <section className="py-24 bg-slate-50 border-t border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mb-12">
-            <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">{activeTrans.expertiseTitle}</h2>
+            <h2 className="text-xs font-bold text-royal-blue tracking-widest uppercase mb-3">{activeTrans.expertiseTitle}</h2>
             <h3 className="text-3xl font-extrabold text-slate-900 tracking-tight leading-none">{activeTrans.expertiseSubtitle}</h3>
           </div>
 
@@ -395,7 +395,7 @@ export default async function StaffingPage({ params }: Props) {
       <section className="py-24 bg-white">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-16">
-            <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">{activeTrans.processTitle}</h2>
+            <h2 className="text-xs font-bold text-royal-blue tracking-widest uppercase mb-3">{activeTrans.processTitle}</h2>
             <h3 className="text-3xl font-extrabold text-slate-900 tracking-tight leading-none">{activeTrans.processSubtitle}</h3>
           </div>
 
@@ -404,7 +404,7 @@ export default async function StaffingPage({ params }: Props) {
               {activeTrans.processSteps.map((item, i) => (
                 <div key={i} className="flex gap-6 items-start relative">
                   <div className="flex-shrink-0 z-10">
-                    <div className="w-10 h-10 rounded-xl bg-[#0F4C81] flex items-center justify-center text-white font-bold text-sm">
+                    <div className="w-10 h-10 rounded-xl bg-royal-blue flex items-center justify-center text-white font-bold text-sm">
                       {i + 1}
                     </div>
                   </div>
@@ -428,7 +428,7 @@ export default async function StaffingPage({ params }: Props) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {activeTrans.whyItems.map((item, index) => (
               <div key={index} className="space-y-3">
-                <div className="w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-[#0F4C81]">
+                <div className="w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-royal-blue">
                   <Users size={20} />
                 </div>
                 <h3 className="text-lg font-bold text-slate-900">{item.title}</h3>
@@ -451,7 +451,7 @@ export default async function StaffingPage({ params }: Props) {
           <div>
             <Link
               href="/consultation"
-              className="inline-flex items-center justify-center h-11 px-7 bg-[#0F4C81] hover:bg-[#0A365D] text-white font-bold text-xs uppercase tracking-wider rounded-md transition-colors duration-200 shadow-sm hover:shadow-md"
+              className="PrimaryBrandButton"
             >
               {activeTrans.ctaBtn}
             </Link>

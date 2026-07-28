@@ -99,8 +99,8 @@ export function WhyHypercodeSection() {
         
         {/* Title Block */}
         <div className="max-w-3xl mb-20 space-y-4">
-          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C81] tracking-widest uppercase">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#0F4C81]" />
+          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-royal-blue tracking-widest uppercase">
+            <span className="w-1.5 h-1.5 rounded-full bg-royal-blue" />
             {curr.badge}
           </span>
           <h2 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">
@@ -118,7 +118,7 @@ export function WhyHypercodeSection() {
             
             {/* Timeline comparison */}
             <div className="bg-[#F8FAFC] border border-slate-200 rounded-[24px] p-8 space-y-6 shadow-sm">
-              <span className="text-[10px] font-extrabold text-[#0F4C81] tracking-widest uppercase block">
+              <span className="text-[10px] font-extrabold text-royal-blue tracking-widest uppercase block">
                 {curr.timelineHeader}
               </span>
               
@@ -141,11 +141,11 @@ export function WhyHypercodeSection() {
               <div className="space-y-2">
                 <div className="flex justify-between items-center text-xs font-bold uppercase tracking-wider text-slate-800">
                   <span>{curr.accelerated}</span>
-                  <span className="text-[#0F4C81] font-extrabold">4-6 Weeks</span>
+                  <span className="text-royal-blue font-extrabold">4-6 Weeks</span>
                 </div>
                 <div className="h-3 w-full bg-slate-200 rounded-full overflow-hidden">
                   <motion.div
-                    className="h-full bg-[#0F4C81]"
+                    className="h-full bg-royal-blue"
                     initial={{ width: 0 }}
                     whileInView={{ width: '25%' }}
                     viewport={{ once: true }}
@@ -166,7 +166,7 @@ export function WhyHypercodeSection() {
                   <div key={index} className={`p-5 flex justify-between items-center gap-4 ${row.highlight ? 'bg-blue-50/20' : ''}`}>
                     <div className="text-xs font-bold text-slate-700">{row.metric}</div>
                     <div className="flex items-center gap-6 text-right">
-                      <div className="text-xs font-extrabold text-[#0F4C81] flex items-center gap-1.5">
+                      <div className="text-xs font-extrabold text-royal-blue flex items-center gap-1.5">
                         <CheckCircle2 size={12} className="text-emerald-500" />
                         {row.hc}
                       </div>
@@ -189,14 +189,14 @@ export function WhyHypercodeSection() {
               return (
                 <motion.div
                   key={index}
-                  className="premium-card flex flex-col justify-between p-8 md:p-10 rounded-[24px] bg-white border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-[#0F4C81]/20 transition-all duration-300"
+                  className="premium-card flex flex-col justify-between p-8 md:p-10 rounded-[24px] bg-white border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-royal-blue/20 transition-all duration-300"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                 >
                   <div className="flex flex-col h-full space-y-6">
-                    <div className="w-12 h-12 rounded-xl bg-slate-50 border border-slate-200 text-[#0F4C81] flex items-center justify-center flex-shrink-0">
+                    <div className="w-12 h-12 rounded-xl bg-slate-50 border border-slate-200 text-royal-blue flex items-center justify-center flex-shrink-0">
                       <Icon size={24} />
                     </div>
                     <div className="flex flex-col flex-grow space-y-3">

@@ -86,7 +86,7 @@ export function StaffingExperience() {
     <section className="py-24 bg-slate-50 border-t border-b border-slate-100 text-left">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-20">
-          <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">STAFFING SOLUTIONS</h2>
+          <h2 className="text-xs font-bold text-royal-blue tracking-widest uppercase mb-3">STAFFING SOLUTIONS</h2>
           <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-none">
             Scale With Strategic Talent
           </h3>
@@ -107,7 +107,7 @@ export function StaffingExperience() {
                     key={idx}
                     className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm"
                   >
-                    <div className="w-10 h-10 rounded-lg bg-slate-50 border border-slate-100 text-[#0F4C81] flex items-center justify-center mb-4">
+                    <div className="w-10 h-10 rounded-lg bg-slate-50 border border-slate-100 text-royal-blue flex items-center justify-center mb-4">
                       <Icon size={18} />
                     </div>
                     <h5 className="text-sm font-bold text-slate-900 mb-1">{offer.title}</h5>
@@ -119,7 +119,7 @@ export function StaffingExperience() {
             <div className="pt-2">
               <Link
                 href="/consultation?service=IT%20Staffing"
-                className="inline-flex items-center text-xs font-bold text-[#0F4C81] hover:text-[#0c3c66] transition-colors group"
+                className="inline-flex items-center text-xs font-bold text-royal-blue hover:text-[#0c3c66] transition-colors group"
               >
                 <span>Request talent from our coordinators</span>
                 <ArrowRight size={14} className="ml-1.5" />
@@ -151,7 +151,7 @@ export function StaffingExperience() {
                     <div
                       className={`w-9 h-9 rounded-xl border flex items-center justify-center transition-all duration-200 ${
                         isActive
-                          ? 'bg-[#0F4C81] text-white border-[#0F4C81]'
+                          ? 'bg-royal-blue text-white border-royal-blue'
                           : 'bg-slate-50 text-slate-400 border-slate-200 hover:border-slate-350'
                       }`}
                     >
@@ -159,7 +159,7 @@ export function StaffingExperience() {
                     </div>
                     <span
                       className={`text-[9px] font-bold tracking-wider uppercase mt-1.5 transition-colors ${
-                        isActive ? 'text-[#0F4C81]' : 'text-slate-500'
+                        isActive ? 'text-royal-blue' : 'text-slate-500'
                       }`}
                     >
                       {step.title}
@@ -174,7 +174,7 @@ export function StaffingExperience() {
               <div className="space-y-3">
                 <div className="flex justify-between items-start flex-wrap gap-2 text-left">
                   <div>
-                    <span className="text-[9px] font-bold text-[#0F4C81] uppercase tracking-widest block mb-0.5">
+                    <span className="text-[9px] font-bold text-royal-blue uppercase tracking-widest block mb-0.5">
                       STEP {activeStep + 1} Pipeline
                     </span>
                     <h5 className="text-base font-bold text-slate-900">

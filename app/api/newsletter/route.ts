@@ -92,7 +92,7 @@ export async function POST(req: Request) {
         const confirmEmailHtml = isSpanish ? `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;">
             <div style="text-align: center; padding-bottom: 20px;">
-              <h2 style="color: #0f4c81; margin: 0;">HyperCode</h2>
+              <h2 style="color: #145BFF; margin: 0;">HyperCode</h2>
               <p style="color: #64748b; font-size: 14px; margin: 5px 0 0 0;">Soluciones de Datos, Tecnología y Talento</p>
             </div>
             <div style="color: #1e293b; line-height: 1.6; border-top: 1px solid #e2e8f0; padding-top: 20px;">
@@ -102,14 +102,14 @@ export async function POST(req: Request) {
               <p>Puedes cancelar tu suscripción o gestionar tus preferencias en cualquier momento utilizando los enlaces que se encuentran al final de nuestros correos.</p>
               <p>¡Bienvenido a la comunidad!</p>
               <p>Atentamente,</p>
-              <p style="margin: 0; font-weight: bold; color: #0f4c81;">El equipo editorial de HyperCode</p>
+              <p style="margin: 0; font-weight: bold; color: #145BFF;">El equipo editorial de HyperCode</p>
               <p style="margin: 0; font-size: 12px; color: #64748b;">Schaumburg, IL</p>
             </div>
           </div>
         ` : `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;">
             <div style="text-align: center; padding-bottom: 20px;">
-              <h2 style="color: #0f4c81; margin: 0;">HyperCode</h2>
+              <h2 style="color: #145BFF; margin: 0;">HyperCode</h2>
               <p style="color: #64748b; font-size: 14px; margin: 5px 0 0 0;">Data, Technology, & Talent Solutions</p>
             </div>
             <div style="color: #1e293b; line-height: 1.6; border-top: 1px solid #e2e8f0; padding-top: 20px;">
@@ -119,7 +119,7 @@ export async function POST(req: Request) {
               <p>You can unsubscribe or manage your preferences at any time using the links at the bottom of our emails.</p>
               <p>Welcome to the community!</p>
               <p>Best regards,</p>
-              <p style="margin: 0; font-weight: bold; color: #0f4c81;">HyperCode Editorial Team</p>
+              <p style="margin: 0; font-weight: bold; color: #145BFF;">HyperCode Editorial Team</p>
               <p style="margin: 0; font-size: 12px; color: #64748b;">Schaumburg, IL</p>
             </div>
           </div>

@@ -185,7 +185,7 @@ export default function AdminOverviewPage() {
   if (authLoading || (session && !userProfile)) {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#0F4C81]"></div>
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-royal-blue"></div>
       </div>
     );
   }
@@ -240,7 +240,7 @@ export default function AdminOverviewPage() {
 
         {loading ? (
           <div className="h-[400px] bg-white border border-slate-200 rounded-2xl flex items-center justify-center shadow-sm">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#0F4C81]"></div>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-royal-blue"></div>
           </div>
         ) : (
           <div className="space-y-6">
@@ -250,13 +250,13 @@ export default function AdminOverviewPage() {
               <div onClick={() => router.push(`/admin/leads`)} className="bg-white p-5 border border-slate-200 rounded-2xl shadow-sm hover:shadow-md hover:border-slate-300 transition-all text-left flex flex-col justify-between h-28 cursor-pointer group">
                 <div className="flex justify-between items-center">
                   <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Leads</span>
-                  <div className="p-1.5 rounded-lg bg-blue-50 text-[#0F4C81]">
+                  <div className="p-1.5 rounded-lg bg-blue-50 text-royal-blue">
                     <FileText className="w-4 h-4" />
                   </div>
                 </div>
                 <div className="flex items-baseline gap-2 mt-2">
                   <span className="text-2xl font-bold text-slate-900">{totalLeads}</span>
-                  <span className="text-[10px] text-slate-400 group-hover:text-[#0F4C81] flex items-center font-semibold">
+                  <span className="text-[10px] text-slate-400 group-hover:text-royal-blue flex items-center font-semibold">
                     {locale === 'es' ? 'Ver todos' : 'View all'} <ChevronRight className="w-3 h-3 ml-0.5" />
                   </span>
                 </div>
@@ -328,7 +328,7 @@ export default function AdminOverviewPage() {
                   <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">CMS Articles</h4>
                   <span className="text-2xl font-bold text-slate-800 mt-2 block">{articles.length}</span>
                 </div>
-                <div className="p-3 bg-blue-50 text-[#0F4C81] rounded-2xl">
+                <div className="p-3 bg-blue-50 text-royal-blue rounded-2xl">
                   <Globe className="w-6 h-6" />
                 </div>
               </div>
@@ -350,7 +350,7 @@ export default function AdminOverviewPage() {
               <div className="bg-white p-6 border border-slate-200 rounded-2xl shadow-sm">
                 <div className="flex justify-between items-center mb-4">
                   <h3 className="text-sm font-bold text-slate-800 tracking-tight">Recent Leads & Inquiries</h3>
-                  <button onClick={() => router.push(`/admin/leads`)} className="text-xs font-bold text-[#0F4C81] hover:underline flex items-center gap-1 cursor-pointer">
+                  <button onClick={() => router.push(`/admin/leads`)} className="text-xs font-bold text-royal-blue hover:underline flex items-center gap-1 cursor-pointer">
                     View all <ChevronRight className="w-3.5 h-3.5" />
                   </button>
                 </div>

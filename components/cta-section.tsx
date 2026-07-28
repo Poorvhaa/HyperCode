@@ -7,31 +7,38 @@ export function CTASection() {
   const t = useTranslations();
 
   return (
-    <section className="py-36 bg-gradient-to-br from-slate-950 via-[#0a0e17] to-slate-950 text-white text-center relative overflow-hidden border-t border-b border-white/5">
-      {/* Background radial gradient decoration */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.12)_0%,transparent_70%)] pointer-events-none" />
+    <section 
+      style={{
+        background: 'linear-gradient(135deg, #061126 0%, #0A1D3F 50%, #07152E 100%)'
+      }}
+      className="py-32 text-white text-center relative overflow-hidden border-t border-b border-white/5"
+    >
+      {/* Background radial gradient decorations */}
+      <div className="absolute top-1/2 -left-20 -translate-y-1/2 w-[350px] h-[350px] bg-[#1769F5]/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/2 -right-20 -translate-y-1/2 w-[350px] h-[350px] bg-[#2DBD3E]/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(20,91,255,0.012)_1px,transparent_1px),linear-gradient(to_bottom,rgba(20,91,255,0.012)_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none" />
       
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-8">
-        <h2 className="text-xs font-bold text-[#60A5FA] tracking-widest uppercase">
+      <div className="max-w-4xl mx-auto px-6 sm:px-8 relative z-10 space-y-8">
+        <h2 className="text-xs font-bold text-[#35C7F4] tracking-widest uppercase">
           {t('cta.badge')}
         </h2>
-        <h3 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight max-w-2xl mx-auto">
+        <h3 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight max-w-2xl mx-auto text-white">
           {t('cta.heading')}
         </h3>
-        <p className="text-sm sm:text-base lg:text-lg text-slate-300 max-w-xl mx-auto leading-relaxed font-medium">
+        <p className="text-sm sm:text-base lg:text-lg text-[#C8D5E8] max-w-3xl mx-auto leading-relaxed font-semibold">
           {t('cta.description')}
         </p>
         
         <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-4">
           <Link
             href="/consultation"
-            className="inline-flex items-center justify-center h-12 px-8 bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm tracking-wide rounded-xl transition-all duration-300 shadow-[0_4px_20px_rgba(59,130,246,0.35)] hover:shadow-[0_4px_25px_rgba(59,130,246,0.6)] cursor-pointer hover:-translate-y-0.5 active:translate-y-0 w-full sm:w-auto"
+            className="PrimaryBrandButton w-full sm:w-auto"
           >
             {t('cta.primaryButton')}
           </Link>
           <Link
             href="/contact"
-            className="inline-flex items-center justify-center h-12 px-8 bg-slate-900/80 border border-slate-800 hover:border-slate-700 hover:bg-slate-800 text-white font-bold text-sm tracking-wide rounded-xl transition-all duration-300 shadow-md cursor-pointer hover:-translate-y-0.5 active:translate-y-0 w-full sm:w-auto"
+            className="SecondaryBrandButton w-full sm:w-auto"
           >
             {t('cta.secondaryButton')}
           </Link>

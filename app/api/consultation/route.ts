@@ -115,7 +115,7 @@ if (saveError || !savedData) {
         // A. Admin Alert Email
         const adminEmailHtml = `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc;">
-            <div style="background-color: #0f4c81; color: white; padding: 15px; border-radius: 6px; text-align: center;">
+            <div style="background-color: #145BFF; color: white; padding: 15px; border-radius: 6px; text-align: center;">
               <h2 style="margin: 0; font-size: 20px;">New Consultation Request</h2>
             </div>
             <div style="padding: 20px 10px; color: #1e293b; line-height: 1.6;">
@@ -142,7 +142,7 @@ if (saveError || !savedData) {
                 </tr>
                 <tr>
                   <td style="padding: 8px 0; font-weight: bold; color: #475569;">Primary Service Interest:</td>
-                  <td style="padding: 8px 0; font-weight: bold; color: #0f4c81;">${validated.service}</td>
+                  <td style="padding: 8px 0; font-weight: bold; color: #145BFF;">${validated.service}</td>
                 </tr>
                 <tr>
                   <td style="padding: 8px 0; font-weight: bold; color: #475569;">Preferred Services:</td>
@@ -221,7 +221,7 @@ if (saveError || !savedData) {
         const clientEmailHtml = isSpanish ? `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;">
             <div style="text-align: center; padding-bottom: 20px;">
-              <h2 style="color: #0f4c81; margin: 0;">HyperCode</h2>
+              <h2 style="color: #145BFF; margin: 0;">HyperCode</h2>
               <p style="color: #64748b; font-size: 14px; margin: 5px 0 0 0;">Consultoría de IA y Transformación Digital</p>
             </div>
             <div style="color: #1e293b; line-height: 1.6; border-top: 1px solid #e2e8f0; padding-top: 20px;">
@@ -229,19 +229,19 @@ if (saveError || !savedData) {
               <p>Hemos recibido su solicitud de videoconsulta tecnológica para su empresa, <strong>${validated.company}</strong>.</p>
               <p>Nuestros directores de soluciones están revisando sus objetivos de negocio en torno al enfoque de <strong>"${validated.service}"</strong> y coordinando una agenda técnica adecuada.</p>
               <p>Una invitación de Zoom o Google Meet con fechas propuestas le será enviada a este correo en un plazo de 24 horas hábiles.</p>
-              <div style="margin: 25px 0; padding: 15px; background-color: #f8fafc; border-left: 4px solid #0f4c81; font-size: 13px; color: #475569;">
+              <div style="margin: 25px 0; padding: 15px; background-color: #f8fafc; border-left: 4px solid #145BFF; font-size: 13px; color: #475569;">
                 <strong>Resumen de desafíos técnicos:</strong><br/>
                 <em>"${validated.currentChallenges || validated.message}"</em>
               </div>
               <p>Atentamente,</p>
-              <p style="margin: 0; font-weight: bold; color: #0f4c81;">Práctica de Transformación Digital</p>
+              <p style="margin: 0; font-weight: bold; color: #145BFF;">Práctica de Transformación Digital</p>
               <p style="margin: 0; font-size: 12px; color: #64748b;">HyperCode Consulting</p>
             </div>
           </div>
         ` : `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;">
             <div style="text-align: center; padding-bottom: 20px;">
-              <h2 style="color: #0f4c81; margin: 0;">HyperCode</h2>
+              <h2 style="color: #145BFF; margin: 0;">HyperCode</h2>
               <p style="color: #64748b; font-size: 14px; margin: 5px 0 0 0;">AI & Digital Transformation Consulting</p>
             </div>
             <div style="color: #1e293b; line-height: 1.6; border-top: 1px solid #e2e8f0; padding-top: 20px;">
@@ -249,12 +249,12 @@ if (saveError || !savedData) {
               <p>We have successfully received your video consultation request for <strong>${validated.company}</strong>.</p>
               <p>Our solutions director is reviewing your business goal of <strong>"${validated.service}"</strong> and aligning it with our practice engineers.</p>
               <p>A calendar invite with Google Meet/Zoom options will be dispatched to your corporate email shortly.</p>
-              <div style="margin: 25px 0; padding: 15px; background-color: #f8fafc; border-left: 4px solid #0f4c81; font-size: 13px; color: #475569;">
+              <div style="margin: 25px 0; padding: 15px; background-color: #f8fafc; border-left: 4px solid #145BFF; font-size: 13px; color: #475569;">
                 <strong>Challenge summary:</strong><br/>
                 <em>"${validated.currentChallenges || validated.message}"</em>
               </div>
               <p>Best regards,</p>
-              <p style="margin: 0; font-weight: bold; color: #0f4c81;">Digital Transformation Practice</p>
+              <p style="margin: 0; font-weight: bold; color: #145BFF;">Digital Transformation Practice</p>
               <p style="margin: 0; font-size: 12px; color: #64748b;">HyperCode Consulting</p>
             </div>
           </div>

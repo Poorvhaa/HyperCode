@@ -285,7 +285,7 @@ if (!res.ok || !result?.success) {
               placeholder="John Doe"
               autoComplete="name"
               {...register('name')}
-              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
+              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
                 errors.name
                   ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
                   : touchedFields.name
@@ -312,7 +312,7 @@ if (!res.ok || !result?.success) {
               autoComplete="email"
               inputMode="email"
               {...register('email')}
-              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
+              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
                 errors.email
                   ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
                   : touchedFields.email
@@ -338,7 +338,7 @@ if (!res.ok || !result?.success) {
               placeholder="Enter company name"
               autoComplete="organization"
               {...register('company')}
-              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
+              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
                 errors.company
                   ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
                   : touchedFields.company
@@ -369,7 +369,7 @@ if (!res.ok || !result?.success) {
                   e.target.value = filterPhoneInput(e.target.value);
                 }
               })}
-              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
+              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
                 errors.phone
                   ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
                   : touchedFields.phone
@@ -400,7 +400,7 @@ if (!res.ok || !result?.success) {
                 onClick={() => toggleService(opt.id)}
                 className={`px-4 py-2.5 rounded-full border text-sm font-bold transition-all flex items-center gap-2 cursor-pointer ${
                   active
-                    ? 'bg-[#0F4C81]/15 border-[#0F4C81] text-[#0F4C81]'
+                    ? 'bg-royal-blue/15 border-royal-blue text-royal-blue'
                     : 'bg-slate-50 border-slate-200 text-slate-600 hover:border-slate-350 hover:bg-slate-100'
                 }`}
               >
@@ -420,7 +420,7 @@ if (!res.ok || !result?.success) {
             <select
               id="contact-industry"
               {...register('industry')}
-              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all text-base text-slate-800 cursor-pointer ${
+              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 cursor-pointer ${
                 errors.industry
                   ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
                   : touchedFields.industry
@@ -447,7 +447,7 @@ if (!res.ok || !result?.success) {
           <select
             id="contact-company-size"
             {...register('companySize')}
-            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all text-base text-slate-800 cursor-pointer"
+            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 cursor-pointer"
           >
             <option value="">-- Select Size --</option>
             <option value="1-10">1-10 Employees</option>
@@ -464,7 +464,7 @@ if (!res.ok || !result?.success) {
             <select
               id="contact-budget"
               {...register('budget')}
-              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all text-base text-slate-800 cursor-pointer ${
+              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 cursor-pointer ${
                 errors.budget
                   ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
                   : touchedFields.budget
@@ -492,7 +492,7 @@ if (!res.ok || !result?.success) {
             <select
               id="contact-timeline"
               {...register('timeline')}
-              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all text-base text-slate-800 cursor-pointer ${
+              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 cursor-pointer ${
                 errors.timeline
                   ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
                   : touchedFields.timeline
@@ -521,7 +521,7 @@ if (!res.ok || !result?.success) {
             type="text"
             placeholder="e.g. United States, United Kingdom"
             {...register('country')}
-            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all text-base text-slate-800 placeholder-slate-400"
+            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400"
           />
         </div>
 
@@ -530,7 +530,7 @@ if (!res.ok || !result?.success) {
           <select
             id="contact-method"
             {...register('preferredContactMethod')}
-            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all text-base text-slate-800 cursor-pointer"
+            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 cursor-pointer"
           >
             <option value="Email">Email</option>
             <option value="Phone Call">Phone Call</option>
@@ -544,7 +544,7 @@ if (!res.ok || !result?.success) {
           <select
             id="contact-project-type"
             {...register('projectType')}
-            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all text-base text-slate-800 cursor-pointer"
+            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 cursor-pointer"
           >
             <option value="">-- Select Project Type --</option>
             <option value="New Product from Scratch">New Product from Scratch</option>
@@ -561,7 +561,7 @@ if (!res.ok || !result?.success) {
             <select
               id="contact-subject"
               {...register('subject')}
-              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all text-base text-slate-800 cursor-pointer ${
+              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 cursor-pointer ${
                 errors.subject
                   ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
                   : touchedFields.subject
@@ -597,7 +597,7 @@ if (!res.ok || !result?.success) {
                 onClick={() => toggleTech(tech)}
                 className={`px-3.5 py-2 rounded-full border text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
                   active
-                    ? 'bg-[#0F4C81]/15 border-[#0F4C81] text-[#0F4C81]'
+                    ? 'bg-royal-blue/15 border-royal-blue text-royal-blue'
                     : 'bg-white border-slate-200 text-slate-600 hover:border-slate-300 hover:bg-slate-100'
                 }`}
               >
@@ -618,7 +618,7 @@ if (!res.ok || !result?.success) {
             rows={5}
             placeholder="Please describe your technology requirements, key challenges, or hiring profiles..."
             {...register('message')}
-            className={`w-full pl-5 pr-11 py-4 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
+            className={`w-full pl-5 pr-11 py-4 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
               errors.message
                 ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
                 : touchedFields.message
@@ -673,7 +673,7 @@ export function ContactForm() {
   return (
     <Suspense fallback={
       <div className="flex justify-center p-12">
-        <Loader2 className="animate-spin text-[#0F4C81]" size={36} />
+        <Loader2 className="animate-spin text-royal-blue" size={36} />
       </div>
     }>
       <ContactFormContent />

@@ -400,7 +400,7 @@ export default function AIConsultantDashboard() {
   if (authLoading || (session && !userProfile)) {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#0F4C81]"></div>
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-royal-blue"></div>
       </div>
     );
   }
@@ -420,7 +420,7 @@ export default function AIConsultantDashboard() {
           </p>
           <button 
             onClick={() => router.push(`/${locale}/admin`)}
-            className="px-5 py-2.5 bg-[#0F4C81] hover:bg-[#0c3e6b] text-white font-semibold rounded-xl text-sm transition-all flex items-center justify-center gap-2 mx-auto cursor-pointer"
+            className="px-5 py-2.5 bg-royal-blue hover:bg-deep-navy text-white font-semibold rounded-xl text-sm transition-all flex items-center justify-center gap-2 mx-auto cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>{locale === 'es' ? 'Volver al Panel' : 'Back to Dashboard'}</span>
@@ -472,7 +472,7 @@ export default function AIConsultantDashboard() {
           <button
             onClick={() => { setActiveTab('analytics'); setSelectedConversation(null); setSelectedLead(null); }}
             className={`pb-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-all cursor-pointer ${
-              activeTab === 'analytics' ? 'border-[#0F4C81] text-[#0F4C81]' : 'border-transparent text-slate-400'
+              activeTab === 'analytics' ? 'border-royal-blue text-royal-blue' : 'border-transparent text-slate-400'
             }`}
           >
             {locale === 'es' ? 'Métricas de Embudo' : 'AI Analytics'}
@@ -480,7 +480,7 @@ export default function AIConsultantDashboard() {
           <button
             onClick={() => { setActiveTab('conversations'); setSelectedConversation(null); setSelectedLead(null); }}
             className={`pb-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-all cursor-pointer ${
-              activeTab === 'conversations' ? 'border-[#0F4C81] text-[#0F4C81]' : 'border-transparent text-slate-400'
+              activeTab === 'conversations' ? 'border-royal-blue text-royal-blue' : 'border-transparent text-slate-400'
             }`}
           >
             {locale === 'es' ? 'Conversaciones' : 'Conversations'} ({conversations.length})
@@ -488,7 +488,7 @@ export default function AIConsultantDashboard() {
           <button
             onClick={() => { setActiveTab('messages'); setSelectedConversation(null); setSelectedLead(null); }}
             className={`pb-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-all cursor-pointer ${
-              activeTab === 'messages' ? 'border-[#0F4C81] text-[#0F4C81]' : 'border-transparent text-slate-400'
+              activeTab === 'messages' ? 'border-royal-blue text-royal-blue' : 'border-transparent text-slate-400'
             }`}
           >
             {locale === 'es' ? 'Mensajes' : 'Chat Messages'} ({globalMessages.length})
@@ -496,7 +496,7 @@ export default function AIConsultantDashboard() {
           <button
             onClick={() => { setActiveTab('leads'); setSelectedConversation(null); setSelectedLead(null); }}
             className={`pb-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-all cursor-pointer ${
-              activeTab === 'leads' ? 'border-[#0F4C81] text-[#0F4C81]' : 'border-transparent text-slate-400'
+              activeTab === 'leads' ? 'border-royal-blue text-royal-blue' : 'border-transparent text-slate-400'
             }`}
           >
             {locale === 'es' ? 'Prospectos Calificados' : 'Qualified Leads'} ({leads.length})
@@ -504,7 +504,7 @@ export default function AIConsultantDashboard() {
           <button
             onClick={() => { setActiveTab('consultations'); setSelectedConversation(null); setSelectedLead(null); }}
             className={`pb-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-all cursor-pointer ${
-              activeTab === 'consultations' ? 'border-[#0F4C81] text-[#0F4C81]' : 'border-transparent text-slate-400'
+              activeTab === 'consultations' ? 'border-royal-blue text-royal-blue' : 'border-transparent text-slate-400'
             }`}
           >
             {locale === 'es' ? 'Consultas desde Chat' : 'Consultations'} ({consultations.length})
@@ -513,7 +513,7 @@ export default function AIConsultantDashboard() {
 
         {loading ? (
           <div className="h-64 flex items-center justify-center bg-white border border-slate-200 rounded-3xl shadow-sm">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#0F4C81]"></div>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-royal-blue"></div>
           </div>
         ) : (
           <div className="space-y-6">
@@ -527,7 +527,7 @@ export default function AIConsultantDashboard() {
                   <div className="bg-white p-5 border border-slate-200 rounded-2xl shadow-sm text-left flex flex-col justify-between h-28">
                     <div className="flex justify-between items-center">
                       <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">AI Sessions</span>
-                      <MessageSquare className="w-4 h-4 text-[#0F4C81]" />
+                      <MessageSquare className="w-4 h-4 text-royal-blue" />
                     </div>
                     <div className="flex items-baseline gap-2 mt-2">
                       <span className="text-2xl font-bold text-slate-900">{totalConvos}</span>
@@ -662,7 +662,7 @@ export default function AIConsultantDashboard() {
                       placeholder="Search session or visitor..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 focus:border-[#0F4C81]"
+                      className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 focus:border-royal-blue"
                     />
                   </div>
 
@@ -720,7 +720,7 @@ export default function AIConsultantDashboard() {
                                 <div className="flex gap-4 items-center">
                                   <button
                                     onClick={() => handleSelectConversation(convo)}
-                                    className="text-[#0F4C81] hover:text-[#0c3e6b] font-bold flex items-center gap-1 cursor-pointer"
+                                    className="text-royal-blue hover:text-deep-navy font-bold flex items-center gap-1 cursor-pointer"
                                   >
                                     <Eye className="w-4 h-4" />
                                     <span>View Log</span>
@@ -759,7 +759,7 @@ export default function AIConsultantDashboard() {
                       placeholder="Search name, email, or company..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 focus:border-[#0F4C81]"
+                      className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 focus:border-royal-blue"
                     />
                   </div>
 
@@ -817,7 +817,7 @@ export default function AIConsultantDashboard() {
                               <td className="py-4 px-6 text-slate-500">{lead.service_interest}</td>
                               <td className="py-4 px-6 text-emerald-700 font-bold">{lead.budget_range}</td>
                               <td className="py-4 px-6 font-extrabold text-slate-800 flex items-center gap-1">
-                                <Award className="w-3.5 h-3.5 text-[#0F4C81]" />
+                                <Award className="w-3.5 h-3.5 text-royal-blue" />
                                 <span>{lead.lead_score}</span>
                               </td>
                               <td className="py-4 px-6">{getPriorityBadge(lead.lead_score)}</td>
@@ -834,7 +834,7 @@ export default function AIConsultantDashboard() {
                                 <div className="flex gap-4 items-center">
                                   <button
                                     onClick={() => setSelectedLead(lead)}
-                                    className="text-[#0F4C81] hover:text-[#0c3e6b] font-bold flex items-center gap-1 cursor-pointer font-bold"
+                                    className="text-royal-blue hover:text-deep-navy font-bold flex items-center gap-1 cursor-pointer font-bold"
                                   >
                                     <Eye className="w-4 h-4" />
                                     <span>Open</span>
@@ -873,7 +873,7 @@ export default function AIConsultantDashboard() {
                       placeholder="Search name, email, or company..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 focus:border-[#0F4C81]"
+                      className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 focus:border-royal-blue"
                     />
                   </div>
 
@@ -914,7 +914,7 @@ export default function AIConsultantDashboard() {
                               <td className="py-4 px-6 font-bold text-slate-800">{r.name}</td>
                               <td className="py-4 px-6 text-slate-700 font-semibold">{r.company || '—'}</td>
                               <td className="py-4 px-6 text-slate-500">{r.email}</td>
-                              <td className="py-4 px-6 text-slate-500 font-bold text-[#0F4C81]">{r.service}</td>
+                              <td className="py-4 px-6 text-slate-500 font-bold text-royal-blue">{r.service}</td>
                               <td className="py-4 px-6 text-indigo-800 font-extrabold">{r.preferred_date}</td>
                               <td className="py-4 px-6 text-slate-400">{new Date(r.created_at).toLocaleString()}</td>
                               <td className="py-4 px-6">
@@ -951,7 +951,7 @@ export default function AIConsultantDashboard() {
                       placeholder="Search message, sender, or conversation..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 focus:border-[#0F4C81]"
+                      className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 focus:border-royal-blue"
                     />
                   </div>
 
@@ -1000,7 +1000,7 @@ export default function AIConsultantDashboard() {
                             <tr key={msg.id} className="hover:bg-slate-50/50">
                               <td className="py-4 px-6">
                                 <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
-                                  msg.sender === 'user' ? 'bg-blue-100 text-blue-800' : 'bg-gradient-to-tr from-[#0F4C81] to-[#38BDF8] text-white'
+                                  msg.sender === 'user' ? 'bg-blue-100 text-blue-800' : 'bg-gradient-to-tr from-royal-blue to-[#25B5FF] text-white'
                                 }`}>
                                   {msg.sender}
                                 </span>
@@ -1058,7 +1058,7 @@ export default function AIConsultantDashboard() {
             <div className="flex-1 p-6 overflow-y-auto bg-slate-50 space-y-4">
               {loadingMessages ? (
                 <div className="h-full flex items-center justify-center">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#0F4C81]"></div>
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-royal-blue"></div>
                 </div>
               ) : convoMessages.length === 0 ? (
                 <div className="text-center text-slate-400 py-8">No messages logged in this session.</div>
@@ -1066,7 +1066,7 @@ export default function AIConsultantDashboard() {
                 convoMessages.map((msg, idx) => (
                   <div key={idx} className={`flex gap-2.5 max-w-[85%] ${msg.sender === 'user' ? 'self-end flex-row-reverse ml-auto' : 'self-start mr-auto'}`}>
                     <div className={`px-4 py-2.5 rounded-2xl text-xs leading-relaxed ${
-                      msg.sender === 'user' ? 'bg-[#0F4C81] text-white rounded-tr-none' : 'bg-white border border-slate-200 text-slate-800 rounded-tl-none shadow-sm'
+                      msg.sender === 'user' ? 'bg-royal-blue text-white rounded-tr-none' : 'bg-white border border-slate-200 text-slate-800 rounded-tl-none shadow-sm'
                     }`}>
                       {msg.message}
                     </div>
@@ -1135,7 +1135,7 @@ export default function AIConsultantDashboard() {
                 </div>
                 <div>
                   <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Service Interest</p>
-                  <p className="mt-1 font-semibold text-[#0F4C81]">{selectedLead.service_interest}</p>
+                  <p className="mt-1 font-semibold text-royal-blue">{selectedLead.service_interest}</p>
                 </div>
                 <div>
                   <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Language</p>

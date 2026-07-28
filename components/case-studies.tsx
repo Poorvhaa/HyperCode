@@ -74,7 +74,7 @@ export function CaseStudies({ studies, limit, featuredOnly }: CaseStudiesProps) 
             />
             {/* Industry Badge */}
             <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-md px-3 py-1 rounded-xl border border-slate-100 shadow-sm">
-              <span className="text-[10px] font-black text-[#0F4C81] uppercase tracking-wider">
+              <span className="text-[10px] font-black text-royal-blue uppercase tracking-wider">
                 {study.industry}
               </span>
             </div>
@@ -93,7 +93,7 @@ export function CaseStudies({ studies, limit, featuredOnly }: CaseStudiesProps) 
               <span className="text-[10px] font-bold text-slate-450 tracking-widest uppercase block">
                 {study.clientType}
               </span>
-              <h3 className="text-xl font-black text-slate-900 tracking-tight leading-snug group-hover:text-[#0F4C81] transition-colors duration-200">
+              <h3 className="text-xl font-black text-slate-900 tracking-tight leading-snug group-hover:text-royal-blue transition-colors duration-200">
                 {study.title}
               </h3>
             </div>
@@ -127,7 +127,7 @@ export function CaseStudies({ studies, limit, featuredOnly }: CaseStudiesProps) 
               {study.technologies.slice(0, 4).map((tech) => (
                 <span
                   key={tech}
-                  className="px-2.5 py-0.5 rounded-lg bg-slate-50 text-[#0F4C81] text-[9px] font-extrabold uppercase tracking-wide border border-slate-200/40"
+                  className="px-2.5 py-0.5 rounded-lg bg-slate-50 text-royal-blue text-[9px] font-extrabold uppercase tracking-wide border border-slate-200/40"
                 >
                   {tech}
                 </span>
@@ -138,7 +138,7 @@ export function CaseStudies({ studies, limit, featuredOnly }: CaseStudiesProps) 
             <div className="pt-4 border-t border-slate-100 flex items-center justify-between mt-auto">
               <Link
                 href={`/case-studies/${study.slug}`}
-                className="inline-flex items-center gap-1.5 text-xs font-black text-[#0F4C81] hover:text-[#0c3e69] transition-colors duration-200 group/link uppercase tracking-wider"
+                className="inline-flex items-center gap-1.5 text-xs font-black text-royal-blue hover:text-deep-navy transition-colors duration-200 group/link uppercase tracking-wider"
               >
                 <span>{t('readStory')}</span>
                 <ArrowRight size={14} className="group-hover/link:translate-x-1 transition-transform duration-200" />

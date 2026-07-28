@@ -41,7 +41,7 @@ export function BusinessOutcomesSection() {
     <section className="section-padding bg-white border-b border-slate-200 text-left">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mb-16">
-          <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">
+          <h2 className="text-xs font-bold text-royal-blue tracking-widest uppercase mb-3">
             BUSINESS IMPACT
           </h2>
           <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">
@@ -63,10 +63,10 @@ export function BusinessOutcomesSection() {
               >
                 <div className="space-y-6">
                   <div className="flex items-center justify-between">
-                    <div className="w-12 h-12 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-[#0F4C81]">
+                    <div className="w-12 h-12 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-royal-blue">
                       <Icon size={24} />
                     </div>
-                    <span className="text-[11px] font-extrabold text-[#0F4C81] uppercase tracking-wider bg-slate-50 border border-slate-200 px-3 py-1 rounded-lg">
+                    <span className="text-[11px] font-extrabold text-royal-blue uppercase tracking-wider bg-slate-50 border border-slate-200 px-3 py-1 rounded-lg">
                       {outcome.metric}
                     </span>
                   </div>
@@ -91,7 +91,7 @@ export function BusinessOutcomesSection() {
           <div className="flex gap-4 flex-shrink-0">
             <Link
               href="/consultation"
-              className="btn-primary"
+              className="PrimaryBrandButton"
             >
               <span>Schedule Consultation</span>
               <ArrowRight size={16} className="ml-2" />

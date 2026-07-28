@@ -75,10 +75,10 @@ export default async function TermsAndConditionsPage({ params }: Props) {
                   <a
                     key={key}
                     href={`#${key}`}
-                    className="group flex items-center justify-between py-2 text-sm font-semibold text-slate-600 hover:text-[#0F4C81] transition-colors"
+                    className="group flex items-center justify-between py-2 text-sm font-semibold text-slate-600 hover:text-royal-blue transition-colors"
                   >
                     <span>{t(`sections.${key}.title`)}</span>
-                    <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 text-[#0F4C81] transition-all -translate-x-2 group-hover:translate-x-0" />
+                    <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 text-royal-blue transition-all -translate-x-2 group-hover:translate-x-0" />
                   </a>
                 ))}
               </nav>

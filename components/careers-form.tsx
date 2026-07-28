@@ -324,7 +324,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
         <div className="pt-6">
           <button
             onClick={() => setSubmitted(false)}
-            className="inline-flex h-11 h-11 px-6 items-center justify-center bg-[#0F4C81] text-white font-semibold text-xs rounded-xl hover:bg-[#0c3c66] transition-colors cursor-pointer border-none"
+            className="inline-flex h-11 h-11 px-6 items-center justify-center bg-royal-blue text-white font-semibold text-xs rounded-xl hover:bg-[#0c3c66] transition-colors cursor-pointer border-none"
           >
             {t.backToCareers}
           </button>
@@ -358,7 +358,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
                 type="text"
                 placeholder="John Doe"
                 autoComplete="name"
-                className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
+                className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
                   errors.name
                     ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
                     : touchedFields.name
@@ -390,7 +390,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
                 placeholder="john@company.com"
                 autoComplete="email"
                 inputMode="email"
-                className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
+                className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
                   errors.email
                     ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
                     : touchedFields.email
@@ -426,7 +426,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
                 placeholder="+1 (555) 123-4567"
                 autoComplete="tel"
                 inputMode="tel"
-                className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
+                className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
                   errors.phone
                     ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
                     : touchedFields.phone
@@ -456,7 +456,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
                 {...register('linkedin')}
                 type="text"
                 placeholder="https://linkedin.com/in/username"
-                className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
+                className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
                   errors.linkedin
                     ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
                     : touchedFields.linkedin
@@ -496,7 +496,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
                 type="number"
                 min="0"
                 placeholder="5"
-                className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all text-base text-slate-800 ${
+                className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 ${
                   errors.yearsExperience
                     ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
                     : touchedFields.yearsExperience
@@ -526,7 +526,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
                 {...register('skills')}
                 type="text"
                 placeholder={t.skillsPlaceholder}
-                className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
+                className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
                   errors.skills
                     ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
                     : touchedFields.skills
@@ -556,7 +556,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
                 {...register('message')}
                 placeholder={t.coverLetterPlaceholder}
                 rows={4}
-                className={`w-full pl-5 pr-11 py-4 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all text-base text-slate-800 placeholder-slate-400 resize-none ${
+                className={`w-full pl-5 pr-11 py-4 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 resize-none ${
                   errors.message
                     ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
                     : touchedFields.message
@@ -599,7 +599,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
                 onClick={() => fileInputRef.current?.click()}
                 className={`w-full p-8 border-2 border-dashed rounded-[20px] flex flex-col items-center justify-center gap-2 cursor-pointer transition-all ${
                   isDragActive 
-                    ? 'border-[#0F4C81] bg-[#0F4C81]/5 text-[#0F4C81]' 
+                    ? 'border-royal-blue bg-royal-blue/5 text-royal-blue' 
                     : 'border-slate-200 hover:border-slate-350 hover:bg-slate-50 text-slate-500'
                 }`}
               >
@@ -610,13 +610,13 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
                   accept=".pdf,.doc,.docx"
                   className="hidden"
                 />
-                <Upload size={28} className={isDragActive ? 'animate-bounce text-[#0F4C81]' : 'text-slate-400'} />
+                <Upload size={28} className={isDragActive ? 'animate-bounce text-royal-blue' : 'text-slate-400'} />
                 <p className="text-xs font-semibold text-slate-700 text-center">{t.resumeDesc}</p>
               </div>
             ) : (
-              <div className="flex items-center justify-between p-4 rounded-xl border border-[#0F4C81]/20 bg-[#0F4C81]/5 text-left">
+              <div className="flex items-center justify-between p-4 rounded-xl border border-royal-blue/20 bg-royal-blue/5 text-left">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-white border border-[#0F4C81]/15 flex items-center justify-center text-[#0F4C81]">
+                  <div className="w-10 h-10 rounded-lg bg-white border border-royal-blue/15 flex items-center justify-center text-royal-blue">
                     <FileText size={20} />
                   </div>
                   <div>

@@ -95,19 +95,19 @@ export default async function AboutPage({ params }: Props) {
           {/* Metrics Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-12 mt-12 border-t border-slate-200">
             <div className="premium-card p-6 bg-slate-50 border border-slate-200 shadow-sm text-center">
-              <div className="text-3xl font-black text-[#0F4C81]">{t('stats.projects')}</div>
+              <div className="text-3xl font-black text-royal-blue">{t('stats.projects')}</div>
               <p className="text-[10px] text-slate-500 font-extrabold uppercase tracking-widest mt-2">{t('stats.projectsLabel')}</p>
             </div>
             <div className="premium-card p-6 bg-slate-50 border border-slate-200 shadow-sm text-center">
-              <div className="text-3xl font-black text-[#0F4C81]">{t('stats.satisfaction')}</div>
+              <div className="text-3xl font-black text-royal-blue">{t('stats.satisfaction')}</div>
               <p className="text-[10px] text-slate-500 font-extrabold uppercase tracking-widest mt-2">{t('stats.satisfactionLabel')}</p>
             </div>
             <div className="premium-card p-6 bg-slate-50 border border-slate-200 shadow-sm text-center">
-              <div className="text-3xl font-black text-[#0F4C81]">{t('stats.consultants')}</div>
+              <div className="text-3xl font-black text-royal-blue">{t('stats.consultants')}</div>
               <p className="text-[10px] text-slate-500 font-extrabold uppercase tracking-widest mt-2">{t('stats.consultantsLabel')}</p>
             </div>
             <div className="premium-card p-6 bg-slate-50 border border-slate-200 shadow-sm text-center">
-              <div className="text-3xl font-black text-[#0F4C81]">{t('stats.experience')}</div>
+              <div className="text-3xl font-black text-royal-blue">{t('stats.experience')}</div>
               <p className="text-[10px] text-slate-500 font-extrabold uppercase tracking-widest mt-2">{t('stats.experienceLabel')}</p>
             </div>
           </div>
@@ -135,7 +135,7 @@ export default async function AboutPage({ params }: Props) {
               {/* Mission */}
               <div className="premium-card p-8 bg-white border border-slate-200 shadow-sm space-y-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 text-[#0F4C81] flex items-center justify-center flex-shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 text-royal-blue flex items-center justify-center flex-shrink-0">
                     <Target size={20} />
                   </div>
                   <h3 className="text-[16px] lg:text-[18px] font-black text-slate-900 uppercase tracking-wider">{t('mission')}</h3>
@@ -148,7 +148,7 @@ export default async function AboutPage({ params }: Props) {
               {/* Vision */}
               <div className="premium-card p-8 bg-white border border-slate-200 shadow-sm space-y-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 text-[#0F4C81] flex items-center justify-center flex-shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 text-royal-blue flex items-center justify-center flex-shrink-0">
                     <Eye size={20} />
                   </div>
                   <h3 className="text-[16px] lg:text-[18px] font-black text-slate-900 uppercase tracking-wider">{t('vision')}</h3>
@@ -167,7 +167,7 @@ export default async function AboutPage({ params }: Props) {
       <section className="section-padding bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-16 space-y-4 animate-fadeIn">
-            <span className="text-xs font-bold text-[#0F4C81] uppercase tracking-widest">
+            <span className="text-xs font-bold text-royal-blue uppercase tracking-widest">
               {t('whyChooseTitle')}
             </span>
             <p className="text-lg sm:text-xl text-slate-650 leading-relaxed font-semibold">
@@ -178,7 +178,7 @@ export default async function AboutPage({ params }: Props) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             {/* Leadership */}
             <div className="premium-card p-8 bg-white border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-              <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 text-[#0F4C81] flex items-center justify-center mb-5">
+              <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 text-royal-blue flex items-center justify-center mb-5">
                 <Award size={20} />
               </div>
               <h4 className="text-[22px] font-bold text-slate-900 mb-3 leading-[1.2]">
@@ -191,7 +191,7 @@ export default async function AboutPage({ params }: Props) {
 
             {/* Agnostic & Scalable Solutions */}
             <div className="premium-card p-8 bg-white border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-              <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 text-[#0F4C81] flex items-center justify-center mb-5">
+              <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 text-royal-blue flex items-center justify-center mb-5">
                 <Cpu size={20} />
               </div>
               <h4 className="text-[22px] font-bold text-slate-900 mb-3 leading-[1.2]">
@@ -204,7 +204,7 @@ export default async function AboutPage({ params }: Props) {
 
             {/* Rapid Talent Mobilization */}
             <div className="premium-card p-8 bg-white border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-              <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 text-[#0F4C81] flex items-center justify-center mb-5">
+              <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 text-royal-blue flex items-center justify-center mb-5">
                 <Zap size={20} />
               </div>
               <h4 className="text-[22px] font-bold text-slate-900 mb-3 leading-[1.2]">
@@ -217,7 +217,7 @@ export default async function AboutPage({ params }: Props) {
 
             {/* Mentoring & Handover */}
             <div className="premium-card p-8 bg-white border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-              <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 text-[#0F4C81] flex items-center justify-center mb-5">
+              <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 text-royal-blue flex items-center justify-center mb-5">
                 <BookOpen size={20} />
               </div>
               <h4 className="text-[22px] font-bold text-slate-900 mb-3 leading-[1.2]">
@@ -235,7 +235,7 @@ export default async function AboutPage({ params }: Props) {
       <section className="section-padding bg-[#F8FAFC] border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-16 space-y-3">
-            <span className="text-xs font-bold text-[#0F4C81] uppercase tracking-widest">{t('pillars')}</span>
+            <span className="text-xs font-bold text-royal-blue uppercase tracking-widest">{t('pillars')}</span>
             <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">{t('valuesTitle')}</h3>
           </div>
 
@@ -247,7 +247,7 @@ export default async function AboutPage({ params }: Props) {
                   key={i}
                   className="premium-card bg-white flex items-start gap-4 p-8 shadow-sm hover:shadow-md transition-shadow animate-fadeIn"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-[#0F4C81] flex-shrink-0 animate-pulse">
+                  <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-royal-blue flex-shrink-0 animate-pulse">
                     <Icon size={20} />
                   </div>
                   <div className="space-y-1">
@@ -279,7 +279,7 @@ export default async function AboutPage({ params }: Props) {
             <div className="pt-4">
               <Link
                 href="/consultation"
-                className="btn-primary"
+                className="PrimaryBrandButton"
               >
                 {tc('consultation')}
               </Link>

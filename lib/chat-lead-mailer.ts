@@ -149,7 +149,7 @@ export async function submitChatLead(lead: LeadInput) {
       // Admin Alert Email HTML
       const adminEmailHtml = `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc;">
-          <div style="background-color: #0F4C81; color: white; padding: 15px; border-radius: 6px; text-align: center;">
+          <div style="background-color: #145BFF; color: white; padding: 15px; border-radius: 6px; text-align: center;">
             <h2 style="margin: 0; font-size: 20px;">New Lead via Enterprise AI Consultant</h2>
             <p style="margin: 5px 0 0 0; font-size: 13px;">Service Interest: <strong>${serviceInterest}</strong></p>
           </div>
@@ -234,7 +234,7 @@ export async function submitChatLead(lead: LeadInput) {
       const userEmailHtml = isSpanish ? `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;">
           <div style="text-align: center; padding-bottom: 20px;">
-            <h2 style="color: #0f4c81; margin: 0;">HyperCode</h2>
+            <h2 style="color: #145BFF; margin: 0;">HyperCode</h2>
             <p style="color: #64748b; font-size: 14px; margin: 5px 0 0 0;">Soluciones de Transformación Digital</p>
           </div>
           <div style="color: #1e293b; line-height: 1.6; border-top: 1px solid #e2e8f0; padding-top: 20px;">
@@ -251,14 +251,14 @@ export async function submitChatLead(lead: LeadInput) {
             <p>Un consultor senior se pondrá en contacto con usted en un plazo de 24 horas hábiles para coordinar los siguientes pasos.</p>
             <p>Esperamos colaborar con usted para impulsar sus objetivos tecnológicos.</p>
             <p>Atentamente,</p>
-            <p style="margin: 0; font-weight: bold; color: #0f4c81;">Práctica de Consultoría de HyperCode</p>
+            <p style="margin: 0; font-weight: bold; color: #145BFF;">Práctica de Consultoría de HyperCode</p>
             <p style="margin: 0; font-size: 12px; color: #64748b;">Schaumburg, IL</p>
           </div>
         </div>
       ` : `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;">
           <div style="text-align: center; padding-bottom: 20px;">
-            <h2 style="color: #0f4c81; margin: 0;">HyperCode</h2>
+            <h2 style="color: #145BFF; margin: 0;">HyperCode</h2>
             <p style="color: #64748b; font-size: 14px; margin: 5px 0 0 0;">Digital Transformation Solutions</p>
           </div>
           <div style="color: #1e293b; line-height: 1.6; border-top: 1px solid #e2e8f0; padding-top: 20px;">
@@ -275,7 +275,7 @@ export async function submitChatLead(lead: LeadInput) {
             <p>Expect a senior practice partner to contact you within 24 business hours to share our initial findings.</p>
             <p>We look forward to partnering on this digital initiative.</p>
             <p>Best regards,</p>
-            <p style="margin: 0; font-weight: bold; color: #0f4c81;">HyperCode Consulting Practice</p>
+            <p style="margin: 0; font-weight: bold; color: #145BFF;">HyperCode Consulting Practice</p>
             <p style="margin: 0; font-size: 12px; color: #64748b;">Schaumburg, IL</p>
           </div>
         </div>

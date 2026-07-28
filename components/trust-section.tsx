@@ -85,7 +85,7 @@ export function TrustSection() {
                 className="p-6 rounded-xl bg-white border border-slate-200 shadow-sm"
               >
                 <div className="flex items-center space-x-4 mb-4">
-                  <div className="w-10 h-10 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center text-[#0F4C81]">
+                  <div className="w-10 h-10 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center text-royal-blue">
                     <Icon size={20} />
                   </div>
                   <h3 className="text-[15px] font-bold text-slate-900 leading-snug">{pillar.title}</h3>
@@ -101,7 +101,7 @@ export function TrustSection() {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
             {stats.map((stat, index) => (
               <div key={index} className="flex flex-col items-center">
-                <div className="text-4xl sm:text-5xl font-bold text-[#0F4C81] tracking-tight mb-2">
+                <div className="text-4xl sm:text-5xl font-bold text-royal-blue tracking-tight mb-2">
                   <AnimatedCounter value={stat.value} suffix={stat.suffix} />
                 </div>
                 <div className="text-[10px] sm:text-xs font-bold tracking-wider text-slate-500 uppercase max-w-[180px]">

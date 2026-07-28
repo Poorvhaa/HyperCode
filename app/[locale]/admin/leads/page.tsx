@@ -220,7 +220,7 @@ export default function AdminLeadsPage() {
   if (authLoading || (session && !userProfile)) {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#0F4C81]"></div>
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-royal-blue"></div>
       </div>
     );
   }
@@ -240,7 +240,7 @@ export default function AdminLeadsPage() {
           </p>
           <button 
             onClick={() => router.push(`/admin`)}
-            className="px-5 py-2.5 bg-[#0F4C81] hover:bg-[#0c3e6b] text-white font-semibold rounded-xl text-sm transition-all flex items-center justify-center gap-2 mx-auto cursor-pointer"
+            className="px-5 py-2.5 bg-royal-blue hover:bg-deep-navy text-white font-semibold rounded-xl text-sm transition-all flex items-center justify-center gap-2 mx-auto cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>{locale === 'es' ? 'Volver al Panel' : 'Back to Dashboard'}</span>
@@ -295,7 +295,7 @@ export default function AdminLeadsPage() {
 
         {loading ? (
           <div className="h-[400px] bg-white border border-slate-200 rounded-2xl flex items-center justify-center shadow-sm">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#0F4C81]"></div>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-royal-blue"></div>
           </div>
         ) : (
           <div className="space-y-6">
@@ -304,7 +304,7 @@ export default function AdminLeadsPage() {
               <button
                 onClick={() => { setLeadsSubTab('inquiries'); setSelectedLead(null); }}
                 className={`pb-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-all cursor-pointer ${
-                  leadsSubTab === 'inquiries' ? 'border-[#0F4C81] text-[#0F4C81]' : 'border-transparent text-slate-400'
+                  leadsSubTab === 'inquiries' ? 'border-royal-blue text-royal-blue' : 'border-transparent text-slate-400'
                 }`}
               >
                 {locale === 'es' ? 'Consultas de Contacto' : 'Contact form submissions'} ({inquiries.length})
@@ -312,7 +312,7 @@ export default function AdminLeadsPage() {
               <button
                 onClick={() => { setLeadsSubTab('chat_leads'); setSelectedLead(null); }}
                 className={`pb-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-all cursor-pointer ${
-                  leadsSubTab === 'chat_leads' ? 'border-[#0F4C81] text-[#0F4C81]' : 'border-transparent text-slate-400'
+                  leadsSubTab === 'chat_leads' ? 'border-royal-blue text-royal-blue' : 'border-transparent text-slate-400'
                 }`}
               >
                 {locale === 'es' ? 'Prospectos de Chat' : 'Chatbot Leads'} ({chatLeads.length})
@@ -328,7 +328,7 @@ export default function AdminLeadsPage() {
                   placeholder={locale === 'es' ? 'Buscar prospectos...' : 'Search leads...'}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 focus:border-[#0F4C81] transition-all"
+                  className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 focus:border-royal-blue transition-all"
                 />
               </div>
 
@@ -456,11 +456,11 @@ export default function AdminLeadsPage() {
             <div className="flex-1 p-6 overflow-y-auto space-y-6">
               {/* Status update box */}
               <div className="p-4 bg-blue-50/50 border border-blue-100 rounded-2xl">
-                <label className="text-[10px] font-bold text-[#0F4C81] uppercase tracking-wider block mb-2">Lead Stage</label>
+                <label className="text-[10px] font-bold text-royal-blue uppercase tracking-wider block mb-2">Lead Stage</label>
                 <select
                   value={selectedLead.data.status || 'New'}
                   onChange={(e) => handleLeadStatusChange(selectedLead.type, selectedLead.data.id, e.target.value)}
-                  className="w-full bg-white border border-slate-250 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 focus:border-[#0F4C81] cursor-pointer"
+                  className="w-full bg-white border border-slate-250 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 focus:border-royal-blue cursor-pointer"
                 >
                   <option value="New">New</option>
                   <option value="Contacted">Contacted</option>

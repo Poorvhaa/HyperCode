@@ -107,10 +107,10 @@ export default function AdminLoginPage() {
     <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4 sm:p-6 lg:p-8 font-sans">
       <div className="max-w-md w-full bg-white border border-slate-200/80 rounded-2xl shadow-xl p-8 space-y-8 relative overflow-hidden">
         {/* Decorative Top Line */}
-        <div className="absolute top-0 left-0 right-0 h-1.5 bg-[#0F4C81]"></div>
+        <div className="absolute top-0 left-0 right-0 h-1.5 bg-royal-blue"></div>
 
         <div className="text-center">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-blue-50 text-[#0F4C81] mb-4">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-blue-50 text-royal-blue mb-4">
             <Lock className="w-6 h-6" />
           </div>
           <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
@@ -140,7 +140,7 @@ export default function AdminLoginPage() {
                 placeholder="admin@hypercode.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 focus:border-[#0F4C81] transition-all"
+                className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 focus:border-royal-blue transition-all"
                 required
               />
             </div>
@@ -157,7 +157,7 @@ export default function AdminLoginPage() {
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 focus:border-[#0F4C81] transition-all"
+                className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 focus:border-royal-blue transition-all"
                 required
               />
             </div>
@@ -166,7 +166,7 @@ export default function AdminLoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 px-4 bg-[#0F4C81] hover:bg-[#0c3e6b] text-white font-semibold rounded-xl transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 group disabled:opacity-75 disabled:cursor-not-allowed cursor-pointer"
+            className="w-full py-3 px-4 bg-royal-blue hover:bg-deep-navy text-white font-semibold rounded-xl transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 group disabled:opacity-75 disabled:cursor-not-allowed cursor-pointer"
           >
             {loading ? (
               <>

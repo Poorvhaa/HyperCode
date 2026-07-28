@@ -285,7 +285,7 @@ const onSubmit = async (data: ConsultationFormData) => {
               placeholder="John Doe"
               autoComplete="name"
               {...register('name')}
-              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
+              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
                 errors.name
                   ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
                   : touchedFields.name
@@ -316,7 +316,7 @@ const onSubmit = async (data: ConsultationFormData) => {
               autoComplete="email"
               inputMode="email"
               {...register('email')}
-              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
+              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
                 errors.email
                   ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
                   : touchedFields.email
@@ -346,7 +346,7 @@ const onSubmit = async (data: ConsultationFormData) => {
               placeholder="Company Name"
               autoComplete="organization"
               {...register('company')}
-              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
+              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
                 errors.company
                   ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
                   : touchedFields.company
@@ -381,7 +381,7 @@ const onSubmit = async (data: ConsultationFormData) => {
                   e.target.value = filterPhoneInput(e.target.value);
                 }
               })}
-              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
+              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
                 errors.phone
                   ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
                   : touchedFields.phone
@@ -423,7 +423,7 @@ const onSubmit = async (data: ConsultationFormData) => {
                 onClick={() => togglePreferredService(opt.id)}
                 className={`px-4 py-2.5 rounded-full border text-sm font-bold transition-all flex items-center gap-2 cursor-pointer ${
                   active
-                    ? 'bg-[#0F4C81]/15 border-[#0F4C81] text-[#0F4C81]'
+                    ? 'bg-royal-blue/15 border-royal-blue text-royal-blue'
                     : errors.service
                     ? 'bg-slate-50 border-red-300 ring-1 ring-red-300 text-slate-600 hover:border-slate-350 hover:bg-slate-100'
                     : 'bg-slate-50 border-slate-200 text-slate-600 hover:border-slate-350 hover:bg-slate-100'
@@ -450,7 +450,7 @@ const onSubmit = async (data: ConsultationFormData) => {
             <select
               id="consultation-industry"
               {...register('industry')}
-              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all text-base text-slate-800 cursor-pointer ${
+              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 cursor-pointer ${
                 errors.industry
                   ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
                   : touchedFields.industry
@@ -481,7 +481,7 @@ const onSubmit = async (data: ConsultationFormData) => {
           <select
             id="consultation-company-size"
             {...register('companySize')}
-            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] transition-all text-base text-slate-800 cursor-pointer"
+            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/20 focus:border-royal-blue transition-all text-base text-slate-800 cursor-pointer"
           >
             <option value="">-- Select Size --</option>
             <option value="1-10">1-10 Employees</option>
@@ -497,7 +497,7 @@ const onSubmit = async (data: ConsultationFormData) => {
           <select
             id="consultation-meeting-type"
             {...register('preferredMeetingType')}
-            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] transition-all text-base text-slate-800 cursor-pointer"
+            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/20 focus:border-royal-blue transition-all text-base text-slate-800 cursor-pointer"
           >
             <option value="Video Call">Video Conference (Google Meet/Zoom)</option>
             <option value="Phone Call">Direct Phone Call</option>
@@ -513,7 +513,7 @@ const onSubmit = async (data: ConsultationFormData) => {
             type="text"
             placeholder="e.g. AWS, Postgres, Salesforce, React"
             {...register('currentTechStack')}
-            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] transition-all text-base text-slate-800 placeholder-slate-400"
+            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/20 focus:border-royal-blue transition-all text-base text-slate-800 placeholder-slate-400"
           />
         </div>
       </div>
@@ -527,7 +527,7 @@ const onSubmit = async (data: ConsultationFormData) => {
             type="text"
             placeholder="e.g. Automate support operations, migration to AWS, build a new SaaS product"
             {...register('businessGoal')}
-            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] transition-all text-base text-slate-800 placeholder-slate-400"
+            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/20 focus:border-royal-blue transition-all text-base text-slate-800 placeholder-slate-400"
           />
         </div>
 
@@ -538,7 +538,7 @@ const onSubmit = async (data: ConsultationFormData) => {
             rows={2}
             placeholder="e.g. Manual process bottleneck, slow dashboard speed, scaling issues, developer recruitment delay"
             {...register('currentChallenges')}
-            className="w-full px-5 py-4 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] transition-all text-base text-slate-800 placeholder-slate-400"
+            className="w-full px-5 py-4 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/20 focus:border-royal-blue transition-all text-base text-slate-800 placeholder-slate-400"
           />
         </div>
 
@@ -549,7 +549,7 @@ const onSubmit = async (data: ConsultationFormData) => {
             type="text"
             placeholder="e.g. 50% operational cost reduction, sub-second latency, launch MVP by Q3"
             {...register('expectedOutcome')}
-            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] transition-all text-base text-slate-800 placeholder-slate-400"
+            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/20 focus:border-royal-blue transition-all text-base text-slate-800 placeholder-slate-400"
           />
         </div>
       </div>
@@ -575,7 +575,7 @@ const onSubmit = async (data: ConsultationFormData) => {
                   onClick={() => setValue('budget', opt.id, { shouldValidate: true, shouldDirty: true })}
                   className={`w-full px-5 py-3.5 rounded-[16px] border text-base font-bold transition-all text-left flex items-center justify-between cursor-pointer ${
                     active
-                      ? 'bg-[#0F4C81] border-[#0F4C81] text-white shadow-sm'
+                      ? 'bg-royal-blue border-royal-blue text-white shadow-sm'
                       : errors.budget
                       ? 'bg-slate-50 border-red-300 ring-2 ring-red-100 text-slate-700 hover:bg-slate-100'
                       : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
@@ -613,7 +613,7 @@ const onSubmit = async (data: ConsultationFormData) => {
                   onClick={() => setValue('timeline', opt.id, { shouldValidate: true, shouldDirty: true })}
                   className={`w-full px-5 py-3.5 rounded-[16px] border text-base font-bold transition-all text-left flex items-center justify-between cursor-pointer ${
                     active
-                      ? 'bg-[#0F4C81] border-[#0F4C81] text-white shadow-sm'
+                      ? 'bg-royal-blue border-royal-blue text-white shadow-sm'
                       : errors.timeline
                       ? 'bg-slate-50 border-red-300 ring-2 ring-red-100 text-slate-700 hover:bg-slate-100'
                       : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
@@ -642,7 +642,7 @@ const onSubmit = async (data: ConsultationFormData) => {
             rows={4}
             placeholder="Please describe your technology requirements, project background, or team augmentation targets..."
             {...register('message')}
-            className={`w-full pl-5 pr-11 py-4 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
+            className={`w-full pl-5 pr-11 py-4 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
               errors.message
                 ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
                 : touchedFields.message
@@ -697,7 +697,7 @@ export function ConsultationForm() {
   return (
     <Suspense fallback={
       <div className="flex justify-center p-12">
-        <Loader2 className="animate-spin text-[#0F4C81]" size={36} />
+        <Loader2 className="animate-spin text-royal-blue" size={36} />
       </div>
     }>
       <ConsultationFormContent />

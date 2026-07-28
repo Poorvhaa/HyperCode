@@ -31,7 +31,7 @@ export function CareersFAQ() {
     <section className="py-24 bg-white border-b border-slate-100 text-left">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">FAQ</h2>
+          <h2 className="text-xs font-bold text-royal-blue tracking-widest uppercase mb-3">FAQ</h2>
           <h3 className="text-3xl font-extrabold text-slate-900 tracking-tight leading-none">
             {t('faqTitle')}
           </h3>

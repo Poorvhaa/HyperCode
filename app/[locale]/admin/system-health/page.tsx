@@ -102,7 +102,7 @@ export default function SystemHealthPage() {
   if (authLoading || (session && !userProfile)) {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#0F4C81]"></div>
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-royal-blue"></div>
       </div>
     );
   }
@@ -122,7 +122,7 @@ export default function SystemHealthPage() {
           </p>
           <button 
             onClick={() => router.push(`/${locale}/admin`)}
-            className="px-5 py-2.5 bg-[#0F4C81] hover:bg-[#0c3e6b] text-white font-semibold rounded-xl text-sm transition-all flex items-center justify-center gap-2 mx-auto cursor-pointer"
+            className="px-5 py-2.5 bg-royal-blue hover:bg-deep-navy text-white font-semibold rounded-xl text-sm transition-all flex items-center justify-center gap-2 mx-auto cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>{locale === 'es' ? 'Volver al Panel' : 'Back to Dashboard'}</span>
@@ -140,7 +140,7 @@ export default function SystemHealthPage() {
         <div className="flex justify-between items-center">
           <div>
             <h1 className="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
-              <Activity className="w-6 h-6 text-[#0F4C81]" />
+              <Activity className="w-6 h-6 text-royal-blue" />
               <span>{locale === 'es' ? 'Salud del Sistema' : 'System Health'}</span>
             </h1>
             <p className="text-sm text-slate-500 mt-1">
@@ -152,7 +152,7 @@ export default function SystemHealthPage() {
           <button
             onClick={loadHealthData}
             disabled={loading}
-            className="px-4 py-2 bg-[#0F4C81] hover:bg-[#0c3e6b] text-white text-xs font-bold rounded-xl shadow-sm transition-all cursor-pointer disabled:opacity-50"
+            className="px-4 py-2 bg-royal-blue hover:bg-deep-navy text-white text-xs font-bold rounded-xl shadow-sm transition-all cursor-pointer disabled:opacity-50"
           >
             {loading ? (locale === 'es' ? 'Actualizando...' : 'Refreshing...') : (locale === 'es' ? 'Actualizar' : 'Refresh')}
           </button>
@@ -160,7 +160,7 @@ export default function SystemHealthPage() {
 
         {loading && !healthReport ? (
           <div className="h-[400px] bg-white border border-slate-200 rounded-2xl flex items-center justify-center shadow-sm">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#0F4C81]"></div>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-royal-blue"></div>
           </div>
         ) : healthReport ? (
           <div className="space-y-6">

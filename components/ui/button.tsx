@@ -8,16 +8,16 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-primary text-primary-foreground [a]:hover:bg-primary/80',
+        default: 'bg-gradient-to-r from-royal-blue via-sky-blue to-green text-white hover:shadow-[0_4px_14px_rgba(20,91,255,0.25)] hover:-translate-y-0.5 active:translate-y-0 active:scale-98 transition-all duration-200 border-none',
         outline:
-          'border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50',
+          'border-royal-blue bg-white text-royal-blue hover:border-green hover:-translate-y-0.5 active:translate-y-0 active:scale-98 transition-all duration-200',
         secondary:
-          'bg-secondary text-secondary-foreground hover:bg-secondary/80 aria-expanded:bg-secondary aria-expanded:text-secondary-foreground',
+          'border-royal-blue bg-white text-royal-blue hover:border-green hover:-translate-y-0.5 active:translate-y-0 active:scale-98 transition-all duration-200',
         ghost:
-          'hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50',
+          'bg-transparent text-royal-blue hover:bg-royal-blue/10 active:translate-y-px transition-all duration-200',
         destructive:
           'bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40',
-        link: 'text-primary underline-offset-4 hover:underline',
+        link: 'text-royal-blue underline-offset-4 hover:underline',
       },
       size: {
         default:

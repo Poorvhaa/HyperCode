@@ -74,7 +74,7 @@ export function HeroBanner({
                 {breadcrumbs.map((crumb, idx) => (
                   <div key={idx} className="flex items-center gap-1.5">
                     {crumb.href ? (
-                      <Link href={crumb.href} className="hover:text-[#0F4C81] transition-colors">
+                      <Link href={crumb.href} className="hover:text-royal-blue transition-colors">
                         {crumb.label}
                       </Link>
                     ) : (
@@ -88,8 +88,8 @@ export function HeroBanner({
 
             {/* Category Badge */}
             {categoryLabel && (
-              <span className="inline-flex items-center gap-1.5 text-xs font-black text-[#0F4C81] tracking-widest uppercase">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#0F4C81]" />
+              <span className="inline-flex items-center gap-1.5 text-xs font-black text-royal-blue tracking-widest uppercase">
+                <span className="w-1.5 h-1.5 rounded-full bg-royal-blue" />
                 {categoryLabel}
               </span>
             )}
@@ -97,7 +97,7 @@ export function HeroBanner({
             <h1 className="text-4xl sm:text-5xl lg:text-[56px] font-black text-slate-900 tracking-tight leading-[1.1]">
               {title}{' '}
               {titleHighlight && (
-                <span className="text-[#0F4C81]">
+                <span className="text-royal-blue">
                   {titleHighlight}
                 </span>
               )}

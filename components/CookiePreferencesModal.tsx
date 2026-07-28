@@ -137,7 +137,7 @@ export function CookiePreferencesModal() {
             {/* Header */}
             <div className="p-6 sm:p-8 border-b border-slate-100 flex items-start justify-between gap-4">
               <div className="space-y-1">
-                <div className="flex items-center gap-2 text-[#0F4C81]">
+                <div className="flex items-center gap-2 text-royal-blue">
                   <ShieldCheck size={20} className="stroke-[2.2px]" />
                   <span className="text-[10px] font-black uppercase tracking-widest">{t('title') ? 'Privacy' : 'HyperCode Privacy'}</span>
                 </div>
@@ -152,7 +152,7 @@ export function CookiePreferencesModal() {
                 type="button"
                 onClick={closePreferences}
                 aria-label={t('close')}
-                className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200/60 flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-100/80 active:scale-95 transition-all cursor-pointer outline-none focus:ring-2 focus:ring-[#0F4C81]/25"
+                className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200/60 flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-100/80 active:scale-95 transition-all cursor-pointer outline-none focus:ring-2 focus:ring-royal-blue/25"
               >
                 <X size={18} className="stroke-[2.2px]" />
               </button>
@@ -170,7 +170,7 @@ export function CookiePreferencesModal() {
                 {/* Strictly Necessary */}
                 <div className="p-5 sm:p-6 rounded-2xl border border-slate-100 bg-slate-50/50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition-all">
                   <div className="flex items-start gap-4 flex-1">
-                    <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-[#0F4C81] flex-shrink-0">
+                    <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-royal-blue flex-shrink-0">
                       <Lock size={18} />
                     </div>
                     <div className="space-y-1 text-left">
@@ -264,14 +264,14 @@ export function CookiePreferencesModal() {
                 <button
                   type="button"
                   onClick={rejectAll}
-                  className="w-full sm:w-auto text-center px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 hover:text-slate-800 bg-white border border-slate-200 hover:border-slate-300 transition-all cursor-pointer outline-none focus:ring-2 focus:ring-[#0F4C81]/25"
+                  className="w-full sm:w-auto text-center px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 hover:text-slate-800 bg-white border border-slate-200 hover:border-slate-300 transition-all cursor-pointer outline-none focus:ring-2 focus:ring-royal-blue/25"
                 >
                   {t('rejectAll')}
                 </button>
                 <button
                   type="button"
                   onClick={acceptAll}
-                  className="w-full sm:w-auto text-center px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 hover:text-slate-800 bg-white border border-slate-200 hover:border-slate-300 transition-all cursor-pointer outline-none focus:ring-2 focus:ring-[#0F4C81]/25"
+                  className="w-full sm:w-auto text-center px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 hover:text-slate-800 bg-white border border-slate-200 hover:border-slate-300 transition-all cursor-pointer outline-none focus:ring-2 focus:ring-royal-blue/25"
                 >
                   {t('acceptAll')}
                 </button>
@@ -279,7 +279,7 @@ export function CookiePreferencesModal() {
               <button
                 type="button"
                 onClick={handleSave}
-                className="w-full sm:w-auto text-center px-6 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-white bg-[#0F4C81] hover:bg-[#0D3F6D] shadow-lg shadow-blue-500/10 hover:shadow-blue-500/15 active:scale-98 transition-all cursor-pointer border-none outline-none focus:ring-2 focus:ring-[#0F4C81]/25"
+                className="w-full sm:w-auto text-center px-6 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-white bg-royal-blue hover:bg-deep-navy shadow-lg shadow-blue-500/10 hover:shadow-blue-500/15 active:scale-98 transition-all cursor-pointer border-none outline-none focus:ring-2 focus:ring-royal-blue/25"
               >
                 {t('savePreferences')}
               </button>

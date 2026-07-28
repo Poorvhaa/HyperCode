@@ -25,7 +25,7 @@ export function TechnologyEcosystem() {
           {/* Left info column */}
           <div className="lg:col-span-5 space-y-6">
             <div>
-              <h2 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">
+              <h2 className="text-xs font-bold text-royal-blue tracking-widest uppercase mb-3">
                 INTEGRATED STACK
               </h2>
               <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
@@ -36,7 +36,7 @@ export function TechnologyEcosystem() {
               We leverage modern analytics architectures, cloud platforms, and engineering frameworks to deliver stable, high-performance data systems. Our consultants maintain gold-standard certifications and deep advisory knowledge.
             </p>
             <div className="pt-4 flex items-center space-x-3 text-xs text-slate-500 font-bold uppercase tracking-wider">
-              <Award size={18} className="text-[#0F4C81]" />
+              <Award size={18} className="text-royal-blue" />
               <span>Certified Partner Ecosystem</span>
             </div>
           </div>

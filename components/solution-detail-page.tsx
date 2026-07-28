@@ -192,7 +192,7 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
             {/* Text details on left */}
             <div className="lg:col-span-7 space-y-6">
-              <span className="text-[10px] font-extrabold text-[#0F4C81] tracking-widest uppercase block">
+              <span className="text-[10px] font-extrabold text-royal-blue tracking-widest uppercase block">
                 {isEs ? 'Resumen del Servicio' : 'Service Overview'}
               </span>
               <h2 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">
@@ -222,7 +222,7 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
       <section className="section-padding bg-[#F8FAFC] border-b border-slate-200 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-16 space-y-4">
-            <span className="text-[10px] font-extrabold text-[#0F4C81] tracking-widest uppercase">
+            <span className="text-[10px] font-extrabold text-royal-blue tracking-widest uppercase">
               {activeTrans.keySolutionsLabel}
             </span>
             <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">
@@ -239,10 +239,10 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
             {activeTrans.features.map((feature: any, i: number) => (
               <div
                 key={i}
-                className="premium-card p-8 bg-white border border-slate-200 shadow-sm hover:shadow-xl hover:border-[#0F4C81]/30 hover:scale-[1.02] transition-all duration-300 flex flex-col justify-between"
+                className="premium-card p-8 bg-white border border-slate-200 shadow-sm hover:shadow-xl hover:border-royal-blue/30 hover:scale-[1.02] transition-all duration-300 flex flex-col justify-between"
               >
                 <div className="space-y-5">
-                  <div className="w-12 h-12 rounded-2xl bg-[#0F4C81]/5 border border-[#0F4C81]/15 text-[#0F4C81] flex items-center justify-center shadow-inner">
+                  <div className="w-12 h-12 rounded-2xl bg-royal-blue/5 border border-royal-blue/15 text-royal-blue flex items-center justify-center shadow-inner">
                     <CheckCircle size={20} />
                   </div>
                   <h4 className="text-[22px] font-bold text-slate-900 tracking-tight leading-[1.2]">{feature.title}</h4>
@@ -258,7 +258,7 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
       <section className="section-padding bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-16 space-y-4">
-            <span className="text-[10px] font-extrabold text-[#0F4C81] tracking-widest uppercase">
+            <span className="text-[10px] font-extrabold text-royal-blue tracking-widest uppercase">
               {activeTrans.benefitsTitle}
             </span>
             <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">{activeTrans.benefitsTitle}</h3>
@@ -271,7 +271,7 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
 
               return (
                 <div key={i} className="premium-card flex gap-5 items-start p-6 bg-[#F8FAFC] border border-slate-200 shadow-sm">
-                  <div className="w-11 h-11 rounded-2xl bg-white border border-slate-200 text-[#0F4C81] flex items-center justify-center flex-shrink-0 shadow-sm animate-pulse">
+                  <div className="w-11 h-11 rounded-2xl bg-white border border-slate-200 text-royal-blue flex items-center justify-center flex-shrink-0 shadow-sm animate-pulse">
                     <Icon size={18} />
                   </div>
                   <div className="space-y-1.5">
@@ -289,7 +289,7 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
       <section className="section-padding bg-[#F8FAFC] border-b border-slate-200 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl mb-20 space-y-4">
-            <span className="text-[10px] font-extrabold text-[#0F4C81] tracking-widest uppercase">
+            <span className="text-[10px] font-extrabold text-royal-blue tracking-widest uppercase">
               {isEs ? 'Metodología de Entrega' : 'Delivery Methodology'}
             </span>
             <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">
@@ -312,12 +312,12 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
                 return (
                   <div key={i} className="flex flex-col md:flex-row items-stretch gap-8 relative">
                     {/* Number badge on timeline */}
-                    <div className="absolute left-4 lg:left-1/2 w-8 h-8 rounded-full bg-[#0F4C81] text-white font-black text-xs flex items-center justify-center -translate-x-1/2 border-4 border-slate-50 z-10 hidden md:flex" />
+                    <div className="absolute left-4 lg:left-1/2 w-8 h-8 rounded-full bg-royal-blue text-white font-black text-xs flex items-center justify-center -translate-x-1/2 border-4 border-slate-50 z-10 hidden md:flex" />
 
                     <div className={`w-full md:w-1/2 flex ${isEven ? 'md:justify-end md:text-right' : 'md:justify-start md:text-left'}`}>
-                      <div className={`premium-card p-6 md:p-8 bg-white border border-slate-200 shadow-sm max-w-xl space-y-3 relative group hover:border-[#0F4C81]/30 transition-all ${isEven ? 'md:mr-8' : 'md:ml-8'}`}>
+                      <div className={`premium-card p-6 md:p-8 bg-white border border-slate-200 shadow-sm max-w-xl space-y-3 relative group hover:border-royal-blue/30 transition-all ${isEven ? 'md:mr-8' : 'md:ml-8'}`}>
                         <div className={`flex items-center gap-3 ${isEven ? 'md:flex-row-reverse' : 'flex-row'}`}>
-                          <span className="text-xs font-black text-white px-2.5 py-1 bg-[#0F4C81] rounded-lg">Step 0{i + 1}</span>
+                          <span className="text-xs font-black text-white px-2.5 py-1 bg-royal-blue rounded-lg">Step 0{i + 1}</span>
                           <h4 className="text-[22px] font-bold text-slate-900 leading-[1.2]">{step.title}</h4>
                         </div>
                         <p className="text-[16px] text-slate-655 leading-[1.7] font-semibold">{step.desc}</p>
@@ -336,7 +336,7 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
       <section className="section-padding bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-16 space-y-4">
-            <span className="text-[10px] font-extrabold text-[#0F4C81] tracking-widest uppercase">
+            <span className="text-[10px] font-extrabold text-royal-blue tracking-widest uppercase">
               {activeTrans.techTitle}
             </span>
             <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">{activeTrans.techTitle}</h3>
@@ -349,9 +349,9 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {activeTrans.technologies.map((tech: any, i: number) => (
-              <div key={i} className="premium-card p-6 rounded-2xl border border-slate-200 bg-white shadow-sm flex flex-col justify-between hover:border-[#0F4C81] hover:shadow-md transition-all duration-300 group">
+              <div key={i} className="premium-card p-6 rounded-2xl border border-slate-200 bg-white shadow-sm flex flex-col justify-between hover:border-royal-blue hover:shadow-md transition-all duration-300 group">
                 <div className="space-y-2">
-                  <h4 className="text-[22px] font-bold text-slate-900 group-hover:text-[#0F4C81] transition-colors leading-[1.2]">{tech.name}</h4>
+                  <h4 className="text-[22px] font-bold text-slate-900 group-hover:text-royal-blue transition-colors leading-[1.2]">{tech.name}</h4>
                   <p className="text-[9px] text-slate-400 leading-relaxed font-extrabold uppercase tracking-widest">{tech.role}</p>
                 </div>
               </div>
@@ -364,7 +364,7 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
       <section className="section-padding bg-[#F8FAFC] border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-16 space-y-4">
-            <span className="text-[10px] font-extrabold text-[#0F4C81] tracking-widest uppercase">
+            <span className="text-[10px] font-extrabold text-royal-blue tracking-widest uppercase">
               {isEs ? 'Industrias que Servimos' : 'Industries We Serve'}
             </span>
             <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">
@@ -378,7 +378,7 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
               const Icon = INDUSTRY_ICON_MAP[iconKey] || Terminal;
               return (
                 <div key={i} className="premium-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all text-center flex flex-col items-center gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-[#0F4C81]">
+                  <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-royal-blue">
                     <Icon size={18} />
                   </div>
                   <span className="text-xs font-extrabold text-slate-800">{ind}</span>
@@ -393,7 +393,7 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
       <section className="section-padding bg-white border-b border-slate-200">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 space-y-4">
-            <span className="text-[10px] font-extrabold text-[#0F4C81] tracking-widest uppercase">
+            <span className="text-[10px] font-extrabold text-royal-blue tracking-widest uppercase">
               {isEs ? 'Preguntas Frecuentes' : 'Frequently Asked Questions'}
             </span>
             <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">
@@ -408,10 +408,10 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
                 <div key={idx} className="border border-slate-200 rounded-[20px] overflow-hidden bg-slate-50/50 transition-all duration-300">
                   <button
                     onClick={() => toggleFaq(idx)}
-                    className="w-full p-6 text-left flex items-center justify-between gap-4 font-extrabold text-[16px] text-slate-900 hover:text-[#0F4C81] transition-colors"
+                    className="w-full p-6 text-left flex items-center justify-between gap-4 font-extrabold text-[16px] text-slate-900 hover:text-royal-blue transition-colors"
                   >
                     <span>{faq.q}</span>
-                    <ChevronDown size={16} className={`transition-transform duration-300 flex-shrink-0 ${isOpen ? 'rotate-180 text-[#0F4C81]' : 'text-slate-450'}`} />
+                    <ChevronDown size={16} className={`transition-transform duration-300 flex-shrink-0 ${isOpen ? 'rotate-180 text-royal-blue' : 'text-slate-450'}`} />
                   </button>
                   <AnimatePresence initial={false}>
                     {isOpen && (
@@ -439,7 +439,7 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
       <section className="section-padding bg-[#F8FAFC] border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-12 space-y-2">
-            <span className="text-[10px] font-extrabold text-[#0F4C81] tracking-widest uppercase">
+            <span className="text-[10px] font-extrabold text-royal-blue tracking-widest uppercase">
               {isEs ? 'Servicios Relacionados' : 'Related Services'}
             </span>
             <h4 className="text-[22px] font-bold text-slate-900">
@@ -452,7 +452,7 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
               <Link
                 key={idx}
                 href={`/solutions/${rel.slug}`}
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-200 bg-white hover:border-[#0F4C81] text-xs font-bold text-slate-700 hover:text-[#0F4C81] shadow-sm transition-all"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-200 bg-white hover:border-royal-blue text-xs font-bold text-slate-700 hover:text-royal-blue shadow-sm transition-all"
               >
                 <span>{rel.name}</span>
                 <ArrowRight size={12} />
@@ -467,7 +467,7 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
         <section className="section-padding bg-white border-b border-slate-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mb-12 space-y-2 text-left">
-              <span className="text-[10px] font-extrabold text-[#0F4C81] tracking-widest uppercase">
+              <span className="text-[10px] font-extrabold text-royal-blue tracking-widest uppercase">
                 {isEs ? 'Casos de Éxito Relacionados' : 'Related Case Studies'}
               </span>
               <h4 className="text-[22px] font-bold text-slate-900">
@@ -480,7 +480,7 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
       )}
 
       {/* 10. CTA Section */}
-      <section className="section-padding bg-[#0F4C81] relative overflow-hidden text-center text-white">
+      <section className="section-padding bg-royal-blue relative overflow-hidden text-center text-white">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08)_0%,transparent_100%)] pointer-events-none" />
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-8">
           <span className="text-xs font-black text-blue-200 tracking-widest uppercase">{isEs ? 'ENTRE EN CONTACTO' : 'GET IN TOUCH'}</span>
@@ -493,13 +493,13 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-4">
             <Link
               href={`/${locale}/consultation`}
-              className="btn-secondary h-12 px-8 inline-flex items-center justify-center font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md w-full sm:w-auto"
+              className="PrimaryBrandButton w-full sm:w-auto"
             >
               {isEs ? 'Programar Consulta' : 'Schedule Consultation'}
             </Link>
             <Link
               href={`/${locale}/contact`}
-              className="inline-flex items-center justify-center h-12 px-8 bg-white/10 border border-white/10 text-white font-bold text-xs uppercase tracking-wider rounded-xl hover:bg-white/20 transition-all w-full sm:w-auto"
+              className="SecondaryBrandButton w-full sm:w-auto"
             >
               {isEs ? 'Contactar Soporte' : 'Contact Us'}
             </Link>

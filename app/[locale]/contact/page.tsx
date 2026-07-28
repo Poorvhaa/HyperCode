@@ -140,7 +140,7 @@ export default async function ContactPage({ params }: Props) {
               {/* Location Card */}
               <div className="premium-card bg-white border border-slate-200 rounded-[24px] p-7 shadow-sm space-y-5">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-[#0F4C81] shadow-sm">
+                  <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-royal-blue shadow-sm">
                     <MapPin size={20} />
                   </div>
                   <h3 className="font-extrabold text-slate-900 uppercase text-xs tracking-wider">{activeTrans.hq}</h3>
@@ -155,7 +155,7 @@ export default async function ContactPage({ params }: Props) {
               {/* Hours Card */}
               <div className="premium-card bg-white border border-slate-200 rounded-[24px] p-7 shadow-sm space-y-5">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-[#0F4C81] shadow-sm">
+                  <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-royal-blue shadow-sm">
                     <Clock size={20} />
                   </div>
                   <h3 className="font-extrabold text-slate-900 uppercase text-xs tracking-wider">{activeTrans.hours}</h3>
@@ -167,12 +167,12 @@ export default async function ContactPage({ params }: Props) {
               </div>
 
               {/* Response Time SLA Card */}
-              <div className="premium-card p-7 bg-[#0F4C81]/5 border border-slate-200 shadow-sm space-y-3">
+              <div className="premium-card p-7 bg-royal-blue/5 border border-slate-200 shadow-sm space-y-3">
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-emerald-500" />
                   <span className="text-[10px] font-extrabold tracking-wider text-slate-500 uppercase">{activeTrans.slaBadge}</span>
                 </div>
-                <p className="text-3xl font-black text-[#0F4C81]">{activeTrans.slaTitle}</p>
+                <p className="text-3xl font-black text-royal-blue">{activeTrans.slaTitle}</p>
                 <p className="text-[16px] md:text-[17px] text-slate-655 leading-[1.7] font-semibold">
                   {activeTrans.slaDesc}
                 </p>
@@ -180,7 +180,7 @@ export default async function ContactPage({ params }: Props) {
 
               {/* Secure Trust Badge */}
               <div className="flex items-center gap-3 px-6 py-4 bg-slate-50 border border-slate-200 rounded-[16px]">
-                <Shield size={16} className="text-[#0F4C81]" />
+                <Shield size={16} className="text-royal-blue" />
                 <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">SSL Encrypted Intake System</span>
               </div>
 
@@ -205,7 +205,7 @@ export default async function ContactPage({ params }: Props) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             
             {/* Box 1 */}
-            <div className="premium-card p-8 bg-white border border-slate-200 shadow-sm space-y-5 flex flex-col justify-between hover:-translate-y-1 hover:border-[#0F4C81] transition-all duration-300">
+            <div className="premium-card p-8 bg-white border border-slate-200 shadow-sm space-y-5 flex flex-col justify-between hover:-translate-y-1 hover:border-royal-blue transition-all duration-300">
               <div className="space-y-4">
                 <h3 className="text-[22px] font-bold text-slate-900 leading-[1.2]">{activeTrans.boxConsultingTitle}</h3>
                 <p className="text-[16px] md:text-[17px] text-slate-655 leading-[1.7] font-semibold">
@@ -215,7 +215,7 @@ export default async function ContactPage({ params }: Props) {
               <div className="pt-2">
                 <Link
                   href="/consultation"
-                  className="inline-flex items-center text-xs font-bold text-[#0F4C81] hover:gap-2 transition-all gap-1"
+                  className="inline-flex items-center text-xs font-bold text-royal-blue hover:gap-2 transition-all gap-1"
                 >
                   <span>{activeTrans.boxConsultingLink}</span>
                   <ArrowRight size={14} />
@@ -224,7 +224,7 @@ export default async function ContactPage({ params }: Props) {
             </div>
 
             {/* Box 2 */}
-            <div className="premium-card p-8 bg-white border border-slate-200 shadow-sm space-y-5 flex flex-col justify-between hover:-translate-y-1 hover:border-[#0F4C81] transition-all duration-300">
+            <div className="premium-card p-8 bg-white border border-slate-200 shadow-sm space-y-5 flex flex-col justify-between hover:-translate-y-1 hover:border-royal-blue transition-all duration-300">
               <div className="space-y-4">
                 <h3 className="text-[22px] font-bold text-slate-900 leading-[1.2]">{activeTrans.boxStaffingTitle}</h3>
                 <p className="text-[16px] md:text-[17px] text-slate-655 leading-[1.7] font-semibold">
@@ -234,7 +234,7 @@ export default async function ContactPage({ params }: Props) {
               <div className="pt-2">
                 <Link
                   href="/consultation?service=IT%20Staffing"
-                  className="inline-flex items-center text-xs font-bold text-[#0F4C81] hover:gap-2 transition-all gap-1"
+                  className="inline-flex items-center text-xs font-bold text-royal-blue hover:gap-2 transition-all gap-1"
                 >
                   <span>{activeTrans.boxStaffingLink}</span>
                   <ArrowRight size={14} />
@@ -243,14 +243,14 @@ export default async function ContactPage({ params }: Props) {
             </div>
 
             {/* Box 3 */}
-            <div className="premium-card p-8 bg-white border border-slate-200 shadow-sm space-y-5 flex flex-col justify-between hover:-translate-y-1 hover:border-[#0F4C81] transition-all duration-300">
+            <div className="premium-card p-8 bg-white border border-slate-200 shadow-sm space-y-5 flex flex-col justify-between hover:-translate-y-1 hover:border-royal-blue transition-all duration-300">
               <div className="space-y-4">
                 <h3 className="text-[22px] font-bold text-slate-900 leading-[1.2]">{activeTrans.boxPartnershipTitle}</h3>
                 <p className="text-[16px] md:text-[17px] text-slate-655 leading-[1.7] font-semibold">
                   {activeTrans.boxPartnershipDesc}
                 </p>
               </div>
-              <p className="text-[10px] font-extrabold text-[#0F4C81] uppercase tracking-wider">
+              <p className="text-[10px] font-extrabold text-royal-blue uppercase tracking-wider">
                 {activeTrans.boxPartnershipFooter}
               </p>
             </div>

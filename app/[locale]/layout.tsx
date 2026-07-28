@@ -171,7 +171,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
     '@type': 'Corporation',
     'name': 'HyperCode',
     'url': `https://www.hypercode.com/${locale}`,
-    'logo': 'https://www.hypercode.com/icon.svg',
+    'logo': '/hypercodeit.logo.png',
     'description': jsonLdDescription,
     'address': {
       '@type': 'PostalAddress',

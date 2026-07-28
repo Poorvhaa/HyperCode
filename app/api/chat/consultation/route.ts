@@ -117,7 +117,7 @@ export async function POST(req: Request) {
         // Admin Alert Email HTML
         const adminEmailHtml = `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc;">
-            <div style="background-color: #0F4C81; color: white; padding: 15px; border-radius: 6px; text-align: center;">
+            <div style="background-color: #145BFF; color: white; padding: 15px; border-radius: 6px; text-align: center;">
               <h2 style="margin: 0; font-size: 20px;">New Consultation Request via AI Consultant</h2>
               <p style="margin: 5px 0 0 0; font-size: 13px;">Selected Service: <strong>${service}</strong></p>
             </div>
@@ -190,7 +190,7 @@ export async function POST(req: Request) {
         const userEmailHtml = isSpanish ? `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;">
             <div style="text-align: center; padding-bottom: 20px;">
-              <h2 style="color: #0f4c81; margin: 0;">HyperCode</h2>
+              <h2 style="color: #145BFF; margin: 0;">HyperCode</h2>
               <p style="color: #64748b; font-size: 14px; margin: 5px 0 0 0;">Soluciones de Transformación Digital</p>
             </div>
             <div style="color: #1e293b; line-height: 1.6; border-top: 1px solid #e2e8f0; padding-top: 20px;">
@@ -206,14 +206,14 @@ export async function POST(req: Request) {
               <p>Nos pondremos en contacto con usted en un plazo de 24 horas hábiles con invitaciones de calendario (Zoom/Teams).</p>
               <p>Esperamos trabajar con usted.</p>
               <p>Atentamente,</p>
-              <p style="margin: 0; font-weight: bold; color: #0f4c81;">Práctica de Consultoría de HyperCode</p>
+              <p style="margin: 0; font-weight: bold; color: #145BFF;">Práctica de Consultoría de HyperCode</p>
               <p style="margin: 0; font-size: 12px; color: #64748b;">Schaumburg, IL</p>
             </div>
           </div>
         ` : `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;">
             <div style="text-align: center; padding-bottom: 20px;">
-              <h2 style="color: #0f4c81; margin: 0;">HyperCode</h2>
+              <h2 style="color: #145BFF; margin: 0;">HyperCode</h2>
               <p style="color: #64748b; font-size: 14px; margin: 5px 0 0 0;">Digital Transformation Solutions</p>
             </div>
             <div style="color: #1e293b; line-height: 1.6; border-top: 1px solid #e2e8f0; padding-top: 20px;">
@@ -228,7 +228,7 @@ export async function POST(req: Request) {
               </div>
               <p>We will contact you within 24 business hours with custom videoconference calendar invites.</p>
               <p>We look forward to working on this initiative.</p>
-              <p style="margin: 0; font-weight: bold; color: #0f4c81;">HyperCode Consulting Practice</p>
+              <p style="margin: 0; font-weight: bold; color: #145BFF;">HyperCode Consulting Practice</p>
               <p style="margin: 0; font-size: 12px; color: #64748b;">Schaumburg, IL</p>
             </div>
           </div>

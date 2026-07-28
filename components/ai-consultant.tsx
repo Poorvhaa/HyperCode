@@ -72,7 +72,7 @@ const MarkdownRenderer = ({ text, locale }: { text: string; locale: string }) =>
               href={url}
               target={url.startsWith('http') ? '_blank' : '_self'}
               rel="noopener noreferrer"
-              className="text-[#0F4C81] hover:text-blue-600 underline font-extrabold transition-all"
+              className="text-royal-blue hover:text-blue-600 underline font-extrabold transition-all"
             >
               {label}
             </a>
@@ -1619,10 +1619,10 @@ if (!response.ok) {
             className="w-full sm:w-[380px] lg:w-[400px] xl:w-[420px] xl:max-w-[450px] xl:min-w-[390px] h-[min(80dvh,calc(100dvh-20px))] sm:h-[min(75vh,calc(100vh-40px))] lg:h-[min(620px,calc(100vh-48px))] xl:h-[min(650px,calc(100vh-48px))] bg-white/95 backdrop-blur-xl border border-slate-200 rounded-[28px] shadow-[0_24px_60px_rgba(15,76,129,0.15)] overflow-hidden flex flex-col pointer-events-auto mb-0"
           >
             {/* Header bar (shrink-0 prevents squash) */}
-            <div className="h-[76px] px-5 border-b border-slate-100 flex justify-between items-center bg-slate-50 shrink-0">
+            <div className="h-[76px] px-5 border-b border-slate-800 flex justify-between items-center bg-deep-navy shrink-0 text-white">
               <div className="flex items-center gap-3">
                 <div className="relative">
-                  <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#0F4C81] to-blue-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/20">
+                  <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-royal-blue to-green flex items-center justify-center text-white shadow-lg shadow-blue-500/20">
                     <Bot className="w-5 h-5" />
                   </div>
                   {/* Status Indicator */}
@@ -1632,8 +1632,8 @@ if (!response.ok) {
                   </span>
                 </div>
                 <div className="text-left">
-                  <h3 className="text-xs font-black text-slate-900 tracking-wider uppercase leading-none">{t('title')}</h3>
-                  <p className="text-[9px] text-slate-505 font-extrabold tracking-widest mt-1 leading-none uppercase flex items-center gap-1">
+                  <h3 className="text-xs font-black text-white tracking-wider uppercase leading-none">{t('title')}</h3>
+                  <p className="text-[9px] text-slate-300 font-extrabold tracking-widest mt-1 leading-none uppercase flex items-center gap-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                     {locale === 'es' ? 'Consejero de IA En Línea' : 'AI Advisor Online'}
                   </p>
@@ -1646,7 +1646,7 @@ if (!response.ok) {
                   onClick={() => setWindowState('minimized')}
                   title={t('actions.minimize')}
                   aria-label="Minimize AI Consultant"
-                  className="w-8 h-8 hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-[#0F4C81] text-slate-500 rounded-xl transition-colors cursor-pointer outline-none flex items-center justify-center shrink-0 border-none"
+                  className="w-8 h-8 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-royal-blue text-slate-300 rounded-xl transition-colors cursor-pointer outline-none flex items-center justify-center shrink-0 border-none"
                 >
                   <Minus className="w-4 h-4" />
                 </button>
@@ -1654,7 +1654,7 @@ if (!response.ok) {
                   onClick={() => setWindowState('closed')}
                   title={t('actions.close')}
                   aria-label="Close AI Consultant"
-                  className="w-8 h-8 bg-slate-100 hover:bg-rose-50 hover:text-rose-600 focus-visible:ring-2 focus-visible:ring-[#0F4C81] text-slate-500 rounded-xl transition-colors cursor-pointer outline-none flex items-center justify-center shrink-0 border-none"
+                  className="w-8 h-8 bg-white/10 hover:bg-rose-500/20 hover:text-rose-300 focus-visible:ring-2 focus-visible:ring-royal-blue text-slate-300 rounded-xl transition-colors cursor-pointer outline-none flex items-center justify-center shrink-0 border-none"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -1671,7 +1671,7 @@ if (!response.ok) {
                     animate={{ opacity: 1, scale: 1 }}
                     className="flex flex-col items-center max-w-[90%] text-center my-auto py-4 animate-pulse"
                   >
-                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#0F4C81] to-blue-600 flex items-center justify-center text-white shadow-xl shadow-blue-500/25 mb-4 animate-spin">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-royal-blue to-green flex items-center justify-center text-white shadow-xl shadow-blue-500/25 mb-4 animate-spin">
                       <Loader2 className="w-7 h-7" />
                     </div>
                     <p className="text-[10px] text-slate-500 font-bold tracking-widest mt-4 uppercase">
@@ -1688,7 +1688,7 @@ if (!response.ok) {
                     transition={{ duration: 0.3 }}
                     className="flex flex-col items-center max-w-[90%] text-center my-auto py-4"
                   >
-                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#0F4C81] to-blue-600 flex items-center justify-center text-white shadow-xl shadow-blue-500/25 mb-4 animate-pulse">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-royal-blue to-green flex items-center justify-center text-white shadow-xl shadow-blue-500/25 mb-4 animate-pulse">
                       <Bot className="w-7 h-7" />
                     </div>
                     {messages.length > 0 && (
@@ -1696,7 +1696,7 @@ if (!response.ok) {
                         <div className="space-y-2">
                           <p className="font-extrabold text-sm text-slate-900 flex items-center gap-1.5">{greetingText}</p>
                           <p className="text-slate-655 font-semibold">{introText}</p>
-                          <p className="text-[#0F4C81] font-bold pt-2 border-t border-slate-200/50 mt-2">{questionText}</p>
+                          <p className="text-royal-blue font-bold pt-2 border-t border-slate-200/50 mt-2">{questionText}</p>
                         </div>
                       </div>
                     )}
@@ -1713,7 +1713,7 @@ if (!response.ok) {
                               key={idx}
                               onClick={() => routeSuggestedPrompt(prompt)}
                               disabled={isSending || isTyping}
-                              className="px-3.5 py-2 bg-slate-50 hover:bg-[#0F4C81] hover:border-[#0F4C81] focus-visible:ring-2 focus-visible:ring-[#0F4C81] focus-visible:ring-offset-1 outline-none text-slate-600 hover:text-white rounded-2xl text-[11px] font-bold border border-slate-200 transition-all duration-300 cursor-pointer shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 shrink-0"
+                              className="px-3.5 py-2 bg-slate-50 hover:bg-royal-blue hover:border-royal-blue focus-visible:ring-2 focus-visible:ring-royal-blue focus-visible:ring-offset-1 outline-none text-slate-600 hover:text-white rounded-2xl text-[11px] font-bold border border-slate-200 transition-all duration-300 cursor-pointer shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 shrink-0"
                             >
                               {getCompactChipLabel(prompt, locale)}
                             </button>
@@ -1741,7 +1741,7 @@ if (!response.ok) {
                         className={`w-7 h-7 rounded-xl shrink-0 flex items-center justify-center text-[10px] font-bold shadow-sm ${
                           msg.sender === 'user' 
                             ? 'bg-slate-100 text-slate-600' 
-                            : 'bg-gradient-to-tr from-[#0F4C81] to-blue-600 text-white'
+                            : 'bg-gradient-to-tr from-royal-blue to-green text-white'
                         }`}
                       >
                         {msg.sender === 'user' ? <User className="w-3.5 h-3.5" /> : <Bot className="w-3.5 h-3.5" />}
@@ -1750,7 +1750,7 @@ if (!response.ok) {
                         <div
                           className={`px-4 py-3 rounded-2xl text-xs leading-relaxed whitespace-pre-wrap font-semibold ${
                             msg.sender === 'user'
-                              ? 'bg-[#0F4C81] text-white rounded-tr-none shadow-md shadow-[#0F4C81]/15'
+                              ? 'bg-royal-blue text-white rounded-tr-none shadow-md shadow-[#145BFF]/15'
                               : 'bg-slate-50 border border-slate-200 text-slate-800 rounded-tl-none shadow-sm'
                           }`}
                         >
@@ -1780,7 +1780,7 @@ if (!response.ok) {
                   
                   {isTyping && (
                     <div className="flex gap-3 self-start items-center">
-                      <div className="w-7 h-7 rounded-xl bg-gradient-to-tr from-[#0F4C81] to-blue-600 flex items-center justify-center text-white shrink-0 shadow-sm">
+                      <div className="w-7 h-7 rounded-xl bg-gradient-to-tr from-royal-blue to-green flex items-center justify-center text-white shrink-0 shadow-sm">
                         <Bot className="w-3.5 h-3.5 animate-pulse" />
                       </div>
                       <div className="bg-slate-50 border border-slate-200 px-4 py-3 rounded-2xl rounded-tl-none flex items-center gap-1.5 shadow-sm">
@@ -1794,7 +1794,7 @@ if (!response.ok) {
                   {chatbotState.recommendations && (
                     <div className="mt-4 p-4 bg-slate-50 border border-slate-200 rounded-2xl text-slate-800 space-y-3 shadow-inner text-left">
                       <div className="flex items-center gap-2 pb-2 border-b border-slate-200">
-                        <Sparkles className="w-4 h-4 text-[#0F4C81]" />
+                        <Sparkles className="w-4 h-4 text-royal-blue" />
                         <span className="text-xs font-black uppercase text-slate-900 tracking-wider">
                           {locale === 'es' ? 'Recomendación Técnica' : 'Technical Recommendation'}
                         </span>
@@ -1906,14 +1906,14 @@ if (!response.ok) {
                     className="space-y-4 text-left p-4 bg-white border border-slate-200 rounded-2xl animate-fadeIn"
                   >
                     <div className="flex justify-between items-center pb-2 border-b border-slate-150">
-                      <h4 className="text-xs font-extrabold text-[#0F4C81] uppercase tracking-wider flex items-center gap-1.5">
+                      <h4 className="text-xs font-extrabold text-royal-blue uppercase tracking-wider flex items-center gap-1.5">
                         <Sparkles className="w-3.5 h-3.5" />
                         {t('leadQualification.title')}
                       </h4>
                       <button
                         type="button"
                         onClick={() => setActiveFlow('chat')}
-                        className="text-[10px] text-slate-550 hover:text-[#0F4C81] font-bold flex items-center gap-1 cursor-pointer py-1 px-2 hover:bg-slate-100 rounded-lg transition-colors border-none"
+                        className="text-[10px] text-slate-550 hover:text-royal-blue font-bold flex items-center gap-1 cursor-pointer py-1 px-2 hover:bg-slate-100 rounded-lg transition-colors border-none"
                       >
                         <ArrowLeft className="w-3 h-3" />
                         {t('actions.back')}
@@ -1944,12 +1944,12 @@ if (!response.ok) {
                               const err = validateNameInput(val);
                               setFieldErrors(prev => ({ ...prev, name: err }));
                             }}
-                            className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none ${
+                            className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all outline-none ${
                               fieldErrors.name
                                 ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
                                 : (formName.trim().length >= 2 && NAME_REGEX.test(formName.trim()))
                                 ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
-                                : 'border-slate-200 focus:border-[#0F4C81]'
+                                : 'border-slate-200 focus:border-royal-blue'
                             }`}
                           />
                           {formName.trim().length >= 2 && NAME_REGEX.test(formName.trim()) && !fieldErrors.name && (
@@ -1977,12 +1977,12 @@ if (!response.ok) {
                                 const err = validateEmailInput(val);
                                 setFieldErrors(prev => ({ ...prev, email: err }));
                               }}
-                              className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none ${
+                              className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all outline-none ${
                                 fieldErrors.email
                                   ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
                                   : EMAIL_REGEX.test(formEmail.trim())
                                   ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
-                                  : 'border-slate-200 focus:border-[#0F4C81]'
+                                  : 'border-slate-200 focus:border-royal-blue'
                               }`}
                             />
                             {EMAIL_REGEX.test(formEmail.trim()) && !fieldErrors.email && (
@@ -2008,12 +2008,12 @@ if (!response.ok) {
                                 const err = validatePhoneInputStr(val);
                                 setFieldErrors(prev => ({ ...prev, phone: err }));
                               }}
-                              className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none ${
+                              className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all outline-none ${
                                 fieldErrors.phone
                                   ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
                                   : (PHONE_REGEX.test(formPhone.trim()) && getPhoneDigitCount(formPhone.trim()) >= 7 && getPhoneDigitCount(formPhone.trim()) <= 15)
                                   ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
-                                  : 'border-slate-200 focus:border-[#0F4C81]'
+                                  : 'border-slate-200 focus:border-royal-blue'
                               }`}
                             />
                             {(PHONE_REGEX.test(formPhone.trim()) && getPhoneDigitCount(formPhone.trim()) >= 7 && getPhoneDigitCount(formPhone.trim()) <= 15) && !fieldErrors.phone && (
@@ -2042,12 +2042,12 @@ if (!response.ok) {
                                 const err = validateCompanyInput(val);
                                 setFieldErrors(prev => ({ ...prev, company: err }));
                               }}
-                              className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none ${
+                              className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all outline-none ${
                                 fieldErrors.company
                                   ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
                                   : (formCompany.trim().length >= 2 && COMPANY_REGEX.test(formCompany.trim()))
                                   ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
-                                  : 'border-slate-200 focus:border-[#0F4C81]'
+                                  : 'border-slate-200 focus:border-royal-blue'
                               }`}
                             />
                             {(formCompany.trim().length >= 2 && COMPANY_REGEX.test(formCompany.trim())) && !fieldErrors.company && (
@@ -2065,7 +2065,7 @@ if (!response.ok) {
                           <select
                             value={formIndustry}
                             onChange={(e) => setFormIndustry(e.target.value)}
-                            className="w-full bg-white border border-slate-200 rounded-xl px-2 py-2 text-slate-700 focus:outline-none focus:border-[#0F4C81] focus:ring-2 focus:ring-[#0F4C81]/25 cursor-pointer outline-none"
+                            className="w-full bg-white border border-slate-200 rounded-xl px-2 py-2 text-slate-700 focus:outline-none focus:border-royal-blue focus:ring-2 focus:ring-royal-blue/25 cursor-pointer outline-none"
                           >
                             <option value="technology">{t('industries.technology')}</option>
                             <option value="enterprise">{t('industries.enterprise')}</option>
@@ -2083,7 +2083,7 @@ if (!response.ok) {
                           <select
                             value={formBudget}
                             onChange={(e) => setFormBudget(e.target.value)}
-                            className={`w-full bg-white border rounded-xl px-2 py-2 text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 cursor-pointer outline-none ${
+                            className={`w-full bg-white border rounded-xl px-2 py-2 text-slate-700 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 cursor-pointer outline-none ${
                               fieldErrors.budget ? 'border-red-500' : 'border-slate-200'
                             }`}
                           >
@@ -2101,7 +2101,7 @@ if (!response.ok) {
                           <select
                             value={formTimeline}
                             onChange={(e) => setFormTimeline(e.target.value)}
-                            className={`w-full bg-white border rounded-xl px-2 py-2 text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 cursor-pointer outline-none ${
+                            className={`w-full bg-white border rounded-xl px-2 py-2 text-slate-700 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 cursor-pointer outline-none ${
                               fieldErrors.timeline ? 'border-red-500' : 'border-slate-200'
                             }`}
                           >
@@ -2127,12 +2127,12 @@ if (!response.ok) {
                               setFieldErrors(prev => ({ ...prev, message: err }));
                             }}
                             rows={2}
-                            className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all resize-none outline-none ${
+                            className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all resize-none outline-none ${
                               fieldErrors.message
                                 ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
                                 : (formMessage.trim().length >= 20 && formMessage.trim().length <= 2000)
                                 ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
-                                : 'border-slate-200 focus:border-[#0F4C81]'
+                                : 'border-slate-200 focus:border-royal-blue'
                             }`}
                           />
                           {(formMessage.trim().length >= 20 && formMessage.trim().length <= 2000) && !fieldErrors.message && (
@@ -2157,7 +2157,7 @@ if (!response.ok) {
                     <button
                       type="submit"
                       disabled={isFormSubmitting || !isLeadFormValid}
-                      className={`w-full h-11 bg-gradient-to-tr from-[#0F4C81] to-blue-600 hover:from-[#0d3f6b] hover:to-blue-700 hover:-translate-y-0.5 active:translate-y-0 transition-all text-white font-extrabold rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-blue-500/10 outline-none focus:ring-2 focus:ring-[#0F4C81] ${
+                      className={`w-full h-11 bg-gradient-to-tr from-royal-blue to-green hover:from-royal-blue hover:to-bright-lime hover:shadow-[0_0_15px_rgba(20,91,255,0.4)] hover:-translate-y-0.5 active:translate-y-0 transition-all text-white font-extrabold rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-blue-500/10 outline-none focus:ring-2 focus:ring-royal-blue ${
                         (!isLeadFormValid || isFormSubmitting) ? 'opacity-50 cursor-not-allowed from-slate-400 to-slate-450' : ''
                       }`}
                     >
@@ -2175,14 +2175,14 @@ if (!response.ok) {
                     className="space-y-4 text-left p-4 bg-white border border-slate-200 rounded-2xl animate-fadeIn"
                   >
                     <div className="flex justify-between items-center pb-2 border-b border-slate-150">
-                      <h4 className="text-xs font-extrabold text-[#0F4C81] uppercase tracking-wider flex items-center gap-1.5">
+                      <h4 className="text-xs font-extrabold text-royal-blue uppercase tracking-wider flex items-center gap-1.5">
                         <Calendar className="w-3.5 h-3.5" />
                         {t('consultationFlow.title')}
                       </h4>
                       <button
                         type="button"
                         onClick={() => setActiveFlow('chat')}
-                        className="text-[10px] text-slate-550 hover:text-[#0F4C81] font-bold flex items-center gap-1 cursor-pointer py-1 px-2 hover:bg-slate-100 rounded-lg transition-colors border-none"
+                        className="text-[10px] text-slate-550 hover:text-royal-blue font-bold flex items-center gap-1 cursor-pointer py-1 px-2 hover:bg-slate-100 rounded-lg transition-colors border-none"
                       >
                         <ArrowLeft className="w-3 h-3" />
                         {t('actions.back')}
@@ -2213,12 +2213,12 @@ if (!response.ok) {
                               const err = validateNameInput(val);
                               setFieldErrors(prev => ({ ...prev, name: err }));
                             }}
-                            className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none ${
+                            className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all outline-none ${
                               fieldErrors.name
                                 ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
                                 : (formName.trim().length >= 2 && NAME_REGEX.test(formName.trim()))
                                 ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
-                                : 'border-slate-200 focus:border-[#0F4C81]'
+                                : 'border-slate-200 focus:border-royal-blue'
                             }`}
                           />
                           {formName.trim().length >= 2 && NAME_REGEX.test(formName.trim()) && !fieldErrors.name && (
@@ -2246,12 +2246,12 @@ if (!response.ok) {
                                 const err = validateEmailInput(val);
                                 setFieldErrors(prev => ({ ...prev, email: err }));
                               }}
-                              className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none ${
+                              className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all outline-none ${
                                 fieldErrors.email
                                   ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
                                   : EMAIL_REGEX.test(formEmail.trim())
                                   ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
-                                  : 'border-slate-200 focus:border-[#0F4C81]'
+                                  : 'border-slate-200 focus:border-royal-blue'
                               }`}
                             />
                             {EMAIL_REGEX.test(formEmail.trim()) && !fieldErrors.email && (
@@ -2277,12 +2277,12 @@ if (!response.ok) {
                                 const err = validatePhoneInputStr(val);
                                 setFieldErrors(prev => ({ ...prev, phone: err }));
                               }}
-                              className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none ${
+                              className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all outline-none ${
                                 fieldErrors.phone
                                   ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
                                   : (PHONE_REGEX.test(formPhone.trim()) && getPhoneDigitCount(formPhone.trim()) >= 7 && getPhoneDigitCount(formPhone.trim()) <= 15)
                                   ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
-                                  : 'border-slate-200 focus:border-[#0F4C81]'
+                                  : 'border-slate-200 focus:border-royal-blue'
                               }`}
                             />
                             {(PHONE_REGEX.test(formPhone.trim()) && getPhoneDigitCount(formPhone.trim()) >= 7 && getPhoneDigitCount(formPhone.trim()) <= 15) && !fieldErrors.phone && (
@@ -2311,12 +2311,12 @@ if (!response.ok) {
                                 const err = validateCompanyInput(val);
                                 setFieldErrors(prev => ({ ...prev, company: err }));
                               }}
-                              className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none ${
+                              className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all outline-none ${
                                 fieldErrors.company
                                   ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
                                   : (formCompany.trim().length >= 2 && COMPANY_REGEX.test(formCompany.trim()))
                                   ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
-                                  : 'border-slate-200 focus:border-[#0F4C81]'
+                                  : 'border-slate-200 focus:border-royal-blue'
                               }`}
                             />
                             {(formCompany.trim().length >= 2 && COMPANY_REGEX.test(formCompany.trim())) && !fieldErrors.company && (
@@ -2343,12 +2343,12 @@ if (!response.ok) {
                                 const err = validateDateInput(val);
                                 setFieldErrors(prev => ({ ...prev, date: err }));
                               }}
-                              className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all outline-none ${
+                              className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all outline-none ${
                                 fieldErrors.date
                                   ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
                                   : formDate.trim().length >= 5
                                   ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
-                                  : 'border-slate-200 focus:border-[#0F4C81]'
+                                  : 'border-slate-200 focus:border-royal-blue'
                               }`}
                             />
                             {formDate.trim().length >= 5 && !fieldErrors.date && (
@@ -2376,12 +2376,12 @@ if (!response.ok) {
                               setFieldErrors(prev => ({ ...prev, message: err }));
                             }}
                             rows={3}
-                            className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 transition-all resize-none outline-none ${
+                            className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all resize-none outline-none ${
                               fieldErrors.message
                                 ? 'border-red-500 ring-2 ring-red-100 bg-red-50/10'
                                 : (formMessage.trim().length >= 20 && formMessage.trim().length <= 2000)
                                 ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
-                                : 'border-slate-200 focus:border-[#0F4C81]'
+                                : 'border-slate-200 focus:border-royal-blue'
                             }`}
                           />
                           {(formMessage.trim().length >= 20 && formMessage.trim().length <= 2000) && !fieldErrors.message && (
@@ -2406,7 +2406,7 @@ if (!response.ok) {
                     <button
                       type="submit"
                       disabled={isFormSubmitting || !isConsultationFormValid}
-                      className={`w-full h-11 bg-gradient-to-tr from-[#0F4C81] to-blue-600 hover:from-[#0d3f6b] hover:to-blue-700 hover:-translate-y-0.5 active:translate-y-0 transition-all text-white font-extrabold rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-blue-500/10 outline-none focus:ring-2 focus:ring-[#0F4C81] ${
+                      className={`w-full h-11 bg-gradient-to-tr from-royal-blue to-green hover:from-royal-blue hover:to-bright-lime hover:shadow-[0_0_15px_rgba(20,91,255,0.4)] hover:-translate-y-0.5 active:translate-y-0 transition-all text-white font-extrabold rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-blue-500/10 outline-none focus:ring-2 focus:ring-royal-blue ${
                         (!isConsultationFormValid || isFormSubmitting) ? 'opacity-50 cursor-not-allowed from-slate-400 to-slate-455' : ''
                       }`}
                     >
@@ -2439,7 +2439,7 @@ if (!response.ok) {
                     <div className="flex flex-col gap-2 pt-2 w-full max-w-xs mx-auto">
                       <button
                         onClick={handleStartOver}
-                        className="w-full h-10 bg-[#0F4C81] hover:bg-[#0d3f6b] text-white font-bold rounded-xl text-xs uppercase tracking-wider transition-all cursor-pointer shadow-sm hover:shadow outline-none border-none"
+                        className="w-full h-10 bg-royal-blue hover:bg-deep-navy text-white font-bold rounded-xl text-xs uppercase tracking-wider transition-all cursor-pointer shadow-sm hover:shadow outline-none border-none"
                       >
                         {isEs ? 'Iniciar nueva conversación' : 'Start New Conversation'}
                       </button>
@@ -2457,7 +2457,7 @@ if (!response.ok) {
                       {activeFlow !== 'consultation_success' && (
                         <button
                           onClick={() => setActiveFlow('consultation_form')}
-                          className="w-full h-10 border border-slate-200 bg-[#0F4C81]/5 hover:bg-[#0F4C81]/15 text-[#0F4C81] font-bold rounded-xl text-xs uppercase tracking-wider transition-all cursor-pointer outline-none"
+                          className="w-full h-10 border border-slate-200 bg-royal-blue/5 hover:bg-royal-blue/15 text-royal-blue font-bold rounded-xl text-xs uppercase tracking-wider transition-all cursor-pointer outline-none"
                         >
                           {isEs ? 'Reservar consulta' : 'Book Consultation'}
                         </button>
@@ -2488,7 +2488,7 @@ if (!response.ok) {
                         key={idx}
                         onClick={() => routeSuggestedPrompt(prompt)}
                         disabled={isSending || isTyping || isInitializing}
-                        className="px-3.5 py-2.5 bg-slate-50 hover:bg-[#0F4C81] active:bg-[#0d3f6b] focus-visible:ring-2 focus-visible:ring-[#0F4C81] focus-visible:ring-offset-1 text-slate-600 hover:text-white rounded-2xl text-[11px] font-bold border border-slate-200 cursor-pointer max-w-full truncate outline-none transition-all duration-300 min-h-[44px] flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="px-3.5 py-2.5 bg-slate-50 hover:bg-royal-blue active:bg-[#0A1F6B] focus-visible:ring-2 focus-visible:ring-royal-blue focus-visible:ring-offset-1 text-slate-600 hover:text-white rounded-2xl text-[11px] font-bold border border-slate-200 cursor-pointer max-w-full truncate outline-none transition-all duration-300 min-h-[44px] flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         {getCompactChipLabel(prompt, locale)}
                       </button>
@@ -2501,7 +2501,7 @@ if (!response.ok) {
             {/* Sticky Input Bar (shrink-0, sticky, always visible at bottom) */}
             {activeFlow === 'chat' && (
               <div className="h-[74px] border-t border-slate-100 bg-white flex items-center px-4 shrink-0 w-full relative">
-                <div className="relative flex items-center w-full h-[56px] bg-slate-50 border border-slate-200 rounded-full pl-5 pr-1.5 focus-within:border-[#0F4C81] focus-within:ring-2 focus-within:ring-[#0F4C81]/25 transition-all">
+                <div className="relative flex items-center w-full h-[56px] bg-slate-50 border border-slate-200 rounded-full pl-5 pr-1.5 focus-within:border-royal-blue focus-within:ring-2 focus-within:ring-royal-blue/25 transition-all">
                   <input
                     type={getInputAttributes().type}
                     inputMode={getInputAttributes().inputMode}
@@ -2527,7 +2527,7 @@ if (!response.ok) {
   !sessionId
 }
                     aria-label="Send Message"
-                    className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#0F4C81] to-blue-600 disabled:from-slate-200 disabled:to-slate-200 disabled:text-slate-400 hover:from-[#0d3f6b] hover:to-blue-700 text-white flex items-center justify-center shadow-lg shadow-blue-500/10 cursor-pointer transition-all shrink-0 hover:scale-105 active:scale-95 border-none outline-none disabled:cursor-not-allowed"
+                    className="w-10 h-10 rounded-full bg-gradient-to-tr from-royal-blue to-green disabled:from-slate-200 disabled:to-slate-200 disabled:text-slate-400 hover:from-royal-blue hover:to-bright-lime hover:shadow-[0_0_15px_rgba(20,91,255,0.4)] text-white flex items-center justify-center shadow-lg shadow-blue-500/10 cursor-pointer transition-all shrink-0 hover:scale-105 active:scale-95 border-none outline-none disabled:cursor-not-allowed"
                   >
                     {isSending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
                   </button>
@@ -2552,7 +2552,7 @@ if (!response.ok) {
             title={t('tooltip')}
             aria-label="Open AI Consultant"
             aria-haspopup="dialog"
-            className="w-14 h-14 rounded-3xl bg-gradient-to-tr from-[#0F4C81] to-blue-600 text-white flex items-center justify-center shadow-xl shadow-blue-500/25 pointer-events-auto cursor-pointer hover:shadow-blue-500/35 transition-all relative group border-none outline-none"
+            className="w-14 h-14 rounded-3xl bg-gradient-to-tr from-royal-blue to-green text-white flex items-center justify-center shadow-xl shadow-blue-500/25 pointer-events-auto cursor-pointer hover:shadow-blue-500/35 transition-all relative group border-none outline-none"
           >
             <Bot className="w-6 h-6 group-hover:rotate-6 transition-transform" />
             

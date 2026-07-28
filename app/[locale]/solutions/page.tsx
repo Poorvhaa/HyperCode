@@ -367,15 +367,15 @@ function SolutionsPageContent() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
             <div className="space-y-1">
-              <span className="block text-4xl sm:text-5xl font-black text-[#0F4C81] tracking-tight">{t('stats.retentionNum')}</span>
+              <span className="block text-4xl sm:text-5xl font-black text-royal-blue tracking-tight">{t('stats.retentionNum')}</span>
               <span className="block text-[10px] font-extrabold text-slate-500 uppercase tracking-widest">{t('stats.retentionLabel')}</span>
             </div>
             <div className="space-y-1">
-              <span className="block text-4xl sm:text-5xl font-black text-[#0F4C81] tracking-tight">{t('stats.deploymentsNum')}</span>
+              <span className="block text-4xl sm:text-5xl font-black text-royal-blue tracking-tight">{t('stats.deploymentsNum')}</span>
               <span className="block text-[10px] font-extrabold text-slate-500 uppercase tracking-widest">{t('stats.deploymentsLabel')}</span>
             </div>
             <div className="space-y-1">
-              <span className="block text-4xl sm:text-5xl font-black text-[#0F4C81] tracking-tight">{t('stats.onboardingNum')}</span>
+              <span className="block text-4xl sm:text-5xl font-black text-royal-blue tracking-tight">{t('stats.onboardingNum')}</span>
               <span className="block text-[10px] font-extrabold text-slate-500 uppercase tracking-widest">{t('stats.onboardingLabel')}</span>
             </div>
           </div>
@@ -410,14 +410,14 @@ function SolutionsPageContent() {
                       onClick={() => scrollToSection(category.id)}
                       className={`w-full flex items-center justify-between p-3 rounded-xl text-left transition-all group border-none cursor-pointer ${
                         isActive 
-                          ? 'bg-[#0F4C81]/10 text-[#0F4C81] font-bold' 
+                          ? 'bg-royal-blue/10 text-royal-blue font-bold' 
                           : 'text-slate-600 hover:bg-slate-100/50 font-medium'
                       }`}
                     >
                       <div className="flex items-center gap-3 min-w-0">
                         <div className={`p-1.5 rounded-lg transition-colors ${
                           isActive 
-                            ? 'bg-[#0F4C81] text-white' 
+                            ? 'bg-royal-blue text-white' 
                             : 'bg-slate-100 text-slate-500 group-hover:bg-slate-200'
                         }`}>
                           <CategoryIcon size={16} />
@@ -425,7 +425,7 @@ function SolutionsPageContent() {
                         <span className="text-xs truncate tracking-wide">{categoryTitle}</span>
                       </div>
                       <ChevronRight size={14} className={`opacity-0 group-hover:opacity-100 transition-all ${
-                        isActive ? 'opacity-100 text-[#0F4C81]' : 'text-slate-400'
+                        isActive ? 'opacity-100 text-royal-blue' : 'text-slate-400'
                       }`} />
                     </button>
                   );
@@ -449,7 +449,7 @@ function SolutionsPageContent() {
 
                   {/* Interleaved CTA 1: After Category 4 (Mobile Apps) */}
                   {catIdx === 4 && (
-                    <div className="p-8 rounded-[24px] bg-gradient-to-r from-slate-900 to-[#0F4C81] text-white space-y-6 shadow-xl relative overflow-hidden my-12 text-left">
+                    <div className="p-8 rounded-[24px] bg-gradient-to-r from-slate-900 to-royal-blue text-white space-y-6 shadow-xl relative overflow-hidden my-12 text-left">
                       <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
                       <div className="max-w-2xl space-y-3 relative z-10">
                         <span className="text-[10px] font-bold text-blue-300 uppercase tracking-widest">
@@ -469,9 +469,9 @@ function SolutionsPageContent() {
                       <div className="flex flex-wrap gap-3 relative z-10 pt-2">
                         <Link
                           href="/consultation"
-                          className="px-5 py-2.5 bg-[#0F4C81] hover:bg-[#0D3F6D] text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow"
+                          className="PrimaryBrandButton"
                         >
-                          {locale === 'es' ? 'Agendar Consulta' : 'Schedule Consultation'}
+                          {tNav('schedule')}
                         </Link>
                         <Link
                           href="/contact"
@@ -522,7 +522,7 @@ function SolutionsPageContent() {
                   {/* Section Title Header */}
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-slate-150">
                     <div className="flex items-center gap-3">
-                      <div className="p-2.5 rounded-xl bg-slate-100 text-[#0F4C81]">
+                      <div className="p-2.5 rounded-xl bg-slate-100 text-royal-blue">
                         <CategoryIcon size={22} />
                       </div>
                       <div>
@@ -572,7 +572,7 @@ function SolutionsPageContent() {
                         <div className="pt-6 relative z-10">
                           <button
                             onClick={() => setSelectedCategory({ cat: category, catTitle: categoryTitle, IconComponent: CategoryIcon })}
-                            className="w-full inline-flex items-center justify-center gap-1.5 py-3 bg-[#0F4C81]/5 hover:bg-[#0F4C81]/15 text-[#0F4C81] font-bold text-xs uppercase tracking-wider rounded-xl transition-all cursor-pointer border-none"
+                            className="w-full inline-flex items-center justify-center gap-1.5 py-3 bg-royal-blue/5 hover:bg-royal-blue/15 text-royal-blue font-bold text-xs uppercase tracking-wider rounded-xl transition-all cursor-pointer border-none"
                           >
                             <span>{locale === 'es' ? 'Ver Detalles de la Práctica' : 'Explore Category Scope'}</span>
                             <ChevronRight size={14} />
@@ -594,11 +594,11 @@ function SolutionsPageContent() {
                             return (
                               <div
                                 key={srv.id}
-                                className="premium-card bg-white border border-slate-200 p-6 rounded-2xl flex flex-col justify-between shadow-sm hover:shadow-md hover:border-[#0F4C81]/25 transition-all duration-300 h-full text-left group"
+                                className="premium-card bg-white border border-slate-200 p-6 rounded-2xl flex flex-col justify-between shadow-sm hover:shadow-md hover:border-royal-blue/25 transition-all duration-300 h-full text-left group"
                               >
                                 <div className="space-y-4">
                                   <div className="flex items-center justify-between">
-                                    <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-100 text-[#0F4C81] group-hover:scale-105 transition-transform duration-300">
+                                    <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-100 text-royal-blue group-hover:scale-105 transition-transform duration-300">
                                       <ServiceIcon size={18} />
                                     </div>
                                     <span className="text-[9px] font-bold text-slate-400 tracking-wider uppercase">
@@ -606,7 +606,7 @@ function SolutionsPageContent() {
                                     </span>
                                   </div>
 
-                                  <h4 className="text-[22px] font-bold text-slate-900 leading-[1.2] group-hover:text-[#0F4C81] transition-colors">
+                                  <h4 className="text-[22px] font-bold text-slate-900 leading-[1.2] group-hover:text-royal-blue transition-colors">
                                     {srvTitle}
                                   </h4>
 
@@ -644,14 +644,14 @@ function SolutionsPageContent() {
                                 <div className="pt-5 mt-6 border-t border-slate-100 flex items-center justify-between">
                                   <Link
                                     href={srvPath}
-                                    className="text-[11px] font-bold text-[#0F4C81] hover:underline tracking-wider uppercase flex items-center gap-1.5"
+                                    className="text-[11px] font-bold text-royal-blue hover:underline tracking-wider uppercase flex items-center gap-1.5"
                                   >
                                     <span>{locale === 'es' ? 'Ver Detalles' : 'Learn More'}</span>
                                     <ArrowRight size={12} />
                                   </Link>
                                   <Link
                                     href={`/contact?service=${encodeURIComponent(srvTitle)}`}
-                                    className="p-1.5 bg-slate-50 hover:bg-[#0F4C81]/10 text-slate-400 hover:text-[#0F4C81] rounded-lg transition-colors border-none"
+                                    className="p-1.5 bg-slate-50 hover:bg-royal-blue/10 text-slate-400 hover:text-royal-blue rounded-lg transition-colors border-none"
                                   >
                                     <ArrowUpRight size={14} />
                                   </Link>
@@ -677,7 +677,7 @@ function SolutionsPageContent() {
                               >
                                 <div className="space-y-4">
                                   <div className="flex items-center justify-between">
-                                    <div className="p-2 rounded-xl bg-slate-50 border border-slate-100 text-[#0F4C81]">
+                                    <div className="p-2 rounded-xl bg-slate-50 border border-slate-100 text-royal-blue">
                                       <ServiceIcon size={16} />
                                     </div>
                                     <span className="text-[9px] font-bold text-slate-400 tracking-wider uppercase">
@@ -705,14 +705,14 @@ function SolutionsPageContent() {
                                 <div className="pt-4 mt-5 border-t border-slate-100 flex items-center justify-between">
                                   <Link
                                     href={srvPath}
-                                    className="text-[10px] font-bold text-[#0F4C81] hover:underline tracking-wider uppercase flex items-center gap-1"
+                                    className="text-[10px] font-bold text-royal-blue hover:underline tracking-wider uppercase flex items-center gap-1"
                                   >
                                     <span>{locale === 'es' ? 'Ver Detalles' : 'Learn More'}</span>
                                     <ArrowRight size={10} />
                                   </Link>
                                   <Link
                                     href={`/contact?service=${encodeURIComponent(srvTitle)}`}
-                                    className="p-1.5 bg-slate-50 hover:bg-[#0F4C81]/10 text-slate-400 hover:text-[#0F4C81] rounded-lg transition-colors border-none"
+                                    className="p-1.5 bg-slate-50 hover:bg-royal-blue/10 text-slate-400 hover:text-royal-blue rounded-lg transition-colors border-none"
                                   >
                                     <ArrowUpRight size={12} />
                                   </Link>
@@ -742,7 +742,7 @@ function SolutionsPageContent() {
                             <Link
                               key={idx}
                               href={relPath}
-                              className="px-3 py-1 bg-slate-100 hover:bg-[#0F4C81]/10 text-slate-650 hover:text-[#0F4C81] rounded-full text-xs font-semibold transition-all"
+                              className="px-3 py-1 bg-slate-100 hover:bg-royal-blue/10 text-slate-650 hover:text-royal-blue rounded-full text-xs font-semibold transition-all"
                             >
                               {getRelatedName(relSlug)}
                             </Link>
@@ -765,7 +765,7 @@ function SolutionsPageContent() {
       <section className="py-24 bg-white relative z-10 border-t border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
           <div className="max-w-3xl space-y-4">
-            <span className="text-xs font-bold text-[#0F4C81] uppercase tracking-widest">{t('techEcosystemTitle')}</span>
+            <span className="text-xs font-bold text-royal-blue uppercase tracking-widest">{t('techEcosystemTitle')}</span>
             <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">{t('techEcosystemSubtitle')}</h3>
           </div>
 
@@ -787,7 +787,7 @@ function SolutionsPageContent() {
       </section>
 
       {/* Industries We Serve Section */}
-      <section className="relative bg-[#0F4C81] text-white py-28 z-10 overflow-hidden">
+      <section className="relative bg-royal-blue text-white py-28 z-10 overflow-hidden">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-3xl pointer-events-none" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-16">
@@ -822,7 +822,7 @@ function SolutionsPageContent() {
       <section className="py-28 bg-[#F8FAFC] relative z-10 border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
           <div className="text-center max-w-2xl mx-auto space-y-4">
-            <span className="text-xs font-bold text-[#0F4C81] uppercase tracking-widest">{t('why.title')}</span>
+            <span className="text-xs font-bold text-royal-blue uppercase tracking-widest">{t('why.title')}</span>
             <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">{t('why.subtitle')}</h3>
           </div>
 
@@ -831,7 +831,7 @@ function SolutionsPageContent() {
               const AdvIcon = adv.icon;
               return (
                 <div key={idx} className="premium-card bg-white p-8 rounded-[24px] border border-slate-200 shadow-sm space-y-4 text-left hover:border-slate-355 transition-colors duration-300">
-                  <div className="p-3 rounded-xl bg-[#0F4C81]/10 text-[#0F4C81] w-fit">
+                  <div className="p-3 rounded-xl bg-royal-blue/10 text-royal-blue w-fit">
                     <AdvIcon size={20} />
                   </div>
                   <h4 className="text-[22px] font-bold text-slate-900 tracking-tight leading-[1.2]">{t(adv.titleKey)}</h4>
@@ -847,7 +847,7 @@ function SolutionsPageContent() {
         <section className="py-24 bg-white relative z-10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
-            <h2 className="text-xs font-bold text-[#0F4C81] uppercase tracking-widest">{t('faqTitle')}</h2>
+            <h2 className="text-xs font-bold text-royal-blue uppercase tracking-widest">{t('faqTitle')}</h2>
             <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">{t('faqSubtitle')}</h3>
           </div>
 
@@ -883,7 +883,7 @@ function SolutionsPageContent() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
             <Link
               href="/consultation"
-              className="btn-primary w-full sm:w-auto"
+              className="PrimaryBrandButton w-full sm:w-auto"
             >
               {t('ctaBtn')}
             </Link>
@@ -907,7 +907,7 @@ function SolutionsPageContent() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="fixed bottom-24 right-6 z-40 p-3 bg-[#0F4C81] text-white rounded-full shadow-xl hover:bg-[#0D3F6D] transition-colors border-none cursor-pointer hidden lg:block"
+            className="fixed bottom-24 right-6 z-40 p-3 bg-royal-blue text-white rounded-full shadow-xl hover:bg-deep-navy transition-colors border-none cursor-pointer hidden lg:block"
           >
             <ArrowUp size={20} />
           </motion.button>
@@ -926,9 +926,9 @@ function SolutionsPageContent() {
             <div className="max-w-md mx-auto pointer-events-auto shadow-2xl rounded-xl">
               <Link
                 href="/consultation"
-                className="flex items-center justify-center w-full h-12 bg-[#0F4C81] hover:bg-[#0D3F6D] text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-transform active:scale-[0.98]"
+                className="PrimaryBrandButton w-full"
               >
-                {locale === 'es' ? 'Programar Consulta' : 'Schedule Consultation'}
+                {tNav('schedule')}
               </Link>
             </div>
           </motion.div>
@@ -960,7 +960,7 @@ function SolutionsPageContent() {
                 {/* Header block */}
                 <div className="flex items-center justify-between pb-6 border-b border-slate-200">
                   <div className="flex items-center gap-3">
-                    <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-100 text-[#0F4C81]">
+                    <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-100 text-royal-blue">
                       <selectedCategory.IconComponent size={22} />
                     </div>
                     <div>
@@ -1006,7 +1006,7 @@ function SolutionsPageContent() {
                             <Link 
                               href={srvPath}
                               onClick={() => setSelectedCategory(null)}
-                              className="text-xs font-bold text-[#0F4C81] hover:underline flex items-center gap-1"
+                              className="text-xs font-bold text-royal-blue hover:underline flex items-center gap-1"
                             >
                               <span>{t('viewServiceDetails')}</span>
                               <ArrowRight size={12} />
@@ -1027,7 +1027,7 @@ function SolutionsPageContent() {
                       selectedCategory.cat.services.forEach((srv: any) => srv.tech.forEach((tech: string) => techs.add(tech)));
                       return Array.from(techs);
                     }, [selectedCategory]).map((tech, idx) => (
-                      <span key={idx} className="px-3 py-1.5 bg-[#0F4C81]/5 border border-[#0F4C81]/15 text-[#0F4C81] rounded-lg text-xs font-bold uppercase tracking-wider">
+                      <span key={idx} className="px-3 py-1.5 bg-royal-blue/5 border border-royal-blue/15 text-royal-blue rounded-lg text-xs font-bold uppercase tracking-wider">
                         {tech}
                       </span>
                     ))}
@@ -1046,7 +1046,7 @@ function SolutionsPageContent() {
                       });
                       return Array.from(inds);
                     }, [selectedCategory]).map((ind, idx) => (
-                      <span key={idx} className="px-3 py-1.5 bg-[#0F4C81]/5 border border-[#0F4C81]/15 text-[#0F4C81] rounded-lg text-xs font-bold">
+                      <span key={idx} className="px-3 py-1.5 bg-royal-blue/5 border border-royal-blue/15 text-royal-blue rounded-lg text-xs font-bold">
                         {ind}
                       </span>
                     ))}
@@ -1055,9 +1055,9 @@ function SolutionsPageContent() {
 
                 {/* Section 5: Case Study Success */}
                 <div className="p-6.5 rounded-2xl bg-slate-900 text-white relative overflow-hidden border border-slate-800 shadow-md text-left">
-                  <div className="absolute top-0 right-0 w-24 h-24 bg-[#0F4C81]/25 rounded-full blur-xl pointer-events-none" />
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-royal-blue/25 rounded-full blur-xl pointer-events-none" />
                   <div className="space-y-3">
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#0F4C81]/30 text-[10px] font-extrabold text-blue-200 uppercase tracking-wider">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-royal-blue/30 text-[10px] font-extrabold text-blue-200 uppercase tracking-wider">
                       {t('caseStudyLabel')}
                     </span>
                     <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-semibold">
@@ -1071,7 +1071,7 @@ function SolutionsPageContent() {
               <div className="flex items-center gap-4 pt-8 border-t border-slate-200 mt-10">
                 <Link
                   href={`/consultation?service=${encodeURIComponent(selectedCategory.catTitle)}`}
-                  className="flex-1 inline-flex items-center justify-center h-12 bg-[#0F4C81] hover:bg-[#0D3F6D] text-white font-bold text-sm uppercase tracking-wider rounded-xl transition-all shadow-md cursor-pointer"
+                  className="flex-1 inline-flex items-center justify-center h-12 bg-royal-blue hover:bg-deep-navy text-white font-bold text-sm uppercase tracking-wider rounded-xl transition-all shadow-md cursor-pointer"
                   onClick={() => setSelectedCategory(null)}
                 >
                   {tc('solutions') || 'Request Consultation'}
@@ -1095,7 +1095,7 @@ export default function SolutionsPage() {
   return (
     <Suspense fallback={
       <div className="flex h-screen items-center justify-center bg-slate-50">
-        <Loader2 className="animate-spin text-[#0F4C81]" size={40} />
+        <Loader2 className="animate-spin text-royal-blue" size={40} />
       </div>
     }>
       <SolutionsPageContent />

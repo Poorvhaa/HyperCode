@@ -105,7 +105,7 @@ export default async function ConsultationPage({ params }: Props) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="max-w-3xl space-y-4">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
-              {activeTrans.title} <span className="text-[#0F4C81]">{activeTrans.titleHighlight}</span>
+              {activeTrans.title} <span className="text-royal-blue">{activeTrans.titleHighlight}</span>
             </h1>
             <p className="text-lg sm:text-xl text-slate-600 font-medium leading-relaxed">
               {activeTrans.subtitle}
@@ -133,7 +133,7 @@ export default async function ConsultationPage({ params }: Props) {
               <div className="space-y-6 pt-4 border-t border-slate-100">
                 {/* Prop 1 */}
                 <div className="flex gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-[#0F4C81]/5 border border-[#0F4C81]/10 flex items-center justify-center text-[#0F4C81] flex-shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-royal-blue/5 border border-royal-blue/10 flex items-center justify-center text-royal-blue flex-shrink-0">
                     <FileCode2 size={20} />
                   </div>
                   <div>
@@ -146,7 +146,7 @@ export default async function ConsultationPage({ params }: Props) {
 
                 {/* Prop 2 */}
                 <div className="flex gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-[#0F4C81]/5 border border-[#0F4C81]/10 flex items-center justify-center text-[#0F4C81] flex-shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-royal-blue/5 border border-royal-blue/10 flex items-center justify-center text-royal-blue flex-shrink-0">
                     <BarChart4 size={20} />
                   </div>
                   <div>
@@ -159,7 +159,7 @@ export default async function ConsultationPage({ params }: Props) {
 
                 {/* Prop 3 */}
                 <div className="flex gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-[#0F4C81]/5 border border-[#0F4C81]/10 flex items-center justify-center text-[#0F4C81] flex-shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-royal-blue/5 border border-royal-blue/10 flex items-center justify-center text-royal-blue flex-shrink-0">
                     <Users2 size={20} />
                   </div>
                   <div>
@@ -172,7 +172,7 @@ export default async function ConsultationPage({ params }: Props) {
 
                 {/* Prop 4 */}
                 <div className="flex gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-[#0F4C81]/5 border border-[#0F4C81]/10 flex items-center justify-center text-[#0F4C81] flex-shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-royal-blue/5 border border-royal-blue/10 flex items-center justify-center text-royal-blue flex-shrink-0">
                     <ShieldCheck size={20} />
                   </div>
                   <div>

@@ -267,7 +267,7 @@ export default function AdminCMSPage() {
   if (authLoading || (session && !userProfile)) {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#0F4C81]"></div>
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-royal-blue"></div>
       </div>
     );
   }
@@ -287,7 +287,7 @@ export default function AdminCMSPage() {
           </p>
           <button 
             onClick={() => router.push(`/admin`)}
-            className="px-5 py-2.5 bg-[#0F4C81] hover:bg-[#0c3e6b] text-white font-semibold rounded-xl text-sm transition-all flex items-center justify-center gap-2 mx-auto cursor-pointer"
+            className="px-5 py-2.5 bg-royal-blue hover:bg-deep-navy text-white font-semibold rounded-xl text-sm transition-all flex items-center justify-center gap-2 mx-auto cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>{locale === 'es' ? 'Volver al Panel' : 'Back to Dashboard'}</span>
@@ -352,7 +352,7 @@ export default function AdminCMSPage() {
                 setCsFeaturedImage('');
               }
             }}
-            className="px-4 py-2 bg-[#0F4C81] hover:bg-[#0c3e6b] text-white text-xs font-bold rounded-xl flex items-center gap-2 shadow-sm transition-all cursor-pointer"
+            className="px-4 py-2 bg-royal-blue hover:bg-deep-navy text-white text-xs font-bold rounded-xl flex items-center gap-2 shadow-sm transition-all cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             <span>{cmsSubTab === 'articles' ? 'New Article' : 'New Case Study'}</span>
@@ -390,7 +390,7 @@ export default function AdminCMSPage() {
 
         {loading ? (
           <div className="h-[400px] bg-white border border-slate-200 rounded-2xl flex items-center justify-center shadow-sm">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#0F4C81]"></div>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-royal-blue"></div>
           </div>
         ) : (
           <div className="space-y-6">
@@ -399,7 +399,7 @@ export default function AdminCMSPage() {
               <button
                 onClick={() => { setCmsSubTab('articles'); }}
                 className={`pb-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-all cursor-pointer ${
-                  cmsSubTab === 'articles' ? 'border-[#0F4C81] text-[#0F4C81]' : 'border-transparent text-slate-400'
+                  cmsSubTab === 'articles' ? 'border-royal-blue text-royal-blue' : 'border-transparent text-slate-400'
                 }`}
               >
                 Articles ({articles.length})
@@ -407,7 +407,7 @@ export default function AdminCMSPage() {
               <button
                 onClick={() => { setCmsSubTab('case_studies'); }}
                 className={`pb-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-all cursor-pointer ${
-                  cmsSubTab === 'case_studies' ? 'border-[#0F4C81] text-[#0F4C81]' : 'border-transparent text-slate-400'
+                  cmsSubTab === 'case_studies' ? 'border-royal-blue text-royal-blue' : 'border-transparent text-slate-400'
                 }`}
               >
                 Case Studies ({caseStudies.length})
@@ -423,7 +423,7 @@ export default function AdminCMSPage() {
                   placeholder="Search by title..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/25 focus:border-[#0F4C81] transition-all"
+                  className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 focus:border-royal-blue transition-all"
                 />
               </div>
             </div>
@@ -582,10 +582,10 @@ export default function AdminCMSPage() {
 
                 <div className="border-t border-slate-100 pt-4 flex items-center justify-between">
                   <label className="flex items-center gap-2 font-bold text-slate-700 cursor-pointer">
-                    <input type="checkbox" checked={artPublished} onChange={(e) => setArtPublished(e.target.checked)} className="rounded text-[#0F4C81] w-4 h-4 cursor-pointer" />
+                    <input type="checkbox" checked={artPublished} onChange={(e) => setArtPublished(e.target.checked)} className="rounded text-royal-blue w-4 h-4 cursor-pointer" />
                     <span>Publish Immediately</span>
                   </label>
-                  <button type="submit" className="px-5 py-2.5 bg-[#0F4C81] hover:bg-[#0c3e6b] text-white font-bold rounded-xl text-xs uppercase tracking-wider transition-all cursor-pointer">
+                  <button type="submit" className="px-5 py-2.5 bg-royal-blue hover:bg-deep-navy text-white font-bold rounded-xl text-xs uppercase tracking-wider transition-all cursor-pointer">
                     Save Article
                   </button>
                 </div>
@@ -649,10 +649,10 @@ export default function AdminCMSPage() {
 
                 <div className="border-t border-slate-100 pt-4 flex items-center justify-between">
                   <label className="flex items-center gap-2 font-bold text-slate-700 cursor-pointer">
-                    <input type="checkbox" checked={csPublished} onChange={(e) => setCsPublished(e.target.checked)} className="rounded text-[#0F4C81] w-4 h-4 cursor-pointer" />
+                    <input type="checkbox" checked={csPublished} onChange={(e) => setCsPublished(e.target.checked)} className="rounded text-royal-blue w-4 h-4 cursor-pointer" />
                     <span>Publish Immediately</span>
                   </label>
-                  <button type="submit" className="px-5 py-2.5 bg-[#0F4C81] hover:bg-[#0c3e6b] text-white font-bold rounded-xl text-xs uppercase tracking-wider transition-all cursor-pointer">
+                  <button type="submit" className="px-5 py-2.5 bg-royal-blue hover:bg-deep-navy text-white font-bold rounded-xl text-xs uppercase tracking-wider transition-all cursor-pointer">
                     Save Case Study
                   </button>
                 </div>

@@ -22,9 +22,9 @@ export function TechPartnersSection() {
             {partners.map((partner, index) => (
               <div
                 key={index}
-                className="flex items-center space-x-2 text-slate-700 hover:text-[#0F4C81] transition-colors duration-200 cursor-default"
+                className="flex items-center space-x-2 text-slate-700 hover:text-royal-blue transition-colors duration-200 cursor-default"
               >
-                <div className="w-1.5 h-1.5 rounded-full bg-[#0F4C81] flex-shrink-0 animate-pulse" />
+                <div className="w-1.5 h-1.5 rounded-full bg-royal-blue flex-shrink-0 animate-pulse" />
                 <span className="text-xs font-black tracking-tight">{partner.name}</span>
                 <span className="text-[9px] font-bold text-slate-400">/ {partner.type}</span>
               </div>

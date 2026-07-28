@@ -170,7 +170,7 @@ export default function AdminSettingsPage() {
   if (authLoading || (session && !userProfile)) {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#0F4C81]"></div>
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-royal-blue"></div>
       </div>
     );
   }
@@ -190,7 +190,7 @@ export default function AdminSettingsPage() {
           </p>
           <button 
             onClick={() => router.push(`/admin`)}
-            className="px-5 py-2.5 bg-[#0F4C81] hover:bg-[#0c3e6b] text-white font-semibold rounded-xl text-sm transition-all flex items-center justify-center gap-2 mx-auto cursor-pointer"
+            className="px-5 py-2.5 bg-royal-blue hover:bg-deep-navy text-white font-semibold rounded-xl text-sm transition-all flex items-center justify-center gap-2 mx-auto cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>{locale === 'es' ? 'Volver al Panel' : 'Back to Dashboard'}</span>
@@ -250,7 +250,7 @@ export default function AdminSettingsPage() {
 
         {loading ? (
           <div className="h-[400px] bg-white border border-slate-200 rounded-2xl flex items-center justify-center shadow-sm">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#0F4C81]"></div>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-royal-blue"></div>
           </div>
         ) : (
           <div className="space-y-6">
@@ -259,7 +259,7 @@ export default function AdminSettingsPage() {
               <button
                 onClick={() => { setSettingsSubTab('company'); }}
                 className={`pb-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-all cursor-pointer ${
-                  settingsSubTab === 'company' ? 'border-[#0F4C81] text-[#0F4C81]' : 'border-transparent text-slate-400'
+                  settingsSubTab === 'company' ? 'border-royal-blue text-royal-blue' : 'border-transparent text-slate-400'
                 }`}
               >
                 Company Profile
@@ -267,7 +267,7 @@ export default function AdminSettingsPage() {
               <button
                 onClick={() => { setSettingsSubTab('templates'); }}
                 className={`pb-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-all cursor-pointer ${
-                  settingsSubTab === 'templates' ? 'border-[#0F4C81] text-[#0F4C81]' : 'border-transparent text-slate-400'
+                  settingsSubTab === 'templates' ? 'border-royal-blue text-royal-blue' : 'border-transparent text-slate-400'
                 }`}
               >
                 Email Templates
@@ -275,7 +275,7 @@ export default function AdminSettingsPage() {
               <button
                 onClick={() => { setSettingsSubTab('users'); }}
                 className={`pb-3 text-xs font-bold uppercase tracking-wider border-b-2 transition-all cursor-pointer ${
-                  settingsSubTab === 'users' ? 'border-[#0F4C81] text-[#0F4C81]' : 'border-transparent text-slate-400'
+                  settingsSubTab === 'users' ? 'border-royal-blue text-royal-blue' : 'border-transparent text-slate-400'
                 }`}
               >
                 User Accounts ({userProfiles.length})
@@ -287,7 +287,7 @@ export default function AdminSettingsPage() {
               <div className="bg-white border border-slate-200 rounded-2xl shadow-sm max-w-2xl">
                 <form onSubmit={handleSaveSettings} className="p-6 space-y-4 text-xs">
                   <h3 className="text-sm font-bold text-slate-800 border-b border-slate-100 pb-3 flex items-center gap-2">
-                    <Settings className="w-4.5 h-4.5 text-[#0F4C81]" />
+                    <Settings className="w-4.5 h-4.5 text-royal-blue" />
                     Company Settings
                   </h3>
                   <div className="grid grid-cols-2 gap-4">
@@ -324,7 +324,7 @@ export default function AdminSettingsPage() {
                   </div>
 
                   <div className="flex justify-end pt-3">
-                    <button type="submit" className="px-5 py-2.5 bg-[#0F4C81] hover:bg-[#0c3e6b] text-white font-bold rounded-xl text-xs uppercase tracking-wider transition-all cursor-pointer flex items-center gap-1.5 shadow-sm">
+                    <button type="submit" className="px-5 py-2.5 bg-royal-blue hover:bg-deep-navy text-white font-bold rounded-xl text-xs uppercase tracking-wider transition-all cursor-pointer flex items-center gap-1.5 shadow-sm">
                       <Save className="w-4 h-4" />
                       <span>Save Company Profile</span>
                     </button>
@@ -349,7 +349,7 @@ export default function AdminSettingsPage() {
               <div className="bg-white border border-slate-200 rounded-2xl shadow-sm max-w-3xl">
                 <div className="p-6 border-b border-slate-100">
                   <h3 className="text-sm font-bold text-slate-800 flex items-center gap-2">
-                    <Shield className="w-4.5 h-4.5 text-[#0F4C81]" />
+                    <Shield className="w-4.5 h-4.5 text-royal-blue" />
                     Admin Portal User Accounts
                   </h3>
                 </div>
@@ -444,7 +444,7 @@ function TemplateEditorForm({ tpl, onSave }: { tpl: EmailTemplate; onSave: (id: 
         <span className="text-[10px] text-slate-400 mt-1 block">Variables like <code className="bg-slate-100 px-1 py-0.5 rounded">{"{{name}}"}</code>, <code className="bg-slate-100 px-1 py-0.5 rounded">{"{{subject}}"}</code>, <code className="bg-slate-100 px-1 py-0.5 rounded">{"{{position}}"}</code>, or <code className="bg-slate-100 px-1 py-0.5 rounded">{"{{budget}}"}</code> will be dynamically replaced on dispatch.</span>
       </div>
       <div className="flex justify-end pt-1">
-        <button type="submit" disabled={saving} className="px-4 py-2 bg-[#0F4C81] hover:bg-[#0c3e6b] text-white font-bold rounded-xl text-xs uppercase tracking-wider transition-all cursor-pointer flex items-center gap-1.5 shadow-sm disabled:opacity-75">
+        <button type="submit" disabled={saving} className="px-4 py-2 bg-royal-blue hover:bg-deep-navy text-white font-bold rounded-xl text-xs uppercase tracking-wider transition-all cursor-pointer flex items-center gap-1.5 shadow-sm disabled:opacity-75">
           <Save className="w-3.5 h-3.5" />
           <span>{saving ? 'Saving...' : 'Save Template'}</span>
         </button>

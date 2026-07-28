@@ -51,7 +51,7 @@ async function fetchArticle(slug: string, locale: string) {
       const techTitle = isSpanish ? 'Tecnologías Utilizadas' : 'Technologies Deployed';
 
       const techHtml = dbCS.technologies 
-        ? `<h2 class="mt-8">${techTitle}</h2><p>${dbCS.technologies.split(',').map(t => `<span style="background-color: #f1f5f9; color: #0f4c81; font-weight: bold; font-size: 11px; padding: 4px 8px; margin-right: 6px; border-radius: 6px; display: inline-block;">${t.trim()}</span>`).join('')}</p>`
+        ? `<h2 class="mt-8">${techTitle}</h2><p>${dbCS.technologies.split(',').map(t => `<span style="background-color: #f1f5f9; color: #145BFF; font-weight: bold; font-size: 11px; padding: 4px 8px; margin-right: 6px; border-radius: 6px; display: inline-block;">${t.trim()}</span>`).join('')}</p>`
         : '';
 
       const contentHtml = `
@@ -222,9 +222,9 @@ export default async function ArticlePage({ params }: PageProps) {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full space-y-6">
           {/* Breadcrumbs */}
           <nav className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-wider">
-            <Link href="/" className="hover:text-[#0F4C81] transition-colors">{tc('home')}</Link>
+            <Link href="/" className="hover:text-royal-blue transition-colors">{tc('home')}</Link>
             <span>/</span>
-            <Link href="/insights" className="hover:text-[#0F4C81] transition-colors">{tInsights('title')}</Link>
+            <Link href="/insights" className="hover:text-royal-blue transition-colors">{tInsights('title')}</Link>
             <span>/</span>
             <span className="text-slate-500 truncate max-w-[200px] sm:max-w-xs">{article.category}</span>
           </nav>
@@ -271,7 +271,7 @@ export default async function ArticlePage({ params }: PageProps) {
             <div className="lg:col-span-1 space-y-6 lg:sticky lg:top-28">
               <Link
                 href="/insights"
-                className="inline-flex items-center gap-2 text-xs font-bold text-[#0F4C81] hover:text-[#0c3c66] transition-colors uppercase tracking-wider"
+                className="inline-flex items-center gap-2 text-xs font-bold text-royal-blue hover:text-[#0c3c66] transition-colors uppercase tracking-wider"
               >
                 <ArrowLeft size={14} />
                 <span>{activeTrans.backToInsights}</span>
@@ -288,7 +288,7 @@ export default async function ArticlePage({ params }: PageProps) {
                     href={`https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-9 h-9 rounded-lg border border-slate-200 flex items-center justify-center text-slate-500 hover:border-[#0F4C81] hover:text-[#0F4C81] hover:bg-slate-50 transition-all cursor-pointer"
+                    className="w-9 h-9 rounded-lg border border-slate-200 flex items-center justify-center text-slate-500 hover:border-royal-blue hover:text-royal-blue hover:bg-slate-50 transition-all cursor-pointer"
                     title="Share on LinkedIn"
                   >
                     <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -334,7 +334,7 @@ export default async function ArticlePage({ params }: PageProps) {
             {/* Center/Right: Article Content & Author Bio */}
             <div className="lg:col-span-3 space-y-12">
               <div 
-                className="space-y-6 text-slate-700 text-sm sm:text-base leading-relaxed font-medium [&>p]:leading-relaxed [&>p]:mb-6 [&>h2]:text-xl [&>h2]:font-extrabold [&>h2]:text-slate-900 [&>h2]:mt-8 [&>h2]:mb-4 [&>blockquote]:pl-4 [&>blockquote]:border-l-4 [&>blockquote]:border-[#0F4C81] [&>blockquote]:italic [&>blockquote]:text-slate-850 [&>blockquote]:my-6 [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:space-y-2 [&>ol]:list-decimal [&>ol]:pl-6 [&>ol]:space-y-2 [&>li]:pl-1 [&>em]:text-slate-800 [&>p>strong]:text-slate-800"
+                className="space-y-6 text-slate-700 text-sm sm:text-base leading-relaxed font-medium [&>p]:leading-relaxed [&>p]:mb-6 [&>h2]:text-xl [&>h2]:font-extrabold [&>h2]:text-slate-900 [&>h2]:mt-8 [&>h2]:mb-4 [&>blockquote]:pl-4 [&>blockquote]:border-l-4 [&>blockquote]:border-royal-blue [&>blockquote]:italic [&>blockquote]:text-slate-850 [&>blockquote]:my-6 [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:space-y-2 [&>ol]:list-decimal [&>ol]:pl-6 [&>ol]:space-y-2 [&>li]:pl-1 [&>em]:text-slate-800 [&>p>strong]:text-slate-800"
                 dangerouslySetInnerHTML={{ __html: article.content }}
               />
 
@@ -345,7 +345,7 @@ export default async function ArticlePage({ params }: PageProps) {
                 </div>
                 <div className="space-y-2">
                   <h4 className="text-sm font-bold text-slate-900">{activeTrans.aboutAuthor}</h4>
-                  <p className="text-base font-extrabold text-[#0F4C81] leading-none">{article.author.name}</p>
+                  <p className="text-base font-extrabold text-royal-blue leading-none">{article.author.name}</p>
                   <p className="text-xs font-bold text-slate-400 uppercase tracking-wider leading-none mt-1">{article.author.role}</p>
                   <p className="text-xs sm:text-sm text-slate-655 leading-relaxed font-medium pt-2">
                     {article.author.bio || activeTrans.defaultBio}
@@ -375,7 +375,7 @@ export default async function ArticlePage({ params }: PageProps) {
                   <div className="pt-2">
                     <Link
                       href="/consultation"
-                      className="inline-flex items-center justify-center h-10 px-6 bg-[#0F4C81] hover:bg-[#0A365D] text-white font-bold text-xs uppercase tracking-wider rounded-md transition-colors"
+                      className="PrimaryBrandButton"
                     >
                       {activeTrans.bookConsultation}
                     </Link>
@@ -393,7 +393,7 @@ export default async function ArticlePage({ params }: PageProps) {
       <section className="py-20 bg-slate-50 border-t border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-left">
-            <h4 className="text-xs font-bold text-[#0F4C81] tracking-widest uppercase mb-3">{tc('readMore') || 'READ MORE'}</h4>
+            <h4 className="text-xs font-bold text-royal-blue tracking-widest uppercase mb-3">{tc('readMore') || 'READ MORE'}</h4>
             <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">{tInsights('relatedArticles')}</h3>
           </div>
 
@@ -407,14 +407,14 @@ export default async function ArticlePage({ params }: PageProps) {
                   <span className="inline-block w-fit px-2.5 py-0.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-500 text-[9px] font-bold uppercase tracking-wider mb-3">
                     {art.category}
                   </span>
-                  <h4 className="text-sm font-bold text-slate-900 mb-2 leading-snug group-hover:text-[#0F4C81] transition-colors line-clamp-2">
+                  <h4 className="text-sm font-bold text-slate-900 mb-2 leading-snug group-hover:text-royal-blue transition-colors line-clamp-2">
                     <Link href={`/insights/${art.slug}`}>{art.title}</Link>
                   </h4>
                   <p className="text-xs text-slate-500 leading-relaxed font-medium line-clamp-3 mb-4">{art.excerpt}</p>
                 </div>
                 <div className="flex items-center justify-between text-[10px] text-slate-400 font-bold uppercase tracking-wider pt-3 border-t border-slate-100">
                   <span>{art.date}</span>
-                  <Link href={`/insights/${art.slug}`} className="text-[#0F4C81]">
+                  <Link href={`/insights/${art.slug}`} className="text-royal-blue">
                     {activeTrans.readBrief}
                   </Link>
                 </div>
