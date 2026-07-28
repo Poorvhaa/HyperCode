@@ -569,7 +569,7 @@
 /* Footer redesign styles */
 .footer-link {
   color: #D7E3F4;
-  transition: all 250ms ease-out;
+  transition: all 200ms ease-out;
   display: inline-block;
   text-decoration: none;
 }

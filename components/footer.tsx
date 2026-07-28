@@ -93,7 +93,8 @@ export function Footer() {
   return (
     <footer 
       style={{
-        background: 'linear-gradient(180deg, #0A2360 0%, #071A3A 100%)'
+        background: 'linear-gradient(135deg, #061A42 0%, #0A2A68 55%, #082153 100%)',
+        borderTop: '1px solid rgba(80, 170, 255, 0.22)'
       }}
       className="relative text-left text-[#D7E3F4] overflow-hidden min-h-[500px]"
     >
@@ -181,28 +182,39 @@ export function Footer() {
         </div>
 
         {/* Main Section: Sitemap columns and Company details */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr_1fr] gap-10 lg:gap-12 py-16 border-b border-white/10 text-left">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[minmax(280px,1.25fr)_minmax(160px,0.75fr)_minmax(220px,1fr)_minmax(210px,0.9fr)] items-start gap-10 lg:gap-12 py-16 border-b border-white/10 text-left">
           
           {/* Column 1: Company Info & Contact Details */}
-          <div className="space-y-6 lg:col-span-1">
-            <Link href="/" className="flex items-center">
-              <Image
-                src="/hypercodeit.logo.png"
-                alt="HyperCode Logo"
-                width={180}
-                height={180}
-                priority
-                className="h-auto w-[140px] md:w-[160px] lg:w-[180px] object-contain"
-                quality={100}
-              />
+          <div className="flex flex-col items-start space-y-6 lg:col-span-1">
+            <Link href="/" className="inline-flex">
+              <div 
+                style={{
+                  background: 'rgba(255, 255, 255, 0.96)',
+                  borderRadius: '18px',
+                  padding: '16px 18px',
+                  border: '1px solid rgba(255, 255, 255, 0.18)',
+                  boxShadow: '0 14px 36px rgba(0, 0, 0, 0.18)'
+                }}
+                className="inline-flex items-center justify-center"
+              >
+                <Image
+                  src="/hypercodeit.logo.png"
+                  alt="HyperCode"
+                  width={165}
+                  height={130}
+                  quality={100}
+                  className="h-auto w-[145px] md:w-[155px] lg:w-[165px]"
+                  priority
+                />
+              </div>
             </Link>
             
-            <p className="text-xs text-[#C8D5E8] font-bold uppercase tracking-wider leading-relaxed">
+            <p className="text-xs text-[#D7E3F4] font-bold uppercase tracking-wider leading-relaxed">
               {tf('tagline') || 'Enterprise AI & Digital Transformation Consulting'}
             </p>
             
             {/* Contact Details */}
-            <div className="space-y-4 text-xs sm:text-sm text-[#C8D5E8]">
+            <div className="space-y-4 text-xs sm:text-sm text-[#D7E3F4]">
               {/* Address */}
               <div className="flex items-start gap-3">
                 <MapPin size={18} className="text-[#35C7F4] mt-0.5 flex-shrink-0" />
@@ -217,19 +229,19 @@ export function Footer() {
               
               {/* Email */}
               <a 
-                href="mailto:solutions@hypercodeit.com" 
+                href="mailto:HR@hypercodeus.com" 
                 className="flex items-center gap-3 text-[#D7E3F4] hover:text-[#35C7F4] transition-colors duration-200 group font-medium"
               >
                 <Mail size={18} className="text-[#35C7F4] group-hover:text-[#35C7F4] transition-colors flex-shrink-0" />
-                <span>solutions@hypercodeit.com</span>
+                <span>HR@hypercodeus.com</span>
               </a>
               
               {/* Phone */}
               <a 
                 href="tel:+18005550199" 
-                className="flex items-center gap-3 text-[#D7E3F4] hover:text-[#67D94B] transition-colors duration-200 group font-medium"
+                className="flex items-center gap-3 text-[#68DB52] hover:text-[#35C7F4] transition-colors duration-200 group font-medium"
               >
-                <Phone size={18} className="text-[#67D94B] group-hover:text-[#67D94B] transition-colors flex-shrink-0" />
+                <Phone size={18} className="text-[#68DB52] group-hover:text-[#35C7F4] transition-colors flex-shrink-0" />
                 <span>+1 (800) 555-0199</span>
               </a>
             </div>
@@ -274,8 +286,16 @@ export function Footer() {
           {/* Column 2: Company */}
           <div className="space-y-6 text-left">
             <div className="flex items-center gap-2.5">
-              <span className="w-[3px] h-[18px] bg-gradient-to-b from-[#1769F5] to-[#2DBD3E] rounded-full" />
-              <h4 className="text-xs font-bold text-white uppercase tracking-widest">{tc('company')}</h4>
+              <span 
+                style={{
+                  width: '3px',
+                  height: '22px',
+                  borderRadius: '999px',
+                  background: 'linear-gradient(180deg, #1D7BFF 0%, #20C65A 100%)'
+                }}
+                className="flex-shrink-0"
+              />
+              <h4 className="text-sm font-bold text-white uppercase tracking-[0.04em]">{tc('company')}</h4>
             </div>
             <ul className="space-y-4 text-sm font-semibold">
               <li><Link href="/about" className="footer-link">{tNav('about')}</Link></li>
@@ -287,8 +307,16 @@ export function Footer() {
           {/* Column 3: Solutions (Pillar 1) */}
           <div className="space-y-6 text-left">
             <div className="flex items-center gap-2.5">
-              <span className="w-[3px] h-[18px] bg-gradient-to-b from-[#1769F5] to-[#2DBD3E] rounded-full" />
-              <h4 className="text-xs font-bold text-white uppercase tracking-widest">{tc('solutions')}</h4>
+              <span 
+                style={{
+                  width: '3px',
+                  height: '22px',
+                  borderRadius: '999px',
+                  background: 'linear-gradient(180deg, #1D7BFF 0%, #20C65A 100%)'
+                }}
+                className="flex-shrink-0"
+              />
+              <h4 className="text-sm font-bold text-white uppercase tracking-[0.04em]">{tc('solutions')}</h4>
             </div>
             <ul className="space-y-4 text-sm font-semibold">
               {solutionsList.slice(0, 7).map((s, idx) => (
@@ -301,11 +329,19 @@ export function Footer() {
 
           {/* Column 4: Solutions (Pillar 2) */}
           <div className="space-y-6 text-left">
-            <div className="flex items-center gap-2.5 opacity-0 hidden lg:flex select-none">
-              <span className="w-[3px] h-[18px] bg-[#1769F5] rounded-full" />
-              <h4 className="text-xs font-bold text-white uppercase tracking-widest">Continued</h4>
+            <div className="flex items-center gap-2.5">
+              <span 
+                style={{
+                  width: '3px',
+                  height: '22px',
+                  borderRadius: '999px',
+                  background: 'linear-gradient(180deg, #1D7BFF 0%, #20C65A 100%)'
+                }}
+                className="flex-shrink-0"
+              />
+              <h4 className="text-sm font-bold text-white uppercase tracking-[0.04em]">{tc('moreSolutions')}</h4>
             </div>
-            <ul className="space-y-4 text-sm font-semibold lg:mt-[44px]">
+            <ul className="space-y-4 text-sm font-semibold">
               {solutionsList.slice(7).map((s, idx) => (
                 <li key={idx}>
                   <Link href={s.href} className="footer-link">{s.name}</Link>
@@ -314,10 +350,17 @@ export function Footer() {
               <li>
                 <Link
                   href="/solutions"
-                  className="footer-link font-bold mt-1 inline-flex items-center gap-1"
+                  className="
+                    inline-flex items-center gap-2
+                    text-sm font-semibold
+                    text-white
+                    transition-all duration-200
+                    hover:translate-x-1
+                    hover:text-cyan-300
+                  "
                 >
                   <span>{tNav('viewAllSolutions')}</span>
-                  <ArrowRight size={12} />
+                  <ArrowRight className="h-4 w-4" />
                 </Link>
               </li>
             </ul>
