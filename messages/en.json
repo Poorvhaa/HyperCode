@@ -92,7 +92,11 @@
     "consulting": "Technology Consulting",
     "uiux": "UI/UX Design",
     "staffing": "IT & Non-IT Staffing",
-    "digitalTransformation": "Digital Transformation"
+    "digitalTransformation": "Digital Transformation",
+    "aiDesc": "Architecting generative AI agent pipelines and models.",
+    "biDesc": "Translating data assets into visual reports and dashboards.",
+    "mobileDevDesc": "Engineering premium native iOS and Android mobile solutions.",
+    "digitalTransformationDesc": "Modernizing corporate infrastructure with connected tech."
   },
   "Footer": {
     "connect": "Connect With Us",
@@ -171,8 +175,6 @@
       "subject": "Subject",
       "message": "Project Description / Message",
       "industry": "Industry",
-      "companySize": "Company Size",
-      "budget": "Project Budget",
       "timeline": "Expected Timeline",
       "country": "Country",
       "contactMethod": "Preferred Contact Method",
@@ -191,7 +193,6 @@
       "subjectError": "Subject is required",
       "messageError": "Message must be at least 10 characters",
       "industryError": "Please select your industry",
-      "budgetError": "Please select a budget range",
       "timelineError": "Please select a timeline"
     },
     "subjects": {
@@ -218,33 +219,19 @@
       "company": "Company Name",
       "phone": "Phone Number",
       "service": "Preferred Service Focus",
-      "budget": "Estimated Budget",
       "timeline": "Target Timeline",
       "message": "Short Project Overview",
-      "businessGoal": "Primary Business Goal",
-      "currentChallenges": "Current Technology Challenges",
-      "expectedOutcome": "Expected Outcome",
-      "currentTechStack": "Current Tech Stack / Tools",
       "meetingType": "Preferred Meeting Type",
       "preferredServices": "Service Areas of Interest",
-      "industry": "Industry Vertical",
-      "companySize": "Company Size",
+      "industry": "Industry",
       "submit": "Schedule Consultation",
       "submitting": "Scheduling...",
       "successTitle": "Consultation Scheduled!",
       "successDesc": "Your intake file has been generated and scored. A calendar invite with a video conference link will be dispatched shortly.",
       "errorSubmit": "Scheduling failed. Please check your inputs.",
       "serviceError": "Please select a service interest",
-      "budgetError": "Please select a budget range",
       "timelineError": "Please select a timeline",
       "messageError": "Please describe your project (min 10 characters)"
-    },
-    "budgets": {
-      "b1": "Under $25,000",
-      "b2": "$25,000 - $100,000",
-      "b3": "$100,000 - $250,000",
-      "b4": "$250,000+",
-      "b5": "To Be Decided"
     },
     "timelines": {
       "t1": "Immediately (Under 1 Month)",
@@ -1184,7 +1171,7 @@
       },
       "rights": {
         "title": "7. Your Rights and Choices",
-        "content": "Depending on your location (such as the EU under GDPR or California under CCPA), you may possess specific rights regarding your personal information, including the right to access, correct, delete, or limit the use of your data. To exercise any of these rights, please contact us at HR@hypercodeus.com."
+        "content": "Depending on your location (such as the EU under GDPR or California under CCPA), you may possess specific rights regarding your personal information, including the right to access, correct, delete, or limit the use of your data. To exercise any of these rights, please contact us at hello@hypercodeit.com."
       },
       "changes": {
         "title": "8. Changes to this Policy",
@@ -1192,7 +1179,7 @@
       },
       "contact": {
         "title": "9. Contact Us",
-        "content": "If you have any questions or concerns regarding this Privacy Policy, please contact us:\n\n• By email: HR@hypercodeus.com\n\n• By mail: 2095 Hammond Dr Suite B, Schaumburg, IL 60173"
+        "content": "If you have any questions or concerns regarding this Privacy Policy, please contact us:\n\n• By email: hello@hypercodeit.com\n\n• By mail: 2095 Hammond Dr Suite B, Schaumburg, IL 60173"
       }
     }
   },
@@ -1238,7 +1225,7 @@
       },
       "contact": {
         "title": "9. Contact Us",
-        "content": "In order to resolve a complaint regarding the site or to receive further information regarding use of the site, please contact us:\n\n• By email: HR@hypercodeus.com\n\n• By mail: 2095 Hammond Dr Suite B, Schaumburg, IL 60173"
+        "content": "In order to resolve a complaint regarding the site or to receive further information regarding use of the site, please contact us:\n\n• By email: hello@hypercodeit.com\n\n• By mail: 2095 Hammond Dr Suite B, Schaumburg, IL 60173"
       }
     }
   },
@@ -1491,8 +1478,126 @@
       },
       "contact": {
         "title": "7. Contact Us",
-        "content": "If you have questions about our use of cookies or other tracking technologies, please contact us:\n\n• By email: HR@hypercodeus.com\n\n• By mail: 2095 Hammond Dr Suite B, Schaumburg, IL 60173"
+        "content": "If you have questions about our use of cookies or other tracking technologies, please contact us:\n\n• By email: hello@hypercodeit.com\n\n• By mail: 2095 Hammond Dr Suite B, Schaumburg, IL 60173"
       }
+    }
+  },
+  "HomepageRedesign": {
+    "Hero": {
+      "badge": "USA-Based Technology Partner",
+      "headline": "Engineering the Living Technology Ecosystems of Tomorrow",
+      "supporting": "We design and engineer unified digital worlds—connecting AI, multi-cloud platforms, and intelligent APIs into high-performance business engines that scale continuously.",
+      "ctaPrimary": "Schedule Free Consultation",
+      "ctaSecondary": "Explore Solutions",
+      "trust": {
+        "ai": "AI Powered",
+        "enterprise": "Enterprise Ready",
+        "cloud": "Cloud Native",
+        "delivery": "Fast Delivery"
+      }
+    },
+    "TransformationEngine": {
+      "badge": "HOW HYPERCODE TRANSFORMS BUSINESS",
+      "headline": "From Business Challenge to Scalable Technology",
+      "supporting": "A structured six-stage approach that turns business requirements into secure, scalable, and intelligent digital solutions.",
+      "stage1": {
+        "name": "Discover",
+        "title": "Understand Your Digital Environment",
+        "description": "We begin by understanding your business goals, current technology, workflows, data, and operational requirements.",
+        "benefits": [
+          "Business Requirements",
+          "Existing Systems",
+          "Workflow Mapping"
+        ]
+      },
+      "stage2": {
+        "name": "Architect",
+        "title": "Design the Right Technology Foundation",
+        "description": "We design the target digital ecosystem, integration patterns, cloud topology, security protocols, and data strategy.",
+        "benefits": [
+          "Solution Architecture",
+          "Technology Selection",
+          "Security & Scalability"
+        ]
+      },
+      "stage3": {
+        "name": "Engineer",
+        "title": "Build Reliable Digital Products",
+        "description": "We build high-performance applications, platforms, and APIs using agile methodologies and modern DevOps pipelines.",
+        "benefits": [
+          "Agile Development",
+          "Quality Engineering",
+          "DevOps & CI/CD"
+        ]
+      },
+      "stage4": {
+        "name": "Connect",
+        "title": "Connect Your Business Systems",
+        "description": "We integrate enterprise systems, databases, and APIs to create a unified, real-time data environment.",
+        "benefits": [
+          "API Integration",
+          "Data Integration",
+          "Enterprise Platforms"
+        ]
+      },
+      "stage5": {
+        "name": "Automate",
+        "title": "Automate Work and Decisions",
+        "description": "We introduce AI models and workflow automation to streamline repetitive tasks and accelerate decision-making.",
+        "benefits": [
+          "AI Automation",
+          "Workflow Automation",
+          "Intelligent Analytics"
+        ]
+      },
+      "stage6": {
+        "name": "Scale",
+        "title": "Scale Securely With Confidence",
+        "description": "We optimize cloud infrastructure and establish continuous monitoring to support enterprise-level growth safely.",
+        "benefits": [
+          "Cloud Optimization",
+          "Performance Monitoring",
+          "Continuous Improvement"
+        ]
+      }
+    },
+    "ServiceEcosystem": {
+      "badge": "SERVICE ECOSYSTEM",
+      "title": "Intelligent Digital Capabilities",
+      "subtitle": "We design, build, and support the key technological pillars of modern business.",
+      "centralDefaultTitle": "HyperCode Engine",
+      "centralDefaultDesc": "Hover or focus any technology node around the core to inspect our capabilities, key services, and business outcomes.",
+      "centralDefaultOutcome": "Accelerate business value",
+      "outcomes": {
+        "aiOutcome": "Reduce operational manual tasks by 45%",
+        "biOutcome": "Improve executive decision speed by 2.4x",
+        "dataOutcome": "Unlock sub-second automated forecasting insights",
+        "softwareOutcome": "Build resilient, modular enterprise platforms",
+        "webOutcome": "Achieve 99.9% conversion and sub-second load times",
+        "mobileOutcome": "Engage customers with 4.9-star native experiences",
+        "cloudOutcome": "Achieve 99.99% uptime with SOC 2 compliance",
+        "digitalOutcome": "Deploy end-to-end modernized workflows",
+        "platformOutcome": "Consolidate legacy storage into secure data lakes",
+        "staffingOutcome": "Onboard elite pre-vetted squads in 5-10 days"
+      }
+    },
+    "IndustrySolutions": {
+      "badge": "SECTORS WE SERVE",
+      "title": "Industry Solutions",
+      "subtitle": "Custom engineering and architecture tailored to your specific sector."
+    },
+    "DeliveryProcess": {
+      "badge": "OUR PROCESS",
+      "title": "Accelerated Delivery Methodology",
+      "subtitle": "How we go from scoping to production deployment in half the time of traditional integrators.",
+      "step1Title": "1. Scoping & Roadmap",
+      "step1Desc": "Aligning technology strategy, timelines, and business cases.",
+      "step2Title": "2. System Architecture",
+      "step2Desc": "Engineering scalable cloud, data pipelines, and integrations.",
+      "step3Title": "3. Agile Engineering",
+      "step3Desc": "Rapid development, continuous integration, and validation.",
+      "step4Title": "4. Launch & Scale",
+      "step4Desc": "Seamless cloud deployment, handovers, and optimization."
     }
   }
 }

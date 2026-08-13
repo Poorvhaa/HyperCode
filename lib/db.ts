@@ -871,7 +871,7 @@ export const db = {
       throw error;
     }
 
-    return (data || []).map(d => ({
+    return (data || []).map((d: any) => ({
       id: d.id,
       full_name: d.full_name,
       company: d.company || '',
@@ -910,7 +910,7 @@ export const db = {
       throw error;
     }
 
-    return (data || []).map(d => {
+    return (data || []).map((d: any) => {
       let position = 'Software Engineer';
       let years_experience = 3;
       let message = '';
@@ -974,7 +974,7 @@ export const db = {
       throw error;
     }
 
-    return (data || []).map(d => ({
+    return (data || []).map((d: any) => ({
       id: d.id,
       email: d.email,
       status: d.status || 'subscribed',

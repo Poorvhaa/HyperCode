@@ -90,7 +90,7 @@ export default function AIConsultantDashboard() {
       const [convs, lds, reqs, msgs] = await Promise.all([
         db.getAllChatConversations(),
         db.getAllChatLeads(),
-        supabase ? supabase.from('consultation_requests').select('*').not('language', 'is', null).order('created_at', { ascending: false }).then(r => r.data || []) : Promise.resolve([]),
+        supabase ? supabase.from('consultation_requests').select('*').not('language', 'is', null).order('created_at', { ascending: false }).then((r: any) => r.data || []) : Promise.resolve([]),
         db.getAllChatMessages()
       ]);
       setConversations(convs);

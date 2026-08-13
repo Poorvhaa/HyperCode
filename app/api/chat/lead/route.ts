@@ -93,7 +93,7 @@ export async function POST(req: Request) {
     console.error('Save lead route error:', err);
     if (err instanceof z.ZodError) {
       const fieldErrors: Record<string, string> = {};
-      err.errors.forEach((e) => {
+      err.issues.forEach((e: any) => {
         const path = e.path.join('.');
         if (path) {
           fieldErrors[path] = e.message;

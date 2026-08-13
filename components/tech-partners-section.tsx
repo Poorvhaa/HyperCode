@@ -14,7 +14,7 @@ export function TechPartnersSection() {
     <section className="bg-[#F8FAFC] border-b border-slate-200 py-8 select-none">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          <h2 className="text-[10px] font-extrabold tracking-widest text-slate-500 uppercase">
+          <h2 className="text-eyebrow text-slate-500">
             Trusted Technology Expertise
           </h2>
           
@@ -25,8 +25,8 @@ export function TechPartnersSection() {
                 className="flex items-center space-x-2 text-slate-700 hover:text-royal-blue transition-colors duration-200 cursor-default"
               >
                 <div className="w-1.5 h-1.5 rounded-full bg-royal-blue flex-shrink-0 animate-pulse" />
-                <span className="text-xs font-black tracking-tight">{partner.name}</span>
-                <span className="text-[9px] font-bold text-slate-400">/ {partner.type}</span>
+                <span className="text-body-sm font-bold tracking-tight">{partner.name}</span>
+                <span className="text-caption font-semibold text-slate-400">/ {partner.type}</span>
               </div>
             ))}
           </div>

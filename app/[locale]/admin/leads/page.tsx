@@ -492,14 +492,6 @@ export default function AdminLeadsPage() {
                       <p className="mt-1 font-semibold text-slate-800">{selectedLead.data.industry || '—'}</p>
                     </div>
                     <div>
-                      <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Company Size</p>
-                      <p className="mt-1 font-semibold text-slate-800">{selectedLead.data.company_size || '—'}</p>
-                    </div>
-                    <div>
-                      <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Budget</p>
-                      <p className="mt-1 font-semibold text-indigo-750 text-indigo-700">{selectedLead.data.budget || '—'}</p>
-                    </div>
-                    <div>
                       <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Timeline</p>
                       <p className="mt-1 font-semibold text-slate-800">{selectedLead.data.timeline || '—'}</p>
                     </div>

@@ -398,10 +398,6 @@ export default function AdminConsultationsPage() {
                   <p className="mt-1 font-semibold text-slate-800">{selectedConsultation.company || '—'}</p>
                 </div>
                 <div>
-                  <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Company Size</p>
-                  <p className="mt-1 font-semibold text-slate-800">{selectedConsultation.company_size || '—'}</p>
-                </div>
-                <div>
                   <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Industry</p>
                   <p className="mt-1 font-semibold text-slate-800">{selectedConsultation.industry || '—'}</p>
                 </div>
@@ -410,22 +406,11 @@ export default function AdminConsultationsPage() {
                   <p className="mt-1 font-semibold text-slate-800">{selectedConsultation.preferred_meeting_type || '—'}</p>
                 </div>
                 <div>
-                  <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Budget</p>
-                  <p className="mt-1 font-semibold text-emerald-700 flex items-center gap-0.5">
-                    <DollarSign className="w-3.5 h-3.5 text-emerald-600" />
-                    {selectedConsultation.budget || '—'}
-                  </p>
-                </div>
-                <div>
                   <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Timeline</p>
                   <p className="mt-1 font-semibold text-slate-800 flex items-center gap-1">
                     <Clock className="w-3.5 h-3.5 text-slate-400" />
                     {selectedConsultation.timeline || '—'}
                   </p>
-                </div>
-                <div className="col-span-2">
-                  <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Current Tech Stack</p>
-                  <p className="mt-1 font-semibold text-slate-800">{selectedConsultation.current_tech_stack || '—'}</p>
                 </div>
                 {selectedConsultation.preferred_services && selectedConsultation.preferred_services.length > 0 && (
                   <div className="col-span-2">
@@ -446,27 +431,6 @@ export default function AdminConsultationsPage() {
                   <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Primary Service Interest</p>
                   <p className="mt-1.5 font-semibold text-slate-800 bg-slate-50 p-3 rounded-xl border border-slate-100">
                     {selectedConsultation.service_interest}
-                  </p>
-                </div>
-
-                <div>
-                  <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Business Goal</p>
-                  <p className="mt-1.5 font-semibold text-slate-800 bg-slate-50 p-3 rounded-xl border border-slate-100">
-                    {selectedConsultation.business_goal || '—'}
-                  </p>
-                </div>
-
-                <div>
-                  <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Current Challenges</p>
-                  <p className="mt-1.5 text-slate-700 bg-slate-50 p-3 rounded-xl border border-slate-100 leading-relaxed text-xs">
-                    {selectedConsultation.current_challenges || '—'}
-                  </p>
-                </div>
-
-                <div>
-                  <p className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Expected Outcome</p>
-                  <p className="mt-1.5 font-semibold text-slate-800 bg-slate-50 p-3 rounded-xl border border-slate-100">
-                    {selectedConsultation.expected_outcome || '—'}
                   </p>
                 </div>
 

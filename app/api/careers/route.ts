@@ -13,7 +13,7 @@ import {
 // Initialize Resend
 const resendApiKey = process.env.RESEND_API_KEY || '';
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
-const contactRecipient = process.env.HYPERCODE_CONTACT_EMAIL || 'HR@hypercodeus.com';
+const contactRecipient = process.env.HYPERCODE_CONTACT_EMAIL || 'hello@hypercodeit.com';
 const resendFromEmail =
   process.env.RESEND_FROM_EMAIL ||
   'HyperCode <HR@hypercodeit.com>';
@@ -194,49 +194,59 @@ export async function POST(req: Request) {
       try {
         // A. Recruiter Alert Email
         const adminEmailHtml = `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc;">
-            <div style="background-color: #145BFF; color: white; padding: 15px; border-radius: 6px; text-align: center;">
-              <h2 style="margin: 0; font-size: 20px;">New Candidate Application</h2>
-              <p style="margin: 5px 0 0 0; font-size: 13px;">Position: <strong>${position}</strong></p>
-            </div>
-            <div style="padding: 20px 10px; color: #1e293b; line-height: 1.6;">
-              <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
-                <tr>
-                  <td style="padding: 8px 0; font-weight: bold; width: 150px; color: #475569;">Candidate Name:</td>
-                  <td style="padding: 8px 0; font-weight: bold;">${name}</td>
-                </tr>
-                <tr>
-                  <td style="padding: 8px 0; font-weight: bold; color: #475569;">Email:</td>
-                  <td style="padding: 8px 0;"><a href="mailto:${email}">${email}</a></td>
-                </tr>
-                <tr>
-                  <td style="padding: 8px 0; font-weight: bold; color: #475569;">Phone:</td>
-                  <td style="padding: 8px 0;">${phone || 'Not provided'}</td>
-                </tr>
-                <tr>
-                  <td style="padding: 8px 0; font-weight: bold; color: #475569;">LinkedIn:</td>
-                  <td style="padding: 8px 0;">${linkedin ? `<a href="${linkedin}" target="_blank">${linkedin}</a>` : 'Not provided'}</td>
-                </tr>
-                <tr>
-                  <td style="padding: 8px 0; font-weight: bold; color: #475569;">Experience:</td>
-                  <td style="padding: 8px 0;">${yearsExperience} years</td>
-                </tr>
-                <tr>
-                  <td style="padding: 8px 0; font-weight: bold; color: #475569;">Primary Skills:</td>
-                  <td style="padding: 8px 0; font-weight: bold; color: #145BFF;">${skills || 'Not specified'}</td>
-                </tr>
-                <tr>
-                  <td style="padding: 8px 0; font-weight: bold; color: #475569;">Resume File:</td>
-                  <td style="padding: 8px 0;"><a href="${resumeUrl}" target="_blank" style="background-color: #145BFF; color: white; padding: 4px 10px; text-decoration: none; border-radius: 4px; font-size: 11px; font-weight: bold;">Download Resume</a></td>
-                </tr>
-              </table>
-              <div style="background-color: white; border: 1px solid #cbd5e1; border-radius: 6px; padding: 15px; margin-top: 10px; white-space: pre-wrap;">
-                <strong>Cover Message:</strong><br/>
-                ${message || 'No cover message submitted.'}
+          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f8fafc; padding: 40px 20px;">
+            <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03); overflow: hidden;">
+              <div style="padding: 32px 32px 20px 32px; text-align: center; border-bottom: 1px solid #f1f5f9;">
+                <img src="https://www.hypercodeit.com/logo.png" alt="HyperCode Logo" width="180" style="border: 0; display: block; margin: 0 auto; width: 180px; height: auto;" />
+                <div style="margin-top: 10px; font-size: 10px; font-weight: 800; letter-spacing: 0.15em; color: #64748b; text-transform: uppercase;">
+                  WE SOLVE. WE BUILD. YOU GROW.
+                </div>
               </div>
-            </div>
-            <div style="text-align: center; font-size: 11px; color: #94a3b8; margin-top: 20px; border-top: 1px solid #e2e8f0; padding-top: 15px;">
-              This is an automated alert from the HyperCode Recruitment System.
+              <div style="padding: 32px; color: #1e293b; line-height: 1.6; font-size: 14px;">
+                <div style="background-color: #145BFF; color: white; padding: 15px; border-radius: 8px; text-align: center; margin-bottom: 24px;">
+                  <h2 style="margin: 0; font-size: 18px;">New Candidate Application</h2>
+                  <p style="margin: 5px 0 0 0; font-size: 13px;">Position: <strong>${position}</strong></p>
+                </div>
+                <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+                  <tr>
+                    <td style="padding: 8px 0; font-weight: bold; width: 150px; color: #475569;">Candidate Name:</td>
+                    <td style="padding: 8px 0; font-weight: bold;">${name}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 8px 0; font-weight: bold; color: #475569;">Email:</td>
+                    <td style="padding: 8px 0;"><a href="mailto:${email}">${email}</a></td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 8px 0; font-weight: bold; color: #475569;">Phone:</td>
+                    <td style="padding: 8px 0;">${phone || 'Not provided'}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 8px 0; font-weight: bold; color: #475569;">LinkedIn:</td>
+                    <td style="padding: 8px 0;">${linkedin ? `<a href="${linkedin}" target="_blank">${linkedin}</a>` : 'Not provided'}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 8px 0; font-weight: bold; color: #475569;">Experience:</td>
+                    <td style="padding: 8px 0;">${yearsExperience} years</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 8px 0; font-weight: bold; color: #475569;">Primary Skills:</td>
+                    <td style="padding: 8px 0; font-weight: bold; color: #145BFF;">${skills || 'Not specified'}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 8px 0; font-weight: bold; color: #475569;">Resume File:</td>
+                    <td style="padding: 8px 0;"><a href="${resumeUrl}" target="_blank" style="background-color: #145BFF; color: white; padding: 4px 10px; text-decoration: none; border-radius: 4px; font-size: 11px; font-weight: bold;">Download Resume</a></td>
+                  </tr>
+                </table>
+                <div style="background-color: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 15px; margin-top: 10px; white-space: pre-wrap;">
+                  <strong>Cover Message:</strong><br/>
+                  ${message || 'No cover message submitted.'}
+                </div>
+              </div>
+              <div style="padding: 24px 32px; background-color: #f8fafc; border-top: 1px solid #f1f5f9; text-align: center; font-size: 12px; color: #64748b; line-height: 1.5;">
+                <div style="font-weight: bold; color: #475569; margin-bottom: 4px;">HyperCode IT Solutions</div>
+                <div><a href="mailto:solutions@hypercodeit.com" style="color: #145BFF; text-decoration: none;">solutions@hypercodeit.com</a></div>
+                <div style="margin-top: 4px;"><a href="https://www.hypercodeit.com" target="_blank" style="color: #64748b; text-decoration: none;">https://www.hypercodeit.com</a></div>
+              </div>
             </div>
           </div>
         `;
@@ -248,49 +258,65 @@ export async function POST(req: Request) {
           : 'Application Received - HyperCode';
 
         const userEmailHtml = isSpanish ? `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;">
-            <div style="text-align: center; padding-bottom: 20px;">
-              <h2 style="color: #145BFF; margin: 0;">HyperCode</h2>
-              <p style="color: #64748b; font-size: 14px; margin: 5px 0 0 0;">Soluciones de Datos, Tecnología y Talento</p>
-            </div>
-            <div style="color: #1e293b; line-height: 1.6; border-top: 1px solid #e2e8f0; padding-top: 20px;">
-              <p>Hola <strong>${name}</strong>,</p>
-              <p>Gracias por postularse para la vacante de <strong>"${position}"</strong> en HyperCode.</p>
-              <p>Confirmamos que hemos recibido sus detalles y su currículum correctamente. Nuestro equipo de adquisición de talento técnico revisará su perfil, habilidades y años de experiencia para evaluar la compatibilidad con las necesidades de nuestros clientes.</p>
-              <p>Si su perfil coincide con la vacante, un reclutador de HyperCode se pondrá en contacto con usted en un plazo de 3 a 5 días hábiles para programar una llamada de preselección inicial.</p>
-              <div style="margin: 20px 0; padding: 15px; background-color: #f8fafc; border-radius: 6px; font-size: 13px; color: #475569;">
-                <strong>Detalles de su postulación:</strong><br/>
-                • Posición: ${position}<br/>
-                • Experiencia: ${yearsExperience} años<br/>
-                • Currículum: <a href="${resumeUrl}" target="_blank">Ver Archivo Cargado</a>
+          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f8fafc; padding: 40px 20px;">
+            <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03); overflow: hidden;">
+              <div style="padding: 32px 32px 20px 32px; text-align: center; border-bottom: 1px solid #f1f5f9;">
+                <img src="https://www.hypercodeit.com/logo.png" alt="HyperCode Logo" width="180" style="border: 0; display: block; margin: 0 auto; width: 180px; height: auto;" />
+                <div style="margin-top: 10px; font-size: 10px; font-weight: 800; letter-spacing: 0.15em; color: #64748b; text-transform: uppercase;">
+                  WE SOLVE. WE BUILD. YOU GROW.
+                </div>
               </div>
-              <p>Agradecemos su interés en formar parte de nuestro equipo de ingeniería.</p>
-              <p>Atentamente,</p>
-              <p style="margin: 0; font-weight: bold; color: #145BFF;">Adquisición de Talento de HyperCode</p>
-              <p style="margin: 0; font-size: 12px; color: #64748b;">Schaumburg, IL</p>
+              <div style="padding: 32px; color: #1e293b; line-height: 1.6; font-size: 14px;">
+                <p>Hola <strong>${name}</strong>,</p>
+                <p>Gracias por postularse para la vacante de <strong>"${position}"</strong> en HyperCode.</p>
+                <p>Confirmamos que hemos recibido sus detalles y su currículum correctamente. Nuestro equipo de adquisición de talento técnico revisará su perfil, habilidades y años de experiencia para evaluar la compatibilidad con las necesidades de nuestros clientes.</p>
+                <p>Si su perfil coincide con la vacante, un reclutador de HyperCode se pondrá en contacto con usted en un plazo de 3 a 5 días hábiles para programar una llamada de preselección inicial.</p>
+                <div style="margin: 20px 0; padding: 15px; background-color: #f8fafc; border-radius: 6px; font-size: 13px; color: #475569;">
+                  <strong>Detalles de su postulación:</strong><br/>
+                  • Posición: ${position}<br/>
+                  • Experiencia: ${yearsExperience} años<br/>
+                  • Currículum: <a href="${resumeUrl}" target="_blank">Ver Archivo Cargado</a>
+                </div>
+                <p>Agradecemos su interés en formar parte de nuestro equipo de ingeniería.</p>
+                <p>Atentamente,</p>
+                <p style="margin: 0; font-weight: bold; color: #145BFF;">Adquisición de Talento de HyperCode</p>
+              </div>
+              <div style="padding: 24px 32px; background-color: #f8fafc; border-top: 1px solid #f1f5f9; text-align: center; font-size: 12px; color: #64748b; line-height: 1.5;">
+                <div style="font-weight: bold; color: #475569; margin-bottom: 4px;">HyperCode IT Solutions</div>
+                <div><a href="mailto:solutions@hypercodeit.com" style="color: #145BFF; text-decoration: none;">solutions@hypercodeit.com</a></div>
+                <div style="margin-top: 4px;"><a href="https://www.hypercodeit.com" target="_blank" style="color: #64748b; text-decoration: none;">https://www.hypercodeit.com</a></div>
+              </div>
             </div>
           </div>
         ` : `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;">
-            <div style="text-align: center; padding-bottom: 20px;">
-              <h2 style="color: #145BFF; margin: 0;">HyperCode</h2>
-              <p style="color: #64748b; font-size: 14px; margin: 5px 0 0 0;">Data, Technology, & Talent Solutions</p>
-            </div>
-            <div style="color: #1e293b; line-height: 1.6; border-top: 1px solid #e2e8f0; padding-top: 20px;">
-              <p>Hi <strong>${name}</strong>,</p>
-              <p>Thank you for applying for the <strong>"${position}"</strong> position at HyperCode.</p>
-              <p>We confirm that we have successfully received your candidate profile and resume. Our technical recruitment team will review your credentials, core skills, and background mapping against this role.</p>
-              <p>If your background matches our clients' requirements, a HyperCode recruiter will reach out within 3 to 5 business days to coordinate a screening call.</p>
-              <div style="margin: 20px 0; padding: 15px; background-color: #f8fafc; border-radius: 6px; font-size: 13px; color: #475569;">
-                <strong>Application Highlights:</strong><br/>
-                • Position: ${position}<br/>
-                • Experience: ${yearsExperience} years<br/>
-                • Resume: <a href="${resumeUrl}" target="_blank">View Uploaded File</a>
+          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f8fafc; padding: 40px 20px;">
+            <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03); overflow: hidden;">
+              <div style="padding: 32px 32px 20px 32px; text-align: center; border-bottom: 1px solid #f1f5f9;">
+                <img src="https://www.hypercodeit.com/logo.png" alt="HyperCode Logo" width="180" style="border: 0; display: block; margin: 0 auto; width: 180px; height: auto;" />
+                <div style="margin-top: 10px; font-size: 10px; font-weight: 800; letter-spacing: 0.15em; color: #64748b; text-transform: uppercase;">
+                  WE SOLVE. WE BUILD. YOU GROW.
+                </div>
               </div>
-              <p>We appreciate your interest in building your career with HyperCode.</p>
-              <p>Best regards,</p>
-              <p style="margin: 0; font-weight: bold; color: #145BFF;">HyperCode Talent Acquisition Squad</p>
-              <p style="margin: 0; font-size: 12px; color: #64748b;">Schaumburg, IL</p>
+              <div style="padding: 32px; color: #1e293b; line-height: 1.6; font-size: 14px;">
+                <p>Hi <strong>${name}</strong>,</p>
+                <p>Thank you for applying for the <strong>"${position}"</strong> position at HyperCode.</p>
+                <p>We confirm that we have successfully received your candidate profile and resume. Our technical recruitment team will review your credentials, core skills, and background mapping against this role.</p>
+                <p>If your background matches our clients' requirements, a HyperCode recruiter will reach out within 3 to 5 business days to coordinate a screening call.</p>
+                <div style="margin: 20px 0; padding: 15px; background-color: #f8fafc; border-radius: 6px; font-size: 13px; color: #475569;">
+                  <strong>Application Highlights:</strong><br/>
+                  • Position: ${position}<br/>
+                  • Experience: ${yearsExperience} years<br/>
+                  • Resume: <a href="${resumeUrl}" target="_blank">View Uploaded File</a>
+                </div>
+                <p>We appreciate your interest in building your career with HyperCode.</p>
+                <p>Best regards,</p>
+                <p style="margin: 0; font-weight: bold; color: #145BFF;">HyperCode Talent Acquisition Squad</p>
+              </div>
+              <div style="padding: 24px 32px; background-color: #f8fafc; border-top: 1px solid #f1f5f9; text-align: center; font-size: 12px; color: #64748b; line-height: 1.5;">
+                <div style="font-weight: bold; color: #475569; margin-bottom: 4px;">HyperCode IT Solutions</div>
+                <div><a href="mailto:solutions@hypercodeit.com" style="color: #145BFF; text-decoration: none;">solutions@hypercodeit.com</a></div>
+                <div style="margin-top: 4px;"><a href="https://www.hypercodeit.com" target="_blank" style="color: #64748b; text-decoration: none;">https://www.hypercodeit.com</a></div>
+              </div>
             </div>
           </div>
         `;
@@ -360,7 +386,7 @@ export async function POST(req: Request) {
     console.log('[Careers API] catch block triggered:', err);
     if (err instanceof z.ZodError) {
       const fieldErrors: Record<string, string> = {};
-      err.errors.forEach((e) => {
+      err.issues.forEach((e: any) => {
         const path = e.path.join('.');
         if (path) {
           fieldErrors[path] = e.message;

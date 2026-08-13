@@ -33,7 +33,6 @@ function ContactFormContent() {
     'company',
     'phone',
     'industry',
-    'budget',
     'timeline',
     'subject',
     'message'
@@ -121,8 +120,6 @@ function ContactFormContent() {
     ),
     services: z.array(z.string()).default([]),
     industry: createDropdownSchema(t('industryError')),
-    companySize: z.string().default(''),
-    budget: createDropdownSchema(t('budgetError')),
     timeline: createDropdownSchema(t('timelineError')),
     country: z.string().default(''),
     preferredContactMethod: z.string().default('Email'),
@@ -153,8 +150,6 @@ function ContactFormContent() {
       message: '',
       services: [],
       industry: '',
-      companySize: '',
-      budget: '',
       timeline: '',
       country: '',
       preferredContactMethod: 'Email',
@@ -490,51 +485,7 @@ function ContactFormContent() {
           {errors.industry && <span id="contact-industry-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">{errors.industry.message}</span>}
         </div>
 
-        <div>
-          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5" htmlFor="contact-company-size">{t('companySize') || 'Company Size'}</label>
-          <select
-            id="contact-company-size"
-            {...register('companySize')}
-            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 cursor-pointer"
-          >
-            <option value="">-- Select Size --</option>
-            <option value="1-10">1-10 Employees</option>
-            <option value="11-50">11-50 Employees</option>
-            <option value="51-200">51-200 Employees</option>
-            <option value="201-500">201-500 Employees</option>
-            <option value="500+">500+ (Enterprise)</option>
-          </select>
-        </div>
 
-        <div>
-          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5" htmlFor="contact-budget">{t('budget')}</label>
-          <div className="relative">
-            <select
-              id="contact-budget"
-              {...register('budget')}
-              aria-invalid={Boolean(errors.budget)}
-              aria-describedby={errors.budget ? 'contact-budget-error' : undefined}
-              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 cursor-pointer ${
-                errors.budget
-                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
-                  : touchedFields.budget
-                  ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
-                  : 'border-slate-200'
-              }`}
-            >
-              <option value="">-- Select Budget --</option>
-              {Object.entries(tConsult.raw('budgets')).map(([key, val]) => (
-                <option key={key} value={val as string}>{val as string}</option>
-              ))}
-            </select>
-            {touchedFields.budget && !errors.budget && (
-              <span className="absolute right-8 top-1/2 -translate-y-1/2 text-green-500 pointer-events-none">
-                <Check size={20} className="stroke-[3px]" />
-              </span>
-            )}
-          </div>
-          {errors.budget && <span id="contact-budget-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">{errors.budget.message}</span>}
-        </div>
 
         <div>
           <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5" htmlFor="contact-timeline">{t('timeline')}</label>

@@ -15,7 +15,7 @@ import {
 // Initialize Resend
 const resendApiKey = process.env.RESEND_API_KEY || '';
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
-const contactRecipient = process.env.HYPERCODE_CONTACT_EMAIL || 'HR@hypercodeus.com';
+const contactRecipient = process.env.HYPERCODE_CONTACT_EMAIL || 'hello@hypercodeit.com';
 const resendFromEmail =
   process.env.RESEND_FROM_EMAIL ||
   'HyperCode <HR@hypercodeit.com>';
@@ -116,45 +116,55 @@ export async function POST(req: Request) {
       try {
         // Admin Alert Email HTML
         const adminEmailHtml = `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc;">
-            <div style="background-color: #145BFF; color: white; padding: 15px; border-radius: 6px; text-align: center;">
-              <h2 style="margin: 0; font-size: 20px;">New Consultation Request via AI Consultant</h2>
-              <p style="margin: 5px 0 0 0; font-size: 13px;">Selected Service: <strong>${service}</strong></p>
-            </div>
-            <div style="padding: 20px 10px; color: #1e293b; line-height: 1.6;">
-              <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
-                <tr>
-                  <td style="padding: 8px 0; font-weight: bold; width: 150px; color: #475569;">Company:</td>
-                  <td style="padding: 8px 0; font-weight: bold;">${company}</td>
-                </tr>
-                <tr>
-                  <td style="padding: 8px 0; font-weight: bold; color: #475569;">Contact Name:</td>
-                  <td style="padding: 8px 0;">${name}</td>
-                </tr>
-                <tr>
-                  <td style="padding: 8px 0; font-weight: bold; color: #475569;">Email:</td>
-                  <td style="padding: 8px 0;"><a href="mailto:${email}">${email}</a></td>
-                </tr>
-                <tr>
-                  <td style="padding: 8px 0; font-weight: bold; color: #475569;">Phone:</td>
-                  <td style="padding: 8px 0;">${phone}</td>
-                </tr>
-                <tr>
-                  <td style="padding: 8px 0; font-weight: bold; color: #475569;">Preferred Date:</td>
-                  <td style="padding: 8px 0; color: #059669; font-weight: bold;">${preferredDate}</td>
-                </tr>
-                <tr>
-                  <td style="padding: 8px 0; font-weight: bold; color: #475569;">Language:</td>
-                  <td style="padding: 8px 0; text-transform: uppercase;">${language}</td>
-                </tr>
-              </table>
-              <div style="background-color: white; border: 1px solid #cbd5e1; border-radius: 6px; padding: 15px; margin-top: 10px; white-space: pre-wrap;">
-                <strong>Project Description:</strong><br/>
-                ${message}
+          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f8fafc; padding: 40px 20px;">
+            <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03); overflow: hidden;">
+              <div style="padding: 32px 32px 20px 32px; text-align: center; border-bottom: 1px solid #f1f5f9;">
+                <img src="https://www.hypercodeit.com/logo.png" alt="HyperCode Logo" width="180" style="border: 0; display: block; margin: 0 auto; width: 180px; height: auto;" />
+                <div style="margin-top: 10px; font-size: 10px; font-weight: 800; letter-spacing: 0.15em; color: #64748b; text-transform: uppercase;">
+                  WE SOLVE. WE BUILD. YOU GROW.
+                </div>
               </div>
-            </div>
-            <div style="text-align: center; font-size: 11px; color: #94a3b8; margin-top: 20px; border-top: 1px solid #e2e8f0; padding-top: 15px;">
-              This is an automated alert from the HyperCode AI Platform.
+              <div style="padding: 32px; color: #1e293b; line-height: 1.6; font-size: 14px;">
+                <div style="background-color: #145BFF; color: white; padding: 15px; border-radius: 8px; text-align: center; margin-bottom: 24px;">
+                  <h2 style="margin: 0; font-size: 18px;">New Consultation Request via AI Consultant</h2>
+                  <p style="margin: 5px 0 0 0; font-size: 13px;">Selected Service: <strong>${service}</strong></p>
+                </div>
+                <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+                  <tr>
+                    <td style="padding: 8px 0; font-weight: bold; width: 150px; color: #475569;">Company:</td>
+                    <td style="padding: 8px 0; font-weight: bold;">${company}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 8px 0; font-weight: bold; color: #475569;">Contact Name:</td>
+                    <td style="padding: 8px 0;">${name}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 8px 0; font-weight: bold; color: #475569;">Email:</td>
+                    <td style="padding: 8px 0;"><a href="mailto:${email}">${email}</a></td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 8px 0; font-weight: bold; color: #475569;">Phone:</td>
+                    <td style="padding: 8px 0;">${phone}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 8px 0; font-weight: bold; color: #475569;">Preferred Date:</td>
+                    <td style="padding: 8px 0; color: #059669; font-weight: bold;">${preferredDate}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 8px 0; font-weight: bold; color: #475569;">Language:</td>
+                    <td style="padding: 8px 0; text-transform: uppercase;">${language}</td>
+                  </tr>
+                </table>
+                <div style="background-color: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 15px; margin-top: 10px; white-space: pre-wrap;">
+                  <strong>Project Description:</strong><br/>
+                  ${message}
+                </div>
+              </div>
+              <div style="padding: 24px 32px; background-color: #f8fafc; border-top: 1px solid #f1f5f9; text-align: center; font-size: 12px; color: #64748b; line-height: 1.5;">
+                <div style="font-weight: bold; color: #475569; margin-bottom: 4px;">HyperCode IT Solutions</div>
+                <div><a href="mailto:solutions@hypercodeit.com" style="color: #145BFF; text-decoration: none;">solutions@hypercodeit.com</a></div>
+                <div style="margin-top: 4px;"><a href="https://www.hypercodeit.com" target="_blank" style="color: #64748b; text-decoration: none;">https://www.hypercodeit.com</a></div>
+              </div>
             </div>
           </div>
         `;
@@ -188,48 +198,64 @@ export async function POST(req: Request) {
           : 'Consultation Request Confirmed - HyperCode';
 
         const userEmailHtml = isSpanish ? `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;">
-            <div style="text-align: center; padding-bottom: 20px;">
-              <h2 style="color: #145BFF; margin: 0;">HyperCode</h2>
-              <p style="color: #64748b; font-size: 14px; margin: 5px 0 0 0;">Soluciones de Transformación Digital</p>
-            </div>
-            <div style="color: #1e293b; line-height: 1.6; border-top: 1px solid #e2e8f0; padding-top: 20px;">
-              <p>Hola <strong>${name}</strong>,</p>
-              <p>Gracias por programar una consulta a través de nuestro Consultor de IA de HyperCode.</p>
-              <p>Hemos recibido sus requisitos para <strong>"${service}"</strong>. Uno de nuestros Directores de Soluciones Técnicas revisará su caso para preparar la llamada.</p>
-              <div style="margin: 20px 0; padding: 15px; background-color: #f8fafc; border-radius: 6px; font-size: 13px;">
-                <strong>Detalles de su Consulta:</strong><br/>
-                • Empresa: ${company}<br/>
-                • Fecha sugerida: ${preferredDate}<br/>
-                • Servicio: ${service}
+          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f8fafc; padding: 40px 20px;">
+            <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03); overflow: hidden;">
+              <div style="padding: 32px 32px 20px 32px; text-align: center; border-bottom: 1px solid #f1f5f9;">
+                <img src="https://www.hypercodeit.com/logo.png" alt="HyperCode Logo" width="180" style="border: 0; display: block; margin: 0 auto; width: 180px; height: auto;" />
+                <div style="margin-top: 10px; font-size: 10px; font-weight: 800; letter-spacing: 0.15em; color: #64748b; text-transform: uppercase;">
+                  WE SOLVE. WE BUILD. YOU GROW.
+                </div>
               </div>
-              <p>Nos pondremos en contacto con usted en un plazo de 24 horas hábiles con invitaciones de calendario (Zoom/Teams).</p>
-              <p>Esperamos trabajar con usted.</p>
-              <p>Atentamente,</p>
-              <p style="margin: 0; font-weight: bold; color: #145BFF;">Práctica de Consultoría de HyperCode</p>
-              <p style="margin: 0; font-size: 12px; color: #64748b;">Schaumburg, IL</p>
+              <div style="padding: 32px; color: #1e293b; line-height: 1.6; font-size: 14px;">
+                <p>Hola <strong>${name}</strong>,</p>
+                <p>Gracias por programar una consulta a través de nuestro Consultor de IA de HyperCode.</p>
+                <p>Hemos recibido sus requisitos para <strong>"${service}"</strong>. Uno de nuestros Directores de Soluciones Técnicas revisará su caso para preparar la llamada.</p>
+                <div style="margin: 20px 0; padding: 15px; background-color: #f8fafc; border-radius: 6px; font-size: 13px;">
+                  <strong>Detalles de su Consulta:</strong><br/>
+                  • Empresa: ${company}<br/>
+                  • Fecha sugerida: ${preferredDate}<br/>
+                  • Servicio: ${service}
+                </div>
+                <p>Nos pondremos en contacto con usted en un plazo de 24 horas hábiles con invitaciones de calendario (Zoom/Teams).</p>
+                <p>Esperamos trabajar con usted.</p>
+                <p>Atentamente,</p>
+                <p style="margin: 0; font-weight: bold; color: #145BFF;">Práctica de Consultoría de HyperCode</p>
+              </div>
+              <div style="padding: 24px 32px; background-color: #f8fafc; border-top: 1px solid #f1f5f9; text-align: center; font-size: 12px; color: #64748b; line-height: 1.5;">
+                <div style="font-weight: bold; color: #475569; margin-bottom: 4px;">HyperCode IT Solutions</div>
+                <div><a href="mailto:solutions@hypercodeit.com" style="color: #145BFF; text-decoration: none;">solutions@hypercodeit.com</a></div>
+                <div style="margin-top: 4px;"><a href="https://www.hypercodeit.com" target="_blank" style="color: #64748b; text-decoration: none;">https://www.hypercodeit.com</a></div>
+              </div>
             </div>
           </div>
         ` : `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;">
-            <div style="text-align: center; padding-bottom: 20px;">
-              <h2 style="color: #145BFF; margin: 0;">HyperCode</h2>
-              <p style="color: #64748b; font-size: 14px; margin: 5px 0 0 0;">Digital Transformation Solutions</p>
-            </div>
-            <div style="color: #1e293b; line-height: 1.6; border-top: 1px solid #e2e8f0; padding-top: 20px;">
-              <p>Hi <strong>${name}</strong>,</p>
-              <p>Thank you for scheduling a technical review call with HyperCode via our AI Consultant.</p>
-              <p>We have successfully logged your request for <strong>"${service}"</strong>. A Solutions Director is evaluating your project scope details.</p>
-              <div style="margin: 20px 0; padding: 15px; background-color: #f8fafc; border-radius: 6px; font-size: 13px;">
-                <strong>Meeting Parameters:</strong><br/>
-                • Company: ${company}<br/>
-                • Suggested Date: ${preferredDate}<br/>
-                • Service Interest: ${service}
+          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f8fafc; padding: 40px 20px;">
+            <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03); overflow: hidden;">
+              <div style="padding: 32px 32px 20px 32px; text-align: center; border-bottom: 1px solid #f1f5f9;">
+                <img src="https://www.hypercodeit.com/logo.png" alt="HyperCode Logo" width="180" style="border: 0; display: block; margin: 0 auto; width: 180px; height: auto;" />
+                <div style="margin-top: 10px; font-size: 10px; font-weight: 800; letter-spacing: 0.15em; color: #64748b; text-transform: uppercase;">
+                  WE SOLVE. WE BUILD. YOU GROW.
+                </div>
               </div>
-              <p>We will contact you within 24 business hours with custom videoconference calendar invites.</p>
-              <p>We look forward to working on this initiative.</p>
-              <p style="margin: 0; font-weight: bold; color: #145BFF;">HyperCode Consulting Practice</p>
-              <p style="margin: 0; font-size: 12px; color: #64748b;">Schaumburg, IL</p>
+              <div style="padding: 32px; color: #1e293b; line-height: 1.6; font-size: 14px;">
+                <p>Hi <strong>${name}</strong>,</p>
+                <p>Thank you for scheduling a technical review call with HyperCode via our AI Consultant.</p>
+                <p>We have successfully logged your request for <strong>"${service}"</strong>. A Solutions Director is evaluating your project scope details.</p>
+                <div style="margin: 20px 0; padding: 15px; background-color: #f8fafc; border-radius: 6px; font-size: 13px;">
+                  <strong>Meeting Parameters:</strong><br/>
+                  • Company: ${company}<br/>
+                  • Suggested Date: ${preferredDate}<br/>
+                  • Service Interest: ${service}
+                </div>
+                <p>We will contact you within 24 business hours with custom videoconference calendar invites.</p>
+                <p>We look forward to working on this initiative.</p>
+                <p style="margin: 0; font-weight: bold; color: #145BFF;">HyperCode Consulting Practice</p>
+              </div>
+              <div style="padding: 24px 32px; background-color: #f8fafc; border-top: 1px solid #f1f5f9; text-align: center; font-size: 12px; color: #64748b; line-height: 1.5;">
+                <div style="font-weight: bold; color: #475569; margin-bottom: 4px;">HyperCode IT Solutions</div>
+                <div><a href="mailto:solutions@hypercodeit.com" style="color: #145BFF; text-decoration: none;">solutions@hypercodeit.com</a></div>
+                <div style="margin-top: 4px;"><a href="https://www.hypercodeit.com" target="_blank" style="color: #64748b; text-decoration: none;">https://www.hypercodeit.com</a></div>
+              </div>
             </div>
           </div>
         `;
@@ -274,7 +300,7 @@ export async function POST(req: Request) {
     console.error('Save chat consultation route error:', err);
     if (err instanceof z.ZodError) {
       const fieldErrors: Record<string, string> = {};
-      err.errors.forEach((e) => {
+      err.issues.forEach((e: any) => {
         const path = e.path.join('.');
         if (path) {
           fieldErrors[path] = e.message;

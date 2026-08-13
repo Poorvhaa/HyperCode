@@ -67,7 +67,7 @@ export default async function PrivacyPolicyPage({ params }: Props) {
           {/* Table of Contents - Desktop Sticky Sidebar */}
           <aside className="hidden lg:block lg:col-span-1">
             <div className="sticky top-28 space-y-4">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+              <h3 className="text-eyebrow text-slate-400">
                 {t('toc')}
               </h3>
               <nav className="flex flex-col space-y-1">
@@ -75,7 +75,7 @@ export default async function PrivacyPolicyPage({ params }: Props) {
                   <a
                     key={key}
                     href={`#${key}`}
-                    className="group flex items-center justify-between py-2 text-sm font-semibold text-slate-600 hover:text-royal-blue transition-colors"
+                    className="group flex items-center justify-between py-2 text-body-sm font-semibold text-slate-600 hover:text-royal-blue transition-colors"
                   >
                     <span>{t(`sections.${key}.title`)}</span>
                     <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 text-royal-blue transition-all -translate-x-2 group-hover:translate-x-0" />
@@ -94,10 +94,10 @@ export default async function PrivacyPolicyPage({ params }: Props) {
                   id={key}
                   className="scroll-mt-28 border-b border-slate-100 pb-8 last:border-0"
                 >
-                  <h2 className="text-2xl font-bold text-slate-900 mb-4 tracking-tight">
+                  <h2 className="text-h3 text-slate-900 mb-4">
                     {t(`sections.${key}.title`)}
                   </h2>
-                  <p className="text-slate-600 leading-relaxed whitespace-pre-line font-medium text-[15px]">
+                  <p className="text-slate-600 leading-relaxed whitespace-pre-line text-body">
                     {t(`sections.${key}.content`)}
                   </p>
                 </section>

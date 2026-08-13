@@ -92,7 +92,11 @@
     "consulting": "Consultoría Tecnológica",
     "uiux": "Diseño UI/UX",
     "staffing": "Contratación de Personal",
-    "digitalTransformation": "Transformación Digital"
+    "digitalTransformation": "Transformación Digital",
+    "aiDesc": "Diseño de flujos de trabajo y agentes de IA generativa.",
+    "biDesc": "Traducción de activos de datos en informes y paneles visuales.",
+    "mobileDevDesc": "Ingeniería de aplicaciones móviles nativas para iOS y Android.",
+    "digitalTransformationDesc": "Modernización de infraestructura corporativa con tecnología conectada."
   },
   "Footer": {
     "connect": "Conéctese con Nosotros",
@@ -171,8 +175,6 @@
       "subject": "Asunto",
       "message": "Descripción del Proyecto / Mensaje",
       "industry": "Industria",
-      "companySize": "Tamaño de la Empresa",
-      "budget": "Presupuesto del Proyecto",
       "timeline": "Plazo Estimado",
       "country": "País",
       "contactMethod": "Método de Contacto Preferido",
@@ -191,7 +193,6 @@
       "subjectError": "El asunto es requerido",
       "messageError": "El mensaje debe tener al menos 10 caracteres",
       "industryError": "Por favor, seleccione su industria",
-      "budgetError": "Por favor, seleccione un rango de presupuesto",
       "timelineError": "Por favor, seleccione un plazo estimado"
     },
     "subjects": {
@@ -218,34 +219,21 @@
       "company": "Nombre de la Empresa",
       "phone": "Número de Teléfono",
       "service": "Área de Enfoque de Servicio",
-      "budget": "Presupuesto Estimado",
       "timeline": "Plazo Objetivo",
       "message": "Breve Resumen del Proyecto",
-      "businessGoal": "Objetivo Principal de Negocio",
-      "currentChallenges": "Desafíos Tecnológicos Actuales",
-      "expectedOutcome": "Resultado Esperado",
-      "currentTechStack": "Pila Tecnológica / Herramientas Actuales",
       "meetingType": "Tipo de Reunión Preferida",
       "preferredServices": "Áreas de Servicio de Interés",
-      "industry": "Vertical de la Industria",
-      "companySize": "Tamaño de la Empresa",
+      "industry": "Industria",
       "submit": "Programar una consulta",
       "submitting": "Programando...",
       "successTitle": "¡Se solicita una consulta!",
       "successDesc": "Se ha generado y calificado su expediente. En breve se enviará una invitación de calendario con el enlace de la videoconferencia.",
       "errorSubmit": "Error al programar. Compruebe los campos del formulario.",
       "serviceError": "Seleccione un área de servicio de interés",
-      "budgetError": "Seleccione un rango de presupuesto",
       "timelineError": "Seleccione un plazo estimado",
       "messageError": "Describa brevemente su proyecto (mín. 10 caracteres)"
     },
-    "budgets": {
-      "b1": "Menos de $25,000",
-      "b2": "$25,000 - $100,000",
-      "b3": "$100,000 - $250,000",
-      "b4": "$250,000+",
-      "b5": "Por Decidir"
-    },
+
     "timelines": {
       "t1": "Inmediatamente (Menos de 1 Mes)",
       "t2": "Dentro de 1-3 Meses",
@@ -1184,7 +1172,7 @@
       },
       "rights": {
         "title": "7. Sus Derechos y Opciones",
-        "content": "Dependiendo de su ubicación (como la UE bajo el RGPD o California bajo la CCPA), puede poseer derechos específicos con respecto a su información personal, incluido el derecho a acceder, corregir, eliminar o limitar el que usemos sus datos. Para ejercer cualquiera de estos derechos, póngase en contacto con nosotros en HR@hypercodeus.com."
+        "content": "Dependiendo de su ubicación (como la UE bajo el RGPD o California bajo la CCPA), puede poseer derechos específicos con respecto a su información personal, incluido el derecho a acceder, corregir, eliminar o limitar el que usemos sus datos. Para ejercer cualquiera de estos derechos, póngase en contacto con nosotros en hello@hypercodeit.com."
       },
       "changes": {
         "title": "8. Cambios en esta Política",
@@ -1192,7 +1180,7 @@
       },
       "contact": {
         "title": "9. Contáctenos",
-        "content": "Si tiene alguna pregunta o inquietud con respecto a esta Política de Privacidad, póngase en contacto con nosotros:\n\n• Por correo electrónico: HR@hypercodeus.com\n\n• Por correo postal: 2095 Hammond Dr Suite B, Schaumburg, IL 60173"
+        "content": "Si tiene alguna pregunta o inquietud con respecto a esta Política de Privacidad, póngase en contacto con nosotros:\n\n• Por correo electrónico: hello@hypercodeit.com\n\n• Por correo postal: 2095 Hammond Dr Suite B, Schaumburg, IL 60173"
       }
     }
   },
@@ -1238,7 +1226,7 @@
       },
       "contact": {
         "title": "9. Contáctenos",
-        "content": "In order to resolve a complaint regarding the site or to receive further information regarding use of the site, please contact us:\n\n• By email: HR@hypercodeus.com\n\n• By mail: 2095 Hammond Dr Suite B, Schaumburg, IL 60173"
+        "content": "In order to resolve a complaint regarding the site or to receive further information regarding use of the site, please contact us:\n\n• By email: hello@hypercodeit.com\n\n• By mail: 2095 Hammond Dr Suite B, Schaumburg, IL 60173"
       }
     }
   },
@@ -1491,8 +1479,126 @@
       },
       "contact": {
         "title": "7. Contacto",
-        "content": "Si tiene preguntas sobre nuestro uso de cookies u otras tecnologías de seguimiento, póngase en contacto con nosotros:\n\n• Por correo electrónico: HR@hypercodeus.com\n\n• Por correo postal: 2095 Hammond Dr Suite B, Schaumburg, IL 60173"
+        "content": "Si tiene preguntas sobre nuestro uso de cookies u otras tecnologías de seguimiento, póngase en contacto con nosotros:\n\n• Por correo electrónico: hello@hypercodeit.com\n\n• Por correo postal: 2095 Hammond Dr Suite B, Schaumburg, IL 60173"
       }
+    }
+  },
+  "HomepageRedesign": {
+    "Hero": {
+      "badge": "Socio Tecnológico en EE. UU.",
+      "headline": "Diseñando los Ecosistemas Tecnológicos Vivos del Mañana",
+      "supporting": "Diseñamos y desarrollamos mundos digitales unificados, conectando IA, plataformas multi-nube y APIs inteligentes en motores de negocio de alto rendimiento que escalan continuamente.",
+      "ctaPrimary": "Agendar Consulta Gratuita",
+      "ctaSecondary": "Explorar Soluciones",
+      "trust": {
+        "ai": "Impulsado por IA",
+        "enterprise": "Listo para la Empresa",
+        "cloud": "Nativo de la Nube",
+        "delivery": "Entrega Rápida"
+      }
+    },
+    "TransformationEngine": {
+      "badge": "CÓMO HYPERCODE TRANSFORMA LOS NEGOCIOS",
+      "headline": "De Desafío Comercial a Tecnología Escalable",
+      "supporting": "Un enfoque estructurado de seis etapas que convierte los requisitos comerciales en soluciones digitales seguras, escalables e inteligentes.",
+      "stage1": {
+        "name": "Descubrir",
+        "title": "Comprender su Entorno Digital",
+        "description": "Comenzamos por comprender sus objetivos comerciales, tecnología actual, flujos de trabajo, datos y requisitos operativos.",
+        "benefits": [
+          "Requisitos de Negocio",
+          "Sistemas Existentes",
+          "Mapeo de Flujos de Trabajo"
+        ]
+      },
+      "stage2": {
+        "name": "Arquitectar",
+        "title": "Diseñar la Base Tecnológica Correcta",
+        "description": "Diseñamos el ecosistema digital objetivo, patrones de integración, topología de la nube, protocolos de seguridad y estrategia de datos.",
+        "benefits": [
+          "Arquitectura de Soluciones",
+          "Selección de Tecnología",
+          "Seguridad y Escalabilidad"
+        ]
+      },
+      "stage3": {
+        "name": "Ingeniería",
+        "title": "Construir Productos Digitales Confiables",
+        "description": "Construimos aplicaciones, plataformas y APIs de alto rendimiento utilizando metodologías ágiles y canalizaciones DevOps modernas.",
+        "benefits": [
+          "Desarrollo Ágil",
+          "Ingeniería de Calidad",
+          "DevOps y CI/CD"
+        ]
+      },
+      "stage4": {
+        "name": "Conectar",
+        "title": "Conectar sus Sistemas de Negocio",
+        "description": "Integramos sistemas empresariales, bases de datos y APIs para crear un entorno de datos unificado y en tiempo real.",
+        "benefits": [
+          "Integración de APIs",
+          "Integración de Datos",
+          "Plataformas Empresariales"
+        ]
+      },
+      "stage5": {
+        "name": "Automatizar",
+        "title": "Automatizar Trabajo y Decisiones",
+        "description": "Introducimos modelos de IA y automatización de flujos de trabajo para agilizar las tareas repetitivas y acelerar la toma de decisiones.",
+        "benefits": [
+          "Automatización con IA",
+          "Automatización de Flujos de Trabajo",
+          "Analítica Inteligente"
+        ]
+      },
+      "stage6": {
+        "name": "Escalar",
+        "title": "Escalar con Confianza de Forma Segura",
+        "description": "Optimizamos la infraestructura en la nube y establecemos un monitoreo continuo para respaldar el crecimiento empresarial de manera segura.",
+        "benefits": [
+          "Optimización de la Nube",
+          "Monitoreo de Rendimiento",
+          "Mejora Continua"
+        ]
+      }
+    },
+    "ServiceEcosystem": {
+      "badge": "ECOSISTEMA DE SERVICIOS",
+      "title": "Capacidades Digitales Inteligentes",
+      "subtitle": "Diseñamos, construimos y apoyamos los pilares tecnológicos clave de las empresas modernas.",
+      "centralDefaultTitle": "Motor HyperCode",
+      "centralDefaultDesc": "Pase el cursor o enfoque cualquier nodo tecnológico alrededor del núcleo para inspeccionar nuestras capacidades, servicios y resultados.",
+      "centralDefaultOutcome": "Acelerar el valor empresarial",
+      "outcomes": {
+        "aiOutcome": "Reducir tareas manuales operativas en un 45%",
+        "biOutcome": "Mejorar la velocidad de decisión ejecutiva en 2.4x",
+        "dataOutcome": "Desbloquear pronósticos automatizados en milisegundos",
+        "softwareOutcome": "Construir plataformas empresariales modulares y resilientes",
+        "webOutcome": "Lograr una conversión del 99.9% y tiempos de carga óptimos",
+        "mobileOutcome": "Atraer clientes con experiencias nativas de 4.9 estrellas",
+        "cloudOutcome": "Alcanzar 99.99% de tiempo de actividad con SOC 2",
+        "digitalOutcome": "Desplegar flujos de trabajo modernizados de extremo a extremo",
+        "platformOutcome": "Consolidar almacenamiento heredado en lagos de datos seguros",
+        "staffingOutcome": "Incorporar equipos de élite preseleccionados en 5-10 días"
+      }
+    },
+    "IndustrySolutions": {
+      "badge": "SECTORS QUE SERVIMOS",
+      "title": "Soluciones Industriales",
+      "subtitle": "Ingeniería y arquitectura a medida adaptadas a su sector específico."
+    },
+    "DeliveryProcess": {
+      "badge": "NUESTRO PROCESO",
+      "title": "Metodología de Entrega Acelerada",
+      "subtitle": "Cómo pasamos del alcance al despliegue en producción en la mitad de tiempo que los integradores tradicionales.",
+      "step1Title": "1. Alcance y Hoja de Ruta",
+      "step1Desc": "Alineación de la estrategia tecnológica, los plazos y los casos de negocio.",
+      "step2Title": "2. Arquitectura del Sistema",
+      "step2Desc": "Diseño de infraestructura en la nube, flujos de datos e integraciones.",
+      "step3Title": "3. Ingeniería Ágil",
+      "step3Desc": "Desarrollo rápido, integración continua y validación.",
+      "step4Title": "4. Lanzamiento y Escalado",
+      "step4Desc": "Despliegue sin fricciones en la nube, transferencias y optimización."
     }
   }
 }

@@ -35,7 +35,6 @@ function ConsultationFormContent() {
     'phone',
     'service',
     'industry',
-    'budget',
     'timeline',
     'message'
   ];
@@ -49,7 +48,6 @@ function ConsultationFormContent() {
   const t = useTranslations('Consultation.form');
   const tContact = useTranslations('Contact.form');
   const tNav = useTranslations('Navigation');
-  const tBudgets = useTranslations('Consultation.budgets');
   const tTimelines = useTranslations('Consultation.timelines');
   const tAi = useTranslations('AIConsultant');
   const locale = useLocale();
@@ -69,15 +67,6 @@ function ConsultationFormContent() {
     { id: 'Digital Marketing', label: tNav('marketing') },
     { id: 'E-commerce', label: tNav('ecommerce') },
     { id: 'Technology Consulting', label: tNav('techConsulting') },
-  ];
-
-  // Localized budget range pill labels
-  const budgetOptions = [
-    { id: 'Less than $25K', label: tBudgets('b1') },
-    { id: '$25K-$100K', label: tBudgets('b2') },
-    { id: '$100K-$250K', label: tBudgets('b3') },
-    { id: '$250K+', label: tBudgets('b4') },
-    { id: 'Not Sure Yet', label: tBudgets('b5') },
   ];
 
   // Localized expected timeline pill labels
@@ -105,19 +94,13 @@ function ConsultationFormContent() {
       locale === 'es' ? 'El número de teléfono debe tener entre 7 y 15 dígitos' : 'Phone number must be between 7 and 15 digits'
     ),
     service: createDropdownSchema(t('serviceError')),
-    budget: createDropdownSchema(t('budgetError')),
     timeline: createDropdownSchema(t('timelineError')),
     message: createTextareaSchema(
       locale === 'es' ? 'El mensaje debe tener al menos 20 caracteres' : 'Message must be at least 20 characters',
       locale === 'es' ? 'El mensaje debe tener como máximo 2000 caracteres' : 'Message must be at most 2000 characters'
     ),
-    businessGoal: z.string().default(''),
-    currentChallenges: z.string().default(''),
-    expectedOutcome: z.string().default(''),
     preferredServices: z.array(z.string()).default([]),
     industry: createDropdownSchema(tContact('industryError')),
-    companySize: z.string().default(''),
-    currentTechStack: z.string().default(''),
     preferredMeetingType: z.string().default('Video Call'),
   });
 
@@ -141,21 +124,14 @@ function ConsultationFormContent() {
       company: '',
       phone: '',
       service: '',
-      budget: '',
       timeline: '',
       message: '',
-      businessGoal: '',
-      currentChallenges: '',
-      expectedOutcome: '',
       preferredServices: [],
       industry: '',
-      companySize: '',
-      currentTechStack: '',
       preferredMeetingType: 'Video Call',
     },
   });
 
-  const watchedBudget = watch('budget');
   const watchedTimeline = watch('timeline');
   const watchedServices = watch('preferredServices') || [];
   const messageValue = watch('message') || '';
@@ -314,7 +290,7 @@ function ConsultationFormContent() {
       {/* Primary Contact Block */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5" htmlFor="consultation-name">{t('name')}</label>
+          <label className="block text-[13px] md:text-[14px] lg:text-[15px] font-bold text-slate-500 uppercase tracking-[0.05em] leading-[1.5] mb-2.5" htmlFor="consultation-name">{t('name')}</label>
           <div className="relative">
             <input
               id="consultation-name"
@@ -324,9 +300,9 @@ function ConsultationFormContent() {
               {...register('name')}
               aria-invalid={Boolean(errors.name)}
               aria-describedby={errors.name ? 'consultation-name-error' : undefined}
-              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
+              className={`w-full h-[56px] md:h-[60px] lg:h-[64px] px-[20px] rounded-[18px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-[15px] md:text-[16px] lg:text-[17px] font-medium placeholder-slate-400 placeholder:text-[16px] placeholder:font-medium ${
                 errors.name
-                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
+                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200 shadow-[0_0_0_1px_#ef4444]'
                   : touchedFields.name
                   ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                   : 'border-slate-200'
@@ -346,7 +322,7 @@ function ConsultationFormContent() {
         </div>
 
         <div>
-          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5" htmlFor="consultation-email">{t('email')}</label>
+          <label className="block text-[13px] md:text-[14px] lg:text-[15px] font-bold text-slate-500 uppercase tracking-[0.05em] leading-[1.5] mb-2.5" htmlFor="consultation-email">{t('email')}</label>
           <div className="relative">
             <input
               id="consultation-email"
@@ -357,9 +333,9 @@ function ConsultationFormContent() {
               {...register('email')}
               aria-invalid={Boolean(errors.email)}
               aria-describedby={errors.email ? 'consultation-email-error' : undefined}
-              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
+              className={`w-full h-[56px] md:h-[60px] lg:h-[64px] px-[20px] rounded-[18px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-[15px] md:text-[16px] lg:text-[17px] font-medium placeholder-slate-400 placeholder:text-[16px] placeholder:font-medium ${
                 errors.email
-                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
+                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200 shadow-[0_0_0_1px_#ef4444]'
                   : touchedFields.email
                   ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                   : 'border-slate-200'
@@ -379,7 +355,7 @@ function ConsultationFormContent() {
         </div>
 
         <div>
-          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5" htmlFor="consultation-company">{t('company')}</label>
+          <label className="block text-[13px] md:text-[14px] lg:text-[15px] font-bold text-slate-500 uppercase tracking-[0.05em] leading-[1.5] mb-2.5" htmlFor="consultation-company">{t('company')}</label>
           <div className="relative">
             <input
               id="consultation-company"
@@ -389,9 +365,9 @@ function ConsultationFormContent() {
               {...register('company')}
               aria-invalid={Boolean(errors.company)}
               aria-describedby={errors.company ? 'consultation-company-error' : undefined}
-              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
+              className={`w-full h-[56px] md:h-[60px] lg:h-[64px] px-[20px] rounded-[18px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-[15px] md:text-[16px] lg:text-[17px] font-medium placeholder-slate-400 placeholder:text-[16px] placeholder:font-medium ${
                 errors.company
-                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
+                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200 shadow-[0_0_0_1px_#ef4444]'
                   : touchedFields.company
                   ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                   : 'border-slate-200'
@@ -411,7 +387,7 @@ function ConsultationFormContent() {
         </div>
 
         <div>
-          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5" htmlFor="consultation-phone">{t('phone')}</label>
+          <label className="block text-[13px] md:text-[14px] lg:text-[15px] font-bold text-slate-500 uppercase tracking-[0.05em] leading-[1.5] mb-2.5" htmlFor="consultation-phone">{t('phone')}</label>
           <div className="relative">
             <input
               id="consultation-phone"
@@ -426,9 +402,9 @@ function ConsultationFormContent() {
               })}
               aria-invalid={Boolean(errors.phone)}
               aria-describedby={errors.phone ? 'consultation-phone-error' : undefined}
-              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
+              className={`w-full h-[56px] md:h-[60px] lg:h-[64px] px-[20px] rounded-[18px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-[15px] md:text-[16px] lg:text-[17px] font-medium placeholder-slate-400 placeholder:text-[16px] placeholder:font-medium ${
                 errors.phone
-                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
+                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200 shadow-[0_0_0_1px_#ef4444]'
                   : touchedFields.phone
                   ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                   : 'border-slate-200'
@@ -457,7 +433,7 @@ function ConsultationFormContent() {
           tabIndex={-1}
           aria-hidden="true"
         />
-        <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-3">{t('preferredServices') || 'Select Service Areas of Interest'}</label>
+        <label className="block text-[13px] md:text-[14px] lg:text-[15px] font-bold text-slate-500 uppercase tracking-[0.05em] leading-[1.5] mb-3">{t('preferredServices') || 'Select Service Areas of Interest'}</label>
         <div className="flex flex-wrap gap-2.5">
           {serviceOptions.map((opt, index) => {
             const active = watchedServices.includes(opt.id);
@@ -493,16 +469,16 @@ function ConsultationFormContent() {
       {/* Advanced Consulting Intake Fields */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5" htmlFor="consultation-industry">{t('industry') || 'Industry'}</label>
+          <label className="block text-[13px] md:text-[14px] lg:text-[15px] font-bold text-slate-500 uppercase tracking-[0.05em] leading-[1.5] mb-2.5" htmlFor="consultation-industry">{t('industry') || 'Industry'}</label>
           <div className="relative">
             <select
               id="consultation-industry"
               {...register('industry')}
               aria-invalid={Boolean(errors.industry)}
               aria-describedby={errors.industry ? 'consultation-industry-error' : undefined}
-              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 cursor-pointer ${
+              className={`w-full h-[56px] md:h-[60px] lg:h-[64px] pl-5 pr-12 rounded-[18px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-[15px] md:text-[16px] lg:text-[17px] font-medium cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M7%209l3%203%203-3%22%20stroke%3D%22%2364748B%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-[length:20px_20px] bg-[right_20px_center] bg-no-repeat ${
                 errors.industry
-                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
+                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200 shadow-[0_0_0_1px_#ef4444]'
                   : touchedFields.industry
                   ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                   : 'border-slate-200'
@@ -526,183 +502,86 @@ function ConsultationFormContent() {
           )}
         </div>
 
-        <div>
-          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5" htmlFor="consultation-company-size">{t('companySize') || 'Company Size'}</label>
-          <select
-            id="consultation-company-size"
-            {...register('companySize')}
-            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/20 focus:border-royal-blue transition-all text-base text-slate-800 cursor-pointer"
-          >
-            <option value="">-- Select Size --</option>
-            <option value="1-10">1-10 Employees</option>
-            <option value="11-50">11-50 Employees</option>
-            <option value="51-200">51-200 Employees</option>
-            <option value="201-500">201-500 Employees</option>
-            <option value="500+">500+ Employees</option>
-          </select>
-        </div>
+
 
         <div>
-          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5" htmlFor="consultation-meeting-type">{t('meetingType') || 'Preferred Meeting Type'}</label>
-          <select
-            id="consultation-meeting-type"
-            {...register('preferredMeetingType')}
-            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/20 focus:border-royal-blue transition-all text-base text-slate-800 cursor-pointer"
-          >
-            <option value="Video Call">Video Conference (Google Meet/Zoom)</option>
-            <option value="Phone Call">Direct Phone Call</option>
-            <option value="In-person meeting">In-person (HQ or Offices)</option>
-            <option value="Email assessment">Written Email Assessment</option>
-          </select>
+          <label className="block text-[13px] md:text-[14px] lg:text-[15px] font-bold text-slate-500 uppercase tracking-[0.05em] leading-[1.5] mb-2.5" htmlFor="consultation-meeting-type">{t('meetingType') || 'Preferred Meeting Type'}</label>
+          <div className="relative">
+            <select
+              id="consultation-meeting-type"
+              {...register('preferredMeetingType')}
+              className="w-full h-[56px] md:h-[60px] lg:h-[64px] px-[20px] pr-12 rounded-[18px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/20 focus:border-royal-blue transition-all text-[15px] md:text-[16px] lg:text-[17px] font-medium cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M7%209l3%203%203-3%22%20stroke%3D%22%2364748B%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-[length:20px_20px] bg-[right_20px_center] bg-no-repeat"
+            >
+              <option value="Video Call">Video Conference (Google Meet/Zoom)</option>
+              <option value="Phone Call">Direct Phone Call</option>
+              <option value="In-person meeting">In-person (HQ or Offices)</option>
+              <option value="Email assessment">Written Email Assessment</option>
+            </select>
+          </div>
         </div>
 
-        <div>
-          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5" htmlFor="consultation-tech-stack">{t('currentTechStack') || 'Current Tech Stack / Key Tools'}</label>
-          <input
-            id="consultation-tech-stack"
-            type="text"
-            placeholder="e.g. AWS, Postgres, Salesforce, React"
-            {...register('currentTechStack')}
-            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/20 focus:border-royal-blue transition-all text-base text-slate-800 placeholder-slate-400"
-          />
-        </div>
+
       </div>
 
-      {/* Goal, Challenges, Outcomes Fields */}
-      <div className="space-y-6">
-        <div>
-          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5" htmlFor="consultation-goal">{t('businessGoal') || 'Primary Business Goal'}</label>
-          <input
-            id="consultation-goal"
-            type="text"
-            placeholder="e.g. Automate support operations, migration to AWS, build a new SaaS product"
-            {...register('businessGoal')}
-            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/20 focus:border-royal-blue transition-all text-base text-slate-800 placeholder-slate-400"
-          />
-        </div>
 
-        <div>
-          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5" htmlFor="consultation-challenges">{t('currentChallenges') || 'Current Technology Challenges'}</label>
-          <textarea
-            id="consultation-challenges"
-            rows={2}
-            placeholder="e.g. Manual process bottleneck, slow dashboard speed, scaling issues, developer recruitment delay"
-            {...register('currentChallenges')}
-            className="w-full px-5 py-4 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/20 focus:border-royal-blue transition-all text-base text-slate-800 placeholder-slate-400"
-          />
-        </div>
 
-        <div>
-          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5" htmlFor="consultation-outcome">{t('expectedOutcome') || 'Expected Outcome & Success Criteria'}</label>
-          <input
-            id="consultation-outcome"
-            type="text"
-            placeholder="e.g. 50% operational cost reduction, sub-second latency, launch MVP by Q3"
-            {...register('expectedOutcome')}
-            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/20 focus:border-royal-blue transition-all text-base text-slate-800 placeholder-slate-400"
-          />
-        </div>
-      </div>
 
-      {/* Budget and Timeline Selection pills */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="relative">
-          <input
-            type="text"
-            {...register('budget')}
-            className="sr-only"
-            tabIndex={-1}
-            aria-hidden="true"
-          />
-          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-3">{t('budget')}</label>
-          <div className="flex flex-col gap-2.5">
-            {budgetOptions.map((opt, index) => {
-              const active = watchedBudget === opt.id;
-              return (
-                <button
-                  key={opt.id}
-                  type="button"
-                  onClick={() => setValue('budget', opt.id, { shouldValidate: true, shouldDirty: true })}
-                  aria-invalid={Boolean(errors.budget)}
-                  aria-describedby={errors.budget ? 'consultation-budget-error' : undefined}
-                  data-field-name={index === 0 ? 'budget' : undefined}
-                  className={`w-full px-5 py-3.5 rounded-[16px] border text-base font-bold transition-all text-left flex items-center justify-between cursor-pointer ${
-                    active
-                      ? 'bg-royal-blue border-royal-blue text-white shadow-sm'
-                      : errors.budget
-                      ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200 text-slate-700'
-                      : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
-                  }`}
-                >
-                  <span>{opt.label}</span>
-                  {active && <Check size={16} />}
-                </button>
-              );
-            })}
-          </div>
-          {errors.budget && (
-            <span id="consultation-budget-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">
-              {errors.budget.message}
-            </span>
-          )}
-        </div>
 
-        <div className="relative">
-          <input
-            type="text"
-            {...register('timeline')}
-            className="sr-only"
-            tabIndex={-1}
-            aria-hidden="true"
-          />
-          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-3">{t('timeline')}</label>
-          <div className="flex flex-col gap-2.5">
-            {timelineOptions.map((opt, index) => {
-              const active = watchedTimeline === opt.id;
-              return (
-                <button
-                  key={opt.id}
-                  type="button"
-                  onClick={() => setValue('timeline', opt.id, { shouldValidate: true, shouldDirty: true })}
-                  aria-invalid={Boolean(errors.timeline)}
-                  aria-describedby={errors.timeline ? 'consultation-timeline-error' : undefined}
-                  data-field-name={index === 0 ? 'timeline' : undefined}
-                  className={`w-full px-5 py-3.5 rounded-[16px] border text-base font-bold transition-all text-left flex items-center justify-between cursor-pointer ${
-                    active
-                      ? 'bg-royal-blue border-royal-blue text-white shadow-sm'
-                      : errors.timeline
-                      ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200 text-slate-700'
-                      : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
-                  }`}
-                >
-                  <span>{opt.label}</span>
-                  {active && <Check size={16} />}
-                </button>
-              );
-            })}
-          </div>
-          {errors.timeline && (
-            <span id="consultation-timeline-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">
-              {errors.timeline.message}
-            </span>
-          )}
+      {/* Timeline Selection pills */}
+      <div className="relative">
+        <input
+          type="text"
+          {...register('timeline')}
+          className="sr-only"
+          tabIndex={-1}
+          aria-hidden="true"
+        />
+        <label className="block text-[13px] md:text-[14px] lg:text-[15px] font-bold text-slate-500 uppercase tracking-[0.05em] leading-[1.5] mb-3">{t('timeline')}</label>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          {timelineOptions.map((opt, index) => {
+            const active = watchedTimeline === opt.id;
+            return (
+              <button
+                key={opt.id}
+                type="button"
+                onClick={() => setValue('timeline', opt.id, { shouldValidate: true, shouldDirty: true })}
+                aria-invalid={Boolean(errors.timeline)}
+                aria-describedby={errors.timeline ? 'consultation-timeline-error' : undefined}
+                data-field-name={index === 0 ? 'timeline' : undefined}
+                className={`h-[60px] px-[20px] rounded-[18px] border text-[15px] font-semibold transition-all text-left flex items-center justify-between cursor-pointer ${
+                  active
+                    ? 'bg-royal-blue border-royal-blue text-white shadow-sm'
+                    : errors.timeline
+                    ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200 text-slate-700'
+                    : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
+                }`}
+              >
+                <span>{opt.label}</span>
+                {active && <Check size={16} />}
+              </button>
+            );
+          })}
         </div>
+        {errors.timeline && (
+          <span id="consultation-timeline-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">
+            {errors.timeline.message}
+          </span>
+        )}
       </div>
 
       {/* Main message textarea */}
       <div>
-        <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5" htmlFor="consultation-message">{t('message')}</label>
+        <label className="block text-[13px] md:text-[14px] lg:text-[15px] font-bold text-slate-500 uppercase tracking-[0.05em] leading-[1.5] mb-2.5" htmlFor="consultation-message">{t('message')}</label>
         <div className="relative">
           <textarea
             id="consultation-message"
-            rows={4}
             placeholder="Please describe your technology requirements, project background, or team augmentation targets..."
             {...register('message')}
             aria-invalid={Boolean(errors.message)}
             aria-describedby={errors.message ? 'consultation-message-error' : undefined}
-            className={`w-full pl-5 pr-11 py-4 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
+            className={`w-full h-[170px] p-[20px] rounded-[18px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-[15px] md:text-[16px] lg:text-[17px] font-medium placeholder-slate-400 placeholder:text-[16px] placeholder:font-medium resize-none ${
               errors.message
-                ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
+                ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200 shadow-[0_0_0_1px_#ef4444]'
                 : touchedFields.message
                 ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                 : 'border-slate-200'
@@ -733,7 +612,7 @@ function ConsultationFormContent() {
         <button
           type="submit"
           disabled={submitting}
-          className={`btn-primary min-w-[220px] flex items-center justify-center gap-2 transition-all ${
+          className={`btn-primary h-[60px] min-w-[220px] rounded-[18px] flex items-center justify-center gap-2 text-[18px] font-bold transition-all ${
             submitting ? 'opacity-50 cursor-not-allowed bg-slate-400 hover:bg-slate-400 border-slate-400' : ''
           }`}
         >

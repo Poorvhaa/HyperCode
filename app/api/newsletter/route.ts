@@ -90,37 +90,53 @@ export async function POST(req: Request) {
         const subject = isSpanish ? '¡Bienvenido a HyperCode Insights!' : 'Welcome to HyperCode Insights!';
         
         const confirmEmailHtml = isSpanish ? `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;">
-            <div style="text-align: center; padding-bottom: 20px;">
-              <h2 style="color: #145BFF; margin: 0;">HyperCode</h2>
-              <p style="color: #64748b; font-size: 14px; margin: 5px 0 0 0;">Soluciones de Datos, Tecnología y Talento</p>
-            </div>
-            <div style="color: #1e293b; line-height: 1.6; border-top: 1px solid #e2e8f0; padding-top: 20px;">
-              <p>Hola,</p>
-              <p>¡Gracias por suscribirte al boletín de HyperCode!</p>
-              <p>A partir de ahora, recibirás nuestros artículos mensuales de opinión, planos de ingeniería, casos de éxito e ideas de nuestros asesores técnicos directamente en tu bandeja de entrada.</p>
-              <p>Puedes cancelar tu suscripción o gestionar tus preferencias en cualquier momento utilizando los enlaces que se encuentran al final de nuestros correos.</p>
-              <p>¡Bienvenido a la comunidad!</p>
-              <p>Atentamente,</p>
-              <p style="margin: 0; font-weight: bold; color: #145BFF;">El equipo editorial de HyperCode</p>
-              <p style="margin: 0; font-size: 12px; color: #64748b;">Schaumburg, IL</p>
+          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f8fafc; padding: 40px 20px;">
+            <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03); overflow: hidden;">
+              <div style="padding: 32px 32px 20px 32px; text-align: center; border-bottom: 1px solid #f1f5f9;">
+                <img src="https://www.hypercodeit.com/logo.png" alt="HyperCode Logo" width="180" style="border: 0; display: block; margin: 0 auto; width: 180px; height: auto;" />
+                <div style="margin-top: 10px; font-size: 10px; font-weight: 800; letter-spacing: 0.15em; color: #64748b; text-transform: uppercase;">
+                  WE SOLVE. WE BUILD. YOU GROW.
+                </div>
+              </div>
+              <div style="padding: 32px; color: #1e293b; line-height: 1.6; font-size: 14px;">
+                <p>Hola,</p>
+                <p>¡Gracias por suscribirte al boletín de HyperCode!</p>
+                <p>A partir de ahora, recibirás nuestros artículos mensuales de opinión, planos de ingeniería, casos de éxito e ideas de nuestros asesores técnicos directamente en tu bandeja de entrada.</p>
+                <p>Puedes cancelar tu suscripción o gestionar tus preferencias en cualquier momento utilizando los enlaces que se encuentran al final de nuestros correos.</p>
+                <p>¡Bienvenido a la comunidad!</p>
+                <p>Atentamente,</p>
+                <p style="margin: 0; font-weight: bold; color: #145BFF;">El equipo editorial de HyperCode</p>
+              </div>
+              <div style="padding: 24px 32px; background-color: #f8fafc; border-top: 1px solid #f1f5f9; text-align: center; font-size: 12px; color: #64748b; line-height: 1.5;">
+                <div style="font-weight: bold; color: #475569; margin-bottom: 4px;">HyperCode IT Solutions</div>
+                <div><a href="mailto:solutions@hypercodeit.com" style="color: #145BFF; text-decoration: none;">solutions@hypercodeit.com</a></div>
+                <div style="margin-top: 4px;"><a href="https://www.hypercodeit.com" target="_blank" style="color: #64748b; text-decoration: none;">https://www.hypercodeit.com</a></div>
+              </div>
             </div>
           </div>
         ` : `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;">
-            <div style="text-align: center; padding-bottom: 20px;">
-              <h2 style="color: #145BFF; margin: 0;">HyperCode</h2>
-              <p style="color: #64748b; font-size: 14px; margin: 5px 0 0 0;">Data, Technology, & Talent Solutions</p>
-            </div>
-            <div style="color: #1e293b; line-height: 1.6; border-top: 1px solid #e2e8f0; padding-top: 20px;">
-              <p>Hi there,</p>
-              <p>Thank you for subscribing to the HyperCode newsletter!</p>
-              <p>You will now receive our monthly thought leadership pieces, engineering blueprints, case studies, and insights from our technical advisors directly in your inbox.</p>
-              <p>You can unsubscribe or manage your preferences at any time using the links at the bottom of our emails.</p>
-              <p>Welcome to the community!</p>
-              <p>Best regards,</p>
-              <p style="margin: 0; font-weight: bold; color: #145BFF;">HyperCode Editorial Team</p>
-              <p style="margin: 0; font-size: 12px; color: #64748b;">Schaumburg, IL</p>
+          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f8fafc; padding: 40px 20px;">
+            <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03); overflow: hidden;">
+              <div style="padding: 32px 32px 20px 32px; text-align: center; border-bottom: 1px solid #f1f5f9;">
+                <img src="https://www.hypercodeit.com/logo.png" alt="HyperCode Logo" width="180" style="border: 0; display: block; margin: 0 auto; width: 180px; height: auto;" />
+                <div style="margin-top: 10px; font-size: 10px; font-weight: 800; letter-spacing: 0.15em; color: #64748b; text-transform: uppercase;">
+                  WE SOLVE. WE BUILD. YOU GROW.
+                </div>
+              </div>
+              <div style="padding: 32px; color: #1e293b; line-height: 1.6; font-size: 14px;">
+                <p>Hi there,</p>
+                <p>Thank you for subscribing to the HyperCode newsletter!</p>
+                <p>You will now receive our monthly thought leadership pieces, engineering blueprints, case studies, and insights from our technical advisors directly in your inbox.</p>
+                <p>You can unsubscribe or manage your preferences at any time using the links at the bottom of our emails.</p>
+                <p>Welcome to the community!</p>
+                <p>Best regards,</p>
+                <p style="margin: 0; font-weight: bold; color: #145BFF;">HyperCode Editorial Team</p>
+              </div>
+              <div style="padding: 24px 32px; background-color: #f8fafc; border-top: 1px solid #f1f5f9; text-align: center; font-size: 12px; color: #64748b; line-height: 1.5;">
+                <div style="font-weight: bold; color: #475569; margin-bottom: 4px;">HyperCode IT Solutions</div>
+                <div><a href="mailto:solutions@hypercodeit.com" style="color: #145BFF; text-decoration: none;">solutions@hypercodeit.com</a></div>
+                <div style="margin-top: 4px;"><a href="https://www.hypercodeit.com" target="_blank" style="color: #64748b; text-decoration: none;">https://www.hypercodeit.com</a></div>
+              </div>
             </div>
           </div>
         `;
@@ -156,7 +172,7 @@ export async function POST(req: Request) {
     console.error('Newsletter route error:', err);
     if (err instanceof z.ZodError) {
       const fieldErrors: Record<string, string> = {};
-      err.errors.forEach((e) => {
+      err.issues.forEach((e: any) => {
         const path = e.path.join('.');
         if (path) {
           fieldErrors[path] = e.message;

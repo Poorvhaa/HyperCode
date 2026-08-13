@@ -345,7 +345,7 @@ Language: ${language === 'es' ? 'Spanish' : 'English'}
             .join(' | ');
 
           await submitChatLead({
-            conversation_id: conversationId,
+            conversation_id: conversationId || '',
             name: updatedLeadData.name!,
             email: updatedLeadData.email!,
             phone: updatedLeadData.phone || 'N/A',
