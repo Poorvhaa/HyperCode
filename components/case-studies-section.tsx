@@ -103,8 +103,8 @@ const [progressVal, setProgressVal] = useState(0);
 
 // Sticky scroll progress
 const { scrollYProgress } = useScroll({
-target: sectionRef,
-offset: ['start start', 'end end']
+  target: sectionRef,
+  offset: ['start 96px', 'end 100%']
 });
 
 const smoothScroll = useSpring(scrollYProgress, {
@@ -139,21 +139,21 @@ setParallax({ x: 0, y: 0 });
 
 // Card 0 motion values
 const relPos0 = useTransform(scrollPosition, (pos) => 0 - pos);
-const x0 = useTransform(relPos0, [-1.5, -1, 0, 1, 1.5], ['-56vw', '-28vw', '0vw', '28vw', '56vw']);
+const x0 = useTransform(relPos0, [-1.5, -1, 0, 1, 1.5], ['-290%', '-170%', '-50%', '70%', '190%']);
 const scale0 = useTransform(relPos0, [-1.5, -1, 0, 1, 1.5], [0.85, 0.9, 1.0, 0.9, 0.85]);
-const opacity0 = useTransform(relPos0, [-1.1, -1, 0, 1, 1.1], [0, 0.18, 1.0, 0.18, 0]);
+const opacity0 = useTransform(relPos0, [-1.1, -1, 0, 1, 1.1], [0, 0.15, 1.0, 0.15, 0]);
 
 // Card 1 motion values
 const relPos1 = useTransform(scrollPosition, (pos) => 1 - pos);
-const x1 = useTransform(relPos1, [-1.5, -1, 0, 1, 1.5], ['-56vw', '-28vw', '0vw', '28vw', '56vw']);
+const x1 = useTransform(relPos1, [-1.5, -1, 0, 1, 1.5], ['-290%', '-170%', '-50%', '70%', '190%']);
 const scale1 = useTransform(relPos1, [-1.5, -1, 0, 1, 1.5], [0.85, 0.9, 1.0, 0.9, 0.85]);
-const opacity1 = useTransform(relPos1, [-1.1, -1, 0, 1, 1.1], [0, 0.18, 1.0, 0.18, 0]);
+const opacity1 = useTransform(relPos1, [-1.1, -1, 0, 1, 1.1], [0, 0.15, 1.0, 0.15, 0]);
 
 // Card 2 motion values
 const relPos2 = useTransform(scrollPosition, (pos) => 2 - pos);
-const x2 = useTransform(relPos2, [-1.5, -1, 0, 1, 1.5], ['-56vw', '-28vw', '0vw', '28vw', '56vw']);
+const x2 = useTransform(relPos2, [-1.5, -1, 0, 1, 1.5], ['-290%', '-170%', '-50%', '70%', '190%']);
 const scale2 = useTransform(relPos2, [-1.5, -1, 0, 1, 1.5], [0.85, 0.9, 1.0, 0.9, 0.85]);
-const opacity2 = useTransform(relPos2, [-1.1, -1, 0, 1, 1.1], [0, 0.18, 1.0, 0.18, 0]);
+const opacity2 = useTransform(relPos2, [-1.1, -1, 0, 1, 1.1], [0, 0.15, 1.0, 0.15, 0]);
 
 const cardMotionValues = [
 { x: x0, scale: scale0, opacity: opacity0 },
@@ -176,8 +176,8 @@ const targetScrollY = scrollTop + rect.top + targetProgress * scrollableHeight;
 window.scrollTo({ top: targetScrollY, behavior: 'smooth' });
 };
 
-const SCROLL_PER_CARD_VH = 60;
-const totalScrollHeightVh = studies.length * SCROLL_PER_CARD_VH; // 180vh
+const SCROLL_PER_CARD_VH = 50;
+const totalScrollHeightVh = studies.length * SCROLL_PER_CARD_VH; // 150vh
 
 return (
 <>
@@ -185,267 +185,259 @@ return (
 DESKTOP VIEW: STICKY HORIZONTAL TIMELINE (>= 1024px)
 ========================================== */}
 <div
-ref={sectionRef}
-tabIndex={0}
-aria-label={t('title')}
-onKeyDown={(e) => {
-if (prefersReducedMotion) return;
-if (e.key === 'ArrowLeft') {
-e.preventDefault();
-const prevIdx = Math.max(0, activeIdx - 1);
-handleTimelineClick(prevIdx);
-} else if (e.key === 'ArrowRight') {
-e.preventDefault();
-const nextIdx = Math.min(studies.length - 1, activeIdx + 1);
-handleTimelineClick(nextIdx);
-}
-}}
-className={`hidden lg:block relative w-full bg-[#F5F7FB] border-b border-slate-200 focus-visible:outline-none ${
-prefersReducedMotion ? 'h-auto py-20' : ''
-}`}
-style={prefersReducedMotion ? {} : { height: `${totalScrollHeightVh}vh` }}
+  tabIndex={0}
+  aria-label={t('title')}
+  onKeyDown={(e) => {
+    if (prefersReducedMotion) return;
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      const prevIdx = Math.max(0, activeIdx - 1);
+      handleTimelineClick(prevIdx);
+    } else if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      const nextIdx = Math.min(studies.length - 1, activeIdx + 1);
+      handleTimelineClick(nextIdx);
+    }
+  }}
+  className="hidden lg:block relative w-full bg-[#F5F7FB] border-b border-slate-200 focus-visible:outline-none"
 >
-<div
-className={`${
-prefersReducedMotion ? 'relative top-0 h-auto' : 'sticky top-[88px] h-[calc(100svh-88px)]'
-} w-full overflow-visible flex flex-col justify-center bg-[#F5F7FB] bg-[linear-gradient(to_right,rgba(20,91,255,0.008)_1px,transparent_1px),linear-gradient(to_bottom,rgba(20,91,255,0.008)_1px,transparent_1px)] bg-[size:40px_40px]`}
->
+  {/* 1. Header (Static Layout) */}
+  <div className="max-w-7xl mx-auto px-8 pt-24 xl:pt-[120px] pb-6 w-full relative z-20">
+    <div className="max-w-3xl text-left flex flex-col">
+      <span className="inline-flex items-center gap-1.5 text-eyebrow text-royal-blue mb-4 lg:mb-5">
+        <span className="w-1.5 h-1.5 rounded-full bg-royal-blue animate-pulse" />
+        {t('badge')}
+      </span>
+      <h2 className="text-h2 text-slate-900 mb-4 lg:mb-5">
+        {t('title')}
+      </h2>
+      <p className="text-body text-slate-500 max-w-xl">
+        {t('subtitle')}
+      </p>
+    </div>
+  </div>
 
-{/* Subtle Ambient lights inside overflow-hidden enclosure */}
-<div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-  <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-royal-blue/5 rounded-full blur-[100px] pointer-events-none -z-10 animate-pulse" />
-  <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-green/3 rounded-full blur-[100px] pointer-events-none -z-10 animate-pulse" />
-</div>
+  {/* 2. Scroll Track with Sticky cards */}
+  <div
+    ref={sectionRef}
+    style={prefersReducedMotion ? {} : { height: `${totalScrollHeightVh}vh` }}
+    className="relative w-full overflow-visible"
+  >
+    <div
+      className={`${
+        prefersReducedMotion ? 'relative top-0 h-auto' : 'sticky top-[96px] h-[calc(100vh-96px)]'
+      } w-full overflow-hidden flex flex-col justify-center bg-[#F5F7FB] bg-[linear-gradient(to_right,rgba(20,91,255,0.008)_1px,transparent_1px),linear-gradient(to_bottom,rgba(20,91,255,0.008)_1px,transparent_1px)] bg-[size:40px_40px] z-10`}
+    >
+      <div className="max-w-7xl mx-auto px-8 w-full relative z-20 flex flex-col">
+        {/* Horizontal Timeline Track Canvas */}
+        <div
+          ref={canvasRef}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+          className={`relative w-full ${
+            prefersReducedMotion ? 'h-auto py-8' : 'h-[440px] xl:h-[500px]'
+          } flex items-center justify-center pointer-events-auto z-20`}
+        >
+          {/* Timeline Track Wrapper */}
+          <div
+            className={`relative w-full h-full flex ${
+              prefersReducedMotion ? 'flex-row justify-center gap-8' : 'items-center justify-center'
+            } overflow-visible`}
+          >
+            {/* Horizontal Guide Blueprint Line */}
+            {!prefersReducedMotion && (
+              <div 
+                className="absolute left-0 right-0 h-[1.5px] bg-slate-200/80 z-0"
+              />
+            )}
 
-<div className="max-w-7xl mx-auto px-8 w-full relative z-10 flex flex-col space-y-6 xl:space-y-8">
+            {/* Glowing Data pulse traveling down path */}
+            {!prefersReducedMotion && clickedIdx === null && (
+              <motion.div
+                animate={{ left: ['0%', '100%'] }}
+                transition={{ duration: 7, repeat: Infinity, ease: 'linear' }}
+                className="absolute h-1 w-12 bg-gradient-to-r from-royal-blue/0 via-royal-blue to-royal-blue/0 rounded-full shadow-[0_0_8px_rgba(20,91,255,0.8)] z-10"
+                style={{ top: 'calc(50% - 2px)' }}
+              />
+            )}
 
-{/* Title block */}
-<div className="max-w-3xl text-left space-y-3">
-<span className="inline-flex items-center gap-1.5 text-eyebrow text-royal-blue">
-<span className="w-1.5 h-1.5 rounded-full bg-royal-blue animate-pulse" />
-{t('badge')}
-</span>
-<h2 className="text-h2 text-slate-900">
-{t('title')}
-</h2>
-<p className="text-body text-slate-500 max-w-xl">
-{t('subtitle')}
-</p>
-</div>
+            {studies.map((study, idx) => {
+              const isFoc = activeIdx === idx;
+              const isClicked = clickedIdx === idx;
 
-{/* Horizontal Timeline Track Canvas */}
-<div
-ref={canvasRef}
-onMouseMove={handleMouseMove}
-onMouseLeave={handleMouseLeave}
-className={`relative w-full ${
-prefersReducedMotion ? 'h-auto py-8' : 'h-[520px]'
-} flex items-center justify-center pointer-events-auto`}
->
-{/* Timeline Track Wrapper */}
-<div
-className={`relative w-full h-full flex ${
-prefersReducedMotion ? 'flex-row justify-center gap-8' : 'items-center justify-center'
-} overflow-visible`}
->
-{/* Horizontal Guide Blueprint Line */}
-{!prefersReducedMotion && (
-<div 
-className="absolute left-0 right-0 h-[1.5px] bg-slate-200/80 z-0"
-/>
-)}
+              const IndustryIcon = getIndustryIcon(study.industry);
+              const firstMetric = study.metrics[0] || { value: '100%', label: 'Success' };
 
-{/* Glowing Data pulse traveling down path */}
-{!prefersReducedMotion && clickedIdx === null && (
-<motion.div
-animate={{ left: ['0%', '100%'] }}
-transition={{ duration: 7, repeat: Infinity, ease: 'linear' }}
-className="absolute h-1 w-12 bg-gradient-to-r from-royal-blue/0 via-royal-blue to-royal-blue/0 rounded-full shadow-[0_0_8px_rgba(20,91,255,0.8)] z-10"
-style={{ top: 'calc(50% - 2px)' }}
-/>
-)}
+              // Highlighting mechanics
+              let capsuleBorder = 'border-slate-200/80';
+              let scaleTarget = undefined;
+              let opacityTarget = undefined;
 
-{studies.map((study, idx) => {
-const isFoc = activeIdx === idx;
-const isClicked = clickedIdx === idx;
+              if (clickedIdx !== null) {
+                if (isClicked) {
+                  scaleTarget = 1.05;
+                  opacityTarget = 1.0;
+                  capsuleBorder = 'border-royal-blue shadow-lg';
+                } else {
+                  scaleTarget = 0.9;
+                  opacityTarget = 0.15;
+                }
+              } else {
+                if (isFoc) {
+                  capsuleBorder = 'border-royal-blue shadow-md';
+                }
+              }
 
-const IndustryIcon = getIndustryIcon(study.industry);
-const firstMetric = study.metrics[0] || { value: '100%', label: 'Success' };
+              return (
+                <motion.div
+                  key={study.slug}
+                  tabIndex={prefersReducedMotion || isFoc ? 0 : -1}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      if (isFoc || prefersReducedMotion) {
+                        setClickedIdx(idx);
+                      } else {
+                        handleTimelineClick(idx);
+                      }
+                    }
+                  }}
+                  style={
+                    prefersReducedMotion
+                      ? {
+                          position: 'relative'
+                        }
+                      : {
+                          position: 'absolute',
+                          left: '50%',
+                          top: '50%',
+                          x: cardMotionValues[idx]?.x,
+                          y: '-50%',
+                          scale: clickedIdx !== null ? undefined : cardMotionValues[idx]?.scale,
+                          opacity: clickedIdx !== null ? undefined : cardMotionValues[idx]?.opacity
+                        }
+                  }
+                  animate={
+                    prefersReducedMotion
+                      ? { scale: 1, opacity: 1 }
+                      : {
+                          scale: clickedIdx !== null ? scaleTarget : undefined,
+                          opacity: clickedIdx !== null ? opacityTarget : undefined
+                        }
+                  }
+                  transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+                  onClick={() => {
+                    if (prefersReducedMotion || isFoc) {
+                      setClickedIdx(idx);
+                    } else {
+                      handleTimelineClick(idx);
+                    }
+                  }}
+                  className={`w-[330px] h-[390px] xl:h-[450px] rounded-[36px] border backdrop-blur-xl p-7 flex flex-col justify-between relative overflow-hidden select-none hover:border-royal-blue/30 cursor-pointer shadow-xs transition-all duration-300 z-20 ${
+                    prefersReducedMotion
+                      ? 'pointer-events-auto border-slate-200/80 bg-white/95 shadow-md'
+                      : isFoc
+                      ? 'pointer-events-auto border-royal-blue bg-[#F4F8FF]/95 ring-1 ring-royal-blue/20 shadow-sm scale-102 z-30'
+                      : 'pointer-events-none border-slate-200/80 bg-white/95 opacity-18'
+                  } ${capsuleBorder}`}
+                >
+                  {/* Glass Shimmer Reflection */}
+                  <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/10 to-white/20 opacity-0 hover:opacity-100 transition-opacity pointer-events-none" />
 
-// Highlighting mechanics
-let capsuleBorder = 'border-slate-200/80';
-let scaleTarget = undefined;
-let opacityTarget = undefined;
+                  {/* Header block */}
+                  <div className="flex justify-between items-center">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-50 border border-slate-150 text-[9px] font-black text-slate-500 uppercase tracking-wider">
+                      <IndustryIcon size={11} className="text-royal-blue" />
+                      <span>{study.industry}</span>
+                    </span>
+                    <span className="text-[8px] font-black text-green tracking-wider uppercase bg-green/10 px-2 py-0.5 rounded-md">
+                      DEPLOYED
+                    </span>
+                  </div>
 
-if (clickedIdx !== null) {
-if (isClicked) {
-scaleTarget = 1.05;
-opacityTarget = 1.0;
-capsuleBorder = 'border-royal-blue shadow-lg';
-} else {
-scaleTarget = 0.9;
-opacityTarget = 0.15;
-}
-} else {
-if (isFoc) {
-capsuleBorder = 'border-royal-blue shadow-md';
-}
-}
+                  {/* Center: KPI progress ring */}
+                  <div className="my-2">
+                    <KPIRing value={firstMetric.value} label={firstMetric.label} active={prefersReducedMotion || isFoc || isClicked} />
+                  </div>
 
-return (
-<motion.div
-key={study.slug}
-tabIndex={prefersReducedMotion || isFoc ? 0 : -1}
-onKeyDown={(e) => {
-if (e.key === 'Enter' || e.key === ' ') {
-e.preventDefault();
-if (isFoc || prefersReducedMotion) {
-setClickedIdx(idx);
-} else {
-handleTimelineClick(idx);
-}
-}
-}}
-style={
-prefersReducedMotion
-? {
-position: 'relative'
-}
-: {
-position: 'absolute',
-left: '50%',
-top: '50%',
-x: cardMotionValues[idx]?.x,
-y: '-50%',
-scale: clickedIdx !== null ? undefined : cardMotionValues[idx]?.scale,
-opacity: clickedIdx !== null ? undefined : cardMotionValues[idx]?.opacity
-}
-}
-animate={
-prefersReducedMotion
-? { scale: 1, opacity: 1 }
-: {
-scale: clickedIdx !== null ? scaleTarget : undefined,
-opacity: clickedIdx !== null ? opacityTarget : undefined
-}
-}
-transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
-onClick={() => {
-if (prefersReducedMotion || isFoc) {
-setClickedIdx(idx);
-} else {
-handleTimelineClick(idx);
-}
-}}
-                    className={`w-[330px] h-[450px] rounded-[36px] border backdrop-blur-xl p-7 flex flex-col justify-between relative overflow-hidden select-none hover:border-royal-blue/30 cursor-pointer shadow-xs transition-all duration-300 z-20 ${
-prefersReducedMotion
-                        ? 'pointer-events-auto border-slate-200/80 bg-white/95 shadow-md'
-: isFoc
-                        ? 'pointer-events-auto border-royal-blue bg-[#F4F8FF]/95 ring-1 ring-royal-blue/20 shadow-sm scale-102 z-30'
-                        : 'pointer-events-none border-slate-200/80 bg-white/95 opacity-18'
-} ${capsuleBorder}`}
->
-{/* Glass Shimmer Reflection */}
-<div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/10 to-white/20 opacity-0 hover:opacity-100 transition-opacity pointer-events-none" />
+                  {/* Bottom contents */}
+                  <div className="space-y-3">
+                    <div className="space-y-1 text-left">
+                      <span className="text-eyebrow text-slate-400">
+                        {study.clientType}
+                      </span>
+                      <h3 className="text-h4 text-slate-900 line-clamp-2">
+                        {study.title}
+                      </h3>
+                    </div>
 
-{/* Header block */}
-<div className="flex justify-between items-center">
-<span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-50 border border-slate-150 text-[9px] font-black text-slate-500 uppercase tracking-wider">
-<IndustryIcon size={11} className="text-royal-blue" />
-<span>{study.industry}</span>
-</span>
-<span className="text-[8px] font-black text-green tracking-wider uppercase bg-green/10 px-2 py-0.5 rounded-md">
-DEPLOYED
-</span>
-</div>
+                    {/* Tech stack badges */}
+                    <div className="flex flex-wrap gap-1.5">
+                      {study.technologies.slice(0, 3).map((tech) => (
+                        <span
+                          key={tech}
+                          className="px-2 py-0.5 rounded-lg bg-slate-50 border border-slate-150 text-slate-500 text-[8.5px] font-extrabold uppercase tracking-wide"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
 
-{/* Center: KPI progress ring */}
-<div className="my-2">
-<KPIRing value={firstMetric.value} label={firstMetric.label} active={prefersReducedMotion || isFoc || isClicked} />
-</div>
+                    <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-[9px] font-black text-slate-400 tracking-wider uppercase">
+                      <div className="flex items-center gap-1">
+                        <CheckCircle size={12} className="text-green" />
+                        <span>100% SUCCESS</span>
+                      </div>
+                      <span className="text-royal-blue tracking-tight hover:underline flex items-center gap-0.5">
+                        {locale === 'es' ? 'Ver Detalles' : 'View Details'}
+                        <ArrowRight size={10} />
+                      </span>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
 
-{/* Bottom contents */}
-<div className="space-y-3">
-<div className="space-y-1 text-left">
-<span className="text-eyebrow text-slate-400">
-{study.clientType}
-</span>
-<h3 className="text-h4 text-slate-900 line-clamp-2">
-{study.title}
-</h3>
-</div>
-
-{/* Tech stack badges */}
-<div className="flex flex-wrap gap-1.5">
-{study.technologies.slice(0, 3).map((tech) => (
-<span
-key={tech}
-className="px-2 py-0.5 rounded-lg bg-slate-50 border border-slate-150 text-slate-500 text-[8.5px] font-extrabold uppercase tracking-wide"
->
-{tech}
-</span>
-))}
-</div>
-
-<div className="pt-3 border-t border-slate-100 flex items-center justify-between text-[9px] font-black text-slate-400 tracking-wider uppercase">
-<div className="flex items-center gap-1">
-<CheckCircle size={12} className="text-green" />
-<span>100% SUCCESS</span>
-</div>
-<span className="text-royal-blue tracking-tight hover:underline flex items-center gap-0.5">
-{locale === 'es' ? 'Ver Detalles' : 'View Details'}
-<ArrowRight size={10} />
-</span>
-</div>
-</div>
-
-{/* Highlight backdrop glow */}
-{(isFoc || isClicked) && !prefersReducedMotion && (
-<div className="absolute -inset-1 bg-royal-blue/5 rounded-[36px] filter blur-xs animate-pulse -z-10" />
-                      )}
-                    </motion.div>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Timeline navigation dots */}
-            <div className="flex justify-center gap-3 mt-8">
-              {studies.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => handleTimelineClick(idx)}
-                  className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                    activeIdx === idx
-                      ? 'bg-royal-blue w-6'
-                      : 'bg-slate-200 hover:bg-slate-350'
-                  }`}
-                  aria-label={`Go to case study ${idx + 1}`}
-                />
-              ))}
-            </div>
-</div>
-</div>
+        {/* Timeline navigation dots */}
+        <div className="flex justify-center gap-3 mt-8">
+          {studies.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => handleTimelineClick(idx)}
+              className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                activeIdx === idx
+                  ? 'bg-royal-blue w-6'
+                  : 'bg-slate-200 hover:bg-slate-350'
+              }`}
+              aria-label={`Go to case study ${idx + 1}`}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 {/* ==========================================
 TABLET VIEW: CONDENSED TIMELINE (768px - 1023px)
 ========================================== */}
-<div className="hidden md:block lg:hidden py-24 bg-[#F5F7FB] border-b border-slate-200 text-slate-800 text-center relative overflow-visible select-none">
-<div className="max-w-4xl mx-auto px-6 space-y-12">
-{/* Header */}
-<div className="max-w-2xl mx-auto space-y-3">
-<span className="inline-flex items-center gap-1.5 text-eyebrow text-royal-blue">
-<span className="w-1.5 h-1.5 rounded-full bg-royal-blue animate-pulse" />
-{t('badge')}
-</span>
-<h2 className="text-h2 text-slate-900">
-{t('title')}
-</h2>
-<p className="text-body-sm text-slate-500">
-{t('subtitle')}
-</p>
-          </div>
+    <div className="hidden md:block lg:hidden pt-[72px] pb-[72px] md:pt-[96px] md:pb-[96px] bg-[#F5F7FB] border-b border-slate-200 text-slate-800 text-center relative overflow-visible select-none">
+      <div className="max-w-4xl mx-auto px-6 space-y-12">
+        {/* Header */}
+        <div className="max-w-2xl mx-auto flex flex-col items-center">
+          <span className="inline-flex items-center gap-1.5 text-eyebrow text-royal-blue mb-4">
+            <span className="w-1.5 h-1.5 rounded-full bg-royal-blue animate-pulse" />
+            {t('badge')}
+          </span>
+          <h2 className="text-h2 text-slate-900 mb-4">
+            {t('title')}
+          </h2>
+          <p className="text-body-sm text-slate-500">
+            {t('subtitle')}
+          </p>
+        </div>
 
           <div className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-none">
 {studies.map((study, idx) => {
@@ -506,22 +498,22 @@ className="px-6 py-3.5 rounded-xl border border-slate-200 bg-white inline-flex i
 {/* ==========================================
 MOBILE VIEW: VERTICAL BLUEPRINT TIMELINE (< 768px)
 ========================================== */}
-<div className="block md:hidden py-16 bg-[#F5F7FB] border-b border-slate-200 overflow-visible text-left bg-[linear-gradient(to_right,rgba(20,91,255,0.008)_1px,transparent_1px),linear-gradient(to_bottom,rgba(20,91,255,0.008)_1px,transparent_1px)] bg-[size:30px_30px]">
-<div className="max-w-7xl mx-auto px-6 space-y-10">
+    <div className="block md:hidden pt-[56px] pb-[56px] bg-[#F5F7FB] border-b border-slate-200 overflow-visible text-left bg-[linear-gradient(to_right,rgba(20,91,255,0.008)_1px,transparent_1px),linear-gradient(to_bottom,rgba(20,91,255,0.008)_1px,transparent_1px)] bg-[size:30px_30px]">
+      <div className="max-w-7xl mx-auto px-6 space-y-10">
 
-{/* Header */}
-<div className="space-y-2">
-<span className="inline-flex items-center gap-1.5 text-eyebrow text-royal-blue">
-<span className="w-1.5 h-1.5 rounded-full bg-royal-blue animate-pulse" />
-{t('badge')}
-</span>
-<h2 className="text-h2 text-slate-900">
-{t('title')}
-</h2>
-<p className="text-body-sm text-slate-500">
-{t('subtitle')}
-</p>
-</div>
+        {/* Header */}
+        <div className="flex flex-col text-left">
+          <span className="inline-flex items-center gap-1.5 text-eyebrow text-royal-blue mb-4">
+            <span className="w-1.5 h-1.5 rounded-full bg-royal-blue animate-pulse" />
+            {t('badge')}
+          </span>
+          <h2 className="text-h2 text-slate-900 mb-4">
+            {t('title')}
+          </h2>
+          <p className="text-body-sm text-slate-500">
+            {t('subtitle')}
+          </p>
+        </div>
 
 {/* Vertical Storytelling Timeline */}
 <div className="relative pl-10 space-y-8">

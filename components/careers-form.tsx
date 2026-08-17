@@ -353,15 +353,15 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
           <CheckCircle size={36} />
         </div>
         <div className="space-y-3">
-          <h3 className="text-2xl font-extrabold text-slate-900">{t.successTitle}</h3>
-          <p className="text-sm sm:text-base text-slate-600 leading-relaxed max-w-md mx-auto">
+          <h3 className="text-h3 text-slate-900">{t.successTitle}</h3>
+          <p className="text-body text-slate-600 max-w-md mx-auto">
             {t.successText}
           </p>
         </div>
         <div className="pt-6">
           <button
             onClick={() => setSubmitted(false)}
-            className="inline-flex h-11 px-6 items-center justify-center bg-royal-blue text-white font-semibold text-xs rounded-xl hover:bg-[#0c3c66] transition-colors cursor-pointer border-none"
+            className="inline-flex h-11 px-6 items-center justify-center bg-royal-blue text-white text-button rounded-xl hover:bg-[#0c3c66] transition-colors cursor-pointer border-none"
           >
             {t.backToCareers}
           </button>
@@ -401,7 +401,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Full Name */}
           <div className="space-y-2">
-            <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855" htmlFor="careers-name">{t.fullName}</label>
+            <label className="block text-body font-bold text-slate-855" htmlFor="careers-name">{t.fullName}</label>
             <div className="relative">
               <input
                 id="careers-name"
@@ -411,7 +411,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
                 autoComplete="name"
                 aria-invalid={Boolean(errors.name)}
                 aria-describedby={errors.name ? 'careers-name-error' : undefined}
-                className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
+                className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-body text-slate-800 placeholder-slate-400 ${
                   errors.name
                     ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                     : touchedFields.name
@@ -426,7 +426,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
               )}
             </div>
             {errors.name && (
-              <p id="careers-name-error" className="text-xs font-semibold text-red-500 mt-1.5" role="alert">
+              <p id="careers-name-error" className="text-caption font-semibold text-red-500 mt-1.5" role="alert">
                 {errors.name.message}
               </p>
             )}
@@ -434,7 +434,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
 
           {/* Email Address */}
           <div className="space-y-2">
-            <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855" htmlFor="careers-email">{t.emailAddress}</label>
+            <label className="block text-body font-bold text-slate-855" htmlFor="careers-email">{t.emailAddress}</label>
             <div className="relative">
               <input
                 id="careers-email"
@@ -445,7 +445,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
                 inputMode="email"
                 aria-invalid={Boolean(errors.email)}
                 aria-describedby={errors.email ? 'careers-email-error' : undefined}
-                className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
+                className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-body text-slate-800 placeholder-slate-400 ${
                   errors.email
                     ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                     : touchedFields.email
@@ -460,7 +460,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
               )}
             </div>
             {errors.email && (
-              <p id="careers-email-error" className="text-xs font-semibold text-red-500 mt-1.5" role="alert">
+              <p id="careers-email-error" className="text-caption font-semibold text-red-500 mt-1.5" role="alert">
                 {errors.email.message}
               </p>
             )}
@@ -468,7 +468,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
 
           {/* Phone Number */}
           <div className="space-y-2">
-            <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855" htmlFor="careers-phone">{t.phoneNumber}</label>
+            <label className="block text-body font-bold text-slate-855" htmlFor="careers-phone">{t.phoneNumber}</label>
             <div className="relative">
               <input
                 id="careers-phone"
@@ -483,7 +483,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
                 inputMode="tel"
                 aria-invalid={Boolean(errors.phone)}
                 aria-describedby={errors.phone ? 'careers-phone-error' : undefined}
-                className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
+                className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-body text-slate-800 placeholder-slate-400 ${
                   errors.phone
                     ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                     : touchedFields.phone
@@ -498,7 +498,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
               )}
             </div>
             {errors.phone && (
-              <p id="careers-phone-error" className="text-xs font-semibold text-red-500 mt-1.5" role="alert">
+              <p id="careers-phone-error" className="text-caption font-semibold text-red-500 mt-1.5" role="alert">
                 {errors.phone.message}
               </p>
             )}
@@ -506,7 +506,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
 
           {/* LinkedIn URL */}
           <div className="space-y-2">
-            <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855" htmlFor="careers-linkedin">{t.linkedinUrl}</label>
+            <label className="block text-body font-bold text-slate-855" htmlFor="careers-linkedin">{t.linkedinUrl}</label>
             <div className="relative">
               <input
                 id="careers-linkedin"
@@ -515,7 +515,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
                 placeholder="https://linkedin.com/in/username"
                 aria-invalid={Boolean(errors.linkedin)}
                 aria-describedby={errors.linkedin ? 'careers-linkedin-error' : undefined}
-                className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
+                className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-body text-slate-800 placeholder-slate-400 ${
                   errors.linkedin
                     ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                     : touchedFields.linkedin
@@ -530,7 +530,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
               )}
             </div>
             {errors.linkedin && (
-              <p id="careers-linkedin-error" className="text-xs font-semibold text-red-500 mt-1.5" role="alert">
+              <p id="careers-linkedin-error" className="text-caption font-semibold text-red-500 mt-1.5" role="alert">
                 {errors.linkedin.message}
               </p>
             )}
@@ -538,8 +538,8 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
 
           {/* Position Applied For */}
           <div className="space-y-2">
-            <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855">{t.positionApplied}</label>
-            <div className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50 text-slate-800 text-base font-bold shadow-sm select-none flex items-center">
+            <label className="block text-body font-bold text-slate-855">{t.positionApplied}</label>
+            <div className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50 text-slate-800 text-body font-bold shadow-sm select-none flex items-center">
               Business Development Manager
             </div>
             <input type="hidden" {...register('position')} value="Business Development Manager" />
@@ -547,7 +547,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
 
           {/* Years of Experience */}
           <div className="space-y-2">
-            <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855" htmlFor="careers-experience">{t.yearsExp}</label>
+            <label className="block text-body font-bold text-slate-855" htmlFor="careers-experience">{t.yearsExp}</label>
             <div className="relative">
               <input
                 id="careers-experience"
@@ -557,9 +557,9 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
                 placeholder="5"
                 aria-invalid={Boolean(errors.yearsExperience)}
                 aria-describedby={errors.yearsExperience ? 'careers-yearsExperience-error' : undefined}
-                className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 ${
+                className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-body text-slate-800 ${
                   errors.yearsExperience
-                    ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
+                    ? 'border-red-500 bg-red-50/70 focus:border-red-656 focus:ring-2 focus:ring-red-200'
                     : touchedFields.yearsExperience
                     ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                     : 'border-slate-200'
@@ -572,7 +572,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
               )}
             </div>
             {errors.yearsExperience && (
-              <p id="careers-yearsExperience-error" className="text-xs font-semibold text-red-500 mt-1.5" role="alert">
+              <p id="careers-yearsExperience-error" className="text-caption font-semibold text-red-500 mt-1.5" role="alert">
                 {errors.yearsExperience.message}
               </p>
             )}
@@ -580,7 +580,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
 
           {/* Core Technical Skills */}
           <div className="md:col-span-2 space-y-2">
-            <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855" htmlFor="careers-skills">{t.skills}</label>
+            <label className="block text-body font-bold text-slate-855" htmlFor="careers-skills">{t.skills}</label>
             <div className="relative">
               <input
                 id="careers-skills"
@@ -589,7 +589,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
                 placeholder={t.skillsPlaceholder}
                 aria-invalid={Boolean(errors.skills)}
                 aria-describedby={errors.skills ? 'careers-skills-error' : undefined}
-                className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
+                className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-body text-slate-800 placeholder-slate-400 ${
                   errors.skills
                     ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                     : touchedFields.skills
@@ -604,7 +604,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
               )}
             </div>
             {errors.skills && (
-              <p id="careers-skills-error" className="text-xs font-semibold text-red-500 mt-1.5" role="alert">
+              <p id="careers-skills-error" className="text-caption font-semibold text-red-500 mt-1.5" role="alert">
                 {errors.skills.message}
               </p>
             )}
@@ -612,7 +612,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
 
           {/* Cover Message */}
           <div className="md:col-span-2 space-y-2">
-            <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855" htmlFor="careers-cover">{t.coverLetter}</label>
+            <label className="block text-body font-bold text-slate-855" htmlFor="careers-cover">{t.coverLetter}</label>
             <div className="relative">
               <textarea
                 id="careers-cover"
@@ -621,7 +621,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
                 rows={4}
                 aria-invalid={Boolean(errors.message)}
                 aria-describedby={errors.message ? 'careers-message-error' : undefined}
-                className={`w-full pl-5 pr-11 py-4 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 resize-none ${
+                className={`w-full pl-5 pr-11 py-4 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-body text-slate-800 placeholder-slate-400 resize-none ${
                   errors.message
                     ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                     : touchedFields.message
@@ -637,15 +637,15 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
             </div>
             <div className="flex justify-between items-center mt-1.5">
               {errors.message ? (
-                <p id="careers-message-error" className="text-xs font-semibold text-red-500" role="alert">
+                <p id="careers-message-error" className="text-caption font-semibold text-red-500" role="alert">
                   {errors.message.message}
                 </p>
               ) : (
-                <p className="text-xs text-slate-400">
+                <p className="text-caption text-slate-400">
                   {locale === 'es' ? 'La carta de presentación debe tener al menos 20 caracteres' : 'Cover letter must be at least 20 characters'}
                 </p>
               )}
-              <span className={`text-xs font-bold ${remainingChars < 100 ? 'text-amber-500' : 'text-slate-400'}`}>
+              <span className={`text-caption font-bold ${remainingChars < 100 ? 'text-amber-500' : 'text-slate-400'}`}>
                 {remainingChars} {locale === 'es' ? 'caracteres restantes' : 'characters remaining'}
               </span>
             </div>
@@ -653,7 +653,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
 
           {/* File Upload Zone */}
           <div className="md:col-span-2 space-y-2">
-            <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855">{t.resumeUpload}</label>
+            <label className="block text-body font-bold text-slate-855">{t.resumeUpload}</label>
             
             {!resumeFile ? (
               <div
@@ -670,7 +670,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
                   isDragActive 
                     ? 'border-royal-blue bg-royal-blue/5 text-royal-blue' 
                     : fileError
-                    ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200 text-slate-500'
+                    ? 'border-red-500 bg-red-50/70 focus:border-red-656 focus:ring-2 focus:ring-red-200 text-slate-500'
                     : 'border-slate-200 hover:border-slate-350 hover:bg-slate-50 text-slate-500'
                 }`}
               >
@@ -682,7 +682,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
                   className="hidden"
                 />
                 <Upload size={28} className={isDragActive ? 'animate-bounce text-royal-blue' : 'text-slate-400'} />
-                <p className="text-xs font-semibold text-slate-700 text-center">{t.resumeDesc}</p>
+                <p className="text-body-sm font-semibold text-slate-700 text-center">{t.resumeDesc}</p>
               </div>
             ) : (
               <div className="flex items-center justify-between p-4 rounded-xl border border-royal-blue/20 bg-royal-blue/5 text-left">
@@ -691,10 +691,10 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
                     <FileText size={20} />
                   </div>
                   <div>
-                    <p className="text-xs font-bold text-slate-900 truncate max-w-[200px] sm:max-w-[400px]">
+                    <p className="text-body-sm font-bold text-slate-900 truncate max-w-[200px] sm:max-w-[400px]">
                       {resumeFile.name}
                     </p>
-                    <p className="text-[10px] text-slate-500 font-semibold uppercase">
+                    <p className="text-caption text-slate-500 font-semibold uppercase">
                       {(resumeFile.size / 1024).toFixed(0)} KB
                     </p>
                   </div>
@@ -709,7 +709,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
               </div>
             )}
             
-            {fileError && <p id="careers-file-error" className="text-xs text-red-655 font-semibold mt-1" role="alert">{fileError}</p>}
+            {fileError && <p id="careers-file-error" className="text-caption text-red-655 font-semibold mt-1" role="alert">{fileError}</p>}
           </div>
         </div>
 
@@ -717,7 +717,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
         <button
           type="submit"
           disabled={submitting}
-          className={`btn-primary w-full flex items-center justify-center gap-2 transition-all ${
+          className={`btn-primary w-full flex items-center justify-center gap-2 text-button transition-all ${
             submitting ? 'opacity-50 cursor-not-allowed bg-slate-400 hover:bg-slate-400 border-slate-400' : ''
           }`}
         >

@@ -1410,7 +1410,17 @@ export const db = {
       console.error('[DB Error] getChatMessages failed:', error.message || error);
       throw error;
     }
-    return data || [];
+    
+    return (data || []).map((row: any) => {
+      let sender: 'user' | 'assistant' = 'user';
+      if (row.sender === 'assistant' || row.sender === 'bot' || row.sender === 'ai') {
+        sender = 'assistant';
+      }
+      return {
+        ...row,
+        sender
+      };
+    });
   },
 
   async getAllChatLeads(): Promise<ChatLead[]> {

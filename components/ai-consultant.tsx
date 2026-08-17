@@ -3,2642 +3,377 @@
 import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslations, useLocale } from 'next-intl';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useFormValidation } from '@/hooks/use-form-validation';
-import {
-  NAME_REGEX,
-  EMAIL_REGEX,
-  PHONE_REGEX,
-  COMPANY_REGEX,
-  filterPhoneInput,
-  getPhoneDigitCount,
-  isValidDropdownValue,
-  sanitizePayload
-} from '@/lib/validation';
 import {
   MessageSquare,
   X,
-  Minus,
   Send,
-  ArrowLeft,
+  RefreshCw,
   Sparkles,
-  CheckCircle,
-  Calendar,
-  Loader2,
-  Maximize2,
   Bot,
   User,
-  ChevronRight,
-  Check
+  Loader2,
+  Calendar,
+  Mail
 } from 'lucide-react';
-import { trackGAEvent } from '@/lib/analytics';
-
 
 interface Message {
-  id: string;
-  sender: 'user' | 'assistant';
-  message: string;
-  created_at: string;
+  role: 'user' | 'assistant';
+  content: string;
+  isCTA?: boolean;
 }
 
-interface AIConsultantProps {
-  outsideClickAction?: 'minimize' | 'close' | 'none';
-}
-
-const MarkdownRenderer = ({ text, locale }: { text: string; locale: string }) => {
-  const tokenRegex = /(\*\*.*?\*\*|\[.*?\]\(.*?\))/g;
-  const matches = text.split(tokenRegex);
-  return (
-    <>
-      {matches.map((part, i) => {
-        if (part.startsWith('**') && part.endsWith('**')) {
-          return (
-            <strong key={i} className="font-extrabold text-slate-950">
-              {part.slice(2, -2)}
-            </strong>
-          );
-        }
-        if (part.startsWith('[') && part.includes('](')) {
-          const closeBracket = part.indexOf(']');
-          const openParen = part.indexOf('(');
-          const label = part.slice(1, closeBracket);
-          let url = part.slice(openParen + 1, -1);
-          if (url.startsWith('/')) {
-            url = `/${locale}${url}`;
-          }
-          return (
-            <a
-              key={i}
-              href={url}
-              target={url.startsWith('http') ? '_blank' : '_self'}
-              rel="noopener noreferrer"
-              className="text-royal-blue hover:text-blue-600 underline font-extrabold transition-all"
-            >
-              {label}
-            </a>
-          );
-        }
-        return part;
-      })}
-    </>
-  );
-};
-
-const getCompactChipLabel = (prompt: string, locale: string): string => {
-  const p = prompt.toLowerCase();
-  const isEs = locale === 'es';
-
-  if (p.includes('chatbot') || p.includes('ia')) {
-    return isEs ? 'Chatbot de IA' : 'AI Chatbot';
-  }
-  if (p.includes('erp') || p.includes('software')) {
-    return isEs ? 'Software ERP' : 'ERP Software';
-  }
-  if (p.includes('cloud') || p.includes('migration') || p.includes('nube')) {
-    return isEs ? 'Migrar a Nube' : 'Cloud Migration';
-  }
-  if (p.includes('developers') || p.includes('desarrolladores') || p.includes('talent')) {
-    return isEs ? 'Contratar Talento' : 'Hire Developers';
-  }
-  if (p.includes('cto') || p.includes('virtual cto')) {
-    return isEs ? 'Consultoría CTO' : 'CTO Consulting';
-  }
-  if (p.includes('cyber') || p.includes('seguridad') || p.includes('pentest')) {
-    return isEs ? 'Ciberseguridad' : 'Cyber Assessment';
-  }
-  if (p.includes('power bi') || p.includes('dashboard') || p.includes('analytics')) {
-    return isEs ? 'Power BI / Tableros' : 'Power BI Dashboards';
-  }
-  if (p.includes('shopify') || p.includes('store') || p.includes('tienda')) {
-    return isEs ? 'Tienda Shopify' : 'Shopify Store';
-  }
-  if (p.includes('consultation') || p.includes('consulta')) {
-    return isEs ? 'Consulta' : 'Consultation';
-  }
-
-  if (prompt.length > 20) {
-    return prompt.substring(0, 18) + '...';
-  }
-  return prompt;
-};
-
-export default function AIConsultant({ outsideClickAction = 'minimize' }: AIConsultantProps) {
+export default function AIConsultant() {
   const t = useTranslations('AIConsultant');
   const locale = useLocale();
 
   const [mounted, setMounted] = useState(false);
-  
-  // Widget Window States: 'closed' | 'minimized' | 'open'
-  const [windowState, setWindowState] = useState<'closed' | 'minimized' | 'open'>('closed');
-  
-  // Chat States
-  const sessionIdRef = useRef<string | null>(null);
-  const initializedRef = useRef(false);
-  const [sessionId, setSessionId] = useState<string>('');
-  const [conversationId, setConversationId] = useState<string>('');
+  const [isOpen, setIsOpen] = useState(false);
+  const [sessionId, setSessionId] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const [isSending, setIsSending] = useState(false);
-  const [suggestedPrompts, setSuggestedPrompts] = useState<string[]>([]);
-  const [lastFailedMessage, setLastFailedMessage] = useState<string | null>(null);
-  
-  // Interactive Flow States: 'chat' | 'lead_form' | 'consultation_form' | 'lead_success' | 'consultation_success'
-  const [activeFlow, setActiveFlow] = useState<'chat' | 'lead_form' | 'consultation_form' | 'lead_success' | 'consultation_success'>('chat');
-  const [selectedService, setSelectedService] = useState('');
+  const [errorText, setErrorText] = useState<string | null>(null);
 
-  // Custom Flow States
-  const [chatState, setChatState] = useState<'DEFAULT' | 'AI_SOLUTIONS' | 'STAFFING' | 'WEB_DEVELOPMENT' | 'CONSULTATION'>('DEFAULT');
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const chatInputRef = useRef<HTMLInputElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
 
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  // Stateful AI Consultant Engine
-  const [chatbotState, setChatbotState] = useState<{
-    detectedIntent: string;
-    conversationStage: string;
-    currentQuestion: string | null;
-    leadData: Record<string, any>;
-    projectData: Record<string, any>;
-    recommendations: any;
-    leadSubmitted: boolean;
-  }>({
-    detectedIntent: 'DEFAULT',
-    conversationStage: 'Greeting',
-    currentQuestion: null,
-    leadData: {},
-    projectData: {},
-    recommendations: null,
-    leadSubmitted: false
-  });
-
-  const getInputAttributes = () => {
-    const cq = chatbotState.currentQuestion;
-    if (cq === 'lead_email') {
-      return {
-        type: 'email',
-        inputMode: 'email' as const,
-        maxLength: 254,
-        autoComplete: 'email'
-      };
-    }
-    if (cq === 'lead_phone') {
-      return {
-        type: 'tel',
-        inputMode: 'tel' as const,
-        maxLength: 20,
-        autoComplete: 'tel'
-      };
-    }
-    if (cq === 'lead_name') {
-      return {
-        type: 'text',
-        inputMode: 'text' as const,
-        maxLength: 80,
-        autoComplete: 'name'
-      };
-    }
-    if (cq === 'lead_company') {
-      return {
-        type: 'text',
-        inputMode: 'text' as const,
-        maxLength: 120,
-        autoComplete: 'organization'
-      };
-    }
-    return {
-      type: 'text',
-      inputMode: 'text' as const,
-      maxLength: 1000,
-      autoComplete: 'off'
-    };
-  };
-
-  const handleInputChange = (val: string) => {
-    const cq = chatbotState.currentQuestion;
-    if (cq === 'lead_phone') {
-      const cleaned = val.replace(/[^0-9+\-()\s]/g, '');
-      setInputValue(cleaned);
-    } else if (cq === 'lead_name') {
-      const cleaned = val.replace(/[^A-Za-zÀ-ÿ .'-]/g, '');
-      setInputValue(cleaned);
-    } else {
-      setInputValue(val);
-    }
-  };
-  const getInputValidation = () => {
-  switch (chatbotState.currentQuestion) {
-    case 'lead_name':
-      return {
-        maxLength: 80,
-        pattern: "[A-Za-zÀ-ÿ .'-]+"
-      };
-
-    case 'lead_company':
-      return {
-        maxLength: 120
-      };
-
-    case 'lead_email':
-      return {
-        type: 'email',
-        maxLength: 254
-      };
-
-    case 'lead_phone':
-      return {
-        type: 'tel',
-        inputMode: 'tel',
-        maxLength: 20,
-        pattern: "[0-9()+\\- ]*"
-      };
-
-    default:
-      return {};
-  }
-};
-
-  const [isInitializing, setIsInitializing] = useState(true);
-
-  // Mount effect with state initialization (no restoration of chat history/session/conversation)
+  // Generate fresh session ID on mount
   useEffect(() => {
     setMounted(true);
-    
-    const savedWindowState = localStorage.getItem('hypercode_ai_consult_window_state');
-    if (savedWindowState === 'open' || savedWindowState === 'minimized') {
-      setWindowState(savedWindowState);
-    }
-    
-    // Explicitly initialize chat states to clear any existing browser caches
-    setConversationId('');
-    setMessages([]);
-    setSelectedService('');
-    setActiveFlow('chat');
-    setChatState('DEFAULT');
-    setChatbotState({
-      detectedIntent: 'DEFAULT',
-      conversationStage: 'Greeting',
-      currentQuestion: null,
-      leadData: {},
-      projectData: {},
-      recommendations: null,
-      leadSubmitted: false
-    });
+    const generateUUID = () => {
+      if (typeof window !== 'undefined' && window.crypto && window.crypto.randomUUID) {
+        return window.crypto.randomUUID();
+      }
+      return 'session_' + Math.random().toString(36).substring(2, 15) + '-' + Math.random().toString(36).substring(2, 15);
+    };
+    setSessionId(generateUUID());
   }, []);
 
-  // Listen to mobile menu events to hide launcher
-  useEffect(() => {
-    const handleMobileMenuToggle = (e: Event) => {
-      const customEvent = e as CustomEvent<{ open: boolean }>;
-      setIsMobileMenuOpen(customEvent.detail.open);
-    };
-    window.addEventListener('hypercode-mobile-menu-toggle', handleMobileMenuToggle);
-    return () => {
-      window.removeEventListener('hypercode-mobile-menu-toggle', handleMobileMenuToggle);
-    };
-  }, []);
-
-  // Persist only windowState to maintain layout state during internal navigation
-  useEffect(() => {
-    if (mounted) {
-      localStorage.setItem('hypercode_ai_consult_window_state', windowState);
-    }
-  }, [windowState, mounted]);
-
-  // Pre-fill manual forms from conversational leadData context for premium experience
-  useEffect(() => {
-    if (chatbotState.leadData) {
-      if (chatbotState.leadData.name && !formName) setFormName(chatbotState.leadData.name);
-      if (chatbotState.leadData.email && !formEmail) setFormEmail(chatbotState.leadData.email);
-      if (chatbotState.leadData.company && !formCompany) setFormCompany(chatbotState.leadData.company);
-      if (chatbotState.leadData.phone && !formPhone) setFormPhone(chatbotState.leadData.phone);
-      if (chatbotState.leadData.projectDescription && !formMessage) setFormMessage(chatbotState.leadData.projectDescription);
-      if (chatbotState.leadData.industry) {
-        const ind = chatbotState.leadData.industry.toLowerCase();
-        if (ind.includes('health')) setFormIndustry('healthcare');
-        else if (ind.includes('finan') || ind.includes('bank')) setFormIndustry('finance');
-        else if (ind.includes('retail') || ind.includes('shop') || ind.includes('e-com')) setFormIndustry('retail');
-        else if (ind.includes('manufact')) setFormIndustry('manufacturing');
-        else if (ind.includes('edu')) setFormIndustry('education');
-        else if (ind.includes('gov')) setFormIndustry('government');
-        else if (ind.includes('real')) setFormIndustry('realestate');
-        else if (ind.includes('logis')) setFormIndustry('logistics');
-        else if (ind.includes('legal')) setFormIndustry('legal');
-        else if (ind.includes('tech')) setFormIndustry('technology');
-      }
-    }
-  }, [chatbotState.leadData]);
-
-  const [staffingStep, setStaffingStep] = useState<number>(0);
-  const [staffingData, setStaffingData] = useState({
-    role: '',
-    type: '',
-    location: '',
-    experience: '',
-    timeline: '',
-    contactName: '',
-    contactEmail: '',
-    contactPhone: ''
-  });
-
-  const [webDevStep, setWebDevStep] = useState<number>(0);
-  const [webDevData, setWebDevData] = useState({
-    businessType: '',
-    goals: '',
-    redesign: '',
-    features: '',
-    timeline: ''
-  });
-
-  // Form Inputs
-  const [formName, setFormName] = useState('');
-  const [formEmail, setFormEmail] = useState('');
-  const [formPhone, setFormPhone] = useState('');
-  const [formCompany, setFormCompany] = useState('');
-  const [formIndustry, setFormIndustry] = useState('technology');
-  const [formBudget, setFormBudget] = useState('between10k25k');
-  const [formTimeline, setFormTimeline] = useState('medium');
-  const [formMessage, setFormMessage] = useState('');
-  const [formDate, setFormDate] = useState('');
-  
-  // Validation / Error States
-  const [formError, setFormError] = useState('');
-  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
-  const [isFormSubmitting, setIsFormSubmitting] = useState(false);
-
-  const chatLeadFieldOrder = ['name', 'email', 'phone', 'company', 'industry', 'budget', 'timeline', 'message'];
-  const chatConsultationFieldOrder = ['name', 'email', 'phone', 'company', 'date', 'message'];
-
-  const { formRef: leadFormRef, focusAndScrollToError: focusAndScrollToLeadError } = useFormValidation({
-    navbarSelector: 'header',
-    extraOffset: 12,
-    fieldOrder: chatLeadFieldOrder,
-  });
-
-  const { formRef: consultFormRef, focusAndScrollToError: focusAndScrollToConsultError } = useFormValidation({
-    navbarSelector: 'header',
-    extraOffset: 12,
-    fieldOrder: chatConsultationFieldOrder,
-  });
-
-  const isLeadFormValid =
-    formName.trim().length >= 2 &&
-    formName.trim().length <= 80 &&
-    NAME_REGEX.test(formName.trim()) &&
-    EMAIL_REGEX.test(formEmail.trim()) &&
-    PHONE_REGEX.test(formPhone.trim()) &&
-    getPhoneDigitCount(formPhone.trim()) >= 7 &&
-    getPhoneDigitCount(formPhone.trim()) <= 15 &&
-    formCompany.trim().length >= 2 &&
-    COMPANY_REGEX.test(formCompany.trim()) &&
-    isValidDropdownValue(formBudget) &&
-    isValidDropdownValue(formTimeline) &&
-    formMessage.trim().length >= 20 &&
-    formMessage.trim().length <= 2000;
-
-  const isConsultationFormValid =
-    formName.trim().length >= 2 &&
-    formName.trim().length <= 80 &&
-    NAME_REGEX.test(formName.trim()) &&
-    EMAIL_REGEX.test(formEmail.trim()) &&
-    PHONE_REGEX.test(formPhone.trim()) &&
-    getPhoneDigitCount(formPhone.trim()) >= 7 &&
-    getPhoneDigitCount(formPhone.trim()) <= 15 &&
-    formCompany.trim().length >= 2 &&
-    COMPANY_REGEX.test(formCompany.trim()) &&
-    formDate.trim().length >= 5 &&
-    formMessage.trim().length >= 20 &&
-    formMessage.trim().length <= 2000;
-
-  const validateNameInput = (val: string) => {
-    const trimmed = val.trim();
-    if (!trimmed) return t('errors.validationName');
-    if (trimmed.length < 2 || trimmed.length > 80) return t('errors.validationNameLength');
-    if (!NAME_REGEX.test(trimmed)) return t('errors.validationNameChars');
-    return '';
-  };
-
-  const validateEmailInput = (val: string) => {
-    const trimmed = val.trim();
-    if (!trimmed) return t('errors.validationEmail');
-    if (!EMAIL_REGEX.test(trimmed)) return t('errors.email');
-    return '';
-  };
-
-  const validatePhoneInputStr = (val: string) => {
-    const trimmed = val.trim();
-    if (!trimmed) return t('errors.validationPhone');
-    if (!PHONE_REGEX.test(trimmed)) return t('errors.validationPhoneChars');
-    const digits = getPhoneDigitCount(trimmed);
-    if (digits < 7 || digits > 15) return t('errors.validationPhoneDigits');
-    return '';
-  };
-
-  const validateCompanyInput = (val: string) => {
-    const trimmed = val.trim();
-    if (!trimmed) return t('errors.validationCompany');
-    if (trimmed.length < 2) return t('errors.validationCompanyLength');
-    if (!COMPANY_REGEX.test(trimmed)) return t('errors.validationCompanyChars');
-    return '';
-  };
-
-  const validateDateInput = (val: string) => {
-    const trimmed = val.trim();
-    if (!trimmed) return t('errors.validationDate');
-    if (trimmed.length < 5) return t('errors.validationDateLength');
-    return '';
-  };
-
-  const validateMessageInput = (val: string) => {
-    const trimmed = val.trim();
-    if (!trimmed) return t('errors.validationMessage');
-    if (trimmed.length < 20 || trimmed.length > 2000) return t('errors.validationMessageLength');
-    return '';
-  };
-
-  const handleFieldChange = (field: string, value: string, setter: (val: string) => void) => {
-    setter(value);
-    if (fieldErrors[field]) {
-      setFieldErrors(prev => {
-        const next = { ...prev };
-        delete next[field];
-        return next;
-      });
-    }
-  };
-  
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-  const widgetRef = useRef<HTMLDivElement>(null);
-
-  // Safe translation helper
-  const getSafeTranslation = (key: string, fallback: string): string => {
-    try {
-      return t.has(key) ? t(key) : fallback;
-    } catch {
-      return fallback;
-    }
-  };
-
-  const getDefaultPrompts = () => {
-    try {
-      const raw = t.raw('suggestedPrompts');
-      if (Array.isArray(raw)) return raw;
-    } catch {}
-    return [
-      "I need an AI chatbot",
-      "I want ERP software",
-      "I need dedicated developers",
-      "I want CTO consulting"
-    ];
-  };
-
-  // 1. Initialize Session ID and Load Chat
-  useEffect(() => {
-    if (initializedRef.current) return;
-    initializedRef.current = true;
-
-    let freshSessionId;
-    if (typeof window !== 'undefined' && window.crypto && window.crypto.randomUUID) {
-      freshSessionId = window.crypto.randomUUID();
-    } else {
-      freshSessionId = 'session_' + Math.random().toString(36).substring(2, 15) + '-' + Math.random().toString(36).substring(2, 15);
-    }
-    
-    sessionIdRef.current = freshSessionId;
-    setSessionId(freshSessionId);
-    setSuggestedPrompts(getDefaultPrompts());
-
-    // Call POST /api/chat/session to create/fetch conversation row
-    const initSession = async () => {
-      try {
-        const res = await fetch('/api/chat/session', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            session_id: freshSessionId,
-            language: locale
-          })
-        });
-        const data = await res.json().catch(() => null);
-
-        if (!res.ok || !data?.success || !data?.conversation?.id) {
-          console.warn('[AI Consultant Session Error]', {
-            status: res.status,
-            response: data
-          });
-
-          throw new Error(
-            data?.error || 'Unable to initialize AI Consultant session.'
-          );
-        }
-
-        setConversationId(data.conversation.id);
-
-        setMessages([
-          {
-            id: 'greeting',
-            sender: 'assistant',
-            message: t('welcomeMessage'),
-            created_at: new Date().toISOString()
-          }
-        ]);
-      } catch (err) {
-        console.warn('Failed to initialize AI Consultant session:', err);
-      } finally {
-        setIsInitializing(false);
-      }
-    };
-
-    initSession();
-  }, [t, locale]);
-
-  // 2. Keyboard ESC Support & Custom Open Event
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setWindowState('closed');
-      }
-    };
-    const handleOpenChat = () => {
-      setWindowState('open');
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    window.addEventListener('open-hypercode-chat', handleOpenChat);
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-      window.removeEventListener('open-hypercode-chat', handleOpenChat);
-    };
-  }, []);
-
-  // 3. Click Outside to Close/Minimize
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (
-        windowState === 'open' &&
-        outsideClickAction !== 'none' &&
-        widgetRef.current &&
-        !widgetRef.current.contains(e.target as Node)
-      ) {
-        if (outsideClickAction === 'minimize') {
-          setWindowState('minimized');
-        } else if (outsideClickAction === 'close') {
-          setWindowState('closed');
-        }
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [windowState, outsideClickAction]);
-
-  // Scroll to bottom on new messages
+  // Scroll to bottom on new messages or typing state
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, isTyping, activeFlow]);
+  }, [messages, isTyping]);
 
-  // Initialize Conversation in remote DB
-  
-
-  // Trigger initialization when opening the chat
+  // Focus input when opening panel
   useEffect(() => {
-    if (windowState === 'open') {
-      trackGAEvent({ action: 'chatbot_opened', category: 'Chatbot' });
+    if (isOpen) {
+      setTimeout(() => {
+        chatInputRef.current?.focus();
+      }, 100);
     }
-  }, [windowState]);
+  }, [isOpen]);
 
-  // Handle language switch synchronization with DB
+  // Close panel on Escape key
   useEffect(() => {
-    if (conversationId) {
-      fetch('/api/chat/language-switch', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          conversation_id: conversationId,
-          language: locale
-        })
-      }).catch(err => console.warn('Language switch sync failed:', err));
-
-      setMessages(prev => prev.map(m => {
-        if (m.id === 'greeting') {
-          return { ...m, message: t('welcomeMessage') };
-        }
-        return m;
-      }));
-      setSuggestedPrompts(getDefaultPrompts());
-    }
-  }, [locale, conversationId, t]);
-
-  // Helper to add user message and simulate typing assistant responses with database sync fallback
-  const simulateAssistantResponse = (userMsg: string, assistantMsg: string, nextPrompts: string[], delay = 800) => {
-    const userMsgId = 'user_' + Date.now();
-    const newUserMessage: Message = {
-      id: userMsgId,
-      sender: 'user',
-      message: userMsg,
-      created_at: new Date().toISOString()
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
+        setIsOpen(false);
+      }
     };
-    setMessages(prev => [...prev, newUserMessage]);
-    setIsTyping(true);
-
-    // Async sync user message to backend database
-
-    setTimeout(() => {
-      setIsTyping(false);
-      const assistantMsgId = 'assistant_' + Date.now();
-      setMessages(prev => [...prev, {
-        id: assistantMsgId,
-        sender: 'assistant',
-        message: assistantMsg,
-        created_at: new Date().toISOString()
-      }]);
-      setSuggestedPrompts(nextPrompts);
-
-      // Async sync assistant message to backend database
-      
-    }, delay);
-  };
-
-  // 1. AI Solutions Flow
-  const startAISolutionsFlow = () => {
-    setChatState('AI_SOLUTIONS');
-    const isEs = locale === 'es';
-    const userMsg = isEs ? 'Soluciones de IA' : 'AI Solutions';
-    const assistantMsg = isEs
-      ? "En HyperCode, creamos capacidades avanzadas de IA para transformar empresas:\n\n• **Automatización de IA**: Automatice flujos de trabajo y tareas repetitivas.\n• **Agentes de IA**: Agentes autónomos que pueden ejecutar tareas complejas.\n• **Chatbots de IA**: Interfaces conversacionales inteligentes.\n• **Soluciones de IA personalizadas**: Modelos de aprendizaje automático a medida.\n• **IA generativa y LLM**: Integración de modelos de lenguaje grandes.\n• **Procesamiento inteligente de documentos**: Extraiga datos de documentos automáticamente.\n• **Integración de IA y ML**: Incorpore IA de manera transparente en sistemas existentes.\n\n¿Le gustaría explorar alguna de estas soluciones en más detalle?"
-      : "At HyperCode, we build advanced AI capabilities to transform businesses:\n\n• **AI Automation**: Automate repetitive workflows and tasks.\n• **AI Agents**: Autonomous agents that can execute complex tasks.\n• **AI Chatbots**: Intelligent conversational interfaces.\n• **Custom AI Solutions**: Tailored machine learning models.\n• **Generative AI & LLMs**: Large language model integration.\n• **Intelligent Document Processing**: Automatically extract data from documents.\n• **AI Integration & ML**: Seamlessly embed AI into existing systems.\n\nWould you like to explore one of these solutions in more detail?";
-    
-    const prompts = isEs
-      ? ['Chatbots de IA', 'Automatización de IA', 'Agentes de IA', 'Análisis de Datos', 'Reservar Consulta']
-      : ['AI Chatbots', 'AI Automation', 'AI Agents', 'Data Analytics', 'Book Consultation'];
-
-    simulateAssistantResponse(userMsg, assistantMsg, prompts);
-  };
-
-  const handleAISolutionsInput = (text: string) => {
-    const p = text.toLowerCase().trim();
-    const isEs = locale === 'es';
-
-    if (p.includes('book consultation') || p.includes('reservar consulta')) {
-      startConsultationFlow();
-      return;
-    }
-    if (p.includes('back to start') || p.includes('volver al inicio')) {
-      handleStartOver();
-      return;
-    }
-
-    let answer = '';
-    if (p.includes('chatbot')) {
-      answer = isEs
-        ? "Nuestros Chatbots de IA están construidos utilizando LLM avanzados e instrucciones de sistema sensibles al contexto para automatizar el servicio al cliente, calificar clientes potenciales y brindar asistencia instantánea las 24 horas, los 7 días de la semana."
-        : "Our AI Chatbots are built using advanced LLMs and context-aware system instructions to automate customer service, qualify leads, and provide 24/7 instant assistance.";
-    } else if (p.includes('automation') || p.includes('automatización') || p.includes('automatizacion')) {
-      answer = isEs
-        ? "Automatizamos flujos de trabajo empresariales complejos conectando bases de datos, API en la nube y componentes de aprendizaje automático para mejorar la productividad y eliminar los gastos generales manuales."
-        : "We automate complex business workflows by connecting databases, cloud APIs, and machine learning components to improve productivity and eliminate manual overhead.";
-    } else if (p.includes('agent') || p.includes('agente')) {
-      answer = isEs
-        ? "HyperCode diseña Agentes de IA autónomos que planifican, ejecutan y verifican flujos de trabajo de varios pasos. Pueden llamar a herramientas personalizadas, buscar en bases de datos de conocimiento internas y tomar decisiones dentro de límites establecidos."
-        : "HyperCode designs autonomous AI Agents that plan, execute, and verify multi-step workflows. They can call custom tools, search internal knowledge bases, and make decisions within set boundaries.";
-    } else if (p.includes('data') || p.includes('datos') || p.includes('analytics') || p.includes('análisis') || p.includes('analisis')) {
-      answer = isEs
-        ? "Nuestros servicios de Análisis de Datos le ayudan a crear modelos predictivos, ejecutar detección de anomalías en transacciones y compilar tableros interactivos usando Power BI y Tableau."
-        : "Our Data Analytics services help you build predictive models, run anomaly detection on transactions, and compile interactive dashboards using Power BI and Tableau.";
-    } else {
-      handleSendMessage(text);
-      return;
-    }
-
-    const followUp = isEs
-      ? "\n\n¿Le gustaría explorar otra solución o reservar una consulta?"
-      : "\n\nWould you like to explore another solution, or book a consultation?";
-
-    const prompts = isEs
-      ? ['Chatbots de IA', 'Automatización de IA', 'Agentes de IA', 'Análisis de Datos', 'Reservar Consulta', 'Volver al Inicio']
-      : ['AI Chatbots', 'AI Automation', 'AI Agents', 'Data Analytics', 'Book Consultation', 'Back to Start'];
-
-    simulateAssistantResponse(text, answer + followUp, prompts);
-  };
-
-  // 2. Staffing Flow
-  const startStaffingFlow = () => {
-    setChatState('STAFFING');
-    setStaffingStep(1);
-    setStaffingData({
-      role: '',
-      type: '',
-      location: '',
-      experience: '',
-      timeline: '',
-      contactName: '',
-      contactEmail: '',
-      contactPhone: ''
-    });
-
-    const isEs = locale === 'es';
-    const userMsg = isEs ? 'Contratar Talento' : 'Hire Talent';
-    const assistantMsg = isEs
-      ? "¿Para qué puesto o tecnología está buscando contratar? (ej. Desarrollador React, Ingeniero de Datos, DevOps)"
-      : "What role or technology are you looking to hire for? (e.g., React Developer, Data Engineer, DevOps)";
-
-    const prompts = isEs
-      ? ['Desarrollador React', 'Ingeniero de Datos', 'Ingeniero DevOps', 'Volver al Inicio']
-      : ['React Developer', 'Data Engineer', 'DevOps Engineer', 'Back to Start'];
-
-    simulateAssistantResponse(userMsg, assistantMsg, prompts);
-  };
-
-  const handleStaffingInput = (text: string) => {
-    const isEs = locale === 'es';
-    if (text.toLowerCase().includes('back to start') || text.toLowerCase().includes('volver al inicio')) {
-      handleStartOver();
-      return;
-    }
-
-    if (staffingStep === 1) {
-      setStaffingData(prev => ({ ...prev, role: text }));
-      setStaffingStep(2);
-      const question = isEs
-        ? "¿Este puesto es por Contrato, de Tiempo Completo o Contrato a Término?"
-        : "Is this position Contract, Full-Time, or Contract-to-Hire?";
-      const prompts = isEs
-        ? ['Contrato', 'Tiempo Completo', 'Contrato a Término']
-        : ['Contract', 'Full-Time', 'Contract-to-Hire'];
-      simulateAssistantResponse(text, question, prompts);
-    } else if (staffingStep === 2) {
-      setStaffingData(prev => ({ ...prev, type: text }));
-      setStaffingStep(3);
-      const question = isEs
-        ? "¿Cuál es la ubicación preferida del candidato? (ej. Remoto, Presencial, Híbrido)"
-        : "What is the preferred location for the candidate? (e.g., Remote, On-site, Hybrid)";
-      const prompts = isEs
-        ? ['Remoto', 'Presencial', 'Híbrido']
-        : ['Remote', 'On-site', 'Hybrid'];
-      simulateAssistantResponse(text, question, prompts);
-    } else if (staffingStep === 3) {
-      setStaffingData(prev => ({ ...prev, location: text }));
-      setStaffingStep(4);
-      const question = isEs
-        ? "¿Qué nivel de experiencia se requiere para este puesto?"
-        : "What level of experience is required for this position?";
-      const prompts = isEs
-        ? ['Junior', 'Mid-Level', 'Senior']
-        : ['Junior', 'Mid-Level', 'Senior'];
-      simulateAssistantResponse(text, question, prompts);
-    } else if (staffingStep === 4) {
-      setStaffingData(prev => ({ ...prev, experience: text }));
-      setStaffingStep(5);
-      const question = isEs
-        ? "¿Cuál es su plazo para realizar esta contratación?"
-        : "What is your timeline for making this hire?";
-      const prompts = isEs
-        ? ['Inmediato', '1-3 Meses', 'Flexible']
-        : ['Immediate', '1-3 Months', 'Flexible'];
-      simulateAssistantResponse(text, question, prompts);
-    } else if (staffingStep === 5) {
-      setStaffingData(prev => ({ ...prev, timeline: text }));
-      setStaffingStep(6);
-      const question = isEs
-        ? "Para coordinar, por favor díganos su Nombre Completo:"
-        : "To coordinate, please tell us your Full Name:";
-      simulateAssistantResponse(text, question, []);
-    } else if (staffingStep === 6) {
-      setStaffingData(prev => ({ ...prev, contactName: text }));
-      setStaffingStep(7);
-      const question = isEs
-        ? "¿Cuál es su Dirección de Correo Electrónico?"
-        : "What is your Email Address?";
-      simulateAssistantResponse(text, question, []);
-    } else if (staffingStep === 7) {
-      if (!text.includes('@') || !text.includes('.')) {
-        const errorMsg = t('errors.validationEmailPrompt');
-        const userMsgId = 'user_' + Date.now();
-        setMessages(prev => [...prev, { id: userMsgId, sender: 'user', message: text, created_at: new Date().toISOString() }]);
-        setIsTyping(true);
-        setTimeout(() => {
-          setIsTyping(false);
-          setMessages(prev => [...prev, { id: 'assistant_err_' + Date.now(), sender: 'assistant', message: errorMsg, created_at: new Date().toISOString() }]);
-        }, 500);
-        return;
-      }
-      setStaffingData(prev => ({ ...prev, contactEmail: text }));
-      setStaffingStep(8);
-      const question = isEs
-        ? "¿Cuál es su Número de Teléfono?"
-        : "What is your Phone Number?";
-      simulateAssistantResponse(text, question, []);
-    } else if (staffingStep === 8) {
-      const finalPhone = text;
-      setStaffingData(prev => {
-        const updated = { ...prev, contactPhone: finalPhone };
-        
-        // Submit the lead to DB via API
-        fetch('/api/chat/lead', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            conversation_id: conversationId,
-            name: updated.contactName,
-            email: updated.contactEmail,
-            phone: updated.contactPhone,
-            company: 'Staffing Client',
-            industry: 'technology',
-            service_interest: `Staffing: ${updated.role}`,
-            budget_range: 'Flexible',
-            timeline: updated.timeline,
-            message: `Role: ${updated.role}\nType: ${updated.type}\nLocation: ${updated.location}\nExperience: ${updated.experience}\nTimeline: ${updated.timeline}`,
-            language: locale
-          })
-        }).catch(err => console.warn('Submit staffing lead failed:', err));
-
-        return updated;
-      });
-
-      setChatState('DEFAULT');
-      setStaffingStep(0);
-      const confirmation = isEs
-        ? "¡Gracias! Su solicitud de personal ha sido registrada con éxito. Un especialista de talento de HyperCode se pondrá en contacto con usted en breve."
-        : "Thank you! Your staffing request has been successfully registered. A HyperCode talent specialist will contact you shortly.";
-      simulateAssistantResponse(text, confirmation, getDefaultPrompts());
-    }
-  };
-
-  // 3. Web Development Flow
-  const startWebDevelopmentFlow = () => {
-    setChatState('WEB_DEVELOPMENT');
-    setWebDevStep(1);
-    setWebDevData({
-      businessType: '',
-      goals: '',
-      redesign: '',
-      features: '',
-      timeline: ''
-    });
-
-    const isEs = locale === 'es';
-    const userMsg = isEs ? 'Desarrollo Web' : 'Website Development';
-    const assistantMsg = isEs
-      ? "¿Para qué tipo de negocio es este sitio web? (ej. Comercio Electrónico, Blog, Plataforma SaaS, Sitio Corporativo)"
-      : "What type of business is this website for? (e.g., E-commerce, Blog, SaaS Platform, Corporate Site)";
-
-    const prompts = isEs
-      ? ['Comercio Electrónico', 'Sitio Corporativo', 'Plataforma SaaS', 'Volver al Inicio']
-      : ['E-commerce', 'Corporate Site', 'SaaS Platform', 'Back to Start'];
-
-    simulateAssistantResponse(userMsg, assistantMsg, prompts);
-  };
-
-  const handleWebDevInput = (text: string) => {
-    const isEs = locale === 'es';
-    if (text.toLowerCase().includes('back to start') || text.toLowerCase().includes('volver al inicio')) {
-      handleStartOver();
-      return;
-    }
-
-    if (webDevStep === 1) {
-      setWebDevData(prev => ({ ...prev, businessType: text }));
-      setWebDevStep(2);
-      const question = isEs
-        ? "¿Cuáles son los objetivos principales del sitio web? (ej. Generación de prospectos, ventas en línea, presencia de marca)"
-        : "What are your primary website goals? (e.g., Lead generation, online sales, brand awareness)";
-      const prompts = isEs
-        ? ['Generación de Prospectos', 'Ventas en Línea', 'Presencia de Marca']
-        : ['Lead Generation', 'Online Sales', 'Brand Awareness'];
-      simulateAssistantResponse(text, question, prompts);
-    } else if (webDevStep === 2) {
-      setWebDevData(prev => ({ ...prev, goals: text }));
-      setWebDevStep(3);
-      const question = isEs
-        ? "¿Es este un proyecto de sitio web nuevo o un rediseño de un sitio existente?"
-        : "Is this a new website project or a redesign of an existing site?";
-      const prompts = isEs
-        ? ['Sitio Web Nuevo', 'Rediseño de Sitio Existente']
-        : ['New Website', 'Redesign Existing Site'];
-      simulateAssistantResponse(text, question, prompts);
-    } else if (webDevStep === 3) {
-      setWebDevData(prev => ({ ...prev, redesign: text }));
-      setWebDevStep(4);
-      const question = isEs
-        ? "¿Qué características específicas necesita? (ej. CMS/Blog, pasarela de pago, área de miembros)"
-        : "What specific features do you need? (e.g., CMS/Blog, payment gateway, members area)";
-      const prompts = isEs
-        ? ['CMS / Blog', 'Integración de Pagos', 'Aplicación Web Personalizada']
-        : ['CMS / Blog', 'Payment Integration', 'Custom Web Application'];
-      simulateAssistantResponse(text, question, prompts);
-    } else if (webDevStep === 4) {
-      setWebDevData(prev => ({ ...prev, features: text }));
-      setWebDevStep(5);
-      const question = isEs
-        ? "¿Cuál es su plazo estimado para lanzar este proyecto?"
-        : "What is your estimated timeline to launch this project?";
-      const prompts = isEs
-        ? ['1 Mes', '1-3 Meses', 'Flexible']
-        : ['1 Month', '1-3 Months', 'Flexible'];
-      simulateAssistantResponse(text, question, prompts);
-    } else if (webDevStep === 5) {
-      setWebDevData(prev => ({ ...prev, timeline: text }));
-      setWebDevStep(6);
-      const question = isEs
-        ? "¿Le gustaría programar una consulta con nuestro equipo de desarrollo web para calificar los detalles?"
-        : "Would you like to schedule a consultation with our web development team to review the details?";
-      const prompts = isEs
-        ? ['Sí, programar consulta', 'No, gracias']
-        : ['Yes, schedule consultation', 'No, thanks'];
-      simulateAssistantResponse(text, question, prompts);
-    } else if (webDevStep === 6) {
-      const p = text.toLowerCase().trim();
-      const isYes = p.includes('yes') || p.includes('sí') || p.includes('si') || p.includes('schedule');
-      
-      if (isYes) {
-        setSelectedService(isEs ? 'Desarrollo Web' : 'Website Development');
-        setFormMessage(
-          isEs
-            ? `Tipo de negocio: ${webDevData.businessType}\nObjetivos: ${webDevData.goals}\nTipo: ${webDevData.redesign}\nFunciones: ${webDevData.features}\nPlazo: ${webDevData.timeline}`
-            : `Business Type: ${webDevData.businessType}\nGoals: ${webDevData.goals}\nProject: ${webDevData.redesign}\nFeatures: ${webDevData.features}\nTimeline: ${webDevData.timeline}`
-        );
-        setActiveFlow('lead_form');
-        setChatState('DEFAULT');
-        setWebDevStep(0);
-        
-        // Add user response to messages list
-        setMessages(prev => [...prev, {
-          id: 'user_opt_yes_' + Date.now(),
-          sender: 'user',
-          message: text,
-          created_at: new Date().toISOString()
-        }]);
-      } else {
-        setChatState('DEFAULT');
-        setWebDevStep(0);
-        const finalMsg = isEs
-          ? "¡Entendido! Si cambia de opinión, siempre puede programar una llamada. ¿Hay algo más en lo que pueda ayudarle?"
-          : "Understood! If you change your mind, you can always schedule a call later. Is there anything else I can help you with?";
-        simulateAssistantResponse(text, finalMsg, getDefaultPrompts());
-      }
-    }
-  };
-
-  // 4. Consultation Flow
-  const startConsultationFlow = () => {
-    setChatState('CONSULTATION');
-    setSelectedService(locale === 'es' ? 'Consulta de Tecnología' : 'Technology Consulting');
-    setActiveFlow('consultation_form');
-  };
-
-  // Central Router Function
-  const routeSuggestedPrompt = (prompt: string) => {
-    const p = prompt.toLowerCase().trim();
-
-    if (chatbotState.detectedIntent !== 'DEFAULT') {
-      handleSendMessage(prompt);
-      return;
-    }
-
-    // 1. Start Over Trigger
-    if (
-      p.includes('back to start') ||
-      p.includes('volver al inicio') ||
-      p.includes('volver a servicios') ||
-      p.includes('go back to services')
-    ) {
-      handleStartOver();
-      return;
-    }
-
-    // 2. Explicit Form Triggers
-    if (
-      p.includes('contact an expert') ||
-      p.includes('contactar un experto') ||
-      p.includes('schedule a consultation') ||
-      p.includes('quiero una consulta') ||
-      p.includes('schedule consultation') ||
-      p.includes('schedule call now') ||
-      p.includes('agendar llamada ahora') ||
-      p.includes('programar una consulta') ||
-      p.includes('agendar llamada') ||
-      p === 'consultation' ||
-      p === 'consulta'
-    ) {
-      startConsultationFlow();
-      return;
-    }
-
-    if (
-      p.includes('qualify my project') ||
-      p.includes('calificar mi proyecto') ||
-      p.includes('qualify project blueprint') ||
-      p.includes('calificar plan de proyecto')
-    ) {
-      setSelectedService(locale === 'es' ? 'Soluciones de IA' : 'AI Solutions');
-      setActiveFlow('lead_form');
-      return;
-    }
-
-    if (
-      p.includes('get staffing quote') ||
-      p.includes('cotizar personal') ||
-      p.includes('solicitar presupuesto') ||
-      p.includes('cotizar presupuesto')
-    ) {
-      startStaffingFlow();
-      return;
-    }
-
-    // 3. Navigation Triggers (Only navigate when they explicitly choose to do so by clicking)
-    // Cloud & DevOps / Cloud Migration
-    if (
-      p.includes('cloud assessment') ||
-      p.includes('evaluación cloud') ||
-      p.includes('migration strategy') ||
-      p.includes('estrategia de migración') ||
-      p.includes('devops & ci/cd') ||
-      p.includes('devops y ci/cd')
-    ) {
-      window.location.href = `/${locale}/solutions/cloud-migration`;
-      return;
-    }
-
-    // AI & Automation
-    if (
-      p.includes('ai strategy') ||
-      p.includes('estrategia de ia') ||
-      p.includes('process automation') ||
-      p.includes('automatización') ||
-      p.includes('ai chatbot dev') ||
-      p.includes('desarrollo chatbots')
-    ) {
-      window.location.href = `/${locale}/solutions/ai-consulting`;
-      return;
-    }
-
-    // Business Intelligence
-    if (
-      p.includes('bi dashboard setup') ||
-      p.includes('configurar tablero bi') ||
-      p.includes('kpi tracking') ||
-      p.includes('métricas kpi') ||
-      p.includes('data warehousing') ||
-      p.includes('almacén de datos') ||
-      p.includes('reporting & etl') ||
-      p.includes('reportes y etl')
-    ) {
-      window.location.href = `/${locale}/solutions/business-intelligence`;
-      return;
-    }
-
-    // Data Analytics
-    if (
-      p.includes('predictive models') ||
-      p.includes('modelos predictivos') ||
-      p.includes('data engineering') ||
-      p.includes('ingeniería de datos') ||
-      p.includes('bigquery / snowflake')
-    ) {
-      window.location.href = `/${locale}/solutions/data-analytics-services`;
-      return;
-    }
-
-    // Web Development
-    if (
-      p.includes('saas development') ||
-      p.includes('desarrollo saas') ||
-      p.includes('next.js & react dev') ||
-      p.includes('desarrollo next.js')
-    ) {
-      window.location.href = `/${locale}/solutions/web-development-services`;
-      return;
-    }
-
-    // Software Development / ERP
-    if (
-      p.includes('custom erp dev') ||
-      p.includes('desarrollo erp') ||
-      p.includes('enterprise crm') ||
-      p.includes('crm empresarial') ||
-      p.includes('database architecture') ||
-      p.includes('arquitectura de bd') ||
-      p.includes('software audit') ||
-      p.includes('auditoría de software')
-    ) {
-      window.location.href = `/${locale}/solutions/custom-software-development`;
-      return;
-    }
-
-    // Mobile Development
-    if (
-      p.includes('react native') ||
-      p.includes('soluciones flutter') ||
-      p.includes('flutter solutions') ||
-      p.includes('apps ios/android') ||
-      p.includes('ios/android apps') ||
-      p.includes('diseño ux móvil') ||
-      p.includes('mobile ux design')
-    ) {
-      window.location.href = `/${locale}/solutions/cross-platform-apps`;
-      return;
-    }
-
-    // Digital Transformation
-    if (
-      p.includes('digital audit') ||
-      p.includes('auditoría digital') ||
-      p.includes('legacy modernization') ||
-      p.includes('modernización legada') ||
-      p.includes('cto advisory') ||
-      p.includes('asesoría de cto')
-    ) {
-      window.location.href = `/${locale}/solutions/digital-transformation-consulting`;
-      return;
-    }
-
-    // Shopify / E-commerce
-    if (
-      p.includes('shopify custom themes') ||
-      p.includes('temas shopify') ||
-      p.includes('stripe integration') ||
-      p.includes('integración stripe') ||
-      p.includes('headless e-commerce') ||
-      p.includes('e-commerce headless') ||
-      p.includes('conversion audit') ||
-      p.includes('auditoría de conversión')
-    ) {
-      window.location.href = `/${locale}/solutions/ecommerce-websites`;
-      return;
-    }
-
-    // Security
-    if (
-      p.includes('penetration testing') ||
-      p.includes('pruebas de penetración') ||
-      p.includes('soc2 compliance') ||
-      p.includes('cumplimiento soc2') ||
-      p.includes('iam security audit') ||
-      p.includes('auditoría de iam') ||
-      p.includes('software security') ||
-      p.includes('seguridad de software')
-    ) {
-      window.location.href = `/${locale}/solutions/security-assessment`;
-      return;
-    }
-
-    // 4. Default: Send as regular chat message
-    handleSendMessage(prompt);
-  };
-
-  // Central User Submit Interceptor
-  const handleUserSubmit = (text: string) => {
-    if (!text.trim()) return;
-    routeSuggestedPrompt(text);
-  };
-
-  const handleRetrySendMessage = () => {
-    if (lastFailedMessage) {
-      const msg = lastFailedMessage;
-      setLastFailedMessage(null);
-      // Remove previous error messages
-      setMessages(prev => prev.filter(m => !m.id.startsWith('error_')));
-      handleSendMessage(msg);
-    }
-  };
-
-  // Send Message Handler
-  const handleSendMessage = async (textToSend: string) => {
-    if (
-  !textToSend.trim() ||
-  isSending ||
-  isTyping ||
-  isInitializing ||
-  !sessionId
-) {
-  return;
-}
-    
-    setLastFailedMessage(null);
-
-    trackGAEvent({
-      action: 'chatbot_message_sent',
-      category: 'Chatbot',
-      label: textToSend
-    });
-    
-    const userMsgId = 'user_' + Date.now();
-    const newUserMessage: Message = {
-      id: userMsgId,
-      sender: 'user',
-      message: textToSend,
-      created_at: new Date().toISOString()
-    };
-    
-    setMessages(prev => [...prev, newUserMessage]);
-    setInputValue('');
-    setIsSending(true);
-    setIsTyping(true);
-
-    const historyPayload = messages.map(m => ({
-      sender: m.sender,
-      message: m.message
-    }));
-
-    try {
-      const response = await fetch('/api/chat/message', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          conversation_id: conversationId || undefined,
-          session_id: sessionId,
-          sender: 'user',
-          message: textToSend,
-          language: locale,
-          history: historyPayload,
-          timestamp: new Date().toISOString(),
-          state: chatbotState
-        })
-      });
-
-      const data = await response.json().catch(() => null);
-
-if (!response.ok) {
-  const errorMessage =
-    data?.error ||
-    data?.details?.[0]?.message ||
-    `Server error: status ${response.status}`;
-
-  console.error('[AI Consultant API Error]', {
-    status: response.status,
-    response: data
-  });
-
-  throw new Error(errorMessage);
-}
-      if (!data.success) {
-        throw new Error(data.error || 'Server processed request with failure status');
-      }
-
-      if (!conversationId && data.userMessage?.conversation_id) {
-        setConversationId(data.userMessage.conversation_id);
-      }
-
-      if (data.state) {
-        setChatbotState(prev => ({
-          ...prev,
-          detectedIntent: data.state.detectedIntent,
-          conversationStage: data.state.conversationStage,
-          currentQuestion: data.state.currentQuestion,
-          leadData: data.state.leadData || {},
-          projectData: data.state.projectData || {},
-          recommendations: data.state.recommendations || null,
-          leadSubmitted: data.state.leadSubmitted || false
-        }));
-      }
-
-      setTimeout(() => {
-        setIsTyping(false);
-        setMessages(prev => [...prev, {
-          id: data.assistantMessage.id,
-          sender: 'assistant',
-          message: data.assistantMessage.message,
-          created_at: data.assistantMessage.created_at
-        }]);
-
-        if (data.suggestedPrompts && data.suggestedPrompts.length > 0) {
-          setSuggestedPrompts(data.suggestedPrompts);
-        }
-
-        if (data.flowTrigger === 'lead_form') {
-          setSelectedService(textToSend);
-          setActiveFlow('lead_form');
-        } else if (data.flowTrigger === 'consultation_form') {
-          setActiveFlow('consultation_form');
-        } else if (data.flowTrigger === 'staffing_form') {
-          startStaffingFlow();
-        }
-      }, 800);
-    } catch (err) {
-      console.error('Failed to send message:', err);
-      setIsTyping(false);
-      setLastFailedMessage(textToSend);
-      setMessages(prev => [...prev, {
-        id: 'error_' + Date.now(),
-        sender: 'assistant',
-        message: t('errors.generic'),
-        created_at: new Date().toISOString()
-      }]);
-    } finally {
-      setIsSending(false);
-    }
-  };
-
-  // Lead Form Submission
-  const handleLeadSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setFormError('');
-    setFieldErrors({});
-
-    const newErrors: Record<string, string> = {};
-    
-    const trimmedName = formName.trim();
-    if (!trimmedName) {
-      newErrors.name = t('errors.validationName');
-    } else if (trimmedName.length < 2 || trimmedName.length > 80) {
-      newErrors.name = t('errors.validationNameLength');
-    } else if (!NAME_REGEX.test(trimmedName)) {
-      newErrors.name = t('errors.validationNameChars');
-    }
-
-    const trimmedEmail = formEmail.trim();
-    if (!trimmedEmail) {
-      newErrors.email = t('errors.validationEmail');
-    } else if (!EMAIL_REGEX.test(trimmedEmail)) {
-      newErrors.email = t('errors.email');
-    }
-
-    const trimmedPhone = formPhone.trim();
-    if (!trimmedPhone) {
-      newErrors.phone = t('errors.validationPhone');
-    } else if (!PHONE_REGEX.test(trimmedPhone)) {
-      newErrors.phone = t('errors.validationPhoneChars');
-    } else {
-      const digits = getPhoneDigitCount(trimmedPhone);
-      if (digits < 7 || digits > 15) {
-        newErrors.phone = t('errors.validationPhoneDigits');
-      }
-    }
-
-    const trimmedCompany = formCompany.trim();
-    if (!trimmedCompany) {
-      newErrors.company = t('errors.validationCompany');
-    } else if (trimmedCompany.length < 2) {
-      newErrors.company = t('errors.validationCompanyLength');
-    } else if (!COMPANY_REGEX.test(trimmedCompany)) {
-      newErrors.company = t('errors.validationCompanyChars');
-    }
-
-    if (!isValidDropdownValue(formBudget)) {
-      newErrors.budget = t('errors.validationBudget');
-    }
-    if (!isValidDropdownValue(formTimeline)) {
-      newErrors.timeline = t('errors.validationTimeline');
-    }
-
-    const trimmedMessage = formMessage.trim();
-    if (!trimmedMessage) {
-      newErrors.message = t('errors.validationMessage');
-    } else if (trimmedMessage.length < 20 || trimmedMessage.length > 2000) {
-      newErrors.message = t('errors.validationMessageLength');
-    }
-
-    if (Object.keys(newErrors).length > 0) {
-      setFieldErrors(newErrors);
-      setTimeout(() => {
-        focusAndScrollToLeadError(newErrors);
-      }, 0);
-      return;
-    }
-
-    setIsFormSubmitting(true);
-
-    const sanitizedPayload = sanitizePayload({
-      conversation_id: conversationId,
-      name: trimmedName,
-      email: trimmedEmail,
-      phone: trimmedPhone,
-      company: trimmedCompany,
-      industry: formIndustry,
-      service_interest: selectedService || 'AI & Data Solutions',
-      budget_range: t(`budgets.${formBudget}` as any),
-      timeline: t(`timelines.${formTimeline}` as any),
-      message: trimmedMessage,
-      language: locale,
-      website_url: ''
-    });
-
-    try {
-      const res = await fetch('/api/chat/lead', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(sanitizedPayload)
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        if (data.success) {
-          trackGAEvent({
-            action: 'chatbot_lead_submitted',
-            category: 'Chatbot',
-            label: selectedService || 'AI & Data Solutions'
-          });
-          setActiveFlow('lead_success');
-          setMessages(prev => [...prev, {
-            id: 'lead_confirm_' + Date.now(),
-            sender: 'assistant',
-            message: t('leadQualification.successDesc'),
-            created_at: new Date().toISOString()
-          }]);
-        }
-      } else {
-        setFormError(t('errors.generic'));
-      }
-    } catch (err) {
-      setFormError(t('errors.generic'));
-    } finally {
-      setIsFormSubmitting(false);
-    }
-  };
-
-  // Consultation Submission
-  const handleConsultationSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setFormError('');
-    setFieldErrors({});
-
-    const newErrors: Record<string, string> = {};
-    
-    const trimmedName = formName.trim();
-    if (!trimmedName) {
-      newErrors.name = t('errors.validationName');
-    } else if (trimmedName.length < 2 || trimmedName.length > 80) {
-      newErrors.name = t('errors.validationNameLength');
-    } else if (!NAME_REGEX.test(trimmedName)) {
-      newErrors.name = t('errors.validationNameChars');
-    }
-
-    const trimmedEmail = formEmail.trim();
-    if (!trimmedEmail) {
-      newErrors.email = t('errors.validationEmail');
-    } else if (!EMAIL_REGEX.test(trimmedEmail)) {
-      newErrors.email = t('errors.email');
-    }
-
-    const trimmedPhone = formPhone.trim();
-    if (!trimmedPhone) {
-      newErrors.phone = t('errors.validationPhone');
-    } else if (!PHONE_REGEX.test(trimmedPhone)) {
-      newErrors.phone = t('errors.validationPhoneChars');
-    } else {
-      const digits = getPhoneDigitCount(trimmedPhone);
-      if (digits < 7 || digits > 15) {
-        newErrors.phone = t('errors.validationPhoneDigits');
-      }
-    }
-
-    const trimmedCompany = formCompany.trim();
-    if (!trimmedCompany) {
-      newErrors.company = t('errors.validationCompany');
-    } else if (trimmedCompany.length < 2) {
-      newErrors.company = t('errors.validationCompanyLength');
-    } else if (!COMPANY_REGEX.test(trimmedCompany)) {
-      newErrors.company = t('errors.validationCompanyChars');
-    }
-
-    const trimmedDate = formDate.trim();
-    if (!trimmedDate) {
-      newErrors.date = t('errors.validationDate');
-    } else if (trimmedDate.length < 5) {
-      newErrors.date = t('errors.validationDateLength');
-    }
-
-    const trimmedMessage = formMessage.trim();
-    if (!trimmedMessage) {
-      newErrors.message = t('errors.validationMessage');
-    } else if (trimmedMessage.length < 20 || trimmedMessage.length > 2000) {
-      newErrors.message = t('errors.validationMessageLength');
-    }
-
-    if (Object.keys(newErrors).length > 0) {
-      setFieldErrors(newErrors);
-      setTimeout(() => {
-        focusAndScrollToConsultError(newErrors);
-      }, 0);
-      return;
-    }
-
-    setIsFormSubmitting(true);
-
-    const sanitizedPayload = sanitizePayload({
-      name: trimmedName,
-      email: trimmedEmail,
-      phone: trimmedPhone,
-      company: trimmedCompany,
-      service: selectedService || 'Technology Consulting',
-      message: trimmedMessage,
-      preferred_date: trimmedDate,
-      language: locale
-    });
-
-    try {
-      const res = await fetch('/api/chat/consultation', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(sanitizedPayload)
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        if (data.success) {
-          trackGAEvent({
-            action: 'chatbot_consultation_booked',
-            category: 'Chatbot',
-            label: selectedService || 'Technology Consulting'
-          });
-          setActiveFlow('consultation_success');
-          setMessages(prev => [...prev, {
-            id: 'consult_confirm_' + Date.now(),
-            sender: 'assistant',
-            message: t('consultationFlow.successDesc'),
-            created_at: new Date().toISOString()
-          }]);
-        }
-      } else {
-        setFormError(t('errors.generic'));
-      }
-    } catch (err) {
-      setFormError(t('errors.generic'));
-    } finally {
-      setIsFormSubmitting(false);
-    }
-  };
-
-  const handleStartOver = () => {
-    setActiveFlow('chat');
-    setChatState('DEFAULT');
-    setChatbotState({
-      detectedIntent: 'DEFAULT',
-      conversationStage: 'Greeting',
-      currentQuestion: null,
-      leadData: {},
-      projectData: {},
-      recommendations: null,
-      leadSubmitted: false
-    });
-    setMessages([
-      {
-        id: 'greeting',
-        sender: 'assistant',
-        message: t('welcomeMessage'),
-        created_at: new Date().toISOString()
-      }
-    ]);
-    setSuggestedPrompts(getDefaultPrompts());
-    setFormName('');
-    setFormEmail('');
-    setFormPhone('');
-    setFormCompany('');
-    setFormMessage('');
-    setFormDate('');
-  };
-  // Check if suggested queries should be shown (hide after first user message)
-  const showChips = activeFlow === 'chat' && messages.filter(m => m.sender === 'user').length === 0;
-  const isChatEmpty = activeFlow === 'chat' && messages.length <= 1;
-
-  // Localized greeting parts
-  const isEs = locale === 'es';
-  const greetingText = isEs ? '¡Hola! 👋' : 'Hello 👋';
-  const introText = isEs ? 'Soy el Consultor de IA de HyperCode.' : "I'm HyperCode AI Consultant.";
-  const questionText = isEs ? '¿Cómo puedo ayudarle con sus objetivos comerciales hoy?' : 'How can I help your business today?';
-  
-  // Localized placeholder
-  const placeholderText = isInitializing
-    ? (isEs ? 'Preparando su Consultor de IA...' : 'Preparing your AI Consultant...')
-    : (isEs
-      ? 'Pregunte sobre IA, contratación, automatización o transformación digital...'
-      : 'Ask anything about AI, hiring, automation or digital transformation...');
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen]);
 
   if (!mounted) return null;
 
+  const handleStartOver = () => {
+    const freshUUID = (() => {
+      if (typeof window !== 'undefined' && window.crypto && window.crypto.randomUUID) {
+        return window.crypto.randomUUID();
+      }
+      return 'session_' + Math.random().toString(36).substring(2, 15) + '-' + Math.random().toString(36).substring(2, 15);
+    })();
+    setSessionId(freshUUID);
+    setMessages([]);
+    setInputValue('');
+    setIsTyping(false);
+    setErrorText(null);
+  };
+
+  const handleSendMessage = async (text: string) => {
+    if (!text.trim() || isTyping) return;
+    setErrorText(null);
+
+    const userMessage: Message = { role: 'user', content: text.trim() };
+    const updatedMessages = [...messages, userMessage];
+    setMessages(updatedMessages);
+    setInputValue('');
+    setIsTyping(true);
+
+    try {
+      // Normalize history payload for backend call
+      const historyPayload = messages.map(m => ({
+        role: m.role,
+        content: m.content
+      }));
+
+      const res = await fetch('/api/chat/message', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          session_id: sessionId,
+          message: text.trim(),
+          language: locale,
+          history: historyPayload
+        })
+      });
+
+      const data = await res.json().catch(() => null);
+
+      if (!res.ok || !data?.success) {
+        throw new Error(data?.error || t('errors.generic'));
+      }
+
+      const assistantMessage: Message = { role: 'assistant', content: data.message };
+      const nextMessages = [...updatedMessages, assistantMessage];
+
+      // Insert inline CTA if user has completed 2 exchanges and assistant hasn't offered CTA yet
+      const userExchanges = nextMessages.filter(m => m.role === 'user').length;
+      const hasCTAAlready = nextMessages.some(m => m.isCTA);
+
+      if (userExchanges >= 2 && !hasCTAAlready) {
+        nextMessages.push({
+          role: 'assistant',
+          content: t('ctaOffer'),
+          isCTA: true
+        });
+      }
+
+      setMessages(nextMessages);
+    } catch (err) {
+      console.error('[AI Consultant Client Error]', err);
+      setErrorText(t('errors.generic'));
+    } finally {
+      setIsTyping(false);
+    }
+  };
+
+  const quickActions = [
+    { label: t('actions.buildSoftware'), query: locale === 'es' ? 'Quiero construir un software' : 'I want to build software' },
+    { label: t('actions.modernizeSystems'), query: locale === 'es' ? 'Quiero modernizar mis sistemas' : 'I want to modernize legacy systems' },
+    { label: t('actions.aiAutomation'), query: locale === 'es' ? 'Quiero integrar inteligencia artificial y automatización' : 'I want AI and automation integration' },
+    { label: t('actions.estimateProject'), query: locale === 'es' ? '¿Cómo puedo estimar el costo de mi proyecto?' : 'How do I estimate project scope and cost?' }
+  ];
+
   return createPortal(
-    <div className={`fixed z-[999999] pointer-events-none flex flex-col items-end justify-end ${
-      windowState === 'open' 
-        ? 'bottom-4 left-4 right-4 sm:bottom-6 sm:right-6 sm:left-auto' 
-        : 'bottom-5 right-5 sm:bottom-6 sm:right-6'
-    }`}>
+    <div className="fixed bottom-0 right-0 z-[999999] pointer-events-none">
       
-      {/* 1. Chat Widget Window */}
-      <AnimatePresence>
-        {windowState === 'open' && (
-          <motion.div
-            ref={widgetRef}
-            initial={{ opacity: 0, y: 30, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 30, scale: 0.95 }}
-            transition={{ duration: 0.25, ease: 'easeOut' }}
-            role="dialog"
-            aria-label="AI Consultant Chat Window"
-            className="w-full sm:w-[380px] lg:w-[400px] xl:w-[420px] xl:max-w-[450px] xl:min-w-[390px] h-[min(80dvh,calc(100dvh-20px))] sm:h-[min(75vh,calc(100vh-40px))] lg:h-[min(620px,calc(100vh-48px))] xl:h-[min(650px,calc(100vh-48px))] bg-white/95 backdrop-blur-xl border border-slate-200 rounded-[28px] shadow-[0_24px_60px_rgba(15,76,129,0.15)] overflow-hidden flex flex-col pointer-events-auto mb-0"
-          >
-            {/* Header bar (shrink-0 prevents squash) */}
-            <div className="h-[76px] px-5 border-b border-slate-800 flex justify-between items-center bg-deep-navy shrink-0 text-white">
-              <div className="flex items-center gap-3">
-                <div className="relative">
-                  <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-royal-blue to-green flex items-center justify-center text-white shadow-lg shadow-blue-500/20">
-                    <Bot className="w-5 h-5" />
-                  </div>
-                  {/* Status Indicator */}
-                  <span className="absolute -bottom-0.5 -right-0.5 flex h-3 w-3">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500 border-2 border-white"></span>
-                  </span>
+      {/* 1. Compact Premium Chat Panel */}
+      {isOpen && (
+        <div
+          ref={panelRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label="HyperCode AI Consultant Chat"
+          className="fixed inset-0 sm:inset-auto sm:bottom-6 sm:right-6 sm:w-[440px] sm:h-[620px] sm:max-w-[calc(100vw-48px)] sm:max-h-[calc(100vh-48px)] sm:rounded-[24px] bg-white border border-slate-200 shadow-2xl flex flex-col overflow-hidden pointer-events-auto transition-all duration-300"
+          style={{
+            boxShadow: '0 20px 50px -12px rgba(20, 91, 255, 0.15)'
+          }}
+        >
+          {/* Header */}
+          <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100 bg-white shrink-0">
+            <div className="flex items-center gap-3">
+              <div className="relative">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#145BFF] to-[#00C9A7] flex items-center justify-center text-white shadow-md shadow-blue-500/10">
+                  <Bot className="w-5 h-5" />
                 </div>
-                <div className="text-left">
-                  <h3 className="text-xs font-black text-white tracking-wider uppercase leading-none">{t('title')}</h3>
-                  <p className="text-[9px] text-slate-300 font-extrabold tracking-widest mt-1 leading-none uppercase flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                    {locale === 'es' ? 'Consejero de IA En Línea' : 'AI Advisor Online'}
-                  </p>
-                </div>
+                <span className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-500 border-2 border-white" />
               </div>
-              
-              {/* Header Action Buttons */}
-              <div className="flex items-center gap-1.5">
-                <button
-                  onClick={() => setWindowState('minimized')}
-                  title={t('actions.minimize')}
-                  aria-label="Minimize AI Consultant"
-                  className="w-8 h-8 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-royal-blue text-slate-300 rounded-xl transition-colors cursor-pointer outline-none flex items-center justify-center shrink-0 border-none"
-                >
-                  <Minus className="w-4 h-4" />
-                </button>
-                <button
-                  onClick={() => setWindowState('closed')}
-                  title={t('actions.close')}
-                  aria-label="Close AI Consultant"
-                  className="w-8 h-8 bg-white/10 hover:bg-rose-500/20 hover:text-rose-300 focus-visible:ring-2 focus-visible:ring-royal-blue text-slate-300 rounded-xl transition-colors cursor-pointer outline-none flex items-center justify-center shrink-0 border-none"
-                >
-                  <X className="w-4 h-4" />
-                </button>
+              <div className="text-left">
+                <h2 className="text-sm font-bold text-slate-900 leading-none">{t('title')}</h2>
+                <div className="text-[11px] font-semibold text-emerald-600 tracking-wide mt-1 flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  {t('status')}
+                </div>
               </div>
             </div>
-
-            {/* Scrollable Content or Forms */}
-            {activeFlow === 'chat' ? (
-              isInitializing ? (
-                /* Preparing state */
-                <div className="flex-1 flex flex-col justify-center items-center p-5 bg-transparent min-h-0">
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="flex flex-col items-center max-w-[90%] text-center my-auto py-4 animate-pulse"
-                  >
-                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-royal-blue to-green flex items-center justify-center text-white shadow-xl shadow-blue-500/25 mb-4 animate-spin">
-                      <Loader2 className="w-7 h-7" />
-                    </div>
-                    <p className="text-[10px] text-slate-500 font-bold tracking-widest mt-4 uppercase">
-                      {isEs ? 'Preparando su Consultor de IA...' : 'Preparing your AI Consultant...'}
-                    </p>
-                  </motion.div>
-                </div>
-              ) : isChatEmpty ? (
-                /* Empty state: welcome & suggested queries */
-                <div className="flex-1 flex flex-col justify-center items-center p-5 bg-transparent min-h-0 overflow-y-auto">
-                  <motion.div
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="flex flex-col items-center max-w-[90%] text-center my-auto py-4"
-                  >
-                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-royal-blue to-green flex items-center justify-center text-white shadow-xl shadow-blue-500/25 mb-4 animate-pulse">
-                      <Bot className="w-7 h-7" />
-                    </div>
-                    {messages.length > 0 && (
-                      <div className="bg-slate-50 border border-slate-200 p-5 rounded-3xl rounded-tl-none text-xs leading-relaxed text-slate-800 text-left shadow-sm max-w-[95%]">
-                        <div className="space-y-2">
-                          <p className="font-extrabold text-sm text-slate-900 flex items-center gap-1.5">{greetingText}</p>
-                          <p className="text-slate-655 font-semibold">{introText}</p>
-                          <p className="text-royal-blue font-bold pt-2 border-t border-slate-200/50 mt-2">{questionText}</p>
-                        </div>
-                      </div>
-                    )}
-                    
-                    {/* Suggested Queries */}
-                    {showChips && suggestedPrompts.length > 0 && (
-                      <div className="flex flex-col gap-3 mt-8 items-center w-full animate-fadeIn">
-                        <span className="text-[10px] font-extrabold text-slate-500 uppercase tracking-widest">
-                          {t('suggestedTitle')}
-                        </span>
-                        <div className="flex flex-wrap gap-2 justify-center max-w-full">
-                          {suggestedPrompts.slice(0, 8).map((prompt, idx) => (
-                            <button
-                              key={idx}
-                              onClick={() => routeSuggestedPrompt(prompt)}
-                              disabled={isSending || isTyping}
-                              className="px-3.5 py-2 bg-slate-50 hover:bg-royal-blue hover:border-royal-blue focus-visible:ring-2 focus-visible:ring-royal-blue focus-visible:ring-offset-1 outline-none text-slate-600 hover:text-white rounded-2xl text-[11px] font-bold border border-slate-200 transition-all duration-300 cursor-pointer shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 shrink-0"
-                            >
-                              {getCompactChipLabel(prompt, locale)}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </motion.div>
-                </div>
-              ) : (
-                /* Active chat state: scrollable messages list */
-                <div className="flex-1 overflow-y-auto p-5 space-y-4 flex flex-col custom-scrollbar bg-transparent min-h-0">
-                  <div className="flex-grow min-h-[0px]" />
-                  {messages.map((msg) => (
-                    <motion.div
-                      key={msg.id}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.2 }}
-                      className={`flex gap-3.5 max-w-[85%] ${
-                        msg.sender === 'user' ? 'self-end flex-row-reverse' : 'self-start'
-                      }`}
-                    >
-                      <div
-                        className={`w-7 h-7 rounded-xl shrink-0 flex items-center justify-center text-[10px] font-bold shadow-sm ${
-                          msg.sender === 'user' 
-                            ? 'bg-slate-100 text-slate-600' 
-                            : 'bg-gradient-to-tr from-royal-blue to-green text-white'
-                        }`}
-                      >
-                        {msg.sender === 'user' ? <User className="w-3.5 h-3.5" /> : <Bot className="w-3.5 h-3.5" />}
-                      </div>
-                      <div className="flex flex-col text-left">
-                        <div
-                          className={`px-4 py-3 rounded-2xl text-xs leading-relaxed whitespace-pre-wrap font-semibold ${
-                            msg.sender === 'user'
-                              ? 'bg-royal-blue text-white rounded-tr-none shadow-md shadow-[#145BFF]/15'
-                              : 'bg-slate-50 border border-slate-200 text-slate-800 rounded-tl-none shadow-sm'
-                          }`}
-                        >
-                          {msg.sender === 'user' ? (
-                            msg.message
-                          ) : (
-                            <>
-                              <MarkdownRenderer text={msg.message} locale={locale} />
-                              {msg.id.startsWith('error_') && lastFailedMessage && (
-                                <button
-                                  type="button"
-                                  onClick={handleRetrySendMessage}
-                                  className="mt-2 block text-[10px] text-rose-600 hover:text-rose-800 font-extrabold underline cursor-pointer bg-transparent border-none p-0 outline-none"
-                                >
-                                  {locale === 'es' ? 'Reintentar' : 'Retry'}
-                                </button>
-                              )}
-                            </>
-                          )}
-                        </div>
-                        <span className="text-[8px] text-slate-400 font-extrabold uppercase mt-1 px-1 tracking-wider">
-                          {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                        </span>
-                      </div>
-                    </motion.div>
-                  ))}
-                  
-                  {isTyping && (
-                    <div className="flex gap-3 self-start items-center">
-                      <div className="w-7 h-7 rounded-xl bg-gradient-to-tr from-royal-blue to-green flex items-center justify-center text-white shrink-0 shadow-sm">
-                        <Bot className="w-3.5 h-3.5 animate-pulse" />
-                      </div>
-                      <div className="bg-slate-50 border border-slate-200 px-4 py-3 rounded-2xl rounded-tl-none flex items-center gap-1.5 shadow-sm">
-                        <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                        <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                        <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
-                      </div>
-                    </div>
-                  )}
-
-                  {chatbotState.recommendations && (
-                    <div className="mt-4 p-4 bg-slate-50 border border-slate-200 rounded-2xl text-slate-800 space-y-3 shadow-inner text-left">
-                      <div className="flex items-center gap-2 pb-2 border-b border-slate-200">
-                        <Sparkles className="w-4 h-4 text-royal-blue" />
-                        <span className="text-xs font-black uppercase text-slate-900 tracking-wider">
-                          {locale === 'es' ? 'Recomendación Técnica' : 'Technical Recommendation'}
-                        </span>
-                      </div>
-                      
-                      {chatbotState.recommendations.techStack && chatbotState.recommendations.techStack.length > 0 && (
-                        <div>
-                          <span className="text-[10px] font-bold text-slate-500 uppercase block">
-                            {locale === 'es' ? 'Stack Tecnológico' : 'Tech Stack'}
-                          </span>
-                          <div className="flex flex-wrap gap-1 mt-1">
-                            {chatbotState.recommendations.techStack.map((tech: string, i: number) => (
-                              <span key={i} className="text-[10px] bg-slate-200 text-slate-800 font-bold px-2 py-0.5 rounded-md" style={{ display: 'inline-block' }}>
-                                {tech}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-
-                      {chatbotState.recommendations.architecture && (
-                        <div>
-                          <span className="text-[10px] font-bold text-slate-500 uppercase block">
-                            {locale === 'es' ? 'Arquitectura Propuesta' : 'Proposed Architecture'}
-                          </span>
-                          <p className="text-[11px] text-slate-700 font-semibold mt-0.5">
-                            {chatbotState.recommendations.architecture}
-                          </p>
-                        </div>
-                      )}
-
-                      <div className="grid grid-cols-2 gap-2 text-left">
-                        {chatbotState.recommendations.timelineEstimate && (
-                          <div>
-                            <span className="text-[10px] font-bold text-slate-500 uppercase block">
-                              {locale === 'es' ? 'Plazo Estimado' : 'Est. Timeline'}
-                            </span>
-                            <p className="text-[11px] text-slate-900 font-bold mt-0.5">
-                              {chatbotState.recommendations.timelineEstimate}
-                            </p>
-                          </div>
-                        )}
-                        {chatbotState.recommendations.teamSizeEstimate && (
-                          <div>
-                            <span className="text-[10px] font-bold text-slate-500 uppercase block">
-                              {locale === 'es' ? 'Equipo Recomendado' : 'Est. Team Size'}
-                            </span>
-                            <p className="text-[11px] text-slate-900 font-bold mt-0.5">
-                              {chatbotState.recommendations.teamSizeEstimate}
-                            </p>
-                          </div>
-                        )}
-                      </div>
-
-                      {chatbotState.recommendations.potentialRisks && chatbotState.recommendations.potentialRisks.length > 0 && (
-                        <div>
-                          <span className="text-[10px] font-bold text-slate-500 uppercase block">
-                            {locale === 'es' ? 'Riesgos Potenciales' : 'Potential Risks'}
-                          </span>
-                          <ul className="list-disc pl-4 text-[10px] text-slate-650 font-semibold space-y-0.5 mt-1">
-                            {chatbotState.recommendations.potentialRisks.map((risk: string, i: number) => (
-                              <li key={i}>{risk}</li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-
-                      {chatbotState.recommendations.nextSteps && (
-                        <div className="pt-2 border-t border-slate-150">
-                          <span className="text-[10px] font-bold text-slate-500 uppercase block">
-                            {locale === 'es' ? 'Próximos Pasos' : 'Next Steps'}
-                          </span>
-                          <p className="text-[11px] text-indigo-700 font-extrabold mt-0.5">
-                            {chatbotState.recommendations.nextSteps}
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                  )}
-
-                  {chatbotState.leadSubmitted && (
-                    <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl text-emerald-800 space-y-2 mt-4 text-left">
-                      <div className="flex items-center gap-2">
-                        <CheckCircle className="w-5 h-5 text-emerald-600" />
-                        <span className="text-xs font-black uppercase text-emerald-900 tracking-wider">
-                          {locale === 'es' ? '¡Proyecto Calificado!' : 'Project Qualified!'}
-                        </span>
-                      </div>
-                      <p className="text-[11px] font-semibold text-emerald-700 leading-relaxed">
-                        {locale === 'es' 
-                          ? 'Su proyecto ha sido registrado con éxito en nuestro sistema de prioridades de HyperCode. Un Director de Prácticas le enviará su propuesta de arquitectura personalizada por correo electrónico.'
-                          : 'Your project has been successfully logged with HyperCode. A practice director is reviewing your requirements and will email your custom architecture blueprint shortly.'}
-                      </p>
-                    </div>
-                  )}
-
-                  <div ref={messagesEndRef} className="pb-4" />
-                </div>
-              )
-            ) : (
-              /* Non-chat active flows: forms & success screens (scrollable) */
-              <div className="flex-1 overflow-y-auto p-4 space-y-4 flex flex-col custom-scrollbar bg-slate-50 min-h-0">
-                {activeFlow === 'lead_form' && (
-                  <motion.form
-                    ref={leadFormRef}
-                    initial={{ opacity: 0, x: 15 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    onSubmit={handleLeadSubmit}
-                    className="space-y-4 text-left p-4 bg-white border border-slate-200 rounded-2xl animate-fadeIn"
-                  >
-                    <div className="flex justify-between items-center pb-2 border-b border-slate-150">
-                      <h4 className="text-xs font-extrabold text-royal-blue uppercase tracking-wider flex items-center gap-1.5">
-                        <Sparkles className="w-3.5 h-3.5" />
-                        {t('leadQualification.title')}
-                      </h4>
-                      <button
-                        type="button"
-                        onClick={() => setActiveFlow('chat')}
-                        className="text-[10px] text-slate-550 hover:text-royal-blue font-bold flex items-center gap-1 cursor-pointer py-1 px-2 hover:bg-slate-100 rounded-lg transition-colors border-none"
-                      >
-                        <ArrowLeft className="w-3 h-3" />
-                        {t('actions.back')}
-                      </button>
-                    </div>
-                    
-                    <p className="text-[10px] text-slate-500 leading-relaxed font-semibold">
-                      {t('leadQualification.subtitle')}
-                    </p>
-
-                    {formError && (
-                      <div className="p-2.5 bg-rose-50 border border-rose-200 rounded-xl text-[10px] font-bold text-rose-600" role="alert">
-                        {formError}
-                      </div>
-                    )}
-
-                    <div className="space-y-3 text-xs">
-                      <div>
-                        <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.name')}</label>
-                        <div className="relative">
-                          <input
-                            type="text"
-                            name="name"
-                            required
-                            value={formName}
-                            onChange={(e) => {
-                              const val = e.target.value;
-                              setFormName(val);
-                              const err = validateNameInput(val);
-                              setFieldErrors(prev => ({ ...prev, name: err }));
-                            }}
-                            aria-invalid={Boolean(fieldErrors.name)}
-                            aria-describedby={fieldErrors.name ? 'chat-lead-name-error' : undefined}
-                            className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all outline-none ${
-                              fieldErrors.name
-                                ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
-                                : (formName.trim().length >= 2 && NAME_REGEX.test(formName.trim()))
-                                ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
-                                : 'border-slate-200 focus:border-royal-blue'
-                            }`}
-                          />
-                          {formName.trim().length >= 2 && NAME_REGEX.test(formName.trim()) && !fieldErrors.name && (
-                            <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-green-500">
-                              <Check size={14} className="stroke-[3px]" />
-                            </span>
-                          )}
-                        </div>
-                        {fieldErrors.name && (
-                          <span id="chat-lead-name-error" className="text-[9px] font-semibold text-red-500 mt-1 block" role="alert">{fieldErrors.name}</span>
-                        )}
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-3">
-                        <div>
-                          <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.email')}</label>
-                          <div className="relative">
-                            <input
-                              type="email"
-                              name="email"
-                              required
-                              value={formEmail}
-                              onChange={(e) => {
-                                const val = e.target.value;
-                                setFormEmail(val);
-                                const err = validateEmailInput(val);
-                                setFieldErrors(prev => ({ ...prev, email: err }));
-                              }}
-                              aria-invalid={Boolean(fieldErrors.email)}
-                              aria-describedby={fieldErrors.email ? 'chat-lead-email-error' : undefined}
-                              className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all outline-none ${
-                                fieldErrors.email
-                                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
-                                  : EMAIL_REGEX.test(formEmail.trim())
-                                  ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
-                                  : 'border-slate-200 focus:border-royal-blue'
-                              }`}
-                            />
-                            {EMAIL_REGEX.test(formEmail.trim()) && !fieldErrors.email && (
-                              <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-green-500">
-                                <Check size={14} className="stroke-[3px]" />
-                              </span>
-                            )}
-                          </div>
-                          {fieldErrors.email && (
-                            <span id="chat-lead-email-error" className="text-[9px] font-semibold text-red-500 mt-1 block" role="alert">{fieldErrors.email}</span>
-                          )}
-                        </div>
-                        <div>
-                          <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.phone')}</label>
-                          <div className="relative">
-                            <input
-                              type="tel"
-                              name="phone"
-                              required
-                              value={formPhone}
-                              onChange={(e) => {
-                                const val = filterPhoneInput(e.target.value);
-                                setFormPhone(val);
-                                const err = validatePhoneInputStr(val);
-                                setFieldErrors(prev => ({ ...prev, phone: err }));
-                              }}
-                              aria-invalid={Boolean(fieldErrors.phone)}
-                              aria-describedby={fieldErrors.phone ? 'chat-lead-phone-error' : undefined}
-                              className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all outline-none ${
-                                fieldErrors.phone
-                                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
-                                  : (PHONE_REGEX.test(formPhone.trim()) && getPhoneDigitCount(formPhone.trim()) >= 7 && getPhoneDigitCount(formPhone.trim()) <= 15)
-                                  ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
-                                  : 'border-slate-200 focus:border-royal-blue'
-                              }`}
-                            />
-                            {(PHONE_REGEX.test(formPhone.trim()) && getPhoneDigitCount(formPhone.trim()) >= 7 && getPhoneDigitCount(formPhone.trim()) <= 15) && !fieldErrors.phone && (
-                              <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-green-500">
-                                <Check size={14} className="stroke-[3px]" />
-                              </span>
-                            )}
-                          </div>
-                          {fieldErrors.phone && (
-                            <span id="chat-lead-phone-error" className="text-[9px] font-semibold text-red-500 mt-1 block" role="alert">{fieldErrors.phone}</span>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-3">
-                        <div>
-                          <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.company')}</label>
-                          <div className="relative">
-                            <input
-                              type="text"
-                              name="company"
-                              required
-                              value={formCompany}
-                              onChange={(e) => {
-                                const val = e.target.value;
-                                setFormCompany(val);
-                                const err = validateCompanyInput(val);
-                                setFieldErrors(prev => ({ ...prev, company: err }));
-                              }}
-                              aria-invalid={Boolean(fieldErrors.company)}
-                              aria-describedby={fieldErrors.company ? 'chat-lead-company-error' : undefined}
-                              className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all outline-none ${
-                                fieldErrors.company
-                                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
-                                  : (formCompany.trim().length >= 2 && COMPANY_REGEX.test(formCompany.trim()))
-                                  ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
-                                  : 'border-slate-200 focus:border-royal-blue'
-                              }`}
-                            />
-                            {(formCompany.trim().length >= 2 && COMPANY_REGEX.test(formCompany.trim())) && !fieldErrors.company && (
-                              <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-green-500">
-                                <Check size={14} className="stroke-[3px]" />
-                              </span>
-                            )}
-                          </div>
-                          {fieldErrors.company && (
-                            <span id="chat-lead-company-error" className="text-[9px] font-semibold text-red-500 mt-1 block" role="alert">{fieldErrors.company}</span>
-                          )}
-                        </div>
-                        <div>
-                          <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.industry')}</label>
-                          <select
-                            name="industry"
-                            value={formIndustry}
-                            onChange={(e) => setFormIndustry(e.target.value)}
-                            className="w-full bg-white border border-slate-200 rounded-xl px-2 py-2 text-slate-700 focus:outline-none focus:border-royal-blue focus:ring-2 focus:ring-royal-blue/25 cursor-pointer outline-none"
-                          >
-                            <option value="technology">{t('industries.technology')}</option>
-                            <option value="enterprise">{t('industries.enterprise')}</option>
-                            <option value="healthcare">{t('industries.healthcare')}</option>
-                            <option value="finance">{t('industries.finance')}</option>
-                            <option value="retail">{t('industries.retail')}</option>
-                            <option value="other">{t('industries.other')}</option>
-                          </select>
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-3">
-                        <div>
-                          <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.budget')}</label>
-                          <select
-                            name="budget"
-                            value={formBudget}
-                            onChange={(e) => setFormBudget(e.target.value)}
-                            aria-invalid={Boolean(fieldErrors.budget)}
-                            aria-describedby={fieldErrors.budget ? 'chat-lead-budget-error' : undefined}
-                            className={`w-full bg-white border rounded-xl px-2 py-2 text-slate-700 focus:outline-none focus:ring-2 cursor-pointer outline-none ${
-                              fieldErrors.budget
-                                ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
-                                : 'border-slate-200 focus:ring-royal-blue/25'
-                            }`}
-                          >
-                            <option value="default">-- Select Budget --</option>
-                            <option value="under5k">{t('budgets.under5k')}</option>
-                            <option value="between5k10k">{t('budgets.between5k10k')}</option>
-                            <option value="between10k25k">{t('budgets.between10k25k')}</option>
-                            <option value="between25k50k">{t('budgets.between25k50k')}</option>
-                            <option value="over50k">{t('budgets.over50k')}</option>
-                          </select>
-                          {fieldErrors.budget && <span id="chat-lead-budget-error" className="text-[8px] font-semibold text-red-500 mt-0.5 block" role="alert">{fieldErrors.budget}</span>}
-                        </div>
-                        <div>
-                          <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.timeline')}</label>
-                          <select
-                            name="timeline"
-                            value={formTimeline}
-                            onChange={(e) => setFormTimeline(e.target.value)}
-                            aria-invalid={Boolean(fieldErrors.timeline)}
-                            aria-describedby={fieldErrors.timeline ? 'chat-lead-timeline-error' : undefined}
-                            className={`w-full bg-white border rounded-xl px-2 py-2 text-slate-700 focus:outline-none focus:ring-2 cursor-pointer outline-none ${
-                              fieldErrors.timeline
-                                ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
-                                : 'border-slate-200 focus:ring-royal-blue/25'
-                            }`}
-                          >
-                            <option value="default">-- Select Timeline --</option>
-                            <option value="immediate">{t('timelines.immediate')}</option>
-                            <option value="medium">{t('timelines.medium')}</option>
-                            <option value="long">{t('timelines.long')}</option>
-                            <option value="norush">{t('timelines.norush')}</option>
-                          </select>
-                          {fieldErrors.timeline && <span id="chat-lead-timeline-error" className="text-[8px] font-semibold text-red-500 mt-0.5 block" role="alert">{fieldErrors.timeline}</span>}
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.message')}</label>
-                        <div className="relative">
-                          <textarea
-                            name="message"
-                            value={formMessage}
-                            onChange={(e) => {
-                              const val = e.target.value;
-                              setFormMessage(val);
-                              const err = validateMessageInput(val);
-                              setFieldErrors(prev => ({ ...prev, message: err }));
-                            }}
-                            rows={2}
-                            aria-invalid={Boolean(fieldErrors.message)}
-                            aria-describedby={fieldErrors.message ? 'chat-lead-message-error' : undefined}
-                            className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all resize-none outline-none ${
-                              fieldErrors.message
-                                ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
-                                : (formMessage.trim().length >= 20 && formMessage.trim().length <= 2000)
-                                ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
-                                : 'border-slate-200 focus:border-royal-blue'
-                            }`}
-                          />
-                          {(formMessage.trim().length >= 20 && formMessage.trim().length <= 2000) && !fieldErrors.message && (
-                            <span className="absolute right-2.5 top-3.5 text-green-500">
-                              <Check size={14} className="stroke-[3px]" />
-                            </span>
-                          )}
-                        </div>
-                        <div className="flex justify-between items-center mt-0.5">
-                          {fieldErrors.message ? (
-                            <span id="chat-lead-message-error" className="text-[8px] font-semibold text-red-500" role="alert">{fieldErrors.message}</span>
-                          ) : (
-                            <span className="text-[8px] text-slate-400">Min 20 characters</span>
-                          )}
-                          <span className="text-[8px] text-slate-450 font-bold">
-                            {Math.max(0, 2000 - formMessage.trim().length)} chars remaining
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <button
-                      type="submit"
-                      disabled={isFormSubmitting}
-                      className={`w-full h-11 bg-gradient-to-tr from-royal-blue to-green hover:from-royal-blue hover:to-bright-lime hover:shadow-[0_0_15px_rgba(20,91,255,0.4)] hover:-translate-y-0.5 active:translate-y-0 transition-all text-white font-extrabold rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-blue-500/10 outline-none focus:ring-2 focus:ring-royal-blue ${
-                        isFormSubmitting ? 'opacity-50 cursor-not-allowed from-slate-400 to-slate-450' : ''
-                      }`}
-                    >
-                      {isFormSubmitting ? <Loader2 className="w-4.5 h-4.5 animate-spin" /> : <Sparkles className="w-4.5 h-4.5" />}
-                      <span>{t('leadQualification.submit')}</span>
-                    </button>
-                  </motion.form>
-                )}
-                {activeFlow === 'consultation_form' && (
-                  <motion.form
-                    ref={consultFormRef}
-                    initial={{ opacity: 0, x: 15 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    onSubmit={handleConsultationSubmit}
-                    className="space-y-4 text-left p-4 bg-white border border-slate-200 rounded-2xl animate-fadeIn"
-                  >
-                    <div className="flex justify-between items-center pb-2 border-b border-slate-150">
-                      <h4 className="text-xs font-extrabold text-royal-blue uppercase tracking-wider flex items-center gap-1.5">
-                        <Calendar className="w-3.5 h-3.5" />
-                        {t('consultationFlow.title')}
-                      </h4>
-                      <button
-                        type="button"
-                        onClick={() => setActiveFlow('chat')}
-                        className="text-[10px] text-slate-550 hover:text-royal-blue font-bold flex items-center gap-1 cursor-pointer py-1 px-2 hover:bg-slate-100 rounded-lg transition-colors border-none"
-                      >
-                        <ArrowLeft className="w-3 h-3" />
-                        {t('actions.back')}
-                      </button>
-                    </div>
-                    
-                    <p className="text-[10px] text-slate-500 leading-relaxed font-semibold">
-                      {t('consultationFlow.subtitle')}
-                    </p>
-
-                    {formError && (
-                      <div className="p-2.5 bg-rose-50 border border-rose-200 rounded-xl text-[10px] font-bold text-rose-600" role="alert">
-                        {formError}
-                      </div>
-                    )}
-
-                    <div className="space-y-3 text-xs">
-                      <div>
-                        <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.name')}</label>
-                        <div className="relative">
-                          <input
-                            type="text"
-                            name="name"
-                            required
-                            value={formName}
-                            onChange={(e) => {
-                              const val = e.target.value;
-                              setFormName(val);
-                              const err = validateNameInput(val);
-                              setFieldErrors(prev => ({ ...prev, name: err }));
-                            }}
-                            aria-invalid={Boolean(fieldErrors.name)}
-                            aria-describedby={fieldErrors.name ? 'chat-consult-name-error' : undefined}
-                            className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all outline-none ${
-                              fieldErrors.name
-                                ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
-                                : (formName.trim().length >= 2 && NAME_REGEX.test(formName.trim()))
-                                ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
-                                : 'border-slate-200 focus:border-royal-blue'
-                            }`}
-                          />
-                          {formName.trim().length >= 2 && NAME_REGEX.test(formName.trim()) && !fieldErrors.name && (
-                            <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-green-500">
-                              <Check size={14} className="stroke-[3px]" />
-                            </span>
-                          )}
-                        </div>
-                        {fieldErrors.name && (
-                          <span id="chat-consult-name-error" className="text-[9px] font-semibold text-red-500 mt-1 block" role="alert">{fieldErrors.name}</span>
-                        )}
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-3">
-                        <div>
-                          <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.email')}</label>
-                          <div className="relative">
-                            <input
-                              type="email"
-                              name="email"
-                              required
-                              value={formEmail}
-                              onChange={(e) => {
-                                const val = e.target.value;
-                                setFormEmail(val);
-                                const err = validateEmailInput(val);
-                                setFieldErrors(prev => ({ ...prev, email: err }));
-                              }}
-                              aria-invalid={Boolean(fieldErrors.email)}
-                              aria-describedby={fieldErrors.email ? 'chat-consult-email-error' : undefined}
-                              className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all outline-none ${
-                                fieldErrors.email
-                                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
-                                  : EMAIL_REGEX.test(formEmail.trim())
-                                  ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
-                                  : 'border-slate-200 focus:border-royal-blue'
-                              }`}
-                            />
-                            {EMAIL_REGEX.test(formEmail.trim()) && !fieldErrors.email && (
-                              <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-green-500">
-                                <Check size={14} className="stroke-[3px]" />
-                              </span>
-                            )}
-                          </div>
-                          {fieldErrors.email && (
-                            <span id="chat-consult-email-error" className="text-[9px] font-semibold text-red-500 mt-1 block" role="alert">{fieldErrors.email}</span>
-                          )}
-                        </div>
-                        <div>
-                          <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.phone')}</label>
-                          <div className="relative">
-                            <input
-                              type="tel"
-                              name="phone"
-                              required
-                              value={formPhone}
-                              onChange={(e) => {
-                                const val = filterPhoneInput(e.target.value);
-                                setFormPhone(val);
-                                const err = validatePhoneInputStr(val);
-                                setFieldErrors(prev => ({ ...prev, phone: err }));
-                              }}
-                              aria-invalid={Boolean(fieldErrors.phone)}
-                              aria-describedby={fieldErrors.phone ? 'chat-consult-phone-error' : undefined}
-                              className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all outline-none ${
-                                fieldErrors.phone
-                                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
-                                  : (PHONE_REGEX.test(formPhone.trim()) && getPhoneDigitCount(formPhone.trim()) >= 7 && getPhoneDigitCount(formPhone.trim()) <= 15)
-                                  ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
-                                  : 'border-slate-200 focus:border-royal-blue'
-                              }`}
-                            />
-                            {(PHONE_REGEX.test(formPhone.trim()) && getPhoneDigitCount(formPhone.trim()) >= 7 && getPhoneDigitCount(formPhone.trim()) <= 15) && !fieldErrors.phone && (
-                              <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-green-500">
-                                <Check size={14} className="stroke-[3px]" />
-                              </span>
-                            )}
-                          </div>
-                          {fieldErrors.phone && (
-                            <span id="chat-consult-phone-error" className="text-[9px] font-semibold text-red-500 mt-1 block" role="alert">{fieldErrors.phone}</span>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-3">
-                        <div>
-                          <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.company')}</label>
-                          <div className="relative">
-                            <input
-                              type="text"
-                              name="company"
-                              required
-                              value={formCompany}
-                              onChange={(e) => {
-                                const val = e.target.value;
-                                setFormCompany(val);
-                                const err = validateCompanyInput(val);
-                                setFieldErrors(prev => ({ ...prev, company: err }));
-                              }}
-                              aria-invalid={Boolean(fieldErrors.company)}
-                              aria-describedby={fieldErrors.company ? 'chat-consult-company-error' : undefined}
-                              className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all outline-none ${
-                                fieldErrors.company
-                                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
-                                  : (formCompany.trim().length >= 2 && COMPANY_REGEX.test(formCompany.trim()))
-                                  ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
-                                  : 'border-slate-200 focus:border-royal-blue'
-                              }`}
-                            />
-                            {(formCompany.trim().length >= 2 && COMPANY_REGEX.test(formCompany.trim())) && !fieldErrors.company && (
-                              <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-green-500">
-                                <Check size={14} className="stroke-[3px]" />
-                              </span>
-                            )}
-                          </div>
-                          {fieldErrors.company && (
-                            <span id="chat-consult-company-error" className="text-[9px] font-semibold text-red-500 mt-1 block" role="alert">{fieldErrors.company}</span>
-                          )}
-                        </div>
-                        <div>
-                          <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('consultationFlow.date')}</label>
-                          <div className="relative">
-                            <input
-                              type="text"
-                              name="date"
-                              placeholder="e.g. Next Monday 10am EST"
-                              required
-                              value={formDate}
-                              onChange={(e) => {
-                                const val = e.target.value;
-                                setFormDate(val);
-                                const err = validateDateInput(val);
-                                setFieldErrors(prev => ({ ...prev, date: err }));
-                              }}
-                              aria-invalid={Boolean(fieldErrors.date)}
-                              aria-describedby={fieldErrors.date ? 'chat-consult-date-error' : undefined}
-                              className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all outline-none ${
-                                fieldErrors.date
-                                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
-                                  : formDate.trim().length >= 5
-                                  ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
-                                  : 'border-slate-200 focus:border-royal-blue'
-                              }`}
-                            />
-                            {formDate.trim().length >= 5 && !fieldErrors.date && (
-                              <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-green-500">
-                                <Check size={14} className="stroke-[3px]" />
-                              </span>
-                            )}
-                          </div>
-                          {fieldErrors.date && (
-                            <span id="chat-consult-date-error" className="text-[9px] font-semibold text-red-500 mt-1 block" role="alert">{fieldErrors.date}</span>
-                          )}
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block mb-1">{t('leadQualification.message')}</label>
-                        <div className="relative">
-                          <textarea
-                            name="message"
-                            required
-                            value={formMessage}
-                            onChange={(e) => {
-                              const val = e.target.value;
-                              setFormMessage(val);
-                              const err = validateMessageInput(val);
-                              setFieldErrors(prev => ({ ...prev, message: err }));
-                            }}
-                            rows={3}
-                            aria-invalid={Boolean(fieldErrors.message)}
-                            aria-describedby={fieldErrors.message ? 'chat-consult-message-error' : undefined}
-                            className={`w-full bg-white border rounded-xl px-3 py-2 pr-8 text-slate-800 focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all resize-none outline-none ${
-                              fieldErrors.message
-                                ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
-                                : (formMessage.trim().length >= 20 && formMessage.trim().length <= 2000)
-                                ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
-                                : 'border-slate-200 focus:border-royal-blue'
-                            }`}
-                          />
-                          {(formMessage.trim().length >= 20 && formMessage.trim().length <= 2000) && !fieldErrors.message && (
-                            <span className="absolute right-2.5 top-3.5 text-green-500">
-                              <Check size={14} className="stroke-[3px]" />
-                            </span>
-                          )}
-                        </div>
-                        <div className="flex justify-between items-center mt-0.5">
-                          {fieldErrors.message ? (
-                            <span id="chat-consult-message-error" className="text-[8px] font-semibold text-red-500" role="alert">{fieldErrors.message}</span>
-                          ) : (
-                            <span className="text-[8px] text-slate-400">Min 20 characters</span>
-                          )}
-                          <span className="text-[8px] text-slate-450 font-bold">
-                            {Math.max(0, 2000 - formMessage.trim().length)} chars remaining
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <button
-                      type="submit"
-                      disabled={isFormSubmitting}
-                      className={`w-full h-11 bg-gradient-to-tr from-royal-blue to-green hover:from-royal-blue hover:to-bright-lime hover:shadow-[0_0_15px_rgba(20,91,255,0.4)] hover:-translate-y-0.5 active:translate-y-0 transition-all text-white font-extrabold rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-blue-500/10 outline-none focus:ring-2 focus:ring-royal-blue ${
-                        isFormSubmitting ? 'opacity-50 cursor-not-allowed from-slate-400 to-slate-455' : ''
-                      }`}
-                    >
-                      {isFormSubmitting ? <Loader2 className="w-4.5 h-4.5 animate-spin" /> : <Calendar className="w-4.5 h-4.5" />}
-                      <span>{t('consultationFlow.submit')}</span>
-                    </button>
-                  </motion.form>
-                )}
-                {(activeFlow === 'lead_success' || activeFlow === 'consultation_success') && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.97 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="bg-white border border-slate-200 p-5 rounded-2xl text-center space-y-4 flex-1 flex flex-col justify-center max-w-[90%] mx-auto my-auto shadow-sm animate-fadeIn"
-                  >
-                    <div className="w-12 h-12 bg-emerald-50 border border-emerald-250 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-xl shadow-sm animate-bounce">
-                      <CheckCircle className="w-6 h-6" />
-                    </div>
-                    
-                    <div className="space-y-1.5">
-                      <h3 className="text-sm font-extrabold text-slate-900 uppercase tracking-wider">
-                        {activeFlow === 'lead_success' ? t('leadQualification.successTitle') : t('consultationFlow.successTitle')}
-                      </h3>
-                      <p className="text-xs text-slate-500 leading-relaxed font-semibold">
-                        {isEs 
-                          ? '¡Gracias! Nuestro consultor se pondrá en contacto con usted en breve.' 
-                          : 'Thank you! Our consultant will contact you shortly.'}
-                      </p>
-                    </div>
-
-                    <div className="flex flex-col gap-2 pt-2 w-full max-w-xs mx-auto">
-                      <button
-                        onClick={handleStartOver}
-                        className="w-full h-10 bg-royal-blue hover:bg-deep-navy text-white font-bold rounded-xl text-xs uppercase tracking-wider transition-all cursor-pointer shadow-sm hover:shadow outline-none border-none"
-                      >
-                        {isEs ? 'Iniciar nueva conversación' : 'Start New Conversation'}
-                      </button>
-                      
-                      <button
-                        onClick={() => {
-                          setWindowState('minimized');
-                          window.location.href = '/' + locale;
-                        }}
-                        className="w-full h-10 border border-slate-200 hover:bg-slate-50 text-slate-605 font-bold rounded-xl text-xs uppercase tracking-wider transition-all cursor-pointer outline-none bg-white"
-                      >
-                        {isEs ? 'Volver al inicio' : 'Back to Home'}
-                      </button>
-
-                      {activeFlow !== 'consultation_success' && (
-                        <button
-                          onClick={() => setActiveFlow('consultation_form')}
-                          className="w-full h-10 border border-slate-200 bg-royal-blue/5 hover:bg-royal-blue/15 text-royal-blue font-bold rounded-xl text-xs uppercase tracking-wider transition-all cursor-pointer outline-none"
-                        >
-                          {isEs ? 'Reservar consulta' : 'Book Consultation'}
-                        </button>
-                      )}
-                    </div>
-                  </motion.div>
-                )}
-                <div ref={messagesEndRef} />
-              </div>
-            )}
-
-            {/* Suggested Queries Container (placed outside scrollable message area for active chat) */}
-            <AnimatePresence>
-              {activeFlow === 'chat' && !isChatEmpty && suggestedPrompts.length > 0 && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  transition={{ duration: 0.25 }}
-                  className="px-5 mt-4 mb-4 flex flex-col gap-2.5 bg-transparent border-t border-slate-100 shrink-0 animate-fadeIn pt-4"
-                >
-                  <span className="text-[10px] font-extrabold text-slate-550 uppercase tracking-widest text-left block px-1">
-                    {t('suggestedTitle')}
-                  </span>
-                  <div className="flex flex-wrap gap-2 items-start justify-start">
-                    {suggestedPrompts.slice(0, 8).map((prompt, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => routeSuggestedPrompt(prompt)}
-                        disabled={isSending || isTyping || isInitializing}
-                        className="px-3.5 py-2.5 bg-slate-50 hover:bg-royal-blue active:bg-[#0A1F6B] focus-visible:ring-2 focus-visible:ring-royal-blue focus-visible:ring-offset-1 text-slate-600 hover:text-white rounded-2xl text-[11px] font-bold border border-slate-200 cursor-pointer max-w-full truncate outline-none transition-all duration-300 min-h-[44px] flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        {getCompactChipLabel(prompt, locale)}
-                      </button>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            {/* Sticky Input Bar (shrink-0, sticky, always visible at bottom) */}
-            {activeFlow === 'chat' && (
-              <div className="h-[74px] border-t border-slate-100 bg-white flex items-center px-4 shrink-0 w-full relative">
-                <div className="relative flex items-center w-full h-[56px] bg-slate-50 border border-slate-200 rounded-full pl-5 pr-1.5 focus-within:border-royal-blue focus-within:ring-2 focus-within:ring-royal-blue/25 transition-all">
-                  <input
-                    type={getInputAttributes().type}
-                    inputMode={getInputAttributes().inputMode}
-                    maxLength={getInputAttributes().maxLength}
-                    autoComplete={getInputAttributes().autoComplete}
-                    placeholder={placeholderText}
-                    value={inputValue}
-                    onChange={(e) => handleInputChange(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' && inputValue.trim()) handleUserSubmit(inputValue);
-                    }}
-                    disabled={isSending || isTyping || isInitializing}
-                    aria-label="Chat input message"
-                    className="flex-1 bg-transparent text-xs text-slate-800 placeholder-slate-400 focus:outline-none py-1.5 outline-none font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
-                  />
-                  <button
-                    onClick={() => handleUserSubmit(inputValue)}
-                    disabled={
-  !inputValue.trim() ||
-  isSending ||
-  isTyping ||
-  isInitializing ||
-  !sessionId
-}
-                    aria-label="Send Message"
-                    className="w-10 h-10 rounded-full bg-gradient-to-tr from-royal-blue to-green disabled:from-slate-200 disabled:to-slate-200 disabled:text-slate-400 hover:from-royal-blue hover:to-bright-lime hover:shadow-[0_0_15px_rgba(20,91,255,0.4)] text-white flex items-center justify-center shadow-lg shadow-blue-500/10 cursor-pointer transition-all shrink-0 hover:scale-105 active:scale-95 border-none outline-none disabled:cursor-not-allowed"
-                  >
-                    {isSending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
-                  </button>
-                </div>
-              </div>
-            )}
-
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* 2. Floating Launcher Button (Visible in Closed or Minimized state) */}
-      <AnimatePresence>
-        {(windowState === 'closed' || windowState === 'minimized') && !isMobileMenuOpen && (
-          <motion.button
-            initial={{ opacity: 0, scale: 0.7 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.7 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => setWindowState('open')}
-            title={t('tooltip')}
-            aria-label="Open AI Consultant"
-            aria-haspopup="dialog"
-            className="w-14 h-14 rounded-3xl bg-gradient-to-tr from-royal-blue to-green text-white flex items-center justify-center shadow-xl shadow-blue-500/25 pointer-events-auto cursor-pointer hover:shadow-blue-500/35 transition-all relative group border-none outline-none"
-          >
-            <Bot className="w-6 h-6 group-hover:rotate-6 transition-transform" />
             
-            {/* Outer glowing pulsing rings */}
-            <motion.div
-              animate={{
-                scale: [1, 1.25, 1],
-                opacity: [0.35, 0, 0.35]
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-              className="absolute -inset-1.5 rounded-[28px] border border-blue-500/30 pointer-events-none"
-            />
-            <motion.div
-              animate={{
-                scale: [1, 1.45, 1],
-                opacity: [0.2, 0, 0.2]
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                delay: 1.5,
-                ease: "easeInOut"
-              }}
-              className="absolute -inset-3 rounded-[32px] border border-blue-500/15 pointer-events-none"
-            />
+            <button
+              onClick={() => setIsOpen(false)}
+              aria-label="Close panel"
+              className="w-11 h-11 flex items-center justify-center rounded-full hover:bg-slate-50 text-slate-400 hover:text-slate-600 transition-colors cursor-pointer border-none outline-none focus-visible:ring-2 focus-visible:ring-[#145BFF]/30"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
 
-            <span className="absolute -top-1 -right-1 flex h-3.5 w-3.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500 border-2 border-slate-900"></span>
-            </span>
-          </motion.button>
-        )}
-      </AnimatePresence>
+          {/* Messages Area */}
+          <div className="flex-1 overflow-y-auto p-5 space-y-4 bg-slate-50/50">
+            {messages.length === 0 ? (
+              /* Welcome Greeting & Quick Actions */
+              <div className="h-full flex flex-col justify-center py-6 text-center space-y-6">
+                <div className="space-y-3 px-4">
+                  <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center mx-auto text-[#145BFF] shadow-inner">
+                    <Sparkles className="w-6 h-6 animate-pulse" />
+                  </div>
+                  <h3 className="text-sm font-semibold text-slate-800 leading-relaxed max-w-xs mx-auto">
+                    {t('welcomeMessage')}
+                  </h3>
+                </div>
+
+                <div className="grid grid-cols-1 gap-2.5 px-6">
+                  {quickActions.map((action, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => handleSendMessage(action.query)}
+                      className="w-full text-left bg-white border border-slate-200 text-slate-700 hover:text-[#145BFF] hover:border-[#145BFF]/30 hover:bg-blue-50/10 font-bold px-4 py-3.5 rounded-2xl transition duration-200 shadow-2xs hover:shadow-xs active:scale-[0.98] cursor-pointer text-xs flex items-center justify-between outline-none focus-visible:ring-2 focus-visible:ring-[#145BFF]/30"
+                    >
+                      <span>{action.label}</span>
+                      <Sparkles className="w-3.5 h-3.5 text-slate-350 shrink-0 ml-2" />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              /* Chat Message Stream */
+              <div className="space-y-4">
+                {messages.map((m, idx) => {
+                  const isBot = m.role === 'assistant';
+                  if (m.isCTA) {
+                    return (
+                      <div
+                        key={idx}
+                        className="p-5 bg-white border border-slate-200 rounded-[20px] text-slate-800 space-y-4 shadow-sm text-left animate-fadeIn max-w-[90%] mr-auto"
+                      >
+                        <div className="flex items-center gap-2 pb-1 text-slate-905">
+                          <Bot className="w-4 h-4 text-[#145BFF]" />
+                          <span className="text-xs font-bold tracking-wide">
+                            {t('title')}
+                          </span>
+                        </div>
+                        <p className="text-xs font-semibold text-slate-700 leading-relaxed">
+                          {m.content}
+                        </p>
+                        <div className="flex flex-col gap-2 pt-1">
+                          <a
+                            href={`/${locale}/consultation`}
+                            className="w-full h-11 bg-[#145BFF] hover:bg-blue-700 text-white font-extrabold rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-blue-500/10 transition duration-200 outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-1 text-center"
+                          >
+                            <Calendar className="w-4 h-4" />
+                            <span>{t('actions.scheduleConsultation')}</span>
+                          </a>
+                          <a
+                            href={`/${locale}/contact`}
+                            className="w-full h-11 bg-white border border-slate-200 hover:bg-slate-50 text-slate-705 font-bold rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer transition duration-200 outline-none focus-visible:ring-2 focus-visible:ring-slate-300 text-center"
+                          >
+                            <Mail className="w-4 h-4" />
+                            <span>{t('actions.contactHyperCode')}</span>
+                          </a>
+                        </div>
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <div
+                      key={idx}
+                      className={`flex gap-3 max-w-[85%] text-left ${isBot ? 'mr-auto' : 'ml-auto flex-row-reverse'}`}
+                    >
+                      <div className={`w-8 h-8 rounded-full border flex items-center justify-center shrink-0 shadow-3xs select-none ${
+                        isBot ? 'bg-blue-50 border-blue-100 text-[#145BFF]' : 'bg-slate-100 border-slate-200 text-slate-500'
+                      }`}>
+                        {isBot ? <Bot size={15} /> : <User size={15} />}
+                      </div>
+                      <div className={`p-3.5 rounded-[18px] border text-xs font-semibold leading-relaxed ${
+                        isBot ? 'bg-white border-slate-200 text-slate-700 shadow-2xs' : 'bg-[#145BFF]/10 border-[#145BFF]/20 text-slate-800'
+                      }`}>
+                        <p className="whitespace-pre-wrap">{m.content}</p>
+                      </div>
+                    </div>
+                  );
+                })}
+
+                {/* Error Banner */}
+                {errorText && (
+                  <div className="p-4 bg-rose-50 border border-rose-100 text-rose-700 rounded-[18px] text-xs font-bold text-left animate-fadeIn">
+                    {errorText}
+                  </div>
+                )}
+
+                {/* Typing state */}
+                {isTyping && (
+                  <div className="flex gap-3 max-w-[80%] text-left mr-auto select-none items-center">
+                    <div className="w-8 h-8 rounded-full border border-blue-100 bg-blue-50 text-[#145BFF] flex items-center justify-center shrink-0 shadow-3xs">
+                      <Bot size={15} className="animate-pulse" />
+                    </div>
+                    <div className="p-3.5 rounded-[18px] border border-slate-200 bg-white text-slate-400 text-xs font-bold flex items-center gap-1.5 shadow-2xs">
+                      <span>{t('typing')}</span>
+                      <span className="flex items-center gap-0.5 mt-0.5">
+                        <span className="w-1 h-1 rounded-full bg-slate-350 animate-bounce" style={{ animationDelay: '0ms' }} />
+                        <span className="w-1 h-1 rounded-full bg-slate-350 animate-bounce" style={{ animationDelay: '150ms' }} />
+                        <span className="w-1 h-1 rounded-full bg-slate-350 animate-bounce" style={{ animationDelay: '300ms' }} />
+                      </span>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+            <div ref={messagesEndRef} />
+          </div>
+
+          {/* Sticky Bottom Input Bar */}
+          <div className="p-3 border-t border-slate-100 bg-white flex items-center gap-2 shrink-0">
+            <button
+              onClick={handleStartOver}
+              title={t('actions.resetChat')}
+              aria-label="Reset chat and start fresh"
+              className="w-11 h-11 flex items-center justify-center rounded-xl border border-slate-200 text-slate-400 hover:text-slate-600 hover:bg-slate-50 hover:border-slate-300 transition duration-200 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
+            >
+              <RefreshCw className="w-4.5 h-4.5" />
+            </button>
+
+            <div className="relative flex-1 flex items-center bg-slate-50 border border-slate-200 rounded-xl focus-within:bg-white focus-within:border-[#145BFF] focus-within:ring-2 focus-within:ring-[#145BFF]/25 transition duration-200 h-11 px-3">
+              <input
+                ref={chatInputRef}
+                type="text"
+                placeholder={t('placeholder')}
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && inputValue.trim()) handleSendMessage(inputValue);
+                }}
+                disabled={isTyping}
+                aria-label="Type message text"
+                className="w-full bg-transparent text-xs text-slate-800 placeholder-slate-400 focus:outline-none outline-none font-semibold disabled:opacity-50"
+              />
+            </div>
+
+            <button
+              onClick={() => handleSendMessage(inputValue)}
+              disabled={!inputValue.trim() || isTyping}
+              aria-label="Send message"
+              className="w-11 h-11 bg-[#145BFF] disabled:bg-slate-100 disabled:text-slate-400 hover:bg-blue-700 text-white rounded-xl flex items-center justify-center cursor-pointer transition duration-200 shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-[#145BFF] focus-visible:ring-offset-1"
+            >
+              <Send className="w-4.5 h-4.5" />
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* 2. Floating Launcher Button */}
+      {(!isOpen) && (
+        <button
+          onClick={() => setIsOpen(true)}
+          title={t('tooltip')}
+          aria-label="Open AI Consultant"
+          aria-haspopup="dialog"
+          className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-gradient-to-tr from-[#145BFF] to-[#00C9A7] text-white flex items-center justify-center shadow-xl shadow-blue-500/25 pointer-events-auto cursor-pointer hover:shadow-blue-500/35 transition duration-200 shrink-0 hover:scale-105 active:scale-95 outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#145BFF] border-none group"
+        >
+          <MessageSquare className="w-6 h-6 group-hover:scale-105 transition duration-200" />
+          
+          {/* Subtle outer glowing pulsing ring */}
+          <div
+            className="absolute -inset-1 rounded-full border border-blue-500/20 pointer-events-none animate-ping"
+            style={{ animationDuration: '3s' }}
+          />
+
+          <span className="absolute -top-0.5 -right-0.5 flex h-3.5 w-3.5">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500 border-2 border-white"></span>
+          </span>
+        </button>
+      )}
 
     </div>,
     document.body

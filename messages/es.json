@@ -245,224 +245,23 @@
   },
   "AIConsultant": {
     "title": "Consultor de IA HyperCode",
-    "subtitle": "Asesor Senior de Transformación Digital",
-    "tooltip": "Hable con nuestro Socio de Transformación Digital",
-    "placeholder": "Describa su desafío empresarial o solicitud de contratación...",
-    "suggestedTitle": "Consultas Recomendadas del Asesor",
-    "welcomeMessage": "¡Hola! Soy su asesor técnico de HyperCode. Puedo recomendarle soluciones, sugerirle tecnologías, estimar plazos de proyectos y calcular el tamaño de los equipos de desarrollo. ¿Qué desea construir o escalar hoy?",
-    "typing": "Analizando esquemas y parámetros...",
+    "status": "En línea / Listo para ayudar",
+    "tooltip": "Hable con nuestro Consultor de Tecnología",
+    "placeholder": "Escriba su mensaje...",
+    "welcomeMessage": "Hola, soy el Consultor de IA de HyperCode. ¿En qué le gustaría recibir ayuda?",
+    "typing": "Escribiendo...",
+    "ctaOffer": "¿Le gustaría programar una consulta con nuestro equipo?",
     "actions": {
-      "close": "Cerrar Sesión",
-      "minimize": "Minimizar Ventana",
-      "back": "Atrás",
-      "startOver": "Nueva Sesión de Asesoría",
-      "submit": "Enviar"
+      "buildSoftware": "Construir Software",
+      "modernizeSystems": "Modernizar Sistemas",
+      "aiAutomation": "IA y Automatización",
+      "estimateProject": "Estimar Proyecto",
+      "scheduleConsultation": "Programar Consulta",
+      "contactHyperCode": "Contactar a HyperCode",
+      "resetChat": "Nueva conversación"
     },
     "errors": {
-      "validation": "Por favor complete todos los campos requeridos.",
-      "email": "Introduzca un correo corporativo válido.",
-      "phone": "Introduzca un número de teléfono válido.",
-      "generic": "Error de servicio. Inténtelo de nuevo.",
-      "validationName": "El nombre es requerido.",
-      "validationNameLength": "El nombre debe tener entre 2 y 80 caracteres.",
-      "validationNameChars": "El nombre solo puede contener letras, espacios, guiones y apóstrofes.",
-      "validationEmail": "El correo es requerido.",
-      "validationPhone": "El teléfono es requerido.",
-      "validationPhoneChars": "Número de teléfono inválido.",
-      "validationPhoneDigits": "El teléfono debe tener entre 7 y 15 dígitos.",
-      "validationCompany": "La empresa es requerida.",
-      "validationCompanyLength": "La empresa debe tener al menos 2 caracteres.",
-      "validationCompanyChars": "El nombre de la empresa solo puede contener letras, números, espacios, & y .",
-      "validationBudget": "Por favor seleccione un presupuesto.",
-      "validationTimeline": "Por favor seleccione un plazo.",
-      "validationMessage": "El mensaje es requerido.",
-      "validationMessageLength": "El mensaje debe tener entre 20 y 2000 caracteres.",
-      "validationDate": "La fecha preferida es requerida.",
-      "validationDateLength": "Por favor especifique la fecha preferida.",
-      "validationEmailPrompt": "Por favor, introduzca una dirección de correo electrónico válida (ej. nombre@empresa.com):",
-      "validationPhonePrompt": "Por favor, introduzca un número de teléfono válido (ej. +1 555-0199):"
-    },
-    "consultationFlow": {
-      "title": "Configurar Sesión de Consulta",
-      "subtitle": "Verifique sus detalles a continuación para agendar una sesión técnica con un director.",
-      "date": "Fecha Preferida de Reunión",
-      "submit": "Confirmar Solicitud de Consulta",
-      "successTitle": "¡Consulta Solicitada!",
-      "successDesc": "Su solicitud ha sido calificada y enviada con éxito. Recibirá las invitaciones de calendario en breve."
-    },
-    "leadQualification": {
-      "title": "Evaluador de Proyectos IA",
-      "subtitle": "Ingrese sus requerimientos para generar un borrador de proyecto y enviarlo a nuestros directores de práctica.",
-      "name": "Nombre Completo",
-      "email": "Correo Corporativo",
-      "phone": "Número de Teléfono",
-      "company": "Nombre de la Empresa",
-      "industry": "Industria",
-      "service": "Enfoque de Servicio",
-      "budget": "Rango de Presupuesto",
-      "timeline": "Limitación de Plazo",
-      "message": "Describa su objetivo / tecnologías requeridas",
-      "submit": "Calificar Plan de Proyecto",
-      "successTitle": "¡Proyecto Calificado!",
-      "successDesc": "Nuestro motor ha calificado su proyecto. Un director de soluciones se comunicará con usted con una propuesta en 24 horas.",
-      "scoreLabel": "Puntaje de Prioridad",
-      "priorityHigh": "Prioridad Corporativa",
-      "priorityMedium": "Prioridad Estándar",
-      "priorityLow": "Fase de Planificación"
-    },
-    "staffingFlow": {
-      "title": "Escale su Equipo de Ingeniería",
-      "subtitle": "Especifique los roles y el número de desarrolladores que necesita desplegar.",
-      "roles": "Roles Técnicos Requeridos (ej. Next.js, Python)",
-      "teamSize": "Número de Desarrolladores",
-      "location": "Ubicación (EE. UU. / LatAm / India)",
-      "submit": "Solicitar Cotización de Contratación",
-      "successTitle": "¡Cotización Solicitada!",
-      "successDesc": "Su solicitud de contratación ha sido enviada a nuestros directores de talento. Le enviaremos perfiles que coincidan en 24 horas."
-    },
-    "successMessages": {
-      "leadSuccess": "Su proyecto ha sido calificado y dirigido correctamente.",
-      "consultSuccess": "Se enviarán invitaciones de calendario a su correo en breve."
-    },
-    "suggestedPrompts": [
-      "Necesito un chatbot de IA",
-      "Quiero un software ERP",
-      "Necesito migración a la nube",
-      "Necesito desarrolladores dedicados",
-      "Quiero consultoría de CTO",
-      "Necesito evaluación de ciberseguridad",
-      "Quiero un dashboard de Power BI",
-      "Necesito una tienda Shopify"
-    ],
-    "industries": {
-      "healthcare": "Salud",
-      "finance": "Finanzas",
-      "retail": "Venta al por menor",
-      "manufacturing": "Manufactura",
-      "education": "Educación",
-      "government": "Gobierno",
-      "realestate": "Bienes Raíces",
-      "logistics": "Logística",
-      "hospitality": "Hospitalidad",
-      "construction": "Construcción",
-      "legal": "Legal",
-      "pharma": "Farmacéutica",
-      "startups": "Startups",
-      "smes": "PyMEs",
-      "enterprise": "Grandes Empresas",
-      "technology": "Tecnología",
-      "other": "Otro"
-    },
-    "budgets": {
-      "under25k": "Menos de $25,000",
-      "between25k100k": "$25,000 - $100,000",
-      "between100k250k": "$100,000 - $250,000",
-      "over250k": "$250,000+ (Corporativo)",
-      "under5k": "Menos de $5,000",
-      "between5k10k": "$5,000 - $10,000",
-      "between10k25k": "$10,000 - $25,000",
-      "between25k50k": "$25,000 - $50,000",
-      "over50k": "$50,000+"
-    },
-    "timelines": {
-      "immediate": "Inmediato (Menos de 1 mes)",
-      "medium": "1-3 meses",
-      "long": "3-6 meses",
-      "norush": "Explorando / En planificación"
-    },
-    "advisor": {
-      "greeting": {
-        "message": "¡Hola! Soy su asesor técnico de HyperCode. Puedo recomendarle soluciones, sugerirle tecnologías, estimar plazos de proyectos y calcular el tamaño de los equipos de desarrollo. ¿Qué desea construir o escalar hoy?",
-        "suggestedPrompts": [
-          "Necesito un chatbot de IA",
-          "Quiero un software ERP",
-          "Necesito desarrolladores dedicados",
-          "Quiero consultoría de CTO"
-        ]
-      },
-      "about": {
-        "message": "HyperCode es una firma de consultoría de IA y transformación digital de grado empresarial. Nos especializamos en estructurar plataformas de datos en la nube, desarrollar software a medida y proporcionar soluciones globales de reclutamiento técnico. Apoyamos a empresas medianas y corporativas con ingenieros certificados.",
-        "suggestedPrompts": [
-          "¿Qué servicios ofrecen?",
-          "Quiero una consulta"
-        ]
-      },
-      "location": {
-        "message": "HyperCode tiene su sede principal en Schaumburg, Illinois. Servimos a clientes en toda América del Norte y a nivel mundial mediante squads de ingeniería remotos e híbridos.",
-        "suggestedPrompts": [
-          "¿Cómo empezamos?",
-          "Programar una consulta"
-        ]
-      },
-      "pricing": {
-        "message": "Nuestras tarifas varían según el modelo de compromiso: squads dedicados por sprints, contratos por proyectos cerrados o reclutamiento de personal. Si me describe su proyecto, puedo pre-evaluar el presupuesto y los perfiles necesarios.",
-        "suggestedPrompts": [
-          "Calificar mi proyecto",
-          "Programar una consulta"
-        ]
-      },
-      "techConsulting": {
-        "message": "Nuestra práctica de Consultoría Tecnológica ofrece estrategia de IA, diseño de arquitectura de sistemas y CTO como servicio para alinear sus operaciones comerciales con pilas tecnológicas modernas.\n\n¿Le gustaría agendar una reunión técnica con nuestros directores?",
-        "suggestedPrompts": [
-          "Calificar mi proyecto",
-          "Programar una consulta",
-          "Volver a servicios"
-        ]
-      },
-      "aiSolutions": {
-        "message": "Construimos soluciones de IA generativa, flujos automatizados de agentes cognitivos, procesamiento documental inteligente y sistemas RAG utilizando LLMs comerciales para optimizar operaciones.\n\n¿Desea evaluar un proyecto de IA?",
-        "suggestedPrompts": [
-          "Calificar mi proyecto",
-          "Programar una consulta",
-          "Volver a servicios"
-        ]
-      },
-      "dataAnalytics": {
-        "message": "Ingenierizamos sistemas de análisis integrales, conectando almacenes de datos en la nube con Power BI, Tableau y flujos automatizados de ETL para habilitar la toma de decisiones directivas.",
-        "suggestedPrompts": [
-          "Quiero un dashboard de Power BI",
-          "Programar una consulta",
-          "Volver a servicios"
-        ]
-      },
-      "bi": {
-        "message": "Conectamos motores de bases de datos con cuadros de mando interactivos (Power BI y Tableau) para la generación automática de reportes ejecutivos.",
-        "suggestedPrompts": [
-          "Quiero un dashboard de Power BI",
-          "Programar una consulta",
-          "Volver a servicios"
-        ]
-      },
-      "staffing": {
-        "message": "Nuestras Soluciones de Talento escalan sus departamentos con desarrolladores Next.js, Cloud y de Datos pre-seleccionados mediante contratos temporales, permanentes o búsqueda ejecutiva.\n\nIndíqueme los perfiles requeridos.",
-        "suggestedPrompts": [
-          "Solicitar presupuesto",
-          "Necesito desarrolladores dedicados",
-          "Volver a servicios"
-        ]
-      },
-      "webDev": {
-        "message": "Nuestros squads de React, Next.js y TypeScript construyen aplicaciones web con velocidad de carga subsegundo, plataformas SaaS, portales de clientes y herramientas CRM/ERP a medida.",
-        "suggestedPrompts": [
-          "Calificar mi proyecto",
-          "Quiero un software ERP",
-          "Volver a servicios"
-        ]
-      },
-      "consultation": {
-        "message": "Por favor, indique los objetivos de la reunión y su fecha preferida de contacto a continuación. Nuestro motor agendará la videoconferencia con un director.",
-        "suggestedPrompts": [
-          "Agendar llamada ahora",
-          "Volver a servicios"
-        ]
-      },
-      "redirect": {
-        "message": "Me especializo en consultoría tecnológica, ingeniería de software a medida, automatización con IA, ciberseguridad, arquitectura en la nube y soluciones de talento. Indíqueme cuál de estas áreas prefiere discutir.",
-        "suggestedPrompts": [
-          "Saber más de servicios",
-          "Quiero una consulta"
-        ]
-      }
+      "generic": "Algo salió mal. Por favor intente de nuevo o programe una consulta."
     }
   },
   "SolutionsPage": {

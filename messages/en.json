@@ -244,224 +244,23 @@
   },
   "AIConsultant": {
     "title": "HyperCode AI Consultant",
-    "subtitle": "Senior Digital Transformation Advisor",
-    "tooltip": "Chat with our Digital Transformation Partner",
-    "placeholder": "Describe your business challenge or staffing request...",
-    "suggestedTitle": "Recommended Advisor Queries",
-    "welcomeMessage": "Hello! I am your HyperCode Technical Advisor. I can recommend solutions, suggest technologies, estimate project timelines, and calculate team sizes based on your goals. What are you looking to build or scale today?",
-    "typing": "Analyzing schema and parameters...",
+    "status": "Online / Ready to help",
+    "tooltip": "Chat with our Technology Consultant",
+    "placeholder": "Type your message...",
+    "welcomeMessage": "Hi, I’m the HyperCode AI Consultant. What would you like help with?",
+    "typing": "Typing...",
+    "ctaOffer": "Would you like to schedule a consultation with our team?",
     "actions": {
-      "close": "Close Session",
-      "minimize": "Minimize Window",
-      "back": "Back",
-      "startOver": "New Advice Session",
-      "submit": "Submit"
+      "buildSoftware": "Build Software",
+      "modernizeSystems": "Modernize Systems",
+      "aiAutomation": "AI & Automation",
+      "estimateProject": "Estimate Project",
+      "scheduleConsultation": "Schedule Consultation",
+      "contactHyperCode": "Contact HyperCode",
+      "resetChat": "New Chat"
     },
     "errors": {
-      "validation": "Please complete all required fields.",
-      "email": "Enter a valid corporate email.",
-      "phone": "Enter a valid phone number.",
-      "generic": "Service error. Please try again.",
-      "validationName": "Name is required.",
-      "validationNameLength": "Name must be between 2 and 80 characters.",
-      "validationNameChars": "Name must contain only letters, spaces, hyphens, and apostrophes.",
-      "validationEmail": "Email is required.",
-      "validationPhone": "Phone is required.",
-      "validationPhoneChars": "Invalid phone number.",
-      "validationPhoneDigits": "Phone number must be between 7 and 15 digits.",
-      "validationCompany": "Company name is required.",
-      "validationCompanyLength": "Company name must be at least 2 characters.",
-      "validationCompanyChars": "Company name must contain only letters, numbers, spaces, & and .",
-      "validationBudget": "Please select a budget.",
-      "validationTimeline": "Please select a timeline.",
-      "validationMessage": "Message is required.",
-      "validationMessageLength": "Message must be between 20 and 2000 characters.",
-      "validationDate": "Preferred date is required.",
-      "validationDateLength": "Please specify a valid preferred date.",
-      "validationEmailPrompt": "Please enter a valid email address (e.g., name@company.com):",
-      "validationPhonePrompt": "Please enter a valid phone number (e.g., +1 555-0199):"
-    },
-    "consultationFlow": {
-      "title": "Intake Consultation Setup",
-      "subtitle": "Verify your details below to schedule an intake session with a director.",
-      "date": "Preferred Meeting Date",
-      "submit": "Confirm Consultation Request",
-      "successTitle": "Consultation Requested!",
-      "successDesc": "Your request has been successfully scored and routed. Expect calendar invites shortly."
-    },
-    "leadQualification": {
-      "title": "AI Project Assessor",
-      "subtitle": "Input your requirements to generate a project blueprint and route it to our practice directors.",
-      "name": "Full Name",
-      "email": "Corporate Email",
-      "phone": "Phone Number",
-      "company": "Company Name",
-      "industry": "Industry",
-      "service": "Service Focus",
-      "budget": "Budget Range",
-      "timeline": "Timeline Constraint",
-      "message": "Describe your goal / required tech",
-      "submit": "Qualify Project Blueprint",
-      "successTitle": "Project Qualified!",
-      "successDesc": "Our engine scored your project. A solutions director will contact you with a blueprint within 24 hours.",
-      "scoreLabel": "Priority Score",
-      "priorityHigh": "Enterprise Priority",
-      "priorityMedium": "Standard Priority",
-      "priorityLow": "Planning Phase"
-    },
-    "staffingFlow": {
-      "title": "Scale Your Engineering Team",
-      "subtitle": "Specify the roles and headcount you need to deploy.",
-      "roles": "Required Technical Roles (e.g. Next.js, Python)",
-      "teamSize": "Target Headcount",
-      "location": "Developer Location (US / LatAm / India)",
-      "submit": "Submit Staffing Quote Request",
-      "successTitle": "Staffing Quote Generated!",
-      "successDesc": "Your staffing request has been routed to our talent directors. We will email matching profiles within 24 hours."
-    },
-    "successMessages": {
-      "leadSuccess": "Your project has been successfully qualified and routed.",
-      "consultSuccess": "Calendar invites will be dispatched shortly."
-    },
-    "suggestedPrompts": [
-      "I need an AI chatbot",
-      "I want ERP software",
-      "I need cloud migration",
-      "I need dedicated developers",
-      "I want CTO consulting",
-      "I need cybersecurity assessment",
-      "I want Power BI dashboard",
-      "I need Shopify store"
-    ],
-    "industries": {
-      "healthcare": "Healthcare",
-      "finance": "Finance",
-      "retail": "Retail",
-      "manufacturing": "Manufacturing",
-      "education": "Education",
-      "government": "Government",
-      "realestate": "Real Estate",
-      "logistics": "Logistics",
-      "hospitality": "Hospitality",
-      "construction": "Construction",
-      "legal": "Legal",
-      "pharma": "Pharmaceutical",
-      "startups": "Startups",
-      "smes": "SMEs",
-      "enterprise": "Large Enterprises",
-      "technology": "Technology",
-      "other": "Other"
-    },
-    "budgets": {
-      "under25k": "Under $25,000",
-      "between25k100k": "$25,000 - $100,000",
-      "between100k250k": "$100,000 - $250,000",
-      "over250k": "$250,000+ (Enterprise)",
-      "under5k": "Under $5,000",
-      "between5k10k": "$5,000 - $10,000",
-      "between10k25k": "$10,000 - $25,000",
-      "between25k50k": "$25,000 - $50,000",
-      "over50k": "$50,000+"
-    },
-    "timelines": {
-      "immediate": "Immediate (Under 1 month)",
-      "medium": "1-3 months",
-      "long": "3-6 months",
-      "norush": "Exploring / Planning phase"
-    },
-    "advisor": {
-      "greeting": {
-        "message": "Hello! I am your Technical Advisor. I can recommend solutions, suggest technologies, estimate project timelines, and calculate team sizes based on your goals. What are you looking to build or scale today?",
-        "suggestedPrompts": [
-          "I need an AI chatbot",
-          "I want ERP software",
-          "I need dedicated developers",
-          "I want CTO consulting"
-        ]
-      },
-      "about": {
-        "message": "HyperCode is an enterprise-grade AI and Digital Transformation consulting company. We specialize in engineering robust cloud data platforms, building scalable custom software, and providing IT & Non-IT talent solutions globally. We serve mid-market and enterprise organizations with certified engineers.",
-        "suggestedPrompts": [
-          "What services do you offer?",
-          "I want a consultation"
-        ]
-      },
-      "location": {
-        "message": "HyperCode is headquartered in  Schaumburg, Illinois. We serve clients across North America and globally, deploying remote and hybrid teams.",
-        "suggestedPrompts": [
-          "How do we start?",
-          "Schedule a consultation"
-        ]
-      },
-      "pricing": {
-        "message": "Our pricing depends on the engagement model (dedicated squads, project-based contracts, or staff augmentation) and the scope of work. To provide an accurate estimate, I recommend submitting a quick project description for lead scoring or scheduling a technical review call.",
-        "suggestedPrompts": [
-          "Qualify my project",
-          "Schedule a consultation"
-        ]
-      },
-      "techConsulting": {
-        "message": "Our Technology Consulting practice aligns your business strategy with modern infrastructure. We advise on cloud architecture (AWS/Azure), database schema design, and tool selection to reduce technical debt.\n\nWould you like to qualify your project details to see if it meets our enterprise thresholds?",
-        "suggestedPrompts": [
-          "Qualify my project",
-          "Schedule a consultation",
-          "Go back to services"
-        ]
-      },
-      "aiSolutions": {
-        "message": "HyperCode builds enterprise AI & Data solutions. This includes integrating custom LLMs (like Google Gemini and OpenAI), implementing semantic search systems, predictive modeling, and building automated agentic workflows to optimize operations.\n\nLet's assess your AI project needs.",
-        "suggestedPrompts": [
-          "Qualify my project",
-          "Schedule a consultation",
-          "Go back to services"
-        ]
-      },
-      "dataAnalytics": {
-        "message": "We engineer end-to-end data analytics systems. From structuring cloud storage lakes to deploying forecasting models and statistical insights, we turn raw database feeds into competitive advantages.\n\nWould you like to qualify your data analytics project?",
-        "suggestedPrompts": [
-          "Qualify my project",
-          "Schedule a consultation",
-          "Go back to services"
-        ]
-      },
-      "bi": {
-        "message": "Our Business Intelligence (BI) service connects your enterprise databases to real-time interactive dashboards (using Power BI or Tableau). We map your core KPIs and build executive reporting suites for automated performance tracking.",
-        "suggestedPrompts": [
-          "Qualify my project",
-          "Schedule a consultation",
-          "Go back to services"
-        ]
-      },
-      "staffing": {
-        "message": "HyperCode Sourcing and Talent Solutions connects your organization with the top 1% of technical and business talent. We offer IT & Non-IT staffing, staff augmentation, and contract-to-hire options to scale your teams with pre-screened React/Next.js developers, cloud architects, or data engineers.\n\nWhat kind of roles are you looking to fill?",
-        "suggestedPrompts": [
-          "Get a staffing quote",
-          "Schedule a consultation",
-          "Go back to services"
-        ]
-      },
-      "webDev": {
-        "message": "Our Web Development squads build high-performance custom web applications and SaaS platforms using React, Next.js, and TypeScript. We focus on sub-second page loads, responsive layouts, API integrations, and robust security protocols.",
-        "suggestedPrompts": [
-          "Qualify my project",
-          "Schedule a consultation",
-          "Go back to services"
-        ]
-      },
-      "consultation": {
-        "message": "We'd love to schedule a technical review call with a practice director. Please fill out the consultation request fields below with your preferred meeting date, and our team will coordinate calendar invites within 24 business hours.",
-        "suggestedPrompts": [
-          "Schedule call now",
-          "Go back to services"
-        ]
-      },
-      "redirect": {
-        "message": "I can only assist you with inquiries related to HyperCode's professional services (Technology Consulting, Data Analytics, BI, AI Solutions, Web Development, Cloud Solutions, and IT & Non-IT Staffing). Let me know how I can help you with your digital transformation or team scaling.",
-        "suggestedPrompts": [
-          "Tell me about your services",
-          "I want a consultation"
-        ]
-      }
+      "generic": "Something went wrong. Please try again or schedule a consultation."
     }
   },
   "SolutionsPage": {

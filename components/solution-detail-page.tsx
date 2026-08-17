@@ -182,13 +182,13 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
             {/* Text details on left */}
             <div className="lg:col-span-7 space-y-6">
-              <span className="text-[10px] font-extrabold text-royal-blue tracking-widest uppercase block">
+              <span className="text-eyebrow text-royal-blue block">
                 {isEs ? 'Resumen del Servicio' : 'Service Overview'}
               </span>
-              <h2 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">
+              <h2 className="text-h2 text-slate-900">
                 {activeTrans.overviewTitle}
               </h2>
-              <div className="text-[16px] md:text-[17px] lg:text-[18px] text-slate-650 leading-[1.7] font-semibold space-y-6">
+              <div className="text-body text-slate-655 space-y-6">
                 <p>{activeTrans.overviewP1}</p>
                 <p>{activeTrans.overviewP2}</p>
               </div>
@@ -212,13 +212,13 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
       <section className="section-padding bg-[#F8FAFC] border-b border-slate-200 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-16 space-y-4">
-            <span className="text-[10px] font-extrabold text-royal-blue tracking-widest uppercase">
+            <span className="text-eyebrow text-royal-blue block">
               {activeTrans.keySolutionsLabel}
             </span>
-            <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">
+            <h3 className="text-h2 text-slate-900">
               {isEs ? 'Capacidades Tecnológicas Avanzadas' : 'Advanced Technical Capabilities'}
             </h3>
-            <p className="text-[16px] md:text-[17px] text-slate-650 leading-[1.7] font-semibold">
+            <p className="text-body text-slate-655">
               {isEs 
                 ? 'Nuestros ingenieros implementan flujos estructurados de software, seguridad de datos y patrones arquitectónicos modernos.'
                 : 'Our engineers deliver fully compliant pipelines, secure cloud data storage structures, and modular UX/UI architectures.'}
@@ -235,8 +235,8 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
                   <div className="w-12 h-12 rounded-2xl bg-royal-blue/5 border border-royal-blue/15 text-royal-blue flex items-center justify-center shadow-inner">
                     <CheckCircle size={20} />
                   </div>
-                  <h4 className="text-[22px] font-bold text-slate-900 tracking-tight leading-[1.2]">{feature.title}</h4>
-                  <p className="text-[16px] text-slate-655 leading-[1.7] font-semibold">{feature.desc}</p>
+                  <h4 className="text-h3 text-slate-900 leading-[1.2]">{feature.title}</h4>
+                  <p className="text-body text-slate-655">{feature.desc}</p>
                 </div>
               </div>
             ))}
@@ -248,10 +248,10 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
       <section className="section-padding bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-16 space-y-4">
-            <span className="text-[10px] font-extrabold text-royal-blue tracking-widest uppercase">
+            <span className="text-eyebrow text-royal-blue block">
               {activeTrans.benefitsTitle}
             </span>
-            <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">{activeTrans.benefitsTitle}</h3>
+            <h3 className="text-h2 text-slate-900">{activeTrans.benefitsTitle}</h3>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -265,8 +265,8 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
                     <Icon size={18} />
                   </div>
                   <div className="space-y-1.5">
-                    <h4 className="text-[16px] lg:text-[18px] font-extrabold text-slate-900 leading-tight">{benefit.title}</h4>
-                    <p className="text-[16px] text-slate-655 leading-[1.7] font-semibold">{benefit.desc}</p>
+                    <h4 className="text-h4 text-slate-900">{benefit.title}</h4>
+                    <p className="text-body-sm text-slate-655">{benefit.desc}</p>
                   </div>
                 </div>
               );
@@ -279,13 +279,13 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
       <section className="section-padding bg-[#F8FAFC] border-b border-slate-200 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl mb-20 space-y-4">
-            <span className="text-[10px] font-extrabold text-royal-blue tracking-widest uppercase">
+            <span className="text-eyebrow text-royal-blue block">
               {isEs ? 'Metodología de Entrega' : 'Delivery Methodology'}
             </span>
-            <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">
+            <h3 className="text-h2 text-slate-900">
               {isEs ? 'Nuestra Ruta de Implementación de 7 Pasos' : 'Our Structured 7-Step Deployment Process'}
             </h3>
-            <p className="text-[16px] md:text-[17px] text-slate-650 leading-[1.7] font-semibold">
+            <p className="text-body text-slate-650">
               {isEs 
                 ? 'Desde la auditoría inicial hasta el soporte en producción 24/7, seguimos un flujo iterativo y ágil.'
                 : 'From the initial audit discovery through 24/7 support SLA monitoring, we execute in transparent, iterative agile sprints.'}
@@ -307,10 +307,10 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
                     <div className={`w-full md:w-1/2 flex ${isEven ? 'md:justify-end md:text-right' : 'md:justify-start md:text-left'}`}>
                       <div className={`premium-card p-6 md:p-8 bg-white border border-slate-200 shadow-sm max-w-xl space-y-3 relative group hover:border-royal-blue/30 transition-all ${isEven ? 'md:mr-8' : 'md:ml-8'}`}>
                         <div className={`flex items-center gap-3 ${isEven ? 'md:flex-row-reverse' : 'flex-row'}`}>
-                          <span className="text-xs font-black text-white px-2.5 py-1 bg-royal-blue rounded-lg">Step 0{i + 1}</span>
-                          <h4 className="text-[22px] font-bold text-slate-900 leading-[1.2]">{step.title}</h4>
+                          <span className="text-eyebrow text-white px-2.5 py-1 bg-royal-blue rounded-lg">Step 0{i + 1}</span>
+                          <h4 className="text-h3 text-slate-900 leading-[1.2]">{step.title}</h4>
                         </div>
-                        <p className="text-[16px] text-slate-655 leading-[1.7] font-semibold">{step.desc}</p>
+                        <p className="text-body text-slate-655">{step.desc}</p>
                       </div>
                     </div>
                     <div className="w-full md:w-1/2 hidden md:block" />
@@ -326,11 +326,11 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
       <section className="section-padding bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-16 space-y-4">
-            <span className="text-[10px] font-extrabold text-royal-blue tracking-widest uppercase">
+            <span className="text-eyebrow text-royal-blue block">
               {activeTrans.techTitle}
             </span>
-            <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">{activeTrans.techTitle}</h3>
-            <p className="text-[16px] md:text-[17px] text-slate-650 leading-[1.7] font-semibold">
+            <h3 className="text-h2 text-slate-900">{activeTrans.techTitle}</h3>
+            <p className="text-body text-slate-650">
               {isEs 
                 ? 'Utilizamos componentes modernos, marcos de desarrollo seguros e integraciones de nube de primer nivel.'
                 : 'We assemble leading stack architectures, secure framework dependencies, and scalable cloud solutions.'}
@@ -341,8 +341,8 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
             {activeTrans.technologies.map((tech: any, i: number) => (
               <div key={i} className="premium-card p-6 rounded-2xl border border-slate-200 bg-white shadow-sm flex flex-col justify-between hover:border-royal-blue hover:shadow-md transition-all duration-300 group">
                 <div className="space-y-2">
-                  <h4 className="text-[22px] font-bold text-slate-900 group-hover:text-royal-blue transition-colors leading-[1.2]">{tech.name}</h4>
-                  <p className="text-[9px] text-slate-400 leading-relaxed font-extrabold uppercase tracking-widest">{tech.role}</p>
+                  <h4 className="text-h3 text-slate-900 group-hover:text-royal-blue transition-colors leading-[1.2]">{tech.name}</h4>
+                  <p className="text-eyebrow text-slate-400 mt-1">{tech.role}</p>
                 </div>
               </div>
             ))}
@@ -354,10 +354,10 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
       <section className="section-padding bg-[#F8FAFC] border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-16 space-y-4">
-            <span className="text-[10px] font-extrabold text-royal-blue tracking-widest uppercase">
+            <span className="text-eyebrow text-royal-blue block">
               {isEs ? 'Industrias que Servimos' : 'Industries We Serve'}
             </span>
-            <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">
+            <h3 className="text-h2 text-slate-900">
               {isEs ? 'Alineación de Soluciones en Todos los Sectores' : 'Enterprise Solutions Designed for Your Sector'}
             </h3>
           </div>
@@ -371,7 +371,7 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
                   <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-royal-blue">
                     <Icon size={18} />
                   </div>
-                  <span className="text-xs font-extrabold text-slate-800">{ind}</span>
+                  <span className="text-body-sm font-bold text-slate-800">{ind}</span>
                 </div>
               );
             })}
@@ -383,10 +383,10 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
       <section className="section-padding bg-white border-b border-slate-200">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 space-y-4">
-            <span className="text-[10px] font-extrabold text-royal-blue tracking-widest uppercase">
+            <span className="text-eyebrow text-royal-blue block">
               {isEs ? 'Preguntas Frecuentes' : 'Frequently Asked Questions'}
             </span>
-            <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">
+            <h3 className="text-h2 text-slate-900">
               {isEs ? 'Preguntas Frecuentes sobre el Servicio' : 'Got Questions? We Have Answers'}
             </h3>
           </div>
@@ -398,7 +398,7 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
                 <div key={idx} className="border border-slate-200 rounded-[20px] overflow-hidden bg-slate-50/50 transition-all duration-300">
                   <button
                     onClick={() => toggleFaq(idx)}
-                    className="w-full p-6 text-left flex items-center justify-between gap-4 font-extrabold text-[16px] text-slate-900 hover:text-royal-blue transition-colors"
+                    className="w-full p-6 text-left flex items-center justify-between gap-4 text-body font-bold text-slate-900 hover:text-royal-blue transition-colors"
                   >
                     <span>{faq.q}</span>
                     <ChevronDown size={16} className={`transition-transform duration-300 flex-shrink-0 ${isOpen ? 'rotate-180 text-royal-blue' : 'text-slate-450'}`} />
@@ -412,7 +412,7 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.25, ease: 'easeInOut' }}
                       >
-                        <div className="p-6 pt-0 border-t border-slate-200/20 text-[16px] md:text-[17px] text-slate-655 leading-[1.7] font-semibold">
+                        <div className="p-6 pt-0 border-t border-slate-200/20 text-body text-slate-655">
                           {faq.a}
                         </div>
                       </motion.div>
@@ -429,10 +429,10 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
       <section className="section-padding bg-[#F8FAFC] border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-12 space-y-2">
-            <span className="text-[10px] font-extrabold text-royal-blue tracking-widest uppercase">
+            <span className="text-eyebrow text-royal-blue block">
               {isEs ? 'Servicios Relacionados' : 'Related Services'}
             </span>
-            <h4 className="text-[22px] font-bold text-slate-900">
+            <h4 className="text-h3 text-slate-900">
               {isEs ? 'Explore Soluciones Complementarias' : 'Explore Complementary Solutions'}
             </h4>
           </div>
@@ -442,7 +442,7 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
               <Link
                 key={idx}
                 href={`/solutions/${rel.slug}`}
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-200 bg-white hover:border-royal-blue text-xs font-bold text-slate-700 hover:text-royal-blue shadow-sm transition-all"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-200 bg-white hover:border-royal-blue text-button text-slate-700 hover:text-royal-blue shadow-sm transition-all"
               >
                 <span>{rel.name}</span>
                 <ArrowRight size={12} />
@@ -457,10 +457,10 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
         <section className="section-padding bg-white border-b border-slate-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mb-12 space-y-2 text-left">
-              <span className="text-[10px] font-extrabold text-royal-blue tracking-widest uppercase">
+              <span className="text-eyebrow text-royal-blue block">
                 {isEs ? 'Casos de Éxito Relacionados' : 'Related Case Studies'}
               </span>
-              <h4 className="text-[22px] font-bold text-slate-900">
+              <h4 className="text-h3 text-slate-900">
                 {isEs ? 'Resultados de Clientes Probados' : 'Proven Customer Outcomes'}
               </h4>
             </div>
@@ -473,11 +473,11 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
       <section className="section-padding bg-royal-blue relative overflow-hidden text-center text-white">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08)_0%,transparent_100%)] pointer-events-none" />
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-8">
-          <span className="text-xs font-black text-blue-200 tracking-widest uppercase">{isEs ? 'ENTRE EN CONTACTO' : 'GET IN TOUCH'}</span>
-          <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black tracking-tight leading-[1.2] max-w-2xl mx-auto text-white">
+          <span className="text-eyebrow text-blue-200 block">{isEs ? 'ENTRE EN CONTACTO' : 'GET IN TOUCH'}</span>
+          <h3 className="text-h2 text-white leading-none">
             {activeTrans.ctaTitle}
           </h3>
-          <p className="text-[16px] md:text-[17px] text-blue-100 max-w-xl mx-auto leading-[1.7] font-semibold">
+          <p className="text-body text-blue-100 max-w-xl mx-auto">
             {activeTrans.ctaDesc}
           </p>
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-4">

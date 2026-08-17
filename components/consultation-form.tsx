@@ -256,8 +256,8 @@ function ConsultationFormContent() {
       >
         <CheckCircle size={32} className="text-green-600 flex-shrink-0" />
         <div>
-          <h3 className="font-bold text-green-900 text-lg">{t('successTitle')}</h3>
-          <p className="text-green-800 text-sm mt-2 leading-relaxed">{t('successDesc')}</p>
+          <h3 className="text-h3 text-green-900">{t('successTitle')}</h3>
+          <p className="text-body text-green-800 mt-2">{t('successDesc')}</p>
         </div>
       </motion.div>
     );
@@ -290,7 +290,7 @@ function ConsultationFormContent() {
       {/* Primary Contact Block */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-[13px] md:text-[14px] lg:text-[15px] font-bold text-slate-500 uppercase tracking-[0.05em] leading-[1.5] mb-2.5" htmlFor="consultation-name">{t('name')}</label>
+          <label className="block text-eyebrow text-slate-500 mb-2.5" htmlFor="consultation-name">{t('name')}</label>
           <div className="relative">
             <input
               id="consultation-name"
@@ -300,7 +300,7 @@ function ConsultationFormContent() {
               {...register('name')}
               aria-invalid={Boolean(errors.name)}
               aria-describedby={errors.name ? 'consultation-name-error' : undefined}
-              className={`w-full h-[56px] md:h-[60px] lg:h-[64px] px-[20px] rounded-[18px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-[15px] md:text-[16px] lg:text-[17px] font-medium placeholder-slate-400 placeholder:text-[16px] placeholder:font-medium ${
+              className={`w-full h-[56px] md:h-[60px] lg:h-[64px] px-[20px] rounded-[18px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-body text-slate-800 placeholder-slate-400 placeholder:text-[16px] placeholder:font-medium ${
                 errors.name
                   ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200 shadow-[0_0_0_1px_#ef4444]'
                   : touchedFields.name
@@ -315,14 +315,14 @@ function ConsultationFormContent() {
             )}
           </div>
           {errors.name && (
-            <span id="consultation-name-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">
+            <span id="consultation-name-error" className="text-caption text-red-500 mt-1.5 block" role="alert">
               {errors.name.message}
             </span>
           )}
         </div>
 
         <div>
-          <label className="block text-[13px] md:text-[14px] lg:text-[15px] font-bold text-slate-500 uppercase tracking-[0.05em] leading-[1.5] mb-2.5" htmlFor="consultation-email">{t('email')}</label>
+          <label className="block text-eyebrow text-slate-500 mb-2.5" htmlFor="consultation-email">{t('email')}</label>
           <div className="relative">
             <input
               id="consultation-email"
@@ -333,7 +333,7 @@ function ConsultationFormContent() {
               {...register('email')}
               aria-invalid={Boolean(errors.email)}
               aria-describedby={errors.email ? 'consultation-email-error' : undefined}
-              className={`w-full h-[56px] md:h-[60px] lg:h-[64px] px-[20px] rounded-[18px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-[15px] md:text-[16px] lg:text-[17px] font-medium placeholder-slate-400 placeholder:text-[16px] placeholder:font-medium ${
+              className={`w-full h-[56px] md:h-[60px] lg:h-[64px] px-[20px] rounded-[18px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-body text-slate-800 placeholder-slate-400 placeholder:text-[16px] placeholder:font-medium ${
                 errors.email
                   ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200 shadow-[0_0_0_1px_#ef4444]'
                   : touchedFields.email
@@ -348,14 +348,14 @@ function ConsultationFormContent() {
             )}
           </div>
           {errors.email && (
-            <span id="consultation-email-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">
+            <span id="consultation-email-error" className="text-caption text-red-500 mt-1.5 block" role="alert">
               {errors.email.message}
             </span>
           )}
         </div>
 
         <div>
-          <label className="block text-[13px] md:text-[14px] lg:text-[15px] font-bold text-slate-500 uppercase tracking-[0.05em] leading-[1.5] mb-2.5" htmlFor="consultation-company">{t('company')}</label>
+          <label className="block text-eyebrow text-slate-500 mb-2.5" htmlFor="consultation-company">{t('company')}</label>
           <div className="relative">
             <input
               id="consultation-company"
@@ -365,7 +365,7 @@ function ConsultationFormContent() {
               {...register('company')}
               aria-invalid={Boolean(errors.company)}
               aria-describedby={errors.company ? 'consultation-company-error' : undefined}
-              className={`w-full h-[56px] md:h-[60px] lg:h-[64px] px-[20px] rounded-[18px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-[15px] md:text-[16px] lg:text-[17px] font-medium placeholder-slate-400 placeholder:text-[16px] placeholder:font-medium ${
+              className={`w-full h-[56px] md:h-[60px] lg:h-[64px] px-[20px] rounded-[18px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-body text-slate-800 placeholder-slate-400 placeholder:text-[16px] placeholder:font-medium ${
                 errors.company
                   ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200 shadow-[0_0_0_1px_#ef4444]'
                   : touchedFields.company
@@ -380,14 +380,14 @@ function ConsultationFormContent() {
             )}
           </div>
           {errors.company && (
-            <span id="consultation-company-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">
+            <span id="consultation-company-error" className="text-caption text-red-500 mt-1.5 block" role="alert">
               {errors.company.message}
             </span>
           )}
         </div>
 
         <div>
-          <label className="block text-[13px] md:text-[14px] lg:text-[15px] font-bold text-slate-500 uppercase tracking-[0.05em] leading-[1.5] mb-2.5" htmlFor="consultation-phone">{t('phone')}</label>
+          <label className="block text-eyebrow text-slate-500 mb-2.5" htmlFor="consultation-phone">{t('phone')}</label>
           <div className="relative">
             <input
               id="consultation-phone"
@@ -402,7 +402,7 @@ function ConsultationFormContent() {
               })}
               aria-invalid={Boolean(errors.phone)}
               aria-describedby={errors.phone ? 'consultation-phone-error' : undefined}
-              className={`w-full h-[56px] md:h-[60px] lg:h-[64px] px-[20px] rounded-[18px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-[15px] md:text-[16px] lg:text-[17px] font-medium placeholder-slate-400 placeholder:text-[16px] placeholder:font-medium ${
+              className={`w-full h-[56px] md:h-[60px] lg:h-[64px] px-[20px] rounded-[18px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-body text-slate-800 placeholder-slate-400 placeholder:text-[16px] placeholder:font-medium ${
                 errors.phone
                   ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200 shadow-[0_0_0_1px_#ef4444]'
                   : touchedFields.phone
@@ -417,7 +417,7 @@ function ConsultationFormContent() {
             )}
           </div>
           {errors.phone && (
-            <span id="consultation-phone-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">
+            <span id="consultation-phone-error" className="text-caption text-red-500 mt-1.5 block" role="alert">
               {errors.phone.message}
             </span>
           )}
@@ -433,7 +433,7 @@ function ConsultationFormContent() {
           tabIndex={-1}
           aria-hidden="true"
         />
-        <label className="block text-[13px] md:text-[14px] lg:text-[15px] font-bold text-slate-500 uppercase tracking-[0.05em] leading-[1.5] mb-3">{t('preferredServices') || 'Select Service Areas of Interest'}</label>
+        <label className="block text-eyebrow text-slate-500 mb-3">{t('preferredServices') || 'Select Service Areas of Interest'}</label>
         <div className="flex flex-wrap gap-2.5">
           {serviceOptions.map((opt, index) => {
             const active = watchedServices.includes(opt.id);
@@ -445,7 +445,7 @@ function ConsultationFormContent() {
                 aria-invalid={Boolean(errors.service)}
                 aria-describedby={errors.service ? 'consultation-service-error' : undefined}
                 data-field-name={index === 0 ? 'service' : undefined}
-                className={`px-4 py-2.5 rounded-full border text-sm font-bold transition-all flex items-center gap-2 cursor-pointer ${
+                className={`px-4 py-2.5 rounded-full border text-body-sm font-bold transition-all flex items-center gap-2 cursor-pointer ${
                   active
                     ? 'bg-royal-blue/15 border-royal-blue text-royal-blue'
                     : errors.service
@@ -460,7 +460,7 @@ function ConsultationFormContent() {
           })}
         </div>
         {errors.service && (
-          <span id="consultation-service-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">
+          <span id="consultation-service-error" className="text-caption text-red-500 mt-1.5 block" role="alert">
             {errors.service.message}
           </span>
         )}
@@ -469,14 +469,14 @@ function ConsultationFormContent() {
       {/* Advanced Consulting Intake Fields */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-[13px] md:text-[14px] lg:text-[15px] font-bold text-slate-500 uppercase tracking-[0.05em] leading-[1.5] mb-2.5" htmlFor="consultation-industry">{t('industry') || 'Industry'}</label>
+          <label className="block text-eyebrow text-slate-500 mb-2.5" htmlFor="consultation-industry">{t('industry') || 'Industry'}</label>
           <div className="relative">
             <select
               id="consultation-industry"
               {...register('industry')}
               aria-invalid={Boolean(errors.industry)}
               aria-describedby={errors.industry ? 'consultation-industry-error' : undefined}
-              className={`w-full h-[56px] md:h-[60px] lg:h-[64px] pl-5 pr-12 rounded-[18px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-[15px] md:text-[16px] lg:text-[17px] font-medium cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M7%209l3%203%203-3%22%20stroke%3D%22%2364748B%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-[length:20px_20px] bg-[right_20px_center] bg-no-repeat ${
+              className={`w-full h-[56px] md:h-[60px] lg:h-[64px] pl-5 pr-12 rounded-[18px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-body text-slate-800 cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M7%209l3%203%203-3%22%20stroke%3D%22%2364748B%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-[length:20px_20px] bg-[right_20px_center] bg-no-repeat ${
                 errors.industry
                   ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200 shadow-[0_0_0_1px_#ef4444]'
                   : touchedFields.industry
@@ -496,21 +496,19 @@ function ConsultationFormContent() {
             )}
           </div>
           {errors.industry && (
-            <span id="consultation-industry-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">
+            <span id="consultation-industry-error" className="text-caption text-red-500 mt-1.5 block" role="alert">
               {errors.industry.message}
             </span>
           )}
         </div>
 
-
-
         <div>
-          <label className="block text-[13px] md:text-[14px] lg:text-[15px] font-bold text-slate-500 uppercase tracking-[0.05em] leading-[1.5] mb-2.5" htmlFor="consultation-meeting-type">{t('meetingType') || 'Preferred Meeting Type'}</label>
+          <label className="block text-eyebrow text-slate-500 mb-2.5" htmlFor="consultation-meeting-type">{t('meetingType') || 'Preferred Meeting Type'}</label>
           <div className="relative">
             <select
               id="consultation-meeting-type"
               {...register('preferredMeetingType')}
-              className="w-full h-[56px] md:h-[60px] lg:h-[64px] px-[20px] pr-12 rounded-[18px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/20 focus:border-royal-blue transition-all text-[15px] md:text-[16px] lg:text-[17px] font-medium cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M7%209l3%203%203-3%22%20stroke%3D%22%2364748B%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-[length:20px_20px] bg-[right_20px_center] bg-no-repeat"
+              className="w-full h-[56px] md:h-[60px] lg:h-[64px] px-[20px] pr-12 rounded-[18px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/20 focus:border-royal-blue transition-all text-body text-slate-800 cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M7%209l3%203%203-3%22%20stroke%3D%22%2364748B%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-[length:20px_20px] bg-[right_20px_center] bg-no-repeat"
             >
               <option value="Video Call">Video Conference (Google Meet/Zoom)</option>
               <option value="Phone Call">Direct Phone Call</option>
@@ -536,7 +534,7 @@ function ConsultationFormContent() {
           tabIndex={-1}
           aria-hidden="true"
         />
-        <label className="block text-[13px] md:text-[14px] lg:text-[15px] font-bold text-slate-500 uppercase tracking-[0.05em] leading-[1.5] mb-3">{t('timeline')}</label>
+        <label className="block text-eyebrow text-slate-500 mb-3">{t('timeline')}</label>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           {timelineOptions.map((opt, index) => {
             const active = watchedTimeline === opt.id;
@@ -548,11 +546,11 @@ function ConsultationFormContent() {
                 aria-invalid={Boolean(errors.timeline)}
                 aria-describedby={errors.timeline ? 'consultation-timeline-error' : undefined}
                 data-field-name={index === 0 ? 'timeline' : undefined}
-                className={`h-[60px] px-[20px] rounded-[18px] border text-[15px] font-semibold transition-all text-left flex items-center justify-between cursor-pointer ${
+                className={`h-[60px] px-[20px] rounded-[18px] border text-body font-semibold transition-all text-left flex items-center justify-between cursor-pointer ${
                   active
                     ? 'bg-royal-blue border-royal-blue text-white shadow-sm'
                     : errors.timeline
-                    ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200 text-slate-700'
+                    ? 'border-red-500 bg-red-50/70 focus:border-red-656 focus:ring-2 focus:ring-red-200 text-slate-700'
                     : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
                 }`}
               >
@@ -563,7 +561,7 @@ function ConsultationFormContent() {
           })}
         </div>
         {errors.timeline && (
-          <span id="consultation-timeline-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">
+          <span id="consultation-timeline-error" className="text-caption text-red-500 mt-1.5 block" role="alert">
             {errors.timeline.message}
           </span>
         )}
@@ -571,7 +569,7 @@ function ConsultationFormContent() {
 
       {/* Main message textarea */}
       <div>
-        <label className="block text-[13px] md:text-[14px] lg:text-[15px] font-bold text-slate-500 uppercase tracking-[0.05em] leading-[1.5] mb-2.5" htmlFor="consultation-message">{t('message')}</label>
+        <label className="block text-eyebrow text-slate-500 mb-2.5" htmlFor="consultation-message">{t('message')}</label>
         <div className="relative">
           <textarea
             id="consultation-message"
@@ -579,9 +577,9 @@ function ConsultationFormContent() {
             {...register('message')}
             aria-invalid={Boolean(errors.message)}
             aria-describedby={errors.message ? 'consultation-message-error' : undefined}
-            className={`w-full h-[170px] p-[20px] rounded-[18px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-[15px] md:text-[16px] lg:text-[17px] font-medium placeholder-slate-400 placeholder:text-[16px] placeholder:font-medium resize-none ${
+            className={`w-full h-[170px] p-[20px] rounded-[18px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-body text-slate-800 placeholder-slate-400 placeholder:text-[16px] placeholder:font-medium resize-none ${
               errors.message
-                ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200 shadow-[0_0_0_1px_#ef4444]'
+                ? 'border-red-500 bg-red-50/70 focus:border-red-656 focus:ring-2 focus:ring-red-200 shadow-[0_0_0_1px_#ef4444]'
                 : touchedFields.message
                 ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                 : 'border-slate-200'
@@ -595,13 +593,13 @@ function ConsultationFormContent() {
         </div>
         <div className="flex justify-between items-center mt-1.5">
           {errors.message ? (
-            <span id="consultation-message-error" className="text-xs font-semibold text-red-500" role="alert">{errors.message.message}</span>
+            <span id="consultation-message-error" className="text-caption text-red-500" role="alert">{errors.message.message}</span>
           ) : (
-            <span className="text-xs text-slate-400">
+            <span className="text-caption text-slate-400">
               {locale === 'es' ? 'El mensaje debe tener al menos 20 caracteres' : 'Message must be at least 20 characters'}
             </span>
           )}
-          <span className={`text-xs font-bold ${remainingChars < 100 ? 'text-amber-500' : 'text-slate-400'}`}>
+          <span className={`text-caption font-bold ${remainingChars < 100 ? 'text-amber-500' : 'text-slate-400'}`}>
             {remainingChars} {locale === 'es' ? 'caracteres restantes' : 'characters remaining'}
           </span>
         </div>
@@ -612,7 +610,7 @@ function ConsultationFormContent() {
         <button
           type="submit"
           disabled={submitting}
-          className={`btn-primary h-[60px] min-w-[220px] rounded-[18px] flex items-center justify-center gap-2 text-[18px] font-bold transition-all ${
+          className={`btn-primary h-[60px] min-w-[220px] rounded-[18px] flex items-center justify-center gap-2 text-button transition-all ${
             submitting ? 'opacity-50 cursor-not-allowed bg-slate-400 hover:bg-slate-400 border-slate-400' : ''
           }`}
         >

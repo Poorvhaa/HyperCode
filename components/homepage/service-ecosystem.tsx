@@ -221,7 +221,8 @@ export function ServiceEcosystem() {
                           >
                             <X size={8} />
                             <span>{locale === 'es' ? 'Cerrar' : 'Close'}</span>
-                                          )}
+                          </button>
+                        )}
                       </div>
 
                       {/* Title & Description */}

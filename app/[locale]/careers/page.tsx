@@ -399,8 +399,8 @@ export default async function CareersPage({ params }: Props) {
               <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-royal-blue">
                 <Briefcase size={20} />
               </div>
-              <h3 className="text-[22px] font-bold text-slate-900 leading-[1.2]">{activeTrans.challengingProjectsTitle}</h3>
-              <p className="text-[16px] md:text-[17px] text-slate-655 leading-[1.7] font-semibold">
+              <h3 className="text-h3 text-slate-900 leading-[1.2]">{activeTrans.challengingProjectsTitle}</h3>
+              <p className="text-body text-slate-655">
                 {activeTrans.challengingProjectsDesc}
               </p>
             </div>
@@ -409,8 +409,8 @@ export default async function CareersPage({ params }: Props) {
               <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-royal-blue">
                 <Users size={20} />
               </div>
-              <h3 className="text-[22px] font-bold text-slate-900 leading-[1.2]">{activeTrans.collaborativeCultureTitle}</h3>
-              <p className="text-[16px] md:text-[17px] text-slate-655 leading-[1.7] font-semibold">
+              <h3 className="text-h3 text-slate-900 leading-[1.2]">{activeTrans.collaborativeCultureTitle}</h3>
+              <p className="text-body text-slate-655">
                 {activeTrans.collaborativeCultureDesc}
               </p>
             </div>
@@ -419,8 +419,8 @@ export default async function CareersPage({ params }: Props) {
               <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-royal-blue">
                 <TrendingUp size={20} />
               </div>
-              <h3 className="text-[22px] font-bold text-slate-900 leading-[1.2]">{activeTrans.careerAdvancementTitle}</h3>
-              <p className="text-[16px] md:text-[17px] text-slate-655 leading-[1.7] font-semibold">
+              <h3 className="text-h3 text-slate-900 leading-[1.2]">{activeTrans.careerAdvancementTitle}</h3>
+              <p className="text-body text-slate-655">
                 {activeTrans.careerAdvancementDesc}
               </p>
             </div>
@@ -432,18 +432,18 @@ export default async function CareersPage({ params }: Props) {
       <section className="section-padding bg-[#F8FAFC] border-b border-slate-200">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mb-16 space-y-4">
-            <span className="inline-flex items-center gap-1.5 text-xs font-bold text-royal-blue tracking-widest uppercase">
+            <span className="inline-flex items-center gap-1.5 text-eyebrow text-royal-blue">
               <span className="w-1.5 h-1.5 rounded-full bg-royal-blue" />
               {activeTrans.badgePerks}
             </span>
-            <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">{activeTrans.titlePerks}</h3>
+            <h3 className="text-h2 text-slate-900">{activeTrans.titlePerks}</h3>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {activeTrans.benefitsList.map((benefit, i) => (
               <div key={i} className="flex items-center gap-3.5 p-4.5 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
                 <div className="w-2 h-2 rounded-full bg-royal-blue flex-shrink-0" />
-                <p className="text-[16px] text-slate-700 font-bold">{benefit}</p>
+                <p className="text-body-sm text-slate-700 font-bold">{benefit}</p>
               </div>
             ))}
           </div>
@@ -454,18 +454,18 @@ export default async function CareersPage({ params }: Props) {
       <section className="section-padding bg-white relative border-b border-slate-200">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
           <div className="text-center max-w-2xl mx-auto space-y-4">
-            <span className="inline-flex items-center gap-1.5 text-xs font-bold text-royal-blue tracking-widest uppercase">
+            <span className="inline-flex items-center gap-1.5 text-eyebrow text-royal-blue">
               <span className="w-1.5 h-1.5 rounded-full bg-royal-blue" />
               {activeTrans.badgeCulture}
             </span>
-            <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">{activeTrans.titleCulture}</h3>
+            <h3 className="text-h2 text-slate-900">{activeTrans.titleCulture}</h3>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             {activeTrans.cultureCards.map((card, i) => (
               <div key={i} className="premium-card p-8 bg-white border border-slate-200 shadow-sm space-y-3">
-                <h3 className="text-[22px] font-bold text-slate-900 leading-[1.2]">{card.title}</h3>
-                <p className="text-[16px] md:text-[17px] text-slate-655 leading-[1.7] font-semibold">
+                <h3 className="text-h3 text-slate-900 leading-[1.2]">{card.title}</h3>
+                <p className="text-body text-slate-655">
                   {card.desc}
                 </p>
               </div>
@@ -478,14 +478,14 @@ export default async function CareersPage({ params }: Props) {
       <section className="section-padding bg-[#F8FAFC] border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-16 space-y-4">
-            <span className="inline-flex items-center gap-1.5 text-xs font-bold text-royal-blue tracking-widest uppercase">
+            <span className="inline-flex items-center gap-1.5 text-eyebrow text-royal-blue">
               <span className="w-1.5 h-1.5 rounded-full bg-royal-blue" />
               {activeTrans.badgeAcquisition}
             </span>
-            <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">
+            <h3 className="text-h2 text-slate-900">
               {activeTrans.titleAcquisition}
             </h3>
-            <p className="text-[16px] md:text-[17px] lg:text-[18px] text-slate-650 font-semibold leading-relaxed">
+            <p className="text-body text-slate-655">
               {activeTrans.descAcquisition}
             </p>
           </div>
@@ -494,7 +494,7 @@ export default async function CareersPage({ params }: Props) {
             {/* Left Column: Workflow */}
             <div className="lg:col-span-5">
               <div className="premium-card bg-white border border-slate-200 rounded-[24px] p-8 shadow-sm">
-                <span className="text-[10px] font-extrabold text-royal-blue tracking-widest uppercase block mb-8">
+                <span className="text-eyebrow text-royal-blue block mb-8">
                   {activeTrans.badgeTimeline}
                 </span>
                 
@@ -507,7 +507,7 @@ export default async function CareersPage({ params }: Props) {
                           <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-royal-blue shadow-sm flex-shrink-0 z-10">
                             <Icon size={16} />
                           </div>
-                          <span className="text-xs sm:text-sm font-bold text-slate-800 tracking-wide">
+                          <span className="text-body-sm font-bold text-slate-800 tracking-wide">
                             {step.label}
                           </span>
                         </div>
@@ -531,8 +531,8 @@ export default async function CareersPage({ params }: Props) {
                   className="premium-card p-8 bg-white border border-slate-200 shadow-sm hover:shadow-md transition-shadow space-y-5"
                 >
                   <div className="space-y-2">
-                    <h4 className="text-[22px] font-bold text-slate-900 leading-[1.2]">{card.title}</h4>
-                    <p className="text-[16px] md:text-[17px] text-slate-655 leading-[1.7] font-semibold">
+                    <h4 className="text-h3 text-slate-900 leading-[1.2]">{card.title}</h4>
+                    <p className="text-body text-slate-655">
                       {card.description}
                     </p>
                   </div>
@@ -541,7 +541,7 @@ export default async function CareersPage({ params }: Props) {
                     {card.features.map((feature, fIdx) => (
                       <div key={fIdx} className="flex items-center gap-2">
                         <Check size={14} className="text-royal-blue flex-shrink-0" />
-                        <span className="text-[11px] sm:text-xs font-bold text-slate-700">
+                        <span className="text-caption font-bold text-slate-700">
                           {feature}
                         </span>
                       </div>
@@ -558,11 +558,11 @@ export default async function CareersPage({ params }: Props) {
       <section className="section-padding bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
-            <span className="inline-flex items-center gap-1.5 text-xs font-bold text-royal-blue tracking-widest uppercase">
+            <span className="inline-flex items-center gap-1.5 text-eyebrow text-royal-blue">
               <span className="w-1.5 h-1.5 rounded-full bg-royal-blue" />
               {activeTrans.badgePromise}
             </span>
-            <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">
+            <h3 className="text-h2 text-slate-900">
               {activeTrans.titlePromise}
             </h3>
           </div>
@@ -579,8 +579,8 @@ export default async function CareersPage({ params }: Props) {
                     <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 text-royal-blue flex items-center justify-center">
                       <Icon size={18} />
                     </div>
-                    <h4 className="text-[22px] font-bold text-slate-900 leading-[1.2]">{benefit.title}</h4>
-                    <p className="text-[16px] md:text-[17px] text-slate-655 leading-[1.7] font-semibold">
+                    <h4 className="text-h3 text-slate-900 leading-[1.2]">{benefit.title}</h4>
+                    <p className="text-body text-slate-655">
                       {benefit.description}
                     </p>
                   </div>
@@ -595,14 +595,14 @@ export default async function CareersPage({ params }: Props) {
       <section className="section-padding bg-[#F8FAFC] border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-20 space-y-4">
-            <span className="inline-flex items-center gap-1.5 text-xs font-bold text-royal-blue tracking-widest uppercase">
+            <span className="inline-flex items-center gap-1.5 text-eyebrow text-royal-blue">
               <span className="w-1.5 h-1.5 rounded-full bg-royal-blue" />
               {activeTrans.badgeTimeline}
             </span>
-            <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2] mb-4">
+            <h3 className="text-h2 text-slate-900 mb-4">
               {activeTrans.titleTimeline}
             </h3>
-            <p className="text-[16px] md:text-[17px] text-slate-650 leading-relaxed font-semibold">
+            <p className="text-body text-slate-655">
               {activeTrans.descTimeline}
             </p>
           </div>
@@ -615,33 +615,33 @@ export default async function CareersPage({ params }: Props) {
       <section className="section-padding bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
-            <span className="inline-flex items-center gap-1.5 text-xs font-bold text-royal-blue tracking-widest uppercase">
+            <span className="inline-flex items-center gap-1.5 text-eyebrow text-royal-blue">
               <span className="w-1.5 h-1.5 rounded-full bg-royal-blue" />
               {activeTrans.badgePositions}
             </span>
-            <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">{activeTrans.titlePositions}</h3>
+            <h3 className="text-h2 text-slate-900">{activeTrans.titlePositions}</h3>
           </div>
 
           <div className="max-w-4xl mx-auto bg-white border border-slate-200 rounded-[24px] p-8 sm:p-12 shadow-lg">
             {/* Header */}
             <div className="text-center space-y-4 pb-8 border-b border-slate-200">
-              <span className="inline-flex items-center px-4 py-1.5 rounded-full text-[10px] font-bold bg-royal-blue/10 text-royal-blue uppercase tracking-wider">
+              <span className="inline-flex items-center px-4 py-1.5 rounded-full text-eyebrow bg-royal-blue/10 text-royal-blue">
                 {activeTrans.jobTypeLabel}
               </span>
-              <h3 className="text-[28px] sm:text-[32px] font-black text-slate-900 tracking-tight leading-[1.2]">
+              <h3 className="text-h2 text-slate-900">
                 {activeTrans.bdmTitle}
               </h3>
-              <p className="text-slate-500 text-xs sm:text-sm font-extrabold uppercase tracking-widest">
+              <p className="text-eyebrow text-slate-500 block">
                 {activeTrans.locationLabel}
               </p>
             </div>
 
             {/* Overview */}
             <div className="py-8 space-y-4">
-              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+              <h4 className="text-eyebrow text-slate-400">
                 {locale === 'es' ? 'Resumen del Puesto' : 'Role Overview'}
               </h4>
-              <p className="text-slate-655 text-[16px] md:text-[17px] leading-[1.7] font-semibold">
+              <p className="text-body text-slate-655">
                 {activeTrans.bdmDescription}
               </p>
             </div>
@@ -650,14 +650,14 @@ export default async function CareersPage({ params }: Props) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-8 border-t border-b border-slate-200">
               {/* Responsibilities */}
               <div className="space-y-4">
-                <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+                <h4 className="text-eyebrow text-slate-400">
                   {locale === 'es' ? 'Responsabilidades Clave' : 'Key Responsibilities'}
                 </h4>
                 <ul className="space-y-3">
                   {activeTrans.bdmResponsibilities.map((resp, idx) => (
                     <li key={idx} className="flex items-start gap-3">
                       <Check className="text-royal-blue w-4 h-4 mt-0.5 flex-shrink-0" />
-                      <span className="text-slate-655 text-[16px] font-semibold leading-relaxed">{resp}</span>
+                      <span className="text-slate-655 text-body-sm font-semibold leading-relaxed">{resp}</span>
                     </li>
                   ))}
                 </ul>
@@ -665,14 +665,14 @@ export default async function CareersPage({ params }: Props) {
 
               {/* Requirements */}
               <div className="space-y-4">
-                <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+                <h4 className="text-eyebrow text-slate-400">
                   {locale === 'es' ? 'Requisitos' : 'Requirements'}
                 </h4>
                 <ul className="space-y-3">
                   {activeTrans.bdmQualifications.map((qual, idx) => (
                     <li key={idx} className="flex items-start gap-3">
                       <div className="w-1.5 h-1.5 rounded-full bg-royal-blue mt-2 flex-shrink-0" />
-                      <span className="text-slate-655 text-[16px] font-semibold leading-relaxed">{qual}</span>
+                      <span className="text-slate-655 text-body-sm font-semibold leading-relaxed">{qual}</span>
                     </li>
                   ))}
                 </ul>
@@ -681,14 +681,14 @@ export default async function CareersPage({ params }: Props) {
 
             {/* Benefits */}
             <div className="py-8 space-y-4">
-              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+              <h4 className="text-eyebrow text-slate-400">
                 {locale === 'es' ? 'Beneficios del Puesto' : 'Role Benefits'}
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {activeTrans.bdmBenefits.map((benefit, idx) => (
                   <div key={idx} className="flex items-center gap-3 p-4 rounded-2xl bg-slate-50 border border-slate-200 shadow-sm">
                     <span className="text-sm flex-shrink-0">💼</span>
-                    <span className="text-slate-700 text-[16px] font-bold leading-none">{benefit}</span>
+                    <span className="text-slate-700 text-body-sm font-bold leading-none">{benefit}</span>
                   </div>
                 ))}
               </div>
@@ -712,8 +712,8 @@ export default async function CareersPage({ params }: Props) {
       {/* CTA Section */}
       <section className="section-padding bg-[#F8FAFC]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-          <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">{activeTrans.readyTitle}</h3>
-          <p className="text-[16px] md:text-[17px] lg:text-[18px] text-slate-655 max-w-xl mx-auto font-semibold leading-[1.7]">
+          <h3 className="text-h2 text-slate-900">{activeTrans.readyTitle}</h3>
+          <p className="text-body text-slate-655 max-w-xl mx-auto">
             {activeTrans.readyDesc}
           </p>
           <div>

@@ -143,12 +143,12 @@ export default async function ContactPage({ params }: Props) {
                   <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-royal-blue shadow-sm">
                     <MapPin size={20} />
                   </div>
-                  <h3 className="font-extrabold text-slate-900 uppercase text-xs tracking-wider">{activeTrans.hq}</h3>
+                  <h3 className="text-eyebrow text-slate-900">{activeTrans.hq}</h3>
                 </div>
                 <div className="pl-13 space-y-2">
-                  <p className="text-[16px] font-bold text-slate-800">2095 Hammond Dr, Suite C</p>
-                  <p className="text-[16px] font-bold text-slate-800">Schaumburg, IL 60173</p>
-                  <p className="text-[10px] text-slate-400 font-extrabold uppercase tracking-widest">{activeTrans.hqDesc}</p>
+                  <p className="text-body-sm font-bold text-slate-800">2095 Hammond Dr, Suite C</p>
+                  <p className="text-body-sm font-bold text-slate-800">Schaumburg, IL 60173</p>
+                  <p className="text-caption font-semibold text-slate-400 mt-1">{activeTrans.hqDesc}</p>
                 </div>
               </div>
 
@@ -158,11 +158,11 @@ export default async function ContactPage({ params }: Props) {
                   <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-royal-blue shadow-sm">
                     <Clock size={20} />
                   </div>
-                  <h3 className="font-extrabold text-slate-900 uppercase text-xs tracking-wider">{activeTrans.hours}</h3>
+                  <h3 className="text-eyebrow text-slate-900">{activeTrans.hours}</h3>
                 </div>
-                <div className="pl-13 space-y-2 text-[16px] font-bold text-slate-800">
+                <div className="pl-13 space-y-2 text-body-sm font-bold text-slate-800">
                   <p>{activeTrans.hoursDesc}</p>
-                  <p className="text-[10px] text-slate-400 font-extrabold uppercase tracking-widest">{activeTrans.hoursSub}</p>
+                  <p className="text-caption font-semibold text-slate-400 mt-1">{activeTrans.hoursSub}</p>
                 </div>
               </div>
 
@@ -170,10 +170,10 @@ export default async function ContactPage({ params }: Props) {
               <div className="premium-card p-7 bg-royal-blue/5 border border-slate-200 shadow-sm space-y-3">
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                  <span className="text-[10px] font-extrabold tracking-wider text-slate-500 uppercase">{activeTrans.slaBadge}</span>
+                  <span className="text-eyebrow text-slate-500">{activeTrans.slaBadge}</span>
                 </div>
-                <p className="text-3xl font-black text-royal-blue">{activeTrans.slaTitle}</p>
-                <p className="text-[16px] md:text-[17px] text-slate-655 leading-[1.7] font-semibold">
+                <p className="text-h2 text-royal-blue leading-none">{activeTrans.slaTitle}</p>
+                <p className="text-body text-slate-655">
                   {activeTrans.slaDesc}
                 </p>
               </div>
@@ -181,7 +181,7 @@ export default async function ContactPage({ params }: Props) {
               {/* Secure Trust Badge */}
               <div className="flex items-center gap-3 px-6 py-4 bg-slate-50 border border-slate-200 rounded-[16px]">
                 <Shield size={16} className="text-royal-blue" />
-                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">SSL Encrypted Intake System</span>
+                <span className="text-eyebrow text-slate-500">SSL Encrypted Intake System</span>
               </div>
 
             </div>
@@ -189,8 +189,8 @@ export default async function ContactPage({ params }: Props) {
             {/* Right Column: Contact Form (7 columns) */}
             <div className="lg:col-span-7 bg-white border border-slate-200 rounded-[24px] p-8 sm:p-10 shadow-lg">
               <div className="space-y-2 mb-8">
-                <h2 className="text-[28px] sm:text-[32px] font-black text-slate-900 tracking-tight leading-[1.2]">{activeTrans.formTitle}</h2>
-                <p className="text-[16px] font-semibold text-slate-500">Complete the form below to route directly to our solutions directors.</p>
+                <h2 className="text-h2 text-slate-900">{activeTrans.formTitle}</h2>
+                <p className="text-body text-slate-500">Complete the form below to route directly to our solutions directors.</p>
               </div>
               <ContactForm />
             </div>
@@ -207,15 +207,15 @@ export default async function ContactPage({ params }: Props) {
             {/* Box 1 */}
             <div className="premium-card p-8 bg-white border border-slate-200 shadow-sm space-y-5 flex flex-col justify-between hover:-translate-y-1 hover:border-royal-blue transition-all duration-300">
               <div className="space-y-4">
-                <h3 className="text-[22px] font-bold text-slate-900 leading-[1.2]">{activeTrans.boxConsultingTitle}</h3>
-                <p className="text-[16px] md:text-[17px] text-slate-655 leading-[1.7] font-semibold">
+                <h3 className="text-h3 text-slate-900">{activeTrans.boxConsultingTitle}</h3>
+                <p className="text-body text-slate-655">
                   {activeTrans.boxConsultingDesc}
                 </p>
               </div>
               <div className="pt-2">
                 <Link
                   href="/consultation"
-                  className="inline-flex items-center text-xs font-bold text-royal-blue hover:gap-2 transition-all gap-1"
+                  className="inline-flex items-center text-button text-royal-blue hover:gap-2 transition-all gap-1"
                 >
                   <span>{activeTrans.boxConsultingLink}</span>
                   <ArrowRight size={14} />
@@ -226,15 +226,15 @@ export default async function ContactPage({ params }: Props) {
             {/* Box 2 */}
             <div className="premium-card p-8 bg-white border border-slate-200 shadow-sm space-y-5 flex flex-col justify-between hover:-translate-y-1 hover:border-royal-blue transition-all duration-300">
               <div className="space-y-4">
-                <h3 className="text-[22px] font-bold text-slate-900 leading-[1.2]">{activeTrans.boxStaffingTitle}</h3>
-                <p className="text-[16px] md:text-[17px] text-slate-655 leading-[1.7] font-semibold">
+                <h3 className="text-h3 text-slate-900">{activeTrans.boxStaffingTitle}</h3>
+                <p className="text-body text-slate-655">
                   {activeTrans.boxStaffingDesc}
                 </p>
               </div>
               <div className="pt-2">
                 <Link
                   href="/consultation?service=IT%20Staffing"
-                  className="inline-flex items-center text-xs font-bold text-royal-blue hover:gap-2 transition-all gap-1"
+                  className="inline-flex items-center text-button text-royal-blue hover:gap-2 transition-all gap-1"
                 >
                   <span>{activeTrans.boxStaffingLink}</span>
                   <ArrowRight size={14} />
@@ -245,12 +245,12 @@ export default async function ContactPage({ params }: Props) {
             {/* Box 3 */}
             <div className="premium-card p-8 bg-white border border-slate-200 shadow-sm space-y-5 flex flex-col justify-between hover:-translate-y-1 hover:border-royal-blue transition-all duration-300">
               <div className="space-y-4">
-                <h3 className="text-[22px] font-bold text-slate-900 leading-[1.2]">{activeTrans.boxPartnershipTitle}</h3>
-                <p className="text-[16px] md:text-[17px] text-slate-655 leading-[1.7] font-semibold">
+                <h3 className="text-h3 text-slate-900">{activeTrans.boxPartnershipTitle}</h3>
+                <p className="text-body text-slate-655">
                   {activeTrans.boxPartnershipDesc}
                 </p>
               </div>
-              <p className="text-[10px] font-extrabold text-royal-blue uppercase tracking-wider">
+              <p className="text-eyebrow text-royal-blue">
                 {activeTrans.boxPartnershipFooter}
               </p>
             </div>

@@ -208,7 +208,7 @@ function TransformationEngineContent() {
               {/* Left Column (approximately 45%) */}
               <div className="col-span-12 lg:col-span-5 space-y-6">
                 <div className="flex items-baseline gap-2 text-royal-blue">
-                  <span className="text-xl md:text-2xl font-black opacity-30">
+                  <span className="text-xl md:text-2xl font-extrabold">
                     {stages[activeStage].number}
                   </span>
                   <span className="text-xs font-black tracking-widest uppercase">

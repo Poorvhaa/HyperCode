@@ -276,8 +276,8 @@ function ContactFormContent() {
       >
         <CheckCircle size={32} className="text-green-600 flex-shrink-0" />
         <div>
-          <h3 className="font-bold text-green-900 text-lg">{t('successTitle')}</h3>
-          <p className="text-green-800 text-sm mt-2 leading-relaxed">{t('successText')}</p>
+          <h3 className="text-h3 text-green-900">{t('successTitle')}</h3>
+          <p className="text-body text-green-800 mt-2">{t('successText')}</p>
         </div>
       </motion.div>
     );
@@ -310,7 +310,7 @@ function ContactFormContent() {
       {/* Grid for Name, Email, Company, Phone */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5" htmlFor="contact-name">{t('name')}</label>
+          <label className="block text-body font-bold text-slate-855 mb-2.5" htmlFor="contact-name">{t('name')}</label>
           <div className="relative">
             <input
               id="contact-name"
@@ -320,7 +320,7 @@ function ContactFormContent() {
               {...register('name')}
               aria-invalid={Boolean(errors.name)}
               aria-describedby={errors.name ? 'contact-name-error' : undefined}
-              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
+              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-body text-slate-800 placeholder-slate-400 ${
                 errors.name
                   ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                   : touchedFields.name
@@ -334,11 +334,11 @@ function ContactFormContent() {
               </span>
             )}
           </div>
-          {errors.name && <span id="contact-name-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">{errors.name.message}</span>}
+          {errors.name && <span id="contact-name-error" className="text-caption text-red-500 mt-1.5 block" role="alert">{errors.name.message}</span>}
         </div>
 
         <div>
-          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5" htmlFor="contact-email">{t('email')}</label>
+          <label className="block text-body font-bold text-slate-855 mb-2.5" htmlFor="contact-email">{t('email')}</label>
           <div className="relative">
             <input
               id="contact-email"
@@ -349,7 +349,7 @@ function ContactFormContent() {
               {...register('email')}
               aria-invalid={Boolean(errors.email)}
               aria-describedby={errors.email ? 'contact-email-error' : undefined}
-              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
+              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-body text-slate-800 placeholder-slate-400 ${
                 errors.email
                   ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                   : touchedFields.email
@@ -363,11 +363,11 @@ function ContactFormContent() {
               </span>
             )}
           </div>
-          {errors.email && <span id="contact-email-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">{errors.email.message}</span>}
+          {errors.email && <span id="contact-email-error" className="text-caption text-red-500 mt-1.5 block" role="alert">{errors.email.message}</span>}
         </div>
 
         <div>
-          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5" htmlFor="contact-company">{t('company')}</label>
+          <label className="block text-body font-bold text-slate-855 mb-2.5" htmlFor="contact-company">{t('company')}</label>
           <div className="relative">
             <input
               id="contact-company"
@@ -377,7 +377,7 @@ function ContactFormContent() {
               {...register('company')}
               aria-invalid={Boolean(errors.company)}
               aria-describedby={errors.company ? 'contact-company-error' : undefined}
-              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
+              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-body text-slate-800 placeholder-slate-400 ${
                 errors.company
                   ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                   : touchedFields.company
@@ -391,11 +391,11 @@ function ContactFormContent() {
               </span>
             )}
           </div>
-          {errors.company && <span id="contact-company-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">{errors.company.message}</span>}
+          {errors.company && <span id="contact-company-error" className="text-caption text-red-500 mt-1.5 block" role="alert">{errors.company.message}</span>}
         </div>
 
         <div>
-          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5" htmlFor="contact-phone">{t('phone')}</label>
+          <label className="block text-body font-bold text-slate-855 mb-2.5" htmlFor="contact-phone">{t('phone')}</label>
           <div className="relative">
             <input
               id="contact-phone"
@@ -410,7 +410,7 @@ function ContactFormContent() {
               })}
               aria-invalid={Boolean(errors.phone)}
               aria-describedby={errors.phone ? 'contact-phone-error' : undefined}
-              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
+              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-body text-slate-800 placeholder-slate-400 ${
                 errors.phone
                   ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
                   : touchedFields.phone
@@ -424,13 +424,13 @@ function ContactFormContent() {
               </span>
             )}
           </div>
-          {errors.phone && <span id="contact-phone-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">{errors.phone.message}</span>}
+          {errors.phone && <span id="contact-phone-error" className="text-caption text-red-500 mt-1.5 block" role="alert">{errors.phone.message}</span>}
         </div>
       </div>
 
       {/* Multi-Select Services Chips */}
       <div>
-        <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-3">{t('services') || 'Services Needed'}</label>
+        <label className="block text-body font-bold text-slate-855 mb-3">{t('services') || 'Services Needed'}</label>
         <div className="flex flex-wrap gap-2.5">
           {serviceOptions.map((opt) => {
             const active = selectedServices.includes(opt.id);
@@ -439,7 +439,7 @@ function ContactFormContent() {
                 key={opt.id}
                 type="button"
                 onClick={() => toggleService(opt.id)}
-                className={`px-4 py-2.5 rounded-full border text-sm font-bold transition-all flex items-center gap-2 cursor-pointer ${
+                className={`px-4 py-2.5 rounded-full border text-body-sm font-bold transition-all flex items-center gap-2 cursor-pointer ${
                   active
                     ? 'bg-royal-blue/15 border-royal-blue text-royal-blue'
                     : 'bg-slate-50 border-slate-200 text-slate-600 hover:border-slate-350 hover:bg-slate-100'
@@ -456,16 +456,16 @@ function ContactFormContent() {
       {/* Grid for Select Options */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5" htmlFor="contact-industry">{t('industry')}</label>
+          <label className="block text-body font-bold text-slate-855 mb-2.5" htmlFor="contact-industry">{t('industry')}</label>
           <div className="relative">
             <select
               id="contact-industry"
               {...register('industry')}
               aria-invalid={Boolean(errors.industry)}
               aria-describedby={errors.industry ? 'contact-industry-error' : undefined}
-              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 cursor-pointer ${
+              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-body text-slate-800 cursor-pointer ${
                 errors.industry
-                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
+                  ? 'border-red-500 bg-red-50/70 focus:border-red-656 focus:ring-2 focus:ring-red-200'
                   : touchedFields.industry
                   ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                   : 'border-slate-200'
@@ -482,22 +482,22 @@ function ContactFormContent() {
               </span>
             )}
           </div>
-          {errors.industry && <span id="contact-industry-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">{errors.industry.message}</span>}
+          {errors.industry && <span id="contact-industry-error" className="text-caption text-red-500 mt-1.5 block" role="alert">{errors.industry.message}</span>}
         </div>
 
 
 
         <div>
-          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5" htmlFor="contact-timeline">{t('timeline')}</label>
+          <label className="block text-body font-bold text-slate-855 mb-2.5" htmlFor="contact-timeline">{t('timeline')}</label>
           <div className="relative">
             <select
               id="contact-timeline"
               {...register('timeline')}
               aria-invalid={Boolean(errors.timeline)}
               aria-describedby={errors.timeline ? 'contact-timeline-error' : undefined}
-              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 cursor-pointer ${
+              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-body text-slate-800 cursor-pointer ${
                 errors.timeline
-                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
+                  ? 'border-red-500 bg-red-50/70 focus:border-red-656 focus:ring-2 focus:ring-red-200'
                   : touchedFields.timeline
                   ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                   : 'border-slate-200'
@@ -514,26 +514,26 @@ function ContactFormContent() {
               </span>
             )}
           </div>
-          {errors.timeline && <span id="contact-timeline-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">{errors.timeline.message}</span>}
+          {errors.timeline && <span id="contact-timeline-error" className="text-caption text-red-500 mt-1.5 block" role="alert">{errors.timeline.message}</span>}
         </div>
 
         <div>
-          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5" htmlFor="contact-country">{t('country') || 'Country / Region'}</label>
+          <label className="block text-body font-bold text-slate-855 mb-2.5" htmlFor="contact-country">{t('country') || 'Country / Region'}</label>
           <input
             id="contact-country"
             type="text"
             placeholder="e.g. United States, United Kingdom"
             {...register('country')}
-            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400"
+            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-body text-slate-800 placeholder-slate-400"
           />
         </div>
 
         <div>
-          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5" htmlFor="contact-method">{t('contactMethod') || 'Preferred Contact Method'}</label>
+          <label className="block text-body font-bold text-slate-855 mb-2.5" htmlFor="contact-method">{t('contactMethod') || 'Preferred Contact Method'}</label>
           <select
             id="contact-method"
             {...register('preferredContactMethod')}
-            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 cursor-pointer"
+            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-body text-slate-800 cursor-pointer"
           >
             <option value="Email">Email</option>
             <option value="Phone Call">Phone Call</option>
@@ -543,11 +543,11 @@ function ContactFormContent() {
         </div>
 
         <div>
-          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5" htmlFor="contact-project-type">{t('projectType') || 'Project Type'}</label>
+          <label className="block text-body font-bold text-slate-855 mb-2.5" htmlFor="contact-project-type">{t('projectType') || 'Project Type'}</label>
           <select
             id="contact-project-type"
             {...register('projectType')}
-            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 cursor-pointer"
+            className="w-full h-14 px-5 rounded-[16px] border border-slate-200 bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-body text-slate-800 cursor-pointer"
           >
             <option value="">-- Select Project Type --</option>
             <option value="New Product from Scratch">New Product from Scratch</option>
@@ -559,16 +559,16 @@ function ContactFormContent() {
         </div>
 
         <div>
-          <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5" htmlFor="contact-subject">{t('subject')}</label>
+          <label className="block text-body font-bold text-slate-855 mb-2.5" htmlFor="contact-subject">{t('subject')}</label>
           <div className="relative">
             <select
               id="contact-subject"
               {...register('subject')}
               aria-invalid={Boolean(errors.subject)}
               aria-describedby={errors.subject ? 'contact-subject-error' : undefined}
-              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 cursor-pointer ${
+              className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-body text-slate-800 cursor-pointer ${
                 errors.subject
-                  ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
+                  ? 'border-red-500 bg-red-50/70 focus:border-red-656 focus:ring-2 focus:ring-red-200'
                   : touchedFields.subject
                   ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                   : 'border-slate-200'
@@ -585,13 +585,13 @@ function ContactFormContent() {
               </span>
             )}
           </div>
-          {errors.subject && <span id="contact-subject-error" className="text-xs font-semibold text-red-500 mt-1.5 block" role="alert">{errors.subject.message}</span>}
+          {errors.subject && <span id="contact-subject-error" className="text-caption text-red-500 mt-1.5 block" role="alert">{errors.subject.message}</span>}
         </div>
       </div>
 
       {/* Multi-Select Required Tech Chips */}
       <div>
-        <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-3">{t('requiredTech') || 'Preferred Technologies'}</label>
+        <label className="block text-body font-bold text-slate-855 mb-3">{t('requiredTech') || 'Preferred Technologies'}</label>
         <div className="flex flex-wrap gap-2.5">
           {techOptions.map((tech) => {
             const active = selectedTech.includes(tech);
@@ -600,7 +600,7 @@ function ContactFormContent() {
                 key={tech}
                 type="button"
                 onClick={() => toggleTech(tech)}
-                className={`px-3.5 py-2 rounded-full border text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
+                className={`px-3.5 py-2 rounded-full border text-caption font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
                   active
                     ? 'bg-royal-blue/15 border-royal-blue text-royal-blue'
                     : 'bg-white border-slate-200 text-slate-600 hover:border-slate-300 hover:bg-slate-100'
@@ -616,7 +616,7 @@ function ContactFormContent() {
 
       {/* Message Textarea */}
       <div>
-        <label className="block text-[15px] lg:text-[18px] font-bold text-slate-855 mb-2.5" htmlFor="contact-message">{t('message')}</label>
+        <label className="block text-body font-bold text-slate-855 mb-2.5" htmlFor="contact-message">{t('message')}</label>
         <div className="relative">
           <textarea
             id="contact-message"
@@ -625,9 +625,9 @@ function ContactFormContent() {
             {...register('message')}
             aria-invalid={Boolean(errors.message)}
             aria-describedby={errors.message ? 'contact-message-error' : undefined}
-            className={`w-full pl-5 pr-11 py-4 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-base text-slate-800 placeholder-slate-400 ${
+            className={`w-full pl-5 pr-11 py-4 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-body text-slate-800 placeholder-slate-400 ${
               errors.message
-                ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200'
+                ? 'border-red-500 bg-red-50/70 focus:border-red-656 focus:ring-2 focus:ring-red-200'
                 : touchedFields.message
                 ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                 : 'border-slate-200'
@@ -641,13 +641,13 @@ function ContactFormContent() {
         </div>
         <div className="flex justify-between items-center mt-1.5">
           {errors.message ? (
-            <span id="contact-message-error" className="text-xs font-semibold text-red-500" role="alert">{errors.message.message}</span>
+            <span id="contact-message-error" className="text-caption text-red-500" role="alert">{errors.message.message}</span>
           ) : (
-            <span className="text-xs text-slate-400">
+            <span className="text-caption text-slate-400">
               {locale === 'es' ? 'El mensaje debe tener al menos 20 caracteres' : 'Message must be at least 20 characters'}
             </span>
           )}
-          <span className={`text-xs font-bold ${remainingChars < 100 ? 'text-amber-500' : 'text-slate-400'}`}>
+          <span className={`text-caption font-bold ${remainingChars < 100 ? 'text-amber-500' : 'text-slate-400'}`}>
             {remainingChars} {locale === 'es' ? 'caracteres restantes' : 'characters remaining'}
           </span>
         </div>
@@ -658,7 +658,7 @@ function ContactFormContent() {
         <button
           type="submit"
           disabled={submitting}
-          className={`btn-primary min-w-[200px] flex items-center justify-center gap-2 transition-all ${
+          className={`btn-primary min-w-[200px] flex items-center justify-center gap-2 text-button transition-all ${
             submitting ? 'opacity-50 cursor-not-allowed bg-slate-400 hover:bg-slate-400 border-slate-400' : ''
           }`}
         >

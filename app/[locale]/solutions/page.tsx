@@ -367,16 +367,16 @@ function SolutionsPageContent() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
             <div className="space-y-1">
-              <span className="block text-4xl sm:text-5xl font-black text-royal-blue tracking-tight">{t('stats.retentionNum')}</span>
-              <span className="block text-[10px] font-extrabold text-slate-500 uppercase tracking-widest">{t('stats.retentionLabel')}</span>
+              <span className="block text-h1 text-royal-blue leading-none">{t('stats.retentionNum')}</span>
+              <span className="block text-eyebrow text-slate-500">{t('stats.retentionLabel')}</span>
             </div>
             <div className="space-y-1">
-              <span className="block text-4xl sm:text-5xl font-black text-royal-blue tracking-tight">{t('stats.deploymentsNum')}</span>
-              <span className="block text-[10px] font-extrabold text-slate-500 uppercase tracking-widest">{t('stats.deploymentsLabel')}</span>
+              <span className="block text-h1 text-royal-blue leading-none">{t('stats.deploymentsNum')}</span>
+              <span className="block text-eyebrow text-slate-500">{t('stats.deploymentsLabel')}</span>
             </div>
             <div className="space-y-1">
-              <span className="block text-4xl sm:text-5xl font-black text-royal-blue tracking-tight">{t('stats.onboardingNum')}</span>
-              <span className="block text-[10px] font-extrabold text-slate-500 uppercase tracking-widest">{t('stats.onboardingLabel')}</span>
+              <span className="block text-h1 text-royal-blue leading-none">{t('stats.onboardingNum')}</span>
+              <span className="block text-eyebrow text-slate-500">{t('stats.onboardingLabel')}</span>
             </div>
           </div>
         </div>
@@ -390,10 +390,10 @@ function SolutionsPageContent() {
           <aside className="col-span-3 sticky top-28 h-fit max-h-[80vh] overflow-y-auto pr-4 hidden lg:block scrollbar-thin">
             <div className="space-y-6">
               <div>
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1">
+                <span className="text-eyebrow text-slate-400 block mb-1">
                   {locale === 'es' ? 'Navegación de Soluciones' : 'Solutions Navigation'}
                 </span>
-                <h4 className="text-sm font-extrabold text-slate-900 uppercase tracking-wider">
+                <h4 className="text-h4 text-slate-900">
                   {locale === 'es' ? 'Áreas de Práctica' : 'Practice Areas'}
                 </h4>
               </div>
@@ -422,7 +422,7 @@ function SolutionsPageContent() {
                         }`}>
                           <CategoryIcon size={16} />
                         </div>
-                        <span className="text-xs truncate tracking-wide">{categoryTitle}</span>
+                        <span className="text-body-sm font-bold truncate">{categoryTitle}</span>
                       </div>
                       <ChevronRight size={14} className={`opacity-0 group-hover:opacity-100 transition-all ${
                         isActive ? 'opacity-100 text-royal-blue' : 'text-slate-400'
@@ -452,15 +452,15 @@ function SolutionsPageContent() {
                     <div className="p-8 rounded-[24px] bg-gradient-to-r from-slate-900 to-royal-blue text-white space-y-6 shadow-xl relative overflow-hidden my-12 text-left">
                       <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
                       <div className="max-w-2xl space-y-3 relative z-10">
-                        <span className="text-[10px] font-bold text-blue-300 uppercase tracking-widest">
+                        <span className="text-eyebrow text-blue-300">
                           {locale === 'es' ? '¿TIENE UN PROYECTO EN MENTE?' : 'HAVE A PROJECT IN MIND?'}
                         </span>
-                        <h4 className="text-xl sm:text-2xl font-black tracking-tight leading-tight">
+                        <h4 className="text-h3 text-white">
                           {locale === 'es' 
                             ? 'Acelere su desarrollo de software con ingenieros expertos' 
                             : 'Accelerate your software roadmap with dedicated engineering squads'}
                         </h4>
-                        <p className="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed">
+                        <p className="text-body-sm text-slate-300">
                           {locale === 'es'
                             ? 'Ofrecemos soluciones personalizadas adaptadas a sus necesidades comerciales y de escala operativa.'
                             : 'We deploy certified SRE engineers and developers to architect custom systems under strict access controls.'}
@@ -475,7 +475,7 @@ function SolutionsPageContent() {
                         </Link>
                         <Link
                           href="/contact"
-                          className="px-5 py-2.5 bg-white/10 hover:bg-white/20 border border-white/10 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all"
+                          className="px-5 py-2.5 bg-white/10 hover:bg-white/20 border border-white/10 text-button text-white rounded-xl transition-all"
                         >
                           {locale === 'es' ? 'Solicitar Propuesta' : 'Request Proposal'}
                         </Link>
@@ -488,15 +488,15 @@ function SolutionsPageContent() {
                     <div className="p-8 rounded-[24px] bg-slate-900 border border-slate-800 text-white space-y-6 shadow-xl relative overflow-hidden my-12 text-left">
                       <div className="absolute bottom-0 left-0 w-[200px] h-[200px] bg-emerald-500/5 rounded-full blur-2xl pointer-events-none" />
                       <div className="max-w-2xl space-y-3 relative z-10">
-                        <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest">
+                        <span className="text-eyebrow text-emerald-400">
                           {locale === 'es' ? 'INTELIGENCIA DE DATOS' : 'DATA INTELLIGENCE'}
                         </span>
-                        <h4 className="text-xl sm:text-2xl font-black tracking-tight leading-tight">
+                        <h4 className="text-h3 text-white">
                           {locale === 'es' 
                             ? 'Tome mejores decisiones basadas en datos e inteligencia empresarial' 
                             : 'Maximize performance with real-time analytics and data lakes'}
                         </h4>
-                        <p className="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed">
+                        <p className="text-body-sm text-slate-300">
                           {locale === 'es'
                             ? 'Integramos lagos de datos modernos con paneles interactivos de Power BI para el monitoreo de inventario y KPI.'
                             : 'We build scalable data warehousing pipelines and deploy custom business intelligence dashboards.'}
@@ -505,13 +505,13 @@ function SolutionsPageContent() {
                       <div className="flex flex-wrap gap-3 relative z-10 pt-2">
                         <button
                           onClick={triggerOpenChat}
-                          className="px-5 py-2.5 bg-slate-800 hover:bg-slate-750 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow border-none cursor-pointer"
+                          className="px-5 py-2.5 bg-slate-800 hover:bg-slate-750 text-button text-white rounded-xl transition-all shadow border-none cursor-pointer"
                         >
                           {locale === 'es' ? 'Hablar con Consultor IA' : 'Talk to AI Consultant'}
                         </button>
                         <Link
                           href="/contact"
-                          className="px-5 py-2.5 bg-white/5 hover:bg-white/10 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all"
+                          className="px-5 py-2.5 bg-white/5 hover:bg-white/10 text-button text-white rounded-xl transition-all"
                         >
                           {locale === 'es' ? 'Contactar Especialista' : 'Contact Specialist'}
                         </Link>
@@ -526,10 +526,10 @@ function SolutionsPageContent() {
                         <CategoryIcon size={22} />
                       </div>
                       <div>
-                        <span className="block text-[9px] font-bold text-slate-400 uppercase tracking-widest">
+                        <span className="block text-eyebrow text-slate-400">
                           {category.services.length} {locale === 'es' ? 'Servicios Disponibles' : 'Services Available'}
                         </span>
-                        <h3 className="text-[28px] font-bold text-slate-900 tracking-tight leading-[1.2]">
+                        <h3 className="text-h2 text-slate-900">
                           {categoryTitle}
                         </h3>
                       </div>
@@ -538,7 +538,7 @@ function SolutionsPageContent() {
                     {/* Mobile Toggle Collapse Indicator */}
                     <button
                       onClick={() => toggleMobileCollapse(category.id)}
-                      className="lg:hidden flex items-center justify-between gap-2 px-4 py-2 bg-slate-100 text-slate-600 text-xs font-bold rounded-xl border-none cursor-pointer"
+                      className="lg:hidden flex items-center justify-between gap-2 px-4 py-2 bg-slate-100 text-slate-600 text-body-sm font-semibold rounded-xl border-none cursor-pointer"
                     >
                       <span>{isCollapsed ? (locale === 'es' ? 'Mostrar' : 'Expand') : (locale === 'es' ? 'Ocultar' : 'Collapse')}</span>
                       <ChevronDown size={14} className={`transform transition-transform ${isCollapsed ? '' : 'rotate-180'}`} />
@@ -552,7 +552,7 @@ function SolutionsPageContent() {
                       {/* Left: Category Summary Cover Card */}
                       <div className="lg:col-span-4 bg-white border border-slate-200 rounded-[24px] p-6 shadow-sm flex flex-col justify-between hover:border-slate-355 transition-all text-left relative overflow-hidden group">
                         <div className="space-y-4 relative z-10">
-                          <p className="text-[16px] text-slate-655 leading-[1.7] font-semibold">
+                          <p className="text-body text-slate-655">
                             {categoryDesc}
                           </p>
                           
@@ -572,7 +572,7 @@ function SolutionsPageContent() {
                         <div className="pt-6 relative z-10">
                           <button
                             onClick={() => setSelectedCategory({ cat: category, catTitle: categoryTitle, IconComponent: CategoryIcon })}
-                            className="w-full inline-flex items-center justify-center gap-1.5 py-3 bg-royal-blue/5 hover:bg-royal-blue/15 text-royal-blue font-bold text-xs uppercase tracking-wider rounded-xl transition-all cursor-pointer border-none"
+                            className="w-full inline-flex items-center justify-center gap-1.5 py-3 bg-royal-blue/5 hover:bg-royal-blue/15 text-button text-royal-blue rounded-xl transition-all cursor-pointer border-none"
                           >
                             <span>{locale === 'es' ? 'Ver Detalles de la Práctica' : 'Explore Category Scope'}</span>
                             <ChevronRight size={14} />
@@ -601,16 +601,16 @@ function SolutionsPageContent() {
                                     <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-100 text-royal-blue group-hover:scale-105 transition-transform duration-300">
                                       <ServiceIcon size={18} />
                                     </div>
-                                    <span className="text-[9px] font-bold text-slate-400 tracking-wider uppercase">
+                                    <span className="text-eyebrow text-slate-400">
                                       {srv.tech[0] || 'Core Tech'}
                                     </span>
                                   </div>
 
-                                  <h4 className="text-[22px] font-bold text-slate-900 leading-[1.2] group-hover:text-royal-blue transition-colors">
+                                  <h4 className="text-h3 text-slate-900 group-hover:text-royal-blue transition-colors">
                                     {srvTitle}
                                   </h4>
 
-                                  <p className="text-[16px] text-slate-655 leading-[1.7] font-semibold line-clamp-3">
+                                  <p className="text-body text-slate-655 line-clamp-3">
                                     {srvDesc}
                                   </p>
 
@@ -644,7 +644,7 @@ function SolutionsPageContent() {
                                 <div className="pt-5 mt-6 border-t border-slate-100 flex items-center justify-between">
                                   <Link
                                     href={srvPath}
-                                    className="text-[11px] font-bold text-royal-blue hover:underline tracking-wider uppercase flex items-center gap-1.5"
+                                    className="text-button text-royal-blue hover:underline flex items-center gap-1.5"
                                   >
                                     <span>{locale === 'es' ? 'Ver Detalles' : 'Learn More'}</span>
                                     <ArrowRight size={12} />
@@ -685,11 +685,11 @@ function SolutionsPageContent() {
                                     </span>
                                   </div>
 
-                                  <h4 className="text-[22px] font-bold text-slate-900 leading-[1.2]">
+                                  <h4 className="text-h3 text-slate-900">
                                     {srvTitle}
                                   </h4>
 
-                                  <p className="text-slate-655 text-[16px] leading-[1.7] font-semibold line-clamp-3">
+                                  <p className="text-body text-slate-655 line-clamp-3">
                                     {srvDesc}
                                   </p>
 
@@ -705,7 +705,7 @@ function SolutionsPageContent() {
                                 <div className="pt-4 mt-5 border-t border-slate-100 flex items-center justify-between">
                                   <Link
                                     href={srvPath}
-                                    className="text-[10px] font-bold text-royal-blue hover:underline tracking-wider uppercase flex items-center gap-1"
+                                    className="text-button text-royal-blue hover:underline flex items-center gap-1"
                                   >
                                     <span>{locale === 'es' ? 'Ver Detalles' : 'Learn More'}</span>
                                     <ArrowRight size={10} />
@@ -728,7 +728,7 @@ function SolutionsPageContent() {
                     {/* Related Services Chips Footer inside Category */}
                     <div className="pt-8 border-t border-slate-100 mt-8 text-left">
                       <div className="flex flex-wrap items-center gap-2">
-                        <span className="text-[10px] font-bold text-slate-450 uppercase tracking-widest mr-2">
+                        <span className="text-eyebrow text-slate-450 mr-2">
                           {locale === 'es' ? 'Relacionado:' : 'Related:'}
                         </span>
                         
@@ -742,7 +742,7 @@ function SolutionsPageContent() {
                             <Link
                               key={idx}
                               href={relPath}
-                              className="px-3 py-1 bg-slate-100 hover:bg-royal-blue/10 text-slate-650 hover:text-royal-blue rounded-full text-xs font-semibold transition-all"
+                              className="px-3 py-1 bg-slate-100 hover:bg-royal-blue/10 text-slate-650 hover:text-royal-blue rounded-full text-body-sm font-semibold transition-all"
                             >
                               {getRelatedName(relSlug)}
                             </Link>
@@ -762,38 +762,88 @@ function SolutionsPageContent() {
       </section>
 
       {/* Technology Ecosystem Section */}
-      <section className="py-24 bg-white relative z-10 border-t border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
-          <div className="max-w-3xl space-y-4">
-            <span className="text-xs font-bold text-royal-blue uppercase tracking-widest">{t('techEcosystemTitle')}</span>
-            <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">{t('techEcosystemSubtitle')}</h3>
+      <section 
+        className="py-16 md:py-24 relative z-10 border-t border-b border-slate-200 overflow-hidden"
+        style={{
+          backgroundImage: 'linear-gradient(135deg, #F8FBFF 0%, #FFFFFF 50%, #F7FCF9 100%)'
+        }}
+      >
+        {/* Faint ambient background glows */}
+        <div className="absolute top-10 left-10 w-96 h-96 bg-royal-blue/5 rounded-full blur-[100px] pointer-events-none -z-10" />
+        <div className="absolute bottom-10 right-10 w-96 h-96 bg-green/3 rounded-full blur-[100px] pointer-events-none -z-10" />
+
+        <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12 xl:px-16 w-full space-y-12">
+          {/* Header block aligned with global content container */}
+          <div className="max-w-[1100px] text-left space-y-4">
+            <span className="text-xs font-bold text-royal-blue tracking-widest uppercase block">
+              {t('techEcosystemTitle')}
+            </span>
+            <h3 className="text-3xl sm:text-[clamp(42px,4vw,64px)] font-black text-slate-900 leading-[1.1] tracking-tight">
+              {t('techEcosystemSubtitle')}
+            </h3>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {techEcosystem.map((group, idx) => (
-              <div key={idx} className="premium-card p-7 bg-[#F8FAFC] border border-slate-200 rounded-2xl text-left space-y-4 shadow-sm">
-                <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider border-b border-slate-200 pb-2">{group.name}</h4>
-                <div className="flex flex-wrap gap-1.5">
-                  {group.items.map((item, itemIdx) => (
-                    <span key={itemIdx} className="px-2.5 py-1 bg-white border border-slate-200 text-slate-655 rounded-lg text-xs font-semibold">
-                      {item}
-                    </span>
-                  ))}
+          {/* Cards Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-7">
+            {techEcosystem.map((group, idx) => {
+              let CategoryIcon = Cpu;
+              if (group.name === 'Cloud') CategoryIcon = Cloud;
+              else if (group.name === 'AI & ML') CategoryIcon = Brain;
+              else if (group.name === 'Frontend') CategoryIcon = Code;
+              else if (group.name === 'Backend') CategoryIcon = Terminal;
+              else if (group.name === 'Database') CategoryIcon = Database;
+              else if (group.name === 'DevOps') CategoryIcon = Layers;
+              else if (group.name === 'Analytics') CategoryIcon = TrendingUp;
+
+              return (
+                <div 
+                  key={idx} 
+                  className="bg-[#F8FAFC]/90 border border-slate-200/80 rounded-[24px] p-7 md:p-8 text-left min-h-[260px] flex flex-col justify-between hover:-translate-y-1 hover:border-royal-blue/30 hover:bg-[#F4F8FF]/80 hover:shadow-md transition-all duration-300 ease-in-out group shadow-2xs select-none"
+                >
+                  <div className="space-y-5">
+                    {/* Header with name and category icon */}
+                    <div className="flex items-center justify-between border-b border-slate-200/60 pb-3">
+                      <h4 className="text-sm font-black text-slate-900 uppercase tracking-wide">
+                        {group.name}
+                      </h4>
+                      <CategoryIcon size={15} className="text-royal-blue group-hover:scale-110 transition-transform duration-300" />
+                    </div>
+
+                    {/* Wrapping Technology Chips */}
+                    <div className="flex flex-wrap gap-2.5">
+                      {group.items.map((item, itemIdx) => (
+                        <span 
+                          key={itemIdx} 
+                          className="px-3.5 py-2 bg-white border border-[#DDE6F2] hover:border-royal-blue/40 text-slate-700 rounded-full text-sm font-semibold tracking-tight transition-colors duration-300"
+                        >
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* Industries We Serve Section */}
-      <section className="relative bg-royal-blue text-white py-28 z-10 overflow-hidden">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-3xl pointer-events-none" />
+      <section 
+        className="relative py-20 md:py-24 z-10 border-t border-b border-slate-200 overflow-hidden"
+        style={{
+          backgroundImage: 'linear-gradient(135deg, #F5F9FF 0%, #FFFFFF 48%, #F4FBF7 100%)'
+        }}
+      >
+        {/* Pale light ambient glows */}
+        <div className="absolute top-10 left-10 w-96 h-96 bg-royal-blue/5 rounded-full blur-[100px] pointer-events-none -z-10" />
+        <div className="absolute bottom-10 right-10 w-96 h-96 bg-green/3 rounded-full blur-[100px] pointer-events-none -z-10" />
         
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-16">
-          <div className="max-w-3xl space-y-4 text-left">
-            <span className="text-xs font-bold text-blue-200 uppercase tracking-widest">{t('industriesTitle')}</span>
-            <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black tracking-tight leading-[1.2]">{t('industriesSubtitle')}</h3>
+        <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12 xl:px-16 relative z-10 w-full space-y-12">
+          {/* Header container */}
+          <div className="max-w-[1100px] text-left space-y-4">
+            <span className="text-xs font-bold text-royal-blue tracking-widest uppercase block">{t('industriesTitle')}</span>
+            <h3 className="text-3xl sm:text-[clamp(42px,4vw,64px)] font-black text-slate-900 leading-[1.08] tracking-tight">{t('industriesSubtitle')}</h3>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -802,14 +852,44 @@ function SolutionsPageContent() {
               const indTitle = t(`industriesList.${ind.key}.title`);
               const indDesc = t(`industriesList.${ind.key}.desc`);
 
+              // Define individual pale industry accents
+              const getIndustryAccent = (id: string) => {
+                const mapping: Record<string, { bg: string; border: string; text: string; topLine: string }> = {
+                  healthcare: { bg: 'bg-blue-50/60', border: 'border-blue-100', text: 'text-blue-600', topLine: 'from-blue-400 to-cyan-300' },
+                  finance: { bg: 'bg-cyan-50/60', border: 'border-cyan-100', text: 'text-cyan-600', topLine: 'from-cyan-400 to-teal-300' },
+                  retail: { bg: 'bg-green-50/60', border: 'border-green-100', text: 'text-green-600', topLine: 'from-green-400 to-emerald-300' },
+                  manufacturing: { bg: 'bg-teal-50/60', border: 'border-teal-100', text: 'text-teal-600', topLine: 'from-teal-400 to-emerald-300' },
+                  education: { bg: 'bg-indigo-50/60', border: 'border-indigo-100', text: 'text-indigo-600', topLine: 'from-indigo-400 to-blue-300' },
+                  logistics: { bg: 'bg-sky-50/60', border: 'border-sky-100', text: 'text-sky-600', topLine: 'from-sky-400 to-blue-300' },
+                  hospitality: { bg: 'bg-rose-50/60', border: 'border-rose-100', text: 'text-rose-600', topLine: 'from-rose-400 to-orange-300' },
+                  construction: { bg: 'bg-amber-50/60', border: 'border-amber-100', text: 'text-amber-600', topLine: 'from-amber-400 to-yellow-300' },
+                  legal: { bg: 'bg-slate-100/60', border: 'border-slate-200', text: 'text-slate-700', topLine: 'from-slate-500 to-slate-400' },
+                  pharma: { bg: 'bg-emerald-50/60', border: 'border-emerald-100', text: 'text-emerald-600', topLine: 'from-emerald-400 to-teal-300' },
+                  government: { bg: 'bg-blue-100/60', border: 'border-blue-200', text: 'text-blue-700', topLine: 'from-blue-600 to-indigo-500' },
+                  technology: { bg: 'bg-royal-blue/10', border: 'border-royal-blue/20', text: 'text-royal-blue', topLine: 'from-royal-blue to-green' }
+                };
+                return mapping[id] || { bg: 'bg-slate-50', border: 'border-slate-200', text: 'text-royal-blue', topLine: 'from-royal-blue to-cyan-400' };
+              };
+
+              const accent = getIndustryAccent(ind.id);
+
               return (
-                <div key={ind.id} className="p-8 rounded-[24px] bg-white/10 border border-white/10 shadow-sm flex flex-col justify-between hover:bg-white/15 transition-all duration-300 group text-left">
+                <div 
+                  key={ind.id} 
+                  className="relative p-8 rounded-[24px] bg-white/88 border border-[#DDE7F2] flex flex-col justify-between hover:-translate-y-1 transition-all duration-300 group text-left shadow-2xs select-none"
+                  style={{
+                    boxShadow: '0 12px 35px rgba(15, 23, 42, 0.06)'
+                  }}
+                >
+                  {/* Subtle top border line on card hover */}
+                  <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${accent.topLine} opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-t-[24px]`} />
+
                   <div className="space-y-4">
-                    <div className="p-3 w-fit rounded-xl bg-white/10 border border-white/5 text-blue-200 group-hover:scale-105 transition-all">
+                    <div className={`p-3 w-fit rounded-xl ${accent.bg} border ${accent.border} ${accent.text} group-hover:scale-105 transition-transform duration-300`}>
                       <IndIcon size={20} />
                     </div>
-                    <h4 className="text-lg font-bold text-white tracking-tight">{indTitle}</h4>
-                    <p className="text-xs text-blue-100 leading-relaxed font-medium">{indDesc}</p>
+                    <h4 className="text-lg font-black text-slate-900 tracking-tight">{indTitle}</h4>
+                    <p className="text-sm font-semibold text-slate-500 leading-relaxed">{indDesc}</p>
                   </div>
                 </div>
               );
@@ -822,8 +902,8 @@ function SolutionsPageContent() {
       <section className="py-28 bg-[#F8FAFC] relative z-10 border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
           <div className="text-center max-w-2xl mx-auto space-y-4">
-            <span className="text-xs font-bold text-royal-blue uppercase tracking-widest">{t('why.title')}</span>
-            <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">{t('why.subtitle')}</h3>
+            <span className="text-eyebrow text-royal-blue block">{t('why.title')}</span>
+            <h3 className="text-h2 text-slate-900">{t('why.subtitle')}</h3>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -834,8 +914,8 @@ function SolutionsPageContent() {
                   <div className="p-3 rounded-xl bg-royal-blue/10 text-royal-blue w-fit">
                     <AdvIcon size={20} />
                   </div>
-                  <h4 className="text-[22px] font-bold text-slate-900 tracking-tight leading-[1.2]">{t(adv.titleKey)}</h4>
-                  <p className="text-[16px] text-slate-655 leading-[1.7] font-semibold">{t(adv.descKey)}</p>
+                  <h4 className="text-h3 text-slate-900">{t(adv.titleKey)}</h4>
+                  <p className="text-body text-slate-655">{t(adv.descKey)}</p>
                 </div>
               );
             })}
@@ -847,8 +927,8 @@ function SolutionsPageContent() {
         <section className="py-24 bg-white relative z-10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
-            <h2 className="text-xs font-bold text-royal-blue uppercase tracking-widest">{t('faqTitle')}</h2>
-            <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">{t('faqSubtitle')}</h3>
+            <span className="text-eyebrow text-royal-blue block">{t('faqTitle')}</span>
+            <h3 className="text-h2 text-slate-900">{t('faqSubtitle')}</h3>
           </div>
 
           <div className="space-y-4">
@@ -859,11 +939,11 @@ function SolutionsPageContent() {
             ].map((faq, idx) => (
               <div key={idx} className="border border-slate-200 rounded-2xl overflow-hidden bg-[#F8FAFC]">
                 <details className="group">
-                  <summary className="flex items-center justify-between p-6 font-bold text-slate-800 cursor-pointer list-none text-sm md:text-base hover:bg-slate-50 select-none">
+                  <summary className="flex items-center justify-between p-6 text-body font-bold text-slate-800 cursor-pointer list-none hover:bg-slate-50 select-none">
                     <span>{faq.q}</span>
                     <ChevronRight size={18} className="transform transition-transform group-open:rotate-90 text-slate-450" />
                   </summary>
-                  <div className="px-6 pb-6 pt-2 text-[16px] text-slate-655 leading-[1.7] font-semibold border-t border-slate-100 text-left">
+                  <div className="px-6 pb-6 pt-2 text-body text-slate-655 border-t border-slate-100 text-left">
                     {faq.a}
                   </div>
                 </details>
@@ -876,8 +956,8 @@ function SolutionsPageContent() {
       {/* CTA Section */}
       <section className="py-24 bg-white relative z-10 border-t border-slate-200">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
-          <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">{t('ctaSectionTitle')}</h3>
-          <p className="text-[16px] md:text-[17px] text-slate-655 max-w-2xl mx-auto font-semibold leading-[1.7]">
+          <h3 className="text-h2 text-slate-900">{t('ctaSectionTitle')}</h3>
+          <p className="text-body text-slate-655 max-w-2xl mx-auto">
             {t('ctaSectionSubtitle')}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
@@ -889,7 +969,7 @@ function SolutionsPageContent() {
             </Link>
             <button
               onClick={triggerOpenChat}
-              className="inline-flex items-center justify-center h-12 px-8 bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm uppercase tracking-wider rounded-xl transition-all shadow-md hover:shadow-lg cursor-pointer w-full sm:w-auto border-none"
+              className="inline-flex items-center justify-center h-12 px-8 bg-slate-900 hover:bg-slate-800 text-white text-button rounded-xl transition-all shadow-md hover:shadow-lg cursor-pointer w-full sm:w-auto border-none"
             >
               {tAi('title') || 'Talk to AI Consultant'}
             </button>
@@ -964,8 +1044,8 @@ function SolutionsPageContent() {
                       <selectedCategory.IconComponent size={22} />
                     </div>
                     <div>
-                      <span className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest">{t('drawerTitle')}</span>
-                      <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight leading-snug">
+                      <span className="block text-eyebrow text-slate-450">{t('drawerTitle')}</span>
+                      <h3 className="text-h3 text-slate-900">
                         {selectedCategory.catTitle}
                       </h3>
                     </div>
@@ -980,15 +1060,15 @@ function SolutionsPageContent() {
 
                 {/* Section 1: Overview */}
                 <div className="space-y-3">
-                  <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest">{t('drawerTitle')}</h4>
-                  <p className="text-slate-700 text-sm font-semibold leading-relaxed bg-slate-50 border border-slate-200 p-5 rounded-2xl shadow-sm">
+                  <h4 className="text-eyebrow text-slate-400">{t('drawerTitle')}</h4>
+                  <p className="text-slate-700 text-body bg-slate-50 border border-slate-200 p-5 rounded-2xl shadow-sm">
                     {t(`categories.${selectedCategory.cat.id}.desc`)}
                   </p>
                 </div>
 
                 {/* Section 2: Specific capabilities */}
                 <div className="space-y-4">
-                  <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest">{tc('detailedCapabilities')}</h4>
+                  <h4 className="text-eyebrow text-slate-400">{tc('detailedCapabilities')}</h4>
                   <div className="space-y-4">
                     {selectedCategory.cat.services.map((srv: any) => {
                       const srvDetails = getServiceDetails(srv.id, locale);
@@ -998,15 +1078,15 @@ function SolutionsPageContent() {
 
                       return (
                         <div key={srv.id} className="p-5 rounded-2xl border border-slate-100 bg-white shadow-sm space-y-3 text-left">
-                          <h5 className="font-bold text-slate-900 text-sm sm:text-base">{srvTitle}</h5>
-                          <p className="text-xs sm:text-sm text-slate-550 leading-relaxed">{srvDesc}</p>
+                          <h5 className="text-body font-bold text-slate-900">{srvTitle}</h5>
+                          <p className="text-body-sm text-slate-555 leading-relaxed">{srvDesc}</p>
                           
                           {/* Link to dedicated landing page */}
                           <div className="pt-2 border-t border-slate-100/50 mt-1 flex items-center justify-between">
                             <Link 
                               href={srvPath}
                               onClick={() => setSelectedCategory(null)}
-                              className="text-xs font-bold text-royal-blue hover:underline flex items-center gap-1"
+                              className="text-button text-royal-blue hover:underline flex items-center gap-1"
                             >
                               <span>{t('viewServiceDetails')}</span>
                               <ArrowRight size={12} />
@@ -1020,14 +1100,14 @@ function SolutionsPageContent() {
 
                 {/* Section 3: Technologies Used */}
                 <div className="space-y-3">
-                  <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest">{tc('technologies')}</h4>
+                  <h4 className="text-eyebrow text-slate-400">{tc('technologies')}</h4>
                   <div className="flex flex-wrap gap-1.5">
                     {useMemo(() => {
                       const techs = new Set<string>();
                       selectedCategory.cat.services.forEach((srv: any) => srv.tech.forEach((tech: string) => techs.add(tech)));
                       return Array.from(techs);
                     }, [selectedCategory]).map((tech, idx) => (
-                      <span key={idx} className="px-3 py-1.5 bg-royal-blue/5 border border-royal-blue/15 text-royal-blue rounded-lg text-xs font-bold uppercase tracking-wider">
+                      <span key={idx} className="px-3 py-1.5 bg-royal-blue/5 border border-royal-blue/15 text-eyebrow text-royal-blue rounded-lg">
                         {tech}
                       </span>
                     ))}
@@ -1036,7 +1116,7 @@ function SolutionsPageContent() {
 
                 {/* Section 4: Target Industries */}
                 <div className="space-y-3">
-                  <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest">{tc('industries')}</h4>
+                  <h4 className="text-eyebrow text-slate-400">{tc('industries')}</h4>
                   <div className="flex flex-wrap gap-1.5">
                     {useMemo(() => {
                       const inds = new Set<string>();
@@ -1046,7 +1126,7 @@ function SolutionsPageContent() {
                       });
                       return Array.from(inds);
                     }, [selectedCategory]).map((ind, idx) => (
-                      <span key={idx} className="px-3 py-1.5 bg-royal-blue/5 border border-royal-blue/15 text-royal-blue rounded-lg text-xs font-bold">
+                      <span key={idx} className="px-3 py-1.5 bg-royal-blue/5 border border-royal-blue/15 text-body-sm font-bold text-royal-blue rounded-lg">
                         {ind}
                       </span>
                     ))}
@@ -1057,10 +1137,10 @@ function SolutionsPageContent() {
                 <div className="p-6.5 rounded-2xl bg-slate-900 text-white relative overflow-hidden border border-slate-800 shadow-md text-left">
                   <div className="absolute top-0 right-0 w-24 h-24 bg-royal-blue/25 rounded-full blur-xl pointer-events-none" />
                   <div className="space-y-3">
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-royal-blue/30 text-[10px] font-extrabold text-blue-200 uppercase tracking-wider">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-royal-blue/30 text-eyebrow text-blue-200">
                       {t('caseStudyLabel')}
                     </span>
-                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-semibold">
+                    <p className="text-body-sm text-slate-300">
                       {getCaseStudySummary(selectedCategory.cat.id, locale === 'es')}
                     </p>
                   </div>

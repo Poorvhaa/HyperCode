@@ -8,7 +8,6 @@ import { ServiceEcosystem } from '@/components/homepage/service-ecosystem';
 import { IndustryShowcase } from '@/components/homepage/industry-showcase';
 import { CaseStudiesSection } from '@/components/case-studies-section';
 import { DeliveryProcess } from '@/components/homepage/delivery-process';
-import { AIConsultantInvitation } from '@/components/homepage/ai-consultant-invitation';
 import { FinalCTA } from '@/components/homepage/final-cta';
 import { ThemeObserver } from '@/components/homepage/theme-observer';
 import { setRequestLocale } from 'next-intl/server';
@@ -53,9 +52,6 @@ export default async function Page({ params }: Props) {
       
       {/* 7. Delivery process */}
       <DeliveryProcess />
-      
-      {/* 8. AI Consultant invitation */}
-      <AIConsultantInvitation />
       
       {/* 9. Final CTA */}
       <FinalCTA />
