@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: Props) {
     title: `HyperCode | ${tc('careers')} | Apply`,
     description: "Submit your technical credentials and resume to join HyperCode's elite engineering and data squads.",
     alternates: {
-      canonical: `https://www.hypercode.com/${locale}/careers/apply`,
+      canonical: `https://www.hypercodeit.com/${locale}/careers/apply`,
     },
   };
 }

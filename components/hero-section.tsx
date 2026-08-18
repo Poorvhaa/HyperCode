@@ -99,25 +99,35 @@ export function HeroSection() {
       return;
     }
 
+    let ticking = false;
     const checkSpace = () => {
-      const cardEl = document.getElementById(`workflow-card-${activeStep}`);
-      const navEl = document.querySelector('nav');
-      if (!cardEl) return;
-      
-      const cardRect = cardEl.getBoundingClientRect();
-      const navBottom = navEl ? navEl.getBoundingClientRect().bottom : 0;
-      const spaceAbove = cardRect.top - navBottom;
-      
-      if (spaceAbove < 190) {
-        setUseBottomPlacement(true);
-      } else {
-        setUseBottomPlacement(false);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const cardEl = document.getElementById(`workflow-card-${activeStep}`);
+          const navEl = document.querySelector('nav');
+          if (!cardEl) {
+            ticking = false;
+            return;
+          }
+          
+          const cardRect = cardEl.getBoundingClientRect();
+          const navBottom = navEl ? navEl.getBoundingClientRect().bottom : 0;
+          const spaceAbove = cardRect.top - navBottom;
+          
+          if (spaceAbove < 190) {
+            setUseBottomPlacement(true);
+          } else {
+            setUseBottomPlacement(false);
+          }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
     checkSpace();
-    window.addEventListener('scroll', checkSpace);
-    window.addEventListener('resize', checkSpace);
+    window.addEventListener('scroll', checkSpace, { passive: true });
+    window.addEventListener('resize', checkSpace, { passive: true });
     return () => {
       window.removeEventListener('scroll', checkSpace);
       window.removeEventListener('resize', checkSpace);

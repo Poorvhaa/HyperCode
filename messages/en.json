@@ -30,6 +30,8 @@
     "close": "Close"
   },
   "Navigation": {
+    "openMenu": "Open navigation menu",
+    "closeMenu": "Close navigation menu",
     "home": "Home",
     "solutions": "Solutions",
     "about": "About Us",
@@ -213,6 +215,15 @@
   "Consultation": {
     "title": "Book a Consultation",
     "subtitle": "Schedule a session with a HyperCode solutions director to design your systems or map recruiting pipelines.",
+    "selectIndustry": "-- Select Industry --",
+    "industries": {
+      "healthcare": "Healthcare & Life Sciences",
+      "finance": "Banking & Financial Services",
+      "retail": "Retail & E-commerce",
+      "manufacturing": "Advanced Manufacturing",
+      "logistics": "Logistics & Supply Chain",
+      "other": "Other / General"
+    },
     "form": {
       "name": "Full Name",
       "email": "Corporate Email",
@@ -264,6 +275,9 @@
     }
   },
   "SolutionsPage": {
+    "backToTop": "Back to top",
+    "sidebarHeader": "SERVICES & EXPERTISE",
+    "sidebarSubtitle": "Explore Our Solutions",
     "heroTitle": "Enterprise Technology Consulting & Solutions",
     "heroSubtitle": "Accelerating business value through Custom Software Engineering, Generative AI, cloud scaling, and IT & Non-IT staffing services.",
     "searchPlaceholder": "Search services by name, tech stack, or industry vertical...",
@@ -293,8 +307,9 @@
       "onboardingLabel": "Average Squad Onboarding"
     },
     "why": {
-      "title": "Why Enterprise Leaders Choose HyperCode",
-      "subtitle": "We marry software engineering excellence with data architecture and global sourcing networks.",
+      "title": "WHY ENTERPRISES CHOOSE HYPERCODE",
+      "subtitle": "Engineering Technology That Moves Business Forward.",
+      "desc": "We combine software engineering, AI, data, cloud, and global talent to build secure, scalable solutions for modern enterprises.",
       "engineersTitle": "Certified SRE Engineers",
       "engineersDesc": "All squad engineers are fully certified in Next.js, Python, or cloud practices, ensuring compliance and clean architectures.",
       "deliveryTitle": "Accelerated Delivery",
@@ -1284,7 +1299,9 @@
   "HomepageRedesign": {
     "Hero": {
       "badge": "USA-Based Technology Partner",
-      "headline": "Engineering the Living Technology Ecosystems of Tomorrow",
+      "headlinePart1": "Building",
+      "headlineGradient": "Intelligent Technology",
+      "headlinePart2": "That Powers Business Growth.",
       "supporting": "We design and engineer unified digital worlds—connecting AI, multi-cloud platforms, and intelligent APIs into high-performance business engines that scale continuously.",
       "ctaPrimary": "Schedule Free Consultation",
       "ctaSecondary": "Explore Solutions",

@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: Props) {
     title: `HyperCode | Data Warehousing Services | ${tc('solutions')}`,
     description: "Enterprise Cloud Data Warehousing services, database migration, Snowflake/BigQuery architectures, and data lakehouse deployment. Headquartered in Schaumburg, IL.",
     alternates: {
-      canonical: `https://www.hypercode.com/${locale}/solutions/data-warehousing-services`,
+      canonical: `https://www.hypercodeit.com/${locale}/solutions/data-warehousing-services`,
     },
   };
 }

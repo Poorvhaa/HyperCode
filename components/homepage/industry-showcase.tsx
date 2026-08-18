@@ -279,7 +279,7 @@ export function IndustryShowcase() {
                 className="bg-white border border-slate-200/80 p-8 rounded-[32px] shadow-xs flex flex-col justify-between min-h-[360px]"
               >
                 <div className="space-y-4">
-                  <span className="text-[10px] font-black text-slate-400 tracking-widest uppercase block">
+                  <span className="text-[11px] font-black text-slate-600 tracking-widest uppercase block">
                     {locale === 'es' ? 'Sector Seleccionado' : 'Current Sector'}
                   </span>
                   <h3 className="text-2xl lg:text-3xl font-black text-slate-900 tracking-tight leading-snug flex items-center gap-3">
@@ -306,12 +306,12 @@ export function IndustryShowcase() {
                 {/* Integrated Statistics / Metric Widget */}
                 <div className="mt-6 pt-4 border-t border-slate-150 flex items-center justify-between">
                   <div>
-                    <span className="text-[8px] font-black text-slate-400 tracking-widest uppercase block">{widget.subtitle}</span>
+                    <span className="text-[11px] font-black text-slate-600 tracking-widest uppercase block">{widget.subtitle}</span>
                     <span className="text-xs font-bold text-slate-700 block">{widget.title}</span>
                   </div>
                   <div className="text-right">
                     <span className="text-lg font-black text-royal-blue block leading-none">{widget.val}</span>
-                    <span className="text-[7.5px] font-bold text-green tracking-wider uppercase block mt-1">{widget.metricName}</span>
+                    <span className="text-[11px] font-bold text-emerald-700 tracking-wider uppercase block mt-1">{widget.metricName}</span>
                   </div>
                 </div>
 

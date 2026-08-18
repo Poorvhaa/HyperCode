@@ -127,26 +127,28 @@ function FinalCTAContent() {
                     </g>
                   ))}
 
-                  {/* Animated data routes flowing along map */}
+                  {/* Animated data data routes flowing along map */}
                   <motion.circle
+                    cx="0"
+                    cy="0"
                     r="3.5"
                     fill="#145BFF"
                     animate={{
-                      cx: [70, 160, 330],
-                      cy: [90, 60, 80]
+                      x: [70, 160, 330],
+                      y: [90, 60, 80]
                     }}
                     transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-                    style={{ filter: 'drop-shadow(0 0 3px rgba(20,91,255,0.7))' }}
                   />
                   <motion.circle
+                    cx="0"
+                    cy="0"
                     r="3"
                     fill="#48B900"
                     animate={{
-                      cx: [220, 160, 70],
-                      cy: [140, 60, 90]
+                      x: [220, 160, 70],
+                      y: [140, 60, 90]
                     }}
                     transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-                    style={{ filter: 'drop-shadow(0 0 3px rgba(72,185,0,0.7))' }}
                   />
                 </svg>
               </motion.div>

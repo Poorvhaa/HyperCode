@@ -228,14 +228,12 @@ export function PremiumHero() {
           const px1 = (1 - progress1) * (1 - progress1) * 250 + 2 * (1 - progress1) * progress1 * controlX + progress1 * progress1 * screenX;
           const py1 = (1 - progress1) * (1 - progress1) * 250 + 2 * (1 - progress1) * progress1 * controlY + progress1 * progress1 * screenY;
           
+          const isNodeHovered = hoveredNodeIdRef.current === node.id;
           if (pEl1) {
-            pEl1.setAttribute('cx', `${px1}`);
-            pEl1.setAttribute('cy', `${py1}`);
+            pEl1.style.transform = `translate3d(${px1}px, ${py1}px, 0) scale(${isNodeHovered ? 1.5 : 1.0})`;
             // Smoothly fade in/out particle near terminal ends
             const pulseFade = progress1 < 0.1 ? progress1 * 10 : progress1 > 0.9 ? (1 - progress1) * 10 : 1;
-            const isNodeHovered = hoveredNodeIdRef.current === node.id;
             pEl1.setAttribute('opacity', `${pulseFade * depthOpacity * (isNodeHovered ? 1.0 : 0.85)}`);
-            pEl1.setAttribute('r', isNodeHovered ? '4.5' : '3');
           }
 
           // Trail particle coordinate math (lagging behind)
@@ -244,8 +242,7 @@ export function PremiumHero() {
           const py2 = (1 - progress2) * (1 - progress2) * 250 + 2 * (1 - progress2) * progress2 * controlY + progress2 * progress2 * screenY;
 
           if (pEl2) {
-            pEl2.setAttribute('cx', `${px2}`);
-            pEl2.setAttribute('cy', `${py2}`);
+            pEl2.style.transform = `translate3d(${px2}px, ${py2}px, 0)`;
             const trailFade = progress2 < 0.1 ? progress2 * 10 : progress2 > 0.9 ? (1 - progress2) * 10 : 0.6;
             pEl2.setAttribute('opacity', `${trailFade * depthOpacity * 0.55}`);
           }
@@ -344,7 +341,7 @@ export function PremiumHero() {
             0 4px 18px rgba(8, 22, 45, 0.025),
             0 1px 3px rgba(8, 22, 45, 0.015),
             inset 0 1.5px 2px rgba(255, 255, 255, 0.8) !important;
-          transition: border-color 300ms ease, box-shadow 300ms ease, transform 100ms ease-out !important;
+          transition: transform 150ms ease-out, opacity 150ms ease-out !important;
         }
         .glass-card-premium::after {
           content: '';
@@ -477,13 +474,14 @@ export function PremiumHero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25, duration: 0.65, ease: easePremium }}
-            className="text-display text-slate-900"
+            className="text-display text-slate-900 max-w-3xl leading-[1.15]"
           >
-            Engineering the{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#145BFF] via-[#25B5FF] to-[#48B900] inline-block pb-1">
-              Living Technology Ecosystems
-            </span>{' '}
-            of Tomorrow.
+            {t('headlinePart1')}{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#145BFF] via-[#25B5FF] to-[#48B900] inline-block pb-1 whitespace-nowrap">
+              {t('headlineGradient')}
+            </span>
+            <br className="hidden md:inline" />{' '}
+            {t('headlinePart2')}
           </motion.h1>
 
           {/* Strictly preserved copy paragraph */}
@@ -550,14 +548,17 @@ export function PremiumHero() {
           </motion.div>
         </div>
 
-        {/* RIGHT COLUMN: Interactive 3D Digital Business Ecosystem */}
-        <div className="col-span-1 lg:col-span-6 flex items-center justify-center relative min-h-[460px] sm:min-h-[500px] lg:min-h-[580px]">
+        <div className="col-span-1 lg:col-span-6 flex items-center justify-center relative min-h-[460px] sm:min-h-[500px] lg:min-h-[580px] overflow-hidden md:overflow-visible">
           <div
             ref={containerRef}
             style={{
               transform: `scale(${scale})`,
               transformOrigin: 'center center',
-              transition: 'transform 300ms ease-out'
+              transition: 'transform 300ms ease-out',
+              marginTop: `${(scale - 1) * 250}px`,
+              marginBottom: `${(scale - 1) * 250}px`,
+              marginLeft: `${(scale - 1) * 250}px`,
+              marginRight: `${(scale - 1) * 250}px`
             }}
             className="relative w-[500px] h-[500px] flex items-center justify-center"
           >
@@ -586,7 +587,7 @@ export function PremiumHero() {
                 {/* Logo Image in absolute original state */}
                 <div className="relative w-[100px] h-[60px] flex items-center justify-center">
                   <Image
-                    src="/hypercodeit.logo.png"
+                    src="/hypercodeit.logo.webp"
                     alt="HyperCode Core"
                     width={92}
                     height={52}
@@ -631,19 +632,21 @@ export function PremiumHero() {
                     {/* Primary Particle */}
                     <circle
                       ref={el => { particleRefs.current[idx * 2] = el; }}
+                      cx="0"
+                      cy="0"
                       r="3"
                       fill={node.color}
-                      className="transition-all duration-300"
-                      style={{ filter: `drop-shadow(0 0 4px ${node.color})` }}
+                      className="transition-opacity duration-300"
                     />
                     {/* Lagging Trail Particle */}
                     <circle
                       ref={el => { particleRefs.current[idx * 2 + 1] = el; }}
+                      cx="0"
+                      cy="0"
                       r="1.8"
                       fill={node.color}
                       opacity="0.6"
-                      className="transition-all duration-300"
-                      style={{ filter: `drop-shadow(0 0 3px ${node.color})` }}
+                      className="transition-opacity duration-300"
                     />
                   </g>
                 ))}

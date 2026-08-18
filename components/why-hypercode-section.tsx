@@ -163,9 +163,9 @@ export function WhyHypercodeSection() {
               </div>
               <div className="divide-y divide-slate-100">
                 {comparisonRows.map((row, index) => (
-                  <div key={index} className={`p-5 flex justify-between items-center gap-4 ${row.highlight ? 'bg-blue-50/20' : ''}`}>
+                  <div key={index} className={`p-5 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-4 ${row.highlight ? 'bg-blue-50/20' : ''}`}>
                     <div className="text-xs font-bold text-slate-700">{row.metric}</div>
-                    <div className="flex items-center gap-6 text-right">
+                    <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-left sm:text-right">
                       <div className="text-xs font-extrabold text-royal-blue flex items-center gap-1.5">
                         <CheckCircle2 size={12} className="text-emerald-500" />
                         {row.hc}

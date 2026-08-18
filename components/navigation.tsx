@@ -62,11 +62,18 @@ export function Navigation() {
   };
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 20);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -132,7 +139,7 @@ export function Navigation() {
             <div className="flex items-center h-full">
               <Link href="/" className="flex items-center flex-shrink-0">
                 <Image
-                  src="/hypercodeit.logo.png"
+                  src="/hypercodeit.logo.webp"
                   alt="HyperCode"
                   width={115}
                   height={80}
@@ -253,14 +260,21 @@ export function Navigation() {
             {/* Mobile Actions */}
             <div className="flex lg:hidden items-center gap-3">
               <button
+                type="button"
                 onClick={() => setIsMobileLangOpen(!isMobileLangOpen)}
+                aria-expanded={isMobileLangOpen}
+                aria-label="Toggle language menu"
                 className="px-3 py-1.5 rounded-xl border border-slate-200 text-body-sm font-semibold text-slate-700 bg-white"
               >
                 {locale.toUpperCase()}
               </button>
 
               <button
+                type="button"
                 onClick={() => setIsOpen(!isOpen)}
+                aria-expanded={isOpen}
+                aria-label={isOpen ? t('closeMenu') : t('openMenu')}
+                aria-controls="mobile-navigation"
                 className="p-2 rounded-xl text-slate-605 hover:bg-slate-50"
               >
                 {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -273,6 +287,7 @@ export function Navigation() {
         <AnimatePresence>
           {isOpen && (
             <motion.div
+              id="mobile-navigation"
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}

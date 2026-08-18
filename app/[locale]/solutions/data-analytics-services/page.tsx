@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: Props) {
     title: `HyperCode | Data Analytics Services | ${tc('solutions')}`,
     description: "Enterprise Data Analytics services, predictive modeling, statistical research, customer analytics, and business forecasting. Headquartered in Schaumburg, IL.",
     alternates: {
-      canonical: `https://www.hypercode.com/${locale}/solutions/data-analytics-services`,
+      canonical: `https://www.hypercodeit.com/${locale}/solutions/data-analytics-services`,
     },
   };
 }

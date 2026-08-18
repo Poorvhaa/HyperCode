@@ -203,7 +203,7 @@ export function Footer() {
                 className="inline-flex items-center justify-center hover:shadow-xl transition-all duration-300"
               >
                 <Image
-                  src="/hypercodeit.logo.png"
+                  src="/hypercodeit.logo.webp"
                   alt="HyperCode Logo"
                   width={150}
                   height={115}

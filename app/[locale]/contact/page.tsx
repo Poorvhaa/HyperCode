@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: Props) {
     title: `HyperCode | Contact | General Inquiries & Partnerships`,
     description: "HyperCode can be contacted for general business inquiries, career questions, partnership proposals, and media requests. Headquartered in Schaumburg, IL.",
     alternates: {
-      canonical: `https://www.hypercode.com/${locale}/contact`,
+      canonical: `https://www.hypercodeit.com/${locale}/contact`,
     },
   };
 }

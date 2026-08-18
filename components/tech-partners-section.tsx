@@ -26,7 +26,7 @@ export function TechPartnersSection() {
               >
                 <div className="w-1.5 h-1.5 rounded-full bg-royal-blue flex-shrink-0 animate-pulse" />
                 <span className="text-body-sm font-bold tracking-tight">{partner.name}</span>
-                <span className="text-caption font-semibold text-slate-400">/ {partner.type}</span>
+                <span className="text-caption font-semibold text-slate-500">/ {partner.type}</span>
               </div>
             ))}
           </div>

@@ -65,7 +65,7 @@ export default function AdminSidebar({ userProfile, activeTab }: SidebarProps) {
     <aside className="w-64 bg-white border-r border-slate-200 flex flex-col min-h-screen">
       <div className="p-4 border-b border-slate-100 flex flex-col gap-1.5 items-start justify-center">
         <Image
-          src="/hypercodeit.logo.png"
+          src="/hypercodeit.logo.webp"
           alt="HyperCode Logo"
           width={130}
           height={34}

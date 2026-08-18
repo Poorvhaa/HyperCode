@@ -116,7 +116,7 @@ export function AboutClient({ locale, tAbout, tCommon }: AboutClientProps) {
         
         <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
           {/* Breadcrumb */}
-          <nav className="flex items-center space-x-2 text-eyebrow text-slate-400 mb-6" aria-label="Breadcrumb">
+          <nav className="flex items-center space-x-2 text-eyebrow text-slate-500 mb-6" aria-label="Breadcrumb">
             {breadcrumbs.map((b, i) => (
               <span key={i} className="flex items-center">
                 {i > 0 && <ChevronRight size={10} className="mx-2 text-slate-350" />}
@@ -152,7 +152,7 @@ export function AboutClient({ locale, tAbout, tCommon }: AboutClientProps) {
                 <Link href="/consultation" className="PrimaryBrandButton">
                   {locale === 'es' ? 'Iniciar Consulta Técnica' : 'Initiate Scoping Intake'}
                 </Link>
-                <Link href="/solutions" className="SecondaryBrandButton border-slate-200 bg-white hover:bg-slate-50">
+                <Link href="/solutions" className="SecondaryBrandOutlineButton">
                   {locale === 'es' ? 'Ver Especialidades' : 'Explore Capabilities'}
                 </Link>
               </div>
@@ -334,10 +334,10 @@ export function AboutClient({ locale, tAbout, tCommon }: AboutClientProps) {
                     </motion.div>
                   </AnimatePresence>
                   
-                  <div className="flex items-center justify-between pt-4 border-t border-slate-100 mt-4 text-eyebrow text-slate-400">
+                  <div className="flex items-center justify-between pt-4 border-t border-slate-100 mt-4 text-eyebrow text-slate-500">
                     <span>{locale === 'es' ? 'Estado del Sistema' : 'System Status'}</span>
-                    <span className="text-green flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-green animate-pulse" />
+                    <span className="text-emerald-700 flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
                       {locale === 'es' ? 'OPTIMIZADO' : 'OPTIMIZED'}
                     </span>
                   </div>
@@ -443,7 +443,7 @@ export function AboutClient({ locale, tAbout, tCommon }: AboutClientProps) {
               <div key={idx} className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-[0_2px_6px_rgba(15,23,42,0.01)] relative flex flex-col justify-between gap-4">
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-body font-mono text-royal-blue/30">{step.num}</span>
+                    <span className="text-xl font-semibold font-mono text-royal-blue">{step.num}</span>
                     <span className="w-2.5 h-2.5 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center">
                       <span className="w-1 h-1 rounded-full bg-royal-blue" />
                     </span>
@@ -606,7 +606,7 @@ export function AboutClient({ locale, tAbout, tCommon }: AboutClientProps) {
             <Link href="/consultation" className="PrimaryBrandButton">
               {tCommon.consultation || 'Schedule Intake'}
             </Link>
-            <Link href="/contact" className="SecondaryBrandButton border-slate-200 bg-white hover:bg-slate-50">
+            <Link href="/contact" className="SecondaryBrandOutlineButton">
               {locale === 'es' ? 'Contáctenos' : 'Contact Sales'}
             </Link>
           </div>

@@ -368,7 +368,7 @@ export function ServiceEcosystem() {
                           {tNav(node.titleKey) || node.titleKey}
                         </span>
                         {microLabel && (
-                          <span className="text-[8.5px] font-bold text-slate-400 block tracking-wider uppercase">
+                          <span className="text-[11px] font-bold text-slate-600 block tracking-wider uppercase">
                             {microLabel}
                           </span>
                         )}
@@ -395,7 +395,7 @@ export function ServiceEcosystem() {
                       <span className="text-[10px] font-black tracking-widest text-slate-800 uppercase block">
                         HYPERCODE
                       </span>
-                      <span className="text-[7.5px] font-bold text-slate-400 font-mono tracking-widest block leading-tight">
+                      <span className="text-[11px] font-bold text-slate-650 font-mono tracking-widest block leading-tight">
                         TRANSFORMATION ENGINE
                       </span>
                     </div>
@@ -441,7 +441,7 @@ export function ServiceEcosystem() {
                           {tNav(node.titleKey) || node.titleKey}
                         </span>
                         {microLabel && (
-                          <span className="text-[8px] font-bold text-slate-400 block tracking-wider uppercase">
+                          <span className="text-[11px] font-bold text-slate-600 block tracking-wider uppercase">
                             {microLabel}
                           </span>
                         )}
@@ -534,7 +534,7 @@ export function ServiceEcosystem() {
                   HYPERCODE ENGINE
                 </span>
               </div>
-              <span className="text-[7.5px] font-bold text-slate-400 uppercase tracking-widest border border-slate-200 bg-white px-2 py-0.5 rounded-md">
+              <span className="text-[11px] font-bold text-slate-650 uppercase tracking-widest border border-slate-200 bg-white px-2 py-0.5 rounded-md">
                 CORE
               </span>
             </div>

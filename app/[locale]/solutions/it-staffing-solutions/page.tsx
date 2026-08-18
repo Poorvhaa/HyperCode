@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Props) {
     title: currentSeo.title,
     description: currentSeo.description,
     alternates: {
-      canonical: `https://www.hypercode.com/${locale}/solutions/it-staffing-solutions`,
+      canonical: `https://www.hypercodeit.com/${locale}/solutions/it-staffing-solutions`,
     },
   };
 }

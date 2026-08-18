@@ -119,7 +119,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: `HyperCode | ${article.title} | Insights`,
     description: article.excerpt,
     alternates: {
-      canonical: `https://www.hypercode.com/${locale}/insights/${article.slug}`,
+      canonical: `https://www.hypercodeit.com/${locale}/insights/${article.slug}`,
     },
   };
 }
@@ -210,7 +210,7 @@ export default async function ArticlePage({ params }: PageProps) {
     relatedArticles.push(...extra);
   }
 
-  const shareUrl = `https://www.hypercode.com/${locale}/insights/${article.slug}`;
+  const shareUrl = `https://www.hypercodeit.com/${locale}/insights/${article.slug}`;
   const shareText = encodeURIComponent(article.title);
 
   return (

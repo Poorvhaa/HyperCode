@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: Props) {
     title: `HyperCode | Enterprise Web Development Services | ${tc('solutions')}`,
     description: "Designing and developing modern, scalable, secure, and high-performance web applications using React, Next.js, and Node.js. Headquartered in Schaumburg, IL.",
     alternates: {
-      canonical: `https://www.hypercode.com/${locale}/solutions/web-development-services`,
+      canonical: `https://www.hypercodeit.com/${locale}/solutions/web-development-services`,
     },
   };
 }

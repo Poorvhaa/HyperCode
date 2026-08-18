@@ -3,14 +3,16 @@ import { Footer } from '@/components/footer';
 import { PremiumHero } from '@/components/homepage/premium-hero';
 import { TrustSection } from '@/components/trust-section';
 import { TechPartnersSection } from '@/components/tech-partners-section';
-import { TransformationEngine } from '@/components/homepage/transformation-engine/transformation-engine';
-import { ServiceEcosystem } from '@/components/homepage/service-ecosystem';
-import { IndustryShowcase } from '@/components/homepage/industry-showcase';
-import { CaseStudiesSection } from '@/components/case-studies-section';
-import { DeliveryProcess } from '@/components/homepage/delivery-process';
-import { FinalCTA } from '@/components/homepage/final-cta';
-import { ThemeObserver } from '@/components/homepage/theme-observer';
 import { setRequestLocale } from 'next-intl/server';
+import dynamic from 'next/dynamic';
+
+const TransformationEngine = dynamic(() => import('@/components/homepage/transformation-engine/transformation-engine').then(m => m.TransformationEngine));
+const ServiceEcosystem = dynamic(() => import('@/components/homepage/service-ecosystem').then(m => m.ServiceEcosystem));
+const IndustryShowcase = dynamic(() => import('@/components/homepage/industry-showcase').then(m => m.IndustryShowcase));
+const CaseStudiesSection = dynamic(() => import('@/components/case-studies-section').then(m => m.CaseStudiesSection));
+const DeliveryProcess = dynamic(() => import('@/components/homepage/delivery-process').then(m => m.DeliveryProcess));
+const FinalCTA = dynamic(() => import('@/components/homepage/final-cta').then(m => m.FinalCTA));
+const ThemeObserver = dynamic(() => import('@/components/homepage/theme-observer').then(m => m.ThemeObserver));
 
 interface Props {
   params: Promise<{ locale: string }>;

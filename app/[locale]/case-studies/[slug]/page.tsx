@@ -40,17 +40,17 @@ export async function generateMetadata({ params }: Props) {
     title: study.seo.title,
     description: study.seo.description,
     alternates: {
-      canonical: `https://www.hypercode.com/${locale}/case-studies/${slug}`,
+      canonical: `https://www.hypercodeit.com/${locale}/case-studies/${slug}`,
       languages: {
-        'en-US': `https://www.hypercode.com/en/case-studies/${slug}`,
-        'es-US': `https://www.hypercode.com/es/case-studies/${slug}`,
-        'x-default': `https://www.hypercode.com/en/case-studies/${slug}`,
+        'en-US': `https://www.hypercodeit.com/en/case-studies/${slug}`,
+        'es-US': `https://www.hypercodeit.com/es/case-studies/${slug}`,
+        'x-default': `https://www.hypercodeit.com/en/case-studies/${slug}`,
       }
     },
     openGraph: {
       title: study.seo.ogTitle,
       description: study.seo.ogDescription,
-      url: `https://www.hypercode.com/${locale}/case-studies/${slug}`,
+      url: `https://www.hypercodeit.com/${locale}/case-studies/${slug}`,
       siteName: 'HyperCode',
       locale: locale === 'en' ? 'en_US' : 'es_ES',
       type: 'article',
@@ -98,19 +98,19 @@ export default async function CaseStudyDetailPage({ params }: Props) {
         '@type': 'ListItem',
         'position': 1,
         'name': isEs ? 'Inicio' : 'Home',
-        'item': `https://www.hypercode.com/${locale}`
+        'item': `https://www.hypercodeit.com/${locale}`
       },
       {
         '@type': 'ListItem',
         'position': 2,
         'name': isEs ? 'Casos de Estudio' : 'Case Studies',
-        'item': `https://www.hypercode.com/${locale}/case-studies`
+        'item': `https://www.hypercodeit.com/${locale}/case-studies`
       },
       {
         '@type': 'ListItem',
         'position': 3,
         'name': study.title,
-        'item': `https://www.hypercode.com/${locale}/case-studies/${slug}`
+        'item': `https://www.hypercodeit.com/${locale}/case-studies/${slug}`
       }
     ]
   };

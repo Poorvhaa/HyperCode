@@ -30,6 +30,8 @@
     "close": "Cerrar"
   },
   "Navigation": {
+    "openMenu": "Abrir menú de navegación",
+    "closeMenu": "Cerrar menú de navegación",
     "home": "Inicio",
     "solutions": "Soluciones",
     "about": "Nosotros",
@@ -213,6 +215,15 @@
   "Consultation": {
     "title": "Programar Consulta",
     "subtitle": "Reserve una sesión con un director de soluciones de HyperCode para diseñar sus sistemas o planificar flujos de contratación.",
+    "selectIndustry": "-- Seleccionar Industria --",
+    "industries": {
+      "healthcare": "Salud y Ciencias de la Vida",
+      "finance": "Servicios Bancarios y Financieros",
+      "retail": "Venta al por Menor y Comercio Electrónico",
+      "manufacturing": "Manufactura Avanzada",
+      "logistics": "Logística y Cadena de Suministro",
+      "other": "Otro / General"
+    },
     "form": {
       "name": "Nombre Completo",
       "email": "Correo Corporativo",
@@ -265,6 +276,9 @@
     }
   },
   "SolutionsPage": {
+    "backToTop": "Volver arriba",
+    "sidebarHeader": "SERVICIOS Y EXPERIENCIA",
+    "sidebarSubtitle": "Explore Nuestras Soluciones",
     "heroTitle": "Consultoría y Soluciones Tecnológicas Corporativas",
     "heroSubtitle": "Aceleramos el valor de su negocio a través de Ingeniería de Software, Inteligencia Artificial Generativa, migración a la nube y soluciones de reclutamiento TI y No-TI.",
     "searchPlaceholder": "Busque servicios por nombre, tecnología o industria vertical...",
@@ -294,8 +308,9 @@
       "onboardingLabel": "Onboarding Promedio de Células"
     },
     "why": {
-      "title": "Por qué los Líderes Corporativos Eligen a HyperCode",
-      "subtitle": "Combinamos la excelencia en ingeniería con la arquitectura de datos y redes globales de talento.",
+      "title": "POR QUÉ LAS EMPRESAS ELIGEN HYPERCODE",
+      "subtitle": "Ingeniería tecnológica que impulsa el crecimiento empresarial.",
+      "desc": "Combinamos ingeniería de software, inteligencia artificial, datos, nube y talento global para crear soluciones seguras y escalables para empresas modernas.",
       "engineersTitle": "Ingenieros SRE Certificados",
       "engineersDesc": "Todos nuestros ingenieros están completamente certificados en Next.js, Python o prácticas en la nube, asegurando compliance y arquitecturas limpias.",
       "deliveryTitle": "Entrega Acelerada",
@@ -1285,7 +1300,9 @@
   "HomepageRedesign": {
     "Hero": {
       "badge": "Socio Tecnológico en EE. UU.",
-      "headline": "Diseñando los Ecosistemas Tecnológicos Vivos del Mañana",
+      "headlinePart1": "Creamos",
+      "headlineGradient": "tecnología inteligente",
+      "headlinePart2": "que impulsa el crecimiento empresarial.",
       "supporting": "Diseñamos y desarrollamos mundos digitales unificados, conectando IA, plataformas multi-nube y APIs inteligentes en motores de negocio de alto rendimiento que escalan continuamente.",
       "ctaPrimary": "Agendar Consulta Gratuita",
       "ctaSecondary": "Explorar Soluciones",

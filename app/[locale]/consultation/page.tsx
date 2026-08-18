@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: Props) {
     title: `HyperCode | Schedule Consultation | Enterprise Solutions`,
     description: "Request a project consultation or staffing review with our practice directors and solutions architects. Headquartered in Schaumburg, IL.",
     alternates: {
-      canonical: `https://www.hypercode.com/${locale}/consultation`,
+      canonical: `https://www.hypercodeit.com/${locale}/consultation`,
     },
   };
 }

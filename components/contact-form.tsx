@@ -471,8 +471,8 @@ function ContactFormContent() {
                   : 'border-slate-200'
               }`}
             >
-              <option value="">-- Select Industry --</option>
-              {Object.entries(tAi.raw('industries')).map(([key, val]) => (
+              <option value="">{tConsult('selectIndustry')}</option>
+              {Object.entries(tConsult.raw('industries')).map(([key, val]) => (
                 <option key={key} value={val as string}>{val as string}</option>
               ))}
             </select>

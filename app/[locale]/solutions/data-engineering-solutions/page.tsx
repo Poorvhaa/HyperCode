@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: Props) {
     title: `HyperCode | Data Engineering Solutions | ${tc('solutions')}`,
     description: "Enterprise Data Engineering solutions, ETL/ELT data pipelines, database integration, Fivetran/dbt modeling, and stream processing. Headquartered in Schaumburg, IL.",
     alternates: {
-      canonical: `https://www.hypercode.com/${locale}/solutions/data-engineering-solutions`,
+      canonical: `https://www.hypercodeit.com/${locale}/solutions/data-engineering-solutions`,
     },
   };
 }

@@ -152,6 +152,7 @@ export function TestimonialsSection() {
                       <button
                         key={idx}
                         onClick={() => setActiveIndex(idx)}
+                        aria-label={`Go to testimonial ${idx + 1}`}
                         className={`w-1.5 h-1.5 rounded-full transition-all duration-200 cursor-pointer border-none ${
                           activeIndex === idx ? 'bg-royal-blue w-3' : 'bg-slate-350'
                         }`}

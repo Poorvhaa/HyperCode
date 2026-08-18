@@ -37,17 +37,17 @@ export async function generateMetadata({ params }: Props) {
     title: pageTitle,
     description: details.description,
     alternates: {
-      canonical: `https://www.hypercode.com/${locale}/solutions/${slug}`,
+      canonical: `https://www.hypercodeit.com/${locale}/solutions/${slug}`,
       languages: {
-        'en-US': `https://www.hypercode.com/en/solutions/${slug}`,
-        'es-US': `https://www.hypercode.com/es/solutions/${slug}`,
-        'x-default': `https://www.hypercode.com/en/solutions/${slug}`,
+        'en-US': `https://www.hypercodeit.com/en/solutions/${slug}`,
+        'es-US': `https://www.hypercodeit.com/es/solutions/${slug}`,
+        'x-default': `https://www.hypercodeit.com/en/solutions/${slug}`,
       }
     },
     openGraph: {
       title: pageTitle,
       description: details.description,
-      url: `https://www.hypercode.com/${locale}/solutions/${slug}`,
+      url: `https://www.hypercodeit.com/${locale}/solutions/${slug}`,
       siteName: 'HyperCode',
       locale: locale === 'en' ? 'en_US' : 'es_ES',
       type: 'website',
@@ -88,19 +88,19 @@ export default async function DynamicServicePage({ params }: Props) {
         '@type': 'ListItem',
         'position': 1,
         'name': locale === 'es' ? 'Inicio' : 'Home',
-        'item': `https://www.hypercode.com/${locale}`
+        'item': `https://www.hypercodeit.com/${locale}`
       },
       {
         '@type': 'ListItem',
         'position': 2,
         'name': locale === 'es' ? 'Soluciones' : 'Solutions',
-        'item': `https://www.hypercode.com/${locale}/solutions`
+        'item': `https://www.hypercodeit.com/${locale}/solutions`
       },
       {
         '@type': 'ListItem',
         'position': 3,
         'name': details.title,
-        'item': `https://www.hypercode.com/${locale}/solutions/${slug}`
+        'item': `https://www.hypercodeit.com/${locale}/solutions/${slug}`
       }
     ]
   };
@@ -114,7 +114,7 @@ export default async function DynamicServicePage({ params }: Props) {
     'provider': {
       '@type': 'LocalBusiness',
       'name': 'HyperCode',
-      'image': 'https://www.hypercode.com/icon.svg',
+      'image': 'https://www.hypercodeit.com/icon.svg',
       'telephone': '+1-800-555-0199',
       'address': {
         '@type': 'PostalAddress',

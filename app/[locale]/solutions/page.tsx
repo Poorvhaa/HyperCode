@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo, Suspense } from 'react';
+import { useState, useEffect, useMemo, Suspense, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/i18n/routing';
@@ -161,6 +161,11 @@ function SolutionsPageContent() {
   // Mobile accordion collapse states (first open by default)
   const [collapsedCats, setCollapsedCats] = useState<Record<string, boolean>>({});
 
+  const isProgrammaticScrolling = useRef(false);
+  const targetSectionId = useRef<string | null>(null);
+  const targetScrollY = useRef<number>(0);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
   useEffect(() => {
     const initialCollapse: Record<string, boolean> = {};
     SERVICES_CATALOG.forEach((cat, idx) => {
@@ -171,48 +176,86 @@ function SolutionsPageContent() {
 
   // Monitor scroll for Scrollspy, Back to Top, and Mobile Sticky Button
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      // Back to top visibility
-      if (window.scrollY > 500) {
-        setShowBackToTop(true);
-      } else {
-        setShowBackToTop(false);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
+
+          // Back to top visibility
+          if (currentScrollY > 500) {
+            setShowBackToTop(true);
+          } else {
+            setShowBackToTop(false);
+          }
+
+          // Mobile sticky CTA visibility
+          if (currentScrollY > 400) {
+            setShowMobileStickyBtn(true);
+          } else {
+            setShowMobileStickyBtn(false);
+          }
+
+          // Check if programmatic scroll has finished
+          if (isProgrammaticScrolling.current) {
+            const targetY = targetScrollY.current;
+            const isAtBottom = window.innerHeight + currentScrollY >= document.documentElement.scrollHeight - 10;
+            const isAtTop = currentScrollY <= 10;
+            const isClose = Math.abs(currentScrollY - targetY) < 5;
+
+            if (isClose || (targetY > currentScrollY && isAtBottom) || (targetY < currentScrollY && isAtTop)) {
+              isProgrammaticScrolling.current = false;
+              targetSectionId.current = null;
+              if (scrollTimeoutRef.current) {
+                clearTimeout(scrollTimeoutRef.current);
+                scrollTimeoutRef.current = null;
+              }
+            } else {
+              ticking = false;
+              return;
+            }
+          }
+
+          // Scrollspy calculation
+          let activeId = SERVICES_CATALOG[0].id;
+          const headerOffset = 100; // Offset to account for sticky navbar (90px)
+
+          const isAtBottom = window.innerHeight + currentScrollY >= document.documentElement.scrollHeight - 10;
+
+          if (isAtBottom) {
+            activeId = SERVICES_CATALOG[SERVICES_CATALOG.length - 1].id;
+          } else {
+            for (let i = 0; i < SERVICES_CATALOG.length; i++) {
+              const cat = SERVICES_CATALOG[i];
+              const el = document.getElementById(cat.id);
+              if (el) {
+                const rect = el.getBoundingClientRect();
+                // If the top of the section is at or above the viewport detection boundary
+                if (rect.top <= headerOffset + 5) {
+                  activeId = cat.id;
+                } else {
+                  break;
+                }
+              }
+            }
+          }
+
+          setActiveSection(activeId);
+          ticking = false;
+        });
+        ticking = true;
       }
-
-      // Mobile sticky CTA visibility
-      if (window.scrollY > 400) {
-        setShowMobileStickyBtn(true);
-      } else {
-        setShowMobileStickyBtn(false);
-      }
     };
 
-    window.addEventListener('scroll', handleScroll);
-
-    // Scrollspy Intersection Observer
-    const observerOptions = {
-      root: null,
-      rootMargin: '-30% 0px -50% 0px',
-      threshold: 0.1
-    };
-
-    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(handleIntersection, observerOptions);
-    SERVICES_CATALOG.forEach(cat => {
-      const el = document.getElementById(cat.id);
-      if (el) observer.observe(el);
-    });
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Run once on mount to establish correct initial active section
+    handleScroll();
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      observer.disconnect();
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
     };
   }, []);
 
@@ -225,12 +268,65 @@ function SolutionsPageContent() {
       const elementRect = element.getBoundingClientRect().top;
       const elementPosition = elementRect - bodyRect;
       const offsetPosition = elementPosition - offset;
+
+      // Lock scrollspy changes during programmatic scroll
+      isProgrammaticScrolling.current = true;
+      targetSectionId.current = id;
+      targetScrollY.current = offsetPosition;
+
+      // Set active section immediately
+      setActiveSection(id);
+
+      // Clear any pending scroll safety timeouts
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+
+      // Safety timeout: in case smooth scrolling gets interrupted or fails to reach target perfectly,
+      // release the scrollspy lock after 1000ms.
+      scrollTimeoutRef.current = setTimeout(() => {
+        isProgrammaticScrolling.current = false;
+        targetSectionId.current = null;
+        scrollTimeoutRef.current = null;
+      }, 1000);
+
       window.scrollTo({
         top: offsetPosition,
         behavior: 'smooth'
       });
     }
   };
+
+  // Sidebar auto-scroll logic to keep the active item visible in the sidebar aside container
+  useEffect(() => {
+    if (activeSection) {
+      const activeBtn = document.getElementById(`sidebar-link-${activeSection}`);
+      const sidebarContainer = activeBtn?.closest('aside');
+      if (activeBtn && sidebarContainer) {
+        const btnRect = activeBtn.getBoundingClientRect();
+        const containerRect = sidebarContainer.getBoundingClientRect();
+        
+        const relativeTop = btnRect.top - containerRect.top + sidebarContainer.scrollTop;
+        const btnHeight = activeBtn.offsetHeight;
+        const containerScrollTop = sidebarContainer.scrollTop;
+        const containerHeight = sidebarContainer.clientHeight;
+
+        if (relativeTop < containerScrollTop) {
+          // Scroll up to show the button
+          sidebarContainer.scrollTo({
+            top: relativeTop,
+            behavior: 'smooth'
+          });
+        } else if (relativeTop + btnHeight > containerScrollTop + containerHeight) {
+          // Scroll down to show the button
+          sidebarContainer.scrollTo({
+            top: relativeTop + btnHeight - containerHeight,
+            behavior: 'smooth'
+          });
+        }
+      }
+    }
+  }, [activeSection]);
 
   // Helper to translate categories
   const getCategoryTitle = (id: string) => {
@@ -387,14 +483,14 @@ function SolutionsPageContent() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           
           {/* Desktop Sticky Navigation Sidebar */}
-          <aside className="col-span-3 sticky top-28 h-fit max-h-[80vh] overflow-y-auto pr-4 hidden lg:block scrollbar-thin">
+          <aside className="col-span-3 sticky top-28 h-fit max-h-[80vh] overflow-y-auto pr-4 hidden lg:block solutions-sidebar-scrollbar">
             <div className="space-y-6">
               <div>
                 <span className="text-eyebrow text-slate-400 block mb-1">
-                  {locale === 'es' ? 'Navegación de Soluciones' : 'Solutions Navigation'}
+                  {t('sidebarHeader')}
                 </span>
                 <h4 className="text-h4 text-slate-900">
-                  {locale === 'es' ? 'Áreas de Práctica' : 'Practice Areas'}
+                  {t('sidebarSubtitle')}
                 </h4>
               </div>
               
@@ -407,6 +503,7 @@ function SolutionsPageContent() {
                   return (
                     <button
                       key={category.id}
+                      id={`sidebar-link-${category.id}`}
                       onClick={() => scrollToSection(category.id)}
                       className={`w-full flex items-center justify-between p-3 rounded-xl text-left transition-all group border-none cursor-pointer ${
                         isActive 
@@ -447,77 +544,6 @@ function SolutionsPageContent() {
                   {/* Category Anchor ID for Scrollspy & Native Offsets */}
                   <div id={category.id} className="scroll-mt-28" />
 
-                  {/* Interleaved CTA 1: After Category 4 (Mobile Apps) */}
-                  {catIdx === 4 && (
-                    <div className="p-8 rounded-[24px] bg-gradient-to-r from-slate-900 to-royal-blue text-white space-y-6 shadow-xl relative overflow-hidden my-12 text-left">
-                      <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
-                      <div className="max-w-2xl space-y-3 relative z-10">
-                        <span className="text-eyebrow text-blue-300">
-                          {locale === 'es' ? '¿TIENE UN PROYECTO EN MENTE?' : 'HAVE A PROJECT IN MIND?'}
-                        </span>
-                        <h4 className="text-h3 text-white">
-                          {locale === 'es' 
-                            ? 'Acelere su desarrollo de software con ingenieros expertos' 
-                            : 'Accelerate your software roadmap with dedicated engineering squads'}
-                        </h4>
-                        <p className="text-body-sm text-slate-300">
-                          {locale === 'es'
-                            ? 'Ofrecemos soluciones personalizadas adaptadas a sus necesidades comerciales y de escala operativa.'
-                            : 'We deploy certified SRE engineers and developers to architect custom systems under strict access controls.'}
-                        </p>
-                      </div>
-                      <div className="flex flex-wrap gap-3 relative z-10 pt-2">
-                        <Link
-                          href="/consultation"
-                          className="PrimaryBrandButton"
-                        >
-                          {tNav('schedule')}
-                        </Link>
-                        <Link
-                          href="/contact"
-                          className="px-5 py-2.5 bg-white/10 hover:bg-white/20 border border-white/10 text-button text-white rounded-xl transition-all"
-                        >
-                          {locale === 'es' ? 'Solicitar Propuesta' : 'Request Proposal'}
-                        </Link>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Interleaved CTA 2: After Category 8 (Data Analytics) */}
-                  {catIdx === 8 && (
-                    <div className="p-8 rounded-[24px] bg-slate-900 border border-slate-800 text-white space-y-6 shadow-xl relative overflow-hidden my-12 text-left">
-                      <div className="absolute bottom-0 left-0 w-[200px] h-[200px] bg-emerald-500/5 rounded-full blur-2xl pointer-events-none" />
-                      <div className="max-w-2xl space-y-3 relative z-10">
-                        <span className="text-eyebrow text-emerald-400">
-                          {locale === 'es' ? 'INTELIGENCIA DE DATOS' : 'DATA INTELLIGENCE'}
-                        </span>
-                        <h4 className="text-h3 text-white">
-                          {locale === 'es' 
-                            ? 'Tome mejores decisiones basadas en datos e inteligencia empresarial' 
-                            : 'Maximize performance with real-time analytics and data lakes'}
-                        </h4>
-                        <p className="text-body-sm text-slate-300">
-                          {locale === 'es'
-                            ? 'Integramos lagos de datos modernos con paneles interactivos de Power BI para el monitoreo de inventario y KPI.'
-                            : 'We build scalable data warehousing pipelines and deploy custom business intelligence dashboards.'}
-                        </p>
-                      </div>
-                      <div className="flex flex-wrap gap-3 relative z-10 pt-2">
-                        <button
-                          onClick={triggerOpenChat}
-                          className="px-5 py-2.5 bg-slate-800 hover:bg-slate-750 text-button text-white rounded-xl transition-all shadow border-none cursor-pointer"
-                        >
-                          {locale === 'es' ? 'Hablar con Consultor IA' : 'Talk to AI Consultant'}
-                        </button>
-                        <Link
-                          href="/contact"
-                          className="px-5 py-2.5 bg-white/5 hover:bg-white/10 text-button text-white rounded-xl transition-all"
-                        >
-                          {locale === 'es' ? 'Contactar Especialista' : 'Contact Specialist'}
-                        </Link>
-                      </div>
-                    </div>
-                  )}
 
                   {/* Section Title Header */}
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-slate-150">
@@ -983,10 +1009,12 @@ function SolutionsPageContent() {
       <AnimatePresence>
         {showBackToTop && (
           <motion.button
+            type="button"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            aria-label={t('backToTop')}
             className="fixed bottom-24 right-6 z-40 p-3 bg-royal-blue text-white rounded-full shadow-xl hover:bg-deep-navy transition-colors border-none cursor-pointer hidden lg:block"
           >
             <ArrowUp size={20} />

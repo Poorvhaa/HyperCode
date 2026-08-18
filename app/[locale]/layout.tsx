@@ -10,9 +10,19 @@ import { CookieProvider } from '@/components/CookieProvider'
 import { CookieBanner } from '@/components/CookieBanner'
 import { CookiePreferencesModal } from '@/components/CookiePreferencesModal'
 
-// Local font variable definitions to prevent build-time network font downloads failing offline/in restricted environments.
-const geistSans = { variable: 'font-geist-sans' };
-const geistMono = { variable: 'font-geist-mono' };
+import { Geist, Geist_Mono } from 'next/font/google';
+
+const geistSans = Geist({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-geist-sans',
+});
+
+const geistMono = Geist_Mono({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-geist-mono',
+});
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -90,13 +100,13 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
   // Language alternates for hreflang tags
   const languageAlternates: Record<string, string> = {
-    'en-US': `https://www.hypercode.com/en`,
-    'es-US': `https://www.hypercode.com/es`,
-    'x-default': 'https://www.hypercode.com/en'
+    'en-US': `https://www.hypercodeit.com/en`,
+    'es-US': `https://www.hypercodeit.com/es`,
+    'x-default': 'https://www.hypercodeit.com/en'
   };
 
   return {
-    metadataBase: new URL('https://www.hypercode.com'),
+    metadataBase: new URL('https://www.hypercodeit.com'),
     title: {
       default: currentSeo.title,
       template: `HyperCode | %s`,
@@ -104,13 +114,13 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     description: currentSeo.desc,
     generator: 'v0.app',
     alternates: {
-      canonical: `https://www.hypercode.com/${locale}`,
+      canonical: `https://www.hypercodeit.com/${locale}`,
       languages: languageAlternates,
     },
     openGraph: {
       title: currentSeo.title,
       description: currentSeo.desc,
-      url: `https://www.hypercode.com/${locale}`,
+      url: `https://www.hypercodeit.com/${locale}`,
       siteName: 'HyperCode',
       locale: locale === 'en' ? 'en_US' : `${locale}_${locale.toUpperCase()}`,
       type: 'website',
@@ -170,7 +180,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
     '@context': 'https://schema.org',
     '@type': 'Corporation',
     'name': 'HyperCode',
-    'url': `https://www.hypercode.com/${locale}`,
+    'url': `https://www.hypercodeit.com/${locale}`,
     'logo': '/hypercodeit.logo.png',
     'description': jsonLdDescription,
     'address': {
@@ -204,11 +214,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
 
   return (
     <html lang={locale} dir="ltr" className={`${geistSans.variable} ${geistMono.variable} bg-background`}>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap" rel="stylesheet" />
-      </head>
+      <head />
       <body className="font-sans antialiased bg-background">
         <script
           type="application/ld+json"

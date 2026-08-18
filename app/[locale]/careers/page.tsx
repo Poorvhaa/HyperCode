@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: Props) {
     title: `HyperCode | ${tc('careers')}`,
     description: t('subtitle'),
     alternates: {
-      canonical: `https://www.hypercode.com/${locale}/careers`,
+      canonical: `https://www.hypercodeit.com/${locale}/careers`,
     },
   };
 }

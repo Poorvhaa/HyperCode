@@ -175,7 +175,7 @@ function TransformationEngineContent() {
                       ? 'border-royal-blue bg-royal-blue text-white shadow-[0_0_12px_rgba(20,91,255,0.25)]'
                       : isCompleted
                       ? 'border-green bg-green/5 text-green'
-                      : 'border-slate-200 bg-white text-slate-400 group-hover:border-slate-350'
+                      : 'border-slate-305 bg-white text-slate-600 group-hover:border-slate-450'
                   }`}>
                     {stage.number}
                   </div>
@@ -184,7 +184,7 @@ function TransformationEngineContent() {
                       ? 'text-royal-blue font-bold'
                       : isCompleted
                       ? 'text-slate-700'
-                      : 'text-slate-400 group-hover:text-slate-650'
+                      : 'text-slate-500 group-hover:text-slate-700'
                   }`}>
                     {stage.name}
                   </span>

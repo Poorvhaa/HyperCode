@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: Props) {
     title: `HyperCode | Business Intelligence Consulting | ${tc('solutions')}`,
     description: "Enterprise Business Intelligence consulting, Power BI/Tableau dashboard creation, self-service BI setups, and data visualization. Headquartered in Schaumburg, IL.",
     alternates: {
-      canonical: `https://www.hypercode.com/${locale}/solutions/business-intelligence-consulting`,
+      canonical: `https://www.hypercodeit.com/${locale}/solutions/business-intelligence-consulting`,
     },
   };
 }
