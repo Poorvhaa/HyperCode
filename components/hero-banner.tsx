@@ -11,6 +11,7 @@ interface Breadcrumb {
 
 interface HeroBannerProps {
   bgImage: string;
+  bgImageAlt?: string;
   overlayOpacity?: number; // base opacity e.g. 0.65
   categoryLabel?: string;
   title: string;
@@ -22,6 +23,7 @@ interface HeroBannerProps {
 
 export function HeroBanner({
   bgImage,
+  bgImageAlt,
   overlayOpacity = 0.52,
   categoryLabel,
   title,
@@ -47,7 +49,7 @@ export function HeroBanner({
         >
           <Image
             src={bgImage}
-            alt={title}
+            alt={bgImageAlt || title}
             fill
             priority
             className="object-cover object-center opacity-[0.06] select-none pointer-events-none filter saturate-50"

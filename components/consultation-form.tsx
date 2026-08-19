@@ -22,7 +22,7 @@ import {
   sanitizePayload
 } from '@/lib/validation';
 
-function ConsultationFormContent() {
+function ConsultationFormContent({ defaultIndustryKey }: { defaultIndustryKey?: string }) {
   const searchParams = useSearchParams();
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -52,6 +52,9 @@ function ConsultationFormContent() {
   const tAi = useTranslations('AIConsultant');
   const tConsult = useTranslations('Consultation');
   const locale = useLocale();
+
+  const industriesObj = tConsult.raw('industries') as Record<string, string>;
+  const defaultIndustryValue = defaultIndustryKey ? (industriesObj[defaultIndustryKey] || '') : '';
 
   // Define dynamic services list matching translated mega menu headers
   const serviceOptions = [
@@ -128,7 +131,7 @@ function ConsultationFormContent() {
       timeline: '',
       message: '',
       preferredServices: [],
-      industry: '',
+      industry: defaultIndustryValue,
       preferredMeetingType: 'Video Call',
     },
   });
@@ -629,14 +632,18 @@ function ConsultationFormContent() {
   );
 }
 
-export function ConsultationForm() {
+interface ConsultationFormProps {
+  defaultIndustryKey?: string;
+}
+
+export function ConsultationForm({ defaultIndustryKey }: ConsultationFormProps) {
   return (
     <Suspense fallback={
       <div className="flex justify-center p-12">
         <Loader2 className="animate-spin text-royal-blue" size={36} />
       </div>
     }>
-      <ConsultationFormContent />
+      <ConsultationFormContent defaultIndustryKey={defaultIndustryKey} />
     </Suspense>
   );
 }

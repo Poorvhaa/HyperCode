@@ -174,7 +174,6 @@
       "email": "Correo Corporativo",
       "company": "Nombre de la Empresa",
       "phone": "Número de Teléfono",
-      "subject": "Asunto",
       "message": "Descripción del Proyecto / Mensaje",
       "industry": "Industria",
       "timeline": "Plazo Estimado",
@@ -183,6 +182,7 @@
       "projectType": "Tipo de Proyecto",
       "requiredTech": "Tecnologías Requeridas",
       "services": "Servicios Solicitados / Áreas de Enfoque",
+      "selectService": "-- Seleccionar Servicio / Área de Enfoque --",
       "submit": "Enviar Consulta",
       "submitting": "Enviando...",
       "successTitle": "¡Consulta Recibida!",
@@ -192,19 +192,37 @@
       "emailError": "Por favor, introduzca una dirección de correo corporativo válida",
       "companyError": "El nombre de la empresa debe tener al menos 2 caracteres",
       "phoneError": "Por favor, introduzca un número de teléfono válido (mín. 10 dígitos)",
-      "subjectError": "El asunto es requerido",
+      "servicesError": "Por favor, seleccione un área de servicio de interés",
       "messageError": "El mensaje debe tener al menos 10 caracteres",
       "industryError": "Por favor, seleccione su industria",
-      "timelineError": "Por favor, seleccione un plazo estimado"
-    },
-    "subjects": {
-      "general": "Consulta General Corporativa",
-      "web": "Desarrollo Web y Apps a Medida",
-      "ai": "IA y Automatización de Procesos Agenciales",
-      "data": "Ingeniería de Datos y Analítica",
-      "talent": "Soluciones de Talento TI y No-TI",
-      "partnership": "Asociación Estratégica",
-      "other": "Otras Consultas"
+      "timelineError": "Por favor, seleccione un plazo estimado",
+      "serviceOptions": {
+        "aiGenerativeAI": "IA y IA Generativa",
+        "aiAutomationAgents": "Automatización e Agentes de IA",
+        "customSoftwareDev": "Desarrollo de Software a Medida",
+        "enterpriseAppDev": "Desarrollo de Aplicaciones Empresariales",
+        "webDev": "Desarrollo Web",
+        "mobileAppDev": "Desarrollo de Aplicaciones Móviles",
+        "cloudConsultingMigration": "Consultoría y Migración a la Nube",
+        "devOpsInfrastructure": "DevOps e Infraestructura",
+        "dataEngineering": "Ingeniería de Datos",
+        "dataAnalytics": "Análisis de Datos",
+        "businessIntelligence": "Inteligencia de Negocios",
+        "digitalTransformation": "Transformación Digital",
+        "cybersecurity": "Ciberseguridad",
+        "uiUxDesign": "Diseño UI/UX",
+        "ecommerceDev": "Desarrollo de Comercio Electrónico",
+        "apiDevIntegration": "Desarrollo e Integración de APIs",
+        "legacyAppModernization": "Modernización de Aplicaciones Heredadas",
+        "erpCrmSolutions": "Soluciones ERP y CRM",
+        "qualityAssuranceTesting": "Control de Calidad y Pruebas",
+        "itConsulting": "Consultoría de TI",
+        "technologyConsulting": "Consultoría Tecnológica",
+        "itStaffingAugmentation": "Selección de Personal de TI y Aumento de Personal",
+        "managedItServices": "Servicios de TI Gestionados",
+        "digitalMarketing": "Marketing Digital",
+        "otherTechRequirement": "Otro Requisito Tecnológico"
+      }
     },
     "headquarters": "Sede Corporativa",
     "email": "Consultas por Correo",
@@ -872,7 +890,7 @@
   },
   "Insights": {
     "title": "Pensamiento de Liderazgo",
-    "subtitle": "Los directores de consultoría de HyperCode y arquitectos de soluciones comparten perspectivas, guías y patrones de ingeniería.",
+    "subtitle": "Explore perspectivas de expertos, guías prácticas, conocimientos de ingeniería y estrategias tecnológicas que abarcan IA, desarrollo de software, nube, datos, ciberseguridad, transformación digital y tecnologías empresariales emergentes.",
     "allCategories": "Todas las Categorías",
     "readArticle": "Leer Artículo",
     "noArticles": "No se encontraron artículos en esta categoría.",
@@ -962,7 +980,7 @@
     "sections": {
       "introduction": {
         "title": "1. Introducción",
-        "content": "Bienvenido a HyperCode. Esta Política de Privacidad describe cómo HyperCode LLC (\"nosotros\", \"nos\" o \"nuestro\") recopila, utiliza, comparte y protege sus datos personales cuando visita nuestro sitio web (https://www.hypercode.com), utiliza nuestro chatbot Consultor de IA, envía solicitudes de contacto o consulta, o solicita puestos de trabajo vacantes. Al acceder a nuestros servicios, usted acepta las prácticas descritas en esta política."
+        "content": "Bienvenido a HyperCode. Esta Política de Privacidad describe cómo HyperCode LLC (\"nosotros\", \"nos\" o \"nuestro\") recopila, utiliza, comparte y protege sus datos personales cuando visita nuestro sitio web (https://www.hypercodeit.com), utiliza nuestro chatbot Consultor de IA, envía solicitudes de contacto o consulta, o solicita puestos de trabajo vacantes. Al acceder a nuestros servicios, usted acepta las prácticas descritas en esta política."
       },
       "collect": {
         "title": "2. Información que Recopilamos",

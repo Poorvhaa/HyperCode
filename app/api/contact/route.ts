@@ -33,7 +33,6 @@ const contactSchema = z.object({
     const digits = getPhoneDigitCount(val);
     return digits >= 7 && digits <= 15;
   }),
-  subject: z.string().trim().min(1).max(200),
   message: z.string().trim().min(20).max(2000),
   source: z.string().optional().default('website'),
   locale: z.string().optional().default('en'),
@@ -75,7 +74,7 @@ const { data: savedData, error: saveError } = await supabase
     company: validated.company || null,
     email: validated.email,
     phone: validated.phone || null,
-    subject: validated.subject,
+    subject: validated.services.join(', ') || 'Website Inquiry',
     message: validated.message,
     status: 'New',
     source: validated.source,
@@ -154,10 +153,6 @@ if (resend) {
                     <td style="padding: 8px 0;">${validated.country || 'Not specified'}</td>
                   </tr>
                   <tr>
-                    <td style="padding: 8px 0; font-weight: bold; color: #475569;">Subject:</td>
-                    <td style="padding: 8px 0; font-weight: bold;">${validated.subject}</td>
-                  </tr>
-                  <tr>
                     <td style="padding: 8px 0; font-weight: bold; color: #475569;">Services Requested:</td>
                     <td style="padding: 8px 0;">${validated.services.join(', ') || 'None selected'}</td>
                   </tr>
@@ -201,7 +196,7 @@ if (resend) {
     from: resendFromEmail,
     to: contactRecipient,
     replyTo: validated.email,
-    subject: `[Lead Alert] New Contact Inquiry: ${validated.subject}`,
+    subject: `[Lead Alert] New Contact Inquiry: ${validated.services.join(', ') || 'None selected'}`,
     html: adminEmailHtml
   });
 
@@ -238,7 +233,7 @@ if (resend) {
               <div style="padding: 32px; color: #1e293b; line-height: 1.6; font-size: 14px;">
                 <p>Hola <strong>${validated.name}</strong>,</p>
                 <p>Gracias por ponerse en contacto con HyperCode.</p>
-                <p>Hemos recibido su consulta general sobre <strong>"${validated.subject}"</strong>. Nuestro equipo de desarrollo de negocios la revisará y la dirigirá al asesor técnico adecuado.</p>
+                <p>Hemos recibido su consulta sobre <strong>"${validated.services.join(', ') || 'nuestros servicios'}"</strong>. Nuestro equipo de desarrollo de negocios la revisará y la dirigirá al asesor técnico adecuado.</p>
                 <p>Un miembro de nuestro equipo se pondrá en contacto con usted en un plazo de 24 horas hábiles.</p>
                 <div style="margin: 25px 0; padding: 15px; background-color: #f8fafc; border-left: 4px solid #145BFF; font-size: 13px; color: #475569;">
                   <strong>Detalles de su mensaje:</strong><br/>
@@ -266,7 +261,7 @@ if (resend) {
               <div style="padding: 32px; color: #1e293b; line-height: 1.6; font-size: 14px;">
                 <p>Hi <strong>${validated.name}</strong>,</p>
                 <p>Thank you for contacting HyperCode.</p>
-                <p>We have successfully received your inquiry regarding <strong>"${validated.subject}"</strong>. Our solutions director will review your details and route them to the appropriate practice lead shortly.</p>
+                <p>We have successfully received your inquiry regarding <strong>"${validated.services.join(', ') || 'our services'}"</strong>. Our solutions director will review your details and route them to the appropriate practice lead shortly.</p>
                 <p>A member of our team will follow up with you within 24 business hours.</p>
                 <div style="margin: 25px 0; padding: 15px; background-color: #f8fafc; border-left: 4px solid #145BFF; font-size: 13px; color: #475569;">
                   <strong>Your message preview:</strong><br/>

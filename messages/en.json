@@ -174,7 +174,6 @@
       "email": "Corporate Email",
       "company": "Company Name",
       "phone": "Phone Number",
-      "subject": "Subject",
       "message": "Project Description / Message",
       "industry": "Industry",
       "timeline": "Expected Timeline",
@@ -183,6 +182,7 @@
       "projectType": "Project Type",
       "requiredTech": "Required Technologies",
       "services": "Requested Services / Focus Areas",
+      "selectService": "-- Select Service / Focus Area --",
       "submit": "Submit Inquiry",
       "submitting": "Sending...",
       "successTitle": "Inquiry Received!",
@@ -192,19 +192,37 @@
       "emailError": "Please enter a valid corporate email address",
       "companyError": "Company name must be at least 2 characters",
       "phoneError": "Please enter a valid phone number (min 10 digits)",
-      "subjectError": "Subject is required",
+      "servicesError": "Please select a service / focus area",
       "messageError": "Message must be at least 10 characters",
       "industryError": "Please select your industry",
-      "timelineError": "Please select a timeline"
-    },
-    "subjects": {
-      "general": "General Enterprise Inquiry",
-      "web": "Custom Web & App Development",
-      "ai": "AI & Agentic Process Automation",
-      "data": "Data Engineering & Analytics",
-      "talent": "IT & Non-IT Talent Solutions",
-      "partnership": "Strategic Partnership",
-      "other": "Other Inquiries"
+      "timelineError": "Please select a timeline",
+      "serviceOptions": {
+        "aiGenerativeAI": "AI & Generative AI",
+        "aiAutomationAgents": "AI Automation & Agents",
+        "customSoftwareDev": "Custom Software Development",
+        "enterpriseAppDev": "Enterprise Application Development",
+        "webDev": "Web Development",
+        "mobileAppDev": "Mobile App Development",
+        "cloudConsultingMigration": "Cloud Consulting & Migration",
+        "devOpsInfrastructure": "DevOps & Infrastructure",
+        "dataEngineering": "Data Engineering",
+        "dataAnalytics": "Data Analytics",
+        "businessIntelligence": "Business Intelligence",
+        "digitalTransformation": "Digital Transformation",
+        "cybersecurity": "Cybersecurity",
+        "uiUxDesign": "UI/UX Design",
+        "ecommerceDev": "E-commerce Development",
+        "apiDevIntegration": "API Development & Integration",
+        "legacyAppModernization": "Legacy Application Modernization",
+        "erpCrmSolutions": "ERP & CRM Solutions",
+        "qualityAssuranceTesting": "Quality Assurance & Testing",
+        "itConsulting": "IT Consulting",
+        "technologyConsulting": "Technology Consulting",
+        "itStaffingAugmentation": "IT Staffing & Staff Augmentation",
+        "managedItServices": "Managed IT Services",
+        "digitalMarketing": "Digital Marketing",
+        "otherTechRequirement": "Other Technology Requirement"
+      }
     },
     "headquarters": "Corporate Headquarters",
     "email": "Email Inquiries",
@@ -871,7 +889,7 @@
   },
   "Insights": {
     "title": "Thought Leadership",
-    "subtitle": "HyperCode consulting directors and solutions architects share perspectives, guides, and engineering patterns.",
+    "subtitle": "Explore expert perspectives, practical guides, engineering insights, and technology strategies covering AI, software development, cloud, data, cybersecurity, digital transformation, and emerging enterprise technologies.",
     "allCategories": "All Categories",
     "readArticle": "Read Article",
     "noArticles": "No articles found in this category.",
@@ -961,7 +979,7 @@
     "sections": {
       "introduction": {
         "title": "1. Introduction",
-        "content": "Welcome to HyperCode. This Privacy Policy describes how HyperCode LLC (\"we\", \"us\", or \"our\") collects, uses, shares, and protects your personal data when you visit our website (https://www.hypercode.com), use our AI Consultant chatbot, submit contact or consultation requests, or apply for job openings. By accessing our services, you consent to the practices described in this policy."
+        "content": "Welcome to HyperCode. This Privacy Policy describes how HyperCode LLC (\"we\", \"us\", or \"our\") collects, uses, shares, and protects your personal data when you visit our website (https://www.hypercodeit.com), use our AI Consultant chatbot, submit contact or consultation requests, or apply for job openings. By accessing our services, you consent to the practices described in this policy."
       },
       "collect": {
         "title": "2. Information We Collect",

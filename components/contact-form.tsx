@@ -32,9 +32,9 @@ function ContactFormContent() {
     'email',
     'company',
     'phone',
+    'services',
     'industry',
     'timeline',
-    'subject',
     'message'
   ];
 
@@ -45,27 +45,38 @@ function ContactFormContent() {
   });
 
   const t = useTranslations('Contact.form');
-  const tSubjects = useTranslations('Contact.subjects');
   const tNav = useTranslations('Navigation');
   const tConsult = useTranslations('Consultation');
   const tAi = useTranslations('AIConsultant');
   const locale = useLocale();
 
-  // 1. Service options mapping (translates the 13 categories)
+  // 1. Service options mapping (translates the 25 options)
   const serviceOptions = [
-    { id: 'AI & Automation', label: tNav('aiAutomation') },
-    { id: 'Software Development', label: tNav('softwareDev') },
-    { id: 'Web Development', label: tNav('webDev') },
-    { id: 'Mobile Development', label: tNav('mobileDev') },
-    { id: 'Cloud & DevOps', label: tNav('cloudDevOps') },
-    { id: 'IT & Non-IT Talent Solutions', label: tNav('talentSolutions') },
-    { id: 'Digital Transformation', label: tNav('digitalTrans') },
-    { id: 'Data & Analytics', label: tNav('dataAnalytics') },
-    { id: 'Cybersecurity', label: tNav('cybersecurity') },
-    { id: 'UI/UX Design', label: tNav('uiUx') },
-    { id: 'Digital Marketing', label: tNav('marketing') },
-    { id: 'E-commerce', label: tNav('ecommerce') },
-    { id: 'Technology Consulting', label: tNav('techConsulting') },
+    { id: 'AI & Generative AI', label: t('serviceOptions.aiGenerativeAI') },
+    { id: 'AI Automation & Agents', label: t('serviceOptions.aiAutomationAgents') },
+    { id: 'Custom Software Development', label: t('serviceOptions.customSoftwareDev') },
+    { id: 'Enterprise Application Development', label: t('serviceOptions.enterpriseAppDev') },
+    { id: 'Web Development', label: t('serviceOptions.webDev') },
+    { id: 'Mobile App Development', label: t('serviceOptions.mobileAppDev') },
+    { id: 'Cloud Consulting & Migration', label: t('serviceOptions.cloudConsultingMigration') },
+    { id: 'DevOps & Infrastructure', label: t('serviceOptions.devOpsInfrastructure') },
+    { id: 'Data Engineering', label: t('serviceOptions.dataEngineering') },
+    { id: 'Data Analytics', label: t('serviceOptions.dataAnalytics') },
+    { id: 'Business Intelligence', label: t('serviceOptions.businessIntelligence') },
+    { id: 'Digital Transformation', label: t('serviceOptions.digitalTransformation') },
+    { id: 'Cybersecurity', label: t('serviceOptions.cybersecurity') },
+    { id: 'UI/UX Design', label: t('serviceOptions.uiUxDesign') },
+    { id: 'E-commerce Development', label: t('serviceOptions.ecommerceDev') },
+    { id: 'API Development & Integration', label: t('serviceOptions.apiDevIntegration') },
+    { id: 'Legacy Application Modernization', label: t('serviceOptions.legacyAppModernization') },
+    { id: 'ERP & CRM Solutions', label: t('serviceOptions.erpCrmSolutions') },
+    { id: 'Quality Assurance & Testing', label: t('serviceOptions.qualityAssuranceTesting') },
+    { id: 'IT Consulting', label: t('serviceOptions.itConsulting') },
+    { id: 'Technology Consulting', label: t('serviceOptions.technologyConsulting') },
+    { id: 'IT Staffing & Staff Augmentation', label: t('serviceOptions.itStaffingAugmentation') },
+    { id: 'Managed IT Services', label: t('serviceOptions.managedItServices') },
+    { id: 'Digital Marketing', label: t('serviceOptions.digitalMarketing') },
+    { id: 'Other Technology Requirement', label: t('serviceOptions.otherTechRequirement') },
   ];
 
   // 2. Tech options
@@ -86,17 +97,6 @@ function ContactFormContent() {
     'Security Audits/Pen-Testing'
   ];
 
-  // 3. Subject options (maintained for compatibility)
-  const subjectOptions = [
-    { id: 'General Inquiry', label: tSubjects('general') },
-    { id: 'Custom Development', label: tSubjects('web') },
-    { id: 'AI Solutions', label: tSubjects('ai') },
-    { id: 'Data Engineering & Analytics', label: tSubjects('data') },
-    { id: 'IT & Non-IT Staffing', label: tSubjects('talent') },
-    { id: 'Partnership Opportunity', label: tSubjects('partnership') },
-    { id: 'Other', label: tSubjects('other') },
-  ];
-
   // Zod Validation Schema
   const contactSchema = z.object({
     name: createNameSchema(
@@ -113,12 +113,11 @@ function ContactFormContent() {
       t('phoneError'),
       locale === 'es' ? 'El número de teléfono debe tener entre 7 y 15 dígitos' : 'Phone number must be between 7 and 15 digits'
     ),
-    subject: createDropdownSchema(t('subjectError')),
+    services: createDropdownSchema(t('servicesError') || 'Please select a service'),
     message: createTextareaSchema(
       locale === 'es' ? 'El mensaje debe tener al menos 20 caracteres' : 'Message must be at least 20 characters',
       locale === 'es' ? 'El mensaje debe tener como máximo 2000 caracteres' : 'Message must be at most 2000 characters'
     ),
-    services: z.array(z.string()).default([]),
     industry: createDropdownSchema(t('industryError')),
     timeline: createDropdownSchema(t('timelineError')),
     country: z.string().default(''),
@@ -146,9 +145,8 @@ function ContactFormContent() {
       email: '',
       company: '',
       phone: '',
-      subject: 'General Inquiry',
+      services: '',
       message: '',
-      services: [],
       industry: '',
       timeline: '',
       country: '',
@@ -158,7 +156,6 @@ function ContactFormContent() {
     },
   });
 
-  const selectedServices = watch('services') || [];
   const selectedTech = watch('requiredTechnologies') || [];
   const messageValue = watch('message') || '';
 
@@ -169,22 +166,20 @@ function ContactFormContent() {
     const serviceParam = searchParams.get('service');
 
     if (subjectParam) {
-      const matched = subjectOptions.find(s => s.id.toLowerCase() === subjectParam.toLowerCase());
+      const matched = serviceOptions.find(opt => opt.id.toLowerCase().includes(subjectParam.toLowerCase()));
       if (matched) {
-        setValue('subject', matched.id);
+        setValue('services', matched.id);
       }
     } else if (positionParam) {
-      setValue('subject', 'IT & Non-IT Staffing');
-      setValue('services', ['IT & Non-IT Talent Solutions']);
+      setValue('services', 'IT Staffing & Staff Augmentation');
       setValue('message', `Looking for recruitment assistance regarding position: ${positionParam}.`);
     } else if (serviceParam) {
       const matchedService = serviceOptions.find(opt => opt.id.toLowerCase().includes(serviceParam.toLowerCase()));
       if (matchedService) {
-        setValue('services', [matchedService.id]);
-        setValue('subject', matchedService.id);
+        setValue('services', matchedService.id);
       }
     }
-  }, [searchParams, setValue]);
+  }, [searchParams, setValue, serviceOptions]);
 
   const onSubmit = async (data: ContactFormData) => {
     setSubmitting(true);
@@ -201,6 +196,7 @@ function ContactFormContent() {
         },
         body: JSON.stringify({
           ...sanitizedData,
+          services: [sanitizedData.services], // Pass as array for backend compatibility
           source: 'website',
           locale,
         }),
@@ -229,7 +225,7 @@ function ContactFormContent() {
       trackGAEvent({
         action: 'contact_form_submission',
         category: 'Leads',
-        label: sanitizedData.subject,
+        label: sanitizedData.services,
       });
 
       setSubmitted(true);
@@ -241,17 +237,6 @@ function ContactFormContent() {
     } finally {
       setSubmitting(false);
     }
-  };
-
-  const toggleService = (serviceId: string) => {
-    const current = [...selectedServices];
-    const index = current.indexOf(serviceId);
-    if (index === -1) {
-      current.push(serviceId);
-    } else {
-      current.splice(index, 1);
-    }
-    setValue('services', current, { shouldValidate: true, shouldDirty: true });
   };
 
   const toggleTech = (tech: string) => {
@@ -428,31 +413,6 @@ function ContactFormContent() {
         </div>
       </div>
 
-      {/* Multi-Select Services Chips */}
-      <div>
-        <label className="block text-body font-bold text-slate-855 mb-3">{t('services') || 'Services Needed'}</label>
-        <div className="flex flex-wrap gap-2.5">
-          {serviceOptions.map((opt) => {
-            const active = selectedServices.includes(opt.id);
-            return (
-              <button
-                key={opt.id}
-                type="button"
-                onClick={() => toggleService(opt.id)}
-                className={`px-4 py-2.5 rounded-full border text-body-sm font-bold transition-all flex items-center gap-2 cursor-pointer ${
-                  active
-                    ? 'bg-royal-blue/15 border-royal-blue text-royal-blue'
-                    : 'bg-slate-50 border-slate-200 text-slate-600 hover:border-slate-350 hover:bg-slate-100'
-                }`}
-              >
-                {active && <Check size={14} />}
-                {opt.label}
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
       {/* Grid for Select Options */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
@@ -484,8 +444,6 @@ function ContactFormContent() {
           </div>
           {errors.industry && <span id="contact-industry-error" className="text-caption text-red-500 mt-1.5 block" role="alert">{errors.industry.message}</span>}
         </div>
-
-
 
         <div>
           <label className="block text-body font-bold text-slate-855 mb-2.5" htmlFor="contact-timeline">{t('timeline')}</label>
@@ -559,33 +517,33 @@ function ContactFormContent() {
         </div>
 
         <div>
-          <label className="block text-body font-bold text-slate-855 mb-2.5" htmlFor="contact-subject">{t('subject')}</label>
+          <label className="block text-body font-bold text-slate-855 mb-2.5" htmlFor="contact-services">{t('services') || 'Services Needed'}</label>
           <div className="relative">
             <select
-              id="contact-subject"
-              {...register('subject')}
-              aria-invalid={Boolean(errors.subject)}
-              aria-describedby={errors.subject ? 'contact-subject-error' : undefined}
+              id="contact-services"
+              {...register('services')}
+              aria-invalid={Boolean(errors.services)}
+              aria-describedby={errors.services ? 'contact-services-error' : undefined}
               className={`w-full h-14 pl-5 pr-11 rounded-[16px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-body text-slate-800 cursor-pointer ${
-                errors.subject
+                errors.services
                   ? 'border-red-500 bg-red-50/70 focus:border-red-656 focus:ring-2 focus:ring-red-200'
-                  : touchedFields.subject
+                  : touchedFields.services
                   ? 'border-green-500 ring-2 ring-green-100 bg-green-50/5'
                   : 'border-slate-200'
               }`}
             >
-              <option value="">-- Select Subject --</option>
-              {subjectOptions.map((opt) => (
+              <option value="">{t('selectService') || '-- Select Service / Focus Area --'}</option>
+              {serviceOptions.map((opt) => (
                 <option key={opt.id} value={opt.id}>{opt.label}</option>
               ))}
             </select>
-            {touchedFields.subject && !errors.subject && (
+            {touchedFields.services && !errors.services && (
               <span className="absolute right-8 top-1/2 -translate-y-1/2 text-green-500 pointer-events-none">
                 <Check size={20} className="stroke-[3px]" />
               </span>
             )}
           </div>
-          {errors.subject && <span id="contact-subject-error" className="text-caption text-red-500 mt-1.5 block" role="alert">{errors.subject.message}</span>}
+          {errors.services && <span id="contact-services-error" className="text-caption text-red-500 mt-1.5 block" role="alert">{errors.services.message}</span>}
         </div>
       </div>
 

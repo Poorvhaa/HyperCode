@@ -371,7 +371,7 @@ export default async function CaseStudyDetailPage({ params }: Props) {
 
             {/* Embedded Consultation Form */}
             <div className="premium-card p-6 sm:p-10 border border-slate-200/80 shadow-lg text-left bg-slate-50/30 rounded-[32px]">
-              <ConsultationForm />
+              <ConsultationForm defaultIndustryKey={slug === 'logistics-dispatch-software-development' ? 'logistics' : undefined} />
             </div>
 
           </div>

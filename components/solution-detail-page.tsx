@@ -165,13 +165,14 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
       {/* 1. Premium Hero Section */}
       <HeroBanner
         bgImage={activeTrans.heroImage}
+        bgImageAlt={activeTrans.heroImageAlt}
         categoryLabel={activeTrans.categoryLabel}
         title={activeTrans.title}
         titleHighlight={activeTrans.titleHighlight}
         subtitle={activeTrans.description}
         breadcrumbs={[
-          { label: isEs ? 'Inicio' : 'Home', href: `/${locale}` },
-          { label: isEs ? 'Soluciones' : 'Solutions', href: `/${locale}/solutions` },
+          { label: isEs ? 'Inicio' : 'Home', href: '/' },
+          { label: isEs ? 'Soluciones' : 'Solutions', href: '/solutions' },
           { label: activeTrans.title }
         ]}
       />
@@ -196,8 +197,60 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
             {/* Context mock/image on right */}
             <div className="lg:col-span-5 relative w-full h-[380px] rounded-[24px] overflow-hidden border border-slate-200 shadow-2xl group">
               <Image
-                src={activeTrans.heroImage}
-                alt={activeTrans.overviewTitle}
+                src={
+                  activeTrans.slug === 'ecommerce-websites'
+                    ? '/images/ecommerce.png'
+                    : activeTrans.slug === 'data-warehousing'
+                    ? '/images/case-study-dashboard.png'
+                    : activeTrans.slug === 'dedicated-teams'
+                    ? '/images/staffing-team.png'
+                    : activeTrans.slug === 'design-systems'
+                    ? '/images/ui-ux-design.png'
+                    : activeTrans.slug === 'digital-strategy'
+                    ? '/images/digital-transformation.png'
+                    : activeTrans.slug === 'docker-containerization'
+                    ? '/images/cloud-infrastructure.png'
+                    : activeTrans.slug === 'email-marketing'
+                    ? '/images/digital-marketing.png'
+                    : activeTrans.slug === 'enterprise-software'
+                    ? '/images/software-development.png'
+                    : activeTrans.heroImage
+                }
+                alt={
+                  activeTrans.slug === 'ecommerce-websites'
+                    ? (isEs
+                      ? 'Escaparate de comercio electrónico moderno que muestra un catálogo de productos de compra en línea, flujo de pago y sistema de gestión de pedidos'
+                      : 'Modern e-commerce storefront showcasing an online shopping product catalog, payment checkout flow, and order management system')
+                    : activeTrans.slug === 'data-warehousing'
+                    ? (isEs
+                      ? 'Tablero analítico de almacenamiento de datos empresariales que muestra gráficos de inteligencia de negocios'
+                      : 'Enterprise data warehousing analytics dashboard displaying business intelligence charts')
+                    : activeTrans.slug === 'dedicated-teams'
+                    ? (isEs
+                      ? 'Equipo de desarrollo de software dedicado colaborando en un espacio de trabajo moderno'
+                      : 'Dedicated software development team collaborating in a modern workspace')
+                    : activeTrans.slug === 'design-systems'
+                    ? (isEs
+                      ? 'Interfaz del Sistema de Diseño Nova en un monitor que muestra tipografía, tokens de color y componentes de interfaz de usuario reutilizables'
+                      : 'Nova Design System interface on a monitor displaying typography, color tokens, and reusable UI components')
+                    : activeTrans.slug === 'digital-strategy'
+                    ? (isEs
+                      ? 'Personas colaborando en una estrategia de transformación digital y hoja de ruta tecnológica en una oficina moderna'
+                      : 'People collaborating on a digital transformation strategy and technology roadmap in a modern office')
+                    : activeTrans.slug === 'docker-containerization'
+                    ? (isEs
+                      ? 'Visualización de infraestructura de nube DevOps que muestra microservicios contenedorizados y orquestación de red virtual'
+                      : 'DevOps cloud infrastructure visualization showing containerized microservices and virtual network orchestration')
+                    : activeTrans.slug === 'email-marketing'
+                    ? (isEs
+                      ? 'Tablero de marketing digital que muestra analíticas de campañas de correo electrónico, métricas de rendimiento de boletines y crecimiento de suscriptores'
+                      : 'Digital marketing dashboard showcasing email campaign analytics, newsletter performance metrics, and subscriber growth')
+                    : activeTrans.slug === 'enterprise-software'
+                    ? (isEs
+                      ? 'Diagrama de arquitectura de software empresarial en un monitor que muestra la integración de sistemas y procesos de negocio'
+                      : 'Enterprise software architecture diagram on a monitor showcasing system integration and business processes')
+                    : (activeTrans.heroImageAlt || activeTrans.overviewTitle)
+                }
                 fill
                 priority
                 className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
@@ -358,7 +411,7 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
               {isEs ? 'Industrias que Servimos' : 'Industries We Serve'}
             </span>
             <h3 className="text-h2 text-slate-900">
-              {isEs ? 'Alineación de Soluciones en Todos los Sectores' : 'Enterprise Solutions Designed for Your Sector'}
+              {activeTrans.industriesHeader}
             </h3>
           </div>
 
@@ -482,13 +535,21 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
           </p>
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-4">
             <Link
-              href={`/${locale}/consultation`}
+              href={
+                pageKey === 'api-development'
+                  ? '/consultation?service=Software%20Development'
+                  : '/consultation'
+              }
               className="PrimaryBrandButton w-full sm:w-auto"
             >
               {isEs ? 'Programar Consulta' : 'Schedule Consultation'}
             </Link>
             <Link
-              href={`/${locale}/contact`}
+              href={
+                pageKey === 'api-development'
+                  ? '/contact?service=API%20Development%20%26%20Integration'
+                  : '/contact'
+              }
               className="SecondaryBrandButton w-full sm:w-auto"
             >
               {isEs ? 'Contactar Soporte' : 'Contact Us'}
