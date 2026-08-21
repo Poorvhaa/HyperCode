@@ -32,10 +32,13 @@ export async function generateMetadata({ params }: Props) {
     };
   }
 
-  const pageTitle = `HyperCode | ${details.title}`;
+  const pageTitle = slug === 'local-seo'
+    ? (locale === 'es' ? 'Servicios de SEO, AEO y GEO | HyperCode' : 'SEO, AEO & GEO Services | HyperCode')
+    : `HyperCode | ${details.title}`;
+  const pageDescription = details.metaDescription || details.description;
   return {
     title: pageTitle,
-    description: details.description,
+    description: pageDescription,
     alternates: {
       canonical: `https://www.hypercodeit.com/${locale}/solutions/${slug}`,
       languages: {
@@ -46,7 +49,7 @@ export async function generateMetadata({ params }: Props) {
     },
     openGraph: {
       title: pageTitle,
-      description: details.description,
+      description: pageDescription,
       url: `https://www.hypercodeit.com/${locale}/solutions/${slug}`,
       siteName: 'HyperCode',
       locale: locale === 'en' ? 'en_US' : 'es_ES',
@@ -63,7 +66,7 @@ export async function generateMetadata({ params }: Props) {
     twitter: {
       card: 'summary_large_image',
       title: pageTitle,
-      description: details.description,
+      description: pageDescription,
       images: [details.heroImage]
     }
   };

@@ -316,13 +316,17 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
             <span className="text-eyebrow text-royal-blue block">
               {activeTrans.keySolutionsLabel}
             </span>
-            <h3 className="text-h2 text-slate-900">
-              {isEs ? 'Capacidades Tecnológicas Avanzadas' : 'Advanced Technical Capabilities'}
-            </h3>
+            {activeTrans.slug === 'local-seo' ? (
+              <h2 className="text-h2 text-slate-900">{activeTrans.capabilitiesTitle}</h2>
+            ) : (
+              <h3 className="text-h2 text-slate-900">
+                {isEs ? 'Capacidades Tecnológicas Avanzadas' : 'Advanced Technical Capabilities'}
+              </h3>
+            )}
             <p className="text-body text-slate-655">
-              {isEs 
+              {activeTrans.capabilitiesDesc || (isEs
                 ? 'Nuestros ingenieros implementan flujos estructurados de software, seguridad de datos y patrones arquitectónicos modernos.'
-                : 'Our engineers deliver fully compliant pipelines, secure cloud data storage structures, and modular UX/UI architectures.'}
+                : 'Our engineers deliver fully compliant pipelines, secure cloud data storage structures, and modular UX/UI architectures.')}
             </p>
           </div>
 
@@ -336,7 +340,11 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
                   <div className="w-12 h-12 rounded-2xl bg-royal-blue/5 border border-royal-blue/15 text-royal-blue flex items-center justify-center shadow-inner">
                     <CheckCircle size={20} />
                   </div>
-                  <h4 className="text-h3 text-slate-900 leading-[1.2]">{feature.title}</h4>
+                  {activeTrans.slug === 'local-seo' ? (
+                    <h3 className="text-h3 text-slate-900 leading-[1.2]">{feature.title}</h3>
+                  ) : (
+                    <h4 className="text-h3 text-slate-900 leading-[1.2]">{feature.title}</h4>
+                  )}
                   <p className="text-body text-slate-655">{feature.desc}</p>
                 </div>
               </div>
@@ -352,7 +360,11 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
             <span className="text-eyebrow text-royal-blue block">
               {activeTrans.benefitsTitle}
             </span>
-            <h3 className="text-h2 text-slate-900">{activeTrans.benefitsTitle}</h3>
+            {activeTrans.slug === 'local-seo' ? (
+              <h2 className="text-h2 text-slate-900">{activeTrans.benefitsTitle}</h2>
+            ) : (
+              <h3 className="text-h2 text-slate-900">{activeTrans.benefitsTitle}</h3>
+            )}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -366,7 +378,11 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
                     <Icon size={18} />
                   </div>
                   <div className="space-y-1.5">
-                    <h4 className="text-h4 text-slate-900">{benefit.title}</h4>
+                    {activeTrans.slug === 'local-seo' ? (
+                      <h3 className="text-h4 text-slate-900">{benefit.title}</h3>
+                    ) : (
+                      <h4 className="text-h4 text-slate-900">{benefit.title}</h4>
+                    )}
                     <p className="text-body-sm text-slate-655">{benefit.desc}</p>
                   </div>
                 </div>
@@ -383,13 +399,17 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
             <span className="text-eyebrow text-royal-blue block">
               {isEs ? 'Metodología de Entrega' : 'Delivery Methodology'}
             </span>
-            <h3 className="text-h2 text-slate-900">
-              {isEs ? 'Nuestra Ruta de Implementación de 7 Pasos' : 'Our Structured 7-Step Deployment Process'}
-            </h3>
+            {activeTrans.slug === 'local-seo' ? (
+              <h2 className="text-h2 text-slate-900">{activeTrans.processTitle}</h2>
+            ) : (
+              <h3 className="text-h2 text-slate-900">
+                {isEs ? 'Nuestra Ruta de Implementación de 7 Pasos' : 'Our Structured 7-Step Deployment Process'}
+              </h3>
+            )}
             <p className="text-body text-slate-650">
-              {isEs 
+              {activeTrans.processDesc || (isEs
                 ? 'Desde la auditoría inicial hasta el soporte en producción 24/7, seguimos un flujo iterativo y ágil.'
-                : 'From the initial audit discovery through 24/7 support SLA monitoring, we execute in transparent, iterative agile sprints.'}
+                : 'From the initial audit discovery through 24/7 support SLA monitoring, we execute in transparent, iterative agile sprints.')}
             </p>
           </div>
 
@@ -408,8 +428,12 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
                     <div className={`w-full md:w-1/2 flex ${isEven ? 'md:justify-end md:text-right' : 'md:justify-start md:text-left'}`}>
                       <div className={`premium-card p-6 md:p-8 bg-white border border-slate-200 shadow-sm max-w-xl space-y-3 relative group hover:border-royal-blue/30 transition-all ${isEven ? 'md:mr-8' : 'md:ml-8'}`}>
                         <div className={`flex items-center gap-3 ${isEven ? 'md:flex-row-reverse' : 'flex-row'}`}>
-                          <span className="text-eyebrow text-white px-2.5 py-1 bg-royal-blue rounded-lg">Step 0{i + 1}</span>
-                          <h4 className="text-h3 text-slate-900 leading-[1.2]">{step.title}</h4>
+                          <span className="text-eyebrow text-white px-2.5 py-1 bg-royal-blue rounded-lg">{isEs ? 'Paso' : 'Step'} 0{i + 1}</span>
+                          {activeTrans.slug === 'local-seo' ? (
+                            <h3 className="text-h3 text-slate-900 leading-[1.2]">{step.title}</h3>
+                          ) : (
+                            <h4 className="text-h3 text-slate-900 leading-[1.2]">{step.title}</h4>
+                          )}
                         </div>
                         <p className="text-body text-slate-655">{step.desc}</p>
                       </div>
@@ -430,11 +454,15 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
             <span className="text-eyebrow text-royal-blue block">
               {activeTrans.techTitle}
             </span>
-            <h3 className="text-h2 text-slate-900">{activeTrans.techTitle}</h3>
+            {activeTrans.slug === 'local-seo' ? (
+              <h2 className="text-h2 text-slate-900">{activeTrans.techTitle}</h2>
+            ) : (
+              <h3 className="text-h2 text-slate-900">{activeTrans.techTitle}</h3>
+            )}
             <p className="text-body text-slate-650">
-              {isEs 
+              {activeTrans.techDesc || (isEs
                 ? 'Utilizamos componentes modernos, marcos de desarrollo seguros e integraciones de nube de primer nivel.'
-                : 'We assemble leading stack architectures, secure framework dependencies, and scalable cloud solutions.'}
+                : 'We assemble leading stack architectures, secure framework dependencies, and scalable cloud solutions.')}
             </p>
           </div>
 
@@ -442,7 +470,11 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
             {activeTrans.technologies.map((tech: any, i: number) => (
               <div key={i} className="premium-card p-6 rounded-2xl border border-slate-200 bg-white shadow-sm flex flex-col justify-between hover:border-royal-blue hover:shadow-md transition-all duration-300 group">
                 <div className="space-y-2">
-                  <h4 className="text-h3 text-slate-900 group-hover:text-royal-blue transition-colors leading-[1.2]">{tech.name}</h4>
+                  {activeTrans.slug === 'local-seo' ? (
+                    <h3 className="text-h3 text-slate-900 group-hover:text-royal-blue transition-colors leading-[1.2]">{tech.name}</h3>
+                  ) : (
+                    <h4 className="text-h3 text-slate-900 group-hover:text-royal-blue transition-colors leading-[1.2]">{tech.name}</h4>
+                  )}
                   <p className="text-eyebrow text-slate-400 mt-1">{tech.role}</p>
                 </div>
               </div>
@@ -458,9 +490,11 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
             <span className="text-eyebrow text-royal-blue block">
               {isEs ? 'Industrias que Servimos' : 'Industries We Serve'}
             </span>
-            <h3 className="text-h2 text-slate-900">
-              {activeTrans.industriesHeader}
-            </h3>
+            {activeTrans.slug === 'local-seo' ? (
+              <h2 className="text-h2 text-slate-900">{activeTrans.industriesHeader}</h2>
+            ) : (
+              <h3 className="text-h2 text-slate-900">{activeTrans.industriesHeader}</h3>
+            )}
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
@@ -487,9 +521,15 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
             <span className="text-eyebrow text-royal-blue block">
               {isEs ? 'Preguntas Frecuentes' : 'Frequently Asked Questions'}
             </span>
-            <h3 className="text-h2 text-slate-900">
-              {isEs ? 'Preguntas Frecuentes sobre el Servicio' : 'Got Questions? We Have Answers'}
-            </h3>
+            {activeTrans.slug === 'local-seo' ? (
+              <h2 className="text-h2 text-slate-900">
+                {isEs ? 'Preguntas Frecuentes sobre SEO, AEO y GEO' : 'SEO, AEO & GEO FAQs'}
+              </h2>
+            ) : (
+              <h3 className="text-h2 text-slate-900">
+                {isEs ? 'Preguntas Frecuentes sobre el Servicio' : 'Got Questions? We Have Answers'}
+              </h3>
+            )}
           </div>
 
           <div className="space-y-4">
@@ -533,9 +573,15 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
             <span className="text-eyebrow text-royal-blue block">
               {isEs ? 'Servicios Relacionados' : 'Related Services'}
             </span>
-            <h4 className="text-h3 text-slate-900">
-              {isEs ? 'Explore Soluciones Complementarias' : 'Explore Complementary Solutions'}
-            </h4>
+            {activeTrans.slug === 'local-seo' ? (
+              <h2 className="text-h3 text-slate-900">
+                {isEs ? 'Explore Servicios Complementarios' : 'Explore Complementary Services'}
+              </h2>
+            ) : (
+              <h4 className="text-h3 text-slate-900">
+                {isEs ? 'Explore Soluciones Complementarias' : 'Explore Complementary Solutions'}
+              </h4>
+            )}
           </div>
 
           <div className="flex flex-wrap gap-4">
@@ -554,7 +600,7 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
       </section>
 
       {/* Related Case Studies Section */}
-      {relatedCaseStudies.length > 0 && (
+      {activeTrans.slug !== 'local-seo' && relatedCaseStudies.length > 0 && (
         <section className="section-padding bg-white border-b border-slate-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mb-12 space-y-2 text-left">
@@ -575,9 +621,11 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08)_0%,transparent_100%)] pointer-events-none" />
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-8">
           <span className="text-eyebrow text-blue-200 block">{isEs ? 'ENTRE EN CONTACTO' : 'GET IN TOUCH'}</span>
-          <h3 className="text-h2 text-white leading-none">
-            {activeTrans.ctaTitle}
-          </h3>
+          {activeTrans.slug === 'local-seo' ? (
+            <h2 className="text-h2 text-white leading-none">{activeTrans.ctaTitle}</h2>
+          ) : (
+            <h3 className="text-h2 text-white leading-none">{activeTrans.ctaTitle}</h3>
+          )}
           <p className="text-body text-blue-100 max-w-xl mx-auto">
             {activeTrans.ctaDesc}
           </p>

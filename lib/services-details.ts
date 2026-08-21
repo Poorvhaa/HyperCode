@@ -698,10 +698,10 @@ export const SERVICE_REGISTRY: Record<string, {
   },
   'local-seo': {
     categoryId: 'digital-marketing',
-    enName: 'Local SEO',
-    esName: 'SEO Local',
-    tech: ['Google Business Profile', 'BrightLocal', 'Yext', 'SEMrush'],
-    related: ['seo-optimization', 'google-ads', 'social-media-marketing']
+    enName: 'SEO, AEO & GEO Services',
+    esName: 'Servicios de SEO, AEO y GEO',
+    tech: ['Google Search Console', 'Google Analytics 4', 'Google Business Profile', 'Microsoft Clarity'],
+    related: ['seo-optimization', 'content-marketing', 'google-ads', 'corporate-websites']
   },
   'google-ads': {
     categoryId: 'digital-marketing',
@@ -1142,7 +1142,7 @@ export function getServiceDetails(slug: string, locale: string): any {
 
   const isEs = locale === 'es';
   const categoryId = service.categoryId;
-  const categoryLabel = CATEGORY_NAMES[categoryId] ? CATEGORY_NAMES[categoryId][isEs ? 'es' : 'en'] : 'Solutions';
+  let categoryLabel = CATEGORY_NAMES[categoryId] ? CATEGORY_NAMES[categoryId][isEs ? 'es' : 'en'] : 'Solutions';
 
   const serviceName = isEs ? service.esName : service.enName;
 
@@ -1155,11 +1155,11 @@ export function getServiceDetails(slug: string, locale: string): any {
     ? `Implemente soluciones avanzadas de ${serviceName.toLowerCase()} diseñadas para escalar su negocio, automatizar operaciones y maximizar su retorno de inversión.`
     : `Deploy advanced ${serviceName.toLowerCase()} solutions tailored to scale operations, automate processes, and drive measurable business ROI.`;
 
-  const overviewTitle = isEs
+  let overviewTitle = isEs
     ? `Acelere su Crecimiento con ${serviceName}`
     : `Accelerate Growth with ${serviceName}`;
 
-  const overviewP1 = isEs
+  let overviewP1 = isEs
     ? `En el panorama tecnológico moderno, las organizaciones de nivel empresarial requieren ${serviceName.toLowerCase()} robusto para mantener su ventaja competitiva. Los enfoques fragmentados y las herramientas heredadas crean latencia operativa e ineficiencias críticas. El equipo de ingenieros de HyperCode une la experiencia práctica y la tecnología de punta para diseñar sistemas alineados con sus necesidades.`
     : `In the modern technological landscape, enterprise organizations require robust ${serviceName.toLowerCase()} to sustain a strong competitive advantage. Legacy approaches and manual workflows lead to high operational latency and critical bottlenecks. HyperCode's engineering team bridges the gap between complex infrastructures and your target business milestones.`;
 
@@ -1168,7 +1168,7 @@ export function getServiceDetails(slug: string, locale: string): any {
     : `Our certified architects and engineers work closely with your operations teams. We implement systems utilizing proven development frameworks that ensure sub-second response times, enterprise-grade data security, and efficient infrastructure overhead control. We handle the entire lifecycle from discovery through production deployment.`;
 
   // Curated Features
-  const features = isEs ? [
+  let features = isEs ? [
     { title: `Estrategia de ${serviceName}`, desc: `Definición de objetivos, análisis de brechas técnicas y diseño de hojas de ruta de implementación corporativa.` },
     { title: `Integración sin Costuras`, desc: `Conecte de forma segura con sus API existentes, ERP, CRM y bases de datos locales sin interrumpir su operación.` },
     { title: `Monitoreo y Telemetría`, desc: `Paneles interactivos y alertas en tiempo real para rastrear la salud del sistema, rendimiento y consultas activas.` },
@@ -1181,7 +1181,7 @@ export function getServiceDetails(slug: string, locale: string): any {
   ];
 
   // Curated Benefits
-  const benefits = isEs ? [
+  let benefits = isEs ? [
     { title: 'Retorno de Inversión (ROI)', desc: 'Reducción de costos de infraestructura y optimización del gasto en desarrollo por sprint.' },
     { title: 'Escalabilidad Elástica', desc: 'Sistemas diseñados con microservicios para procesar cargas de tráfico impredecibles sin latencia.' },
     { title: 'Seguridad y Cumplimiento', desc: 'Aislamiento de bases de datos, auditorías SOC 2 y cifrado de datos TLS de extremo a extremo.' },
@@ -1195,13 +1195,13 @@ export function getServiceDetails(slug: string, locale: string): any {
 
   // Process Timeline
   const timelineData = TIMELINE_TEMPLATES[categoryId] || TIMELINE_TEMPLATES['software-development'] || { steps: DEFAULT_TIMELINE };
-  const timeline = timelineData.steps.map(s => ({
+  let timeline = timelineData.steps.map(s => ({
     title: isEs ? s.titleEs : s.titleEn,
     desc: isEs ? s.descEs : s.descEn
   }));
 
   // Curated Technologies mapping based on registry or category defaults
-  const technologies = service.tech.map(name => {
+  let technologies = service.tech.map(name => {
     let role = 'Platform integration';
     if (name.includes('React') || name.includes('Next.js') || name.includes('Tailwind')) {
       role = isEs ? 'Desarrollo Frontend e Interfaz' : 'Frontend UI & client-side rendering';
@@ -1239,7 +1239,13 @@ export function getServiceDetails(slug: string, locale: string): any {
   });
 
   // FAQs
-  const faqs = getTailoredFaqs(targetSlug, categoryId, isEs);
+  let faqs = getTailoredFaqs(targetSlug, categoryId, isEs);
+
+  let capabilitiesTitle: string | undefined;
+  let capabilitiesDesc: string | undefined;
+  let processTitle: string | undefined;
+  let processDesc: string | undefined;
+  let techDesc: string | undefined;
 
   let heroImage = CATEGORY_HERO_IMAGES[categoryId] || 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1600';
   let heroImageAlt: string | undefined = undefined;
@@ -1266,6 +1272,97 @@ export function getServiceDetails(slug: string, locale: string): any {
     }
   }
 
+  if (targetSlug === 'local-seo') {
+    categoryLabel = isEs
+      ? 'Marketing Digital y Optimización de Búsqueda con IA'
+      : 'Digital Marketing & AI Search Optimization';
+    description = isEs
+      ? 'Fortalezca su visibilidad en Google, motores de búsqueda, experiencias basadas en respuestas y descubrimiento impulsado por IA con los servicios integrados de SEO, AEO y GEO de HyperCode.'
+      : "Build stronger visibility across Google, search engines, answer-driven experiences, and AI-powered discovery with HyperCode's integrated SEO, AEO, and GEO services.";
+    overviewTitle = isEs
+      ? 'Optimice su Marca para el Futuro de la Búsqueda'
+      : 'Optimize Your Brand for the Future of Search';
+    overviewP1 = isEs
+      ? 'HyperCode integra SEO técnico, investigación de palabras clave e intención, optimización on-page y contenido estructurado para ayudar a que las personas y los sistemas de búsqueda comprendan mejor su marca.'
+      : 'HyperCode combines technical SEO, keyword and intent research, on-page optimization, and structured content to help people and search systems better understand your brand.';
+    overviewP2 = isEs
+      ? 'Nuestro enfoque unificado incorpora marcado de esquema apropiado, estrategia de contenido, enlaces internos, desarrollo de autoridad y medición del rendimiento para mejorar continuamente la presencia de búsqueda.'
+      : 'Our unified approach incorporates appropriate schema markup, content strategy, internal linking, authority development, and performance measurement to continually improve search presence.';
+    capabilitiesTitle = isEs ? 'Capacidades de SEO, AEO y GEO' : 'SEO, AEO & GEO Capabilities';
+    capabilitiesDesc = isEs
+      ? 'Una estrategia conectada para la búsqueda tradicional, las experiencias de respuesta y el descubrimiento generado por IA.'
+      : 'A connected strategy for traditional search, answer-driven experiences, and AI-powered discovery.';
+    features = isEs ? [
+      { title: 'Optimización para Motores de Búsqueda (SEO)', desc: 'Mejore la capacidad de rastreo, la relevancia on-page, los enlaces internos y la claridad del contenido para la búsqueda orgánica.' },
+      { title: 'Optimización para Motores de Respuesta (AEO)', desc: 'Estructure respuestas claras y útiles que se adapten a consultas conversacionales y experiencias basadas en respuestas.' },
+      { title: 'Optimización para Motores Generativos (GEO)', desc: 'Refuerce las señales de marca, entidad y autoridad que ayudan a los sistemas generativos a interpretar su contenido.' },
+      { title: 'SEO Técnico', desc: 'Revise indexabilidad, rastreo, metadatos, rendimiento, canonicals, mapas del sitio y marcado de esquema compatible.' },
+      { title: 'Estrategia de Contenido y Palabras Clave', desc: 'Alinee temas, intención de búsqueda y oportunidades de contenido con las necesidades reales de su audiencia.' },
+      { title: 'Analítica y Rendimiento de Búsqueda', desc: 'Mida consultas, páginas de destino, interacción y tendencias de visibilidad para orientar mejoras continuas.' }
+    ] : [
+      { title: 'Search Engine Optimization (SEO)', desc: 'Improve crawlability, on-page relevance, internal linking, and content clarity for organic search.' },
+      { title: 'Answer Engine Optimization (AEO)', desc: 'Structure clear, useful answers suited to conversational queries and answer-driven experiences.' },
+      { title: 'Generative Engine Optimization (GEO)', desc: 'Strengthen brand, entity, and authority signals that help generative systems interpret your content.' },
+      { title: 'Technical SEO', desc: 'Review indexability, crawling, metadata, performance, canonicals, sitemaps, and supported schema markup.' },
+      { title: 'Content & Keyword Strategy', desc: 'Align topics, search intent, and content opportunities with the real needs of your audience.' },
+      { title: 'Analytics & Search Performance', desc: 'Measure queries, landing pages, engagement, and visibility trends to guide continuous improvements.' }
+    ];
+    benefits = isEs ? [
+      { title: 'Mayor Visibilidad en Búsquedas', desc: 'Amplíe la presencia de la marca en experiencias de búsqueda tradicionales, locales y basadas en IA.' },
+      { title: 'Descubrimiento Orgánico Calificado', desc: 'Alinee el contenido con la intención relevante para atraer audiencias con necesidades relacionadas.' },
+      { title: 'Señales de Marca y Entidad Más Claras', desc: 'Ayude a los sistemas de búsqueda a interpretar su organización, experiencia y relaciones temáticas.' },
+      { title: 'Rendimiento de Búsqueda Medible', desc: 'Supervise indicadores de búsqueda y contenido para priorizar mejoras basadas en datos.' }
+    ] : [
+      { title: 'Broader Search Visibility', desc: 'Expand brand presence across traditional, local, and AI-powered search experiences.' },
+      { title: 'Qualified Organic Discovery', desc: 'Align content with relevant intent to reach audiences with related needs.' },
+      { title: 'Clearer Brand & Entity Signals', desc: 'Help search systems interpret your organization, expertise, and topical relationships.' },
+      { title: 'Measurable Search Performance', desc: 'Monitor search and content indicators to prioritize data-informed improvements.' }
+    ];
+    processTitle = isEs ? 'Nuestro Proceso de Optimización en 7 Pasos' : 'Our 7-Step Search Optimization Process';
+    processDesc = isEs
+      ? 'Desde la auditoría inicial hasta la medición continua, cada etapa conecta las prioridades técnicas, de contenido y autoridad.'
+      : 'From the initial audit through continuous measurement, each stage connects technical, content, and authority priorities.';
+    timeline = isEs ? [
+      { title: 'Auditoría de Visibilidad en Búsquedas', desc: 'Evaluamos la presencia actual, la indexabilidad, el contenido y las señales de rendimiento para establecer prioridades.' },
+      { title: 'Investigación de Palabras Clave, Intención y Entidades', desc: 'Analizamos cómo buscan las audiencias y cómo se relacionan los temas, preguntas y entidades con su marca.' },
+      { title: 'Base Técnica de SEO', desc: 'Abordamos rastreo, indexación, metadatos, canonicals, mapas del sitio, rendimiento y esquema relevante.' },
+      { title: 'Optimización de Contenido SEO', desc: 'Mejoramos la estructura on-page, los encabezados, los enlaces internos y la cobertura temática.' },
+      { title: 'Optimización AEO', desc: 'Organizamos respuestas concisas, lenguaje conversacional y contenido estructurado para experiencias basadas en respuestas.' },
+      { title: 'GEO y Desarrollo de Autoridad', desc: 'Fortalecemos señales de entidad, credibilidad temática y referencias de marca mediante contenido útil y consistente.' },
+      { title: 'Medición y Mejora Continua', desc: 'Revisamos indicadores de búsqueda y comportamiento para orientar iteraciones y nuevas oportunidades.' }
+    ] : [
+      { title: 'Search Visibility Audit', desc: 'Assess current presence, indexability, content, and performance signals to establish priorities.' },
+      { title: 'Keyword, Intent & Entity Research', desc: 'Analyze how audiences search and how topics, questions, and entities relate to your brand.' },
+      { title: 'Technical SEO Foundation', desc: 'Address crawling, indexing, metadata, canonicals, sitemaps, performance, and relevant schema.' },
+      { title: 'SEO Content Optimization', desc: 'Improve on-page structure, headings, internal links, and topical coverage.' },
+      { title: 'AEO Optimization', desc: 'Organize concise answers, conversational language, and structured content for answer-driven experiences.' },
+      { title: 'GEO & Authority Development', desc: 'Strengthen entity signals, topical credibility, and brand references through useful, consistent content.' },
+      { title: 'Measurement & Continuous Improvement', desc: 'Review search and behavior indicators to guide iterations and new opportunities.' }
+    ];
+    techDesc = isEs
+      ? 'Utilizamos únicamente plataformas de medición y presencia verificadas para evaluar el rendimiento y orientar mejoras.'
+      : 'We use verified measurement and presence platforms to evaluate performance and guide improvements.';
+    technologies = service.tech.map(name => ({
+      name,
+      role: isEs ? 'Medición y optimización de búsqueda' : 'Search measurement & optimization'
+    }));
+    faqs = isEs ? [
+      { q: '¿Cuál es la diferencia entre SEO, AEO y GEO?', a: 'El SEO mejora la visibilidad en motores de búsqueda, el AEO estructura contenido para experiencias de respuesta y el GEO fortalece las señales que ayudan a los sistemas generativos a comprender y considerar una marca.' },
+      { q: '¿Cómo pueden trabajar juntos SEO, AEO y GEO?', a: 'Comparten una base de contenido útil, estructura técnica clara y autoridad temática. Al coordinarlos, cada mejora puede respaldar múltiples formas de descubrimiento sin duplicar esfuerzos.' },
+      { q: '¿Cómo mejora HyperCode el SEO técnico y on-page?', a: 'Auditamos rastreo, indexación, metadatos, canonicals, mapas del sitio, rendimiento y esquema; luego optimizamos encabezados, contenido, enlaces internos y alineación con la intención.' },
+      { q: '¿Cómo optimizan el contenido para experiencias de búsqueda basadas en respuestas?', a: 'Identificamos preguntas relevantes y organizamos respuestas concisas con encabezados claros, contexto suficiente, lenguaje natural y datos estructurados apropiados.' },
+      { q: '¿Cómo abordan la visibilidad en búsquedas generativas e impulsadas por IA?', a: 'Trabajamos en claridad de entidad, cobertura temática, consistencia de marca, contenido verificable y señales de autoridad que ayudan a los sistemas de IA a interpretar la información.' },
+      { q: '¿Cómo miden el rendimiento de SEO, AEO y GEO?', a: 'Seguimos consultas, impresiones, clics, páginas de destino, interacción, cobertura de contenido y tendencias de descubrimiento, y usamos esos datos para priorizar mejoras.' }
+    ] : [
+      { q: 'What is the difference between SEO, AEO, and GEO?', a: 'SEO improves visibility in search engines, AEO structures content for answer-driven experiences, and GEO strengthens signals that help generative systems understand and consider a brand.' },
+      { q: 'How can SEO, AEO, and GEO work together?', a: 'They share a foundation of useful content, clear technical structure, and topical authority. Coordinating them allows each improvement to support multiple forms of discovery without duplicating effort.' },
+      { q: 'How does HyperCode improve technical and on-page SEO?', a: 'We audit crawling, indexing, metadata, canonicals, sitemaps, performance, and schema, then optimize headings, content, internal links, and alignment with search intent.' },
+      { q: 'How do you optimize content for answer-driven search experiences?', a: 'We identify relevant questions and organize concise answers with clear headings, sufficient context, natural language, and appropriate structured data.' },
+      { q: 'How do you approach visibility in generative and AI-powered search?', a: 'We focus on entity clarity, topical coverage, brand consistency, verifiable content, and authority signals that help AI systems interpret information.' },
+      { q: 'How do you measure SEO, AEO, and GEO performance?', a: 'We track queries, impressions, clicks, landing pages, engagement, content coverage, and discovery trends, then use those findings to prioritize improvements.' }
+    ];
+  }
+
   return {
     slug: targetSlug,
     categoryId,
@@ -1276,13 +1373,35 @@ export function getServiceDetails(slug: string, locale: string): any {
     overviewTitle,
     overviewP1,
     overviewP2,
-    keySolutionsLabel: isEs ? 'Características Clave' : 'Key Features',
-    benefitsTitle: isEs ? 'Beneficios de Negocio' : 'Measurable Business Benefits',
-    techTitle: isEs ? 'Ecosistema Tecnológico' : 'Technologies & Tools',
-    ctaTitle: isEs ? '¿Listo para Construir su Solución?' : "Let's Build Your Solution",
-    ctaDesc: isEs 
-      ? 'Hable con nuestros directores de práctica hoy mismo para diseñar su plan de implementación a medida.'
-      : 'Connect with our solutions directors today to structure a customized delivery roadmap for your enterprise.',
+    keySolutionsLabel: targetSlug === 'local-seo'
+      ? (isEs ? 'Capacidades de Búsqueda' : 'Search Capabilities')
+      : (isEs ? 'Características Clave' : 'Key Features'),
+    capabilitiesTitle,
+    capabilitiesDesc,
+    benefitsTitle: targetSlug === 'local-seo'
+      ? (isEs ? 'Beneficios de Negocio' : 'Business Benefits')
+      : (isEs ? 'Beneficios de Negocio' : 'Measurable Business Benefits'),
+    techTitle: targetSlug === 'local-seo'
+      ? (isEs ? 'Herramientas de Medición de Búsqueda' : 'Search Measurement Tools')
+      : (isEs ? 'Ecosistema Tecnológico' : 'Technologies & Tools'),
+    techDesc,
+    processTitle,
+    processDesc,
+    metaDescription: targetSlug === 'local-seo'
+      ? (isEs
+        ? 'Mejore el descubrimiento en buscadores e IA con los servicios de SEO, AEO y GEO de HyperCode, que combinan optimización técnica, estrategia de contenido y rendimiento de búsqueda medible.'
+        : "Improve search and AI discovery with HyperCode's SEO, AEO and GEO services, combining technical optimization, content strategy and measurable search performance.")
+      : description,
+    ctaTitle: targetSlug === 'local-seo'
+      ? (isEs ? 'Fortalezca su Presencia en la Búsqueda' : 'Strengthen Your Search Presence')
+      : (isEs ? '¿Listo para Construir su Solución?' : "Let's Build Your Solution"),
+    ctaDesc: targetSlug === 'local-seo'
+      ? (isEs
+        ? 'Hable con HyperCode sobre una estrategia integrada de SEO, AEO y GEO alineada con sus objetivos de búsqueda.'
+        : 'Talk with HyperCode about an integrated SEO, AEO, and GEO strategy aligned with your search objectives.')
+      : (isEs
+        ? 'Hable con nuestros directores de práctica hoy mismo para diseñar su plan de implementación a medida.'
+        : 'Connect with our solutions directors today to structure a customized delivery roadmap for your enterprise.'),
     ctaBtn: isEs ? 'Programar Consulta' : 'Schedule Consultation',
     features,
     benefits,
@@ -1293,8 +1412,10 @@ export function getServiceDetails(slug: string, locale: string): any {
     faqs,
     heroImage,
     heroImageAlt,
-    industriesHeader: targetSlug === 'android-apps'
-      ? (isEs ? 'Soluciones Empresariales en Todas las Industrias' : 'Enterprise Solutions Across Industries')
-      : (isEs ? 'Alineación de Soluciones en Todos los Sectores' : 'Enterprise Solutions Designed for Your Sector')
+    industriesHeader: targetSlug === 'local-seo'
+      ? (isEs ? 'Visibilidad de Búsqueda para Diversos Sectores' : 'Search Visibility Across Industries')
+      : targetSlug === 'android-apps'
+        ? (isEs ? 'Soluciones Empresariales en Todas las Industrias' : 'Enterprise Solutions Across Industries')
+        : (isEs ? 'Alineación de Soluciones en Todos los Sectores' : 'Enterprise Solutions Designed for Your Sector')
   };
 }
