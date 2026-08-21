@@ -214,6 +214,22 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
                     ? '/images/digital-marketing.png'
                     : activeTrans.slug === 'enterprise-software'
                     ? '/images/software-development.png'
+                    : activeTrans.slug === 'executive-search'
+                    ? '/images/staffing-team.png'
+                    : activeTrans.slug === 'permanent-staffing'
+                    ? '/images/staffing-team.png'
+                    : activeTrans.slug === 'flutter-development'
+                    ? '/images/mobile-development.png'
+                    : activeTrans.slug === 'identity-access-management'
+                    ? '/images/cybersecurity.png'
+                    : activeTrans.slug === 'generative-ai-solutions'
+                    ? '/images/ai-automation.png'
+                    : activeTrans.slug === 'inventory-systems'
+                    ? 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1600'
+                    : activeTrans.slug === 'ios-apps'
+                    ? 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=1600'
+                    : activeTrans.slug === 'monitoring-observability'
+                    ? '/images/cloud-infrastructure.png'
                     : activeTrans.heroImage
                 }
                 alt={
@@ -249,6 +265,38 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
                     ? (isEs
                       ? 'Diagrama de arquitectura de software empresarial en un monitor que muestra la integración de sistemas y procesos de negocio'
                       : 'Enterprise software architecture diagram on a monitor showcasing system integration and business processes')
+                    : activeTrans.slug === 'executive-search'
+                    ? (isEs
+                      ? 'Equipo de reclutamiento profesional llevando a cabo la búsqueda de ejecutivos y contratación de liderazgo en una oficina moderna'
+                      : 'Professional recruitment team conducting executive search and leadership hiring in a modern office')
+                    : activeTrans.slug === 'permanent-staffing'
+                    ? (isEs
+                      ? 'Equipo de reclutamiento de TI preseleccionando profesionales de tecnología y talento de software'
+                      : 'IT recruitment team screening technology professionals and software talent')
+                    : activeTrans.slug === 'flutter-development'
+                    ? (isEs
+                      ? 'Interfaz de aplicación móvil de Flutter en un teléfono inteligente que muestra el desarrollo multiplataforma para Android e iOS'
+                      : 'Flutter mobile application interface on a smartphone showcasing cross-platform Android and iOS development')
+                    : activeTrans.slug === 'identity-access-management'
+                    ? (isEs
+                      ? 'Interfaz de gestión de accesos y seguridad cibernética con autenticación multifactor y controles de identidad'
+                      : 'Cybersecurity and access management interface showcasing multi-factor authentication and identity controls')
+                    : activeTrans.slug === 'generative-ai-solutions'
+                    ? (isEs
+                      ? 'Interfaz futurista de automatización de IA que muestra flujos de trabajo inteligentes con agentes avanzados y redes neuronales'
+                      : 'Futuristic AI automation interface showcasing intelligent workflows with advanced agents and neural networks')
+                    : activeTrans.slug === 'inventory-systems'
+                    ? (isEs
+                      ? 'Estanterías industriales de almacén organizadas para la gestión de inventario y operaciones logísticas'
+                      : 'Organized industrial warehouse shelving for inventory management and logistics operations')
+                    : activeTrans.slug === 'ios-apps'
+                    ? (isEs
+                      ? 'Un iPhone que muestra un diseño limpio de interfaz de usuario de aplicación móvil, que representa el desarrollo nativo de aplicaciones iOS'
+                      : 'An iPhone displaying a clean mobile application user interface layout, representing native iOS app development')
+                    : activeTrans.slug === 'monitoring-observability'
+                    ? (isEs
+                      ? 'Tablero de gestión de infraestructura de TI y monitoreo del sistema que muestra operaciones de red en la nube y soporte técnico'
+                      : 'IT infrastructure management and system monitoring dashboard showing cloud network operations and technical support')
                     : (activeTrans.heroImageAlt || activeTrans.overviewTitle)
                 }
                 fill

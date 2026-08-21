@@ -284,7 +284,9 @@ export function IndustryShowcase() {
                   </span>
                   <h3 className="text-2xl lg:text-3xl font-black text-slate-900 tracking-tight leading-snug flex items-center gap-3">
                     {displayTitle}
-                    <ActiveIcon size={24} className="text-royal-blue animate-pulse" />
+                    {activeItem.id !== 'manufacturing' && (
+                      <ActiveIcon size={24} className="text-royal-blue animate-pulse" />
+                    )}
                   </h3>
                   <p className="text-sm md:text-base text-slate-500 leading-relaxed">
                     {displayDesc}

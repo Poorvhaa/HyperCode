@@ -181,7 +181,7 @@
       "contactMethod": "Preferred Contact Method",
       "projectType": "Project Type",
       "requiredTech": "Required Technologies",
-      "services": "Requested Services / Focus Areas",
+      "services": "Recommended Services / Focus Areas (Project)",
       "selectService": "-- Select Service / Focus Area --",
       "submit": "Submit Inquiry",
       "submitting": "Sending...",
@@ -236,10 +236,27 @@
     "selectIndustry": "-- Select Industry --",
     "industries": {
       "healthcare": "Healthcare & Life Sciences",
-      "finance": "Banking & Financial Services",
+      "bfsi": "Banking, Financial Services & Insurance (BFSI)",
       "retail": "Retail & E-commerce",
-      "manufacturing": "Advanced Manufacturing",
+      "technology": "Technology & Software",
+      "telecom": "Telecommunications",
+      "manufacturing": "Manufacturing",
+      "automotive": "Automotive",
       "logistics": "Logistics & Supply Chain",
+      "transportation": "Transportation",
+      "energy": "Energy & Utilities",
+      "oilGas": "Oil & Gas",
+      "education": "Education & EdTech",
+      "government": "Government & Public Sector",
+      "professionalServices": "Professional Services",
+      "realEstate": "Real Estate & Construction",
+      "travel": "Travel & Hospitality",
+      "media": "Media & Entertainment",
+      "insurance": "Insurance",
+      "fintech": "FinTech",
+      "foodBeverage": "Food & Beverage",
+      "consumerProducts": "Consumer Products",
+      "nonprofit": "Nonprofit & Associations",
       "other": "Other / General"
     },
     "form": {
@@ -1003,7 +1020,7 @@
       },
       "rights": {
         "title": "7. Your Rights and Choices",
-        "content": "Depending on your location (such as the EU under GDPR or California under CCPA), you may possess specific rights regarding your personal information, including the right to access, correct, delete, or limit the use of your data. To exercise any of these rights, please contact us at hello@hypercodeit.com."
+        "content": "Depending on your location (such as the EU under GDPR or California under CCPA), you may possess specific rights regarding your personal information, including the right to access, correct, delete, or limit the use of your data. To exercise any of these rights, please contact us at hr@hypercodeit.com ."
       },
       "changes": {
         "title": "8. Changes to this Policy",
@@ -1011,7 +1028,7 @@
       },
       "contact": {
         "title": "9. Contact Us",
-        "content": "If you have any questions or concerns regarding this Privacy Policy, please contact us:\n\n• By email: hello@hypercodeit.com\n\n• By mail: 2095 Hammond Dr Suite B, Schaumburg, IL 60173"
+        "content": "If you have any questions or concerns regarding this Privacy Policy, please contact us:\n\n• By email: hr@hypercodeit.com\n\n• By mail: 2095 Hammond Dr Suite B, Schaumburg, IL 60173"
       }
     }
   },
@@ -1019,13 +1036,13 @@
     "legal": "HyperCode Legal",
     "title": "Terms & Conditions",
     "subtitle": "Please read these terms and conditions carefully before using our website and services.",
-    "lastUpdated": "Last Updated: June 26, 2026",
+    "lastUpdated": "Last Updated: August 21, 2026",
     "downloadPdf": "Download PDF Version",
     "toc": "Table of Contents",
     "sections": {
       "agreement": {
         "title": "1. Agreement to Terms",
-        "content": "By accessing or using the HyperCode website (https://www.hypercode.com) and our professional services, you agree to be bound by these Terms & Conditions. If you do not agree with all of these terms, you are expressly prohibited from using our site and services and must discontinue use immediately."
+        "content": "By accessing or using the HyperCode website (https://www.hypercodeit.com) and our professional services, you agree to be bound by these Terms & Conditions. If you do not agree with all of these terms, you are expressly prohibited from using our site and services and must discontinue use immediately."
       },
       "intellectual": {
         "title": "2. Intellectual Property Rights",
@@ -1041,7 +1058,7 @@
       },
       "services": {
         "title": "5. Services and Engagements",
-        "content": "HyperCode provides enterprise web development, data engineering, business intelligence, and IT & Non-IT staffing consulting. Any specific engagement for consulting services, project deliverables, or candidate placements will be governed by a separate written Master Services Agreement (MSA) or Statement of Work (SOW)."
+        "content": "HyperCode provides AI & Automation, Software Development, Web Development, Mobile Development, Cloud & DevOps, IT & Non-IT Talent Solutions, Digital Transformation, Data & Analytics, Cybersecurity, UI/UX Design, Digital Marketing, E-commerce, and Technology Consulting services. Any specific engagement for consulting services, project deliverables, or candidate placements will be governed by a separate written Master Services Agreement (MSA) or Statement of Work (SOW)."
       },
       "termination": {
         "title": "6. Site Management and Termination",
@@ -1057,7 +1074,7 @@
       },
       "contact": {
         "title": "9. Contact Us",
-        "content": "In order to resolve a complaint regarding the site or to receive further information regarding use of the site, please contact us:\n\n• By email: hello@hypercodeit.com\n\n• By mail: 2095 Hammond Dr Suite B, Schaumburg, IL 60173"
+        "content": "In order to resolve a complaint regarding the site or to receive further information regarding use of the site, please contact us:\n\n• By email: hr@hypercodeit.com\n\n• By mail: 2095 Hammond Dr Suite C, Schaumburg, IL 60173"
       }
     }
   },
@@ -1310,7 +1327,7 @@
       },
       "contact": {
         "title": "7. Contact Us",
-        "content": "If you have questions about our use of cookies or other tracking technologies, please contact us:\n\n• By email: hello@hypercodeit.com\n\n• By mail: 2095 Hammond Dr Suite B, Schaumburg, IL 60173"
+        "content": "If you have questions about our use of cookies or other tracking technologies, please contact us:\n\n• By email: hr@hypercodeit.com\n\n• By mail: 2095 Hammond Dr Suite B, Schaumburg, IL 60173"
       }
     }
   },

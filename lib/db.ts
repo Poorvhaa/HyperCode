@@ -176,8 +176,8 @@ export interface NewsletterSubscriber {
 let localSettings: CompanySettings = {
   id: 'default',
   company_name: 'HyperCode',
-  email: 'info@hypercode.com',
-  phone: '+1 (510) 203-9270',
+  email: 'hr@hypercodeit.com',
+  phone: '+1 (224) 351-9727',
   address: '2095 Hammond Dr Suite C ,Schaumburg, IL 60173,United States',
   social_links: { linkedin: 'https://linkedin.com/company/hypercode', twitter: 'https://twitter.com/hypercode', github: 'https://github.com/hypercode' },
   updated_at: new Date().toISOString()

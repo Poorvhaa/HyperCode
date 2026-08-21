@@ -172,8 +172,8 @@ USING (get_user_role() IN ('Admin', 'Consultant'));
 CREATE TABLE IF NOT EXISTS company_settings (
     id TEXT PRIMARY KEY DEFAULT 'default',
     company_name TEXT NOT NULL DEFAULT 'HyperCode',
-    email TEXT NOT NULL DEFAULT 'info@hypercode.com',
-    phone TEXT DEFAULT '+1 (510) 203-9270',
+    email TEXT NOT NULL DEFAULT 'hr@hypercodeit.com',
+    phone TEXT DEFAULT '+1 (224) 351-9727',
     address TEXT DEFAULT '2095 Hammond Dr
 Suite C
 Schaumburg, IL 60173
@@ -205,7 +205,7 @@ CREATE POLICY "Admins can manage templates" ON email_templates FOR ALL USING (ge
 
 -- Seed defaults
 INSERT INTO company_settings (id, company_name, email, phone, address, social_links)
-VALUES ('default', 'HyperCode', 'info@hypercode.com', '+1 (510) 203-9270', '2095 Hammond Dr
+VALUES ('default', 'HyperCode', 'hr@hypercodeit.com', '+1 (224) 351-9727', '2095 Hammond Dr
 Suite C
 Schaumburg, IL 60173
 United States', '{"linkedin": "https://linkedin.com/company/hypercode"'::jsonb)

@@ -192,7 +192,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
     },
     'contactPoint': {
       '@type': 'ContactPoint',
-      'telephone': '+1-800-555-0199',
+      'telephone': '+1 (224) 351-9727',
       'contactType': 'customer service',
       'areaServed': 'US',
       'availableLanguage': ['en', 'es']

@@ -115,7 +115,7 @@ export default async function DynamicServicePage({ params }: Props) {
       '@type': 'LocalBusiness',
       'name': 'HyperCode',
       'image': 'https://www.hypercodeit.com/icon.svg',
-      'telephone': '+1-800-555-0199',
+      'telephone': '+1 (224) 351-9727',
       'address': {
         '@type': 'PostalAddress',
         'addressLocality': 'Schaumburg',

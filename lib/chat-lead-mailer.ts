@@ -3,7 +3,7 @@ import { Resend } from 'resend';
 
 const resendApiKey = process.env.RESEND_API_KEY || '';
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
-const contactRecipient = process.env.HYPERCODE_CONTACT_EMAIL || 'hello@hypercodeit.com';
+const contactRecipient = process.env.HYPERCODE_CONTACT_EMAIL || 'hr@hypercodeit.com';
 const resendFromEmail =
   process.env.RESEND_FROM_EMAIL ||
   'HyperCode <HR@hypercodeit.com>';

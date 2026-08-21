@@ -110,8 +110,8 @@ ALTER TABLE consultation_requests ADD CONSTRAINT consultation_requests_status_ch
 CREATE TABLE IF NOT EXISTS company_settings (
     id TEXT PRIMARY KEY DEFAULT 'default',
     company_name TEXT NOT NULL DEFAULT 'HyperCode',
-    email TEXT NOT NULL DEFAULT 'info@hypercode.com',
-    phone TEXT DEFAULT '+1 (510) 203-9270',
+    email TEXT NOT NULL DEFAULT 'hr@hypercodeit.com',
+    phone TEXT DEFAULT '+1 (224) 351-9727',
     address TEXT DEFAULT '2095 Hammond Dr
 Suite C
 Schaumburg, IL 60173
@@ -129,7 +129,7 @@ CREATE TABLE IF NOT EXISTS email_templates (
 
 -- Seed default company settings
 INSERT INTO company_settings (id, company_name, email, phone, address, social_links)
-VALUES ('default', 'HyperCode', 'info@hypercode.com', '+1 (510) 203-9270', '2095 Hammond Dr
+VALUES ('default', 'HyperCode', 'hr@hypercodeit.com', '+1 (224) 351-9727', '2095 Hammond Dr
 Suite C
 Schaumburg, IL 60173
 United States', '{"linkedin": "https://linkedin.com/company/hypercode", "twitter": "https://twitter.com/hypercode", "github": "https://github.com/hypercode"}'::jsonb)

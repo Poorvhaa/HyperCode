@@ -456,30 +456,11 @@ function SolutionsPageContent() {
           { label: locale === 'es' ? 'Inicio' : 'Home', href: '/' },
           { label: locale === 'es' ? 'Soluciones' : 'Solutions' }
         ]}
+        isCompact={true}
       />
 
-      {/* Key Statistics Grid Section */}
-      <section className="py-12 bg-white border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
-            <div className="space-y-1">
-              <span className="block text-h1 text-royal-blue leading-none">{t('stats.retentionNum')}</span>
-              <span className="block text-eyebrow text-slate-500">{t('stats.retentionLabel')}</span>
-            </div>
-            <div className="space-y-1">
-              <span className="block text-h1 text-royal-blue leading-none">{t('stats.deploymentsNum')}</span>
-              <span className="block text-eyebrow text-slate-500">{t('stats.deploymentsLabel')}</span>
-            </div>
-            <div className="space-y-1">
-              <span className="block text-h1 text-royal-blue leading-none">{t('stats.onboardingNum')}</span>
-              <span className="block text-eyebrow text-slate-500">{t('stats.onboardingLabel')}</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Main Grid: Sticky Sidebar + Category Sections */}
-      <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+      <section className="pt-4 pb-24 sm:pt-6 lg:pt-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           
           {/* Desktop Sticky Navigation Sidebar */}

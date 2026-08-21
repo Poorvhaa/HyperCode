@@ -234,20 +234,20 @@ export function Footer() {
               
               {/* Email */}
               <a 
-                href="mailto:hello@hypercodeit.com" 
+                href="mailto:hr@hypercodeit.com" 
                 className="flex items-center gap-4 text-slate-550 hover:text-royal-blue transition-colors group font-semibold text-body-sm"
               >
                 <Mail className="text-royal-blue group-hover:text-royal-blue transition-colors flex-shrink-0 w-[20px] h-[20px]" />
-                <span>hello@hypercodeit.com</span>
+                <span>hr@hypercodeit.com</span>
               </a>
               
               {/* Phone */}
               <a 
-                href="tel:+18005550199" 
+                href="tel:+1 (224) 351-9727" 
                 className="flex items-center gap-4 text-green hover:text-royal-blue transition-colors group font-semibold text-body-sm"
               >
                 <Phone className="text-green group-hover:text-royal-blue transition-colors flex-shrink-0 w-[20px] h-[20px]" />
-                <span>2243510727</span>
+                <span>+1 (224) 351-9727</span>
               </a>
             </div>
 

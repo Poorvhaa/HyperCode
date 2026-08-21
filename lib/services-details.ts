@@ -842,6 +842,7 @@ export const ALIAS_MAP: Record<string, string> = {
   'data-engineering-solutions': 'etl-pipelines',
   'data-warehousing-services': 'data-warehousing',
   'it-staffing-solutions': 'permanent-staffing',
+  'managed-it-services': 'monitoring-observability',
   'staff-augmentation-services': 'staff-augmentation',
   'web-development-services': 'corporate-websites'
 };
@@ -1150,7 +1151,7 @@ export function getServiceDetails(slug: string, locale: string): any {
   const titleHighlight = '';
 
   // Curated descriptions
-  const description = isEs 
+  let description = isEs
     ? `Implemente soluciones avanzadas de ${serviceName.toLowerCase()} diseñadas para escalar su negocio, automatizar operaciones y maximizar su retorno de inversión.`
     : `Deploy advanced ${serviceName.toLowerCase()} solutions tailored to scale operations, automate processes, and drive measurable business ROI.`;
 
@@ -1162,7 +1163,7 @@ export function getServiceDetails(slug: string, locale: string): any {
     ? `En el panorama tecnológico moderno, las organizaciones de nivel empresarial requieren ${serviceName.toLowerCase()} robusto para mantener su ventaja competitiva. Los enfoques fragmentados y las herramientas heredadas crean latencia operativa e ineficiencias críticas. El equipo de ingenieros de HyperCode une la experiencia práctica y la tecnología de punta para diseñar sistemas alineados con sus necesidades.`
     : `In the modern technological landscape, enterprise organizations require robust ${serviceName.toLowerCase()} to sustain a strong competitive advantage. Legacy approaches and manual workflows lead to high operational latency and critical bottlenecks. HyperCode's engineering team bridges the gap between complex infrastructures and your target business milestones.`;
 
-  const overviewP2 = isEs
+  let overviewP2 = isEs
     ? `Nuestros consultores y arquitectos certificados colaboran estrechamente con sus equipos de operaciones e ingeniería. Construimos soluciones utilizando metodologías provistas que aseguran sub-segundos de latencia, seguridad de grado corporativo, y un control de costos eficiente. Nos encargamos de todo el ciclo de vida, desde el descubrimiento hasta el soporte en producción.`
     : `Our certified architects and engineers work closely with your operations teams. We implement systems utilizing proven development frameworks that ensure sub-second response times, enterprise-grade data security, and efficient infrastructure overhead control. We handle the entire lifecycle from discovery through production deployment.`;
 
@@ -1253,6 +1254,16 @@ export function getServiceDetails(slug: string, locale: string): any {
     heroImageAlt = isEs
       ? 'Tablero interactivo de inteligencia de negocios con gráficos y análisis de datos'
       : 'Interactive business intelligence dashboard displaying charts and data analytics';
+  }
+
+  if (targetSlug === 'predictive-analytics') {
+    if (isEs) {
+      description = 'Implemente soluciones avanzadas de analítica predictiva diseñadas para escalar operaciones, automatizar procesos y respaldar decisiones mejor informadas.';
+      overviewP2 = 'Nuestros consultores y arquitectos certificados colaboran estrechamente con sus equipos de operaciones e ingeniería. Construimos soluciones utilizando metodologías provistas diseñadas para optimizar los tiempos de respuesta, respaldar la seguridad de datos de grado empresarial y lograr un control de costos de infraestructura eficiente. Nos encargamos de todo el ciclo de vida, desde el descubrimiento hasta el soporte en producción.';
+    } else {
+      description = 'Deploy advanced predictive analytics solutions tailored to scale operations, automate processes, and support better-informed decisions.';
+      overviewP2 = 'Our certified architects and engineers work closely with your operations teams. We implement systems utilizing proven development frameworks designed to optimize response times, support enterprise-grade data security, and achieve efficient infrastructure overhead control. We handle the entire lifecycle from discovery through production deployment.';
+    }
   }
 
   return {

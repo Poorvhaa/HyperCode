@@ -181,7 +181,7 @@
       "contactMethod": "Método de Contacto Preferido",
       "projectType": "Tipo de Proyecto",
       "requiredTech": "Tecnologías Requeridas",
-      "services": "Servicios Solicitados / Áreas de Enfoque",
+      "services": "Servicios Recomendados / Áreas de Enfoque (Proyecto)",
       "selectService": "-- Seleccionar Servicio / Área de Enfoque --",
       "submit": "Enviar Consulta",
       "submitting": "Enviando...",
@@ -197,8 +197,8 @@
       "industryError": "Por favor, seleccione su industria",
       "timelineError": "Por favor, seleccione un plazo estimado",
       "serviceOptions": {
-        "aiGenerativeAI": "IA y IA Generativa",
-        "aiAutomationAgents": "Automatización e Agentes de IA",
+        "aiGenerativeAI": "IA e IA Generativa",
+        "aiAutomationAgents": "Automatización y Agentes de IA",
         "customSoftwareDev": "Desarrollo de Software a Medida",
         "enterpriseAppDev": "Desarrollo de Aplicaciones Empresariales",
         "webDev": "Desarrollo Web",
@@ -236,10 +236,27 @@
     "selectIndustry": "-- Seleccionar Industria --",
     "industries": {
       "healthcare": "Salud y Ciencias de la Vida",
-      "finance": "Servicios Bancarios y Financieros",
+      "bfsi": "Servicios Bancarios, Financieros y Seguros (BFSI)",
       "retail": "Venta al por Menor y Comercio Electrónico",
-      "manufacturing": "Manufactura Avanzada",
+      "technology": "Tecnología y Software",
+      "telecom": "Telecomunicaciones",
+      "manufacturing": "Manufactura",
+      "automotive": "Automotriz",
       "logistics": "Logística y Cadena de Suministro",
+      "transportation": "Transporte",
+      "energy": "Energía y Servicios Públicos",
+      "oilGas": "Petróleo y Gas",
+      "education": "Educación y EdTech",
+      "government": "Gobierno y Sector Público",
+      "professionalServices": "Servicios Profesionales",
+      "realEstate": "Bienes Raíces y Construcción",
+      "travel": "Viajes y Hospitalidad",
+      "media": "Medios y Entretenimiento",
+      "insurance": "Seguros",
+      "fintech": "FinTech",
+      "foodBeverage": "Alimentos y Bebidas",
+      "consumerProducts": "Productos de Consumo",
+      "nonprofit": "Organizaciones sin Fines de Lucro y Asociaciones",
       "other": "Otro / General"
     },
     "form": {
@@ -1004,7 +1021,7 @@
       },
       "rights": {
         "title": "7. Sus Derechos y Opciones",
-        "content": "Dependiendo de su ubicación (como la UE bajo el RGPD o California bajo la CCPA), puede poseer derechos específicos con respecto a su información personal, incluido el derecho a acceder, corregir, eliminar o limitar el que usemos sus datos. Para ejercer cualquiera de estos derechos, póngase en contacto con nosotros en hello@hypercodeit.com."
+        "content": "Dependiendo de su ubicación (como la UE bajo el RGPD o California bajo la CCPA), puede poseer derechos específicos con respecto a su información personal, incluido el derecho a acceder, corregir, eliminar o limitar el que usemos sus datos. Para ejercer cualquiera de estos derechos, póngase en contacto con nosotros en hr@hypercodeit.com."
       },
       "changes": {
         "title": "8. Cambios en esta Política",
@@ -1012,7 +1029,7 @@
       },
       "contact": {
         "title": "9. Contáctenos",
-        "content": "Si tiene alguna pregunta o inquietud con respecto a esta Política de Privacidad, póngase en contacto con nosotros:\n\n• Por correo electrónico: hello@hypercodeit.com\n\n• Por correo postal: 2095 Hammond Dr Suite B, Schaumburg, IL 60173"
+        "content": "Si tiene alguna pregunta o inquietud con respecto a esta Política de Privacidad, póngase en contacto con nosotros:\n\n• Por correo electrónico: hr@hypercodeit.com\n\n• Por correo postal: 2095 Hammond Dr Suite B, Schaumburg, IL 60173"
       }
     }
   },
@@ -1020,13 +1037,13 @@
     "legal": "Aspectos Legales de HyperCode",
     "title": "Términos y Condiciones",
     "subtitle": "Por favor, lea atentamente estos términos y condiciones antes de utilizar nuestro sitio web y servicios.",
-    "lastUpdated": "Última Actualización: 26 de junio de 2026",
+    "lastUpdated": "Última Actualización: 21 de agosto de 2026",
     "downloadPdf": "Descargar Versión PDF",
     "toc": "Tabla de Contenidos",
     "sections": {
       "agreement": {
         "title": "1. Acuerdo de los Términos",
-        "content": "Al acceder o utilizar el sitio web de HyperCode (https://www.hypercode.com) y nuestros servicios profesionales, usted acepta quedar vinculado por estos Términos y Condiciones. Si no está de acuerdo con todos estos términos, se le prohíbe expresamente utilizar nuestro sitio y servicios, y debe interrumpir su uso de inmediato."
+        "content": "Al acceder o utilizar el sitio web de HyperCode (https://www.hypercodeit.com) y nuestros servicios profesionales, usted acepta quedar vinculado por estos Términos y Condiciones. Si no está de acuerdo con todos estos términos, se le prohíbe expresamente utilizar nuestro sitio y servicios, y debe interrumpir su uso de inmediato."
       },
       "intellectual": {
         "title": "2. Derechos de Propiedad Intelectual",
@@ -1042,7 +1059,7 @@
       },
       "services": {
         "title": "5. Servicios y Contrataciones",
-        "content": "HyperCode ofrece consultoría en desarrollo web empresarial, ingeniería de datos, inteligencia de negocios y reclutamiento de personal técnico TI y No-TI. Cualquier contratación específica para servicios de consultoría, entregables de proyectos o colocación de candidatos se regirá por un Contrato Marco de Servicios (MSA) o una Declaración de Trabajo (SOW) por separado por escrito."
+        "content": "HyperCode ofrece servicios de IA y Automatización, Desarrollo de Software, Desarrollo Web, Desarrollo Móvil, Nube y DevOps, Soluciones de Talento TI y No-TI, Transformación Digital, Datos y Analítica, Ciberseguridad, Diseño UI/UX, Marketing Digital, Comercio Electrónico y Consultoría Tecnológica. Cualquier contratación específica para servicios de consultoría, entregables de proyectos o colocación de candidatos se regirá por un Contrato Marco de Servicios (MSA) o una Declaración de Trabajo (SOW) por separado por escrito."
       },
       "termination": {
         "title": "6. Gestión del Sitio y Terminación",
@@ -1058,7 +1075,7 @@
       },
       "contact": {
         "title": "9. Contáctenos",
-        "content": "In order to resolve a complaint regarding the site or to receive further information regarding use of the site, please contact us:\n\n• By email: hello@hypercodeit.com\n\n• By mail: 2095 Hammond Dr Suite B, Schaumburg, IL 60173"
+        "content": "Para resolver una queja con respecto al sitio o para recibir más información sobre el uso del mismo, por favor póngase en contacto con nosotros:\n\n• Por correo electrónico: hr@hypercodeit.com\n\n• Por correo postal: 2095 Hammond Dr Suite C, Schaumburg, IL 60173"
       }
     }
   },
@@ -1311,7 +1328,7 @@
       },
       "contact": {
         "title": "7. Contacto",
-        "content": "Si tiene preguntas sobre nuestro uso de cookies u otras tecnologías de seguimiento, póngase en contacto con nosotros:\n\n• Por correo electrónico: hello@hypercodeit.com\n\n• Por correo postal: 2095 Hammond Dr Suite B, Schaumburg, IL 60173"
+        "content": "Si tiene preguntas sobre nuestro uso de cookies u otras tecnologías de seguimiento, póngase en contacto con nosotros:\n\n• Por correo electrónico: hr@hypercodeit.com\n\n• Por correo postal: 2095 Hammond Dr Suite B, Schaumburg, IL 60173"
       }
     }
   },

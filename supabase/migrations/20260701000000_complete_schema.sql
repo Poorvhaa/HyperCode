@@ -264,8 +264,8 @@ CREATE TRIGGER tr_case_studies_updated_at
 CREATE TABLE IF NOT EXISTS public.company_settings (
     id TEXT PRIMARY KEY DEFAULT 'default',
     company_name TEXT NOT NULL DEFAULT 'HyperCode',
-    email TEXT NOT NULL DEFAULT 'info@hypercode.com',
-    phone TEXT DEFAULT '+1 (510) 203-9270',
+    email TEXT NOT NULL DEFAULT 'hr@hypercodeit.com',
+    phone TEXT DEFAULT '+1 (224) 351-9727',
     address TEXT DEFAULT '2095 Hammond Dr
 Suite C
 Schaumburg, IL 60173
@@ -512,7 +512,7 @@ CREATE POLICY "Allow admins to manage email templates" ON public.email_templates
 -- 12. Initial Seeds
 -- =========================================================================
 INSERT INTO public.company_settings (id, company_name, email, phone, address, social_links)
-VALUES ('default', 'HyperCode', 'info@hypercode.com', '+1 (510) 203-9270', '2095 Hammond Dr
+VALUES ('default', 'HyperCode', 'hr@hypercodeit.com', '+1 (224) 351-9727', '2095 Hammond Dr
 Suite C
 Schaumburg, IL 60173
 United States', '{"linkedin": "https://linkedin.com/company/hypercode"}'::jsonb)

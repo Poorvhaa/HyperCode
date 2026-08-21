@@ -396,7 +396,7 @@ function ConsultationFormContent({ defaultIndustryKey }: { defaultIndustryKey?: 
             <input
               id="consultation-phone"
               type="tel"
-              placeholder="+1 (555) 012-3456"
+              placeholder=" +1 (224) 351-9727"
               autoComplete="tel"
               inputMode="tel"
               {...register('phone', {

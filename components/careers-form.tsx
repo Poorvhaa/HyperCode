@@ -478,7 +478,7 @@ export function CareersForm({ initialPosition }: CareersFormProps) {
                   }
                 })}
                 type="tel"
-                placeholder="+1 (555) 123-4567"
+                placeholder="+1 (224) 351-9727"
                 autoComplete="tel"
                 inputMode="tel"
                 aria-invalid={Boolean(errors.phone)}

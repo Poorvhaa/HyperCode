@@ -19,6 +19,7 @@ interface HeroBannerProps {
   subtitle: string;
   breadcrumbs?: Breadcrumb[];
   ctaButtons?: React.ReactNode;
+  isCompact?: boolean;
 }
 
 export function HeroBanner({
@@ -30,7 +31,8 @@ export function HeroBanner({
   titleHighlight,
   subtitle,
   breadcrumbs,
-  ctaButtons
+  ctaButtons,
+  isCompact = false
 }: HeroBannerProps) {
   // Compute top, middle, and bottom opacity levels for the gradient overlay matching the 45-60% requirement
   const topOpacity = Math.min(overlayOpacity + 0.08, 0.60);
@@ -38,7 +40,11 @@ export function HeroBanner({
   const botOpacity = Math.min(overlayOpacity + 0.06, 0.60);
 
   return (
-    <section className="relative w-full h-[480px] sm:h-[520px] lg:h-[560px] flex items-center overflow-hidden bg-[#F8FAFC] border-b border-slate-200 bg-dot-pattern text-left">
+    <section className={
+      isCompact 
+        ? "relative w-full overflow-hidden bg-[#F8FAFC] border-b border-slate-200 bg-dot-pattern text-left pt-[104px] pb-[24px] sm:pt-[112px] sm:pb-[32px] lg:pt-[152px] lg:pb-[32px]" 
+        : "relative w-full h-[480px] sm:h-[520px] lg:h-[560px] flex items-center overflow-hidden bg-[#F8FAFC] border-b border-slate-200 bg-dot-pattern text-left"
+    }>
       {/* Background Image Container with Slow Zoom */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <motion.div
@@ -65,14 +71,16 @@ export function HeroBanner({
         />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-20 pt-12">
+      <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-20 ${isCompact ? '' : 'pt-12'}`}>
         <div className={ctaButtons ? "flex flex-col md:flex-row md:items-center md:justify-between gap-8" : "w-full"}>
           
           {/* Content Block */}
-          <div className={ctaButtons ? "max-w-3xl space-y-5" : "max-w-4xl space-y-5"}>
+          <div className={`${
+            isCompact ? "space-y-2" : "space-y-5"
+          } ${ctaButtons ? "max-w-3xl" : "max-w-4xl"}`}>
             {/* Breadcrumbs */}
             {breadcrumbs && breadcrumbs.length > 0 && (
-              <nav className="flex items-center gap-1.5 text-[10px] font-extrabold text-slate-500 tracking-widest uppercase mb-2">
+              <nav className={`flex items-center gap-1.5 text-[10px] font-extrabold text-slate-500 tracking-widest uppercase ${isCompact ? 'mb-0.5' : 'mb-2'}`}>
                 {breadcrumbs.map((crumb, idx) => (
                   <div key={idx} className="flex items-center gap-1.5">
                     {crumb.href ? (
@@ -96,7 +104,11 @@ export function HeroBanner({
               </span>
             )}
 
-            <h1 className="text-4xl sm:text-5xl lg:text-[56px] font-black text-slate-900 tracking-tight leading-[1.1]">
+            <h1 className={`font-black text-slate-900 tracking-tight leading-[1.15] ${
+              isCompact 
+                ? 'text-[clamp(1.75rem,3.8vw,2.875rem)] max-w-[760px]' 
+                : 'text-4xl sm:text-5xl lg:text-[56px]'
+            }`}>
               {title}{' '}
               {titleHighlight && (
                 <span className="text-royal-blue">
@@ -105,7 +117,11 @@ export function HeroBanner({
               )}
             </h1>
             
-            <p className={ctaButtons ? "text-[16px] md:text-[17px] lg:text-[18px] text-slate-600 leading-[1.7] max-w-xl font-medium" : "text-[16px] md:text-[17px] lg:text-[18px] text-slate-600 leading-[1.7] max-w-2xl md:max-w-3xl font-medium"}>
+            <p className={
+              isCompact 
+                ? "text-[14px] sm:text-[15px] lg:text-[16px] text-slate-605 leading-[1.65] max-w-2xl md:max-w-3xl font-medium"
+                : (ctaButtons ? "text-[16px] md:text-[17px] lg:text-[18px] text-slate-600 leading-[1.7] max-w-xl font-medium" : "text-[16px] md:text-[17px] lg:text-[18px] text-slate-600 leading-[1.7] max-w-2xl md:max-w-3xl font-medium")
+            }>
               {subtitle}
             </p>
           </div>
