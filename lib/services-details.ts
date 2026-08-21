@@ -1142,7 +1142,7 @@ export function getServiceDetails(slug: string, locale: string): any {
 
   const isEs = locale === 'es';
   const categoryId = service.categoryId;
-  let categoryLabel = CATEGORY_NAMES[categoryId] ? CATEGORY_NAMES[categoryId][isEs ? 'es' : 'en'] : 'Solutions';
+  let categoryLabel = CATEGORY_NAMES[categoryId] ? CATEGORY_NAMES[categoryId][isEs ? 'es' : 'en'] : (isEs ? 'Servicios' : 'Services');
 
   const serviceName = isEs ? service.esName : service.enName;
 

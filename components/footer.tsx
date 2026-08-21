@@ -8,6 +8,7 @@ import { useState, type FormEvent } from 'react';
 import { EMAIL_REGEX } from '@/lib/validation';
 import { useCookieConsent } from '@/hooks/useCookieConsent';
 import { useFormValidation } from '@/hooks/use-form-validation';
+import { footerServicesList } from '@/lib/navigation-links';
 
 export function Footer() {
   const tNav = useTranslations('Navigation');
@@ -71,21 +72,10 @@ export function Footer() {
     }
   };
 
-  const solutionsList = [
-    { name: tNav('aiAutomation') || 'Enterprise AI', href: `/solutions/ai-automation` },
-    { name: tNav('softwareDev') || 'Software Engineering', href: `/solutions/custom-software` },
-    { name: tNav('webDev') || 'Web Applications', href: `/solutions/web-development` },
-    { name: tNav('mobileDev') || 'Mobile Apps', href: `/solutions/mobile-apps` },
-    { name: tNav('cloudDevOps') || 'Cloud & DevOps', href: `/solutions/cloud-infrastructure` },
-    { name: tNav('cybersecurity') || 'Cybersecurity', href: `/solutions/cybersecurity` },
-    { name: tNav('staffing') || 'Staffing', href: `/staffing` },
-    { name: tNav('digitalTransformation') || 'Digital Transformation', href: `/solutions/digital-transformation` },
-    { name: tNav('businessIntelligence') || 'BI & Analytics', href: `/solutions/business-intelligence` },
-    { name: tNav('uiUx') || 'UI/UX Design', href: `/solutions/ui-design` },
-    { name: tNav('marketing') || 'Digital Marketing', href: `/solutions/seo-optimization` },
-    { name: tNav('ecommerce') || 'E-commerce', href: `/solutions/shopify-development` },
-    { name: tNav('techConsulting') || 'Technology Consulting', href: `/solutions/technology-consulting` },
-  ];
+  const solutionsList = footerServicesList.map((s) => ({
+    name: tNav(s.labelKey) || '',
+    href: s.href,
+  }));
 
   const currentYear = new Date().getFullYear();
   const copyrightText = (tf('copyright') || `© ${currentYear} HyperCode. All rights reserved.`).replace('2026', currentYear.toString());
