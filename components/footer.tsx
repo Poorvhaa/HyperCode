@@ -6,7 +6,6 @@ import { Mail, Phone, MapPin, ArrowRight, ShieldCheck, Check, AlertCircle } from
 import { useTranslations, useLocale } from 'next-intl';
 import { useState, type FormEvent, type ReactNode } from 'react';
 import { EMAIL_REGEX } from '@/lib/validation';
-import { useCookieConsent } from '@/hooks/useCookieConsent';
 import { useFormValidation } from '@/hooks/use-form-validation';
 import { footerServicesList } from '@/lib/navigation-links';
 import { googleMapsSearchUrl } from '@/lib/utils';
@@ -28,7 +27,6 @@ export function Footer() {
   const tf = useTranslations('Footer');
   const tc = useTranslations('Common');
   const locale = useLocale();
-  const { openPreferences } = useCookieConsent();
 
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
@@ -104,16 +102,33 @@ export function Footer() {
   ] as const;
 
   const currentYear = new Date().getFullYear();
-  const copyrightText = (tf('copyright') || `© ${currentYear} HyperCode. All rights reserved.`).replace('2026', currentYear.toString());
+  const copyrightText = tf('copyright').replace('2026', currentYear.toString());
   const mapsQuery = `2095 Hammond Dr Suite C Schaumburg, IL 60173 ${tf('unitedStates')}`;
 
   return (
     <footer className="relative text-left bg-[#F4F7FB] border-t border-slate-200 text-slate-650 overflow-x-hidden select-none bg-[radial-gradient(circle_at_top,rgba(20,91,255,0.035)_0%,transparent_50%)]">
       <div className="h-[2.5px] w-full bg-gradient-to-r from-[#1769F5] via-[#08A8D8] to-[#2DBD3E] absolute top-0 left-0 right-0 z-20" />
 
-      <div className="max-w-[1440px] mx-auto px-[clamp(1.25rem,4vw,4rem)] pt-8 pb-5 md:pt-10 md:pb-6 relative z-10 w-full">
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-[1.3fr_1fr_0.8fr_1.3fr] items-start gap-x-8 gap-y-8 md:gap-x-10 xl:gap-x-12 pb-6 md:pb-8 border-b border-slate-200/80">
-          {/* 1. Brand */}
+      <div className="max-w-[1440px] mx-auto px-[clamp(1.25rem,4vw,4rem)] pt-6 pb-4 md:pt-8 md:pb-5 relative z-10 w-full">
+        {/* Top CTA strip */}
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 lg:gap-8 pb-6 md:pb-8 mb-6 md:mb-8 border-b border-slate-200/80">
+          <div className="space-y-1.5 min-w-0">
+            <h3 className="text-h3 text-slate-900">{tf('ctaTitle')}</h3>
+            <p className="text-body-sm text-slate-500 max-w-xl">{tf('tagline')}</p>
+          </div>
+          <Link
+            href="/consultation"
+            className="PrimaryBrandButton inline-flex items-center justify-center gap-2 shrink-0 self-start lg:self-center h-11 px-6"
+            aria-label={tNav('schedule')}
+          >
+            <span>{tNav('schedule')}</span>
+            <ArrowRight size={15} aria-hidden="true" />
+          </Link>
+        </div>
+
+        {/* Main footer grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-[1.3fr_1fr_0.8fr_1.3fr] items-start gap-x-8 gap-y-7 md:gap-x-10 xl:gap-x-12 pb-6 md:pb-7 border-b border-slate-200/80">
+          {/* Brand */}
           <div className="flex flex-col gap-3 min-w-0">
             <Link href="/" className="inline-flex w-fit" aria-label="HyperCode Home">
               <div
@@ -138,11 +153,9 @@ export function Footer() {
               </div>
             </Link>
 
-            <p className="text-body-sm text-slate-500 max-w-xs leading-relaxed">
-              {tf('tagline')}
-            </p>
+            <p className="text-body-sm text-slate-500 max-w-xs leading-relaxed">{tf('tagline')}</p>
 
-            <div className="flex items-center gap-2.5 pt-1">
+            <div className="flex items-center gap-2.5 pt-0.5">
               <a
                 href="https://www.linkedin.com/company/hypercode-llc/"
                 target="_blank"
@@ -179,7 +192,7 @@ export function Footer() {
             </div>
           </div>
 
-          {/* 2. Services */}
+          {/* Services */}
           <div className="flex flex-col min-w-0">
             <FooterHeading>{tc('solutions')}</FooterHeading>
             <ul className="flex flex-col gap-2">
@@ -202,7 +215,7 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* 3. Company */}
+          {/* Company */}
           <div className="flex flex-col min-w-0">
             <FooterHeading>{tc('company')}</FooterHeading>
             <ul className="flex flex-col gap-2">
@@ -216,8 +229,8 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* 4. Contact + Newsletter */}
-          <div className="flex flex-col gap-5 min-w-0">
+          {/* Contact + Newsletter */}
+          <div className="flex flex-col gap-4 min-w-0">
             <div>
               <FooterHeading>{tc('contact')}</FooterHeading>
               <div className="flex flex-col gap-2.5 text-body-sm text-slate-550">
@@ -226,7 +239,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={locale === 'es' ? 'Abrir la ubicación de HyperCode en Google Maps' : 'Open HyperCode location in Google Maps'}
-                  className="flex items-start gap-2.5 hover:text-royal-blue transition-colors group rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue focus-visible:ring-offset-2"
+                  className="flex items-start gap-2.5 hover:text-royal-blue transition-colors rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue focus-visible:ring-offset-2"
                 >
                   <MapPin className="text-royal-blue mt-0.5 shrink-0 w-[18px] h-[18px]" aria-hidden="true" />
                   <address className="not-italic leading-relaxed">
@@ -235,17 +248,11 @@ export function Footer() {
                     <span className="block">{tf('unitedStates')}</span>
                   </address>
                 </a>
-                <a
-                  href="tel:+12243519727"
-                  className="flex items-center gap-2.5 hover:text-royal-blue transition-colors"
-                >
+                <a href="tel:+12243519727" className="flex items-center gap-2.5 hover:text-royal-blue transition-colors">
                   <Phone className="text-green shrink-0 w-[18px] h-[18px]" aria-hidden="true" />
                   <span>+1 (224) 351-9727</span>
                 </a>
-                <a
-                  href="mailto:hr@hypercodeit.com"
-                  className="flex items-center gap-2.5 hover:text-royal-blue transition-colors break-all"
-                >
+                <a href="mailto:hr@hypercodeit.com" className="flex items-center gap-2.5 hover:text-royal-blue transition-colors break-all">
                   <Mail className="text-royal-blue shrink-0 w-[18px] h-[18px]" aria-hidden="true" />
                   <span>hr@hypercodeit.com</span>
                 </a>
@@ -310,11 +317,7 @@ export function Footer() {
                     </button>
                   </div>
                   {error && (
-                    <p
-                      id="footer-email-error"
-                      className="text-caption font-medium text-red-500 mt-1.5 flex items-center gap-1"
-                      role="alert"
-                    >
+                    <p id="footer-email-error" className="text-caption font-medium text-red-500 mt-1.5 flex items-center gap-1" role="alert">
                       <AlertCircle size={12} className="shrink-0" aria-hidden="true" />
                       <span>{error}</span>
                     </p>
@@ -325,26 +328,19 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Bottom bar */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pt-4 md:pt-5 text-caption text-slate-450 w-full">
+        {/* Bottom legal bar */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2.5 pt-4 text-caption text-slate-450 w-full">
           <p>{copyrightText}</p>
-          <div className="flex flex-wrap gap-x-5 gap-y-2">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
             <Link href="/PP" className="hover:text-royal-blue transition-colors">
               {tf('privacy')}
             </Link>
+            <span className="text-slate-300 hidden sm:inline" aria-hidden="true">
+              |
+            </span>
             <Link href="/TnC" className="hover:text-royal-blue transition-colors">
               {tf('terms')}
             </Link>
-            <Link href="/cookie-policy" className="hover:text-royal-blue transition-colors">
-              {tf('cookiePolicy')}
-            </Link>
-            <button
-              type="button"
-              onClick={openPreferences}
-              className="hover:text-royal-blue cursor-pointer bg-transparent border-none p-0 text-left text-caption text-slate-450 outline-none focus-visible:ring-2 focus-visible:ring-royal-blue focus-visible:ring-offset-2 rounded-sm"
-            >
-              {tf('cookieSettings')}
-            </button>
           </div>
         </div>
       </div>

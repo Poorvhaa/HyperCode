@@ -49,7 +49,6 @@ export function Navigation() {
   const router = useRouter();
   const locale = useLocale();
   const t = useTranslations('Navigation');
-  const tc = useTranslations('Common');
   
   const isActive = (href: string) => {
     if (href === '/') {
@@ -218,17 +217,8 @@ export function Navigation() {
             </div>
 
             {/* Center Navigation Links */}
-            <div className="hidden xl:flex items-center justify-center space-x-8 h-full rtl:space-x-reverse flex-1">
-              <Link href="/" className={`${getLinkClass('/')} group`}>
-                <span className="relative py-1">
-                  {t('home')}
-                  <span className={`absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-royal-blue to-green transform transition-transform duration-300 origin-left ${
-                    isActive('/') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
-                  }`} />
-                </span>
-              </Link>
-
-              {/* Solutions two-level mega menu */}
+            <div className="hidden xl:flex items-center justify-center space-x-6 h-full rtl:space-x-reverse flex-1">
+              {/* What We Do — Services mega menu */}
               <div
                 ref={solutionsRef}
                 className="h-full flex items-center"
@@ -257,7 +247,7 @@ export function Navigation() {
                   }}
                 >
                   <span className="relative py-1 flex items-center gap-1">
-                    <span>{tc('solutions')}</span>
+                    <span>{t('solutions')}</span>
                     <ChevronDown size={13} className={`transition-transform duration-150 ${isSolutionsOpen ? 'rotate-180' : ''}`} />
                     <span className={`absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-royal-blue to-green transform transition-transform duration-300 origin-left ${
                       isActive('/solutions') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
@@ -305,7 +295,7 @@ export function Navigation() {
                         <div className="p-5 overflow-y-auto bg-white flex flex-col justify-between">
                           <div>
                             <div className="mb-3 border-b border-slate-100 pb-2">
-                              <p className="text-eyebrow text-royal-blue">{tc('solutions')}</p>
+                              <p className="text-eyebrow text-royal-blue">{t('solutions')}</p>
                               <p className="mt-0.5 text-h4 text-slate-900">
                                 {solutionMenu[activeSolutionCategory].label[locale === 'es' ? 'es' : 'en']}
                               </p>
@@ -348,20 +338,29 @@ export function Navigation() {
                 </span>
               </Link>
 
+              <Link href="/case-studies" className={`${getLinkClass('/case-studies')} group`}>
+                <span className="relative py-1">
+                  {t('ourWork')}
+                  <span className={`absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-royal-blue to-green transform transition-transform duration-300 origin-left ${
+                    isActive('/case-studies') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                  }`} />
+                </span>
+              </Link>
+
+              <Link href="/insights" className={`${getLinkClass('/insights')} group`}>
+                <span className="relative py-1">
+                  {t('insights')}
+                  <span className={`absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-royal-blue to-green transform transition-transform duration-300 origin-left ${
+                    isActive('/insights') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                  }`} />
+                </span>
+              </Link>
+
               <Link href="/careers" className={`${getLinkClass('/careers')} group`}>
                 <span className="relative py-1">
                   {t('careers')}
                   <span className={`absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-royal-blue to-green transform transition-transform duration-300 origin-left ${
                     isActive('/careers') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
-                  }`} />
-                </span>
-              </Link>
-
-              <Link href="/contact" className={`${getLinkClass('/contact')} group`}>
-                <span className="relative py-1">
-                  {t('contact')}
-                  <span className={`absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-royal-blue to-green transform transition-transform duration-300 origin-left ${
-                    isActive('/contact') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
                   }`} />
                 </span>
               </Link>
@@ -452,15 +451,7 @@ export function Navigation() {
               className="xl:hidden border-t border-slate-200 bg-white overflow-hidden shadow-xl absolute top-20 left-0 right-0 z-55 max-h-[calc(100vh-80px)] overflow-y-auto"
             >
               <div className="px-4 pt-2 pb-6 space-y-3">
-                <Link
-                  href="/"
-                  onClick={() => setIsOpen(false)}
-                  className="block px-3 py-2.5 text-body font-bold text-slate-800 hover:bg-slate-50 rounded-xl"
-                >
-                  {t('home')}
-                </Link>
-
-                {/* Mobile Solutions accordion */}
+                {/* Mobile What We Do accordion */}
                 <div className="rounded-xl border border-slate-200 overflow-hidden">
                   <div className={`flex items-center ${isActive('/solutions') ? 'bg-royal-blue/5' : 'bg-white'}`}>
                     <Link
@@ -471,7 +462,7 @@ export function Navigation() {
                       }`}
                       aria-current={isActive('/solutions') ? 'page' : undefined}
                     >
-                      {tc('solutions')}
+                      {t('solutions')}
                     </Link>
                     <button
                       type="button"
@@ -533,19 +524,27 @@ export function Navigation() {
                 </Link>
 
                 <Link
+                  href="/case-studies"
+                  onClick={() => setIsOpen(false)}
+                  className="block px-3 py-2.5 text-body font-bold text-slate-800 hover:bg-slate-50 rounded-xl"
+                >
+                  {t('ourWork')}
+                </Link>
+
+                <Link
+                  href="/insights"
+                  onClick={() => setIsOpen(false)}
+                  className="block px-3 py-2.5 text-body font-bold text-slate-800 hover:bg-slate-50 rounded-xl"
+                >
+                  {t('insights')}
+                </Link>
+
+                <Link
                   href="/careers"
                   onClick={() => setIsOpen(false)}
                   className="block px-3 py-2.5 text-body font-bold text-slate-800 hover:bg-slate-50 rounded-xl"
                 >
                   {t('careers')}
-                </Link>
-
-                <Link
-                  href="/contact"
-                  onClick={() => setIsOpen(false)}
-                  className="block px-3 py-2.5 text-body font-bold text-slate-800 hover:bg-slate-50 rounded-xl"
-                >
-                  {t('contact')}
                 </Link>
 
                 {/* Mobile Consultation CTA */}
