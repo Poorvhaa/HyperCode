@@ -195,7 +195,7 @@ function TransformationEngineContent() {
         </div>
 
         {/* Main Content Area Card */}
-        <div className="max-w-5xl mx-auto bg-white border border-slate-200/80 rounded-[24px] md:rounded-[32px] shadow-[0_8px_30px_rgb(0,0,0,0.015)] p-6 md:p-10 lg:p-12 min-h-[480px] flex flex-col justify-center">
+        <div className="max-w-5xl mx-auto bg-white border border-slate-200/80 rounded-lg shadow-[0_8px_30px_rgb(0,0,0,0.015)] p-6 md:p-10 lg:p-12 min-h-[480px] flex flex-col justify-center">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeStage}
@@ -206,7 +206,7 @@ function TransformationEngineContent() {
               className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center"
             >
               {/* Left Column (approximately 45%) */}
-              <div className="col-span-12 lg:col-span-5 space-y-6">
+              <div className="col-span-1 min-w-0 lg:col-span-5 space-y-6">
                 <div className="flex items-baseline gap-2 text-royal-blue">
                   <span className="text-xl md:text-2xl font-extrabold">
                     {stages[activeStage].number}
@@ -250,14 +250,14 @@ function TransformationEngineContent() {
               </div>
 
               {/* Right Column (approximately 55%) */}
-              <div className="col-span-12 lg:col-span-7 flex justify-center items-center">
+              <div className="col-span-1 min-w-0 lg:col-span-7 flex justify-center items-center">
                 <div className="w-full flex justify-center">
                   {renderVisual(activeStage)}
                 </div>
               </div>
 
               {/* CTA Button (Mobile/Tablet Stacked) */}
-              <div className="col-span-12 flex lg:hidden justify-center pt-2">
+              <div className="col-span-1 min-w-0 flex lg:hidden justify-center pt-2">
                 <Link
                   href="/consultation"
                   className="PrimaryBrandButton flex items-center justify-center gap-2 group transition-all duration-300 w-full sm:w-auto"
@@ -279,7 +279,7 @@ function TransformationEngineContent() {
 
 function DiscoverVisual() {
   return (
-    <div className="relative w-full max-w-[400px] h-[280px] bg-slate-50 border border-slate-100 rounded-2xl flex items-center justify-center p-6 overflow-hidden">
+    <div className="relative w-full max-w-[400px] h-[280px] bg-slate-50 border border-slate-100 rounded-lg flex items-center justify-center p-6 overflow-hidden">
       {/* Background blueprint pattern */}
       <div 
         className="absolute inset-0 pointer-events-none opacity-[0.03]"
@@ -291,7 +291,7 @@ function DiscoverVisual() {
       
       {/* Visual Title */}
       <div className="absolute top-4 left-0 right-0 text-center">
-        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+        <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">
           Your Digital Ecosystem
         </span>
       </div>
@@ -312,45 +312,45 @@ function DiscoverVisual() {
 
       {/* Center Business Node */}
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
-        <div className="flex flex-col items-center gap-1 px-4 py-2.5 rounded-2xl bg-white border border-slate-200 shadow-md">
+        <div className="flex flex-col items-center gap-1 px-4 py-2.5 rounded-lg bg-white border border-slate-200 shadow-md">
           <Building2 size={16} className="text-royal-blue animate-pulse" />
-          <span className="text-[10px] font-black text-slate-900 tracking-wider">BUSINESS</span>
+          <span className="text-xs font-black text-slate-900 tracking-wider">BUSINESS</span>
         </div>
       </div>
 
       {/* Technology Cards */}
       <div className="absolute left-[30px] top-[45px] z-10">
-        <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-slate-200 rounded-xl shadow-2xs">
+        <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-slate-200 rounded-lg shadow-2xs">
           <Layers size={11} className="text-slate-450" />
-          <span className="text-[11px] font-bold text-slate-700">ERP</span>
+          <span className="text-xs font-bold text-slate-700">ERP</span>
         </div>
       </div>
 
       <div className="absolute right-[30px] top-[45px] z-10">
-        <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-slate-200 rounded-xl shadow-2xs">
-          <Users size={11} className="text-slate-450" />
-          <span className="text-[11px] font-bold text-slate-700">CRM</span>
+        <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-slate-200 rounded-lg shadow-2xs">
+          <Users size={11} className="text-slate-455" />
+          <span className="text-xs font-bold text-slate-700">CRM</span>
         </div>
       </div>
 
       <div className="absolute left-[30px] top-[175px] z-10">
-        <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-slate-200 rounded-xl shadow-2xs">
+        <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-slate-200 rounded-lg shadow-2xs">
           <Database size={11} className="text-slate-450" />
-          <span className="text-[11px] font-bold text-slate-700">Data</span>
+          <span className="text-xs font-bold text-slate-700">Data</span>
         </div>
       </div>
 
       <div className="absolute right-[30px] top-[175px] z-10">
-        <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-slate-200 rounded-xl shadow-2xs">
-          <Globe size={11} className="text-slate-450" />
-          <span className="text-[11px] font-bold text-slate-700">Web</span>
+        <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-slate-200 rounded-lg shadow-2xs">
+          <Globe size={11} className="text-slate-455" />
+          <span className="text-xs font-bold text-slate-700">Web</span>
         </div>
       </div>
 
       <div className="absolute left-1/2 bottom-[30px] -translate-x-1/2 z-10">
-        <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-slate-200 rounded-xl shadow-2xs">
-          <Smartphone size={11} className="text-slate-450" />
-          <span className="text-[11px] font-bold text-slate-700">Mobile</span>
+        <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-slate-200 rounded-lg shadow-2xs">
+          <Smartphone size={11} className="text-slate-455" />
+          <span className="text-xs font-bold text-slate-700">Mobile</span>
         </div>
       </div>
     </div>
@@ -359,7 +359,7 @@ function DiscoverVisual() {
 
 function ArchitectVisual() {
   return (
-    <div className="relative w-full max-w-[400px] h-[280px] bg-slate-50 border border-slate-100 rounded-2xl flex flex-col justify-center items-center gap-2.5 p-6 overflow-hidden">
+    <div className="relative w-full max-w-[400px] h-[280px] bg-slate-50 border border-slate-100 rounded-lg flex flex-col justify-center items-center gap-2.5 p-6 overflow-hidden">
       <div 
         className="absolute inset-0 pointer-events-none opacity-[0.03]"
         style={{
@@ -369,31 +369,31 @@ function ArchitectVisual() {
       />
       
       {/* Experience */}
-      <div className="w-full max-w-[240px] py-2 px-4 rounded-xl border border-slate-200 bg-white shadow-2xs flex items-center justify-center gap-2">
+      <div className="w-full max-w-[240px] py-2 px-4 rounded-lg border border-slate-200 bg-white shadow-2xs flex items-center justify-center gap-2">
         <Globe size={13} className="text-royal-blue" />
         <span className="text-xs font-bold text-slate-700">Experience</span>
       </div>
       
-      <ArrowDown size={14} className="text-slate-350" />
+      <ArrowDown size={14} className="text-slate-355" />
       
       {/* Applications */}
-      <div className="w-full max-w-[240px] py-2 px-4 rounded-xl border border-slate-200 bg-white shadow-2xs flex items-center justify-center gap-2">
+      <div className="w-full max-w-[240px] py-2 px-4 rounded-lg border border-slate-200 bg-white shadow-2xs flex items-center justify-center gap-2">
         <Cpu size={13} className="text-royal-blue" />
         <span className="text-xs font-bold text-slate-700">Applications</span>
       </div>
       
-      <ArrowDown size={14} className="text-slate-350" />
+      <ArrowDown size={14} className="text-slate-355" />
       
       {/* Data */}
-      <div className="w-full max-w-[240px] py-2 px-4 rounded-xl border border-slate-200 bg-white shadow-2xs flex items-center justify-center gap-2">
+      <div className="w-full max-w-[240px] py-2 px-4 rounded-lg border border-slate-200 bg-white shadow-2xs flex items-center justify-center gap-2">
         <Database size={13} className="text-royal-blue" />
         <span className="text-xs font-bold text-slate-700">Data</span>
       </div>
       
-      <ArrowDown size={14} className="text-slate-350" />
+      <ArrowDown size={14} className="text-slate-355" />
       
       {/* Cloud */}
-      <div className="w-full max-w-[240px] py-2 px-4 rounded-xl border border-slate-200 bg-white shadow-2xs flex items-center justify-center gap-2">
+      <div className="w-full max-w-[240px] py-2 px-4 rounded-lg border border-slate-200 bg-white shadow-2xs flex items-center justify-center gap-2">
         <Cloud size={13} className="text-royal-blue" />
         <span className="text-xs font-bold text-slate-700">Cloud</span>
       </div>
@@ -403,7 +403,7 @@ function ArchitectVisual() {
 
 function EngineerVisual() {
   return (
-    <div className="relative w-full max-w-[400px] h-[280px] bg-slate-50 border border-slate-100 rounded-2xl flex flex-col sm:flex-row justify-center items-center gap-3 p-6 overflow-hidden">
+    <div className="relative w-full max-w-[400px] h-[280px] bg-slate-50 border border-slate-100 rounded-lg flex flex-col sm:flex-row justify-center items-center gap-3 p-6 overflow-hidden">
       <div 
         className="absolute inset-0 pointer-events-none opacity-[0.03]"
         style={{
@@ -413,36 +413,36 @@ function EngineerVisual() {
       />
       
       {/* Design */}
-      <div className="flex-1 w-full sm:w-auto py-3.5 px-2 rounded-xl border border-slate-200 bg-white text-center shadow-2xs flex flex-col items-center gap-1.5">
+      <div className="flex-1 w-full sm:w-auto py-3.5 px-2 rounded-lg border border-slate-200 bg-white text-center shadow-2xs flex flex-col items-center gap-1.5">
         <Sparkles size={14} className="text-royal-blue" />
-        <span className="text-[11px] font-bold text-slate-705">Design</span>
+        <span className="text-xs font-bold text-slate-705">Design</span>
       </div>
       
       <span className="hidden sm:inline text-slate-300 font-bold">→</span>
       <span className="sm:hidden text-slate-300 font-bold">↓</span>
       
       {/* Develop */}
-      <div className="flex-1 w-full sm:w-auto py-3.5 px-2 rounded-xl border border-slate-200 bg-white text-center shadow-2xs flex flex-col items-center gap-1.5">
+      <div className="flex-1 w-full sm:w-auto py-3.5 px-2 rounded-lg border border-slate-200 bg-white text-center shadow-2xs flex flex-col items-center gap-1.5">
         <Cpu size={14} className="text-royal-blue" />
-        <span className="text-[11px] font-bold text-slate-705">Develop</span>
+        <span className="text-xs font-bold text-slate-705">Develop</span>
       </div>
       
       <span className="hidden sm:inline text-slate-300 font-bold">→</span>
       <span className="sm:hidden text-slate-300 font-bold">↓</span>
       
       {/* Test */}
-      <div className="flex-1 w-full sm:w-auto py-3.5 px-2 rounded-xl border border-slate-200 bg-white text-center shadow-2xs flex flex-col items-center gap-1.5">
+      <div className="flex-1 w-full sm:w-auto py-3.5 px-2 rounded-lg border border-slate-200 bg-white text-center shadow-2xs flex flex-col items-center gap-1.5">
         <Check size={14} className="text-royal-blue" />
-        <span className="text-[11px] font-bold text-slate-705">Test</span>
+        <span className="text-xs font-bold text-slate-705">Test</span>
       </div>
       
       <span className="hidden sm:inline text-slate-300 font-bold">→</span>
       <span className="sm:hidden text-slate-300 font-bold">↓</span>
       
       {/* Deploy */}
-      <div className="flex-1 w-full sm:w-auto py-3.5 px-2 rounded-xl border border-slate-200 bg-white text-center shadow-2xs flex flex-col items-center gap-1.5">
+      <div className="flex-1 w-full sm:w-auto py-3.5 px-2 rounded-lg border border-slate-200 bg-white text-center shadow-2xs flex flex-col items-center gap-1.5">
         <Cloud size={14} className="text-royal-blue" />
-        <span className="text-[11px] font-bold text-slate-705">Deploy</span>
+        <span className="text-xs font-bold text-slate-705">Deploy</span>
       </div>
     </div>
   );
@@ -450,7 +450,7 @@ function EngineerVisual() {
 
 function ConnectVisual() {
   return (
-    <div className="relative w-full max-w-[400px] h-[280px] bg-slate-50 border border-slate-100 rounded-2xl flex items-center justify-center gap-4 sm:gap-6 p-6 overflow-hidden">
+    <div className="relative w-full max-w-[400px] h-[280px] bg-slate-50 border border-slate-100 rounded-lg flex items-center justify-center gap-4 sm:gap-6 p-6 overflow-hidden">
       <div 
         className="absolute inset-0 pointer-events-none opacity-[0.03]"
         style={{
@@ -461,21 +461,21 @@ function ConnectVisual() {
       
       {/* Left items */}
       <div className="flex flex-col gap-2.5 z-10">
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-slate-200 bg-white shadow-2xs w-24">
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 bg-white shadow-2xs w-24">
           <Users size={11} className="text-royal-blue" />
-          <span className="text-[11px] font-bold text-slate-700">CRM</span>
+          <span className="text-xs font-bold text-slate-700">CRM</span>
         </div>
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-slate-200 bg-white shadow-2xs w-24">
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 bg-white shadow-2xs w-24">
           <Layers size={11} className="text-royal-blue" />
-          <span className="text-[11px] font-bold text-slate-700">ERP</span>
+          <span className="text-xs font-bold text-slate-700">ERP</span>
         </div>
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-slate-200 bg-white shadow-2xs w-24">
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 bg-white shadow-2xs w-24">
           <Database size={11} className="text-royal-blue" />
-          <span className="text-[11px] font-bold text-slate-700">Data</span>
+          <span className="text-xs font-bold text-slate-700">Data</span>
         </div>
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-slate-200 bg-white shadow-2xs w-24">
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 bg-white shadow-2xs w-24">
           <Globe size={11} className="text-royal-blue" />
-          <span className="text-[11px] font-bold text-slate-700">Apps</span>
+          <span className="text-xs font-bold text-slate-700">Apps</span>
         </div>
       </div>
       
@@ -490,9 +490,9 @@ function ConnectVisual() {
       </div>
       
       {/* Integration layer */}
-      <div className="flex flex-col items-center justify-center p-3 rounded-2xl border border-green/20 bg-green/5 shadow-2xs text-center w-28 h-28 gap-1.5 z-10 relative">
+      <div className="flex flex-col items-center justify-center p-3 rounded-lg border border-green/20 bg-green/5 shadow-2xs text-center w-28 h-28 gap-1.5 z-10 relative">
         <Cpu size={16} className="text-green animate-pulse" />
-        <span className="text-[9px] font-black text-slate-900 tracking-wider">INTEGRATION LAYER</span>
+        <span className="text-xs font-black text-slate-900 tracking-wider">INTEGRATION LAYER</span>
       </div>
     </div>
   );
@@ -500,7 +500,7 @@ function ConnectVisual() {
 
 function AutomateVisual() {
   return (
-    <div className="relative w-full max-w-[400px] h-[280px] bg-slate-50 border border-slate-100 rounded-2xl flex flex-col justify-center items-center gap-2.5 p-6 overflow-hidden">
+    <div className="relative w-full max-w-[400px] h-[280px] bg-slate-50 border border-slate-100 rounded-lg flex flex-col justify-center items-center gap-2.5 p-6 overflow-hidden">
       <div 
         className="absolute inset-0 pointer-events-none opacity-[0.03]"
         style={{
@@ -510,23 +510,23 @@ function AutomateVisual() {
       />
       
       {/* Business Process */}
-      <div className="w-full max-w-[240px] py-2 px-4 rounded-xl border border-slate-200 bg-white shadow-2xs flex items-center justify-center gap-2">
+      <div className="w-full max-w-[240px] py-2 px-4 rounded-lg border border-slate-200 bg-white shadow-2xs flex items-center justify-center gap-2">
         <Activity size={13} className="text-royal-blue" />
         <span className="text-xs font-bold text-slate-700">Business Process</span>
       </div>
       
-      <ArrowDown size={14} className="text-slate-350" />
+      <ArrowDown size={14} className="text-slate-355" />
       
       {/* AI + Automation */}
-      <div className="w-full max-w-[240px] py-2.5 px-4 rounded-xl border-2 border-purple-200 bg-purple-50/50 shadow-2xs flex items-center justify-center gap-2">
+      <div className="w-full max-w-[240px] py-2.5 px-4 rounded-lg border-2 border-purple-200 bg-purple-50/50 shadow-2xs flex items-center justify-center gap-2">
         <Brain size={13} className="text-purple-650 animate-pulse" />
         <span className="text-xs font-black text-purple-950">AI + Automation</span>
       </div>
       
-      <ArrowDown size={14} className="text-slate-350" />
+      <ArrowDown size={14} className="text-slate-355" />
       
       {/* Faster Decisions */}
-      <div className="w-full max-w-[240px] py-2 px-4 rounded-xl border border-slate-200 bg-white shadow-2xs flex items-center justify-center gap-2">
+      <div className="w-full max-w-[240px] py-2 px-4 rounded-lg border border-slate-200 bg-white shadow-2xs flex items-center justify-center gap-2">
         <Zap size={13} className="text-green" />
         <span className="text-xs font-bold text-slate-700">Faster Decisions</span>
       </div>
@@ -536,7 +536,7 @@ function AutomateVisual() {
 
 function ScaleVisual() {
   return (
-    <div className="relative w-full max-w-[400px] h-[280px] bg-slate-50 border border-slate-100 rounded-2xl flex flex-col sm:flex-row justify-center items-center gap-3 p-6 overflow-hidden">
+    <div className="relative w-full max-w-[400px] h-[280px] bg-slate-50 border border-slate-100 rounded-lg flex flex-col sm:flex-row justify-center items-center gap-3 p-6 overflow-hidden">
       <div 
         className="absolute inset-0 pointer-events-none opacity-[0.03]"
         style={{
@@ -546,27 +546,27 @@ function ScaleVisual() {
       />
       
       {/* Launch */}
-      <div className="flex-1 w-full sm:w-auto py-3.5 px-2 rounded-xl border border-slate-200 bg-white text-center shadow-2xs flex flex-col items-center gap-1.5">
+      <div className="flex-1 w-full sm:w-auto py-3.5 px-2 rounded-lg border border-slate-200 bg-white text-center shadow-2xs flex flex-col items-center gap-1.5">
         <ArrowUpRight size={14} className="text-royal-blue" />
-        <span className="text-[11px] font-bold text-slate-705">Launch</span>
+        <span className="text-xs font-bold text-slate-705">Launch</span>
       </div>
       
       <span className="hidden sm:inline text-slate-300 font-bold">→</span>
       <span className="sm:hidden text-slate-300 font-bold">↓</span>
       
       {/* Optimize */}
-      <div className="flex-1 w-full sm:w-auto py-3.5 px-2 rounded-xl border border-slate-200 bg-white text-center shadow-2xs flex flex-col items-center gap-1.5">
+      <div className="flex-1 w-full sm:w-auto py-3.5 px-2 rounded-lg border border-slate-200 bg-white text-center shadow-2xs flex flex-col items-center gap-1.5">
         <Activity size={14} className="text-royal-blue" />
-        <span className="text-[11px] font-bold text-slate-705">Optimize</span>
+        <span className="text-xs font-bold text-slate-705">Optimize</span>
       </div>
       
       <span className="hidden sm:inline text-slate-300 font-bold">→</span>
       <span className="sm:hidden text-slate-300 font-bold">↓</span>
       
       {/* Scale */}
-      <div className="flex-1 w-full sm:w-auto py-3.5 px-2 rounded-xl border-2 border-green/20 bg-green/5 text-center shadow-2xs flex flex-col items-center gap-1.5">
+      <div className="flex-1 w-full sm:w-auto py-3.5 px-2 rounded-lg border-2 border-green/20 bg-green/5 text-center shadow-2xs flex flex-col items-center gap-1.5">
         <Zap size={14} className="text-green animate-bounce" />
-        <span className="text-[11px] font-black text-green">Scale</span>
+        <span className="text-xs font-black text-green">Scale</span>
       </div>
     </div>
   );

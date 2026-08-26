@@ -18,16 +18,21 @@ export function TechPartnersSection() {
             Trusted Technology Expertise
           </h2>
           
-          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 opacity-90">
+          <div
+            className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5"
+            role="list"
+            aria-label="Technology partner accreditations"
+          >
             {partners.map((partner, index) => (
-              <div
+              <span
                 key={index}
-                className="flex items-center space-x-2 text-slate-700 hover:text-royal-blue transition-colors duration-200 cursor-default"
+                role="listitem"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-body-sm shadow-sm whitespace-nowrap"
               >
-                <div className="w-1.5 h-1.5 rounded-full bg-royal-blue flex-shrink-0 animate-pulse" />
-                <span className="text-body-sm font-bold tracking-tight">{partner.name}</span>
-                <span className="text-caption font-semibold text-slate-500">/ {partner.type}</span>
-              </div>
+                <span className="font-bold tracking-tight text-slate-800">{partner.name}</span>
+                <span className="text-slate-300 select-none" aria-hidden="true">/</span>
+                <span className="text-caption font-semibold text-slate-500">{partner.type}</span>
+              </span>
             ))}
           </div>
         </div>

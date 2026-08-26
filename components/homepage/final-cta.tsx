@@ -41,7 +41,7 @@ function FinalCTAContent() {
 
       <div className="max-w-7xl mx-auto px-6 sm:px-8 relative z-10">
         <div 
-          className="rounded-[36px] border border-[#94a3b8]/18 p-8 md:p-12 lg:p-16 shadow-soft bg-[radial-gradient(circle,rgba(20,91,255,0.02)_1px,transparent_1px)] bg-[size:24px_24px]"
+          className="rounded-2xl border border-[#94a3b8]/18 p-8 md:p-12 lg:p-16 shadow-soft bg-[radial-gradient(circle,rgba(20,91,255,0.02)_1px,transparent_1px)] bg-[size:24px_24px]"
           style={{
             background: 'linear-gradient(120deg, rgba(37,99,235,0.06) 0%, rgba(34,197,94,0.05) 100%)'
           }}
@@ -75,7 +75,7 @@ function FinalCTAContent() {
                 </Link>
                 <Link
                   href="/contact"
-                  className="inline-flex items-center justify-center h-[48px] px-7 text-button rounded-full border border-royal-blue/20 bg-white text-royal-blue hover:bg-royal-blue/5 hover:border-royal-blue/50 hover:-translate-y-0.5 hover:shadow-md transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue/25"
+                  className="SecondaryBrandButton"
                   aria-label={t('secondaryButton') || 'Contact HyperCode'}
                 >
                   {t('secondaryButton') || 'Contact HyperCode'}
@@ -90,7 +90,7 @@ function FinalCTAContent() {
                   scale: mapScale,
                   opacity: mapOpacity
                 }}
-                className="relative w-full h-[320px] sm:h-[360px] md:h-[400px] rounded-3xl border border-slate-200 bg-white flex items-center justify-center overflow-hidden shadow-soft select-none"
+                className="relative w-full h-[320px] sm:h-[360px] md:h-[400px] rounded-2xl border border-slate-200 bg-white flex items-center justify-center overflow-hidden shadow-soft select-none"
               >
                 {/* Coordinate overlay grid */}
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(20,91,255,0.03)_0%,transparent_80%)]" />

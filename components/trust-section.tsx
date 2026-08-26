@@ -82,7 +82,7 @@ export function TrustSection() {
             return (
               <div
                 key={index}
-                className="p-6 rounded-xl bg-white border border-slate-200 shadow-sm"
+                className="p-6 rounded-lg bg-white border border-slate-200 shadow-sm"
               >
                 <div className="flex items-center space-x-4 mb-4">
                   <div className="w-10 h-10 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center text-royal-blue">

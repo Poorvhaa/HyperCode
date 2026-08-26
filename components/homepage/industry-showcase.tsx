@@ -226,7 +226,7 @@ export function IndustryShowcase() {
         />
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full relative z-10 space-y-12">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full min-w-0 relative z-10 space-y-12">
         {/* Section Header */}
         <div className="max-w-3xl text-left">
           <span className="inline-flex items-center gap-1.5 text-xs font-bold text-royal-blue tracking-widest uppercase mb-4">
@@ -242,8 +242,8 @@ export function IndustryShowcase() {
         </div>
 
         {/* Industry Navigation Chips Selector */}
-        <div className="w-full relative py-2 border-b border-slate-100">
-          <div className="flex gap-2 overflow-x-auto pb-3 scrollbar-none justify-start px-1">
+        <div className="w-full min-w-0 relative py-2 border-b border-slate-100">
+          <div className="flex flex-wrap gap-2 min-w-0 max-w-full justify-start">
             {industries.map((ind, i) => {
               const active = activeIdx === i;
               const IndIcon = ind.icon;
@@ -251,7 +251,7 @@ export function IndustryShowcase() {
                 <button
                   key={ind.id}
                   onClick={() => setActiveIdx(i)}
-                  className={`flex-shrink-0 px-4 py-2 rounded-full border text-xs font-bold transition-all flex items-center gap-2 cursor-pointer focus-visible:ring-2 focus-visible:ring-royal-blue ${
+                  className={`px-4 py-2 rounded-full border text-xs font-bold transition-all flex items-center gap-2 cursor-pointer focus-visible:ring-2 focus-visible:ring-royal-blue ${
                     active
                       ? 'bg-royal-blue/10 border-royal-blue/30 text-royal-blue shadow-xs'
                       : 'border-slate-200/60 bg-white text-slate-655 hover:bg-slate-50 hover:border-slate-350'
@@ -276,10 +276,10 @@ export function IndustryShowcase() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -15 }}
                 transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                className="bg-white border border-slate-200/80 p-8 rounded-[32px] shadow-xs flex flex-col justify-between min-h-[360px]"
+                className="bg-white border border-slate-200/80 p-8 rounded-2xl shadow-xs flex flex-col justify-between min-h-[360px]"
               >
                 <div className="space-y-4">
-                  <span className="text-[11px] font-black text-slate-600 tracking-widest uppercase block">
+                  <span className="text-xs font-black text-slate-600 tracking-widest uppercase block">
                     {locale === 'es' ? 'Sector Seleccionado' : 'Current Sector'}
                   </span>
                   <h3 className="text-2xl lg:text-3xl font-black text-slate-900 tracking-tight leading-snug flex items-center gap-3">
@@ -296,7 +296,7 @@ export function IndustryShowcase() {
                   <div className="space-y-3 pt-4 border-t border-slate-100/60">
                     {getIndustryOutcomes(activeItem.id, locale).map((outcome, idx) => (
                       <div key={idx} className="flex items-center gap-3">
-                        <span className="w-5 h-5 rounded-full bg-royal-blue/5 border border-royal-blue/10 flex items-center justify-center text-royal-blue font-black text-[9px] select-none">
+                        <span className="w-5 h-5 rounded-full bg-royal-blue/5 border border-royal-blue/10 flex items-center justify-center text-royal-blue font-black text-xs select-none">
                           ✓
                         </span>
                         <span className="text-sm font-semibold text-slate-655">{outcome}</span>
@@ -308,12 +308,12 @@ export function IndustryShowcase() {
                 {/* Integrated Statistics / Metric Widget */}
                 <div className="mt-6 pt-4 border-t border-slate-150 flex items-center justify-between">
                   <div>
-                    <span className="text-[11px] font-black text-slate-600 tracking-widest uppercase block">{widget.subtitle}</span>
+                    <span className="text-xs font-black text-slate-600 tracking-widest uppercase block">{widget.subtitle}</span>
                     <span className="text-xs font-bold text-slate-700 block">{widget.title}</span>
                   </div>
                   <div className="text-right">
                     <span className="text-lg font-black text-royal-blue block leading-none">{widget.val}</span>
-                    <span className="text-[11px] font-bold text-emerald-700 tracking-wider uppercase block mt-1">{widget.metricName}</span>
+                    <span className="text-xs font-bold text-emerald-700 tracking-wider uppercase block mt-1">{widget.metricName}</span>
                   </div>
                 </div>
 
@@ -321,7 +321,7 @@ export function IndustryShowcase() {
                 <div className="pt-6 mt-4">
                   <Link
                     href="/solutions"
-                    className="inline-flex items-center justify-center gap-2 w-full px-6 h-12 rounded-2xl bg-royal-blue text-white text-xs font-bold uppercase tracking-wider hover:bg-royal-blue/90 hover:shadow-md transition-all duration-300"
+                    className="PrimaryBrandButton flex items-center justify-center gap-2 w-full"
                   >
                     <span>{locale === 'es' ? 'Ver Soluciones de Sector' : 'Explore Industry Solutions'}</span>
                     <ArrowRight size={14} />
@@ -334,7 +334,7 @@ export function IndustryShowcase() {
           {/* RIGHT COLUMN: Capability Map Model (55% split) */}
           <div className="lg:col-span-7 w-full flex items-center justify-center relative select-none">
             {/* Desktop View Orbital Model */}
-            <div className="hidden md:flex w-full max-w-[620px] aspect-square relative items-center justify-center rounded-[32px] bg-gradient-to-tr from-royal-blue/[0.02] to-green/[0.015] border border-slate-200/50 shadow-2xs overflow-hidden bg-[radial-gradient(circle,rgba(20,91,255,0.025)_1px,transparent_1px)] bg-[size:20px_20px]">
+            <div className="hidden md:flex w-full max-w-[620px] aspect-square relative items-center justify-center rounded-2xl bg-gradient-to-tr from-royal-blue/[0.02] to-green/[0.015] border border-slate-200/50 shadow-2xs overflow-hidden bg-[radial-gradient(circle,rgba(20,91,255,0.025)_1px,transparent_1px)] bg-[size:20px_20px]">
               
               {/* Scaled-down vector frame to fit intermediate viewports */}
               <div className="relative w-[560px] h-[480px] scale-85 xl:scale-100 origin-center transition-transform duration-300 flex items-center justify-center">
@@ -365,7 +365,7 @@ export function IndustryShowcase() {
                 {/* Central active core bubble */}
                 <div className="absolute left-[280px] top-[240px] -translate-x-1/2 -translate-y-1/2 w-28 h-28 rounded-full bg-white border border-slate-200/85 shadow-md flex flex-col items-center justify-center gap-1.5 z-20 hover:border-royal-blue/30 transition-colors duration-300">
                   <ActiveIcon size={22} className="text-royal-blue" />
-                  <span className="text-[8px] font-black text-slate-500 tracking-wider text-center px-2 line-clamp-2 uppercase">
+                  <span className="text-xs font-black text-slate-500 tracking-wider text-center px-2 line-clamp-2 uppercase">
                     {displayTitle}
                   </span>
                 </div>
@@ -389,7 +389,7 @@ export function IndustryShowcase() {
                       onMouseEnter={() => setHoveredPill(idx)}
                       onMouseLeave={() => setHoveredPill(null)}
                     >
-                      <div className="px-5 py-2.5 rounded-full border border-slate-200/80 bg-white shadow-sm flex items-center gap-2.5 text-[15px] font-bold text-slate-800 hover:border-royal-blue/30 hover:shadow-md transition-all duration-300 select-none cursor-pointer">
+                      <div className="px-5 py-2.5 rounded-full border border-slate-200/80 bg-white shadow-sm flex items-center gap-2.5 text-body-sm font-bold text-slate-800 hover:border-royal-blue/30 hover:shadow-md transition-all duration-300 select-none cursor-pointer">
                         <capConfig.icon size={15} className="text-royal-blue" />
                         <span>{capId}</span>
                       </div>

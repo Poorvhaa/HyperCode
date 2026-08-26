@@ -105,17 +105,17 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-12 pb-6 md:pt-16 md:pb-8 lg:pt-24 lg:pb-12 relative z-10">
         
         {/* Top section: Newsletter Subscribe Bar */}
-        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 pb-14 border-b border-slate-200/80">
-          <div className="space-y-1.5 text-left max-w-xl">
+        <div className="flex flex-col lg:flex-row items-start lg:items-end gap-4 lg:gap-6 pb-14 border-b border-slate-200/80">
+          <div className="space-y-1.5 text-left max-w-xl shrink-0">
             <h3 className="text-h3 text-slate-900">{tf('newsletterTitle') || 'Subscribe to Insights'}</h3>
             <p className="text-body-sm text-slate-500">
               {tf('newsletterDesc') || 'Get monthly technological briefings from our solutions directors.'}
             </p>
           </div>
           
-          <div className="w-full lg:w-auto min-w-[320px] md:min-w-[400px]">
+          <div className="w-full min-w-0 md:min-w-[400px] lg:w-auto">
             {subscribed ? (
-              <div className="p-3.5 bg-green/5 border border-green/20 text-green rounded-xl text-xs font-bold flex items-center gap-2" role="status" aria-live="polite">
+              <div className="p-3.5 bg-green/5 border border-green/20 text-green rounded-lg text-xs font-bold flex items-center gap-2" role="status" aria-live="polite">
                 <ShieldCheck size={16} className="text-green" />
                 <span>{tf('newsletterSuccess') || 'Thank you for subscribing!'}</span>
               </div>

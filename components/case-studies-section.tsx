@@ -72,7 +72,7 @@ style={{ filter: active ? 'drop-shadow(0 0 5px rgba(20,91,255,0.35))' : 'none' }
 {/* Centered KPI text */}
 <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-3">
 <span className="text-xl font-black text-slate-900 tracking-tight leading-none">{value}</span>
-<span className="text-[7.5px] font-black text-slate-450 uppercase tracking-widest leading-tight mt-1.5 truncate max-w-[100px]">
+<span className="text-xs font-black text-slate-450 uppercase tracking-widest leading-tight mt-1.5 truncate max-w-[100px]">
 {label.split(' ')[0]}
 </span>
 </div>
@@ -333,7 +333,7 @@ DESKTOP VIEW: STICKY HORIZONTAL TIMELINE (>= 1024px)
                       handleTimelineClick(idx);
                     }
                   }}
-                  className={`w-[330px] h-[390px] xl:h-[450px] rounded-[36px] border backdrop-blur-xl p-7 flex flex-col justify-between relative overflow-hidden select-none hover:border-royal-blue/30 cursor-pointer shadow-xs transition-all duration-300 z-20 ${
+                  className={`w-[330px] h-[390px] xl:h-[450px] rounded-2xl border backdrop-blur-xl p-7 flex flex-col justify-between relative overflow-hidden select-none hover:border-royal-blue/30 cursor-pointer shadow-xs transition-all duration-300 z-20 ${
                     prefersReducedMotion
                       ? 'pointer-events-auto border-slate-200/80 bg-white/95 shadow-md'
                       : isFoc
@@ -346,11 +346,11 @@ DESKTOP VIEW: STICKY HORIZONTAL TIMELINE (>= 1024px)
 
                   {/* Header block */}
                   <div className="flex justify-between items-center">
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-50 border border-slate-150 text-[9px] font-black text-slate-500 uppercase tracking-wider">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-50 border border-slate-150 text-xs font-black text-slate-500 uppercase tracking-wider">
                       <IndustryIcon size={11} className="text-royal-blue" />
                       <span>{study.industry}</span>
                     </span>
-                    <span className="text-[8px] font-black text-green tracking-wider uppercase bg-green/10 px-2 py-0.5 rounded-md">
+                    <span className="text-xs font-black text-green tracking-wider uppercase bg-green/10 px-2 py-0.5 rounded-lg">
                       DEPLOYED
                     </span>
                   </div>
@@ -363,7 +363,7 @@ DESKTOP VIEW: STICKY HORIZONTAL TIMELINE (>= 1024px)
                   {/* Bottom contents */}
                   <div className="space-y-3">
                     <div className="space-y-1 text-left">
-                      <span className="text-eyebrow text-slate-400">
+                      <span className="text-eyebrow normal-case text-slate-400">
                         {study.clientType}
                       </span>
                       <h3 className="text-h4 text-slate-900 line-clamp-2">
@@ -376,14 +376,14 @@ DESKTOP VIEW: STICKY HORIZONTAL TIMELINE (>= 1024px)
                       {study.technologies.slice(0, 3).map((tech) => (
                         <span
                           key={tech}
-                          className="px-2 py-0.5 rounded-lg bg-slate-50 border border-slate-150 text-slate-500 text-[8.5px] font-extrabold uppercase tracking-wide"
+                          className="px-2 py-0.5 rounded-lg bg-slate-50 border border-slate-150 text-slate-500 text-xs font-extrabold uppercase tracking-wide"
                         >
                           {tech}
                         </span>
                       ))}
                     </div>
 
-                    <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-[9px] font-black text-slate-400 tracking-wider uppercase">
+                    <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-black text-slate-450 tracking-wider uppercase">
                       <div className="flex items-center gap-1">
                         <CheckCircle size={12} className="text-green" />
                         <span>100% SUCCESS</span>
@@ -401,18 +401,25 @@ DESKTOP VIEW: STICKY HORIZONTAL TIMELINE (>= 1024px)
         </div>
 
         {/* Timeline navigation dots */}
-        <div className="flex justify-center gap-3 mt-8">
+        <div className="flex justify-center -space-x-0.5 mt-8">
           {studies.map((_, idx) => (
             <button
               key={idx}
+              type="button"
               onClick={() => handleTimelineClick(idx)}
-              className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                activeIdx === idx
-                  ? 'bg-royal-blue w-6'
-                  : 'bg-slate-200 hover:bg-slate-350'
-              }`}
+              className="group flex items-center justify-center w-6 h-6 rounded-full cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-royal-blue focus-visible:ring-offset-2"
               aria-label={`Go to case study ${idx + 1}`}
-            />
+              aria-current={activeIdx === idx ? 'true' : undefined}
+            >
+              <span
+                aria-hidden="true"
+                className={`rounded-full transition-all duration-300 ${
+                  activeIdx === idx
+                    ? 'bg-royal-blue w-6 h-2.5'
+                    : 'bg-slate-200 group-hover:bg-slate-350 w-2.5 h-2.5'
+                }`}
+              />
+            </button>
           ))}
         </div>
       </div>
@@ -448,14 +455,14 @@ return (
 <div
 key={study.slug}
 onClick={() => setClickedIdx(idx)}
-className="snap-center shrink-0 w-[300px] h-[420px] rounded-3xl border border-slate-200 bg-white p-6 flex flex-col justify-between cursor-pointer focus:outline-none shadow-2xs relative"
+className="snap-center shrink-0 w-[300px] h-[420px] rounded-2xl border border-slate-200 bg-white p-6 flex flex-col justify-between cursor-pointer focus:outline-none shadow-2xs relative"
 >
 <div className="flex justify-between items-center">
-<span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-slate-50 border border-slate-150 text-[8px] font-black text-slate-500 uppercase tracking-wider">
+<span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-slate-50 border border-slate-150 text-xs font-black text-slate-500 uppercase tracking-wider">
 <IndustryIcon size={10} className="text-royal-blue" />
 <span>{study.industry}</span>
 </span>
-<span className="text-[8px] font-black text-green uppercase tracking-wider bg-green/10 px-2 py-0.5 rounded">
+<span className="text-xs font-black text-green uppercase tracking-wider bg-green/10 px-2 py-0.5 rounded-lg">
 STABLE
 </span>
 </div>
@@ -466,12 +473,12 @@ STABLE
 
 <div className="space-y-3 text-left">
 <div className="leading-tight">
-<span className="text-eyebrow text-slate-400 block">{study.clientType}</span>
+<span className="text-eyebrow normal-case text-slate-400 block">{study.clientType}</span>
 <h3 className="text-h4 text-slate-900 line-clamp-2 mt-0.5">{study.title}</h3>
 </div>
 <div className="flex flex-wrap gap-1">
 {study.technologies.slice(0, 3).map((tech) => (
-<span key={tech} className="px-2 py-0.5 rounded-md bg-slate-50 border border-slate-150 text-[8px] text-slate-500 font-extrabold uppercase">
+<span key={tech} className="px-2 py-0.5 rounded-lg bg-slate-50 border border-slate-150 text-xs text-slate-500 font-extrabold uppercase">
 {tech}
 </span>
 ))}
@@ -485,7 +492,7 @@ STABLE
 <div className="pt-4 border-t border-slate-200 flex justify-center">
 <Link
 href="/case-studies"
-className="px-6 py-3.5 rounded-xl border border-slate-200 bg-white inline-flex items-center font-black text-[10px] uppercase tracking-wider text-slate-700 hover:text-royal-blue transition"
+className="SecondaryBrandButton"
 >
 <span>{t('viewAll')}</span>
 <ArrowRight size={13} className="ml-1.5" />
@@ -543,8 +550,8 @@ className="w-full text-left p-5 rounded-2xl border border-slate-200 bg-[#F8FAFC]
 >
 <div className="space-y-3 w-full">
 <div className="flex justify-between items-center w-full">
-<span className="text-eyebrow text-slate-400">{study.clientType}</span>
-<span className="text-[7.5px] font-black text-green bg-green/10 px-2 py-0.5 rounded uppercase">DEPLOYED</span>
+<span className="text-eyebrow normal-case text-slate-400">{study.clientType}</span>
+<span className="text-xs font-black text-green bg-green/10 px-2 py-0.5 rounded-lg uppercase">DEPLOYED</span>
 </div>
 <h3 className="text-h4 text-slate-900">{study.title}</h3>
 <p className="text-body-sm text-slate-500 line-clamp-3">{study.challenge}</p>
@@ -552,11 +559,11 @@ className="w-full text-left p-5 rounded-2xl border border-slate-200 bg-[#F8FAFC]
 {/* Metric highlights */}
 <div className="flex items-center gap-3 pt-3 border-t border-slate-200/60 mt-1">
 <div className="text-lg font-black text-royal-blue leading-none">{firstMetric.value}</div>
-<div className="text-[8px] font-bold text-slate-400 uppercase tracking-wide leading-none">{firstMetric.label}</div>
+<div className="text-xs font-bold text-slate-400 uppercase tracking-wide leading-none">{firstMetric.label}</div>
 </div>
 </div>
 
-<div className="pt-4 border-t border-slate-200/60 w-full mt-4 flex items-center justify-between text-[9px] font-black text-royal-blue uppercase tracking-wider">
+<div className="pt-4 border-t border-slate-200/60 w-full mt-4 flex items-center justify-between text-xs font-black text-royal-blue uppercase tracking-wider">
 <span>100% Success</span>
 <span className="flex items-center gap-0.5">
 {locale === 'es' ? 'Ver Detalles' : 'View Details'}
@@ -572,7 +579,7 @@ className="w-full text-left p-5 rounded-2xl border border-slate-200 bg-[#F8FAFC]
 <div className="pt-4 border-t border-slate-200 flex justify-center">
 <Link
 href="/case-studies"
-className="px-6 py-3 rounded-xl border border-slate-200 bg-white inline-flex items-center font-black text-[10px] uppercase tracking-wider text-slate-700"
+className="SecondaryBrandButton"
 >
 <span>{t('viewAll')}</span>
 <ArrowRight size={13} className="ml-1.5" />
@@ -593,7 +600,7 @@ initial={{ scale: 0.95, opacity: 0 }}
 animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
               transition={{ duration: 0.25 }}
-              className="relative w-full max-w-5xl bg-white rounded-[32px] shadow-2xl border border-slate-200 overflow-hidden flex flex-col md:flex-row h-[90vh] md:h-auto max-h-[850px] z-50 text-left"
+              className="relative w-full max-w-5xl bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col md:flex-row h-[90vh] md:h-auto max-h-[850px] z-50 text-left"
             >
               {/* Close Button */}
               <button
@@ -622,13 +629,13 @@ animate={{ scale: 1, opacity: 1 }}
 
                   {/* Header info */}
                   <div className="space-y-2">
-                    <span className="text-[10px] font-black text-royal-blue uppercase tracking-widest block">
+                    <span className="text-xs font-black text-royal-blue uppercase tracking-widest block">
                       {zoomedStudy.industry}
                     </span>
-                    <span className="text-[9px] font-extrabold text-slate-400 uppercase tracking-wider block">
+                    <span className="text-xs font-extrabold text-slate-450 uppercase tracking-wider block">
                       {zoomedStudy.clientType}
                     </span>
-                    <div className="flex items-center gap-1.5 text-[9px] font-bold text-slate-500 uppercase tracking-widest pt-1">
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-slate-500 uppercase tracking-widest pt-1">
                       <Calendar size={11} className="text-royal-blue" />
                       <span>{zoomedStudy.duration}</span>
                     </div>
@@ -637,12 +644,12 @@ animate={{ scale: 1, opacity: 1 }}
 
                 {/* Tech Badges */}
                 <div className="pt-6 border-t border-slate-200/60 mt-6">
-                  <div className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-3">Technologies Used</div>
+                  <div className="text-xs font-black text-slate-400 uppercase tracking-widest mb-3">Technologies Used</div>
                   <div className="flex flex-wrap gap-1.5">
                     {zoomedStudy.technologies.map((tech) => (
                       <span
                         key={tech}
-                        className="px-2.5 py-0.5 rounded-lg bg-white border border-slate-150 text-slate-600 text-[9.5px] font-extrabold uppercase tracking-wide shadow-3xs"
+                        className="px-2.5 py-0.5 rounded-lg bg-white border border-slate-150 text-slate-600 text-xs font-extrabold uppercase tracking-wide shadow-3xs"
                       >
                         {tech}
                       </span>
@@ -681,8 +688,8 @@ animate={{ scale: 1, opacity: 1 }}
                       {zoomedStudy.solution}
                     </p>
                     <div className="pt-3 border-t border-slate-100/60 mt-1">
-                      <div className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-2">Deployed Architecture</div>
-                      <p className="text-[10px] font-semibold text-slate-500 leading-relaxed">{zoomedStudy.implementation}</p>
+                      <div className="text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Deployed Architecture</div>
+                      <p className="text-body-lg font-semibold text-slate-500">{zoomedStudy.implementation}</p>
                     </div>
                   </div>
                 </div>
@@ -703,7 +710,7 @@ animate={{ scale: 1, opacity: 1 }}
                   <div className="grid grid-cols-3 gap-3 pt-4 border-t border-slate-100/60">
                     {zoomedStudy.metrics.map((m, idx) => (
                       <div key={idx} className="p-2.5 rounded-xl bg-white border border-slate-150 flex flex-col justify-between shadow-3xs">
-                        <span className="text-[7.5px] font-black text-slate-450 uppercase tracking-wider leading-none">{m.label}</span>
+                        <span className="text-xs font-black text-slate-450 uppercase tracking-wider leading-none">{m.label}</span>
                         <span className="text-base font-black text-slate-900 leading-tight mt-1.5 text-transparent bg-clip-text bg-gradient-to-r from-royal-blue to-green">
                           {m.value}
                         </span>
@@ -716,10 +723,11 @@ animate={{ scale: 1, opacity: 1 }}
                 <div className="pt-6 border-t border-slate-100 flex justify-end">
                   <Link
                     href={`/case-studies/${zoomedStudy.slug}`}
->
-<span>{t('readStory')}</span>
-<ArrowRight size={13} />
-</Link>
+                    className="GhostBrandButton"
+                  >
+                    <span>{t('readStory')}</span>
+                    <ArrowRight size={13} />
+                  </Link>
 </div>
 
 </div>
@@ -780,7 +788,7 @@ className="flex flex-col justify-between p-6 rounded-2xl border border-slate-200
 <h3 className="text-sm font-black text-slate-900 tracking-tight leading-snug">
 {tSolutions(`industriesList.${ind.id}.title`)}
 </h3>
-<p className="text-[11.5px] font-medium text-slate-500 leading-relaxed line-clamp-3">
+<p className="text-xs font-medium text-slate-500 leading-relaxed line-clamp-3">
 {tSolutions(`industriesList.${ind.id}.desc`)}
 </p>
 </div>
@@ -792,7 +800,7 @@ className="flex flex-col justify-between p-6 rounded-2xl border border-slate-200
 {ind.tags.slice(0, 2).map((tag) => (
 <span
 key={tag}
-className="px-1.5 py-0.5 rounded-md bg-slate-50 border border-slate-150 text-slate-400 text-[8px] font-black uppercase tracking-wide"
+className="px-1.5 py-0.5 rounded-lg bg-slate-50 border border-slate-150 text-slate-400 text-xs font-black uppercase tracking-wide"
 >
 {tag}
 </span>
@@ -801,7 +809,7 @@ className="px-1.5 py-0.5 rounded-md bg-slate-50 border border-slate-150 text-sla
 
 <Link
 href="/solutions"
-className="inline-flex items-center gap-1 text-[9px] font-black uppercase tracking-wider text-royal-blue hover:gap-1.5 transition-all focus:outline-none focus:ring-1 focus:ring-royal-blue/30 rounded"
+className="inline-flex shrink-0 items-center gap-1 min-h-11 py-[14px] px-2 -my-[14px] text-xs font-black uppercase tracking-wider text-royal-blue hover:gap-1.5 transition-all focus:outline-none focus:ring-1 focus:ring-royal-blue/30 rounded-lg"
 >
 <span>{tHero('exploreSolutions')}</span>
 <ArrowRight size={10} />

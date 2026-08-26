@@ -218,7 +218,7 @@ export function Navigation() {
             </div>
 
             {/* Center Navigation Links */}
-            <div className="hidden lg:flex items-center justify-center space-x-8 h-full rtl:space-x-reverse flex-1">
+            <div className="hidden xl:flex items-center justify-center space-x-8 h-full rtl:space-x-reverse flex-1">
               <Link href="/" className={`${getLinkClass('/')} group`}>
                 <span className="relative py-1">
                   {t('home')}
@@ -368,7 +368,7 @@ export function Navigation() {
             </div>
 
             {/* Right Side Actions */}
-            <div className="hidden lg:flex items-center space-x-4">
+            <div className="hidden xl:flex items-center space-x-4">
               {/* Language Switcher */}
               <div className="relative">
                 <button
@@ -415,7 +415,7 @@ export function Navigation() {
             </div>
 
             {/* Mobile Actions */}
-            <div className="flex lg:hidden items-center gap-3">
+            <div className="flex xl:hidden items-center gap-3">
               <button
                 type="button"
                 onClick={() => setIsMobileLangOpen(!isMobileLangOpen)}
@@ -449,7 +449,7 @@ export function Navigation() {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
-              className="lg:hidden border-t border-slate-200 bg-white overflow-hidden shadow-xl absolute top-20 left-0 right-0 z-55 max-h-[calc(100vh-80px)] overflow-y-auto"
+              className="xl:hidden border-t border-slate-200 bg-white overflow-hidden shadow-xl absolute top-20 left-0 right-0 z-55 max-h-[calc(100vh-80px)] overflow-y-auto"
             >
               <div className="px-4 pt-2 pb-6 space-y-3">
                 <Link
@@ -479,7 +479,7 @@ export function Navigation() {
                       aria-expanded={isMobileSolutionsOpen}
                       aria-controls="mobile-solutions-categories"
                       aria-label={locale === 'es' ? 'Mostrar categorías de servicios' : 'Show service categories'}
-                      className="m-1 rounded-lg p-2 text-slate-600 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue"
+                  className="m-1 rounded-lg p-2 text-slate-600 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue"
                     >
                       <ChevronDown size={18} className={`transition-transform duration-150 ${isMobileSolutionsOpen ? 'rotate-180' : ''}`} />
                     </button>
@@ -567,14 +567,14 @@ export function Navigation() {
       {/* Language Mobile Dropdown Panel Overlay */}
       {isMobileLangOpen && (
         <div className="fixed inset-0 z-50 bg-slate-900/30 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 w-full max-w-xs shadow-2xl border border-slate-200 space-y-4">
+          <div className="bg-white rounded-2xl p-6 w-full max-w-xs shadow-2xl border border-slate-200 space-y-4">
             <h3 className="text-eyebrow text-slate-550">{locale === 'es' ? 'Seleccionar Idioma' : 'Select Language'}</h3>
             <div className="space-y-2">
               {languages.map((lang) => (
                 <button
                   key={lang.code}
                   onClick={() => handleLanguageChange(lang.code)}
-                  className={`w-full py-3 px-4 rounded-2xl border text-body-sm font-bold text-left transition-all ${
+                  className={`w-full py-3 px-4 rounded-xl border text-body-sm font-bold text-left transition-all ${
                     locale === lang.code ? 'bg-royal-blue border-royal-blue text-white' : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
                   }`}
                 >

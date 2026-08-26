@@ -152,7 +152,7 @@ export function AboutClient({ locale, tAbout, tCommon }: AboutClientProps) {
                 <Link href="/consultation" className="PrimaryBrandButton">
                   {locale === 'es' ? 'Iniciar Consulta Técnica' : 'Initiate Scoping Intake'}
                 </Link>
-                <Link href="/solutions" className="SecondaryBrandOutlineButton">
+                <Link href="/solutions" className="SecondaryBrandButton">
                   {locale === 'es' ? 'Ver Especialidades' : 'Explore Capabilities'}
                 </Link>
               </div>
@@ -606,7 +606,7 @@ export function AboutClient({ locale, tAbout, tCommon }: AboutClientProps) {
             <Link href="/consultation" className="PrimaryBrandButton">
               {tCommon.consultation || 'Schedule Intake'}
             </Link>
-            <Link href="/contact" className="SecondaryBrandOutlineButton">
+            <Link href="/contact" className="SecondaryBrandButton">
               {locale === 'es' ? 'Contáctenos' : 'Contact Sales'}
             </Link>
           </div>

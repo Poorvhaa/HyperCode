@@ -43,8 +43,8 @@
   --color-card: var(--color-card);
   --color-foreground: var(--foreground);
   --color-background: var(--background);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
+  --radius-sm: calc(var(--radius) * 0.5);
+  --radius-md: calc(var(--radius) * 0.75);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) * 1.4);
   --radius-2xl: calc(var(--radius) * 1.8);
@@ -601,9 +601,9 @@
   font-size: 15px;
   font-weight: 700;
   border-radius: 9999px;
-  background: transparent;
-  border: 1.5px solid rgba(255, 255, 255, 0.2);
-  color: #FFFFFF !important;
+  background: #FFFFFF;
+  border: 1.5px solid #145BFF;
+  color: #145BFF !important;
   transition: all 250ms cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   text-decoration: none;
@@ -611,9 +611,11 @@
 }
 
 .SecondaryBrandButton:hover {
-  border-color: #08A8D8;
-  background: rgba(255, 255, 255, 0.08);
+  background: linear-gradient(135deg, #145BFF 0%, #00C8FF 100%);
+  border-color: transparent;
+  color: #FFFFFF !important;
   transform: translateY(-2px);
+  box-shadow: 0 4px 14px 0 rgba(20, 91, 255, 0.2);
 }
 
 .SecondaryBrandButton:active {
@@ -622,42 +624,33 @@
 
 .SecondaryBrandButton:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px #08A8D8, 0 0 0 6px rgba(45, 189, 62, 0.3);
+  box-shadow: 0 0 0 3px #145BFF, 0 0 0 6px rgba(20, 91, 255, 0.3);
 }
 
-.SecondaryBrandOutlineButton {
+.GhostBrandButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 48px;
-  padding-left: 28px;
-  padding-right: 28px;
+  background: transparent;
+  color: #145BFF !important;
   font-size: 15px;
   font-weight: 700;
-  border-radius: 9999px;
-  background: #FFFFFF;
-  border: 1.5px solid #1267F4;
-  color: #1267F4 !important;
+  border: none;
   transition: all 250ms cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   text-decoration: none;
   white-space: nowrap;
+  gap: 6px;
 }
 
-.SecondaryBrandOutlineButton:hover {
-  background: linear-gradient(135deg, #145BFF 0%, #00C8FF 100%);
-  border-color: transparent;
-  color: #FFFFFF !important;
-  transform: translateY(-2px);
+.GhostBrandButton:hover {
+  color: #0A1F6B !important;
 }
 
-.SecondaryBrandOutlineButton:active {
-  transform: translateY(0);
-}
-
-.SecondaryBrandOutlineButton:focus-visible {
+.GhostBrandButton:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px #1267F4, 0 0 0 6px rgba(18, 103, 244, 0.3);
+  box-shadow: 0 0 0 3px rgba(20, 91, 255, 0.2);
+  border-radius: 4px;
 }
 
 /* Footer redesign styles */

@@ -325,7 +325,7 @@ export function PremiumHero() {
   return (
     <section
       data-section-theme="light"
-      className="relative w-full min-h-[94vh] flex items-center justify-center text-[#0F172A] pt-36 lg:pt-40 pb-16 overflow-visible select-none"
+      className="relative w-full max-w-full min-w-0 min-h-[94vh] flex items-center justify-center text-[#0F172A] pt-32 sm:pt-36 lg:pt-40 pb-16 overflow-hidden select-none"
       style={{
         background: 'radial-gradient(circle at 20% 35%, rgba(20, 91, 255, 0.05), transparent 45%), radial-gradient(circle at 80% 45%, rgba(72, 185, 0, 0.05), transparent 45%), linear-gradient(135deg, #FFFFFF 0%, #F4F8FF 45%, #F4FBF7 100%)'
       }}
@@ -383,51 +383,6 @@ export function PremiumHero() {
         .glass-card-shine:hover::before {
           left: 150%;
         }
-        .HeroSecondaryButton {
-          position: relative;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          height: 48px;
-          padding-left: 28px;
-          padding-right: 28px;
-          font-size: 15px;
-          font-weight: 700;
-          border-radius: 9999px;
-          color: #145BFF !important;
-          border: 1.5px solid #145BFF;
-          transition: all 250ms cubic-bezier(0.16, 1, 0.3, 1);
-          cursor: pointer;
-          text-decoration: none;
-          white-space: nowrap;
-          background: transparent;
-          overflow: hidden;
-          isolation: isolate;
-        }
-        .HeroSecondaryButton::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: #FFFFFF;
-          z-index: 1;
-          transition: background-color 250ms ease;
-        }
-        .HeroSecondaryButton:hover {
-          border-color: #145BFF;
-          color: #145BFF !important;
-          transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(20, 91, 255, 0.12);
-        }
-        .HeroSecondaryButton:hover::before {
-          background: rgba(20, 91, 255, 0.05);
-        }
-        .HeroSecondaryButton:active {
-          transform: translateY(0);
-        }
-        .HeroSecondaryButton:focus-visible {
-          outline: none;
-          box-shadow: 0 0 0 3px #145BFF, 0 0 0 6px rgba(20, 91, 255, 0.3);
-        }
       `}</style>
 
       {/* Decorative Background Enclosure */}
@@ -453,17 +408,17 @@ export function PremiumHero() {
       </div>
 
       {/* Main Two-column Responsive Container */}
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-10 items-center relative z-10">
+      <div className="max-w-7xl min-w-0 mx-auto px-5 sm:px-8 lg:px-12 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 sm:gap-16 lg:gap-10 items-center relative z-10">
         
         {/* LEFT COLUMN: Business Story */}
-        <div className="col-span-1 lg:col-span-6 space-y-8 text-left max-w-2xl">
+        <div className="col-span-1 lg:col-span-6 min-w-0 w-full space-y-8 text-left max-w-2xl">
           {/* USA-Based badge */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15, duration: 0.55, ease: easePremium }}
           >
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/70 border border-slate-200/50 backdrop-blur-sm text-eyebrow text-[#145BFF] shadow-[0_2px_8px_rgba(20,91,255,0.02)]">
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/70 border border-slate-200/50 backdrop-blur-sm text-eyebrow normal-case text-[#145BFF] shadow-[0_2px_8px_rgba(20,91,255,0.02)]">
               <Sparkles size={11} className="animate-pulse text-[#145BFF]" />
               {t('badge')}
             </span>
@@ -474,10 +429,10 @@ export function PremiumHero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25, duration: 0.65, ease: easePremium }}
-            className="text-display text-slate-900 max-w-3xl leading-[1.15]"
+            className="text-[clamp(2.25rem,11vw,4rem)] sm:text-display text-slate-900 w-full max-w-3xl min-w-0 leading-[1.15] tracking-[-0.02em] whitespace-normal break-normal"
           >
             {t('headlinePart1')}{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#145BFF] via-[#25B5FF] to-[#48B900] inline-block pb-1 whitespace-nowrap">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#145BFF] via-[#25B5FF] to-[#48B900] pb-1 whitespace-normal [box-decoration-break:clone] [-webkit-box-decoration-break:clone]">
               {t('headlineGradient')}
             </span>
             <br className="hidden md:inline" />{' '}
@@ -489,7 +444,7 @@ export function PremiumHero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.35, duration: 0.75, ease: easePremium }}
-            className="text-body-lg text-slate-600"
+            className="text-body-lg text-slate-600 w-full max-w-xl min-w-0"
           >
             {t('supporting')}
           </motion.p>
@@ -499,11 +454,11 @@ export function PremiumHero() {
             initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={prefersReducedMotion ? { duration: 0 } : { delay: 0.45, duration: 0.85, ease: easePremium }}
-            className="flex flex-col sm:flex-row gap-4 pt-3"
+            className="flex w-full min-w-0 flex-col sm:flex-row gap-4 pt-3"
           >
             <Link
               href="/consultation"
-              className="PrimaryBrandButton flex items-center justify-center gap-2 group transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
+              className="PrimaryBrandButton flex w-full min-w-0 items-center justify-center gap-2 text-center group transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg sm:w-auto"
               aria-label={t('ctaPrimary')}
             >
               <span>{t('ctaPrimary')}</span>
@@ -511,10 +466,10 @@ export function PremiumHero() {
             </Link>
             <Link
               href="/solutions"
-              className="HeroSecondaryButton group focus-visible:outline-none"
+              className="SecondaryBrandButton w-full min-w-0 text-center group sm:w-auto"
               aria-label={t('ctaSecondary')}
             >
-              <div className="relative z-10 flex items-center justify-center gap-2">
+              <div className="flex items-center justify-center gap-2">
                 <span>{t('ctaSecondary')}</span>
                 <ArrowRight size={14} className="transition-transform duration-250 group-hover:translate-x-1" />
               </div>
@@ -539,7 +494,7 @@ export function PremiumHero() {
                   <div className={`p-1.5 rounded-lg border ${indicator.bg} ${indicator.color} transition-all duration-300 group-hover:scale-110`}>
                     <IndicatorIcon size={14} className="transition-transform duration-300 group-hover:rotate-6" />
                   </div>
-                  <span className="text-[10.5px] font-bold text-slate-500 uppercase tracking-widest transition-colors duration-300 group-hover:text-slate-900">
+                  <span className="text-xs font-bold text-slate-500 uppercase tracking-widest transition-colors duration-300 group-hover:text-slate-900">
                     {indicator.text}
                   </span>
                 </motion.div>

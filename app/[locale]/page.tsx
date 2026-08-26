@@ -23,7 +23,7 @@ export default async function Page({ params }: Props) {
   setRequestLocale(locale);
 
   return (
-    <main className="relative w-full bg-white">
+    <main className="relative w-full max-w-full min-w-0 bg-white">
       {/* Client theme observer to monitor scrolling states */}
       <ThemeObserver />
       
