@@ -9,6 +9,7 @@ import { EMAIL_REGEX } from '@/lib/validation';
 import { useCookieConsent } from '@/hooks/useCookieConsent';
 import { useFormValidation } from '@/hooks/use-form-validation';
 import { footerServicesList } from '@/lib/navigation-links';
+import { googleMapsSearchUrl } from '@/lib/utils';
 
 export function Footer() {
   const tNav = useTranslations('Navigation');
@@ -56,14 +57,19 @@ export function Footer() {
         setEmail('');
         setTouched(false);
       } else {
-        setError(result?.error || (locale === 'es' ? 'Error al suscribirse.' : 'Failed to subscribe.'));
+        const isDuplicate = result?.code === 'DUPLICATE_SUBSCRIBER';
+        setError(
+          isDuplicate
+            ? (locale === 'es' ? 'Ya se encuentra suscrito.' : 'You are already subscribed.')
+            : (result?.error || (locale === 'es' ? 'No es posible suscribirse en este momento. Por favor, inténtelo de nuevo más tarde.' : 'Unable to subscribe right now. Please try again later.'))
+        );
         setTimeout(() => {
           focusAndScrollToError({ email: true });
         }, 0);
       }
     } catch (err) {
       console.error(err);
-      setError(locale === 'es' ? 'Error al suscribirse.' : 'Failed to subscribe.');
+      setError(locale === 'es' ? 'No es posible suscribirse en este momento. Por favor, inténtelo de nuevo más tarde.' : 'Unable to subscribe right now. Please try again later.');
       setTimeout(() => {
         focusAndScrollToError({ email: true });
       }, 0);
@@ -211,16 +217,22 @@ export function Footer() {
             {/* Contact Details */}
             <div className="space-y-6 text-slate-500">
               {/* Address */}
-              <div className="flex items-start gap-4">
-                <MapPin className="text-royal-blue mt-1.5 flex-shrink-0 w-[20px] h-[20px]" />
-                <address className="not-italic text-body-sm text-slate-550 space-y-1">
-                  <span className="block text-h4 text-slate-800 mb-2">{tf('corporateHq')}</span>
+              <a
+                href={googleMapsSearchUrl(`2095 Hammond Dr Suite C Schaumburg, IL 60173 ${tf('unitedStates')}`)}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={locale === 'es' ? 'Abrir la ubicación de HyperCode en Google Maps' : 'Open HyperCode location in Google Maps'}
+                className="flex items-start gap-4 text-slate-550 hover:text-royal-blue transition-colors group cursor-pointer rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue focus-visible:ring-offset-2"
+              >
+                <MapPin className="text-royal-blue mt-1.5 flex-shrink-0 w-[20px] h-[20px] group-hover:text-royal-blue transition-colors" aria-hidden="true" />
+                <address className="not-italic text-body-sm space-y-1">
+                  <span className="block text-h4 text-slate-800 mb-2 group-hover:text-royal-blue transition-colors">{tf('corporateHq')}</span>
                   <span className="block">2095 Hammond Dr</span>
                   <span className="block">Suite C</span>
                   <span className="block">Schaumburg, IL 60173</span>
                   <span className="block text-royal-blue font-bold mt-1.5">{tf('unitedStates')}</span>
                 </address>
-              </div>
+              </a>
               
               {/* Email */}
               <a 

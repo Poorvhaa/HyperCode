@@ -1,9 +1,14 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
 import { getServiceDetails } from '@/lib/services-details';
+import {
+  CONSULTATION_INDUSTRY_KEYS,
+  CONSULTATION_INDUSTRY_ICON_MAP,
+} from '@/lib/consultation-industries';
 import { HeroBanner } from '@/components/hero-banner';
 import { Link } from '@/i18n/routing';
 import Image from 'next/image';
@@ -50,8 +55,8 @@ interface SolutionDetailPageProps {
   pageKey: string;
 }
 
-// Industry Icon Mapping for "Industries We Serve" section
-const INDUSTRY_ICON_MAP: Record<string, any> = {
+// Legacy icon lookup for non-local-seo industry labels
+const LEGACY_INDUSTRY_ICON_MAP: Record<string, typeof Terminal> = {
   healthcare: HeartPulse,
   finance: Building2,
   retail: ShoppingBag,
@@ -111,6 +116,7 @@ function BrainIcon(props: any) {
 
 export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps) {
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
+  const tConsult = useTranslations('Consultation');
 
   // Fetch localized service details
   const activeTrans = getServiceDetails(pageKey, locale);
@@ -497,19 +503,36 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
             )}
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-            {activeTrans.industries.map((ind: string, i: number) => {
-              const iconKey = ind.toLowerCase();
-              const Icon = INDUSTRY_ICON_MAP[iconKey] || Terminal;
-              return (
-                <div key={i} className="premium-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all text-center flex flex-col items-center gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-royal-blue">
-                    <Icon size={18} />
-                  </div>
-                  <span className="text-body-sm font-bold text-slate-800">{ind}</span>
-                </div>
-              );
-            })}
+          <div className={`grid gap-6 items-stretch ${
+            activeTrans.slug === 'local-seo'
+              ? 'grid-cols-1 min-[480px]:grid-cols-2 md:grid-cols-3 xl:grid-cols-4'
+              : 'grid-cols-1 min-[480px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-3'
+          }`}>
+            {activeTrans.slug === 'local-seo'
+              ? CONSULTATION_INDUSTRY_KEYS.map((key) => {
+                  const Icon = CONSULTATION_INDUSTRY_ICON_MAP[key];
+                  const label = tConsult(`industries.${key}`);
+                  return (
+                    <div key={key} className="premium-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all text-center flex flex-col items-center gap-4 h-full">
+                      <div className="w-14 h-14 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-royal-blue">
+                        <Icon size={26} strokeWidth={2} />
+                      </div>
+                      <span className="text-body-sm font-bold text-slate-800 leading-snug">{label}</span>
+                    </div>
+                  );
+                })
+              : activeTrans.industries.map((ind: string, i: number) => {
+                  const iconKey = ind.toLowerCase();
+                  const Icon = LEGACY_INDUSTRY_ICON_MAP[iconKey] || Terminal;
+                  return (
+                    <div key={i} className="premium-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all text-center flex flex-col items-center gap-4 h-full">
+                      <div className="w-14 h-14 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-royal-blue">
+                        <Icon size={26} strokeWidth={2} />
+                      </div>
+                      <span className="text-body-sm font-bold text-slate-800 leading-snug">{ind}</span>
+                    </div>
+                  );
+                })}
           </div>
         </div>
       </section>

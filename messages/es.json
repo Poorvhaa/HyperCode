@@ -281,10 +281,13 @@
     },
 
     "timelines": {
-      "t1": "Inmediatamente (Menos de 1 Mes)",
-      "t2": "Dentro de 1-3 Meses",
-      "t3": "Planificación (3-6 Meses)",
-      "t4": "Explorando / A Largo Plazo"
+      "t1": { "value": "Immediately / ASAP", "label": "ASAP" },
+      "t2": { "value": "Within 1 Month", "label": "< 1 Mes" },
+      "t3": { "value": "1–3 Months", "label": "1–3 Meses" },
+      "t4": { "value": "3–6 Months", "label": "3–6 Meses" },
+      "t5": { "value": "6–12 Months", "label": "6–12 Meses" },
+      "t6": { "value": "More Than 12 Months", "label": "12+ Meses" },
+      "t7": { "value": "Flexible / Not Sure", "label": "Flexible" }
     },
     "formTitle": "Solicitar Sesión de Admisión del Proyecto",
     "formSubtitle": "Comparta los requisitos de su proyecto y lo asignaremos con el arquitecto de soluciones adecuado."
@@ -419,6 +422,70 @@
       "technology": {
         "title": "Alta Tecnología y Software",
         "desc": "Arquitecturas MVP SaaS, automatización de infraestructura en la nube y pruebas de calidad."
+      },
+      "bfsi": {
+        "title": "Servicios Bancarios, Financieros y Seguros (BFSI)",
+        "desc": "Plataformas bancarias digitales seguras, flujos de cumplimiento e integraciones financieras empresariales."
+      },
+      "telecom": {
+        "title": "Telecomunicaciones",
+        "desc": "Portales de experiencia del cliente, paneles de operaciones de red y sistemas de facturación automatizados."
+      },
+      "automotive": {
+        "title": "Automotriz",
+        "desc": "Plataformas de vehículos conectados, sistemas de gestión de concesionarios y herramientas de visibilidad de cadena de suministro."
+      },
+      "transportation": {
+        "title": "Transporte",
+        "desc": "Plataformas de gestión de flotas, motores de optimización de rutas y aplicaciones de experiencia del pasajero."
+      },
+      "energy": {
+        "title": "Energía y Servicios Públicos",
+        "desc": "Monitoreo de redes inteligentes, plataformas de gestión de activos y portales de autoservicio para clientes."
+      },
+      "oilGas": {
+        "title": "Petróleo y Gas",
+        "desc": "Software de operaciones de campo, sistemas de seguimiento de producción e informes de cumplimiento normativo."
+      },
+      "professionalServices": {
+        "title": "Servicios Profesionales",
+        "desc": "Portales de relación con clientes, plataformas de entrega de proyectos y sistemas de gestión del conocimiento."
+      },
+      "realEstate": {
+        "title": "Bienes Raíces y Construcción",
+        "desc": "Plataformas de gestión inmobiliaria, herramientas de colaboración en proyectos y bases de datos de inmuebles."
+      },
+      "travel": {
+        "title": "Viajes y Hospitalidad",
+        "desc": "Sistemas de reserva a medida, automatización de huéspedes y gestión de programas de fidelización."
+      },
+      "media": {
+        "title": "Medios y Entretenimiento",
+        "desc": "Plataformas de entrega de contenido, paneles de analítica de audiencia y sistemas de gestión de suscripciones."
+      },
+      "insurance": {
+        "title": "Seguros",
+        "desc": "Sistemas de administración de pólizas, flujos de procesamiento de reclamaciones y portales para agentes."
+      },
+      "fintech": {
+        "title": "FinTech",
+        "desc": "Plataformas de pago, integraciones de billeteras digitales y sistemas automatizados de préstamos o suscripción."
+      },
+      "foodBeverage": {
+        "title": "Alimentos y Bebidas",
+        "desc": "Sistemas de gestión de pedidos, seguimiento de cadena de suministro y plataformas de operaciones de franquicias."
+      },
+      "consumerProducts": {
+        "title": "Productos de Consumo",
+        "desc": "Integraciones de comercio electrónico, plataformas de ciclo de vida de productos y paneles de analítica minorista."
+      },
+      "nonprofit": {
+        "title": "Organizaciones sin Fines de Lucro y Asociaciones",
+        "desc": "Sistemas de gestión de donantes, portales de miembros y flujos de registro de eventos."
+      },
+      "other": {
+        "title": "Otro / General",
+        "desc": "Soluciones digitales personalizadas adaptadas a requisitos operativos y modelos de negocio únicos."
       }
     },
     "challenges": {

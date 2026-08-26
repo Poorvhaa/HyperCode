@@ -81,92 +81,85 @@ export async function POST(req: Request) {
       );
     }
 
-    // 2. Send confirmation email via Resend
-    let userEmailSent = false;
+    // 2. Send confirmation email via Resend (required for successful subscription)
+    if (!resend) {
+      console.error('[Newsletter API] Resend is not configured.');
+      await supabaseServer
+        .from('newsletter_subscribers')
+        .delete()
+        .eq('email', validated.email);
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'The newsletter service is temporarily unavailable.',
+          code: 'EMAIL_SERVICE_UNAVAILABLE',
+        },
+        { status: 503 }
+      );
+    }
 
-    if (resend) {
-      try {
-        const isSpanish = validated.language === 'es';
-        const subject = isSpanish ? '¡Bienvenido a HyperCode Insights!' : 'Welcome to HyperCode Insights!';
-        
-        const confirmEmailHtml = isSpanish ? `
-          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f8fafc; padding: 40px 20px;">
-            <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03); overflow: hidden;">
-              <div style="padding: 32px 32px 20px 32px; text-align: center; border-bottom: 1px solid #f1f5f9;">
-                <img src="https://www.hypercodeit.com/logo.png" alt="HyperCode Logo" width="180" style="border: 0; display: block; margin: 0 auto; width: 180px; height: auto;" />
-                <div style="margin-top: 10px; font-size: 10px; font-weight: 800; letter-spacing: 0.15em; color: #64748b; text-transform: uppercase;">
-                  WE SOLVE. WE BUILD. YOU GROW.
-                </div>
-              </div>
-              <div style="padding: 32px; color: #1e293b; line-height: 1.6; font-size: 14px;">
-                <p>Hola,</p>
-                <p>¡Gracias por suscribirte al boletín de HyperCode!</p>
-                <p>A partir de ahora, recibirás nuestros artículos mensuales de opinión, planos de ingeniería, casos de éxito e ideas de nuestros asesores técnicos directamente en tu bandeja de entrada.</p>
-                <p>Puedes cancelar tu suscripción o gestionar tus preferencias en cualquier momento utilizando los enlaces que se encuentran al final de nuestros correos.</p>
-                <p>¡Bienvenido a la comunidad!</p>
-                <p>Atentamente,</p>
-                <p style="margin: 0; font-weight: bold; color: #145BFF;">El equipo editorial de HyperCode</p>
-              </div>
-              <div style="padding: 24px 32px; background-color: #f8fafc; border-top: 1px solid #f1f5f9; text-align: center; font-size: 12px; color: #64748b; line-height: 1.5;">
-                <div style="font-weight: bold; color: #475569; margin-bottom: 4px;">HyperCode IT Solutions</div>
-                <div><a href="mailto:solutions@hypercodeit.com" style="color: #145BFF; text-decoration: none;">solutions@hypercodeit.com</a></div>
-                <div style="margin-top: 4px;"><a href="https://www.hypercodeit.com" target="_blank" style="color: #64748b; text-decoration: none;">https://www.hypercodeit.com</a></div>
-              </div>
-            </div>
-          </div>
-        ` : `
-          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f8fafc; padding: 40px 20px;">
-            <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03); overflow: hidden;">
-              <div style="padding: 32px 32px 20px 32px; text-align: center; border-bottom: 1px solid #f1f5f9;">
-                <img src="https://www.hypercodeit.com/logo.png" alt="HyperCode Logo" width="180" style="border: 0; display: block; margin: 0 auto; width: 180px; height: auto;" />
-                <div style="margin-top: 10px; font-size: 10px; font-weight: 800; letter-spacing: 0.15em; color: #64748b; text-transform: uppercase;">
-                  WE SOLVE. WE BUILD. YOU GROW.
-                </div>
-              </div>
-              <div style="padding: 32px; color: #1e293b; line-height: 1.6; font-size: 14px;">
-                <p>Hi there,</p>
-                <p>Thank you for subscribing to the HyperCode newsletter!</p>
-                <p>You will now receive our monthly thought leadership pieces, engineering blueprints, case studies, and insights from our technical advisors directly in your inbox.</p>
-                <p>You can unsubscribe or manage your preferences at any time using the links at the bottom of our emails.</p>
-                <p>Welcome to the community!</p>
-                <p>Best regards,</p>
-                <p style="margin: 0; font-weight: bold; color: #145BFF;">HyperCode Editorial Team</p>
-              </div>
-              <div style="padding: 24px 32px; background-color: #f8fafc; border-top: 1px solid #f1f5f9; text-align: center; font-size: 12px; color: #64748b; line-height: 1.5;">
-                <div style="font-weight: bold; color: #475569; margin-bottom: 4px;">HyperCode IT Solutions</div>
-                <div><a href="mailto:solutions@hypercodeit.com" style="color: #145BFF; text-decoration: none;">solutions@hypercodeit.com</a></div>
-                <div style="margin-top: 4px;"><a href="https://www.hypercodeit.com" target="_blank" style="color: #64748b; text-decoration: none;">https://www.hypercodeit.com</a></div>
-              </div>
-            </div>
-          </div>
-        `;
+    const isSpanish = validated.language === 'es';
+    const subject = isSpanish ? 'Bienvenido a HyperCode Insights' : 'Welcome to HyperCode Insights';
 
-        const { data: customerEmailData, error: customerEmailError } = await resend.emails.send({
-          from: resendFromEmail,
-          to: validated.email,
-          subject: subject,
-          html: confirmEmailHtml,
+    const confirmEmailHtml = isSpanish
+      ? `<p>Gracias por suscribirse a HyperCode Insights.</p>
+         <p>Recibirá información sobre tecnología, actualizaciones de IA, estrategias de transformación digital y novedades de HyperCode.</p>
+         <p>— Equipo HyperCode<br/><a href="https://www.hypercodeit.com">hypercodeit.com</a></p>`
+      : `<p>Thank you for subscribing to HyperCode Insights.</p>
+         <p>You'll receive technology insights, AI updates, digital transformation strategies, and company updates from HyperCode.</p>
+         <p>— HyperCode Team<br/><a href="https://www.hypercodeit.com">hypercodeit.com</a></p>`;
+
+    try {
+      const { data: customerEmailData, error: customerEmailError } = await resend.emails.send({
+        from: resendFromEmail,
+        to: validated.email,
+        subject,
+        html: confirmEmailHtml,
+      });
+
+      if (customerEmailError) {
+        console.error('[Newsletter API] User confirmation email failed:', {
+          name: customerEmailError.name,
+          message: customerEmailError.message,
         });
-
-        if (customerEmailError) {
-          console.error('[Newsletter API] User confirmation email failed:', {
-            name: customerEmailError.name,
-            message: customerEmailError.message
-          });
-        } else {
-          userEmailSent = true;
-          console.log('[Newsletter API] User confirmation email sent to:', validated.email);
-        }
-      } catch (emailErr) {
-        console.error('Resend newsletter email error:', emailErr);
+        await supabaseServer
+          .from('newsletter_subscribers')
+          .delete()
+          .eq('email', validated.email);
+        return NextResponse.json(
+          {
+            success: false,
+            error: 'Unable to send your confirmation email. Please try again later.',
+            code: 'EMAIL_SEND_FAILED',
+          },
+          { status: 500 }
+        );
       }
+
+      console.log('[Newsletter API] User confirmation email sent:', {
+        email: validated.email,
+        emailId: customerEmailData?.id,
+      });
+    } catch (emailErr) {
+      console.error('[Newsletter API] Resend newsletter email error:', emailErr);
+      await supabaseServer
+        .from('newsletter_subscribers')
+        .delete()
+        .eq('email', validated.email);
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Unable to send your confirmation email. Please try again later.',
+          code: 'EMAIL_SEND_FAILED',
+        },
+        { status: 500 }
+      );
     }
 
     return NextResponse.json({
       success: true,
       saved: true,
-      userEmailSent,
-      warning: userEmailSent ? undefined : 'Your subscription was saved, but the confirmation email could not be sent.'
+      userEmailSent: true,
     });
   } catch (err) {
     console.error('Newsletter route error:', err);

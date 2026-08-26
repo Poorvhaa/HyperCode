@@ -48,7 +48,6 @@ function ConsultationFormContent({ defaultIndustryKey }: { defaultIndustryKey?: 
   const t = useTranslations('Consultation.form');
   const tContact = useTranslations('Contact.form');
   const tNav = useTranslations('Navigation');
-  const tTimelines = useTranslations('Consultation.timelines');
   const tAi = useTranslations('AIConsultant');
   const tConsult = useTranslations('Consultation');
   const locale = useLocale();
@@ -73,13 +72,11 @@ function ConsultationFormContent({ defaultIndustryKey }: { defaultIndustryKey?: 
     { id: 'Technology Consulting', label: tNav('techConsulting') },
   ];
 
-  // Localized expected timeline pill labels
-  const timelineOptions = [
-    { id: 'Immediately', label: tTimelines('t1') },
-    { id: 'Within 3 Months', label: tTimelines('t2') },
-    { id: 'Within 6 Months', label: tTimelines('t3') },
-    { id: 'Exploring Options', label: tTimelines('t4') },
-  ];
+  const timelinesRaw = tConsult.raw('timelines') as Record<string, { value: string; label: string }>;
+  const timelineOptions = Object.values(timelinesRaw).map((opt) => ({
+    id: opt.value,
+    label: opt.label,
+  }));
 
   // Validation schema
   const consultationSchema = z.object({

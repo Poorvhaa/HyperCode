@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Loader2, CheckCircle, Check, AlertCircle } from 'lucide-react';
-import { db } from '@/lib/db';
 import { useFormValidation } from '@/hooks/use-form-validation';
 import { EMAIL_REGEX, sanitizePayload } from '@/lib/validation';
 
@@ -81,24 +80,6 @@ export function NewsletterForm() {
       setTimeout(() => {
         focusAndScrollToError({ email: true });
       }, 0);
-
-      if (!isDuplicate) {
-        try {
-          if (!honeypot) {
-            await db.saveNewsletterSubscriber(
-              cleanEmail,
-              locale === 'es' ? 'es' : 'en',
-              typeof window !== 'undefined' ? window.location.pathname : ''
-            );
-          }
-          setSuccess(true);
-          setEmail('');
-          setHoneypot('');
-          setError('');
-        } catch (localErr: any) {
-          console.error('Newsletter subscription error', localErr);
-        }
-      }
     } finally {
       setSubmitting(false);
     }

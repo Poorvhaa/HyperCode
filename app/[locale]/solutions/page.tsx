@@ -29,17 +29,6 @@ import {
   TrendingUp,
   ShoppingCart,
   Lightbulb,
-  HeartPulse,
-  Building2,
-  ShoppingBag,
-  Factory,
-  GraduationCap,
-  Truck,
-  Hotel,
-  HardHat,
-  Scale,
-  FileText,
-  Building,
   Terminal,
   ArrowUpRight,
   ShieldCheck,
@@ -53,22 +42,11 @@ import {
 } from 'lucide-react';
 import { getServiceDetails, SERVICE_REGISTRY } from '@/lib/services-details';
 import { SERVICES_CATALOG } from '@/lib/services-data';
-
-// Industry Icon Mapping for "Industries We Serve" section
-const INDUSTRY_ICON_MAP: Record<string, any> = {
-  healthcare: HeartPulse,
-  finance: Building2,
-  retail: ShoppingBag,
-  manufacturing: Factory,
-  education: GraduationCap,
-  logistics: Truck,
-  hospitality: Hotel,
-  construction: HardHat,
-  legal: Scale,
-  pharma: FileText,
-  government: Building,
-  technology: Terminal
-};
+import {
+  CONSULTATION_INDUSTRY_KEYS,
+  CONSULTATION_INDUSTRY_ICON_MAP,
+  CONSULTATION_INDUSTRY_ACCENTS,
+} from '@/lib/consultation-industries';
 
 // Lucide icon mapping for the 13 Categories
 const CATEGORY_ICON_MAP: Record<string, any> = {
@@ -144,6 +122,7 @@ function SolutionsPageContent() {
   const tAi = useTranslations('AIConsultant');
   const tc = useTranslations('Common');
   const tSolutions = useTranslations('Solutions');
+  const tConsult = useTranslations('Consultation');
   const locale = useLocale();
 
   // Selected Drawer details
@@ -398,22 +377,6 @@ function SolutionsPageContent() {
     window.dispatchEvent(new CustomEvent('open-hypercode-chat'));
   };
 
-  // Industries We Serve Dataset
-  const industriesWeServe = [
-    { id: 'healthcare', key: 'healthcare' },
-    { id: 'finance', key: 'finance' },
-    { id: 'retail', key: 'retail' },
-    { id: 'manufacturing', key: 'manufacturing' },
-    { id: 'education', key: 'education' },
-    { id: 'logistics', key: 'logistics' },
-    { id: 'hospitality', key: 'hospitality' },
-    { id: 'construction', key: 'construction' },
-    { id: 'legal', key: 'legal' },
-    { id: 'pharma', key: 'pharma' },
-    { id: 'government', key: 'government' },
-    { id: 'technology', key: 'technology' }
-  ];
-
   // Tech Ecosystem Groups
   const techEcosystem = [
     { name: 'Cloud', items: ['AWS', 'Azure', 'Google Cloud', 'Cloudflare'] },
@@ -440,6 +403,26 @@ function SolutionsPageContent() {
       [catId]: !prev[catId]
     }));
   };
+
+  const SelectedCategoryIcon = selectedCategory?.IconComponent;
+
+  const drawerTechnologies = useMemo(() => {
+    if (!selectedCategory) return [];
+    const techs = new Set<string>();
+    selectedCategory.cat.services.forEach((srv: any) => srv.tech.forEach((tech: string) => techs.add(tech)));
+    return Array.from(techs);
+  }, [selectedCategory]);
+
+  const drawerIndustries = useMemo(() => {
+    if (!selectedCategory) return [];
+    const inds = new Set<string>();
+    selectedCategory.cat.services.forEach((srv: any) => {
+      const srvDetails = getServiceDetails(srv.id, locale);
+      const serviceIndustries = srvDetails?.industries?.length ? srvDetails.industries : srv.industries ?? [];
+      serviceIndustries.forEach((ind: string) => inds.add(ind));
+    });
+    return Array.from(inds);
+  }, [selectedCategory, locale]);
 
   return (
     <main className="relative w-full bg-white text-left min-h-screen bg-dot-pattern">
@@ -853,37 +836,17 @@ function SolutionsPageContent() {
             <h3 className="text-3xl sm:text-[clamp(42px,4vw,64px)] font-black text-slate-900 leading-[1.08] tracking-tight">{t('industriesSubtitle')}</h3>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {industriesWeServe.map((ind) => {
-              const IndIcon = INDUSTRY_ICON_MAP[ind.id] || Building;
-              const indTitle = t(`industriesList.${ind.key}.title`);
-              const indDesc = t(`industriesList.${ind.key}.desc`);
-
-              // Define individual pale industry accents
-              const getIndustryAccent = (id: string) => {
-                const mapping: Record<string, { bg: string; border: string; text: string; topLine: string }> = {
-                  healthcare: { bg: 'bg-blue-50/60', border: 'border-blue-100', text: 'text-blue-600', topLine: 'from-blue-400 to-cyan-300' },
-                  finance: { bg: 'bg-cyan-50/60', border: 'border-cyan-100', text: 'text-cyan-600', topLine: 'from-cyan-400 to-teal-300' },
-                  retail: { bg: 'bg-green-50/60', border: 'border-green-100', text: 'text-green-600', topLine: 'from-green-400 to-emerald-300' },
-                  manufacturing: { bg: 'bg-teal-50/60', border: 'border-teal-100', text: 'text-teal-600', topLine: 'from-teal-400 to-emerald-300' },
-                  education: { bg: 'bg-indigo-50/60', border: 'border-indigo-100', text: 'text-indigo-600', topLine: 'from-indigo-400 to-blue-300' },
-                  logistics: { bg: 'bg-sky-50/60', border: 'border-sky-100', text: 'text-sky-600', topLine: 'from-sky-400 to-blue-300' },
-                  hospitality: { bg: 'bg-rose-50/60', border: 'border-rose-100', text: 'text-rose-600', topLine: 'from-rose-400 to-orange-300' },
-                  construction: { bg: 'bg-amber-50/60', border: 'border-amber-100', text: 'text-amber-600', topLine: 'from-amber-400 to-yellow-300' },
-                  legal: { bg: 'bg-slate-100/60', border: 'border-slate-200', text: 'text-slate-700', topLine: 'from-slate-500 to-slate-400' },
-                  pharma: { bg: 'bg-emerald-50/60', border: 'border-emerald-100', text: 'text-emerald-600', topLine: 'from-emerald-400 to-teal-300' },
-                  government: { bg: 'bg-blue-100/60', border: 'border-blue-200', text: 'text-blue-700', topLine: 'from-blue-600 to-indigo-500' },
-                  technology: { bg: 'bg-royal-blue/10', border: 'border-royal-blue/20', text: 'text-royal-blue', topLine: 'from-royal-blue to-green' }
-                };
-                return mapping[id] || { bg: 'bg-slate-50', border: 'border-slate-200', text: 'text-royal-blue', topLine: 'from-royal-blue to-cyan-400' };
-              };
-
-              const accent = getIndustryAccent(ind.id);
+          <div className="grid grid-cols-1 min-[480px]:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 items-stretch">
+            {CONSULTATION_INDUSTRY_KEYS.map((key) => {
+              const IndIcon = CONSULTATION_INDUSTRY_ICON_MAP[key];
+              const indTitle = tConsult(`industries.${key}`);
+              const indDesc = t(`industriesList.${key}.desc`);
+              const accent = CONSULTATION_INDUSTRY_ACCENTS[key];
 
               return (
                 <div 
-                  key={ind.id} 
-                  className="relative p-8 rounded-[24px] bg-white/88 border border-[#DDE7F2] flex flex-col justify-between hover:-translate-y-1 transition-all duration-300 group text-left shadow-2xs select-none"
+                  key={key} 
+                  className="relative p-8 rounded-[24px] bg-white/88 border border-[#DDE7F2] h-full flex flex-col justify-between hover:-translate-y-1 transition-all duration-300 group text-left shadow-2xs select-none"
                   style={{
                     boxShadow: '0 12px 35px rgba(15, 23, 42, 0.06)'
                   }}
@@ -891,9 +854,9 @@ function SolutionsPageContent() {
                   {/* Subtle top border line on card hover */}
                   <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${accent.topLine} opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-t-[24px]`} />
 
-                  <div className="space-y-4">
-                    <div className={`p-3 w-fit rounded-xl ${accent.bg} border ${accent.border} ${accent.text} group-hover:scale-105 transition-transform duration-300`}>
-                      <IndIcon size={20} />
+                  <div className="space-y-5">
+                    <div className={`p-4 w-fit rounded-xl ${accent.bg} border ${accent.border} ${accent.text} group-hover:scale-105 transition-transform duration-300`}>
+                      <IndIcon size={29} strokeWidth={2} />
                     </div>
                     <h4 className="text-lg font-black text-slate-900 tracking-tight">{indTitle}</h4>
                     <p className="text-sm font-semibold text-slate-500 leading-relaxed">{indDesc}</p>
@@ -1050,7 +1013,7 @@ function SolutionsPageContent() {
                 <div className="flex items-center justify-between pb-6 border-b border-slate-200">
                   <div className="flex items-center gap-3">
                     <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-100 text-royal-blue">
-                      <selectedCategory.IconComponent size={22} />
+                      {SelectedCategoryIcon && <SelectedCategoryIcon size={22} />}
                     </div>
                     <div>
                       <span className="block text-eyebrow text-slate-450">{t('drawerTitle')}</span>
@@ -1111,11 +1074,7 @@ function SolutionsPageContent() {
                 <div className="space-y-3">
                   <h4 className="text-eyebrow text-slate-400">{tc('technologies')}</h4>
                   <div className="flex flex-wrap gap-1.5">
-                    {useMemo(() => {
-                      const techs = new Set<string>();
-                      selectedCategory.cat.services.forEach((srv: any) => srv.tech.forEach((tech: string) => techs.add(tech)));
-                      return Array.from(techs);
-                    }, [selectedCategory]).map((tech, idx) => (
+                    {drawerTechnologies.map((tech, idx) => (
                       <span key={idx} className="px-3 py-1.5 bg-royal-blue/5 border border-royal-blue/15 text-eyebrow text-royal-blue rounded-lg">
                         {tech}
                       </span>
@@ -1127,14 +1086,7 @@ function SolutionsPageContent() {
                 <div className="space-y-3">
                   <h4 className="text-eyebrow text-slate-400">{tc('industries')}</h4>
                   <div className="flex flex-wrap gap-1.5">
-                    {useMemo(() => {
-                      const inds = new Set<string>();
-                      selectedCategory.cat.services.forEach((srv: any) => {
-                        const translatedInds = t.raw(`categories.${selectedCategory.cat.id}.services.${srv.id}.industries`) as string[];
-                        translatedInds.forEach(ind => inds.add(ind));
-                      });
-                      return Array.from(inds);
-                    }, [selectedCategory]).map((ind, idx) => (
+                    {drawerIndustries.map((ind, idx) => (
                       <span key={idx} className="px-3 py-1.5 bg-royal-blue/5 border border-royal-blue/15 text-body-sm font-bold text-royal-blue rounded-lg">
                         {ind}
                       </span>

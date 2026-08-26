@@ -280,10 +280,13 @@
       "messageError": "Please describe your project (min 10 characters)"
     },
     "timelines": {
-      "t1": "Immediately (Under 1 Month)",
-      "t2": "Within 1-3 Months",
-      "t3": "Planning (3-6 Months)",
-      "t4": "Exploring / Long Term"
+      "t1": { "value": "Immediately / ASAP", "label": "ASAP" },
+      "t2": { "value": "Within 1 Month", "label": "< 1 Month" },
+      "t3": { "value": "1–3 Months", "label": "1–3 Months" },
+      "t4": { "value": "3–6 Months", "label": "3–6 Months" },
+      "t5": { "value": "6–12 Months", "label": "6–12 Months" },
+      "t6": { "value": "More Than 12 Months", "label": "12+ Months" },
+      "t7": { "value": "Flexible / Not Sure", "label": "Flexible" }
     },
     "formTitle": "Request Project Intake Session",
     "formSubtitle": "Share your project requirements, and we will match you with the appropriate solutions architect."
@@ -418,6 +421,70 @@
       "technology": {
         "title": "High Tech & Software",
         "desc": "SaaS MVP architectures, cloud infrastructure automation, and software quality checks."
+      },
+      "bfsi": {
+        "title": "Banking, Financial Services & Insurance (BFSI)",
+        "desc": "Secure digital banking platforms, compliance workflows, and enterprise financial integrations."
+      },
+      "telecom": {
+        "title": "Telecommunications",
+        "desc": "Customer experience portals, network operations dashboards, and billing automation systems."
+      },
+      "automotive": {
+        "title": "Automotive",
+        "desc": "Connected vehicle platforms, dealer management systems, and supply chain visibility tools."
+      },
+      "transportation": {
+        "title": "Transportation",
+        "desc": "Fleet management platforms, route optimization engines, and passenger experience apps."
+      },
+      "energy": {
+        "title": "Energy & Utilities",
+        "desc": "Smart grid monitoring, asset management platforms, and customer self-service portals."
+      },
+      "oilGas": {
+        "title": "Oil & Gas",
+        "desc": "Field operations software, production tracking systems, and regulatory compliance reporting."
+      },
+      "professionalServices": {
+        "title": "Professional Services",
+        "desc": "Client engagement portals, project delivery platforms, and knowledge management systems."
+      },
+      "realEstate": {
+        "title": "Real Estate & Construction",
+        "desc": "Property management platforms, project collaboration tools, and listing databases."
+      },
+      "travel": {
+        "title": "Travel & Hospitality",
+        "desc": "Custom booking systems, guest service automation, and customer loyalty management portals."
+      },
+      "media": {
+        "title": "Media & Entertainment",
+        "desc": "Content delivery platforms, audience analytics dashboards, and subscription management systems."
+      },
+      "insurance": {
+        "title": "Insurance",
+        "desc": "Policy administration systems, claims processing workflows, and agent-facing portals."
+      },
+      "fintech": {
+        "title": "FinTech",
+        "desc": "Payment platforms, digital wallet integrations, and automated lending or underwriting systems."
+      },
+      "foodBeverage": {
+        "title": "Food & Beverage",
+        "desc": "Order management systems, supply chain tracking, and franchise operations platforms."
+      },
+      "consumerProducts": {
+        "title": "Consumer Products",
+        "desc": "E-commerce integrations, product lifecycle platforms, and retail analytics dashboards."
+      },
+      "nonprofit": {
+        "title": "Nonprofit & Associations",
+        "desc": "Donor management systems, member portals, and event registration workflows."
+      },
+      "other": {
+        "title": "Other / General",
+        "desc": "Custom digital solutions tailored to unique operational requirements and business models."
       }
     },
     "challenges": {

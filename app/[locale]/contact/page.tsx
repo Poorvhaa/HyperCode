@@ -6,6 +6,7 @@ import { Mail, MapPin, Clock, ArrowRight, Award, Shield } from 'lucide-react';
 import { Link } from '@/i18n/routing';
 import Image from 'next/image';
 import { HeroBanner } from '@/components/hero-banner';
+import { googleMapsSearchUrl } from '@/lib/utils';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -138,18 +139,26 @@ export default async function ContactPage({ params }: Props) {
               </div>
 
               {/* Location Card */}
-              <div className="premium-card bg-white border border-slate-200 rounded-[24px] p-7 shadow-sm space-y-5">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-royal-blue shadow-sm">
-                    <MapPin size={20} />
+              <div className="premium-card bg-white border border-slate-200 rounded-[24px] p-7 shadow-sm">
+                <a
+                  href={googleMapsSearchUrl('2095 Hammond Dr, Suite C Schaumburg, IL 60173')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={locale === 'es' ? 'Abrir la ubicación de HyperCode en Google Maps' : 'Open HyperCode location in Google Maps'}
+                  className="block cursor-pointer rounded-xl -m-1 p-1 transition-colors hover:text-royal-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue focus-visible:ring-offset-2"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-royal-blue shadow-sm transition-colors">
+                      <MapPin size={20} aria-hidden="true" />
+                    </div>
+                    <h3 className="text-eyebrow text-slate-900">{activeTrans.hq}</h3>
                   </div>
-                  <h3 className="text-eyebrow text-slate-900">{activeTrans.hq}</h3>
-                </div>
-                <div className="pl-13 space-y-2">
-                  <p className="text-body-sm font-bold text-slate-800">2095 Hammond Dr, Suite C</p>
-                  <p className="text-body-sm font-bold text-slate-800">Schaumburg, IL 60173</p>
-                  <p className="text-caption font-semibold text-slate-400 mt-1">{activeTrans.hqDesc}</p>
-                </div>
+                  <div className="pl-13 space-y-2 mt-5">
+                    <p className="text-body-sm font-bold text-slate-800">2095 Hammond Dr, Suite C</p>
+                    <p className="text-body-sm font-bold text-slate-800">Schaumburg, IL 60173</p>
+                  </div>
+                </a>
+                <p className="text-caption font-semibold text-slate-400 mt-1 pl-13">{activeTrans.hqDesc}</p>
               </div>
 
               {/* Hours Card */}

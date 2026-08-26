@@ -462,8 +462,8 @@ function ContactFormContent() {
               }`}
             >
               <option value="">-- Select Timeline --</option>
-              {Object.entries(tConsult.raw('timelines')).map(([key, val]) => (
-                <option key={key} value={val as string}>{val as string}</option>
+              {Object.entries(tConsult.raw('timelines') as Record<string, { value: string; label: string }>).map(([key, opt]) => (
+                <option key={key} value={opt.value}>{opt.label}</option>
               ))}
             </select>
             {touchedFields.timeline && !errors.timeline && (
