@@ -116,24 +116,24 @@ export function InsightsList({ initialArticles, translatedCategories }: Insights
               <div>
                 {/* Category Badge */}
                 <div className="flex justify-between items-center mb-4">
-                  <span className="inline-block w-fit px-3 py-1 rounded-lg bg-slate-50 border border-slate-200 text-slate-500 text-[10px] font-bold uppercase tracking-wider">
+                  <span className="inline-block w-fit px-3 py-1 rounded-lg bg-slate-50 border border-slate-200 text-slate-500 text-caption font-semibold uppercase tracking-wider">
                     {article.category}
                   </span>
-                  <span className="text-[10px] font-bold text-slate-400 flex items-center gap-1">
+                  <span className="text-caption font-semibold text-slate-400 flex items-center gap-1">
                     <BookOpen size={10} />
                     {article.readTime}
                   </span>
                 </div>
 
                 {/* Title */}
-                <h3 className="text-lg font-bold text-slate-900 mb-2 leading-snug group-hover:text-royal-blue transition-colors">
+                <h3 className="text-card-title text-slate-900 mb-2 group-hover:text-royal-blue transition-colors">
                   <Link href={`/insights/${article.slug}`}>
                     {article.title}
                   </Link>
                 </h3>
 
                 {/* Excerpt */}
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium mb-6 line-clamp-3">
+                <p className="text-body text-slate-600 font-medium mb-6 line-clamp-3">
                   {article.excerpt}
                 </p>
               </div>
@@ -145,13 +145,13 @@ export function InsightsList({ initialArticles, translatedCategories }: Insights
                     <User size={12} />
                   </div>
                   <div>
-                    <p className="text-[11px] font-bold text-slate-800 leading-none">{article.author.name}</p>
-                    <p className="text-[9px] font-semibold text-slate-400 mt-0.5 leading-none">{article.author.role}</p>
+                    <p className="text-body-sm font-semibold text-slate-800 leading-none">{article.author.name}</p>
+                    <p className="text-caption font-medium text-slate-400 mt-0.5 leading-none">{article.author.role}</p>
                   </div>
                 </div>
 
                 {/* Meta Information & CTA */}
-                <div className="flex items-center justify-between text-[11px] font-semibold text-slate-500">
+                <div className="flex items-center justify-between text-caption font-semibold text-slate-500">
                   <div className="flex items-center gap-1.5">
                     <Calendar size={12} />
                     <span>{article.date}</span>

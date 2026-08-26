@@ -163,7 +163,7 @@ export default async function CaseStudyDetailPage({ params }: Props) {
                   <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
                     {t('overview')}
                   </h2>
-                  <p className="text-[16px] md:text-[17px] text-slate-600 leading-[1.8] font-medium">
+                  <p className="text-body text-slate-600 font-medium">
                     {study.challenge.substring(0, 150)}...
                   </p>
                 </div>
@@ -176,7 +176,7 @@ export default async function CaseStudyDetailPage({ params }: Props) {
                       {t('challenge')}
                     </h3>
                   </div>
-                  <p className="text-[16px] md:text-[17px] text-slate-655 leading-[1.8] font-medium">
+                  <p className="text-body text-slate-655 font-medium">
                     {study.challenge}
                   </p>
                 </div>
@@ -189,7 +189,7 @@ export default async function CaseStudyDetailPage({ params }: Props) {
                       {t('solution')}
                     </h3>
                   </div>
-                  <p className="text-[16px] md:text-[17px] text-slate-655 leading-[1.8] font-medium">
+                  <p className="text-body text-slate-655 font-medium">
                     {study.solution}
                   </p>
                 </div>
@@ -199,7 +199,7 @@ export default async function CaseStudyDetailPage({ params }: Props) {
                   <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
                     {t('implementation')}
                   </h3>
-                  <p className="text-[16px] md:text-[17px] text-slate-600 leading-[1.8] font-medium">
+                  <p className="text-body text-slate-600 font-medium">
                     {study.implementation}
                   </p>
                 </div>
@@ -209,7 +209,7 @@ export default async function CaseStudyDetailPage({ params }: Props) {
                   <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
                     {t('businessResults')}
                   </h3>
-                  <p className="text-[16px] md:text-[17px] text-slate-600 leading-[1.8] font-medium">
+                  <p className="text-body text-slate-600 font-medium">
                     {study.businessImpact}
                   </p>
 
@@ -223,7 +223,7 @@ export default async function CaseStudyDetailPage({ params }: Props) {
                         <span className="text-3xl sm:text-4xl font-black text-royal-blue tracking-tight block mb-2">
                           {metric.value}
                         </span>
-                        <span className="text-[10px] sm:text-[11px] font-black text-slate-400 uppercase tracking-widest leading-normal">
+                        <span className="text-caption font-semibold text-slate-400 uppercase tracking-widest leading-normal">
                           {metric.label}
                         </span>
                       </div>
@@ -244,7 +244,7 @@ export default async function CaseStudyDetailPage({ params }: Props) {
 
                   {/* Client Type */}
                   <div className="space-y-1">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">
+                    <span className="text-eyebrow text-slate-400 block">
                       {t('clientType')}
                     </span>
                     <span className="text-sm font-semibold text-slate-800">
@@ -254,7 +254,7 @@ export default async function CaseStudyDetailPage({ params }: Props) {
 
                   {/* Industry */}
                   <div className="space-y-1">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">
+                    <span className="text-eyebrow text-slate-400 block">
                       {t('industry')}
                     </span>
                     <span className="text-sm font-semibold text-slate-800">
@@ -264,7 +264,7 @@ export default async function CaseStudyDetailPage({ params }: Props) {
 
                   {/* Project Duration */}
                   <div className="space-y-1">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">
+                    <span className="text-eyebrow text-slate-400 block">
                       {t('duration')}
                     </span>
                     <span className="text-sm font-semibold text-slate-800">
@@ -274,14 +274,14 @@ export default async function CaseStudyDetailPage({ params }: Props) {
 
                   {/* Technology Stack */}
                   <div className="space-y-2">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">
+                    <span className="text-eyebrow text-slate-400 block">
                       {t('technologies')}
                     </span>
                     <div className="flex flex-wrap gap-1.5">
                       {study.technologies.map((tech) => (
                         <span
                           key={tech}
-                          className="px-2.5 py-0.5 rounded-lg bg-slate-50 text-royal-blue text-[10px] font-extrabold uppercase tracking-wide border border-slate-200/40"
+                          className="px-2.5 py-0.5 rounded-lg bg-slate-50 text-royal-blue text-caption font-semibold uppercase tracking-wide border border-slate-200/40"
                         >
                           {tech}
                         </span>
@@ -291,14 +291,14 @@ export default async function CaseStudyDetailPage({ params }: Props) {
 
                   {/* Services Provided */}
                   <div className="space-y-2">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">
+                    <span className="text-eyebrow text-slate-400 block">
                       {t('services')}
                     </span>
                     <div className="flex flex-wrap gap-1.5">
                       {study.services.map((service) => (
                         <span
                           key={service}
-                          className="px-2.5 py-0.5 rounded-lg bg-slate-100 text-slate-700 text-[10px] font-extrabold uppercase tracking-wide border border-slate-200"
+                          className="px-2.5 py-0.5 rounded-lg bg-slate-100 text-slate-700 text-caption font-semibold uppercase tracking-wide border border-slate-200"
                         >
                           {service}
                         </span>
@@ -340,10 +340,10 @@ export default async function CaseStudyDetailPage({ params }: Props) {
           <section className="section-padding bg-[#F8FAFC] border-b border-slate-200">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="max-w-3xl mb-12 space-y-2 text-left">
-                <span className="text-[10px] font-extrabold text-royal-blue tracking-widest uppercase">
+                <span className="text-eyebrow text-royal-blue">
                   {t('relatedCaseStudies')}
                 </span>
-                <h4 className="text-[22px] font-bold text-slate-900">
+                <h4 className="text-card-title text-slate-900">
                   {isEs ? 'Explore Otros Casos de Éxito' : 'Read Other Success Stories'}
                 </h4>
               </div>
@@ -358,13 +358,13 @@ export default async function CaseStudyDetailPage({ params }: Props) {
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-12">
             
             <div className="space-y-4 max-w-2xl mx-auto">
-              <span className="text-[10px] font-extrabold text-royal-blue tracking-widest uppercase">
+              <span className="text-eyebrow text-royal-blue">
                 {t('contactUs')}
               </span>
-              <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black tracking-tight leading-[1.2] text-slate-900">
+              <h3 className="text-h2 text-slate-900">
                 {isEs ? 'Hablemos de su Proyecto' : 'Initiate a Solutions Briefing'}
               </h3>
-              <p className="text-[16px] text-slate-500 leading-[1.7] font-semibold">
+              <p className="text-body text-slate-500 font-medium">
                 {t('contactUsDesc')}
               </p>
             </div>

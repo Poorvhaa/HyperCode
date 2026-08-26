@@ -33,7 +33,7 @@ export default function NotFound() {
           <div className="pt-4">
             <Link
               href="/"
-              className="inline-flex items-center justify-center h-11 px-7 bg-royal-blue hover:bg-[#0c3c66] text-white font-semibold text-[13px] rounded-xl transition-colors duration-200 shadow-sm"
+              className="inline-flex items-center justify-center h-11 px-7 bg-royal-blue hover:bg-[#0c3c66] text-white text-button rounded-xl transition-colors duration-200 shadow-sm"
             >
               {t('button')}
             </Link>

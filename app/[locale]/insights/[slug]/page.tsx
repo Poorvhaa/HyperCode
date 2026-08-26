@@ -243,7 +243,7 @@ export default async function ArticlePage({ params }: PageProps) {
               </div>
               <div>
                 <p className="text-slate-800 font-extrabold">{article.author.name}</p>
-                <p className="text-[10px] text-slate-400 font-semibold leading-tight mt-0.5">{article.author.role}</p>
+                <p className="text-caption text-slate-400 font-medium leading-tight mt-0.5">{article.author.role}</p>
               </div>
             </div>
 
@@ -271,14 +271,14 @@ export default async function ArticlePage({ params }: PageProps) {
             <div className="lg:col-span-1 space-y-6 lg:sticky lg:top-28">
               <Link
                 href="/insights"
-                className="inline-flex items-center gap-2 text-xs font-bold text-royal-blue hover:text-[#0c3c66] transition-colors uppercase tracking-wider"
+                className="inline-flex items-center gap-2 text-button text-royal-blue hover:text-[#0c3c66] transition-colors uppercase tracking-wider"
               >
                 <ArrowLeft size={14} />
                 <span>{activeTrans.backToInsights}</span>
               </Link>
 
               <div className="pt-6 border-t border-slate-100 space-y-4">
-                <h4 className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
+                <h4 className="text-eyebrow text-slate-400 flex items-center gap-1.5">
                   <Share2 size={12} />
                   <span>{tInsights('share')}</span>
                 </h4>
@@ -404,7 +404,7 @@ export default async function ArticlePage({ params }: PageProps) {
                 className="flex flex-col p-6 rounded-2xl border border-slate-200 bg-white shadow-sm hover:shadow hover:border-slate-300 transition-all justify-between text-left group"
               >
                 <div>
-                  <span className="inline-block w-fit px-2.5 py-0.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-500 text-[9px] font-bold uppercase tracking-wider mb-3">
+                  <span className="inline-block w-fit px-2.5 py-0.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-500 text-caption font-semibold uppercase tracking-wider mb-3">
                     {art.category}
                   </span>
                   <h4 className="text-sm font-bold text-slate-900 mb-2 leading-snug group-hover:text-royal-blue transition-colors line-clamp-2">
@@ -412,7 +412,7 @@ export default async function ArticlePage({ params }: PageProps) {
                   </h4>
                   <p className="text-xs text-slate-500 leading-relaxed font-medium line-clamp-3 mb-4">{art.excerpt}</p>
                 </div>
-                <div className="flex items-center justify-between text-[10px] text-slate-400 font-bold uppercase tracking-wider pt-3 border-t border-slate-100">
+                <div className="flex items-center justify-between text-caption text-slate-400 font-semibold uppercase tracking-wider pt-3 border-t border-slate-100">
                   <span>{art.date}</span>
                   <Link href={`/insights/${art.slug}`} className="text-royal-blue">
                     {activeTrans.readBrief}

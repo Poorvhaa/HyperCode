@@ -44,10 +44,10 @@ export function BusinessOutcomesSection() {
           <h2 className="text-xs font-bold text-royal-blue tracking-widest uppercase mb-3">
             BUSINESS IMPACT
           </h2>
-          <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">
+          <h3 className="text-h2 text-slate-900">
             Delivering Measurable Business Impact
           </h3>
-          <p className="text-[16px] md:text-[17px] lg:text-[18px] text-slate-650 leading-[1.7] mt-4 font-semibold">
+          <p className="text-lead text-slate-650 mt-4 font-medium">
             We focus on concrete database and organizational outcomes, not generic marketing indicators.
           </p>
         </div>
@@ -66,12 +66,12 @@ export function BusinessOutcomesSection() {
                     <div className="w-12 h-12 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-royal-blue">
                       <Icon size={24} />
                     </div>
-                    <span className="text-[11px] font-extrabold text-royal-blue uppercase tracking-wider bg-slate-50 border border-slate-200 px-3 py-1 rounded-lg">
+                    <span className="text-caption font-semibold text-royal-blue uppercase tracking-wider bg-slate-50 border border-slate-200 px-3 py-1 rounded-lg">
                       {outcome.metric}
                     </span>
                   </div>
-                  <h4 className="text-[22px] font-bold text-slate-900 leading-[1.2]">{outcome.title}</h4>
-                  <p className="text-[16px] md:text-[17px] text-slate-605 leading-[1.7] font-medium">
+                  <h4 className="text-card-title text-slate-900">{outcome.title}</h4>
+                  <p className="text-body text-slate-605 font-medium">
                     {outcome.description}
                   </p>
                 </div>
@@ -83,8 +83,8 @@ export function BusinessOutcomesSection() {
         {/* Strategic CTA Section */}
         <div className="mt-20 bg-[#F8FAFC] border border-slate-200 rounded-[24px] p-8 sm:p-10 flex flex-col md:flex-row justify-between items-center gap-6 shadow-sm">
           <div className="space-y-1">
-            <h4 className="text-[22px] font-bold text-slate-900 leading-[1.2]">Are you ready to optimize your data systems?</h4>
-            <p className="text-[16px] md:text-[17px] text-slate-600 font-medium">
+            <h4 className="text-card-title text-slate-900">Are you ready to optimize your data systems?</h4>
+            <p className="text-body text-slate-600 font-medium">
               Schedule a data-readiness assessment to review architectures and identify bottlenecks.
             </p>
           </div>

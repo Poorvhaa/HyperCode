@@ -121,16 +121,16 @@ export default async function InsightsPage({ params }: Props) {
       <section className="section-padding bg-[#F8FAFC]">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="premium-card p-8 sm:p-12 bg-white border border-slate-200 shadow-sm space-y-6 text-center">
-            <h2 className="text-[28px] sm:text-[32px] font-black text-slate-900 tracking-tight leading-[1.2]">
+            <h2 className="text-h2 text-slate-900">
               {t('newsletterTitle')}
             </h2>
-            <p className="text-[16px] text-slate-655 leading-[1.7] font-semibold">
+            <p className="text-body text-slate-655 font-medium">
               {t('newsletterSubtitle')}
             </p>
 
             <NewsletterForm />
 
-            <p className="text-[11px] font-semibold text-slate-400">
+            <p className="text-caption font-medium text-slate-400">
               {locale === 'es' ? 'Nunca compartiremos su correo electrónico. Dese de baja en cualquier momento.' : 
                locale === 'fr' ? 'Nous ne partagerons jamais votre e-mail. Désabonnez-vous à tout moment.' : 
                locale === 'de' ? 'Wir geben Ihre E-Mail-Adresse niemals weiter. Melden Sie sich jederzeit ab.' : 

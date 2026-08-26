@@ -93,16 +93,8 @@ export type FooterServiceLink = {
 
 export const footerServicesList: FooterServiceLink[] = [
   { labelKey: 'aiAutomation', href: '/solutions#ai-automation' },
-  { labelKey: 'softwareDev', href: '/solutions/custom-software-development' },
-  { labelKey: 'webDev', href: '/solutions/web-development-services' },
-  { labelKey: 'mobileDev', href: '/solutions#mobile-development' },
+  { labelKey: 'softwareDev', href: '/solutions#software-development' },
   { labelKey: 'cloudDevOps', href: '/solutions#cloud-devops' },
-  { labelKey: 'cybersecurity', href: '/solutions/security-assessment' },
-  { labelKey: 'talentSolutions', href: '/solutions/it-staffing-solutions' },
-  { labelKey: 'digitalTrans', href: '/solutions/digital-transformation-consulting' },
-  { labelKey: 'businessIntelligence', href: '/solutions/business-intelligence-consulting' },
-  { labelKey: 'uiUx', href: '/solutions/ui-design' },
-  { labelKey: 'marketing', href: '/solutions#digital-marketing' },
-  { labelKey: 'ecommerce', href: '/solutions/ecommerce-websites' },
-  { labelKey: 'techConsulting', href: '/solutions/technology-consulting' }
+  { labelKey: 'dataAnalytics', href: '/solutions#data-analytics' },
+  { labelKey: 'itStaffingConsulting', href: '/solutions#talent-solutions' },
 ];

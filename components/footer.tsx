@@ -4,12 +4,24 @@ import { Link } from '@/i18n/routing';
 import Image from 'next/image';
 import { Mail, Phone, MapPin, ArrowRight, ShieldCheck, Check, AlertCircle } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
-import { useState, type FormEvent } from 'react';
+import { useState, type FormEvent, type ReactNode } from 'react';
 import { EMAIL_REGEX } from '@/lib/validation';
 import { useCookieConsent } from '@/hooks/useCookieConsent';
 import { useFormValidation } from '@/hooks/use-form-validation';
 import { footerServicesList } from '@/lib/navigation-links';
 import { googleMapsSearchUrl } from '@/lib/utils';
+
+function FooterHeading({ children }: { children: ReactNode }) {
+  return (
+    <div className="flex items-center gap-2 mb-3">
+      <span className="w-1.5 h-1.5 rounded-full bg-royal-blue shrink-0" aria-hidden="true" />
+      <h4 className="text-footer-heading text-slate-800">{children}</h4>
+    </div>
+  );
+}
+
+const footerLinkClass =
+  'text-body-sm text-slate-500 hover:text-royal-blue transition-colors duration-200 inline-block';
 
 export function Footer() {
   const tNav = useTranslations('Navigation');
@@ -78,192 +90,68 @@ export function Footer() {
     }
   };
 
-  const solutionsList = footerServicesList.map((s) => ({
-    name: tNav(s.labelKey) || '',
+  const servicesList = footerServicesList.map((s) => ({
+    name: tNav(s.labelKey),
     href: s.href,
   }));
 
+  const companyLinks = [
+    { href: '/about', label: tNav('about') },
+    { href: '/careers', label: tNav('careers') },
+    { href: '/contact', label: tNav('contact') },
+    { href: '/PP', label: tf('privacy') },
+    { href: '/TnC', label: tf('terms') },
+  ] as const;
+
   const currentYear = new Date().getFullYear();
   const copyrightText = (tf('copyright') || `© ${currentYear} HyperCode. All rights reserved.`).replace('2026', currentYear.toString());
+  const mapsQuery = `2095 Hammond Dr Suite C Schaumburg, IL 60173 ${tf('unitedStates')}`;
 
   return (
-    <footer 
-      className="relative text-left bg-[#F4F7FB] border-t border-slate-200 text-slate-650 overflow-hidden min-h-[500px] select-none bg-[radial-gradient(circle_at_top,rgba(20,91,255,0.035)_0%,transparent_50%)]"
-    >
-      {/* Decorative top accent line */}
+    <footer className="relative text-left bg-[#F4F7FB] border-t border-slate-200 text-slate-650 overflow-x-hidden select-none bg-[radial-gradient(circle_at_top,rgba(20,91,255,0.035)_0%,transparent_50%)]">
       <div className="h-[2.5px] w-full bg-gradient-to-r from-[#1769F5] via-[#08A8D8] to-[#2DBD3E] absolute top-0 left-0 right-0 z-20" />
 
-      {/* Quieter continued global network background vector */}
-      <div className="absolute inset-0 opacity-[0.25] pointer-events-none -z-10">
-        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-          <line x1="10%" y1="20%" x2="30%" y2="40%" stroke="#CBD5E1" strokeWidth="0.8" strokeDasharray="3 3" />
-          <line x1="30%" y1="40%" x2="50%" y2="25%" stroke="#CBD5E1" strokeWidth="0.8" strokeDasharray="3 3" />
-          <line x1="50%" y1="25%" x2="75%" y2="55%" stroke="#CBD5E1" strokeWidth="0.8" strokeDasharray="3 3" />
-          <line x1="75%" y1="55%" x2="90%" y2="30%" stroke="#CBD5E1" strokeWidth="0.8" strokeDasharray="3 3" />
-          <circle cx="10%" cy="20%" r="2" fill="#94A3B8" />
-          <circle cx="30%" cy="40%" r="2.5" fill="#94A3B8" />
-          <circle cx="50%" cy="25%" r="2" fill="#94A3B8" />
-          <circle cx="75%" cy="55%" r="3" fill="#94A3B8" />
-          <circle cx="90%" cy="30%" r="2.5" fill="#94A3B8" />
-        </svg>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-12 pb-6 md:pt-16 md:pb-8 lg:pt-24 lg:pb-12 relative z-10">
-        
-        {/* Top section: Newsletter Subscribe Bar */}
-        <div className="flex flex-col lg:flex-row items-start lg:items-end gap-4 lg:gap-6 pb-14 border-b border-slate-200/80">
-          <div className="space-y-1.5 text-left max-w-xl shrink-0">
-            <h3 className="text-h3 text-slate-900">{tf('newsletterTitle') || 'Subscribe to Insights'}</h3>
-            <p className="text-body-sm text-slate-500">
-              {tf('newsletterDesc') || 'Get monthly technological briefings from our solutions directors.'}
-            </p>
-          </div>
-          
-          <div className="w-full min-w-0 md:min-w-[400px] lg:w-auto">
-            {subscribed ? (
-              <div className="p-3.5 bg-green/5 border border-green/20 text-green rounded-lg text-xs font-bold flex items-center gap-2" role="status" aria-live="polite">
-                <ShieldCheck size={16} className="text-green" />
-                <span>{tf('newsletterSuccess') || 'Thank you for subscribing!'}</span>
-              </div>
-            ) : (
-              <form ref={formRef} onSubmit={handleSubscribe} className="w-full">
-                <div className="flex gap-2">
-                  <div className="relative flex-1">
-                    <input
-                      type="email"
-                      name="email"
-                      required
-                      placeholder={tf('newsletterPlaceholder') || 'email@company.com'}
-                      value={email}
-                      onChange={(e) => {
-                        setEmail(e.target.value);
-                        if (error) setError('');
-                        if (e.target.value.length > 5) setTouched(true);
-                      }}
-                      onBlur={() => setTouched(true)}
-                      autoComplete="email"
-                      inputMode="email"
-                      aria-invalid={hasEmailError}
-                      aria-describedby={hasEmailError ? 'footer-email-error' : undefined}
-                      className={`w-full bg-white border rounded-xl pl-4 pr-10 py-3 text-body-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-royal-blue/20 transition-all outline-none ${
-                        hasEmailError
-                          ? 'border-red-500 bg-red-50/5 focus:border-red-600 focus:ring-red-200/50'
-                          : touched && isValidEmail
-                          ? 'border-green focus:border-green'
-                          : 'border-slate-200 focus:border-royal-blue'
-                      }`}
-                      disabled={submitting}
-                    />
-                    {touched && isValidEmail && !error && (
-                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-green">
-                        <Check size={15} className="stroke-[3px]" />
-                      </span>
-                    )}
-                  </div>
-                  <button
-                    type="submit"
-                    disabled={submitting}
-                    aria-label="Submit newsletter subscription"
-                    className={`bg-royal-blue hover:bg-deep-navy text-white px-5 rounded-xl text-button transition flex items-center justify-center cursor-pointer border-none ${
-                      submitting ? 'opacity-50 cursor-not-allowed bg-slate-400' : ''
-                    }`}
-                  >
-                    <ArrowRight size={16} />
-                  </button>
-                </div>
-                {error && (
-                  <p id="footer-email-error" className="text-caption font-semibold text-red-500 text-left pl-1 mt-1 flex items-center gap-1 animate-fadeIn" role="alert">
-                    <AlertCircle size={12} className="flex-shrink-0" />
-                    <span>{error}</span>
-                  </p>
-                )}
-              </form>
-            )}
-          </div>
-        </div>
-
-        {/* Main Section: Sitemap columns and Company details */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[minmax(320px,1.25fr)_minmax(160px,0.75fr)_minmax(220px,1fr)_minmax(210px,0.9fr)] items-start gap-12 md:gap-14 lg:gap-16 py-20 border-b border-slate-200/80 text-left">
-          
-          {/* Column 1: Company Info & Contact Details */}
-          <div className="flex flex-col items-start space-y-6 lg:col-span-1">
-            <Link href="/" className="inline-flex mb-4" aria-label="HyperCode Home">
-              <div 
+      <div className="max-w-[1440px] mx-auto px-[clamp(1.25rem,4vw,4rem)] pt-8 pb-5 md:pt-10 md:pb-6 relative z-10 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-[1.3fr_1fr_0.8fr_1.3fr] items-start gap-x-8 gap-y-8 md:gap-x-10 xl:gap-x-12 pb-6 md:pb-8 border-b border-slate-200/80">
+          {/* 1. Brand */}
+          <div className="flex flex-col gap-3 min-w-0">
+            <Link href="/" className="inline-flex w-fit" aria-label="HyperCode Home">
+              <div
                 style={{
                   background: 'rgba(255, 255, 255, 0.98)',
-                  borderRadius: '20px',
-                  padding: '14px 18px',
+                  borderRadius: '16px',
+                  padding: '10px 14px',
                   border: '1px solid rgba(15, 23, 42, 0.08)',
-                  boxShadow: '0 8px 32px rgba(15, 23, 42, 0.04)'
+                  boxShadow: '0 6px 24px rgba(15, 23, 42, 0.04)',
                 }}
-                className="inline-flex items-center justify-center hover:shadow-xl transition-all duration-300"
+                className="inline-flex items-center justify-center hover:shadow-lg transition-shadow duration-300"
               >
                 <Image
                   src="/hypercodeit.logo.webp"
                   alt="HyperCode Logo"
-                  width={150}
-                  height={115}
+                  width={130}
+                  height={100}
                   quality={100}
-                  className="h-auto w-[130px] md:w-[140px] lg:w-[150px]"
+                  className="h-auto w-[112px] sm:w-[120px]"
                   priority
                 />
               </div>
             </Link>
-            
-            <p className="text-body text-slate-500 max-w-[360px]">
-              {tf('tagline') || 'Enterprise AI & Digital Transformation Consulting'}
-            </p>
-            
-            {/* Contact Details */}
-            <div className="space-y-6 text-slate-500">
-              {/* Address */}
-              <a
-                href={googleMapsSearchUrl(`2095 Hammond Dr Suite C Schaumburg, IL 60173 ${tf('unitedStates')}`)}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={locale === 'es' ? 'Abrir la ubicación de HyperCode en Google Maps' : 'Open HyperCode location in Google Maps'}
-                className="flex items-start gap-4 text-slate-550 hover:text-royal-blue transition-colors group cursor-pointer rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue focus-visible:ring-offset-2"
-              >
-                <MapPin className="text-royal-blue mt-1.5 flex-shrink-0 w-[20px] h-[20px] group-hover:text-royal-blue transition-colors" aria-hidden="true" />
-                <address className="not-italic text-body-sm space-y-1">
-                  <span className="block text-h4 text-slate-800 mb-2 group-hover:text-royal-blue transition-colors">{tf('corporateHq')}</span>
-                  <span className="block">2095 Hammond Dr</span>
-                  <span className="block">Suite C</span>
-                  <span className="block">Schaumburg, IL 60173</span>
-                  <span className="block text-royal-blue font-bold mt-1.5">{tf('unitedStates')}</span>
-                </address>
-              </a>
-              
-              {/* Email */}
-              <a 
-                href="mailto:hr@hypercodeit.com" 
-                className="flex items-center gap-4 text-slate-550 hover:text-royal-blue transition-colors group font-semibold text-body-sm"
-              >
-                <Mail className="text-royal-blue group-hover:text-royal-blue transition-colors flex-shrink-0 w-[20px] h-[20px]" />
-                <span>hr@hypercodeit.com</span>
-              </a>
-              
-              {/* Phone */}
-              <a 
-                href="tel:+1 (224) 351-9727" 
-                className="flex items-center gap-4 text-green hover:text-royal-blue transition-colors group font-semibold text-body-sm"
-              >
-                <Phone className="text-green group-hover:text-royal-blue transition-colors flex-shrink-0 w-[20px] h-[20px]" />
-                <span>+1 (224) 351-9727</span>
-              </a>
-            </div>
 
-            {/* Social media links */}
-            <div className="flex items-center gap-3 pt-3">
+            <p className="text-body-sm text-slate-500 max-w-xs leading-relaxed">
+              {tf('tagline')}
+            </p>
+
+            <div className="flex items-center gap-2.5 pt-1">
               <a
                 href="https://www.linkedin.com/company/hypercode-llc/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Connect with HyperCode on LinkedIn"
-                className="w-[44px] h-[44px] rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-400 hover:text-royal-blue hover:border-royal-blue/30 hover:shadow-lg hover:shadow-royal-blue/10 hover:-translate-y-1 transition-all duration-250 ease-out"
+                className="w-9 h-9 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-400 hover:text-royal-blue hover:border-royal-blue/30 transition-all duration-200"
               >
-                <svg className="w-[20px] h-[20px] fill-current" viewBox="0 0 24 24">
-                  <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
+                <svg className="w-[18px] h-[18px] fill-current" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
                 </svg>
               </a>
               <a
@@ -271,16 +159,17 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Follow HyperCode on Instagram"
-                className="w-[44px] h-[44px] rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-400 hover:text-royal-blue hover:border-royal-blue/30 hover:shadow-lg hover:shadow-royal-blue/10 hover:-translate-y-1 transition-all duration-250 ease-out"
+                className="w-9 h-9 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-400 hover:text-royal-blue hover:border-royal-blue/30 transition-all duration-200"
               >
                 <svg
-                  className="w-[20px] h-[20px]"
+                  className="w-[18px] h-[18px]"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
+                  aria-hidden="true"
                 >
                   <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
                   <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
@@ -290,73 +179,169 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Column 2: Company */}
-          <div className="space-y-6 text-left">
-            <div className="flex items-center gap-2.5 mb-2">
-              <span className="w-2 h-2 rounded-full bg-royal-blue" />
-              <h4 className="text-eyebrow text-slate-800">{tc('company')}</h4>
-            </div>
-            <ul className="space-y-5 text-body-sm font-semibold">
-              <li><Link href="/about" className="text-slate-500 inline-block transform transition-all duration-250 ease-out hover:translate-x-[3px] hover:text-royal-blue">{tNav('about')}</Link></li>
-              <li><Link href="/careers" className="text-slate-500 inline-block transform transition-all duration-250 ease-out hover:translate-x-[3px] hover:text-royal-blue">{tNav('careers')}</Link></li>
-              <li><Link href="/contact" className="text-slate-500 inline-block transform transition-all duration-250 ease-out hover:translate-x-[3px] hover:text-royal-blue">{tNav('contact')}</Link></li>
-            </ul>
-          </div>
-
-          {/* Column 3: Solutions (Pillar 1) */}
-          <div className="space-y-6 text-left">
-            <div className="flex items-center gap-2.5 mb-2">
-              <span className="w-2 h-2 rounded-full bg-royal-blue" />
-              <h4 className="text-eyebrow text-slate-800">{tc('solutions')}</h4>
-            </div>
-            <ul className="space-y-5 text-body-sm font-semibold">
-              {solutionsList.slice(0, 7).map((s, idx) => (
-                <li key={idx}>
-                  <Link href={s.href} className="text-slate-500 inline-block transform transition-all duration-250 ease-out hover:translate-x-[3px] hover:text-royal-blue">{s.name}</Link>
+          {/* 2. Services */}
+          <div className="flex flex-col min-w-0">
+            <FooterHeading>{tc('solutions')}</FooterHeading>
+            <ul className="flex flex-col gap-2">
+              {servicesList.map((s) => (
+                <li key={s.href}>
+                  <Link href={s.href} className={footerLinkClass}>
+                    {s.name}
+                  </Link>
                 </li>
               ))}
-            </ul>
-          </div>
-
-          {/* Column 4: Solutions (Pillar 2) */}
-          <div className="space-y-6 text-left">
-            <div className="flex items-center gap-2.5 mb-2">
-              <span className="w-2 h-2 rounded-full bg-royal-blue" />
-              <h4 className="text-eyebrow text-slate-800">{tc('moreSolutions')}</h4>
-            </div>
-            <ul className="space-y-5 text-body-sm font-semibold">
-              {solutionsList.slice(7).map((s, idx) => (
-                <li key={idx}>
-                  <Link href={s.href} className="text-slate-500 inline-block transform transition-all duration-250 ease-out hover:translate-x-[3px] hover:text-royal-blue">{s.name}</Link>
-                </li>
-              ))}
-              <li className="pt-2">
+              <li className="pt-1">
                 <Link
                   href="/solutions"
-                  className="relative inline-flex items-center gap-2 text-button text-royal-blue group transition-all duration-250 ease-out hover:translate-x-[3px]"
+                  className="inline-flex items-center gap-1.5 text-button text-royal-blue hover:text-deep-navy transition-colors"
                 >
-                  <span className="relative pb-0.5">
-                    {tNav('viewAllSolutions')}
-                    <span className="absolute left-0 bottom-0 w-full h-[2px] bg-gradient-to-r from-royal-blue to-blue-500 transform scale-x-0 origin-left transition-transform duration-250 ease-out group-hover:scale-x-100" />
-                  </span>
-                  <ArrowRight className="h-4.5 w-4.5 transition-transform duration-250 ease-out group-hover:translate-x-[2px]" />
+                  {tNav('viewAllSolutions')}
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </Link>
               </li>
             </ul>
           </div>
+
+          {/* 3. Company */}
+          <div className="flex flex-col min-w-0">
+            <FooterHeading>{tc('company')}</FooterHeading>
+            <ul className="flex flex-col gap-2">
+              {companyLinks.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className={footerLinkClass}>
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* 4. Contact + Newsletter */}
+          <div className="flex flex-col gap-5 min-w-0">
+            <div>
+              <FooterHeading>{tc('contact')}</FooterHeading>
+              <div className="flex flex-col gap-2.5 text-body-sm text-slate-550">
+                <a
+                  href={googleMapsSearchUrl(mapsQuery)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={locale === 'es' ? 'Abrir la ubicación de HyperCode en Google Maps' : 'Open HyperCode location in Google Maps'}
+                  className="flex items-start gap-2.5 hover:text-royal-blue transition-colors group rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue focus-visible:ring-offset-2"
+                >
+                  <MapPin className="text-royal-blue mt-0.5 shrink-0 w-[18px] h-[18px]" aria-hidden="true" />
+                  <address className="not-italic leading-relaxed">
+                    <span className="block">2095 Hammond Dr, Suite C</span>
+                    <span className="block">Schaumburg, IL 60173</span>
+                    <span className="block">{tf('unitedStates')}</span>
+                  </address>
+                </a>
+                <a
+                  href="tel:+12243519727"
+                  className="flex items-center gap-2.5 hover:text-royal-blue transition-colors"
+                >
+                  <Phone className="text-green shrink-0 w-[18px] h-[18px]" aria-hidden="true" />
+                  <span>+1 (224) 351-9727</span>
+                </a>
+                <a
+                  href="mailto:hr@hypercodeit.com"
+                  className="flex items-center gap-2.5 hover:text-royal-blue transition-colors break-all"
+                >
+                  <Mail className="text-royal-blue shrink-0 w-[18px] h-[18px]" aria-hidden="true" />
+                  <span>hr@hypercodeit.com</span>
+                </a>
+              </div>
+            </div>
+
+            <div className="min-w-0">
+              <p className="text-footer-heading text-slate-800 mb-2">{tf('newsletterTitle')}</p>
+              {subscribed ? (
+                <div
+                  className="py-2.5 px-3 bg-green/5 border border-green/20 text-green rounded-lg text-body-sm font-medium flex items-center gap-2"
+                  role="status"
+                  aria-live="polite"
+                >
+                  <ShieldCheck size={15} className="text-green shrink-0" aria-hidden="true" />
+                  <span>{tf('newsletterSuccess')}</span>
+                </div>
+              ) : (
+                <form ref={formRef} onSubmit={handleSubscribe} className="w-full min-w-0">
+                  <div className="flex gap-2 w-full min-w-0">
+                    <div className="relative flex-1 min-w-0">
+                      <input
+                        type="email"
+                        name="email"
+                        required
+                        placeholder={tf('newsletterPlaceholder')}
+                        value={email}
+                        onChange={(e) => {
+                          setEmail(e.target.value);
+                          if (error) setError('');
+                          if (e.target.value.length > 5) setTouched(true);
+                        }}
+                        onBlur={() => setTouched(true)}
+                        autoComplete="email"
+                        inputMode="email"
+                        aria-invalid={hasEmailError}
+                        aria-describedby={hasEmailError ? 'footer-email-error' : undefined}
+                        className={`w-full min-w-0 bg-white border rounded-lg pl-3 pr-9 py-2 text-body-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-royal-blue/20 transition-all ${
+                          hasEmailError
+                            ? 'border-red-500 bg-red-50/5 focus:border-red-600 focus:ring-red-200/50'
+                            : touched && isValidEmail
+                            ? 'border-green focus:border-green'
+                            : 'border-slate-200 focus:border-royal-blue'
+                        }`}
+                        disabled={submitting}
+                      />
+                      {touched && isValidEmail && !error && (
+                        <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-green" aria-hidden="true">
+                          <Check size={14} className="stroke-[3px]" />
+                        </span>
+                      )}
+                    </div>
+                    <button
+                      type="submit"
+                      disabled={submitting}
+                      aria-label="Submit newsletter subscription"
+                      className={`bg-royal-blue hover:bg-deep-navy text-white h-[38px] w-[38px] rounded-lg text-button transition flex items-center justify-center cursor-pointer border-none shrink-0 ${
+                        submitting ? 'opacity-50 cursor-not-allowed bg-slate-400' : ''
+                      }`}
+                    >
+                      <ArrowRight size={16} aria-hidden="true" />
+                    </button>
+                  </div>
+                  {error && (
+                    <p
+                      id="footer-email-error"
+                      className="text-caption font-medium text-red-500 mt-1.5 flex items-center gap-1"
+                      role="alert"
+                    >
+                      <AlertCircle size={12} className="shrink-0" aria-hidden="true" />
+                      <span>{error}</span>
+                    </p>
+                  )}
+                </form>
+              )}
+            </div>
+          </div>
         </div>
 
-        {/* Bottom Section: Legal & Copyright */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-6 pt-8 text-eyebrow text-slate-450 w-full">
-          <p className="text-center sm:text-left">{copyrightText}</p>
-          <div className="flex flex-wrap justify-center sm:justify-end gap-x-6 gap-y-2.5">
-            <Link href="/PP" className="hover:text-royal-blue transition-colors">{tf('privacy')}</Link>
-            <Link href="/TnC" className="hover:text-royal-blue transition-colors">{tf('terms')}</Link>
-            <Link href="/cookie-policy" className="hover:text-royal-blue transition-colors">{tf('cookiePolicy')}</Link>
+        {/* Bottom bar */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pt-4 md:pt-5 text-caption text-slate-450 w-full">
+          <p>{copyrightText}</p>
+          <div className="flex flex-wrap gap-x-5 gap-y-2">
+            <Link href="/PP" className="hover:text-royal-blue transition-colors">
+              {tf('privacy')}
+            </Link>
+            <Link href="/TnC" className="hover:text-royal-blue transition-colors">
+              {tf('terms')}
+            </Link>
+            <Link href="/cookie-policy" className="hover:text-royal-blue transition-colors">
+              {tf('cookiePolicy')}
+            </Link>
             <button
               type="button"
               onClick={openPreferences}
-              className="hover:text-royal-blue cursor-pointer bg-transparent border-none p-0 text-left text-eyebrow text-slate-450 outline-none"
+              className="hover:text-royal-blue cursor-pointer bg-transparent border-none p-0 text-left text-caption text-slate-450 outline-none focus-visible:ring-2 focus-visible:ring-royal-blue focus-visible:ring-offset-2 rounded-sm"
             >
               {tf('cookieSettings')}
             </button>

@@ -148,7 +148,7 @@ export function HiringTimeline() {
                 >
                   {step.title}
                 </span>
-                <span className="text-[10px] text-slate-400 font-bold mt-0.5">
+                <span className="text-caption text-slate-400 font-semibold mt-0.5">
                   {stepLabel} {step.number}
                 </span>
               </button>
@@ -168,7 +168,7 @@ export function HiringTimeline() {
             
             <div className="space-y-2 text-left">
               <div className="flex items-center gap-2.5">
-                <span className="text-[10px] font-bold text-royal-blue tracking-widest uppercase bg-slate-50 border border-slate-100 px-2.5 py-1 rounded-md">
+                <span className="text-eyebrow text-royal-blue bg-slate-50 border border-slate-100 px-2.5 py-1 rounded-md">
                   {stepLabel} {steps[activeStep].number}
                 </span>
                 <h4 className="text-lg font-bold text-slate-900">
@@ -208,7 +208,7 @@ export function HiringTimeline() {
                     <Icon size={16} />
                   </div>
                   <div>
-                    <span className="text-[9px] font-bold text-royal-blue tracking-widest uppercase block">
+                    <span className="text-caption text-royal-blue font-semibold uppercase block">
                       {stepLabel} {step.number}
                     </span>
                     <span className="text-sm font-bold text-slate-900">{step.title}</span>

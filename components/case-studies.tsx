@@ -74,14 +74,14 @@ export function CaseStudies({ studies, limit, featuredOnly }: CaseStudiesProps) 
             />
             {/* Industry Badge */}
             <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-md px-3 py-1 rounded-xl border border-slate-100 shadow-sm">
-              <span className="text-[10px] font-black text-royal-blue uppercase tracking-wider">
+              <span className="text-eyebrow text-royal-blue">
                 {study.industry}
               </span>
             </div>
             {/* Project Duration Badge */}
             <div className="absolute bottom-4 right-4 bg-slate-900/80 backdrop-blur-md px-3 py-1 rounded-xl text-white shadow-sm flex items-center gap-1.5">
               <Calendar size={11} className="text-blue-300" />
-              <span className="text-[10px] font-black tracking-wider uppercase">
+              <span className="text-eyebrow text-white">
                 {study.duration}
               </span>
             </div>
@@ -90,22 +90,22 @@ export function CaseStudies({ studies, limit, featuredOnly }: CaseStudiesProps) 
           {/* Content Area */}
           <div className="flex flex-col flex-1 p-6 sm:p-7 space-y-5">
             <div className="space-y-2">
-              <span className="text-[10px] font-bold text-slate-450 tracking-widest uppercase block">
+              <span className="text-eyebrow text-slate-450 block">
                 {study.clientType}
               </span>
-              <h3 className="text-xl font-black text-slate-900 tracking-tight leading-snug group-hover:text-royal-blue transition-colors duration-200">
+              <h3 className="text-card-title text-slate-900 group-hover:text-royal-blue transition-colors duration-200">
                 {study.title}
               </h3>
             </div>
 
             {/* Quick Summary / Challenge */}
-            <p className="text-sm font-semibold text-slate-550 line-clamp-3 leading-relaxed">
+            <p className="text-body font-medium text-slate-550 line-clamp-3">
               {study.challenge}
             </p>
 
             {/* Outcome Highlight Box */}
             <div className="bg-[#F8FAFC] border border-slate-100/80 rounded-2xl p-4 space-y-3">
-              <span className="text-[10px] font-black text-emerald-600 uppercase tracking-widest block">
+              <span className="text-eyebrow text-emerald-600 block">
                 {t('impact')}
               </span>
               <div className="grid grid-cols-2 gap-2">
@@ -114,7 +114,7 @@ export function CaseStudies({ studies, limit, featuredOnly }: CaseStudiesProps) 
                     <div className="text-lg font-black text-slate-900 leading-tight">
                       {m.value}
                     </div>
-                    <div className="text-[9px] font-extrabold text-slate-400 uppercase tracking-wide leading-tight line-clamp-2">
+                    <div className="text-caption font-semibold text-slate-400 uppercase tracking-wide leading-tight line-clamp-2">
                       {m.label}
                     </div>
                   </div>
@@ -127,7 +127,7 @@ export function CaseStudies({ studies, limit, featuredOnly }: CaseStudiesProps) 
               {study.technologies.slice(0, 4).map((tech) => (
                 <span
                   key={tech}
-                  className="px-2.5 py-0.5 rounded-lg bg-slate-50 text-royal-blue text-[9px] font-extrabold uppercase tracking-wide border border-slate-200/40"
+                  className="px-2.5 py-0.5 rounded-lg bg-slate-50 text-royal-blue text-caption font-semibold uppercase tracking-wide border border-slate-200/40"
                 >
                   {tech}
                 </span>

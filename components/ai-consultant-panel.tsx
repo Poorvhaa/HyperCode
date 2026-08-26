@@ -170,7 +170,7 @@ export default function AIConsultantPanel({ onClose, locale }: AIConsultantPanel
           </div>
           <div className="text-left">
             <h2 className="text-sm font-bold text-slate-900 leading-none">{t('title')}</h2>
-            <div className="text-[11px] font-semibold text-emerald-600 tracking-wide mt-1 flex items-center gap-1">
+            <div className="text-caption font-semibold text-emerald-600 mt-1 flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
               {t('status')}
             </div>
@@ -204,7 +204,7 @@ export default function AIConsultantPanel({ onClose, locale }: AIConsultantPanel
                 <button
                   key={idx}
                   onClick={() => handleSendMessage(action.query)}
-                  className="w-full text-left bg-white border border-slate-200 text-slate-700 hover:text-[#145BFF] hover:border-[#145BFF]/30 hover:bg-blue-50/10 font-bold px-4 py-3.5 rounded-2xl transition duration-200 shadow-2xs hover:shadow-xs active:scale-[0.98] cursor-pointer text-xs flex items-center justify-between outline-none focus-visible:ring-2 focus-visible:ring-[#145BFF]/30"
+                  className="w-full text-left bg-white border border-slate-200 text-slate-700 hover:text-[#145BFF] hover:border-[#145BFF]/30 hover:bg-blue-50/10 font-semibold px-4 py-3.5 rounded-2xl transition duration-200 shadow-2xs hover:shadow-xs active:scale-[0.98] cursor-pointer text-body-sm flex items-center justify-between outline-none focus-visible:ring-2 focus-visible:ring-[#145BFF]/30"
                 >
                   <span>{action.label}</span>
                   <Sparkles className="w-3.5 h-3.5 text-slate-350 shrink-0 ml-2" />

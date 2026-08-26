@@ -80,7 +80,7 @@ export function HeroBanner({
           } ${ctaButtons ? "max-w-3xl" : "max-w-4xl"}`}>
             {/* Breadcrumbs */}
             {breadcrumbs && breadcrumbs.length > 0 && (
-              <nav className={`flex items-center gap-1.5 text-[10px] font-extrabold text-slate-500 tracking-widest uppercase ${isCompact ? 'mb-0.5' : 'mb-2'}`}>
+              <nav className={`flex items-center gap-1.5 text-caption font-semibold text-slate-500 tracking-widest uppercase ${isCompact ? 'mb-0.5' : 'mb-2'}`}>
                 {breadcrumbs.map((crumb, idx) => (
                   <div key={idx} className="flex items-center gap-1.5">
                     {crumb.href ? (
@@ -98,16 +98,16 @@ export function HeroBanner({
 
             {/* Category Badge */}
             {categoryLabel && (
-              <span className="inline-flex items-center gap-1.5 text-xs font-black text-royal-blue tracking-widest uppercase">
+              <span className="inline-flex items-center gap-1.5 text-eyebrow text-royal-blue">
                 <span className="w-1.5 h-1.5 rounded-full bg-royal-blue" />
                 {categoryLabel}
               </span>
             )}
 
-            <h1 className={`font-black text-slate-900 tracking-tight leading-[1.15] ${
+            <h1 className={`text-slate-900 ${
               isCompact 
-                ? 'text-[clamp(1.75rem,3.8vw,2.875rem)] max-w-[760px]' 
-                : 'text-4xl sm:text-5xl lg:text-[56px]'
+                ? 'text-h2 max-w-[760px]' 
+                : 'text-h1'
             }`}>
               {title}{' '}
               {titleHighlight && (
@@ -119,8 +119,8 @@ export function HeroBanner({
             
             <p className={
               isCompact 
-                ? "text-[14px] sm:text-[15px] lg:text-[16px] text-slate-605 leading-[1.65] max-w-2xl md:max-w-3xl font-medium"
-                : (ctaButtons ? "text-[16px] md:text-[17px] lg:text-[18px] text-slate-600 leading-[1.7] max-w-xl font-medium" : "text-[16px] md:text-[17px] lg:text-[18px] text-slate-600 leading-[1.7] max-w-2xl md:max-w-3xl font-medium")
+                ? "text-body text-slate-605 max-w-2xl md:max-w-3xl font-medium"
+                : (ctaButtons ? "text-lead text-slate-600 max-w-xl font-medium" : "text-lead text-slate-600 max-w-2xl md:max-w-3xl font-medium")
             }>
               {subtitle}
             </p>

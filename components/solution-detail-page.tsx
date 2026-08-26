@@ -1,14 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { useTranslations } from 'next-intl';
 import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
 import { getServiceDetails } from '@/lib/services-details';
-import {
-  CONSULTATION_INDUSTRY_KEYS,
-  CONSULTATION_INDUSTRY_ICON_MAP,
-} from '@/lib/consultation-industries';
 import { HeroBanner } from '@/components/hero-banner';
 import { Link } from '@/i18n/routing';
 import Image from 'next/image';
@@ -34,18 +29,6 @@ import {
   TrendingUp,
   ShoppingCart,
   Lightbulb,
-  HeartPulse,
-  Building2,
-  ShoppingBag,
-  Factory,
-  GraduationCap,
-  Truck,
-  Hotel,
-  HardHat,
-  Scale,
-  FileText,
-  Building,
-  Terminal,
   Activity,
   Award
 } from 'lucide-react';
@@ -54,28 +37,6 @@ interface SolutionDetailPageProps {
   locale: string;
   pageKey: string;
 }
-
-// Legacy icon lookup for non-local-seo industry labels
-const LEGACY_INDUSTRY_ICON_MAP: Record<string, typeof Terminal> = {
-  healthcare: HeartPulse,
-  finance: Building2,
-  retail: ShoppingBag,
-  manufacturing: Factory,
-  education: GraduationCap,
-  logistics: Truck,
-  hospitality: Hotel,
-  construction: HardHat,
-  legal: Scale,
-  pharma: FileText,
-  government: Building,
-  technology: Terminal,
-  salud: HeartPulse,
-  finanzas: Building2,
-  'comercio minorista': ShoppingBag,
-  manufactura: Factory,
-  educación: GraduationCap,
-  logística: Truck
-};
 
 // Lucide icon mapping for categories
 const CATEGORY_ICON_MAP: Record<string, any> = {
@@ -116,7 +77,6 @@ function BrainIcon(props: any) {
 
 export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps) {
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
-  const tConsult = useTranslations('Consultation');
 
   // Fetch localized service details
   const activeTrans = getServiceDetails(pageKey, locale);
@@ -485,54 +445,6 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 7. Industries Served Section */}
-      <section className="section-padding bg-[#F8FAFC] border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mb-16 space-y-4">
-            <span className="text-eyebrow text-royal-blue block">
-              {isEs ? 'Industrias que Servimos' : 'Industries We Serve'}
-            </span>
-            {activeTrans.slug === 'local-seo' ? (
-              <h2 className="text-h2 text-slate-900">{activeTrans.industriesHeader}</h2>
-            ) : (
-              <h3 className="text-h2 text-slate-900">{activeTrans.industriesHeader}</h3>
-            )}
-          </div>
-
-          <div className={`grid gap-6 items-stretch ${
-            activeTrans.slug === 'local-seo'
-              ? 'grid-cols-1 min-[480px]:grid-cols-2 md:grid-cols-3 xl:grid-cols-4'
-              : 'grid-cols-1 min-[480px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-3'
-          }`}>
-            {activeTrans.slug === 'local-seo'
-              ? CONSULTATION_INDUSTRY_KEYS.map((key) => {
-                  const Icon = CONSULTATION_INDUSTRY_ICON_MAP[key];
-                  const label = tConsult(`industries.${key}`);
-                  return (
-                    <div key={key} className="premium-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all text-center flex flex-col items-center gap-4 h-full">
-                      <div className="w-14 h-14 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-royal-blue">
-                        <Icon size={26} strokeWidth={2} />
-                      </div>
-                      <span className="text-body-sm font-bold text-slate-800 leading-snug">{label}</span>
-                    </div>
-                  );
-                })
-              : activeTrans.industries.map((ind: string, i: number) => {
-                  const iconKey = ind.toLowerCase();
-                  const Icon = LEGACY_INDUSTRY_ICON_MAP[iconKey] || Terminal;
-                  return (
-                    <div key={i} className="premium-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all text-center flex flex-col items-center gap-4 h-full">
-                      <div className="w-14 h-14 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-royal-blue">
-                        <Icon size={26} strokeWidth={2} />
-                      </div>
-                      <span className="text-body-sm font-bold text-slate-800 leading-snug">{ind}</span>
-                    </div>
-                  );
-                })}
           </div>
         </div>
       </section>

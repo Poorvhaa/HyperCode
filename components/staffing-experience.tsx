@@ -119,7 +119,7 @@ export function StaffingExperience() {
             <div className="pt-2">
               <Link
                 href="/consultation?service=IT%20Staffing"
-                className="inline-flex items-center text-xs font-bold text-royal-blue hover:text-[#0c3c66] transition-colors group"
+                className="inline-flex items-center text-button text-royal-blue hover:text-[#0c3c66] transition-colors group"
               >
                 <span>Request talent from our coordinators</span>
                 <ArrowRight size={14} className="ml-1.5" />
@@ -131,7 +131,7 @@ export function StaffingExperience() {
           <div className="lg:col-span-7 bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm">
             <div className="flex justify-between items-center pb-4 border-b border-slate-100 mb-6">
               <h4 className="text-xs font-bold text-slate-400 tracking-wider uppercase">Talent Pipeline Steps</h4>
-              <span className="text-[10px] text-emerald-600 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">
+              <span className="text-eyebrow text-emerald-600 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">
                 Vetting Active
               </span>
             </div>
@@ -158,7 +158,7 @@ export function StaffingExperience() {
                       <StepIcon size={14} />
                     </div>
                     <span
-                      className={`text-[9px] font-bold tracking-wider uppercase mt-1.5 transition-colors ${
+                      className={`text-caption font-semibold uppercase mt-1.5 transition-colors ${
                         isActive ? 'text-royal-blue' : 'text-slate-500'
                       }`}
                     >
@@ -174,14 +174,14 @@ export function StaffingExperience() {
               <div className="space-y-3">
                 <div className="flex justify-between items-start flex-wrap gap-2 text-left">
                   <div>
-                    <span className="text-[9px] font-bold text-royal-blue uppercase tracking-widest block mb-0.5">
+                    <span className="text-caption text-royal-blue font-semibold uppercase block mb-0.5">
                       STEP {activeStep + 1} Pipeline
                     </span>
                     <h5 className="text-base font-bold text-slate-900">
                       {workflowSteps[activeStep].detailTitle}
                     </h5>
                   </div>
-                  <div className="px-2 py-0.5 bg-white border border-slate-200 text-slate-600 text-[10px] font-bold rounded uppercase">
+                  <div className="px-2 py-0.5 bg-white border border-slate-200 text-slate-600 text-caption font-semibold rounded uppercase">
                     {workflowSteps[activeStep].metric}
                   </div>
                 </div>

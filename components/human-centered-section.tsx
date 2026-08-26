@@ -67,7 +67,7 @@ export function HumanCenteredSection() {
           {/* Right Column - Simple node diagram */}
           <div className="lg:col-span-6 flex flex-col justify-center items-center">
             <div className="w-full max-w-lg bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm">
-              <span className="text-[10px] font-bold text-slate-400 tracking-widest uppercase block mb-6">
+              <span className="text-eyebrow text-slate-400 block mb-6">
                 Consulting Connection Model
               </span>
 
@@ -106,12 +106,12 @@ export function HumanCenteredSection() {
                   "The difference with HyperCode was their collaborative approach. They didn't just build pipelines; they integrated with our leads to design a sustainable platform."
                 </blockquote>
                 <div className="mt-4 flex items-center space-x-3">
-                  <div className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center font-bold text-[10px] text-slate-700">
+                  <div className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center font-semibold text-caption text-slate-700">
                     JG
                   </div>
                   <div>
-                    <span className="text-[10px] font-bold text-slate-900 block">Jonathan Green</span>
-                    <span className="text-[9px] text-slate-500 block">VP of Technology, BlueCross Illinois</span>
+                    <span className="text-body-sm font-semibold text-slate-900 block">Jonathan Green</span>
+                    <span className="text-caption text-slate-500 block">VP of Technology, BlueCross Illinois</span>
                   </div>
                 </div>
               </div>

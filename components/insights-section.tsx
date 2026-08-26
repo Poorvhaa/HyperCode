@@ -73,18 +73,18 @@ export function InsightsSection() {
           {/* Featured Article Card */}
           <div className="lg:col-span-7 rounded-2xl border border-slate-200 bg-slate-50 p-8 sm:p-10 flex flex-col justify-between group">
             <div className="space-y-4">
-              <span className="text-[10px] font-extrabold text-royal-blue uppercase tracking-widest block">
+              <span className="text-eyebrow text-royal-blue block">
                 {featuredArticle.category}
               </span>
-              <h4 className="text-2xl font-extrabold text-slate-900 tracking-tight leading-tight group-hover:text-royal-blue transition-colors">
+              <h4 className="text-h3 text-slate-900 group-hover:text-royal-blue transition-colors">
                 <a href={featuredArticle.href}>{featuredArticle.title}</a>
               </h4>
-              <p className="text-sm text-slate-600 leading-relaxed font-medium line-clamp-4">
+              <p className="text-body text-slate-600 font-medium line-clamp-4">
                 {featuredArticle.desc}
               </p>
             </div>
 
-            <div className="pt-6 mt-8 border-t border-slate-200 flex items-center justify-between flex-wrap gap-4 text-slate-500 text-xs font-semibold uppercase tracking-wider">
+            <div className="pt-6 mt-8 border-t border-slate-200 flex items-center justify-between flex-wrap gap-4 text-slate-500 text-caption font-semibold uppercase tracking-wider">
               <div className="flex items-center space-x-4">
                 <div className="flex items-center space-x-1.5">
                   <CalendarDays size={14} className="text-slate-400" />
@@ -113,15 +113,15 @@ export function InsightsSection() {
                 className="group relative p-6 rounded-2xl border border-slate-200 bg-white hover:border-slate-350 flex flex-col justify-between h-40 shadow-sm"
               >
                 <div>
-                  <span className="text-[9px] font-extrabold text-royal-blue uppercase tracking-widest block mb-2">
+                  <span className="text-eyebrow text-royal-blue block mb-2">
                     {art.category}
                   </span>
-                  <h4 className="text-[15px] font-bold text-slate-900 tracking-tight leading-snug group-hover:text-royal-blue transition-colors line-clamp-2">
+                  <h4 className="text-card-title text-slate-900 group-hover:text-royal-blue transition-colors line-clamp-2">
                     <a href={art.href}>{art.title}</a>
                   </h4>
                 </div>
 
-                <div className="flex items-center justify-between text-[10px] text-slate-500 font-bold uppercase tracking-wider mt-4 border-t border-slate-100 pt-3">
+                <div className="flex items-center justify-between text-caption font-semibold text-slate-500 font-bold uppercase tracking-wider mt-4 border-t border-slate-100 pt-3">
                   <div className="flex items-center space-x-3">
                     <span className="flex items-center space-x-1">
                       <CalendarDays size={12} className="text-slate-400" />

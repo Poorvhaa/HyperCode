@@ -608,7 +608,7 @@ function SolutionsPageContent() {
                                   {srvDetails?.features && srvDetails.features.length > 0 && (
                                     <ul className="space-y-1.5 pt-2 border-t border-slate-100">
                                       {srvDetails.features.slice(0, 2).map((feat: any, idx: number) => (
-                                        <li key={idx} className="flex items-start gap-1.5 text-[11px] text-slate-600">
+                                        <li key={idx} className="flex items-start gap-1.5 text-body-sm text-slate-600">
                                           <CheckCircle size={11} className="text-emerald-500 shrink-0 mt-0.5" />
                                           <span className="font-medium line-clamp-1">{feat.title}</span>
                                         </li>
@@ -619,12 +619,12 @@ function SolutionsPageContent() {
                                   {/* Technologies Stack Tags */}
                                   <div className="flex flex-wrap gap-1 pt-2">
                                     {srv.tech.slice(0, 3).map((techItem, idx) => (
-                                      <span key={idx} className="px-2 py-0.5 bg-slate-50 border border-slate-200 text-slate-600 rounded-md text-[10px] font-semibold">
+                                      <span key={idx} className="px-2 py-0.5 bg-slate-50 border border-slate-200 text-slate-600 rounded-md text-caption font-medium">
                                         {techItem}
                                       </span>
                                     ))}
                                     {srv.tech.length > 3 && (
-                                      <span className="px-2 py-0.5 bg-slate-50 text-slate-400 rounded-md text-[10px] font-semibold">
+                                      <span className="px-2 py-0.5 bg-slate-50 text-slate-400 rounded-md text-caption font-medium">
                                         +{srv.tech.length - 3}
                                       </span>
                                     )}
@@ -670,7 +670,7 @@ function SolutionsPageContent() {
                                     <div className="p-2 rounded-xl bg-slate-50 border border-slate-100 text-royal-blue">
                                       <ServiceIcon size={16} />
                                     </div>
-                                    <span className="text-[9px] font-bold text-slate-400 tracking-wider uppercase">
+                                    <span className="text-caption text-slate-400 font-semibold uppercase">
                                       {srv.tech[0] || 'Core Tech'}
                                     </span>
                                   </div>
@@ -685,7 +685,7 @@ function SolutionsPageContent() {
 
                                   <div className="flex flex-wrap gap-1 pt-1">
                                     {srv.tech.slice(0, 2).map((techItem, idx) => (
-                                      <span key={idx} className="px-2 py-0.5 bg-slate-50 border border-slate-200 text-slate-600 rounded text-[9px] font-semibold">
+                                      <span key={idx} className="px-2 py-0.5 bg-slate-50 border border-slate-200 text-slate-600 rounded text-caption font-medium">
                                         {techItem}
                                       </span>
                                     ))}
@@ -765,10 +765,10 @@ function SolutionsPageContent() {
         <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12 xl:px-16 w-full space-y-12">
           {/* Header block aligned with global content container */}
           <div className="max-w-[1100px] text-left space-y-4">
-            <span className="text-xs font-bold text-royal-blue tracking-widest uppercase block">
+            <span className="text-eyebrow text-royal-blue block">
               {t('techEcosystemTitle')}
             </span>
-            <h3 className="text-3xl sm:text-[clamp(42px,4vw,64px)] font-black text-slate-900 leading-[1.1] tracking-tight">
+            <h3 className="text-h2 text-slate-900">
               {t('techEcosystemSubtitle')}
             </h3>
           </div>
@@ -832,8 +832,8 @@ function SolutionsPageContent() {
         <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12 xl:px-16 relative z-10 w-full space-y-12">
           {/* Header container */}
           <div className="max-w-[1100px] text-left space-y-4">
-            <span className="text-xs font-bold text-royal-blue tracking-widest uppercase block">{t('industriesTitle')}</span>
-            <h3 className="text-3xl sm:text-[clamp(42px,4vw,64px)] font-black text-slate-900 leading-[1.08] tracking-tight">{t('industriesSubtitle')}</h3>
+            <span className="text-eyebrow text-royal-blue block">{t('industriesTitle')}</span>
+            <h3 className="text-h2 text-slate-900">{t('industriesSubtitle')}</h3>
           </div>
 
           <div className="grid grid-cols-1 min-[480px]:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 items-stretch">

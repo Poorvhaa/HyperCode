@@ -19,13 +19,13 @@ export function CTASection() {
       <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(20,91,255,0.012)_1px,transparent_1px),linear-gradient(to_bottom,rgba(20,91,255,0.012)_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none" />
       
       <div className="max-w-4xl mx-auto px-6 sm:px-8 relative z-10 space-y-8">
-        <h2 className="text-xs font-bold text-[#35C7F4] tracking-widest uppercase">
+        <h2 className="text-eyebrow text-[#35C7F4]">
           {t('cta.badge')}
         </h2>
         <h3 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight max-w-2xl mx-auto text-white">
           {t('cta.heading')}
         </h3>
-        <p className="text-sm sm:text-base lg:text-lg text-[#C8D5E8] max-w-3xl mx-auto leading-relaxed font-semibold">
+        <p className="text-lead text-[#C8D5E8] max-w-3xl mx-auto font-medium">
           {t('cta.description')}
         </p>
         

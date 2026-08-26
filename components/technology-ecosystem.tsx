@@ -48,10 +48,10 @@ export function TechnologyEcosystem() {
                 key={tech.name}
                 className="p-5 rounded-2xl border border-slate-200 bg-slate-50 hover:bg-white transition-colors duration-200 flex flex-col justify-between h-28 shadow-sm"
               >
-                <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest block mb-1">
+                <span className="text-caption text-slate-400 font-semibold uppercase block mb-1">
                   {tech.category}
                 </span>
-                <h4 className="text-[16px] font-bold text-slate-900 tracking-tight leading-none">
+                <h4 className="text-body font-semibold text-slate-900 leading-none">
                   {tech.name}
                 </h4>
               </div>

@@ -217,7 +217,7 @@ export function TechnologyExpertise() {
           {activeBadges.map((badgeText, idx) => (
             <span
               key={idx}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-[10px] sm:text-xs font-bold bg-royal-blue/5 text-royal-blue border border-royal-blue/10"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-eyebrow bg-royal-blue/5 text-royal-blue border border-royal-blue/10"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-royal-blue" />
               {badgeText}

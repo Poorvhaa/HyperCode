@@ -209,13 +209,13 @@ export function HeroSection() {
               {/* Glass Enterprise Badge */}
               <div className="inline-flex items-center space-x-2 px-4 py-2 bg-royal-blue/10 border border-royal-blue/20 rounded-full shadow-[0_0_20px_rgba(15,76,129,0.05)]">
                 <Sparkles size={12} className="text-royal-blue animate-pulse" />
-                <span className="text-[10px] sm:text-xs font-semibold text-royal-blue tracking-wider uppercase">
+                <span className="text-eyebrow text-royal-blue">
                   {t('badge')}
                 </span>
               </div>
               
               {/* Ultra bold Headline with Keyword gradient highlights */}
-              <h1 className="text-[36px] sm:text-[48px] lg:text-[70px] font-black text-slate-900 tracking-tight leading-[1.2]">
+              <h1 className="text-display text-slate-900">
                 {t('title')}{' '}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-royal-blue to-blue-600">
                   {t('titleHighlight')}
@@ -223,7 +223,7 @@ export function HeroSection() {
               </h1>
               
               {/* Soft description paragraph */}
-              <p className="text-[16px] md:text-[17px] lg:text-[18px] text-slate-600 leading-[1.7] max-w-xl font-medium">
+              <p className="text-lead text-slate-600 max-w-xl font-medium">
                 {t('subtitle')}
               </p>
             </motion.div>
@@ -400,7 +400,7 @@ export function HeroSection() {
                           <span className="text-xs font-bold text-slate-800 leading-tight block">
                             {step.title}
                           </span>
-                          <span className="text-[9px] text-royal-blue font-extrabold tracking-wider uppercase block">
+                          <span className="text-caption text-royal-blue font-semibold uppercase block">
                             {step.step}
                           </span>
                         </div>
@@ -454,13 +454,13 @@ export function HeroSection() {
                               className="w-[340px] md:w-[300px] lg:w-[340px] p-[24px] text-left flex flex-col justify-center h-auto relative"
                             >
                               <div className="flex flex-col text-left">
-                                <span className="text-[12px] font-bold text-[#1769F5] uppercase tracking-wider block mb-1">
+                                <span className="text-caption font-semibold text-[#1769F5] uppercase tracking-wider block mb-1">
                                   {step.step}
                                 </span>
-                                <h4 className="text-[20px] font-bold text-[#071226] tracking-tight leading-snug mb-2">
+                                <h4 className="text-card-title text-[#071226] leading-snug mb-2">
                                   {step.title}
                                 </h4>
-                                <p className="text-[15px] font-medium text-[#475569] leading-[1.65]">
+                                <p className="text-body text-[#475569] font-medium">
                                   {step.description}
                                 </p>
                               </div>
@@ -525,8 +525,8 @@ export function HeroSection() {
                     >
                       <div className="flex justify-between items-center w-full">
                         <div className="space-y-0.5 text-left">
-                          <h4 className="text-sm sm:text-base font-bold text-slate-800 tracking-tight leading-tight">{step.title}</h4>
-                          <span className="text-[9px] text-royal-blue font-extrabold uppercase tracking-wider block">
+                          <h4 className="text-body-sm font-semibold text-slate-800 leading-tight">{step.title}</h4>
+                          <span className="text-caption text-royal-blue font-semibold uppercase block">
                             {step.step}
                           </span>
                         </div>
@@ -547,7 +547,7 @@ export function HeroSection() {
                             transition={{ duration: 0.2, ease: 'easeInOut' }}
                             className="overflow-hidden"
                           >
-                            <p className="text-xs sm:text-sm text-slate-600 font-medium leading-[1.65]">
+                            <p className="text-body-sm text-slate-600 font-medium">
                               {step.description}
                             </p>
                           </motion.div>

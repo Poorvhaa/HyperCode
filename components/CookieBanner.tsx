@@ -27,7 +27,7 @@ export function CookieBanner() {
                 <ShieldCheck size={22} className="stroke-[2.2px]" />
               </div>
               <div className="space-y-1 text-left">
-                <h4 className="text-sm font-extrabold text-slate-900 tracking-tight uppercase tracking-wider text-[11px] text-slate-400">
+                <h4 className="text-label font-semibold text-slate-400 uppercase tracking-wider">
                   {locale === 'es' ? 'Aviso de Cookies' : 'Cookie Notice'}
                 </h4>
                 <p className="text-sm text-slate-600 leading-relaxed font-semibold">

@@ -163,10 +163,10 @@ export function ServicesSection() {
             <span className="w-1.5 h-1.5 rounded-full bg-royal-blue" />
             {curr.badge}
           </span>
-          <h2 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">
+          <h2 className="text-h2 text-slate-900">
             {curr.title}
           </h2>
-          <p className="text-[16px] md:text-[17px] lg:text-[18px] text-slate-600 leading-[1.7] font-semibold">
+          <p className="text-lead text-slate-600 font-medium">
             {curr.subtitle}
           </p>
         </div>
@@ -201,11 +201,11 @@ export function ServicesSection() {
                 {/* Content - 32px Padding */}
                 <div className="p-8 flex-1 flex flex-col justify-between space-y-6">
                   <div className="space-y-3">
-                    <h3 className="text-[22px] font-bold text-slate-900 tracking-tight group-hover:text-royal-blue transition-colors leading-[1.2]">
+                    <h3 className="text-card-title text-slate-900 group-hover:text-royal-blue transition-colors">
                       {itemTranslation.title}
                     </h3>
                     
-                    <p className="text-[16px] md:text-[17px] text-slate-650 leading-[1.7] font-medium">
+                    <p className="text-body text-slate-650 font-medium">
                       {itemTranslation.desc}
                     </p>
                   </div>

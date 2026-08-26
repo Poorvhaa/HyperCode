@@ -139,7 +139,7 @@ export function CookiePreferencesModal() {
               <div className="space-y-1">
                 <div className="flex items-center gap-2 text-royal-blue">
                   <ShieldCheck size={20} className="stroke-[2.2px]" />
-                  <span className="text-[10px] font-black uppercase tracking-widest">{t('title') ? 'Privacy' : 'HyperCode Privacy'}</span>
+                  <span className="text-eyebrow">{t('title') ? 'Privacy' : 'HyperCode Privacy'}</span>
                 </div>
                 <h3
                   id="cookie-preferences-title"
@@ -179,7 +179,7 @@ export function CookiePreferencesModal() {
                     </div>
                   </div>
                   <div className="flex items-center gap-3 ml-14 sm:ml-0">
-                    <span className="text-[10px] font-black uppercase tracking-wider text-slate-400 select-none bg-slate-100 px-2 py-1 rounded-md">
+                    <span className="text-eyebrow text-slate-400 select-none bg-slate-100 px-2 py-1 rounded-md">
                       {t('necessary.title') ? 'Always On' : 'Necesario'}
                     </span>
                     <CookieToggle

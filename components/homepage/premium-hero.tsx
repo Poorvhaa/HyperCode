@@ -429,7 +429,7 @@ export function PremiumHero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25, duration: 0.65, ease: easePremium }}
-            className="text-[clamp(2.25rem,11vw,4rem)] sm:text-display text-slate-900 w-full max-w-3xl min-w-0 leading-[1.15] tracking-[-0.02em] whitespace-normal break-normal"
+            className="text-display text-slate-900 w-full max-w-3xl min-w-0 whitespace-normal break-normal"
           >
             {t('headlinePart1')}{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#145BFF] via-[#25B5FF] to-[#48B900] pb-1 whitespace-normal [box-decoration-break:clone] [-webkit-box-decoration-break:clone]">

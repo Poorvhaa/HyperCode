@@ -301,7 +301,7 @@ function ConsultationFormContent({ defaultIndustryKey }: { defaultIndustryKey?: 
               {...register('name')}
               aria-invalid={Boolean(errors.name)}
               aria-describedby={errors.name ? 'consultation-name-error' : undefined}
-              className={`w-full h-[56px] md:h-[60px] lg:h-[64px] px-[20px] rounded-[18px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-body text-slate-800 placeholder-slate-400 placeholder:text-[16px] placeholder:font-medium ${
+              className={`w-full h-[56px] md:h-[60px] lg:h-[64px] px-[20px] rounded-[18px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-body text-slate-800 placeholder-slate-400 placeholder:text-base placeholder:font-medium ${
                 errors.name
                   ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200 shadow-[0_0_0_1px_#ef4444]'
                   : touchedFields.name
@@ -334,7 +334,7 @@ function ConsultationFormContent({ defaultIndustryKey }: { defaultIndustryKey?: 
               {...register('email')}
               aria-invalid={Boolean(errors.email)}
               aria-describedby={errors.email ? 'consultation-email-error' : undefined}
-              className={`w-full h-[56px] md:h-[60px] lg:h-[64px] px-[20px] rounded-[18px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-body text-slate-800 placeholder-slate-400 placeholder:text-[16px] placeholder:font-medium ${
+              className={`w-full h-[56px] md:h-[60px] lg:h-[64px] px-[20px] rounded-[18px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-body text-slate-800 placeholder-slate-400 placeholder:text-base placeholder:font-medium ${
                 errors.email
                   ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200 shadow-[0_0_0_1px_#ef4444]'
                   : touchedFields.email
@@ -366,7 +366,7 @@ function ConsultationFormContent({ defaultIndustryKey }: { defaultIndustryKey?: 
               {...register('company')}
               aria-invalid={Boolean(errors.company)}
               aria-describedby={errors.company ? 'consultation-company-error' : undefined}
-              className={`w-full h-[56px] md:h-[60px] lg:h-[64px] px-[20px] rounded-[18px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-body text-slate-800 placeholder-slate-400 placeholder:text-[16px] placeholder:font-medium ${
+              className={`w-full h-[56px] md:h-[60px] lg:h-[64px] px-[20px] rounded-[18px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-body text-slate-800 placeholder-slate-400 placeholder:text-base placeholder:font-medium ${
                 errors.company
                   ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200 shadow-[0_0_0_1px_#ef4444]'
                   : touchedFields.company
@@ -403,7 +403,7 @@ function ConsultationFormContent({ defaultIndustryKey }: { defaultIndustryKey?: 
               })}
               aria-invalid={Boolean(errors.phone)}
               aria-describedby={errors.phone ? 'consultation-phone-error' : undefined}
-              className={`w-full h-[56px] md:h-[60px] lg:h-[64px] px-[20px] rounded-[18px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-body text-slate-800 placeholder-slate-400 placeholder:text-[16px] placeholder:font-medium ${
+              className={`w-full h-[56px] md:h-[60px] lg:h-[64px] px-[20px] rounded-[18px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-body text-slate-800 placeholder-slate-400 placeholder:text-base placeholder:font-medium ${
                 errors.phone
                   ? 'border-red-500 bg-red-50/70 focus:border-red-600 focus:ring-2 focus:ring-red-200 shadow-[0_0_0_1px_#ef4444]'
                   : touchedFields.phone
@@ -578,7 +578,7 @@ function ConsultationFormContent({ defaultIndustryKey }: { defaultIndustryKey?: 
             {...register('message')}
             aria-invalid={Boolean(errors.message)}
             aria-describedby={errors.message ? 'consultation-message-error' : undefined}
-            className={`w-full h-[170px] p-[20px] rounded-[18px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-body text-slate-800 placeholder-slate-400 placeholder:text-[16px] placeholder:font-medium resize-none ${
+            className={`w-full h-[170px] p-[20px] rounded-[18px] border bg-slate-50/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-royal-blue/25 transition-all text-body text-slate-800 placeholder-slate-400 placeholder:text-base placeholder:font-medium resize-none ${
               errors.message
                 ? 'border-red-500 bg-red-50/70 focus:border-red-656 focus:ring-2 focus:ring-red-200 shadow-[0_0_0_1px_#ef4444]'
                 : touchedFields.message

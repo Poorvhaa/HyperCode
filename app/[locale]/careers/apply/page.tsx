@@ -54,7 +54,7 @@ export default async function CareersApplyPage({ params, searchParams }: Props) 
             <div>
               <Link
                 href="/careers"
-                className="inline-flex items-center gap-1.5 text-xs font-bold text-royal-blue hover:text-[#0c3c66] transition-colors"
+                className="inline-flex items-center gap-1.5 text-button text-royal-blue hover:text-[#0c3c66] transition-colors"
               >
                 <ChevronLeft size={16} />
                 <span>{activeTrans.backBtn}</span>

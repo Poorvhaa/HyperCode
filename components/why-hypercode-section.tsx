@@ -103,10 +103,10 @@ export function WhyHypercodeSection() {
             <span className="w-1.5 h-1.5 rounded-full bg-royal-blue" />
             {curr.badge}
           </span>
-          <h2 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">
+          <h2 className="text-h2 text-slate-900">
             {curr.title}
           </h2>
-          <p className="text-[16px] md:text-[17px] lg:text-[18px] text-slate-650 leading-[1.7] font-semibold">
+          <p className="text-lead text-slate-650 font-medium">
             {curr.description}
           </p>
         </div>
@@ -118,7 +118,7 @@ export function WhyHypercodeSection() {
             
             {/* Timeline comparison */}
             <div className="bg-[#F8FAFC] border border-slate-200 rounded-[24px] p-8 space-y-6 shadow-sm">
-              <span className="text-[10px] font-extrabold text-royal-blue tracking-widest uppercase block">
+              <span className="text-eyebrow text-royal-blue block">
                 {curr.timelineHeader}
               </span>
               
@@ -159,7 +159,7 @@ export function WhyHypercodeSection() {
             <div className="bg-white border border-slate-200 rounded-[24px] overflow-hidden shadow-sm">
               <div className="px-6 py-4 bg-[#F8FAFC] border-b border-slate-200 flex justify-between items-center">
                 <span className="text-xs font-extrabold text-slate-900 uppercase tracking-wider">{curr.comparisonTitle}</span>
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{curr.comparisonSub}</span>
+                <span className="text-caption font-medium text-slate-400 uppercase tracking-widest">{curr.comparisonSub}</span>
               </div>
               <div className="divide-y divide-slate-100">
                 {comparisonRows.map((row, index) => (
@@ -200,10 +200,10 @@ export function WhyHypercodeSection() {
                       <Icon size={24} />
                     </div>
                     <div className="flex flex-col flex-grow space-y-3">
-                      <h4 className="text-[22px] font-bold text-slate-900 leading-[1.2]">
+                      <h4 className="text-card-title text-slate-900">
                         {reason.title}
                       </h4>
-                      <p className="text-[16px] md:text-[17px] text-slate-600 leading-[1.7] font-medium flex-grow">
+                      <p className="text-body text-slate-600 font-medium flex-grow">
                         {reason.desc}
                       </p>
                     </div>

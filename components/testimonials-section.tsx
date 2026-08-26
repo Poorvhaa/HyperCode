@@ -66,7 +66,7 @@ export function TestimonialsSection() {
             <span className="w-1.5 h-1.5 rounded-full bg-royal-blue" />
             TESTIMONIALS
           </span>
-          <h3 className="text-[28px] sm:text-[32px] lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.2]">
+          <h3 className="text-h2 text-slate-900">
             Trusted by Enterprise Leaders
           </h3>
         </div>
@@ -99,7 +99,7 @@ export function TestimonialsSection() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.3 }}
-                    className="text-[18px] sm:text-[20px] lg:text-[22px] text-slate-850 font-bold leading-relaxed italic"
+                    className="text-lead text-slate-850 font-medium leading-relaxed italic"
                   >
                     "{testimonials[activeIndex].content}"
                   </motion.blockquote>
@@ -189,13 +189,13 @@ export function TestimonialsSection() {
                 <Play size={24} className="ml-1 text-royal-blue" fill="currentColor" />
               </motion.button>
               <div className="space-y-1">
-                <span className="text-[10px] font-extrabold text-white uppercase tracking-widest block drop-shadow-md">Executive Interview</span>
+                <span className="text-eyebrow text-white block drop-shadow-md">Executive Interview</span>
                 <h4 className="text-sm font-bold text-white tracking-tight drop-shadow-md">Watch Jennifer Thompson discuss ROI outcomes</h4>
               </div>
             </div>
 
             {/* Absolute badge */}
-            <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm border border-slate-200 px-3 py-1.5 rounded-xl flex items-center gap-1.5 text-[10px] font-bold text-slate-650 shadow-sm">
+            <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm border border-slate-200 px-3 py-1.5 rounded-xl flex items-center gap-1.5 text-caption font-semibold text-slate-650 shadow-sm">
               <Award size={12} className="text-royal-blue" />
               <span>Verified Case Discussion</span>
             </div>

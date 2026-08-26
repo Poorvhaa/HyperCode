@@ -246,7 +246,7 @@ export function AboutClient({ locale, tAbout, tCommon }: AboutClientProps) {
                           x={cx} 
                           y={formatGeometry(n.cy + n.r + 14)} 
                           textAnchor="middle" 
-                          className="fill-slate-500 font-mono font-black text-[9px] tracking-tight uppercase"
+                          className="fill-slate-500 font-mono font-semibold text-caption tracking-tight uppercase"
                         >
                           {n.label}
                         </text>
@@ -560,7 +560,7 @@ export function AboutClient({ locale, tAbout, tCommon }: AboutClientProps) {
             <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
               {approachSteps.map((step, idx) => (
                 <div key={idx} className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-[0_2px_6px_rgba(15,23,42,0.01)] flex gap-4 items-start">
-                  <div className="w-8 h-8 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center text-royal-blue text-[10px] font-black font-mono flex-shrink-0">
+                  <div className="w-8 h-8 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center text-royal-blue text-caption font-semibold font-mono flex-shrink-0">
                     {idx + 1}
                   </div>
                   <div className="space-y-1">
