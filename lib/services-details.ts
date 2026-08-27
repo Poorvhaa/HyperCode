@@ -18,7 +18,6 @@ export interface ServiceDetail {
   benefits: Array<{ title: string; desc: string }>;
   features: Array<{ title: string; desc: string }>;
   technologies: Array<{ name: string; role: string }>;
-  timeline: Array<{ title: string; desc: string }>;
   industries: string[];
   faqs: Array<{ q: string; a: string }>;
   relatedServices: Array<{ name: string; slug: string }>;
@@ -864,43 +863,6 @@ export const CATEGORY_HERO_IMAGES: Record<string, string> = {
   'technology-consulting': 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1600'
 };
 
-// Localized Timeline steps descriptions per category
-const TIMELINE_TEMPLATES: Record<string, { steps: Array<{ titleEn: string; descEn: string; titleEs: string; descEs: string }> }> = {
-  'ai-automation': {
-    steps: [
-      { titleEn: 'Discovery & Audit', descEn: 'We examine your business workflows, data sources, and repetitive processes to identify optimal AI opportunities.', titleEs: 'Descubrimiento y Auditoría', descEs: 'Examinamos sus flujos de trabajo de negocio, fuentes de datos y procesos repetitivos para identificar oportunidades óptimas de IA.' },
-      { titleEn: 'Pipeline Strategy', descEn: 'Design security guardrails, data filtering methods, latency SLAs, and choose appropriate LLM systems.', titleEs: 'Estrategia de Canalización', descEs: 'Diseñar salvaguardas de seguridad, métodos de filtrado de datos, SLA de latencia y elegir los sistemas LLM adecuados.' },
-      { titleEn: 'Context Engineering', descEn: 'Architect vector databases, document processing pipelines, prompt blueprints, and semantic indexes (RAG).', titleEs: 'Ingeniería de Contexto', descEs: 'Diseñar bases de datos vectoriales, canales de procesamiento de documentos, esquemas de prompts e índices semánticos (RAG).' },
-      { titleEn: 'Agent Development', descEn: 'Build agentic logic flows, connect tools, register databases, and implement conversational UI modules.', titleEs: 'Desarrollo de Agentes', descEs: 'Construir flujos de lógica de agentes, conectar herramientas, registrar bases de datos e implementar módulos de interfaz conversacional.' },
-      { titleEn: 'Model Testing & Red-Teaming', descEn: 'Rigorous validation of agent behaviors, guardrail checks, hallucinations tests, and system stress runs.', titleEs: 'Pruebas y Red-Teaming', descEs: 'Validación rigurosa del comportamiento de los agentes, verificación de salvaguardas, pruebas de alucinaciones y ejecución de estrés.' },
-      { titleEn: 'Enterprise Launch', descEn: 'Roll out secure endpoints, configure role-based access, and sync telemetry loggers.', titleEs: 'Lanzamiento Empresarial', descEs: 'Desplegar endpoints seguros, configurar accesos basados en roles y sincronizar registradores de telemetría.' },
-      { titleEn: 'SLA Support & Tuning', descEn: 'Continuous prompt tuning, model temperature adjustments, database updates, and live health metrics monitoring.', titleEs: 'Soporte y Ajuste Continuo', descEs: 'Ajuste continuo de prompts, control de temperaturas del modelo, actualizaciones de base de datos y monitoreo de métricas.' }
-    ]
-  },
-  'software-development': {
-    steps: [
-      { titleEn: 'Requirements & Scoping', descEn: 'Collaborate with your stakeholders to outline business requirements, workflow dependencies, and user stories.', titleEs: 'Requisitos y Alcance', descEs: 'Colaborar con las partes interesadas para definir requisitos comerciales, dependencias de flujos y usuarios.' },
-      { titleEn: 'System Architecture', descEn: 'Draft relational database schemas, select tech stack components, and map microservices diagrams.', titleEs: 'Arquitectura del Sistema', descEs: 'Diseñar esquemas de bases de datos relacionales, seleccionar tecnologías y planificar diagramas de microservicios.' },
-      { titleEn: 'UX & Wireframing', descEn: 'Design interactive, responsive screen layouts, brand colors, navigation patterns, and mockups.', titleEs: 'Diseño UX y Wireframing', descEs: 'Diseñar interfaces de pantalla interactivas y adaptables, patrones de navegación y prototipos de prueba.' },
-      { titleEn: 'Sprint Execution', descEn: 'Write robust, clean code in weekly sprints, utilizing type-safe architectures and testing suites.', titleEs: 'Ejecución de Sprints', descEs: 'Escribir código robusto y limpio en sprints semanales, utilizando arquitecturas seguras y pruebas automáticas.' },
-      { titleEn: 'Integration Testing', descEn: 'Validate API endpoints, complete security audits, run unit tests, and perform end-to-end user checks.', titleEs: 'Pruebas de Integración', descEs: 'Validar endpoints de API, auditorías de seguridad, pruebas unitarias y validaciones de flujo de usuario.' },
-      { titleEn: 'Production Deployment', descEn: 'Configure container configurations, manage databases, and trigger zero-downtime server launches.', titleEs: 'Despliegue de Producción', descEs: 'Configurar contenedores, migrar bases de datos y activar lanzamientos de servidores sin interrupciones.' },
-      { titleEn: 'Maintenance & Upgrades', descEn: 'Ongoing patches, security reviews, feature releases, and scalability adjustments to match traffic volumes.', titleEs: 'Soporte y Actualizaciones', descEs: 'Actualizaciones continuas, parches de seguridad, lanzamientos de características y ajustes de escalado.' }
-    ]
-  }
-};
-
-// Catch-all default timeline if category timeline is not specified
-const DEFAULT_TIMELINE = [
-  { titleEn: 'Discovery', descEn: 'Deep discovery alignment sessions to scope project parameters, resource requests, and target milestones.', titleEs: 'Descubrimiento', descEs: 'Sesiones de descubrimiento profundo para definir parámetros del proyecto, recursos y objetivos clave.' },
-  { titleEn: 'Planning', descEn: 'Align technology stack options, write specification manuals, and outline deployment architectures.', titleEs: 'Planificación', descEs: 'Alinear opciones de tecnologías, redactar manuales de especificación y esquematizar arquitecturas.' },
-  { titleEn: 'Design', descEn: 'Figma mockups, interactive interface layouts, brand alignments, and user flows designs.', titleEs: 'Diseño', descEs: 'Prototipos en Figma, esquemas de interfaz interactiva, alineación de marca y flujos de usuario.' },
-  { titleEn: 'Development', descEn: 'Clean coding, repository branching setup, backend API setups, and dashboard layouts construction.', titleEs: 'Desarrollo', descEs: 'Escritura de código limpio, configuración de ramas de repositorio, API backend y diseño de interfaces.' },
-  { titleEn: 'Testing', descEn: 'Rigorous unit testing, QA reviews, security checks, and cross-browser responsiveness validations.', titleEs: 'Pruebas', descEs: 'Pruebas unitarias rigurosas, revisiones de control de calidad, análisis de seguridad y compatibilidad.' },
-  { titleEn: 'Deployment', descEn: 'Configuring servers, containerization, DNS setup, and zero-downtime production deployment.', titleEs: 'Despliegue', descEs: 'Configuración de servidores, contenedores, ajustes de DNS y despliegue en producción sin interrupciones.' },
-  { titleEn: 'Support', descEn: 'Ongoing maintenance, error logs monitoring, database indexing, and feature updates iterations.', titleEs: 'Soporte', descEs: 'Mantenimiento continuo, monitoreo de registros de errores, indexación de bases de datos y actualizaciones.' }
-];
-
 const TAILORED_FAQS: Record<string, {
   en: Array<{ q: string; a: string }>;
   es: Array<{ q: string; a: string }>;
@@ -1193,13 +1155,6 @@ export function getServiceDetails(slug: string, locale: string): any {
     { title: 'Operational Efficiency', desc: 'Automate manual repetitive developer tasks, saving significant engineering cycles.' }
   ];
 
-  // Process Timeline
-  const timelineData = TIMELINE_TEMPLATES[categoryId] || TIMELINE_TEMPLATES['software-development'] || { steps: DEFAULT_TIMELINE };
-  let timeline = timelineData.steps.map(s => ({
-    title: isEs ? s.titleEs : s.titleEn,
-    desc: isEs ? s.descEs : s.descEn
-  }));
-
   // Curated Technologies mapping based on registry or category defaults
   let technologies = service.tech.map(name => {
     let role = 'Platform integration';
@@ -1243,8 +1198,6 @@ export function getServiceDetails(slug: string, locale: string): any {
 
   let capabilitiesTitle: string | undefined;
   let capabilitiesDesc: string | undefined;
-  let processTitle: string | undefined;
-  let processDesc: string | undefined;
   let techDesc: string | undefined;
 
   let heroImage = CATEGORY_HERO_IMAGES[categoryId] || 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1600';
@@ -1318,27 +1271,6 @@ export function getServiceDetails(slug: string, locale: string): any {
       { title: 'Clearer Brand & Entity Signals', desc: 'Help search systems interpret your organization, expertise, and topical relationships.' },
       { title: 'Measurable Search Performance', desc: 'Monitor search and content indicators to prioritize data-informed improvements.' }
     ];
-    processTitle = isEs ? 'Nuestro Proceso de Optimización en 7 Pasos' : 'Our 7-Step Search Optimization Process';
-    processDesc = isEs
-      ? 'Desde la auditoría inicial hasta la medición continua, cada etapa conecta las prioridades técnicas, de contenido y autoridad.'
-      : 'From the initial audit through continuous measurement, each stage connects technical, content, and authority priorities.';
-    timeline = isEs ? [
-      { title: 'Auditoría de Visibilidad en Búsquedas', desc: 'Evaluamos la presencia actual, la indexabilidad, el contenido y las señales de rendimiento para establecer prioridades.' },
-      { title: 'Investigación de Palabras Clave, Intención y Entidades', desc: 'Analizamos cómo buscan las audiencias y cómo se relacionan los temas, preguntas y entidades con su marca.' },
-      { title: 'Base Técnica de SEO', desc: 'Abordamos rastreo, indexación, metadatos, canonicals, mapas del sitio, rendimiento y esquema relevante.' },
-      { title: 'Optimización de Contenido SEO', desc: 'Mejoramos la estructura on-page, los encabezados, los enlaces internos y la cobertura temática.' },
-      { title: 'Optimización AEO', desc: 'Organizamos respuestas concisas, lenguaje conversacional y contenido estructurado para experiencias basadas en respuestas.' },
-      { title: 'GEO y Desarrollo de Autoridad', desc: 'Fortalecemos señales de entidad, credibilidad temática y referencias de marca mediante contenido útil y consistente.' },
-      { title: 'Medición y Mejora Continua', desc: 'Revisamos indicadores de búsqueda y comportamiento para orientar iteraciones y nuevas oportunidades.' }
-    ] : [
-      { title: 'Search Visibility Audit', desc: 'Assess current presence, indexability, content, and performance signals to establish priorities.' },
-      { title: 'Keyword, Intent & Entity Research', desc: 'Analyze how audiences search and how topics, questions, and entities relate to your brand.' },
-      { title: 'Technical SEO Foundation', desc: 'Address crawling, indexing, metadata, canonicals, sitemaps, performance, and relevant schema.' },
-      { title: 'SEO Content Optimization', desc: 'Improve on-page structure, headings, internal links, and topical coverage.' },
-      { title: 'AEO Optimization', desc: 'Organize concise answers, conversational language, and structured content for answer-driven experiences.' },
-      { title: 'GEO & Authority Development', desc: 'Strengthen entity signals, topical credibility, and brand references through useful, consistent content.' },
-      { title: 'Measurement & Continuous Improvement', desc: 'Review search and behavior indicators to guide iterations and new opportunities.' }
-    ];
     techDesc = isEs
       ? 'Utilizamos únicamente plataformas de medición y presencia verificadas para evaluar el rendimiento y orientar mejoras.'
       : 'We use verified measurement and presence platforms to evaluate performance and guide improvements.';
@@ -1385,8 +1317,6 @@ export function getServiceDetails(slug: string, locale: string): any {
       ? (isEs ? 'Herramientas de Medición de Búsqueda' : 'Search Measurement Tools')
       : (isEs ? 'Ecosistema Tecnológico' : 'Technologies & Tools'),
     techDesc,
-    processTitle,
-    processDesc,
     metaDescription: targetSlug === 'local-seo'
       ? (isEs
         ? 'Mejore el descubrimiento en buscadores e IA con los servicios de SEO, AEO y GEO de HyperCode, que combinan optimización técnica, estrategia de contenido y rendimiento de búsqueda medible.'
@@ -1405,7 +1335,6 @@ export function getServiceDetails(slug: string, locale: string): any {
     ctaBtn: isEs ? 'Programar Consulta' : 'Schedule Consultation',
     features,
     benefits,
-    timeline,
     technologies,
     industries,
     relatedServices,

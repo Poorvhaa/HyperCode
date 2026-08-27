@@ -6,15 +6,18 @@ import { usePathname, useRouter, Link } from '@/i18n/routing';
 import { useLocale, useTranslations } from 'next-intl';
 import { SERVICE_REGISTRY, ALIAS_MAP } from '@/lib/services-details';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronDown } from 'lucide-react';
-import { solutionMenu, type MenuService } from '@/lib/navigation-links';
+import { Menu, X, ChevronDown, ArrowRight } from 'lucide-react';
+import { solutionMenu, solutionMenuColumns, type MenuService } from '@/lib/navigation-links';
 
 const languages = [
   { code: 'en', name: 'English' },
   { code: 'es', name: 'Español' }
 ];
 
-const NAV_HEIGHT = 'h-[72px] lg:h-[80px]';
+const NAV_HEIGHT_MOBILE_PX = 100;
+const NAV_HEIGHT_TABLET_PX = 106;
+const NAV_HEIGHT_DESKTOP_PX = 112;
+const NAV_HEIGHT = 'h-[100px] sm:h-[106px] lg:h-[112px]';
 
 function getServiceLabel(service: MenuService, locale: string) {
   if (service.label) return service.label[locale === 'es' ? 'es' : 'en'];
@@ -25,11 +28,18 @@ function getServiceLabel(service: MenuService, locale: string) {
     : service.slug;
 }
 
+function isServiceLinkActive(pathname: string, service: MenuService) {
+  const href = service.href || `/solutions/${service.slug}`;
+  if (href.includes('#')) return pathname === href.split('#')[0];
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
 export function Navigation() {
   const pathname = usePathname();
   const router = useRouter();
   const locale = useLocale();
   const t = useTranslations('Navigation');
+  const tSolutions = useTranslations('SolutionsPage');
 
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -224,12 +234,12 @@ export function Navigation() {
                 priority
                 quality={100}
                 style={{ height: 'auto' }}
-                className="h-auto w-[96px] object-contain sm:w-[104px] lg:w-[110px]"
+                className="h-auto w-[92px] object-contain sm:w-[98px] lg:w-[104px]"
               />
             </Link>
 
             {/* Center — desktop navigation */}
-            <div className="hidden min-w-0 items-center justify-center gap-4 xl:flex xl:gap-7">
+            <div className="hidden min-w-0 items-center justify-center gap-3 lg:flex lg:gap-4 xl:gap-6">
               {/* What We Do mega menu */}
               <div
                 ref={solutionsRef}
@@ -290,7 +300,7 @@ export function Navigation() {
             </div>
 
             {/* Right — desktop actions */}
-            <div className="hidden shrink-0 items-center gap-3 xl:flex xl:gap-4">
+            <div className="hidden shrink-0 items-center gap-2.5 lg:flex lg:gap-3 xl:gap-4">
               <div
                 className={`flex items-center rounded-lg p-0.5 ${
                   isDarkTheme ? 'border border-white/10' : 'border border-slate-200/80 bg-slate-50/50'
@@ -321,7 +331,7 @@ export function Navigation() {
             </div>
 
             {/* Mobile header actions */}
-            <div className="flex items-center justify-end gap-2 xl:hidden">
+            <div className="flex items-center justify-end gap-2 lg:hidden">
               <button
                 type="button"
                 onClick={() => setIsMobileLangOpen(true)}
@@ -355,7 +365,7 @@ export function Navigation() {
             {isSolutionsOpen && (
               <div
                 ref={solutionsMenuRef}
-                className="absolute left-1/2 top-full z-[70] w-[min(1200px,calc(100vw-32px))] max-w-full -translate-x-1/2 pt-2"
+                className="absolute left-1/2 top-full z-[70] w-[min(1080px,calc(100vw-40px))] max-w-full -translate-x-1/2 pt-1.5"
                 onMouseEnter={openSolutions}
                 onMouseLeave={closeSolutionsWithDelay}
               >
@@ -367,48 +377,72 @@ export function Navigation() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 2 }}
                   transition={{ duration: 0.14 }}
-                  className="flex max-h-[calc(100vh-72px-24px)] flex-col overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-[0_8px_40px_-12px_rgba(8,22,45,0.18)] lg:max-h-[calc(100vh-80px-24px)]"
+                  className="overflow-hidden rounded-lg border border-slate-200/90 bg-white shadow-[0_4px_24px_-8px_rgba(8,22,45,0.14)]"
                 >
-                  <div className="shrink-0 border-b border-slate-100 px-5 py-3.5">
-                    <p className="text-[0.6875rem] font-medium uppercase tracking-[0.14em] text-slate-500">
-                      {t('solutions')}
-                    </p>
-                  </div>
-
-                  <div className="min-h-0 flex-1 overflow-y-auto custom-menu-scrollbar">
-                    <div className="grid grid-cols-2 gap-x-4 gap-y-5 px-4 py-4 min-[1440px]:grid-cols-3">
-                      {solutionMenu.map((category) => (
-                        <div key={category.label.en}>
-                          <p className="mb-2 text-[0.6875rem] font-medium uppercase tracking-[0.12em] text-slate-500">
-                            {category.label[locale === 'es' ? 'es' : 'en']}
-                          </p>
-                          <ul className="space-y-0.5" role="none">
-                            {category.services.map((service) => (
-                              <li key={service.slug} role="none">
-                                <Link
-                                  role="menuitem"
-                                  href={service.href || `/solutions/${service.slug}`}
-                                  onClick={() => setIsSolutionsOpen(false)}
-                                  className="block rounded-md px-2 py-1.5 text-[0.8125rem] font-semibold leading-snug text-slate-800 transition-colors hover:bg-slate-50 hover:text-royal-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue"
-                                >
-                                  {getServiceLabel(service, locale)}
-                                </Link>
-                              </li>
+                  <div className="flex max-h-[calc(100vh-100px-20px)] sm:max-h-[calc(100vh-106px-20px)] lg:max-h-[calc(100vh-112px-20px)]">
+                    <div className="min-h-0 min-w-0 flex-1 overflow-y-auto custom-menu-scrollbar">
+                      <div className="grid grid-cols-3 gap-x-6 px-5 py-3.5">
+                        {solutionMenuColumns.map((column, columnIndex) => (
+                          <div key={columnIndex} className="space-y-3.5">
+                            {column.map((category) => (
+                              <div key={category.label.en}>
+                                <p className="mb-1 border-b border-slate-100 pb-1 text-[0.6875rem] font-semibold uppercase tracking-[0.1em] text-slate-500">
+                                  {category.label[locale === 'es' ? 'es' : 'en']}
+                                </p>
+                                <ul className="space-y-0" role="none">
+                                  {category.services.map((service) => {
+                                    const href = service.href || `/solutions/${service.slug}`;
+                                    const active = isServiceLinkActive(pathname, service);
+                                    return (
+                                      <li key={service.slug} role="none">
+                                        <Link
+                                          role="menuitem"
+                                          href={href}
+                                          onClick={() => setIsSolutionsOpen(false)}
+                                          aria-current={active ? 'page' : undefined}
+                                          className={`group flex items-center gap-1 py-[0.3125rem] text-[0.875rem] font-medium leading-snug transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue focus-visible:ring-offset-1 ${
+                                            active
+                                              ? 'font-semibold text-royal-blue'
+                                              : 'text-slate-700 hover:text-royal-blue'
+                                          }`}
+                                        >
+                                          <span className="min-w-0 flex-1">{getServiceLabel(service, locale)}</span>
+                                          <ArrowRight
+                                            size={12}
+                                            aria-hidden="true"
+                                            className={`shrink-0 opacity-0 transition-all duration-150 group-hover:translate-x-0.5 group-hover:opacity-100 group-focus-visible:translate-x-0.5 group-focus-visible:opacity-100 ${
+                                              active ? 'opacity-70' : 'text-royal-blue'
+                                            }`}
+                                          />
+                                        </Link>
+                                      </li>
+                                    );
+                                  })}
+                                </ul>
+                              </div>
                             ))}
-                          </ul>
-                        </div>
-                      ))}
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="shrink-0 border-t border-slate-100 px-5 py-3">
-                    <Link
-                      href="/solutions"
-                      onClick={() => setIsSolutionsOpen(false)}
-                      className="inline-flex items-center gap-1 rounded-sm px-1 py-1 text-[0.8125rem] font-semibold text-royal-blue transition-colors hover:text-royal-blue/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue"
-                    >
-                      {t('viewAllSolutions')} →
-                    </Link>
+                    <aside className="flex w-[11.5rem] shrink-0 flex-col justify-between border-l border-slate-100 px-4 py-3.5 xl:w-[12.5rem]">
+                      <p className="text-[0.8125rem] leading-snug text-slate-500">
+                        {tSolutions('sidebarSubtitle')}
+                      </p>
+                      <Link
+                        href="/solutions"
+                        onClick={() => setIsSolutionsOpen(false)}
+                        className="group mt-4 inline-flex items-center gap-1 text-[0.875rem] font-semibold text-royal-blue transition-colors hover:text-royal-blue/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue focus-visible:ring-offset-1"
+                      >
+                        {t('viewAllSolutions')}
+                        <ArrowRight
+                          size={14}
+                          aria-hidden="true"
+                          className="transition-transform duration-150 group-hover:translate-x-0.5"
+                        />
+                      </Link>
+                    </aside>
                   </div>
                 </motion.div>
               </div>
@@ -428,7 +462,7 @@ export function Navigation() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 z-40 bg-slate-900/20 backdrop-blur-[2px] xl:hidden"
+              className="fixed inset-0 z-40 bg-slate-900/20 backdrop-blur-[2px] lg:hidden"
               onClick={() => setIsOpen(false)}
             />
             <motion.div
@@ -438,8 +472,8 @@ export function Navigation() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: '100%' }}
               transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-              className="fixed inset-y-0 right-0 z-50 flex w-full max-w-sm flex-col bg-white shadow-2xl xl:hidden"
-              style={{ top: 0, paddingTop: '72px' }}
+              className="fixed inset-y-0 right-0 z-50 flex w-full max-w-sm flex-col bg-white shadow-2xl lg:hidden"
+              style={{ top: 0, paddingTop: `${NAV_HEIGHT_MOBILE_PX}px` }}
             >
               <div className="flex-1 overflow-y-auto overscroll-contain px-4 pb-8 pt-2">
                 {/* What We Do accordion */}
@@ -601,7 +635,7 @@ export function Navigation() {
 
       {/* Mobile language overlay */}
       {isMobileLangOpen && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-900/30 p-4 backdrop-blur-sm xl:hidden">
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-900/30 p-4 backdrop-blur-sm lg:hidden">
           <div
             className="w-full max-w-xs space-y-4 rounded-xl border border-slate-200 bg-white p-6 shadow-xl"
             role="dialog"

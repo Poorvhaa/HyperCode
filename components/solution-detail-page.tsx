@@ -358,62 +358,7 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
         </div>
       </section>
 
-      {/* 5. Process Timeline Section */}
-      <section className="section-padding bg-[#F8FAFC] border-b border-slate-200 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-3xl mb-20 space-y-4">
-            <span className="text-eyebrow text-royal-blue block">
-              {isEs ? 'Metodología de Entrega' : 'Delivery Methodology'}
-            </span>
-            {activeTrans.slug === 'local-seo' ? (
-              <h2 className="text-h2 text-slate-900">{activeTrans.processTitle}</h2>
-            ) : (
-              <h3 className="text-h2 text-slate-900">
-                {isEs ? 'Nuestra Ruta de Implementación de 7 Pasos' : 'Our Structured 7-Step Deployment Process'}
-              </h3>
-            )}
-            <p className="text-body text-slate-650">
-              {activeTrans.processDesc || (isEs
-                ? 'Desde la auditoría inicial hasta el soporte en producción 24/7, seguimos un flujo iterativo y ágil.'
-                : 'From the initial audit discovery through 24/7 support SLA monitoring, we execute in transparent, iterative agile sprints.')}
-            </p>
-          </div>
-
-          <div className="relative">
-            {/* Central progress line */}
-            <div className="absolute left-4 lg:left-1/2 top-0 bottom-0 w-[2px] bg-slate-200 -translate-x-1/2 hidden md:block" />
-
-            <div className="space-y-12">
-              {activeTrans.timeline.map((step: any, i: number) => {
-                const isEven = i % 2 === 0;
-                return (
-                  <div key={i} className="flex flex-col md:flex-row items-stretch gap-8 relative">
-                    {/* Number badge on timeline */}
-                    <div className="absolute left-4 lg:left-1/2 w-8 h-8 rounded-full bg-royal-blue text-white font-black text-xs flex items-center justify-center -translate-x-1/2 border-4 border-slate-50 z-10 hidden md:flex" />
-
-                    <div className={`w-full md:w-1/2 flex ${isEven ? 'md:justify-end md:text-right' : 'md:justify-start md:text-left'}`}>
-                      <div className={`premium-card p-6 md:p-8 bg-white border border-slate-200 shadow-sm max-w-xl space-y-3 relative group hover:border-royal-blue/30 transition-all ${isEven ? 'md:mr-8' : 'md:ml-8'}`}>
-                        <div className={`flex items-center gap-3 ${isEven ? 'md:flex-row-reverse' : 'flex-row'}`}>
-                          <span className="text-eyebrow text-white px-2.5 py-1 bg-royal-blue rounded-lg">{isEs ? 'Paso' : 'Step'} 0{i + 1}</span>
-                          {activeTrans.slug === 'local-seo' ? (
-                            <h3 className="text-h3 text-slate-900 leading-[1.2]">{step.title}</h3>
-                          ) : (
-                            <h4 className="text-h3 text-slate-900 leading-[1.2]">{step.title}</h4>
-                          )}
-                        </div>
-                        <p className="text-body text-slate-655">{step.desc}</p>
-                      </div>
-                    </div>
-                    <div className="w-full md:w-1/2 hidden md:block" />
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 6. Technologies Used Section */}
+      {/* 5. Technologies Used Section */}
       <section className="section-padding bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-16 space-y-4">

@@ -85,9 +85,6 @@ export default async function StaffingPage({ params }: Props) {
     expertiseTitle: string;
     expertiseSubtitle: string;
     talentAreas: string[];
-    processTitle: string;
-    processSubtitle: string;
-    processSteps: Array<{ step: string; desc: string }>;
     whyTitle: string;
     whyItems: Array<{ title: string; desc: string }>;
     ctaTitle: string;
@@ -153,14 +150,6 @@ export default async function StaffingPage({ params }: Props) {
         'Scrum Masters',
         'Full Stack Developers',
         'Database Administrators',
-      ],
-      processTitle: "METHODOLOGY",
-      processSubtitle: "Our Hiring Process",
-      processSteps: [
-        { step: 'Requirement', desc: 'Define your needs and position requirements' },
-        { step: 'Screening', desc: 'Pre-qualified candidate review and screening' },
-        { step: 'Interview', desc: 'Technical and cultural fit interviews' },
-        { step: 'Deployment', desc: 'Onboarding and integration with your team' },
       ],
       whyTitle: "Why HyperCode",
       whyItems: [
@@ -240,14 +229,6 @@ export default async function StaffingPage({ params }: Props) {
         'Scrum Masters',
         'Desarrolladores Full Stack',
         'Administradores de Bases de Datos',
-      ],
-      processTitle: "METODOLOGÍA",
-      processSubtitle: "Nuestro Proceso de Contratación",
-      processSteps: [
-        { step: 'Requisito', desc: 'Definir sus necesidades y los requisitos del puesto' },
-        { step: 'Selección', desc: 'Revisión y precalificación de candidatos' },
-        { step: 'Entrevista', desc: 'Entrevistas técnicas y de ajuste cultural' },
-        { step: 'Despliegue', desc: 'Incorporación e integración con su equipo' },
       ],
       whyTitle: "¿Por qué HyperCode?",
       whyItems: [
@@ -388,37 +369,6 @@ export default async function StaffingPage({ params }: Props) {
                 <p className="text-sm font-semibold text-slate-800">{area}</p>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Hiring Process */}
-      <section className="py-24 bg-white">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-16">
-            <h2 className="text-xs font-bold text-royal-blue tracking-widest uppercase mb-3">{activeTrans.processTitle}</h2>
-            <h3 className="text-3xl font-extrabold text-slate-900 tracking-tight leading-none">{activeTrans.processSubtitle}</h3>
-          </div>
-
-          <div className="relative">
-            <div className="space-y-12">
-              {activeTrans.processSteps.map((item, i) => (
-                <div key={i} className="flex gap-6 items-start relative">
-                  <div className="flex-shrink-0 z-10">
-                    <div className="w-10 h-10 rounded-xl bg-royal-blue flex items-center justify-center text-white font-bold text-sm">
-                      {i + 1}
-                    </div>
-                  </div>
-                  <div className="flex-1 pt-1.5">
-                    <h3 className="text-lg font-bold text-slate-900 mb-1">{item.step}</h3>
-                    <p className="text-sm text-slate-600 leading-relaxed font-medium">{item.desc}</p>
-                  </div>
-                  {i < activeTrans.processSteps.length - 1 && (
-                    <div className="absolute left-[19px] top-10 w-px h-16 bg-slate-200 -z-0" />
-                  )}
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </section>
