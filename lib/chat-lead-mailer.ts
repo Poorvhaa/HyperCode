@@ -1,9 +1,9 @@
-import { getSupabaseServer } from '@/lib/supabase-server';
+import { getSupabaseAdmin } from '@/lib/supabase/admin';
 import { Resend } from 'resend';
 
 const resendApiKey = process.env.RESEND_API_KEY || '';
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
-const contactRecipient = process.env.HYPERCODE_CONTACT_EMAIL || 'hello@hypercodeit.com';
+const contactRecipient = process.env.HYPERCODE_CONTACT_EMAIL || 'hr@hypercodeit.com';
 const resendFromEmail =
   process.env.RESEND_FROM_EMAIL ||
   'HyperCode <HR@hypercodeit.com>';
@@ -96,7 +96,7 @@ export async function submitChatLead(lead: LeadInput) {
   const leadScore = calculateLeadScore(company, industry, email, budgetRange, timeline);
 
   // 1. Save to Supabase (using server-only client, throwing on failure)
-  const supabase = getSupabaseServer();
+  const supabase = getSupabaseAdmin();
   if (!supabase) {
     console.error('[Chat Lead Mailer] Supabase server configuration is missing.');
     throw new Error('Database service unavailable: Supabase client is not configured.');

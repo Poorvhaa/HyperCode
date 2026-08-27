@@ -67,8 +67,8 @@ export default function AdminSidebar({ userProfile, activeTab }: SidebarProps) {
         <Image
           src="/hypercodeit.logo.webp"
           alt="HyperCode Logo"
-          width={130}
-          height={34}
+          width={512}
+          height={512}
           priority
           className="h-8 w-auto object-contain"
         />

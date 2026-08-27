@@ -141,8 +141,8 @@ export function Navigation() {
                 <Image
                   src="/hypercodeit.logo.webp"
                   alt="HyperCode"
-                  width={115}
-                  height={80}
+                  width={512}
+                  height={512}
                   priority
                   quality={100}
                   style={{ height: 'auto' }}

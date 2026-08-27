@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import OpenAI from 'openai';
-import { getSupabaseServer, verifySupabaseConnectivity } from '@/lib/supabase-server';
+import { getSupabaseAdmin } from '@/lib/supabase/admin';
+import { verifySupabaseConnectivity } from '@/lib/supabase/connectivity';
 import { isRateLimited, getClientIp, sanitizeInput } from '@/lib/security';
 
 const schema = z.object({
@@ -116,7 +117,7 @@ export async function POST(req: Request) {
     }
 
     // Server-only Supabase Client
-    const supabase = getSupabaseServer();
+    const supabase = getSupabaseAdmin();
     if (!supabase) {
       return NextResponse.json(
         { success: false, error: 'Something went wrong. Please try again or schedule a consultation.' },

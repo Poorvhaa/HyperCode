@@ -8,6 +8,7 @@ import { useState, type FormEvent } from 'react';
 import { EMAIL_REGEX } from '@/lib/validation';
 import { useCookieConsent } from '@/hooks/useCookieConsent';
 import { useFormValidation } from '@/hooks/use-form-validation';
+import { COMPANY } from '@/lib/seo/company';
 
 export function Footer() {
   const tNav = useTranslations('Navigation');
@@ -88,7 +89,7 @@ export function Footer() {
   ];
 
   const currentYear = new Date().getFullYear();
-  const copyrightText = (tf('copyright') || `© ${currentYear} HyperCode. All rights reserved.`).replace('2026', currentYear.toString());
+  const copyrightText = (tf('copyright') || `© ${currentYear} ${COMPANY.legalName}. All rights reserved.`).replace('2026', currentYear.toString());
 
   return (
     <footer 
@@ -205,8 +206,8 @@ export function Footer() {
                 <Image
                   src="/hypercodeit.logo.webp"
                   alt="HyperCode Logo"
-                  width={150}
-                  height={115}
+                  width={512}
+                  height={512}
                   quality={100}
                   className="h-auto w-[130px] md:w-[140px] lg:w-[150px]"
                   priority
@@ -215,7 +216,7 @@ export function Footer() {
             </Link>
             
             <p className="text-body text-slate-500 max-w-[360px]">
-              {tf('tagline') || 'Enterprise AI & Digital Transformation Consulting'}
+              {tf('tagline') || COMPANY.tagline}
             </p>
             
             {/* Contact Details */}
@@ -234,20 +235,20 @@ export function Footer() {
               
               {/* Email */}
               <a 
-                href="mailto:hello@hypercodeit.com" 
+                href={`mailto:${COMPANY.email}`}
                 className="flex items-center gap-4 text-slate-550 hover:text-royal-blue transition-colors group font-semibold text-body-sm"
               >
                 <Mail className="text-royal-blue group-hover:text-royal-blue transition-colors flex-shrink-0 w-[20px] h-[20px]" />
-                <span>hello@hypercodeit.com</span>
+                <span>{COMPANY.email}</span>
               </a>
               
               {/* Phone */}
               <a 
-                href="tel:+18005550199" 
+                href={`tel:${COMPANY.phoneTel}`}
                 className="flex items-center gap-4 text-green hover:text-royal-blue transition-colors group font-semibold text-body-sm"
               >
                 <Phone className="text-green group-hover:text-royal-blue transition-colors flex-shrink-0 w-[20px] h-[20px]" />
-                <span>2243510727</span>
+                <span>{COMPANY.phone}</span>
               </a>
             </div>
 

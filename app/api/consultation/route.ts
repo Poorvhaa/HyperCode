@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
-import { getSupabaseServer } from '@/lib/supabase-server';
+import { getSupabaseAdmin } from '@/lib/supabase/admin';
 import { Resend } from 'resend';
 import {
   NAME_REGEX,
@@ -14,7 +14,7 @@ import {
 // Initialize Resend
 const resendApiKey = process.env.RESEND_API_KEY || '';
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
-const contactRecipient = process.env.HYPERCODE_CONTACT_EMAIL || 'hello@hypercodeit.com';
+const contactRecipient = process.env.HYPERCODE_CONTACT_EMAIL || 'hr@hypercodeit.com';
 const resendFromEmail =
   process.env.RESEND_FROM_EMAIL ||
   'HyperCode <HR@hypercodeit.com>';
@@ -43,7 +43,7 @@ export async function POST(req: Request) {
     const validated = consultationSchema.parse(sanitizedBody);
 
     // Save the consultation directly through the server-only Supabase client
-const supabase = getSupabaseServer();
+const supabase = getSupabaseAdmin();
 
 if (!supabase) {
   console.error(
@@ -166,8 +166,8 @@ if (saveError || !savedData) {
                 </div>
               </div>
               <div style="padding: 24px 32px; background-color: #f8fafc; border-top: 1px solid #f1f5f9; text-align: center; font-size: 12px; color: #64748b; line-height: 1.5;">
-                <div style="font-weight: bold; color: #475569; margin-bottom: 4px;">HyperCode IT Solutions</div>
-                <div><a href="mailto:solutions@hypercodeit.com" style="color: #145BFF; text-decoration: none;">solutions@hypercodeit.com</a></div>
+                <div style="font-weight: bold; color: #475569; margin-bottom: 4px;">HyperCode LLC</div>
+                <div><a href="mailto:hr@hypercodeit.com" style="color: #145BFF; text-decoration: none;">hr@hypercodeit.com</a></div>
                 <div style="margin-top: 4px;"><a href="https://www.hypercodeit.com" target="_blank" style="color: #64748b; text-decoration: none;">https://www.hypercodeit.com</a></div>
               </div>
             </div>
@@ -226,8 +226,8 @@ if (saveError || !savedData) {
                 <p style="margin: 0; font-weight: bold; color: #145BFF;">Práctica de Transformación Digital</p>
               </div>
               <div style="padding: 24px 32px; background-color: #f8fafc; border-top: 1px solid #f1f5f9; text-align: center; font-size: 12px; color: #64748b; line-height: 1.5;">
-                <div style="font-weight: bold; color: #475569; margin-bottom: 4px;">HyperCode IT Solutions</div>
-                <div><a href="mailto:solutions@hypercodeit.com" style="color: #145BFF; text-decoration: none;">solutions@hypercodeit.com</a></div>
+                <div style="font-weight: bold; color: #475569; margin-bottom: 4px;">HyperCode LLC</div>
+                <div><a href="mailto:hr@hypercodeit.com" style="color: #145BFF; text-decoration: none;">hr@hypercodeit.com</a></div>
                 <div style="margin-top: 4px;"><a href="https://www.hypercodeit.com" target="_blank" style="color: #64748b; text-decoration: none;">https://www.hypercodeit.com</a></div>
               </div>
             </div>
@@ -254,8 +254,8 @@ if (saveError || !savedData) {
                 <p style="margin: 0; font-weight: bold; color: #145BFF;">Digital Transformation Practice</p>
               </div>
               <div style="padding: 24px 32px; background-color: #f8fafc; border-top: 1px solid #f1f5f9; text-align: center; font-size: 12px; color: #64748b; line-height: 1.5;">
-                <div style="font-weight: bold; color: #475569; margin-bottom: 4px;">HyperCode IT Solutions</div>
-                <div><a href="mailto:solutions@hypercodeit.com" style="color: #145BFF; text-decoration: none;">solutions@hypercodeit.com</a></div>
+                <div style="font-weight: bold; color: #475569; margin-bottom: 4px;">HyperCode LLC</div>
+                <div><a href="mailto:hr@hypercodeit.com" style="color: #145BFF; text-decoration: none;">hr@hypercodeit.com</a></div>
                 <div style="margin-top: 4px;"><a href="https://www.hypercodeit.com" target="_blank" style="color: #64748b; text-decoration: none;">https://www.hypercodeit.com</a></div>
               </div>
             </div>

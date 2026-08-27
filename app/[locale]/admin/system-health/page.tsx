@@ -5,7 +5,7 @@ import { useRouter, useParams } from 'next/navigation';
 import { Shield, ArrowLeft, Activity, CheckCircle, XCircle, Database, Lock, Key, AlertCircle } from 'lucide-react';
 import { supabase, db, UserProfile } from '@/lib/db';
 import AdminSidebar from '@/components/admin/Sidebar';
-import { HealthCheckReport } from '@/lib/database-health';
+import type { HealthCheckReport } from '@/lib/database-health';
 
 const defaultHealthReport: HealthCheckReport = {
   success: true,

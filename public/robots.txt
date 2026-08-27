@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /en/admin/
+Disallow: /es/admin/
+Disallow: /api/
 
-Sitemap: https://www.hypercode.com/sitemap.xml
+Sitemap: https://www.hypercodeit.com/sitemap.xml

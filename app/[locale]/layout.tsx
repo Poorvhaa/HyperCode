@@ -9,6 +9,12 @@ import AIConsultant from '@/components/ai-consultant'
 import { CookieProvider } from '@/components/CookieProvider'
 import { CookieBanner } from '@/components/CookieBanner'
 import { CookiePreferencesModal } from '@/components/CookiePreferencesModal'
+import {
+  COMPANY,
+  getOrganizationJsonLd,
+  getWebSiteJsonLd,
+  localeUrl,
+} from '@/lib/seo/company'
 
 import { Geist, Geist_Mono } from 'next/font/google';
 
@@ -37,98 +43,55 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   
   // Custom SEO titles and descriptions mapped for 2 languages
-  const seoMap: Record<string, { title: string; desc: string; keywords: string[] }> = {
+  const seoMap: Record<string, { title: string; desc: string }> = {
     en: {
-      title: "HyperCode | AI Solutions | IT & Non-IT Staffing | Web Development| Custom Software Development| Digital Transformation| AI Automation| Enterprise Consulting| Business Process Automation",
-      desc: "HyperCode provides AI Solutions, IT & Non-IT Staffing, Custom Software Development, Web Development, Digital Transformation, AI Automation, Enterprise Consulting, and Business Process Automation.",
-      keywords: [
-        "AI Solutions",
-        "IT & Non-IT Staffing",
-        "Permanent Staffing",
-        "Contract Staffing",
-        "Executive Search",
-        "Talent Acquisition",
-        "Recruitment Services",
-        "Staff Augmentation",
-        "Business Staffing",
-        "AI Consulting",
-        "Digital Transformation",
-        "Software Development",
-        "Web Development",
-        "Cloud Solutions",
-        "Automation Services",
-        "Enterprise AI",
-        "Artificial Intelligence",
-        "Machine Learning",
-        "Business Intelligence",
-        "Technology Consulting",
-        "Hiring Solutions",
-        "Workforce Solutions"
-      ]
+      title: 'HyperCode LLC | AI, Software & Digital Transformation',
+      desc: 'HyperCode LLC helps organizations grow with AI consulting, custom software, data analytics, cloud engineering, and IT staffing. Headquartered in Schaumburg, IL.',
     },
     es: {
-      title: "HyperCode | Soluciones de IA | Contratación de Personal de TI y No TI | Desarrollo Web",
-      desc: "HyperCode ofrece Soluciones de IA, Contratación de Personal de TI y No TI, Desarrollo de Software Personalizado, Desarrollo Web, Transformación Digital, Automatización de IA, Consultoría Empresarial y Automatización de Procesos de Negocio.",
-      keywords: [
-        "Soluciones de IA",
-        "Contratación de Personal de TI y No TI",
-        "Personal Permanente",
-        "Personal por Contrato",
-        "Búsqueda Ejecutiva",
-        "Adquisición de Talento",
-        "Servicios de Reclutamiento",
-        "Aumento de Personal",
-        "Personal de Negocios",
-        "Consultoría de IA",
-        "Transformación Digital",
-        "Desarrollo de Software",
-        "Desarrollo Web",
-        "Soluciones en la Nube",
-        "Servicios de Automatización",
-        "IA Empresarial",
-        "Inteligencia Artificial",
-        "Aprendizaje Automático",
-        "Inteligencia de Negocios",
-        "Consultoría Tecnológica",
-        "Soluciones de Contratación",
-        "Soluciones de Fuerza Laboral"
-      ]
-    }
+      title: 'HyperCode LLC | IA, Software y Transformación Digital',
+      desc: 'HyperCode LLC ayuda a las organizaciones a crecer con consultoría en IA, software personalizado, analítica de datos, ingeniería en la nube y personal IT. Sede en Schaumburg, IL.',
+    },
   };
 
   const currentSeo = seoMap[locale] || seoMap.en;
 
-  // Language alternates for hreflang tags
   const languageAlternates: Record<string, string> = {
-    'en-US': `https://www.hypercodeit.com/en`,
-    'es-US': `https://www.hypercodeit.com/es`,
-    'x-default': 'https://www.hypercodeit.com/en'
+    'en-US': localeUrl('en'),
+    'es-US': localeUrl('es'),
+    'x-default': localeUrl('en'),
   };
 
   return {
-    metadataBase: new URL('https://www.hypercodeit.com'),
+    metadataBase: new URL(COMPANY.siteUrl),
     title: {
       default: currentSeo.title,
-      template: `HyperCode | %s`,
+      template: '%s',
     },
     description: currentSeo.desc,
-    generator: 'v0.app',
     alternates: {
-      canonical: `https://www.hypercodeit.com/${locale}`,
+      canonical: localeUrl(locale),
       languages: languageAlternates,
     },
     openGraph: {
       title: currentSeo.title,
       description: currentSeo.desc,
-      url: `https://www.hypercodeit.com/${locale}`,
-      siteName: 'HyperCode',
-      locale: locale === 'en' ? 'en_US' : `${locale}_${locale.toUpperCase()}`,
+      url: localeUrl(locale),
+      siteName: COMPANY.brandName,
+      locale: locale === 'en' ? 'en_US' : 'es_ES',
       type: 'website',
+      images: [
+        {
+          url: COMPANY.logoPath,
+          alt: `${COMPANY.brandName} logo`,
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
       title: currentSeo.title,
       description: currentSeo.desc,
+      images: [COMPANY.logoPath],
     },
     icons: {
       icon: [
@@ -168,49 +131,8 @@ export default async function RootLayout({ children, params }: LayoutProps) {
   setRequestLocale(locale);
   const messages = await getMessages();
 
-  // Localized JSON-LD description matching the locale
-  const descriptionMap: Record<string, string> = {
-    en: 'Enterprise Web Development, Business Intelligence, Data Analytics, and IT & Non-IT Staffing consulting firm.',
-    es: 'Firma de consultoría de desarrollo web empresarial, inteligencia de negocios, análisis de datos y contratación de personal de TI y no TI.'
-  };
-
-  const jsonLdDescription = descriptionMap[locale] || descriptionMap.en;
-
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Corporation',
-    'name': 'HyperCode',
-    'url': `https://www.hypercodeit.com/${locale}`,
-    'logo': '/hypercodeit.logo.png',
-    'description': jsonLdDescription,
-    'address': {
-      '@type': 'PostalAddress',
-      'addressLocality': 'Schaumburg',
-      'addressRegion': 'IL',
-      'postalCode': '60173',
-      'addressCountry': 'US'
-    },
-    'contactPoint': {
-      '@type': 'ContactPoint',
-      'telephone': '+1-800-555-0199',
-      'contactType': 'customer service',
-      'areaServed': 'US',
-      'availableLanguage': ['en', 'es']
-    },
-    'sameAs': [
-      'https://www.linkedin.com/company/hypercode'
-    ],
-    'knowsAbout': [
-      'AI Solutions',
-      'IT & Non-IT Staffing',
-      'Web Development',
-      'Custom Software Development',
-      'Digital Transformation',
-      'Enterprise AI',
-      'Technology Consulting',
-      'Recruitment Services'
-    ]
-  };
+  const organizationJsonLd = getOrganizationJsonLd(locale);
+  const websiteJsonLd = getWebSiteJsonLd();
 
   return (
     <html lang={locale} dir="ltr" className={`${geistSans.variable} ${geistMono.variable} bg-background`}>
@@ -218,7 +140,11 @@ export default async function RootLayout({ children, params }: LayoutProps) {
       <body className="font-sans antialiased bg-background">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
         <NextIntlClientProvider messages={messages} locale={locale}>
           <CookieProvider>

@@ -102,13 +102,13 @@
   },
   "Footer": {
     "connect": "Conéctese con Nosotros",
-    "copyright": "© 2026 HyperCode. Todos los derechos reservados.",
+    "copyright": "© 2026 HyperCode LLC. Todos los derechos reservados.",
     "privacy": "Política de Privacidad",
     "terms": "Términos y Condiciones",
     "sitemap": "Mapa del Sitio",
-    "tagline": "Consultoría de IA y Transformación Digital Empresarial",
+    "tagline": "We Solve. We Build. You Grow.",
     "officesTitle": "Sede Central Global",
-    "address": "2095 Hammond Dr Suite C ,Schaumburg, IL 60173,United States",
+    "address": "2095 Hammond Dr, Suite C, Schaumburg, IL 60173, United States",
     "phone": "Teléfono",
     "email": "Correo Electrónico",
     "legal": "Legal",
@@ -125,7 +125,7 @@
     "badge": "Socio de Transformación Digital Empresarial",
     "title": "Impulsando empresas mediante ",
     "titleHighlight": "IA y Tecnología.",
-    "subtitle": "Hypercode es una firma de reclutamiento de confianza —tanto en el ámbito tecnológico como en el no tecnológico— que ofrece soluciones de contratación rápidas y de calidad. Combinamos ingeniería de software a medida, estructuras de datos en la nube, analítica avanzada,inteligencia artificial y soluciones de talento estratégico para acelerar el crecimiento corporativo.",
+    "subtitle": "HyperCode es una firma de reclutamiento de confianza —tanto en el ámbito tecnológico como en el no tecnológico— que ofrece soluciones de contratación rápidas y de calidad. Combinamos ingeniería de software a medida, estructuras de datos en la nube, analítica avanzada, inteligencia artificial y soluciones de talento estratégico para acelerar el crecimiento corporativo.",
     "talkToConsultant": "Programar Consulta",
     "exploreSolutions": "Explorar Soluciones",
     "nodes": {
@@ -1004,7 +1004,7 @@
       },
       "rights": {
         "title": "7. Sus Derechos y Opciones",
-        "content": "Dependiendo de su ubicación (como la UE bajo el RGPD o California bajo la CCPA), puede poseer derechos específicos con respecto a su información personal, incluido el derecho a acceder, corregir, eliminar o limitar el que usemos sus datos. Para ejercer cualquiera de estos derechos, póngase en contacto con nosotros en hello@hypercodeit.com."
+        "content": "Dependiendo de su ubicación (como la UE bajo el RGPD o California bajo la CCPA), puede poseer derechos específicos con respecto a su información personal, incluido el derecho a acceder, corregir, eliminar o limitar el que usemos sus datos. Para ejercer cualquiera de estos derechos, póngase en contacto con nosotros en hr@hypercodeit.com."
       },
       "changes": {
         "title": "8. Cambios en esta Política",
@@ -1012,7 +1012,7 @@
       },
       "contact": {
         "title": "9. Contáctenos",
-        "content": "Si tiene alguna pregunta o inquietud con respecto a esta Política de Privacidad, póngase en contacto con nosotros:\n\n• Por correo electrónico: hello@hypercodeit.com\n\n• Por correo postal: 2095 Hammond Dr Suite B, Schaumburg, IL 60173"
+        "content": "Si tiene alguna pregunta o inquietud con respecto a esta Política de Privacidad, póngase en contacto con nosotros:\n\n• Por correo electrónico: hr@hypercodeit.com\n\n• Por correo postal: 2095 Hammond Dr, Suite C, Schaumburg, IL 60173"
       }
     }
   },
@@ -1058,7 +1058,7 @@
       },
       "contact": {
         "title": "9. Contáctenos",
-        "content": "In order to resolve a complaint regarding the site or to receive further information regarding use of the site, please contact us:\n\n• By email: hello@hypercodeit.com\n\n• By mail: 2095 Hammond Dr Suite B, Schaumburg, IL 60173"
+        "content": "In order to resolve a complaint regarding the site or to receive further information regarding use of the site, please contact us:\n\n• By email: hr@hypercodeit.com\n\n• By mail: 2095 Hammond Dr, Suite C, Schaumburg, IL 60173"
       }
     }
   },
@@ -1311,7 +1311,7 @@
       },
       "contact": {
         "title": "7. Contacto",
-        "content": "Si tiene preguntas sobre nuestro uso de cookies u otras tecnologías de seguimiento, póngase en contacto con nosotros:\n\n• Por correo electrónico: hello@hypercodeit.com\n\n• Por correo postal: 2095 Hammond Dr Suite B, Schaumburg, IL 60173"
+        "content": "Si tiene preguntas sobre nuestro uso de cookies u otras tecnologías de seguimiento, póngase en contacto con nosotros:\n\n• Por correo electrónico: hr@hypercodeit.com\n\n• Por correo postal: 2095 Hammond Dr, Suite C, Schaumburg, IL 60173"
       }
     }
   },

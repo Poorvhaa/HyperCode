@@ -4,6 +4,8 @@ import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import Script from 'next/script';
 import { CookieConsent, CookieConsentContextType } from '@/types/cookieConsent';
 import { getCookieConsent, setCookieConsent } from '@/lib/cookieConsent';
+import { GTM_CONTAINER_ID } from '@/lib/analytics-config';
+import { GoogleAnalyticsConsent } from '@/components/analytics/google-analytics-consent';
 
 export const CookieConsentContext = createContext<CookieConsentContextType | undefined>(undefined);
 
@@ -90,12 +92,16 @@ export function CookieProvider({ children }: CookieProviderProps) {
     setIsPreferencesOpen(false);
   };
 
-  // IDs configuration via Env or Defaults
-  const gaId = process.env.NEXT_PUBLIC_GA_ID || 'G-XXXXXXXXXX';
-  const gtmId = process.env.NEXT_PUBLIC_GTM_ID || 'GTM-XXXXXX';
   const clarityId = process.env.NEXT_PUBLIC_CLARITY_ID || 'clarity-mock-id';
   const linkedinPartnerId = process.env.NEXT_PUBLIC_LINKEDIN_PARTNER_ID || 'linkedin-mock-id';
-  const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID || 'meta-pixel-mock-id';
+  const rawMetaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID?.trim();
+  const metaPixelId =
+    rawMetaPixelId &&
+    rawMetaPixelId !== 'null' &&
+    rawMetaPixelId !== 'undefined' &&
+    /^\d+$/.test(rawMetaPixelId)
+      ? rawMetaPixelId
+      : null;
 
   return (
     <CookieConsentContext.Provider
@@ -115,34 +121,19 @@ export function CookieProvider({ children }: CookieProviderProps) {
       {/* Conditionally Load Tracking Scripts based on Consent */}
       {hasMounted && consent?.analytics && (
         <>
-          <Script
-            src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
-            strategy="afterInteractive"
-            onLoad={() => console.log('[Scripts] Loaded Google Analytics library')}
-          />
-          <Script id="google-analytics-init" strategy="afterInteractive">
-            {`
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){window.dataLayer.push(arguments);}
-              window.gtag = gtag;
-              gtag('js', new Date());
-              gtag('config', '${gaId}', {
-                page_path: window.location.pathname,
-              });
-              console.log('[Scripts] Initialized Google Analytics (gtag)');
-            `}
-          </Script>
+          <GoogleAnalyticsConsent />
 
-          <Script id="google-tag-manager-init" strategy="afterInteractive">
-            {`
+          {GTM_CONTAINER_ID && (
+            <Script id="google-tag-manager-init" strategy="afterInteractive">
+              {`
               (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
               new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
               j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-              })(window,document,'script','dataLayer','${gtmId}');
-              console.log('[Scripts] Initialized Google Tag Manager (${gtmId})');
+              })(window,document,'script','dataLayer','${GTM_CONTAINER_ID}');
             `}
-          </Script>
+            </Script>
+          )}
 
           <Script id="microsoft-clarity-init" strategy="afterInteractive">
             {`
@@ -176,21 +167,23 @@ export function CookieProvider({ children }: CookieProviderProps) {
             `}
           </Script>
 
-          <Script id="meta-pixel-init" strategy="afterInteractive">
-            {`
-              !function(f,b,e,v,n,t,s)
-              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-              n.queue=[];t=b.createElement(e);t.async=!0;
-              t.src=v;s=b.getElementsByTagName(e)[0];
-              s.parentNode.insertBefore(t,s)}(window, document,'script',
-              'https://connect.facebook.net/en_US/fbevents.js');
-              fbq('init', '${metaPixelId}');
-              fbq('track', 'PageView');
-              console.log('[Scripts] Initialized Meta Pixel (${metaPixelId})');
-            `}
-          </Script>
+          {metaPixelId && (
+            <Script id="meta-pixel-init" strategy="afterInteractive">
+              {`
+                !function(f,b,e,v,n,t,s)
+                {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+                if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+                n.queue=[];t=b.createElement(e);t.async=!0;
+                t.src=v;s=b.getElementsByTagName(e)[0];
+                s.parentNode.insertBefore(t,s)}(window, document,'script',
+                'https://connect.facebook.net/en_US/fbevents.js');
+                fbq('init', '${metaPixelId}');
+                fbq('track', 'PageView');
+                console.log('[Scripts] Initialized Meta Pixel (${metaPixelId})');
+              `}
+            </Script>
+          )}
         </>
       )}
     </CookieConsentContext.Provider>

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { runDbHealthCheck } from '@/lib/database-health';
-import { getSupabaseServer } from '@/lib/supabase-server';
+import { getSupabaseAdmin } from '@/lib/supabase/admin';
 
 export async function GET(req: Request) {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
@@ -14,7 +14,7 @@ export async function GET(req: Request) {
       return NextResponse.json({ error: 'Unauthorized: Missing token' }, { status: 401 });
     }
 
-    const supabaseServer = getSupabaseServer();
+    const supabaseServer = getSupabaseAdmin();
     if (!supabaseServer) {
       return NextResponse.json({ error: 'Database service unavailable' }, { status: 500 });
     }

@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { SolutionDetailPage } from '@/components/solution-detail-page';
 import { getServiceDetails, SERVICE_REGISTRY } from '@/lib/services-details';
+import { getOrganizationProviderJsonLd, localeUrl } from '@/lib/seo/company';
 import { routing } from '@/i18n/routing';
 import { notFound } from 'next/navigation';
 
@@ -37,17 +38,17 @@ export async function generateMetadata({ params }: Props) {
     title: pageTitle,
     description: details.description,
     alternates: {
-      canonical: `https://www.hypercodeit.com/${locale}/solutions/${slug}`,
+      canonical: localeUrl(locale, `/solutions/${slug}`),
       languages: {
-        'en-US': `https://www.hypercodeit.com/en/solutions/${slug}`,
-        'es-US': `https://www.hypercodeit.com/es/solutions/${slug}`,
-        'x-default': `https://www.hypercodeit.com/en/solutions/${slug}`,
+        'en-US': localeUrl('en', `/solutions/${slug}`),
+        'es-US': localeUrl('es', `/solutions/${slug}`),
+        'x-default': localeUrl('en', `/solutions/${slug}`),
       }
     },
     openGraph: {
       title: pageTitle,
       description: details.description,
-      url: `https://www.hypercodeit.com/${locale}/solutions/${slug}`,
+      url: localeUrl(locale, `/solutions/${slug}`),
       siteName: 'HyperCode',
       locale: locale === 'en' ? 'en_US' : 'es_ES',
       type: 'website',
@@ -88,19 +89,19 @@ export default async function DynamicServicePage({ params }: Props) {
         '@type': 'ListItem',
         'position': 1,
         'name': locale === 'es' ? 'Inicio' : 'Home',
-        'item': `https://www.hypercodeit.com/${locale}`
+        'item': localeUrl(locale)
       },
       {
         '@type': 'ListItem',
         'position': 2,
         'name': locale === 'es' ? 'Soluciones' : 'Solutions',
-        'item': `https://www.hypercodeit.com/${locale}/solutions`
+        'item': localeUrl(locale, '/solutions')
       },
       {
         '@type': 'ListItem',
         'position': 3,
         'name': details.title,
-        'item': `https://www.hypercodeit.com/${locale}/solutions/${slug}`
+        'item': localeUrl(locale, `/solutions/${slug}`)
       }
     ]
   };
@@ -111,19 +112,7 @@ export default async function DynamicServicePage({ params }: Props) {
     '@type': 'Service',
     'name': details.title,
     'serviceType': details.title,
-    'provider': {
-      '@type': 'LocalBusiness',
-      'name': 'HyperCode',
-      'image': 'https://www.hypercodeit.com/icon.svg',
-      'telephone': '+1-800-555-0199',
-      'address': {
-        '@type': 'PostalAddress',
-        'addressLocality': 'Schaumburg',
-        'addressRegion': 'IL',
-        'postalCode': '60173',
-        'addressCountry': 'US'
-      }
-    },
+    'provider': getOrganizationProviderJsonLd(),
     'areaServed': 'US',
     'description': details.description
   };

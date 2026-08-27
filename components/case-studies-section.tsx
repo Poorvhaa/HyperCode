@@ -270,8 +270,8 @@ DESKTOP VIEW: STICKY HORIZONTAL TIMELINE (>= 1024px)
 
               // Highlighting mechanics
               let capsuleBorder = 'border-slate-200/80';
-              let scaleTarget = undefined;
-              let opacityTarget = undefined;
+              let scaleTarget = 1;
+              let opacityTarget = 1;
 
               if (clickedIdx !== null) {
                 if (isClicked) {
@@ -313,17 +313,20 @@ DESKTOP VIEW: STICKY HORIZONTAL TIMELINE (>= 1024px)
                           top: '50%',
                           x: cardMotionValues[idx]?.x,
                           y: '-50%',
-                          scale: clickedIdx !== null ? undefined : cardMotionValues[idx]?.scale,
-                          opacity: clickedIdx !== null ? undefined : cardMotionValues[idx]?.opacity
+                          ...(clickedIdx === null
+                            ? {
+                                scale: cardMotionValues[idx]?.scale,
+                                opacity: cardMotionValues[idx]?.opacity,
+                              }
+                            : {})
                         }
                   }
                   animate={
                     prefersReducedMotion
                       ? { scale: 1, opacity: 1 }
-                      : {
-                          scale: clickedIdx !== null ? scaleTarget : undefined,
-                          opacity: clickedIdx !== null ? opacityTarget : undefined
-                        }
+                      : clickedIdx !== null
+                        ? { scale: scaleTarget, opacity: opacityTarget }
+                        : {}
                   }
                   transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
                   onClick={() => {

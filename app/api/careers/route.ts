@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
-import { getSupabaseServer } from '@/lib/supabase-server';
+import { getSupabaseAdmin } from '@/lib/supabase/admin';
 import { Resend } from 'resend';
 import {
   NAME_REGEX,
@@ -13,7 +13,7 @@ import {
 // Initialize Resend
 const resendApiKey = process.env.RESEND_API_KEY || '';
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
-const contactRecipient = process.env.HYPERCODE_CONTACT_EMAIL || 'hello@hypercodeit.com';
+const contactRecipient = process.env.HYPERCODE_CONTACT_EMAIL || 'hr@hypercodeit.com';
 const resendFromEmail =
   process.env.RESEND_FROM_EMAIL ||
   'HyperCode <HR@hypercodeit.com>';
@@ -42,7 +42,7 @@ export async function POST(req: Request) {
 
   try {
     // 1. Check Supabase client initialization
-    const supabaseServer = getSupabaseServer();
+    const supabaseServer = getSupabaseAdmin();
     if (!supabaseServer) {
       console.error('[Careers API] ERROR: Supabase server client could not be initialized.');
       return NextResponse.json({ error: 'Supabase client initialization failed' }, { status: 500 });
@@ -243,8 +243,8 @@ export async function POST(req: Request) {
                 </div>
               </div>
               <div style="padding: 24px 32px; background-color: #f8fafc; border-top: 1px solid #f1f5f9; text-align: center; font-size: 12px; color: #64748b; line-height: 1.5;">
-                <div style="font-weight: bold; color: #475569; margin-bottom: 4px;">HyperCode IT Solutions</div>
-                <div><a href="mailto:solutions@hypercodeit.com" style="color: #145BFF; text-decoration: none;">solutions@hypercodeit.com</a></div>
+                <div style="font-weight: bold; color: #475569; margin-bottom: 4px;">HyperCode LLC</div>
+                <div><a href="mailto:hr@hypercodeit.com" style="color: #145BFF; text-decoration: none;">hr@hypercodeit.com</a></div>
                 <div style="margin-top: 4px;"><a href="https://www.hypercodeit.com" target="_blank" style="color: #64748b; text-decoration: none;">https://www.hypercodeit.com</a></div>
               </div>
             </div>
@@ -282,8 +282,8 @@ export async function POST(req: Request) {
                 <p style="margin: 0; font-weight: bold; color: #145BFF;">Adquisición de Talento de HyperCode</p>
               </div>
               <div style="padding: 24px 32px; background-color: #f8fafc; border-top: 1px solid #f1f5f9; text-align: center; font-size: 12px; color: #64748b; line-height: 1.5;">
-                <div style="font-weight: bold; color: #475569; margin-bottom: 4px;">HyperCode IT Solutions</div>
-                <div><a href="mailto:solutions@hypercodeit.com" style="color: #145BFF; text-decoration: none;">solutions@hypercodeit.com</a></div>
+                <div style="font-weight: bold; color: #475569; margin-bottom: 4px;">HyperCode LLC</div>
+                <div><a href="mailto:hr@hypercodeit.com" style="color: #145BFF; text-decoration: none;">hr@hypercodeit.com</a></div>
                 <div style="margin-top: 4px;"><a href="https://www.hypercodeit.com" target="_blank" style="color: #64748b; text-decoration: none;">https://www.hypercodeit.com</a></div>
               </div>
             </div>
@@ -313,8 +313,8 @@ export async function POST(req: Request) {
                 <p style="margin: 0; font-weight: bold; color: #145BFF;">HyperCode Talent Acquisition Squad</p>
               </div>
               <div style="padding: 24px 32px; background-color: #f8fafc; border-top: 1px solid #f1f5f9; text-align: center; font-size: 12px; color: #64748b; line-height: 1.5;">
-                <div style="font-weight: bold; color: #475569; margin-bottom: 4px;">HyperCode IT Solutions</div>
-                <div><a href="mailto:solutions@hypercodeit.com" style="color: #145BFF; text-decoration: none;">solutions@hypercodeit.com</a></div>
+                <div style="font-weight: bold; color: #475569; margin-bottom: 4px;">HyperCode LLC</div>
+                <div><a href="mailto:hr@hypercodeit.com" style="color: #145BFF; text-decoration: none;">hr@hypercodeit.com</a></div>
                 <div style="margin-top: 4px;"><a href="https://www.hypercodeit.com" target="_blank" style="color: #64748b; text-decoration: none;">https://www.hypercodeit.com</a></div>
               </div>
             </div>

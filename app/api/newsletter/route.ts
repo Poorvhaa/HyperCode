@@ -1,19 +1,21 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
-import { getSupabaseServer } from '@/lib/supabase-server';
+import {
+  getSupabaseAdmin,
+  isSupabaseAdminConfigured
+} from '@/lib/supabase/admin';
 import { Resend } from 'resend';
 import { EMAIL_REGEX, sanitizePayload } from '@/lib/validation';
 
 // Startup validation for Supabase configuration
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-if (!supabaseUrl || !supabaseAnonKey || !supabaseServiceKey) {
+if (!supabaseUrl || !supabaseAnonKey || !isSupabaseAdminConfigured()) {
   console.error('[Newsletter API] CRITICAL CONFIGURATION ERROR: Missing Supabase environment variables.', {
     NEXT_PUBLIC_SUPABASE_URL: supabaseUrl ? 'Configured' : 'MISSING',
     NEXT_PUBLIC_SUPABASE_ANON_KEY: supabaseAnonKey ? 'Configured' : 'MISSING',
-    SUPABASE_SERVICE_ROLE_KEY: supabaseServiceKey ? 'Configured' : 'MISSING'
+    SUPABASE_SERVICE_ROLE_KEY: isSupabaseAdminConfigured() ? 'Configured' : 'MISSING'
   });
 }
 
@@ -43,7 +45,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: true });
     }
 
-    const supabaseServer = getSupabaseServer();
+    const supabaseServer = getSupabaseAdmin();
 
     if (!supabaseServer) {
       console.error('[Newsletter API] Supabase server configuration is missing.');
@@ -108,8 +110,8 @@ export async function POST(req: Request) {
                 <p style="margin: 0; font-weight: bold; color: #145BFF;">El equipo editorial de HyperCode</p>
               </div>
               <div style="padding: 24px 32px; background-color: #f8fafc; border-top: 1px solid #f1f5f9; text-align: center; font-size: 12px; color: #64748b; line-height: 1.5;">
-                <div style="font-weight: bold; color: #475569; margin-bottom: 4px;">HyperCode IT Solutions</div>
-                <div><a href="mailto:solutions@hypercodeit.com" style="color: #145BFF; text-decoration: none;">solutions@hypercodeit.com</a></div>
+                <div style="font-weight: bold; color: #475569; margin-bottom: 4px;">HyperCode LLC</div>
+                <div><a href="mailto:hr@hypercodeit.com" style="color: #145BFF; text-decoration: none;">hr@hypercodeit.com</a></div>
                 <div style="margin-top: 4px;"><a href="https://www.hypercodeit.com" target="_blank" style="color: #64748b; text-decoration: none;">https://www.hypercodeit.com</a></div>
               </div>
             </div>
@@ -133,8 +135,8 @@ export async function POST(req: Request) {
                 <p style="margin: 0; font-weight: bold; color: #145BFF;">HyperCode Editorial Team</p>
               </div>
               <div style="padding: 24px 32px; background-color: #f8fafc; border-top: 1px solid #f1f5f9; text-align: center; font-size: 12px; color: #64748b; line-height: 1.5;">
-                <div style="font-weight: bold; color: #475569; margin-bottom: 4px;">HyperCode IT Solutions</div>
-                <div><a href="mailto:solutions@hypercodeit.com" style="color: #145BFF; text-decoration: none;">solutions@hypercodeit.com</a></div>
+                <div style="font-weight: bold; color: #475569; margin-bottom: 4px;">HyperCode LLC</div>
+                <div><a href="mailto:hr@hypercodeit.com" style="color: #145BFF; text-decoration: none;">hr@hypercodeit.com</a></div>
                 <div style="margin-top: 4px;"><a href="https://www.hypercodeit.com" target="_blank" style="color: #64748b; text-decoration: none;">https://www.hypercodeit.com</a></div>
               </div>
             </div>

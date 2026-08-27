@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: Props) {
     title: `HyperCode | ${t('title')}`,
     description: t('subtitle'),
     alternates: {
-      canonical: `https://www.hypercodeus.com/${locale}/cookie-policy`,
+      canonical: `https://www.hypercodeit.com/${locale}/cookie-policy`,
     },
   };
 }

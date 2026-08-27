@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getSupabaseServer } from '@/lib/supabase-server';
+import { getSupabaseAdmin } from '@/lib/supabase/admin';
 
 // Authenticate caller and fetch profile details
 async function checkAuth(req: Request) {
@@ -10,7 +10,7 @@ async function checkAuth(req: Request) {
     return { error: 'Unauthorized: Missing token', status: 401 };
   }
 
-  const supabaseServer = getSupabaseServer();
+  const supabaseServer = getSupabaseAdmin();
   if (!supabaseServer) {
     return { error: 'Database service unavailable', status: 500 };
   }

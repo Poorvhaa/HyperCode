@@ -1,6 +1,8 @@
-import { createClient } from '@supabase/supabase-js';
 import * as DBTypes from '@/types/database';
-import { getSupabaseServer } from './supabase-server';
+import {
+  isSupabaseBrowserConfigured,
+  supabaseBrowser
+} from './supabase/browser';
 
 const supabaseUrl = (process.env.NEXT_PUBLIC_SUPABASE_URL || '')
   .trim()
@@ -11,20 +13,9 @@ const supabaseAnonKey = (process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '')
   .replace(/^["']|["']$/g, '')
   .replace(/\s/g, '');
 
-const isSupabaseConfigured = !!(supabaseUrl && supabaseAnonKey);
+const isSupabaseConfigured = isSupabaseBrowserConfigured;
 
-let serverClient: any = null;
-if (typeof window === 'undefined') {
-  try {
-    serverClient = getSupabaseServer();
-  } catch (e: any) {
-    console.warn('[DB] Supabase server client not initialized at module load:', e.message);
-  }
-}
-
-export const supabase = typeof window === 'undefined'
-  ? serverClient
-  : (isSupabaseConfigured ? createClient(supabaseUrl, supabaseAnonKey) : null);
+export const supabase = supabaseBrowser;
 
 export function sanitizePayload(val: any, seen = new WeakSet()): any {
   if (val === null || val === undefined) return null;

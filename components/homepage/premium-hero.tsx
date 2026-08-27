@@ -589,8 +589,8 @@ export function PremiumHero() {
                   <Image
                     src="/hypercodeit.logo.webp"
                     alt="HyperCode Core"
-                    width={92}
-                    height={52}
+                    width={512}
+                    height={512}
                     priority
                     quality={100}
                     style={{ height: 'auto', width: 'auto' }}

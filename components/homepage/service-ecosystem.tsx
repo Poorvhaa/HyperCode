@@ -297,6 +297,7 @@ export function ServiceEcosystem() {
                         fill="none"
                         stroke="#145BFF"
                         strokeWidth="2.5"
+                        initial={{ opacity: 0 }}
                         animate={{ opacity: isActive ? 0.25 : 0 }}
                         className="transition-all duration-300"
                       />
