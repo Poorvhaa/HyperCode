@@ -7,6 +7,7 @@ import { Link } from '@/i18n/routing';
 import Image from 'next/image';
 import { HeroBanner } from '@/components/hero-banner';
 import { googleMapsSearchUrl } from '@/lib/utils';
+import { localeUrl } from '@/lib/site-url';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -19,7 +20,7 @@ export async function generateMetadata({ params }: Props) {
     title: `HyperCode | Contact | General Inquiries & Partnerships`,
     description: "HyperCode can be contacted for general business inquiries, career questions, partnership proposals, and media requests. Headquartered in Schaumburg, IL.",
     alternates: {
-      canonical: `https://www.hypercodeit.com/${locale}/contact`,
+      canonical: localeUrl(locale, 'contact'),
     },
   };
 }

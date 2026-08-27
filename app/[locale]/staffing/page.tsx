@@ -15,6 +15,7 @@ import {
   Cpu 
 } from 'lucide-react';
 import { Link } from '@/i18n/routing';
+import { localeUrl } from '@/lib/site-url';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -41,7 +42,7 @@ export async function generateMetadata({ params }: Props) {
     title: currentSeo.title,
     description: currentSeo.description,
     alternates: {
-      canonical: `https://www.hypercodeit.com/${locale}/staffing`,
+      canonical: localeUrl(locale, 'staffing'),
     },
   };
 }

@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
 import { AboutClient } from '@/components/about/about-client';
+import { localeUrl } from '@/lib/site-url';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -16,7 +17,7 @@ export async function generateMetadata({ params }: Props) {
     title: `HyperCode | ${tc('about')}`,
     description: t('subtitle'),
     alternates: {
-      canonical: `https://www.hypercodeit.com/${locale}/about`,
+      canonical: localeUrl(locale, 'about'),
     },
   };
 }

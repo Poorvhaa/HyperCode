@@ -3,6 +3,7 @@ import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
 import { FileDown, ChevronRight } from 'lucide-react';
 import { HeroBanner } from '@/components/hero-banner';
+import { localeUrl } from '@/lib/site-url';
 import { CookieTable } from '@/components/CookieTable';
 
 interface Props {
@@ -17,7 +18,7 @@ export async function generateMetadata({ params }: Props) {
     title: `HyperCode | ${t('title')}`,
     description: t('subtitle'),
     alternates: {
-      canonical: `https://www.hypercodeus.com/${locale}/cookie-policy`,
+      canonical: localeUrl(locale, 'cookie-policy'),
     },
   };
 }

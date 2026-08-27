@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { SolutionDetailPage } from '@/components/solution-detail-page';
+import { localeUrl } from '@/lib/site-url';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -12,7 +13,7 @@ export async function generateMetadata({ params }: Props) {
     title: `HyperCode | Data Analytics Services | ${tc('solutions')}`,
     description: "Enterprise Data Analytics services, predictive modeling, statistical research, customer analytics, and business forecasting. Headquartered in Schaumburg, IL.",
     alternates: {
-      canonical: `https://www.hypercodeit.com/${locale}/solutions/data-analytics-services`,
+      canonical: localeUrl(locale, 'solutions/data-analytics-services'),
     },
   };
 }

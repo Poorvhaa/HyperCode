@@ -1,145 +1,262 @@
 'use client';
 
-import { BookOpen, Clock, CalendarDays, ArrowRight } from 'lucide-react';
+import { useMemo } from 'react';
+import { useTranslations, useLocale } from 'next-intl';
+import { motion, useReducedMotion } from 'framer-motion';
+import { Link } from '@/i18n/routing';
+import Image from 'next/image';
+import { ArrowRight } from 'lucide-react';
+import {
+  ARTICLE_FEATURED_IMAGES,
+  HOMEPAGE_FEATURED_SLUG,
+  HOMEPAGE_INSIGHT_SLUGS,
+} from '@/lib/insights';
+import { getLocalizedArticles } from '@/lib/insights-localizer';
+import { standardReveal } from '@/lib/motion-tokens';
 
-interface Article {
+function FeaturedArticle({
+  slug,
+  category,
+  title,
+  excerpt,
+  date,
+  readLabel,
+  isReduced,
+}: {
+  slug: string;
   category: string;
   title: string;
-  desc?: string;
+  excerpt: string;
   date: string;
-  readTime: string;
-  href: string;
+  readLabel: string;
+  isReduced: boolean;
+}) {
+  const imageSrc = ARTICLE_FEATURED_IMAGES[slug];
+
+  return (
+    <article className="min-w-0">
+      <Link
+        href={`/insights/${slug}`}
+        className="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#145BFF] focus-visible:ring-offset-2"
+      >
+        {imageSrc && (
+          <motion.div
+            initial={standardReveal.hidden}
+            whileInView={standardReveal.visible({ isReduced })}
+            viewport={{ once: true, margin: '-60px' }}
+            className="relative aspect-[16/10] w-full overflow-hidden bg-slate-200"
+          >
+            <Image
+              src={imageSrc}
+              alt={title}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1280px) 58vw, 720px"
+              className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02] motion-reduce:group-hover:scale-100"
+            />
+          </motion.div>
+        )}
+
+        <motion.div
+          initial={standardReveal.hidden}
+          whileInView={standardReveal.visible({ isReduced, delay: 0.06 })}
+          viewport={{ once: true, margin: '-60px' }}
+          className="mt-6 sm:mt-7 lg:mt-8"
+        >
+          <p className="text-[0.6875rem] font-medium uppercase tracking-[0.16em] text-[#145BFF] sm:text-xs">
+            {category}
+          </p>
+
+          <h3 className="mt-3 font-[family-name:var(--font-display)] text-[clamp(1.625rem,1.8vw+0.75rem,2.75rem)] font-bold leading-[1.15] tracking-[-0.025em] text-[#08162D] transition-colors group-hover:text-[#145BFF]">
+            {title}
+          </h3>
+
+          <p className="mt-4 text-[clamp(1rem,0.2vw+0.94rem,1.125rem)] leading-[1.7] text-slate-600">
+            {excerpt}
+          </p>
+
+          <div className="mt-5 flex flex-wrap items-center justify-between gap-4">
+            <time
+              dateTime={date}
+              className="text-[0.6875rem] font-medium uppercase tracking-[0.12em] text-slate-400 sm:text-xs"
+            >
+              {date}
+            </time>
+
+            <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#145BFF] transition-colors group-hover:text-[#0c3c66]">
+              {readLabel}
+              <ArrowRight
+                size={15}
+                className="transition-transform duration-300 group-hover:translate-x-0.5 motion-reduce:group-hover:translate-x-0"
+                aria-hidden="true"
+              />
+            </span>
+          </div>
+        </motion.div>
+      </Link>
+    </article>
+  );
+}
+
+function SecondaryArticleRow({
+  slug,
+  category,
+  title,
+  excerpt,
+  readLabel,
+  isReduced,
+  index,
+}: {
+  slug: string;
+  category: string;
+  title: string;
+  excerpt: string;
+  readLabel: string;
+  isReduced: boolean;
+  index: number;
+}) {
+  return (
+    <motion.li
+      initial={standardReveal.hidden}
+      whileInView={standardReveal.visible({ isReduced, delay: index * 0.05 })}
+      viewport={{ once: true, margin: '-40px' }}
+      className="border-t border-slate-200/90 first:border-t-0"
+    >
+      <Link
+        href={`/insights/${slug}`}
+        className="group block py-7 sm:py-8 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#145BFF] focus-visible:ring-offset-2"
+      >
+        <p className="text-[0.6875rem] font-medium uppercase tracking-[0.16em] text-[#145BFF] sm:text-xs">
+          {category}
+        </p>
+
+        <h3 className="mt-2.5 font-[family-name:var(--font-display)] text-[clamp(1.125rem,0.8vw+0.85rem,1.625rem)] font-bold leading-[1.25] tracking-[-0.02em] text-[#08162D] transition-colors group-hover:text-[#145BFF]">
+          {title}
+        </h3>
+
+        <p className="mt-3 text-[clamp(0.9375rem,0.15vw+0.9rem,1.0625rem)] leading-[1.65] text-slate-600">
+          {excerpt}
+        </p>
+
+        <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-[#145BFF] transition-colors group-hover:text-[#0c3c66]">
+          {readLabel}
+          <ArrowRight
+            size={14}
+            className="transition-transform duration-300 group-hover:translate-x-0.5 motion-reduce:group-hover:translate-x-0"
+            aria-hidden="true"
+          />
+        </span>
+      </Link>
+    </motion.li>
+  );
 }
 
 export function InsightsSection() {
-  const featuredArticle: Article = {
-    category: 'AI & CLOUD ARCHITECTURE',
-    title: 'The Guide to Microsoft Fabric and Snowflake Coexistence',
-    desc: 'How enterprise CIOs are structuring modern Lakehouses to balance interactive Power BI dashboards with real-time Databricks machine learning workloads without doubling storage costs.',
-    date: 'June 14, 2026',
-    readTime: '8 min read',
-    href: '/insights/microsoft-fabric-and-snowflake-coexistence',
-  };
+  const t = useTranslations('HomepageRedesign.Insights');
+  const tInsights = useTranslations('Insights');
+  const locale = useLocale();
+  const prefersReducedMotion = useReducedMotion();
+  const isReduced = !!prefersReducedMotion;
 
-  const supportingArticles: Article[] = [
-    {
-      category: 'BUSINESS INTELLIGENCE',
-      title: 'Designing Executive Power BI Dashboards: Beyond the Metrics',
-      date: 'June 8, 2026',
-      readTime: '5 min read',
-      href: '/insights/designing-executive-power-bi-dashboards',
-    },
-    {
-      category: 'DATA ENGINEERING',
-      title: 'Optimizing dbt Incremental Models on Enterprise Snowflake Warehouses',
-      date: 'June 3, 2026',
-      readTime: '6 min read',
-      href: '/insights/optimizing-dbt-incremental-models-snowflake',
-    },
-    {
-      category: 'IT & NON-IT STAFFING & LEADERSHIP',
-      title: 'Vetting Senior Data Engineers: The Technical Rubric Apex Teams Use',
-      date: 'May 28, 2026',
-      readTime: '7 min read',
-      href: '/insights/vetting-senior-data-engineers-rubric',
-    },
-  ];
+  const { featured, secondary } = useMemo(() => {
+    const localized = getLocalizedArticles(locale);
+    const curated = HOMEPAGE_INSIGHT_SLUGS.map((slug) =>
+      localized.find((article) => article.slug === slug),
+    ).filter(Boolean) as NonNullable<(typeof localized)[number]>[];
+
+    const featuredArticle =
+      curated.find((article) => article.slug === HOMEPAGE_FEATURED_SLUG) ?? curated[0];
+
+    const supporting = curated.filter((article) => article.slug !== featuredArticle?.slug);
+
+    return { featured: featuredArticle, secondary: supporting };
+  }, [locale]);
+
+  if (!featured) return null;
+
+  const readLabel = tInsights('readArticle');
 
   return (
-    <section className="py-24 bg-white border-b border-slate-100 text-left">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-          <div className="max-w-2xl">
-            <h2 className="text-xs font-bold text-royal-blue tracking-widest uppercase mb-3">KNOWLEDGE & INSIGHTS</h2>
-            <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-none">
-              Thought Leadership
-            </h3>
-            <p className="text-base sm:text-lg text-slate-600 mt-4 leading-relaxed font-medium">
-              Explore key perspectives, design patterns, and staffing strategies curated by HyperCode consultants.
+    <section
+      data-section-theme="neutral"
+      className="relative overflow-hidden border-b border-slate-200/90 bg-[#F5F6F8] text-left"
+      aria-labelledby="insights-section-heading"
+    >
+      <div className="mx-auto min-w-0 max-w-[90rem] px-5 py-14 sm:px-8 sm:py-16 md:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-[7rem]">
+        {/* Section intro */}
+        <div className="mb-12 flex min-w-0 flex-col gap-8 md:mb-14 md:flex-row md:items-end md:justify-between lg:mb-16 xl:mb-20">
+          <motion.div
+            initial={standardReveal.hidden}
+            whileInView={standardReveal.visible({ isReduced })}
+            viewport={{ once: true, margin: '-80px' }}
+            className="min-w-0 max-w-2xl"
+          >
+            <p className="text-[0.6875rem] font-medium uppercase tracking-[0.16em] text-[#145BFF] sm:text-xs">
+              <span className="mr-1.5 text-slate-400">//</span>
+              {t('eyebrow')}
             </p>
-          </div>
-          <div>
-            <a
-              href="/insights"
-              className="inline-flex items-center justify-center h-10 px-5 bg-royal-blue text-white rounded-xl font-bold text-xs hover:bg-[#0c3c66] transition-colors duration-200"
+
+            <h2
+              id="insights-section-heading"
+              className="mt-4 font-[family-name:var(--font-display)] text-[clamp(1.875rem,1.2vw+1.25rem,3.75rem)] font-bold leading-[1.12] tracking-[-0.025em] text-[#08162D] sm:mt-5"
             >
-              <span>Explore All Insights</span>
-            </a>
-          </div>
+              {t('title')}
+            </h2>
+
+            <p className="mt-5 max-w-[32rem] text-[clamp(1rem,0.25vw+0.94rem,1.1875rem)] leading-[1.7] text-slate-600 sm:mt-6">
+              {t('subtitle')}
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={standardReveal.hidden}
+            whileInView={standardReveal.visible({ isReduced, delay: 0.08 })}
+            viewport={{ once: true, margin: '-80px' }}
+            className="shrink-0"
+          >
+            <Link
+              href="/insights"
+              className="group inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-slate-500 transition-colors hover:text-[#145BFF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#145BFF] focus-visible:ring-offset-2"
+            >
+              {t('viewAll')}
+              <ArrowRight
+                size={15}
+                className="transition-transform duration-300 group-hover:translate-x-0.5 motion-reduce:group-hover:translate-x-0"
+                aria-hidden="true"
+              />
+            </Link>
+          </motion.div>
         </div>
 
-        {/* Layout Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-          {/* Featured Article Card */}
-          <div className="lg:col-span-7 rounded-2xl border border-slate-200 bg-slate-50 p-8 sm:p-10 flex flex-col justify-between group">
-            <div className="space-y-4">
-              <span className="text-eyebrow text-royal-blue block">
-                {featuredArticle.category}
-              </span>
-              <h4 className="text-h3 text-slate-900 group-hover:text-royal-blue transition-colors">
-                <a href={featuredArticle.href}>{featuredArticle.title}</a>
-              </h4>
-              <p className="text-body text-slate-600 font-medium line-clamp-4">
-                {featuredArticle.desc}
-              </p>
-            </div>
-
-            <div className="pt-6 mt-8 border-t border-slate-200 flex items-center justify-between flex-wrap gap-4 text-slate-500 text-caption font-semibold uppercase tracking-wider">
-              <div className="flex items-center space-x-4">
-                <div className="flex items-center space-x-1.5">
-                  <CalendarDays size={14} className="text-slate-400" />
-                  <span>{featuredArticle.date}</span>
-                </div>
-                <div className="flex items-center space-x-1.5">
-                  <Clock size={14} className="text-slate-400" />
-                  <span>{featuredArticle.readTime}</span>
-                </div>
-              </div>
-              <a
-                href={featuredArticle.href}
-                className="inline-flex items-center text-royal-blue group-hover:text-[#0c3c66]"
-              >
-                <span>Read Brief</span>
-                <ArrowRight size={14} className="ml-1" />
-              </a>
-            </div>
+        {/* Editorial layout */}
+        <div className="grid min-w-0 grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-12 xl:gap-16">
+          <div className="min-w-0 lg:col-span-7">
+            <FeaturedArticle
+              slug={featured.slug}
+              category={featured.category}
+              title={featured.title}
+              excerpt={featured.excerpt}
+              date={featured.date}
+              readLabel={readLabel}
+              isReduced={isReduced}
+            />
           </div>
 
-          {/* Supporting Articles Grid */}
-          <div className="lg:col-span-5 flex flex-col gap-6">
-            {supportingArticles.map((art, idx) => (
-              <div
-                key={idx}
-                className="group relative p-6 rounded-2xl border border-slate-200 bg-white hover:border-slate-350 flex flex-col justify-between h-40 shadow-sm"
-              >
-                <div>
-                  <span className="text-eyebrow text-royal-blue block mb-2">
-                    {art.category}
-                  </span>
-                  <h4 className="text-card-title text-slate-900 group-hover:text-royal-blue transition-colors line-clamp-2">
-                    <a href={art.href}>{art.title}</a>
-                  </h4>
-                </div>
-
-                <div className="flex items-center justify-between text-caption font-semibold text-slate-500 font-bold uppercase tracking-wider mt-4 border-t border-slate-100 pt-3">
-                  <div className="flex items-center space-x-3">
-                    <span className="flex items-center space-x-1">
-                      <CalendarDays size={12} className="text-slate-400" />
-                      <span>{art.date}</span>
-                    </span>
-                    <span className="flex items-center space-x-1">
-                      <Clock size={12} className="text-slate-400" />
-                      <span>{art.readTime}</span>
-                    </span>
-                  </div>
-                  <a href={art.href} className="text-royal-blue group-hover:text-[#0c3c66]">
-                    <ArrowRight size={14} />
-                  </a>
-                </div>
-              </div>
-            ))}
+          <div className="min-w-0 lg:col-span-5 lg:pt-2">
+            <ul className="m-0 list-none p-0">
+              {secondary.map((article, index) => (
+                <SecondaryArticleRow
+                  key={article.slug}
+                  slug={article.slug}
+                  category={article.category}
+                  title={article.title}
+                  excerpt={article.excerpt}
+                  readLabel={readLabel}
+                  isReduced={isReduced}
+                  index={index}
+                />
+              ))}
+            </ul>
           </div>
-
         </div>
       </div>
     </section>

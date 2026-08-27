@@ -92,6 +92,12 @@
     "contractStaffingDesc": "Flexible contract resources for project-based needs.",
     "directPlacementDesc": "Permanent recruitment solutions for key technical roles.",
     "viewAllSolutions": "View All Services",
+    "navLabel": "Main navigation",
+    "selectLanguage": "Select language",
+    "language": "Language",
+    "close": "Close",
+    "serviceCategories": "Service categories",
+    "showServiceCategories": "Show service categories",
     "talkToAI": "Talk to AI Consultant",
     "viewAll": "View All",
     "cyberSecurity": "Cybersecurity",
@@ -372,12 +378,10 @@
     "industriesSubtitle": "Delivering specialized digital workflows and systems architecture across global sectors.",
     "techEcosystemTitle": "Technology Ecosystem",
     "techEcosystemSubtitle": "We engineer solutions using best-of-breed enterprise technologies, frameworks, and data platforms.",
-    "caseStudyLabel": "Case Study Success",
     "viewCaseStudy": "Read Full Case Study",
     "benefitsLabel": "Strategic Value & Benefits",
     "ctaSectionTitle": "Ready to Transform Your Business?",
     "ctaSectionSubtitle": "Schedule a technical scoping session with our solutions directors or interact with our AI consultant.",
-    "drawerTitle": "Service Capabilities & Scope",
     "relatedServicesLabel": "Related Capabilities",
     "industriesList": {
       "healthcare": {
@@ -1069,7 +1073,7 @@
     "sections": {
       "introduction": {
         "title": "1. Introduction",
-        "content": "Welcome to HyperCode. This Privacy Policy describes how HyperCode LLC (\"we\", \"us\", or \"our\") collects, uses, shares, and protects your personal data when you visit our website (https://www.hypercodeit.com), use our AI Consultant chatbot, submit contact or consultation requests, or apply for job openings. By accessing our services, you consent to the practices described in this policy."
+        "content": "Welcome to HyperCode. This Privacy Policy describes how HyperCode LLC (\"we\", \"us\", or \"our\") collects, uses, shares, and protects your personal data when you visit our website (https://hypercodeit.com), use our AI Consultant chatbot, submit contact or consultation requests, or apply for job openings. By accessing our services, you consent to the practices described in this policy."
       },
       "collect": {
         "title": "2. Information We Collect",
@@ -1115,7 +1119,7 @@
     "sections": {
       "agreement": {
         "title": "1. Agreement to Terms",
-        "content": "By accessing or using the HyperCode website (https://www.hypercodeit.com) and our professional services, you agree to be bound by these Terms & Conditions. If you do not agree with all of these terms, you are expressly prohibited from using our site and services and must discontinue use immediately."
+        "content": "By accessing or using the HyperCode website (https://hypercodeit.com) and our professional services, you agree to be bound by these Terms & Conditions. If you do not agree with all of these terms, you are expressly prohibited from using our site and services and must discontinue use immediately."
       },
       "intellectual": {
         "title": "2. Intellectual Property Rights",
@@ -1267,15 +1271,12 @@
       "p2": "We combine rigorous project management with full transparency for predictable, on-time project deliveries."
     },
     "learnMoreBtn": "Learn More",
-    "drawerTitle": "Service Details",
     "businessValue": "Business Value",
     "expectedOutcomes": "Expected Outcomes",
-    "caseStudyLabel": "Case Study Outcome",
     "categoryLabel": "End-to-End Digital Transformation",
     "consultingPracticesTitle": "Our Consulting Practices",
     "enterpriseCapabilitiesTitle": "Enterprise Technology Capabilities",
     "enterpriseCapabilitiesDesc": "Browse our enterprise-grade consulting practices. From strategic AI consulting to technical talent placement.",
-    "viewServiceDetails": "View Service Details",
     "faqQ1": "How do you determine team sizing and timeline estimates?",
     "faqA1": "Our practice leads analyze your current technical stack, business objectives, and budget constraints to generate a detailed sprint plan detailing developer profiles and project milestones.",
     "faqQ2": "What are the engagement models for talent solutions?",
@@ -1311,7 +1312,7 @@
     "button": "Go Home"
   },
   "cta": {
-    "badge": "GET IN TOUCH",
+    "badge": "START A CONVERSATION",
     "heading": "Ready to Build Your Next Digital Solution?",
     "description": "Partner with our elite engineering squads and technology consultants to build secure, scalable, and AI-first systems.",
     "primaryButton": "Schedule Consultation",
@@ -1406,18 +1407,39 @@
   },
   "HomepageRedesign": {
     "Hero": {
-      "badge": "USA-Based Technology Partner",
-      "headlinePart1": "Building",
-      "headlineGradient": "Intelligent Technology",
-      "headlinePart2": "That Powers Business Growth.",
-      "supporting": "We design and engineer unified digital worlds—connecting AI, multi-cloud platforms, and intelligent APIs into high-performance business engines that scale continuously.",
-      "ctaPrimary": "Schedule Free Consultation",
-      "ctaSecondary": "Explore Solutions",
-      "trust": {
-        "ai": "AI Powered",
-        "enterprise": "Enterprise Ready",
-        "cloud": "Cloud Native",
-        "delivery": "Fast Delivery"
+      "badge": "USA-Based Technology Consulting & Engineering",
+      "headlineLine1": "Engineering Digital Systems That Move",
+      "headlineLine2": "",
+      "headlineGradient": "Businesses Forward",
+      "supporting": "HyperCode engineers custom software, AI automation, cloud, data, and enterprise platforms around real business operations.",
+      "ctaPrimary": "Book a Free Consultation",
+      "ctaSecondary": "View Our Work",
+      "servicePanelTitle": "End-to-End Technology Partner",
+      "services": {
+        "0": "Technology Consulting",
+        "1": "Custom Software Development",
+        "2": "AI & Automation",
+        "3": "Cloud & DevOps",
+        "4": "Data & Analytics",
+        "5": "Enterprise Systems Integration"
+      },
+      "trustItems": {
+        "0": {
+          "title": "USA-Based Technology Partner",
+          "description": "Consulting and engineering leadership"
+        },
+        "1": {
+          "title": "Custom Software Engineering",
+          "description": "Platforms built for real operations"
+        },
+        "2": {
+          "title": "AI & Automation",
+          "description": "Intelligent workflow systems"
+        },
+        "3": {
+          "title": "Cloud & Data",
+          "description": "Enterprise systems integration"
+        }
       }
     },
     "TransformationEngine": {
@@ -1486,11 +1508,12 @@
       }
     },
     "ServiceEcosystem": {
-      "badge": "SERVICE ECOSYSTEM",
-      "title": "Intelligent Digital Capabilities",
+      "badge": "WHAT WE DO",
+      "title": "Technology Capabilities Built Around Business Needs",
       "subtitle": "We design, build, and support the key technological pillars of modern business.",
-      "centralDefaultTitle": "HyperCode Engine",
-      "centralDefaultDesc": "Hover or focus any technology node around the core to inspect our capabilities, key services, and business outcomes.",
+      "viewService": "Explore capability",
+      "centralDefaultTitle": "End-to-end technology delivery",
+      "centralDefaultDesc": "Select a capability to explore how HyperCode helps organizations design, build, and scale modern technology.",
       "centralDefaultOutcome": "Accelerate business value",
       "outcomes": {
         "aiOutcome": "Reduce operational manual tasks by 45%",
@@ -1506,12 +1529,21 @@
       }
     },
     "IndustrySolutions": {
-      "badge": "SECTORS WE SERVE",
-      "title": "Industry Solutions",
-      "subtitle": "Custom engineering and architecture tailored to your specific sector."
+      "badge": "INDUSTRIES",
+      "title": "Technology Built Around Your Industry",
+      "subtitle": "Custom engineering and architecture tailored to your specific sector.",
+      "viewSolutions": "Explore Industry Solutions"
+    },
+    "OurWork": {
+      "badge": "OUR WORK",
+      "title": "Technology Built for Real Business",
+      "subtitle": "Enterprise systems, platforms, and integrations delivered across healthcare, finance, retail, and logistics.",
+      "featuredBadge": "FEATURED WORK",
+      "viewProject": "View Project",
+      "viewCaseStudy": "View Case Study"
     },
     "DeliveryProcess": {
-      "badge": "OUR PROCESS",
+      "badge": "HOW WE WORK",
       "title": "Accelerated Delivery Methodology",
       "subtitle": "How we go from scoping to production deployment in half the time of traditional integrators.",
       "step1Title": "1. Scoping & Roadmap",
@@ -1522,6 +1554,44 @@
       "step3Desc": "Rapid development, continuous integration, and validation.",
       "step4Title": "4. Launch & Scale",
       "step4Desc": "Seamless cloud deployment, handovers, and optimization."
+    },
+    "TechPartners": {
+      "eyebrow": "Trusted Technology Expertise",
+      "microsoftType": "Gold Partner",
+      "azureType": "Cloud Platform",
+      "awsType": "Partner Network",
+      "snowflakeType": "Select Partner",
+      "databricksType": "Consulting Partner",
+      "tableauType": "Partner"
+    },
+    "Insights": {
+      "eyebrow": "INSIGHTS",
+      "title": "Thought Leadership",
+      "subtitle": "Explore key perspectives, design patterns, and staffing strategies curated by HyperCode consultants.",
+      "viewAll": "View All Insights"
+    },
+    "TrustSection": {
+      "eyebrow": "Why HyperCode",
+      "title": "Why Enterprise Leaders Trust HyperCode",
+      "subtitle": "We marry software engineering excellence with data architecture and global sourcing networks to deliver tangible business outcomes.",
+      "pillars": {
+        "nationwide": {
+          "title": "Nationwide Delivery",
+          "description": "Supporting organizations across all 50 states with a highly mobilized consultant workforce."
+        },
+        "government": {
+          "title": "Government Sector Experience",
+          "description": "Approved vendor delivering secure, compliant data and staffing solutions for public agencies."
+        },
+        "enterprise": {
+          "title": "Enterprise Solutions",
+          "description": "Architecting scalable cloud data lakes, BI platforms, and high-performance engineering systems."
+        },
+        "certified": {
+          "title": "Certified Consultants",
+          "description": "Accredited experts across Microsoft, Snowflake, AWS, Databricks, and modern BI tools."
+        }
+      }
     }
   }
 }

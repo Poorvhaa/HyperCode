@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { SolutionDetailPage } from '@/components/solution-detail-page';
+import { localeUrl } from '@/lib/site-url';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -12,7 +13,7 @@ export async function generateMetadata({ params }: Props) {
     title: `HyperCode | Enterprise Web Development Services | ${tc('solutions')}`,
     description: "Designing and developing modern, scalable, secure, and high-performance web applications using React, Next.js, and Node.js. Headquartered in Schaumburg, IL.",
     alternates: {
-      canonical: `https://www.hypercodeit.com/${locale}/solutions/web-development-services`,
+      canonical: localeUrl(locale, 'solutions/web-development-services'),
     },
   };
 }

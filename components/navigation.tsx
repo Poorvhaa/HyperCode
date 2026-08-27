@@ -6,18 +6,15 @@ import { usePathname, useRouter, Link } from '@/i18n/routing';
 import { useLocale, useTranslations } from 'next-intl';
 import { SERVICE_REGISTRY, ALIAS_MAP } from '@/lib/services-details';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  Menu,
-  X,
-  ChevronDown,
-  Globe
-} from 'lucide-react';
-import { solutionMenu, type MenuCategory, type MenuService } from '@/lib/navigation-links';
+import { Menu, X, ChevronDown } from 'lucide-react';
+import { solutionMenu, type MenuService } from '@/lib/navigation-links';
 
 const languages = [
   { code: 'en', name: 'English' },
   { code: 'es', name: 'Español' }
 ];
+
+const NAV_HEIGHT = 'h-[72px] lg:h-[80px]';
 
 function getServiceLabel(service: MenuService, locale: string) {
   if (service.label) return service.label[locale === 'es' ? 'es' : 'en'];
@@ -29,57 +26,43 @@ function getServiceLabel(service: MenuService, locale: string) {
 }
 
 export function Navigation() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isLangOpen, setIsLangOpen] = useState(false);
-  const [isMobileLangOpen, setIsMobileLangOpen] = useState(false);
-  const [isSolutionsOpen, setIsSolutionsOpen] = useState(false);
-  const [activeSolutionCategory, setActiveSolutionCategory] = useState(0);
-  const [isMobileSolutionsOpen, setIsMobileSolutionsOpen] = useState(false);
-  const [mobileSolutionCategory, setMobileSolutionCategory] = useState<number | null>(0);
-  const solutionsRef = useRef<HTMLDivElement>(null);
-  const solutionsTriggerRef = useRef<HTMLAnchorElement>(null);
-  const solutionsCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  // Redesign scroll theme states
-  const [navTheme, setNavTheme] = useState<'hero' | 'light' | 'transformation' | 'final-cta'>('light');
-  const [transformationProgress, setTransformationProgress] = useState(0);
-
   const pathname = usePathname();
   const router = useRouter();
   const locale = useLocale();
   const t = useTranslations('Navigation');
-  
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileLangOpen, setIsMobileLangOpen] = useState(false);
+  const [isSolutionsOpen, setIsSolutionsOpen] = useState(false);
+  const [isMobileSolutionsOpen, setIsMobileSolutionsOpen] = useState(false);
+  const [mobileSolutionCategory, setMobileSolutionCategory] = useState<number | null>(0);
+
+  const solutionsRef = useRef<HTMLDivElement>(null);
+  const solutionsMenuRef = useRef<HTMLDivElement>(null);
+  const solutionsTriggerRef = useRef<HTMLAnchorElement>(null);
+  const solutionsCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+
+  const [navTheme, setNavTheme] = useState<'hero' | 'light' | 'transformation' | 'final-cta'>(pathname === '/' ? 'hero' : 'light');
+  const [transformationProgress, setTransformationProgress] = useState(0);
+
+  const isDarkTheme = navTheme === 'hero';
+  const isHeroOverlay = isDarkTheme && !isScrolled;
+
   const isActive = (href: string) => {
-    if (href === '/') {
-      return pathname === '/';
-    }
-    if (href === '/solutions') {
-      return pathname === '/solutions' || pathname.startsWith('/solutions/');
-    }
+    if (href === '/') return pathname === '/';
+    if (href === '/solutions') return pathname === '/solutions' || pathname.startsWith('/solutions/');
     return pathname.startsWith(href);
   };
 
-  const isDarkTheme = false;
-
   const getLinkClass = (href: string) => {
-    const base = "text-button transition-all duration-200 relative py-2 cursor-pointer bg-transparent border-none outline-none flex items-center h-full hover:text-royal-blue";
-    let textColor = 'text-slate-700';
-
+    const base =
+      'relative flex h-full items-center bg-transparent border-none outline-none cursor-pointer py-2 text-[0.8125rem] lg:text-[0.875rem] font-medium tracking-[-0.01em] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue focus-visible:ring-offset-2';
     if (isDarkTheme) {
-      textColor = isActive(href) ? 'text-white font-bold' : 'text-[#A9B8D1] hover:text-white';
-    } else {
-      textColor = isActive(href) ? 'text-royal-blue font-bold' : 'text-slate-750';
+      return `${base} ${isActive(href) ? 'text-white' : 'text-[#A9B8D1] hover:text-white'}`;
     }
-
-    return `${base} ${textColor}`;
-  };
-
-  const getLangButtonClass = () => {
-    if (isDarkTheme) {
-      return "flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-white/10 text-body-sm font-semibold transition-all duration-200 cursor-pointer text-white hover:bg-white/5 bg-transparent shadow-sm";
-    }
-    return "flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-slate-200 text-body-sm font-semibold transition-all duration-200 cursor-pointer text-slate-700 hover:bg-slate-50 bg-white shadow-sm";
+    return `${base} ${isActive(href) ? 'text-royal-blue' : 'text-slate-700 hover:text-royal-blue'}`;
   };
 
   useEffect(() => {
@@ -87,23 +70,21 @@ export function Navigation() {
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          setIsScrolled(window.scrollY > 20);
+          setIsScrolled(window.scrollY > 16);
           ticking = false;
         });
         ticking = true;
       }
     };
-
     window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
     const handleThemeChange = (e: Event) => {
       const customEvent = e as CustomEvent;
-      if (customEvent.detail && customEvent.detail.theme) {
-        setNavTheme(customEvent.detail.theme);
-      }
+      if (customEvent.detail?.theme) setNavTheme(customEvent.detail.theme);
     };
     const handleStageChange = (e: Event) => {
       const customEvent = e as CustomEvent;
@@ -111,7 +92,6 @@ export function Navigation() {
         setTransformationProgress(customEvent.detail.progress);
       }
     };
-
     window.addEventListener('hypercode-theme-change', handleThemeChange);
     window.addEventListener('hypercode-transformation-stage', handleStageChange);
     return () => {
@@ -131,18 +111,37 @@ export function Navigation() {
   }, [pathname]);
 
   useEffect(() => {
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
     const handlePointerDown = (event: PointerEvent) => {
-      if (solutionsRef.current && !solutionsRef.current.contains(event.target as Node)) {
+      const target = event.target as Node;
+      const insideTrigger = solutionsRef.current?.contains(target);
+      const insideMenu = solutionsMenuRef.current?.contains(target);
+      if (!insideTrigger && !insideMenu) {
         setIsSolutionsOpen(false);
       }
     };
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && isSolutionsOpen) {
-        setIsSolutionsOpen(false);
-        solutionsTriggerRef.current?.focus();
+      if (event.key === 'Escape') {
+        if (isOpen) {
+          setIsOpen(false);
+          return;
+        }
+        if (isMobileLangOpen) {
+          setIsMobileLangOpen(false);
+          return;
+        }
+        if (isSolutionsOpen) {
+          setIsSolutionsOpen(false);
+          solutionsTriggerRef.current?.focus();
+        }
       }
     };
-
     document.addEventListener('pointerdown', handlePointerDown);
     document.addEventListener('keydown', handleKeyDown);
     return () => {
@@ -150,7 +149,7 @@ export function Navigation() {
       document.removeEventListener('keydown', handleKeyDown);
       if (solutionsCloseTimer.current) clearTimeout(solutionsCloseTimer.current);
     };
-  }, [isSolutionsOpen]);
+  }, [isOpen, isMobileLangOpen, isSolutionsOpen]);
 
   const openSolutions = () => {
     if (solutionsCloseTimer.current) clearTimeout(solutionsCloseTimer.current);
@@ -159,81 +158,99 @@ export function Navigation() {
 
   const closeSolutionsWithDelay = () => {
     if (solutionsCloseTimer.current) clearTimeout(solutionsCloseTimer.current);
-    solutionsCloseTimer.current = setTimeout(() => setIsSolutionsOpen(false), 160);
+    solutionsCloseTimer.current = setTimeout(() => setIsSolutionsOpen(false), 200);
   };
 
   const handleLanguageChange = (code: string) => {
     localStorage.setItem('NEXT_LOCALE', code);
     router.replace(pathname, { locale: code });
-    setIsLangOpen(false);
     setIsMobileLangOpen(false);
   };
 
-  const activeLangName = languages.find((lang) => lang.code === locale)?.name || 'English';
-
   const getNavClasses = () => {
-    const baseHeight = isScrolled ? 'h-20 lg:h-[88px]' : 'h-20 lg:h-[120px]';
-    return `bg-white/95 backdrop-blur-md text-slate-700 border-b border-slate-200/60 shadow-sm ${baseHeight}`;
+    if (isHeroOverlay) {
+      return `${NAV_HEIGHT} bg-transparent text-white border-b border-transparent`;
+    }
+    if (isDarkTheme) {
+      return `${NAV_HEIGHT} bg-[#020B18]/92 backdrop-blur-[6px] text-white border-b border-white/[0.08]`;
+    }
+    return `${NAV_HEIGHT} bg-white/[0.97] backdrop-blur-[6px] text-slate-700 border-b border-slate-200/70`;
+  };
+
+  const underlineClass = (href: string) =>
+    `absolute -bottom-0.5 left-0 h-px w-full origin-left bg-gradient-to-r from-royal-blue to-green transition-transform duration-200 ${
+      isActive(href) ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100 group-focus-visible:scale-x-100'
+    }`;
+
+  const langToggleClass = (code: string) => {
+    const active = locale === code;
+    if (isDarkTheme) {
+      return `min-h-[36px] min-w-[36px] rounded-md px-2.5 text-[0.75rem] font-semibold uppercase tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue ${
+        active ? 'bg-white/12 text-white' : 'text-[#A9B8D1] hover:text-white hover:bg-white/5'
+      }`;
+    }
+    return `min-h-[36px] min-w-[36px] rounded-md px-2.5 text-[0.75rem] font-semibold uppercase tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue ${
+      active ? 'bg-royal-blue/10 text-royal-blue' : 'text-slate-600 hover:text-royal-blue hover:bg-slate-50'
+    }`;
   };
 
   return (
     <>
       <motion.nav
-        className={`fixed z-50 transition-all duration-300 ease-in-out top-0 left-0 right-0 w-full ${getNavClasses()}`}
+        aria-label={t('navLabel')}
+        className={`fixed top-0 left-0 right-0 z-50 w-full transition-[background-color,border-color,backdrop-filter] duration-300 ease-out ${getNavClasses()}`}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
       >
-        {/* Active progress indicator for transformation stages */}
         {navTheme === 'transformation' && (
-          <div className="absolute bottom-0 left-0 right-0 h-1 bg-slate-800 pointer-events-none">
+          <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-px bg-slate-800">
             <div
               className="h-full bg-gradient-to-r from-royal-blue to-green transition-all duration-150"
               style={{ width: `${transformationProgress * 100}%` }}
             />
           </div>
         )}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full relative">
-          <div className="flex items-center justify-between h-full w-full">
-            <div className="flex items-center h-full">
-              <Link href="/" className="flex items-center flex-shrink-0">
-                <Image
-                  src="/hypercodeit.logo.webp"
-                  alt="HyperCode"
-                  width={115}
-                  height={80}
-                  priority
-                  quality={100}
-                  style={{ height: 'auto' }}
-                  className={`object-contain transition-all duration-300 ${
-                    isScrolled 
-                      ? 'w-[92px] sm:w-[100px] lg:w-[112px]' 
-                      : 'w-[102px] sm:w-[118px] lg:w-[135px]'
-                  } ${
-                    isDarkTheme ? 'brightness-0 invert' : ''
-                  }`}
-                />
-              </Link>
-            </div>
 
-            {/* Center Navigation Links */}
-            <div className="hidden xl:flex items-center justify-center space-x-6 h-full rtl:space-x-reverse flex-1">
-              {/* What We Do — Services mega menu */}
+        <div className="relative mx-auto h-full w-full max-w-[90rem] px-5 sm:px-8 lg:px-12 xl:px-16">
+          <div className="grid h-full grid-cols-[auto_1fr_auto] items-center gap-3 lg:gap-6">
+            {/* Logo */}
+            <Link href="/" className="flex shrink-0 items-center">
+              <Image
+                src="/hypercodeit.logo.webp"
+                alt="HyperCode"
+                width={115}
+                height={80}
+                priority
+                quality={100}
+                style={{ height: 'auto' }}
+                className="h-auto w-[96px] object-contain sm:w-[104px] lg:w-[110px]"
+              />
+            </Link>
+
+            {/* Center — desktop navigation */}
+            <div className="hidden min-w-0 items-center justify-center gap-4 xl:flex xl:gap-7">
+              {/* What We Do mega menu */}
               <div
                 ref={solutionsRef}
-                className="h-full flex items-center"
+                className="relative flex h-full items-center"
                 onMouseEnter={openSolutions}
                 onMouseLeave={closeSolutionsWithDelay}
                 onBlur={(event) => {
-                  if (!event.currentTarget.contains(event.relatedTarget as Node)) {
-                    setIsSolutionsOpen(false);
+                  const related = event.relatedTarget as Node | null;
+                  if (
+                    related &&
+                    (event.currentTarget.contains(related) || solutionsMenuRef.current?.contains(related))
+                  ) {
+                    return;
                   }
+                  setIsSolutionsOpen(false);
                 }}
               >
                 <Link
                   ref={solutionsTriggerRef}
                   href="/solutions"
-                  className={`${getLinkClass('/solutions')} group`}
+                  className={`${getLinkClass('/solutions')} group gap-1`}
                   aria-current={isActive('/solutions') ? 'page' : undefined}
                   aria-haspopup="menu"
                   aria-expanded={isSolutionsOpen}
@@ -246,219 +263,193 @@ export function Navigation() {
                     }
                   }}
                 >
-                  <span className="relative py-1 flex items-center gap-1">
-                    <span>{t('solutions')}</span>
-                    <ChevronDown size={13} className={`transition-transform duration-150 ${isSolutionsOpen ? 'rotate-180' : ''}`} />
-                    <span className={`absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-royal-blue to-green transform transition-transform duration-300 origin-left ${
-                      isActive('/solutions') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
-                    }`} />
+                  <span className="relative flex items-center gap-1 py-1">
+                    {t('solutions')}
+                    <ChevronDown
+                      size={12}
+                      className={`opacity-70 transition-transform duration-150 ${isSolutionsOpen ? 'rotate-180' : ''}`}
+                      aria-hidden="true"
+                    />
+                    <span className={underlineClass('/solutions')} aria-hidden="true" />
                   </span>
                 </Link>
 
-                <AnimatePresence>
-                  {isSolutionsOpen && (
-                    <motion.div
-                      id="solutions-mega-menu"
-                      aria-label={locale === 'es' ? 'Categorías de servicios' : 'Service categories'}
-                      initial={{ opacity: 0, y: 6 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 4 }}
-                      transition={{ duration: 0.14 }}
-                      className="absolute top-[calc(100%-12px)] left-1/2 -translate-x-1/2 w-[calc(100vw-32px)] max-w-[1100px] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl z-[70]"
-                      onMouseEnter={openSolutions}
-                    >
-                      <div className="grid grid-cols-[31%_69%] max-h-[calc(100vh-112px)]">
-                        <div className="border-r border-slate-200 bg-slate-50 p-2.5 overflow-y-auto">
-                          <div className="px-3 py-2 text-eyebrow text-slate-500">
-                            {locale === 'es' ? 'Categorías' : 'Categories'}
-                          </div>
-                          <div className="flex flex-col space-y-0.5">
-                            {solutionMenu.map((category, index) => (
-                              <button
-                                key={category.label.en}
-                                type="button"
-                                onMouseEnter={() => setActiveSolutionCategory(index)}
-                                onFocus={() => setActiveSolutionCategory(index)}
-                                onClick={() => setActiveSolutionCategory(index)}
-                                className={`w-full rounded-xl px-3 py-1.5 text-left text-body-sm font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue focus-visible:ring-inset whitespace-normal break-words ${
-                                  activeSolutionCategory === index
-                                    ? 'bg-royal-blue text-white'
-                                    : 'text-slate-700 hover:bg-white hover:text-royal-blue'
-                                }`}
-                              >
-                                {category.label[locale === 'es' ? 'es' : 'en']}
-                              </button>
-                            ))}
-                          </div>
-                        </div>
-
-                        <div className="p-5 overflow-y-auto bg-white flex flex-col justify-between">
-                          <div>
-                            <div className="mb-3 border-b border-slate-100 pb-2">
-                              <p className="text-eyebrow text-royal-blue">{t('solutions')}</p>
-                              <p className="mt-0.5 text-h4 text-slate-900">
-                                {solutionMenu[activeSolutionCategory].label[locale === 'es' ? 'es' : 'en']}
-                              </p>
-                            </div>
-                            <div className="grid grid-cols-2 gap-x-4 gap-y-1">
-                              {solutionMenu[activeSolutionCategory].services.map((service) => (
-                                <Link
-                                  key={service.slug}
-                                  href={service.href || `/solutions/${service.slug}`}
-                                  onClick={() => setIsSolutionsOpen(false)}
-                                  className="rounded-xl border border-transparent px-3 py-1.5 text-body-sm font-semibold text-slate-700 transition-colors hover:border-royal-blue/20 hover:bg-royal-blue/5 hover:text-royal-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue"
-                                >
-                                  {getServiceLabel(service, locale)}
-                                </Link>
-                              ))}
-                            </div>
-                          </div>
-                          <div className="mt-4">
-                            <Link
-                              href="/solutions"
-                              onClick={() => setIsSolutionsOpen(false)}
-                              className="inline-flex rounded-lg px-2 py-1.5 text-body-sm font-bold text-royal-blue hover:bg-royal-blue/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue"
-                            >
-                              {locale === 'es' ? 'Ver todos los servicios' : 'View all services'}
-                            </Link>
-                          </div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
               </div>
 
-              <Link href="/about" className={`${getLinkClass('/about')} group`}>
-                <span className="relative py-1">
-                  {t('about')}
-                  <span className={`absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-royal-blue to-green transform transition-transform duration-300 origin-left ${
-                    isActive('/about') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
-                  }`} />
-                </span>
-              </Link>
-
-              <Link href="/case-studies" className={`${getLinkClass('/case-studies')} group`}>
-                <span className="relative py-1">
-                  {t('ourWork')}
-                  <span className={`absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-royal-blue to-green transform transition-transform duration-300 origin-left ${
-                    isActive('/case-studies') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
-                  }`} />
-                </span>
-              </Link>
-
-              <Link href="/insights" className={`${getLinkClass('/insights')} group`}>
-                <span className="relative py-1">
-                  {t('insights')}
-                  <span className={`absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-royal-blue to-green transform transition-transform duration-300 origin-left ${
-                    isActive('/insights') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
-                  }`} />
-                </span>
-              </Link>
-
-              <Link href="/careers" className={`${getLinkClass('/careers')} group`}>
-                <span className="relative py-1">
-                  {t('careers')}
-                  <span className={`absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-royal-blue to-green transform transition-transform duration-300 origin-left ${
-                    isActive('/careers') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
-                  }`} />
-                </span>
-              </Link>
+              {(['/about', '/case-studies', '/insights', '/careers'] as const).map((href) => {
+                const labelKey = href === '/about' ? 'about' : href === '/case-studies' ? 'ourWork' : href === '/insights' ? 'insights' : 'careers';
+                return (
+                  <Link key={href} href={href} className={`${getLinkClass(href)} group`} aria-current={isActive(href) ? 'page' : undefined}>
+                    <span className="relative py-1">
+                      {t(labelKey)}
+                      <span className={underlineClass(href)} aria-hidden="true" />
+                    </span>
+                  </Link>
+                );
+              })}
             </div>
 
-            {/* Right Side Actions */}
-            <div className="hidden xl:flex items-center space-x-4">
-              {/* Language Switcher */}
-              <div className="relative">
-                <button
-                  onClick={() => setIsLangOpen(!isLangOpen)}
-                  className={getLangButtonClass()}
-                >
-                  <Globe size={13} className="text-slate-600" />
-                  <span>{activeLangName}</span>
-                  <ChevronDown size={11} className={`transition-transform duration-300 ${isLangOpen ? 'rotate-180' : ''}`} />
-                </button>
-
-                <AnimatePresence>
-                  {isLangOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 8, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 5, scale: 0.95 }}
-                      transition={{ duration: 0.15 }}
-                      className="absolute right-0 mt-2 w-36 bg-white border border-slate-200 rounded-2xl shadow-xl py-1.5 z-50 overflow-hidden"
-                    >
-                      {languages.map((lang) => (
-                        <button
-                          key={lang.code}
-                          onClick={() => handleLanguageChange(lang.code)}
-                          className={`w-full text-left px-4 py-2.5 text-body-sm font-semibold hover:bg-slate-50 cursor-pointer transition-colors ${
-                            locale === lang.code ? 'text-royal-blue' : 'text-slate-700'
-                          }`}
-                        >
-                          {lang.name}
-                        </button>
-                      ))}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+            {/* Right — desktop actions */}
+            <div className="hidden shrink-0 items-center gap-3 xl:flex xl:gap-4">
+              <div
+                className={`flex items-center rounded-lg p-0.5 ${
+                  isDarkTheme ? 'border border-white/10' : 'border border-slate-200/80 bg-slate-50/50'
+                }`}
+                role="group"
+                aria-label={t('selectLanguage')}
+              >
+                {languages.map((lang) => (
+                  <button
+                    key={lang.code}
+                    type="button"
+                    onClick={() => handleLanguageChange(lang.code)}
+                    aria-current={locale === lang.code ? 'true' : undefined}
+                    aria-label={lang.name}
+                    className={langToggleClass(lang.code)}
+                  >
+                    {lang.code.toUpperCase()}
+                  </button>
+                ))}
               </div>
 
-              {/* Schedule Consultation highlighted CTA */}
               <Link
                 href="/consultation"
-                className="PrimaryBrandButton flex items-center justify-center gap-2"
+                className="PrimaryBrandButton !h-11 !px-5 !text-[0.8125rem] lg:!text-sm !shadow-none hover:!shadow-[0_4px_14px_0_rgba(20,91,255,0.2)] hover:!translate-y-[-1px]"
               >
-                <span>{t('schedule') || 'Schedule Consultation'}</span>
+                {t('schedule')}
               </Link>
             </div>
 
-            {/* Mobile Actions */}
-            <div className="flex xl:hidden items-center gap-3">
+            {/* Mobile header actions */}
+            <div className="flex items-center justify-end gap-2 xl:hidden">
               <button
                 type="button"
-                onClick={() => setIsMobileLangOpen(!isMobileLangOpen)}
-                aria-expanded={isMobileLangOpen}
-                aria-label="Toggle language menu"
-                className="px-3 py-1.5 rounded-xl border border-slate-200 text-body-sm font-semibold text-slate-700 bg-white"
+                onClick={() => setIsMobileLangOpen(true)}
+                aria-label={t('selectLanguage')}
+                className={`min-h-[44px] min-w-[44px] rounded-lg border px-3 text-[0.8125rem] font-semibold uppercase tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue ${
+                  isDarkTheme
+                    ? 'border-white/15 text-white hover:bg-white/5'
+                    : 'border-slate-200 text-slate-700 hover:bg-slate-50'
+                }`}
               >
                 {locale.toUpperCase()}
               </button>
 
               <button
                 type="button"
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={() => setIsOpen((open) => !open)}
                 aria-expanded={isOpen}
-                aria-label={isOpen ? t('closeMenu') : t('openMenu')}
                 aria-controls="mobile-navigation"
-                className="p-2 rounded-xl text-slate-605 hover:bg-slate-50"
+                aria-label={isOpen ? t('closeMenu') : t('openMenu')}
+                className={`flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue ${
+                  isDarkTheme ? 'text-white hover:bg-white/10' : 'text-slate-700 hover:bg-slate-50'
+                }`}
               >
-                {isOpen ? <X size={24} /> : <Menu size={24} />}
+                {isOpen ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
               </button>
             </div>
           </div>
-        </div>
 
-        {/* Mobile Navigation Drawer */}
-        <AnimatePresence>
-          {isOpen && (
+          {/* What We Do mega menu — container-centered to prevent viewport clipping */}
+          <AnimatePresence>
+            {isSolutionsOpen && (
+              <div
+                ref={solutionsMenuRef}
+                className="absolute left-1/2 top-full z-[70] w-[min(1200px,calc(100vw-32px))] max-w-full -translate-x-1/2 pt-2"
+                onMouseEnter={openSolutions}
+                onMouseLeave={closeSolutionsWithDelay}
+              >
+                <motion.div
+                  id="solutions-mega-menu"
+                  role="menu"
+                  aria-label={t('serviceCategories')}
+                  initial={{ opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 2 }}
+                  transition={{ duration: 0.14 }}
+                  className="flex max-h-[calc(100vh-72px-24px)] flex-col overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-[0_8px_40px_-12px_rgba(8,22,45,0.18)] lg:max-h-[calc(100vh-80px-24px)]"
+                >
+                  <div className="shrink-0 border-b border-slate-100 px-5 py-3.5">
+                    <p className="text-[0.6875rem] font-medium uppercase tracking-[0.14em] text-slate-500">
+                      {t('solutions')}
+                    </p>
+                  </div>
+
+                  <div className="min-h-0 flex-1 overflow-y-auto custom-menu-scrollbar">
+                    <div className="grid grid-cols-2 gap-x-4 gap-y-5 px-4 py-4 min-[1440px]:grid-cols-3">
+                      {solutionMenu.map((category) => (
+                        <div key={category.label.en}>
+                          <p className="mb-2 text-[0.6875rem] font-medium uppercase tracking-[0.12em] text-slate-500">
+                            {category.label[locale === 'es' ? 'es' : 'en']}
+                          </p>
+                          <ul className="space-y-0.5" role="none">
+                            {category.services.map((service) => (
+                              <li key={service.slug} role="none">
+                                <Link
+                                  role="menuitem"
+                                  href={service.href || `/solutions/${service.slug}`}
+                                  onClick={() => setIsSolutionsOpen(false)}
+                                  className="block rounded-md px-2 py-1.5 text-[0.8125rem] font-semibold leading-snug text-slate-800 transition-colors hover:bg-slate-50 hover:text-royal-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue"
+                                >
+                                  {getServiceLabel(service, locale)}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="shrink-0 border-t border-slate-100 px-5 py-3">
+                    <Link
+                      href="/solutions"
+                      onClick={() => setIsSolutionsOpen(false)}
+                      className="inline-flex items-center gap-1 rounded-sm px-1 py-1 text-[0.8125rem] font-semibold text-royal-blue transition-colors hover:text-royal-blue/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue"
+                    >
+                      {t('viewAllSolutions')} →
+                    </Link>
+                  </div>
+                </motion.div>
+              </div>
+            )}
+          </AnimatePresence>
+        </div>
+      </motion.nav>
+
+      {/* Mobile menu panel */}
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            <motion.button
+              type="button"
+              aria-label={t('closeMenu')}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 z-40 bg-slate-900/20 backdrop-blur-[2px] xl:hidden"
+              onClick={() => setIsOpen(false)}
+            />
             <motion.div
               id="mobile-navigation"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-              className="xl:hidden border-t border-slate-200 bg-white overflow-hidden shadow-xl absolute top-20 left-0 right-0 z-55 max-h-[calc(100vh-80px)] overflow-y-auto"
+              ref={mobileMenuRef}
+              initial={{ opacity: 0, x: '100%' }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: '100%' }}
+              transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+              className="fixed inset-y-0 right-0 z-50 flex w-full max-w-sm flex-col bg-white shadow-2xl xl:hidden"
+              style={{ top: 0, paddingTop: '72px' }}
             >
-              <div className="px-4 pt-2 pb-6 space-y-3">
-                {/* Mobile What We Do accordion */}
-                <div className="rounded-xl border border-slate-200 overflow-hidden">
-                  <div className={`flex items-center ${isActive('/solutions') ? 'bg-royal-blue/5' : 'bg-white'}`}>
+              <div className="flex-1 overflow-y-auto overscroll-contain px-4 pb-8 pt-2">
+                {/* What We Do accordion */}
+                <div className="border-b border-slate-100">
+                  <div className="flex items-center">
                     <Link
                       href="/solutions"
                       onClick={() => setIsOpen(false)}
-                      className={`flex-1 px-3 py-2.5 text-body font-bold ${
-                        isActive('/solutions') ? 'text-royal-blue' : 'text-slate-800'
+                      className={`flex-1 py-3.5 text-[0.9375rem] font-semibold ${
+                        isActive('/solutions') ? 'text-royal-blue' : 'text-slate-900'
                       }`}
                       aria-current={isActive('/solutions') ? 'page' : undefined}
                     >
@@ -469,112 +460,166 @@ export function Navigation() {
                       onClick={() => setIsMobileSolutionsOpen((open) => !open)}
                       aria-expanded={isMobileSolutionsOpen}
                       aria-controls="mobile-solutions-categories"
-                      aria-label={locale === 'es' ? 'Mostrar categorías de servicios' : 'Show service categories'}
-                  className="m-1 rounded-lg p-2 text-slate-600 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue"
+                      aria-label={t('showServiceCategories')}
+                      className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg text-slate-500 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue"
                     >
-                      <ChevronDown size={18} className={`transition-transform duration-150 ${isMobileSolutionsOpen ? 'rotate-180' : ''}`} />
+                      <ChevronDown
+                        size={18}
+                        className={`transition-transform duration-150 ${isMobileSolutionsOpen ? 'rotate-180' : ''}`}
+                        aria-hidden="true"
+                      />
                     </button>
                   </div>
 
-                  {isMobileSolutionsOpen && (
-                    <div id="mobile-solutions-categories" className="border-t border-slate-200 bg-slate-50 p-2 space-y-1">
-                      {solutionMenu.map((category, index) => {
-                        const isCategoryOpen = mobileSolutionCategory === index;
-                        return (
-                          <div key={category.label.en} className="rounded-lg bg-white border border-slate-200 overflow-hidden">
-                            <button
-                              type="button"
-                              onClick={() => setMobileSolutionCategory(isCategoryOpen ? null : index)}
-                              aria-expanded={isCategoryOpen}
-                              aria-controls={`mobile-solution-category-${index}`}
-                              className={`w-full flex items-center justify-between gap-3 px-3 py-2.5 text-left text-body-sm font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-royal-blue ${
-                                isCategoryOpen ? 'text-royal-blue bg-royal-blue/5' : 'text-slate-700'
-                              }`}
-                            >
-                              <span>{category.label[locale === 'es' ? 'es' : 'en']}</span>
-                              <ChevronDown size={16} className={`flex-shrink-0 transition-transform duration-150 ${isCategoryOpen ? 'rotate-180' : ''}`} />
-                            </button>
-                            {isCategoryOpen && (
-                              <div id={`mobile-solution-category-${index}`} className="border-t border-slate-100 px-2 py-1.5">
-                                {category.services.map((service) => (
-                                  <Link
-                                    key={service.slug}
-                                    href={service.href || `/solutions/${service.slug}`}
-                                    onClick={() => setIsOpen(false)}
-                                    className="block rounded-lg px-3 py-2.5 text-body-sm font-medium text-slate-655 hover:bg-royal-blue/5 hover:text-royal-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue"
-                                  >
-                                    {getServiceLabel(service, locale)}
-                                  </Link>
-                                ))}
+                  <AnimatePresence initial={false}>
+                    {isMobileSolutionsOpen && (
+                      <motion.div
+                        id="mobile-solutions-categories"
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="space-y-1 pb-3 pl-1">
+                          {solutionMenu.map((category, index) => {
+                            const isCategoryOpen = mobileSolutionCategory === index;
+                            return (
+                              <div key={category.label.en}>
+                                <button
+                                  type="button"
+                                  onClick={() => setMobileSolutionCategory(isCategoryOpen ? null : index)}
+                                  aria-expanded={isCategoryOpen}
+                                  aria-controls={`mobile-solution-category-${index}`}
+                                  className={`flex w-full min-h-[44px] items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-left text-[0.875rem] font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-royal-blue ${
+                                    isCategoryOpen ? 'bg-royal-blue/5 text-royal-blue' : 'text-slate-700'
+                                  }`}
+                                >
+                                  <span className="min-w-0 flex-1">{category.label[locale === 'es' ? 'es' : 'en']}</span>
+                                  <ChevronDown
+                                    size={16}
+                                    className={`shrink-0 transition-transform duration-150 ${isCategoryOpen ? 'rotate-180' : ''}`}
+                                    aria-hidden="true"
+                                  />
+                                </button>
+                                <AnimatePresence initial={false}>
+                                  {isCategoryOpen && (
+                                    <motion.div
+                                      id={`mobile-solution-category-${index}`}
+                                      initial={{ height: 0, opacity: 0 }}
+                                      animate={{ height: 'auto', opacity: 1 }}
+                                      exit={{ height: 0, opacity: 0 }}
+                                      transition={{ duration: 0.18 }}
+                                      className="overflow-hidden"
+                                    >
+                                      <div className="space-y-0.5 pb-2 pl-3">
+                                        {category.services.map((service) => (
+                                          <Link
+                                            key={service.slug}
+                                            href={service.href || `/solutions/${service.slug}`}
+                                            onClick={() => setIsOpen(false)}
+                                            className="block min-h-[44px] rounded-lg px-3 py-2.5 text-[0.875rem] font-medium text-slate-600 transition-colors hover:bg-slate-50 hover:text-royal-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue"
+                                          >
+                                            {getServiceLabel(service, locale)}
+                                          </Link>
+                                        ))}
+                                      </div>
+                                    </motion.div>
+                                  )}
+                                </AnimatePresence>
                               </div>
-                            )}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
+                            );
+                          })}
+                          <Link
+                            href="/solutions"
+                            onClick={() => setIsOpen(false)}
+                            className="mt-1 block min-h-[44px] px-3 py-2.5 text-[0.875rem] font-semibold text-royal-blue"
+                          >
+                            {t('viewAllSolutions')} →
+                          </Link>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
 
-                <Link
-                  href="/about"
-                  onClick={() => setIsOpen(false)}
-                  className="block px-3 py-2.5 text-body font-bold text-slate-800 hover:bg-slate-50 rounded-xl"
-                >
-                  {t('about')}
-                </Link>
+                {(['/about', '/case-studies', '/insights', '/careers'] as const).map((href) => {
+                  const labelKey = href === '/about' ? 'about' : href === '/case-studies' ? 'ourWork' : href === '/insights' ? 'insights' : 'careers';
+                  return (
+                    <Link
+                      key={href}
+                      href={href}
+                      onClick={() => setIsOpen(false)}
+                      className={`block min-h-[44px] border-b border-slate-100 py-3.5 text-[0.9375rem] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-royal-blue ${
+                        isActive(href) ? 'text-royal-blue' : 'text-slate-900 hover:text-royal-blue'
+                      }`}
+                      aria-current={isActive(href) ? 'page' : undefined}
+                    >
+                      {t(labelKey)}
+                    </Link>
+                  );
+                })}
 
-                <Link
-                  href="/case-studies"
-                  onClick={() => setIsOpen(false)}
-                  className="block px-3 py-2.5 text-body font-bold text-slate-800 hover:bg-slate-50 rounded-xl"
-                >
-                  {t('ourWork')}
-                </Link>
+                {/* Language */}
+                <div className="border-b border-slate-100 py-4">
+                  <p className="mb-2 text-[0.6875rem] font-medium uppercase tracking-[0.12em] text-slate-500">
+                    {t('language')}
+                  </p>
+                  <div className="flex gap-2" role="group" aria-label={t('selectLanguage')}>
+                    {languages.map((lang) => (
+                      <button
+                        key={lang.code}
+                        type="button"
+                        onClick={() => handleLanguageChange(lang.code)}
+                        aria-current={locale === lang.code ? 'true' : undefined}
+                        className={`min-h-[44px] flex-1 rounded-lg border text-[0.875rem] font-semibold uppercase transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue ${
+                          locale === lang.code
+                            ? 'border-royal-blue bg-royal-blue/5 text-royal-blue'
+                            : 'border-slate-200 text-slate-700 hover:border-slate-300'
+                        }`}
+                      >
+                        {lang.code.toUpperCase()}
+                      </button>
+                    ))}
+                  </div>
+                </div>
 
-                <Link
-                  href="/insights"
-                  onClick={() => setIsOpen(false)}
-                  className="block px-3 py-2.5 text-body font-bold text-slate-800 hover:bg-slate-50 rounded-xl"
-                >
-                  {t('insights')}
-                </Link>
-
-                <Link
-                  href="/careers"
-                  onClick={() => setIsOpen(false)}
-                  className="block px-3 py-2.5 text-body font-bold text-slate-800 hover:bg-slate-50 rounded-xl"
-                >
-                  {t('careers')}
-                </Link>
-
-                {/* Mobile Consultation CTA */}
-                <div className="pt-4 px-3">
+                <div className="pt-5">
                   <Link
                     href="/consultation"
                     onClick={() => setIsOpen(false)}
-                    className="PrimaryBrandButton w-full flex items-center justify-center gap-2"
+                    className="PrimaryBrandButton flex w-full items-center justify-center gap-2"
                   >
-                    <span>{t('schedule') || 'Schedule Consultation'}</span>
+                    {t('schedule')}
                   </Link>
                 </div>
               </div>
             </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.nav>
+          </>
+        )}
+      </AnimatePresence>
 
-      {/* Language Mobile Dropdown Panel Overlay */}
+      {/* Mobile language overlay */}
       {isMobileLangOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-900/30 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl p-6 w-full max-w-xs shadow-2xl border border-slate-200 space-y-4">
-            <h3 className="text-eyebrow text-slate-550">{locale === 'es' ? 'Seleccionar Idioma' : 'Select Language'}</h3>
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-900/30 p-4 backdrop-blur-sm xl:hidden">
+          <div
+            className="w-full max-w-xs space-y-4 rounded-xl border border-slate-200 bg-white p-6 shadow-xl"
+            role="dialog"
+            aria-label={t('selectLanguage')}
+          >
+            <h3 className="text-[0.6875rem] font-medium uppercase tracking-[0.12em] text-slate-500">
+              {t('selectLanguage')}
+            </h3>
             <div className="space-y-2">
               {languages.map((lang) => (
                 <button
                   key={lang.code}
+                  type="button"
                   onClick={() => handleLanguageChange(lang.code)}
-                  className={`w-full py-3 px-4 rounded-xl border text-body-sm font-bold text-left transition-all ${
-                    locale === lang.code ? 'bg-royal-blue border-royal-blue text-white' : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
+                  className={`w-full rounded-lg border px-4 py-3 text-left text-[0.875rem] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue ${
+                    locale === lang.code
+                      ? 'border-royal-blue bg-royal-blue text-white'
+                      : 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100'
                   }`}
                 >
                   {lang.name}
@@ -582,10 +627,11 @@ export function Navigation() {
               ))}
             </div>
             <button
+              type="button"
               onClick={() => setIsMobileLangOpen(false)}
-              className="w-full text-center text-eyebrow text-slate-500 hover:text-slate-700 pt-2 cursor-pointer bg-transparent border-none"
+              className="w-full cursor-pointer border-none bg-transparent pt-1 text-center text-[0.6875rem] font-medium uppercase tracking-[0.12em] text-slate-500 hover:text-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue rounded-sm"
             >
-              {locale === 'es' ? 'Cerrar' : 'Close'}
+              {t('close')}
             </button>
           </div>
         </div>

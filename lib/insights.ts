@@ -569,3 +569,24 @@ export const articles: Article[] = [
     `
   }
 ];
+
+/** Approved featured images from existing article seed data */
+export const ARTICLE_FEATURED_IMAGES: Record<string, string> = {
+  'microsoft-fabric-and-snowflake-coexistence':
+    'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80',
+  'designing-executive-power-bi-dashboards':
+    'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80',
+  'optimizing-dbt-incremental-models-snowflake':
+    'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80',
+  'vetting-senior-data-engineers-rubric':
+    'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80',
+};
+
+export const HOMEPAGE_INSIGHT_SLUGS = [
+  'microsoft-fabric-and-snowflake-coexistence',
+  'designing-executive-power-bi-dashboards',
+  'optimizing-dbt-incremental-models-snowflake',
+  'vetting-senior-data-engineers-rubric',
+] as const;
+
+export const HOMEPAGE_FEATURED_SLUG = 'microsoft-fabric-and-snowflake-coexistence';

@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { SolutionDetailPage } from '@/components/solution-detail-page';
+import { localeUrl } from '@/lib/site-url';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -26,7 +27,7 @@ export async function generateMetadata({ params }: Props) {
     title: currentSeo.title,
     description: currentSeo.description,
     alternates: {
-      canonical: `https://www.hypercodeit.com/${locale}/solutions/it-staffing-solutions`,
+      canonical: localeUrl(locale, 'solutions/it-staffing-solutions'),
     },
   };
 }

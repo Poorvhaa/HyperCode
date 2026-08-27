@@ -4,6 +4,7 @@ import { Footer } from '@/components/footer';
 import { CareersForm } from '@/components/careers-form';
 import { ChevronLeft } from 'lucide-react';
 import { Link } from '@/i18n/routing';
+import { localeUrl } from '@/lib/site-url';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -17,7 +18,7 @@ export async function generateMetadata({ params }: Props) {
     title: `HyperCode | ${tc('careers')} | Apply`,
     description: "Submit your technical credentials and resume to join HyperCode's elite engineering and data squads.",
     alternates: {
-      canonical: `https://www.hypercodeit.com/${locale}/careers/apply`,
+      canonical: localeUrl(locale, 'careers/apply'),
     },
   };
 }

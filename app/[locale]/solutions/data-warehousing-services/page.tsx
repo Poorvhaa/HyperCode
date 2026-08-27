@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { SolutionDetailPage } from '@/components/solution-detail-page';
+import { localeUrl } from '@/lib/site-url';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -12,7 +13,7 @@ export async function generateMetadata({ params }: Props) {
     title: `HyperCode | Data Warehousing Services | ${tc('solutions')}`,
     description: "Enterprise Cloud Data Warehousing services, database migration, Snowflake/BigQuery architectures, and data lakehouse deployment. Headquartered in Schaumburg, IL.",
     alternates: {
-      canonical: `https://www.hypercodeit.com/${locale}/solutions/data-warehousing-services`,
+      canonical: localeUrl(locale, 'solutions/data-warehousing-services'),
     },
   };
 }

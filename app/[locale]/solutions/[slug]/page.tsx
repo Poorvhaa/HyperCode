@@ -3,6 +3,7 @@ import { SolutionDetailPage } from '@/components/solution-detail-page';
 import { getServiceDetails, SERVICE_REGISTRY } from '@/lib/services-details';
 import { routing } from '@/i18n/routing';
 import { notFound } from 'next/navigation';
+import { localeUrl, localeAlternates, absoluteUrl } from '@/lib/site-url';
 
 interface Props {
   params: Promise<{ locale: string; slug: string }>;
@@ -40,17 +41,13 @@ export async function generateMetadata({ params }: Props) {
     title: pageTitle,
     description: pageDescription,
     alternates: {
-      canonical: `https://www.hypercodeit.com/${locale}/solutions/${slug}`,
-      languages: {
-        'en-US': `https://www.hypercodeit.com/en/solutions/${slug}`,
-        'es-US': `https://www.hypercodeit.com/es/solutions/${slug}`,
-        'x-default': `https://www.hypercodeit.com/en/solutions/${slug}`,
-      }
+      canonical: localeUrl(locale, `solutions/${slug}`),
+      languages: localeAlternates(`solutions/${slug}`),
     },
     openGraph: {
       title: pageTitle,
       description: pageDescription,
-      url: `https://www.hypercodeit.com/${locale}/solutions/${slug}`,
+      url: localeUrl(locale, `solutions/${slug}`),
       siteName: 'HyperCode',
       locale: locale === 'en' ? 'en_US' : 'es_ES',
       type: 'website',
@@ -91,19 +88,19 @@ export default async function DynamicServicePage({ params }: Props) {
         '@type': 'ListItem',
         'position': 1,
         'name': locale === 'es' ? 'Inicio' : 'Home',
-        'item': `https://www.hypercodeit.com/${locale}`
+        'item': localeUrl(locale)
       },
       {
         '@type': 'ListItem',
         'position': 2,
         'name': locale === 'es' ? 'Soluciones' : 'Solutions',
-        'item': `https://www.hypercodeit.com/${locale}/solutions`
+        'item': localeUrl(locale, 'solutions')
       },
       {
         '@type': 'ListItem',
         'position': 3,
         'name': details.title,
-        'item': `https://www.hypercodeit.com/${locale}/solutions/${slug}`
+        'item': localeUrl(locale, `solutions/${slug}`)
       }
     ]
   };
@@ -117,7 +114,7 @@ export default async function DynamicServicePage({ params }: Props) {
     'provider': {
       '@type': 'LocalBusiness',
       'name': 'HyperCode',
-      'image': 'https://www.hypercodeit.com/icon.svg',
+      'image': absoluteUrl('/icon.svg'),
       'telephone': '+1 (224) 351-9727',
       'address': {
         '@type': 'PostalAddress',

@@ -3,6 +3,7 @@ import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
 import { FileDown, Calendar, ChevronRight, FileText } from 'lucide-react';
 import { HeroBanner } from '@/components/hero-banner';
+import { localeUrl } from '@/lib/site-url';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -16,7 +17,7 @@ export async function generateMetadata({ params }: Props) {
     title: `HyperCode | ${t('title')}`,
     description: t('subtitle'),
     alternates: {
-      canonical: `https://www.hypercodeus.com/${locale}/TnC`,
+      canonical: localeUrl(locale, 'TnC'),
     },
   };
 }

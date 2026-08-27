@@ -15,7 +15,6 @@ import {
   ArrowRight, 
   Cpu, 
   Loader2,
-  X,
   Brain,
   Code,
   Globe,
@@ -120,17 +119,9 @@ function SolutionsPageContent() {
   const t = useTranslations('SolutionsPage');
   const tNav = useTranslations('Navigation');
   const tAi = useTranslations('AIConsultant');
-  const tc = useTranslations('Common');
   const tSolutions = useTranslations('Solutions');
   const tConsult = useTranslations('Consultation');
   const locale = useLocale();
-
-  // Selected Drawer details
-  const [selectedCategory, setSelectedCategory] = useState<{
-    cat: any;
-    catTitle: string;
-    IconComponent: any;
-  } | null>(null);
 
   // Active section for Scrollspy highlighting
   const [activeSection, setActiveSection] = useState('ai-automation');
@@ -334,45 +325,6 @@ function SolutionsPageContent() {
     return locale === 'es' ? reg.esName : reg.enName;
   };
 
-  // Helper to generate mock case studies dynamically by category ID
-  const getCaseStudySummary = (catId: string, isEs: boolean) => {
-    const caseStudies: Record<string, { en: string; es: string }> = {
-      'ai-automation': {
-        en: "A leading logistics provider automated 85% of customer support intake using our custom RAG-driven voice agents, reducing queue latency by 12 minutes.",
-        es: "Un proveedor logístico líder automatizó el 85% del soporte mediante agentes de voz RAG, reduciendo la latencia de espera en 12 minutos."
-      },
-      'software-development': {
-        en: "Engineered a bespoke SaaS platform supporting 1M+ active telemetry streams with sub-second API endpoints and integrated Stripe billing.",
-        es: "Diseñó una plataforma SaaS personalizada que soporta más de 1M de flujos de telemetría con endpoints API de subsegundo y facturación Stripe."
-      },
-      'web-development': {
-        en: "Delivered a headless corporate website optimized with Next.js, boosting search indexation by 45% and PageSpeed score to 98/100.",
-        es: "Entregó un sitio web corporativo headless optimizado con Next.js, impulsando la indexación de búsqueda en un 45% y la puntuación PageSpeed a 98/100."
-      },
-      'cloud-devops': {
-        en: "Orchestrated zero-downtime cloud migration, structuring container pods with Kubernetes to yield 30% cost efficiency.",
-        es: "Orquestó una migración a la nube con cero tiempo de inactividad, estructurando pods de Kubernetes para lograr un 30% de eficiencia de costos."
-      },
-      'talent-solutions': {
-        en: "Deployed a dedicated squad of Next.js and Go SRE engineers within 8 business days, accelerating project delivery by 3 months.",
-        es: "Desplegó un equipo dedicado de ingenieros Next.js y Go SRE en 8 días hábiles, acelerando la entrega del proyecto por 3 meses."
-      },
-      'data-analytics': {
-        en: "Integrated Snowflake data lakes with custom Power BI dashboards, enabling real-time supply chain inventory monitoring.",
-        es: "Integró lagos de datos de Snowflake con paneles de Power BI, permitiendo el monitoreo de inventario de cadena de suministro en tiempo real."
-      },
-      'cybersecurity': {
-        en: "Conducted pentesting and compliance mapping for a digital healthcare provider, securing SOC 2 and HIPAA certifications.",
-        es: "Realizó pruebas de penetración y mapeo de cumplimiento para un proveedor de salud, asegurando certificaciones SOC 2 e HIPAA."
-      },
-      'technology-consulting': {
-        en: "Served as virtual CTO for a scale-up fintech client, structuring their engineering roadmap and reducing cloud overspend by $150K/year.",
-        es: "Actuó como CTO virtual para una fintech a escala, estructurando su roadmap de ingeniería y reduciendo el sobrecosto en la nube en $150K/año."
-      }
-    };
-    return (caseStudies[catId] || caseStudies['software-development'])[isEs ? 'es' : 'en'];
-  };
-
   const triggerOpenChat = () => {
     window.dispatchEvent(new CustomEvent('open-hypercode-chat'));
   };
@@ -403,26 +355,6 @@ function SolutionsPageContent() {
       [catId]: !prev[catId]
     }));
   };
-
-  const SelectedCategoryIcon = selectedCategory?.IconComponent;
-
-  const drawerTechnologies = useMemo(() => {
-    if (!selectedCategory) return [];
-    const techs = new Set<string>();
-    selectedCategory.cat.services.forEach((srv: any) => srv.tech.forEach((tech: string) => techs.add(tech)));
-    return Array.from(techs);
-  }, [selectedCategory]);
-
-  const drawerIndustries = useMemo(() => {
-    if (!selectedCategory) return [];
-    const inds = new Set<string>();
-    selectedCategory.cat.services.forEach((srv: any) => {
-      const srvDetails = getServiceDetails(srv.id, locale);
-      const serviceIndustries = srvDetails?.industries?.length ? srvDetails.industries : srv.industries ?? [];
-      serviceIndustries.forEach((ind: string) => inds.add(ind));
-    });
-    return Array.from(inds);
-  }, [selectedCategory, locale]);
 
   return (
     <main className="relative w-full bg-white text-left min-h-screen bg-dot-pattern">
@@ -540,7 +472,7 @@ function SolutionsPageContent() {
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
                       
                       {/* Left: Category Summary Cover Card */}
-                      <div className="lg:col-span-4 bg-white border border-slate-200 rounded-[24px] p-6 shadow-sm flex flex-col justify-between hover:border-slate-355 transition-all text-left relative overflow-hidden group">
+                      <div className="lg:col-span-4 bg-white border border-slate-200 rounded-[24px] p-6 shadow-sm hover:border-slate-355 transition-all text-left relative overflow-hidden group">
                         <div className="space-y-4 relative z-10">
                           <p className="text-body text-slate-655">
                             {categoryDesc}
@@ -557,16 +489,6 @@ function SolutionsPageContent() {
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/10 via-transparent to-transparent" />
                           </div>
-                        </div>
-
-                        <div className="pt-6 relative z-10">
-                          <button
-                            onClick={() => setSelectedCategory({ cat: category, catTitle: categoryTitle, IconComponent: CategoryIcon })}
-                            className="w-full inline-flex items-center justify-center gap-1.5 py-3 bg-royal-blue/5 hover:bg-royal-blue/15 text-button text-royal-blue rounded-xl transition-all cursor-pointer border-none"
-                          >
-                            <span>{locale === 'es' ? 'Ver Detalles de la Práctica' : 'Explore Category Scope'}</span>
-                            <ChevronRight size={14} />
-                          </button>
                         </div>
                       </div>
 
@@ -987,147 +909,6 @@ function SolutionsPageContent() {
         )}
       </AnimatePresence>
 
-      {/* Interactive Enterprise Details Drawer (Sheet) */}
-      <AnimatePresence>
-        {selectedCategory && (
-          <>
-            {/* Dark Overlay Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.6 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-slate-950 backdrop-blur-sm z-50 cursor-pointer"
-              onClick={() => setSelectedCategory(null)}
-            />
-
-            {/* Slide-in Details Drawer */}
-            <motion.div
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 26, stiffness: 180 }}
-              className="fixed right-0 top-0 bottom-0 w-full max-w-2xl bg-white shadow-2xl z-50 overflow-y-auto border-l border-slate-200 p-8 md:p-12 flex flex-col justify-between"
-            >
-              <div className="space-y-8 text-left">
-                {/* Header block */}
-                <div className="flex items-center justify-between pb-6 border-b border-slate-200">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-100 text-royal-blue">
-                      {SelectedCategoryIcon && <SelectedCategoryIcon size={22} />}
-                    </div>
-                    <div>
-                      <span className="block text-eyebrow text-slate-450">{t('drawerTitle')}</span>
-                      <h3 className="text-h3 text-slate-900">
-                        {selectedCategory.catTitle}
-                      </h3>
-                    </div>
-                  </div>
-                  <button 
-                    onClick={() => setSelectedCategory(null)}
-                    className="p-2 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-400 hover:text-slate-800 transition-colors border-none cursor-pointer"
-                  >
-                    <X size={20} />
-                  </button>
-                </div>
-
-                {/* Section 1: Overview */}
-                <div className="space-y-3">
-                  <h4 className="text-eyebrow text-slate-400">{t('drawerTitle')}</h4>
-                  <p className="text-slate-700 text-body bg-slate-50 border border-slate-200 p-5 rounded-2xl shadow-sm">
-                    {t(`categories.${selectedCategory.cat.id}.desc`)}
-                  </p>
-                </div>
-
-                {/* Section 2: Specific capabilities */}
-                <div className="space-y-4">
-                  <h4 className="text-eyebrow text-slate-400">{tc('detailedCapabilities')}</h4>
-                  <div className="space-y-4">
-                    {selectedCategory.cat.services.map((srv: any) => {
-                      const srvDetails = getServiceDetails(srv.id, locale);
-                      const srvTitle = srvDetails ? srvDetails.title : t(`categories.${selectedCategory.cat.id}.services.${srv.id}.title`);
-                      const srvDesc = srvDetails ? srvDetails.description : t(`categories.${selectedCategory.cat.id}.services.${srv.id}.desc`);
-                      const srvPath = srvDetails ? `/solutions/${srv.id}` : srv.path;
-
-                      return (
-                        <div key={srv.id} className="p-5 rounded-2xl border border-slate-100 bg-white shadow-sm space-y-3 text-left">
-                          <h5 className="text-body font-bold text-slate-900">{srvTitle}</h5>
-                          <p className="text-body-sm text-slate-555 leading-relaxed">{srvDesc}</p>
-                          
-                          {/* Link to dedicated landing page */}
-                          <div className="pt-2 border-t border-slate-100/50 mt-1 flex items-center justify-between">
-                            <Link 
-                              href={srvPath}
-                              onClick={() => setSelectedCategory(null)}
-                              className="text-button text-royal-blue hover:underline flex items-center gap-1"
-                            >
-                              <span>{t('viewServiceDetails')}</span>
-                              <ArrowRight size={12} />
-                            </Link>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Section 3: Technologies Used */}
-                <div className="space-y-3">
-                  <h4 className="text-eyebrow text-slate-400">{tc('technologies')}</h4>
-                  <div className="flex flex-wrap gap-1.5">
-                    {drawerTechnologies.map((tech, idx) => (
-                      <span key={idx} className="px-3 py-1.5 bg-royal-blue/5 border border-royal-blue/15 text-eyebrow text-royal-blue rounded-lg">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Section 4: Target Industries */}
-                <div className="space-y-3">
-                  <h4 className="text-eyebrow text-slate-400">{tc('industries')}</h4>
-                  <div className="flex flex-wrap gap-1.5">
-                    {drawerIndustries.map((ind, idx) => (
-                      <span key={idx} className="px-3 py-1.5 bg-royal-blue/5 border border-royal-blue/15 text-body-sm font-bold text-royal-blue rounded-lg">
-                        {ind}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Section 5: Case Study Success */}
-                <div className="p-6.5 rounded-2xl bg-slate-900 text-white relative overflow-hidden border border-slate-800 shadow-md text-left">
-                  <div className="absolute top-0 right-0 w-24 h-24 bg-royal-blue/25 rounded-full blur-xl pointer-events-none" />
-                  <div className="space-y-3">
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-royal-blue/30 text-eyebrow text-blue-200">
-                      {t('caseStudyLabel')}
-                    </span>
-                    <p className="text-body-sm text-slate-300">
-                      {getCaseStudySummary(selectedCategory.cat.id, locale === 'es')}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Drawer footer actions */}
-              <div className="flex items-center gap-4 pt-8 border-t border-slate-200 mt-10">
-                <Link
-                  href={`/consultation?service=${encodeURIComponent(selectedCategory.catTitle)}`}
-                  className="flex-1 inline-flex items-center justify-center h-12 bg-royal-blue hover:bg-deep-navy text-white font-bold text-sm uppercase tracking-wider rounded-xl transition-all shadow-md cursor-pointer"
-                  onClick={() => setSelectedCategory(null)}
-                >
-                  {tc('solutions') || 'Request Consultation'}
-                </Link>
-                <button
-                  onClick={() => setSelectedCategory(null)}
-                  className="px-6 h-12 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm uppercase tracking-wider rounded-xl transition-all cursor-pointer border-none"
-                >
-                  {tc('close')}
-                </button>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
     </main>
   );
 }

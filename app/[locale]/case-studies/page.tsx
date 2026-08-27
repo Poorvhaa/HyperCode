@@ -4,6 +4,7 @@ import { Footer } from '@/components/footer';
 import { getCaseStudies } from '@/lib/case-studies-data';
 import { CaseStudies } from '@/components/case-studies';
 import { HeroBanner } from '@/components/hero-banner';
+import { localeUrl } from '@/lib/site-url';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -16,7 +17,7 @@ export async function generateMetadata({ params }: Props) {
     title: `HyperCode | ${t('title')}`,
     description: t('subtitle'),
     alternates: {
-      canonical: `https://www.hypercodeit.com/${locale}/case-studies`,
+      canonical: localeUrl(locale, 'case-studies'),
     },
   };
 }

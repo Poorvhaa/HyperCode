@@ -9,6 +9,7 @@ import AIConsultant from '@/components/ai-consultant'
 import { CookieProvider } from '@/components/CookieProvider'
 import { CookieBanner } from '@/components/CookieBanner'
 import { CookiePreferencesModal } from '@/components/CookiePreferencesModal'
+import { SITE_URL, localeUrl, localeAlternates, absoluteUrl } from '@/lib/site-url'
 
 import { Geist, Geist_Mono } from 'next/font/google';
 
@@ -98,15 +99,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
   const currentSeo = seoMap[locale] || seoMap.en;
 
-  // Language alternates for hreflang tags
-  const languageAlternates: Record<string, string> = {
-    'en-US': `https://www.hypercodeit.com/en`,
-    'es-US': `https://www.hypercodeit.com/es`,
-    'x-default': 'https://www.hypercodeit.com/en'
-  };
-
   return {
-    metadataBase: new URL('https://www.hypercodeit.com'),
+    metadataBase: new URL(SITE_URL),
     title: {
       default: currentSeo.title,
       template: `HyperCode | %s`,
@@ -114,13 +108,13 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     description: currentSeo.desc,
     generator: 'v0.app',
     alternates: {
-      canonical: `https://www.hypercodeit.com/${locale}`,
-      languages: languageAlternates,
+      canonical: localeUrl(locale),
+      languages: localeAlternates(),
     },
     openGraph: {
       title: currentSeo.title,
       description: currentSeo.desc,
-      url: `https://www.hypercodeit.com/${locale}`,
+      url: localeUrl(locale),
       siteName: 'HyperCode',
       locale: locale === 'en' ? 'en_US' : `${locale}_${locale.toUpperCase()}`,
       type: 'website',
@@ -180,8 +174,8 @@ export default async function RootLayout({ children, params }: LayoutProps) {
     '@context': 'https://schema.org',
     '@type': 'Corporation',
     'name': 'HyperCode',
-    'url': `https://www.hypercodeit.com/${locale}`,
-    'logo': '/hypercodeit.logo.png',
+    'url': localeUrl(locale),
+    'logo': absoluteUrl('/hypercodeit.logo.png'),
     'description': jsonLdDescription,
     'address': {
       '@type': 'PostalAddress',

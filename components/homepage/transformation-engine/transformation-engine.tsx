@@ -127,8 +127,8 @@ function TransformationEngineContent() {
   };
 
   return (
-    <section className="py-16 md:py-24 bg-white border-b border-slate-200">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="relative bg-white text-left overflow-hidden border-b border-slate-200/90">
+      <div className="max-w-[90rem] min-w-0 mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 py-14 sm:py-16 md:py-20 lg:py-24 xl:py-[7rem]">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 space-y-4">
           <span className="text-xs font-bold text-royal-blue tracking-widest uppercase">
@@ -175,7 +175,7 @@ function TransformationEngineContent() {
                       ? 'border-royal-blue bg-royal-blue text-white shadow-[0_0_12px_rgba(20,91,255,0.25)]'
                       : isCompleted
                       ? 'border-green bg-green/5 text-green'
-                      : 'border-slate-305 bg-white text-slate-600 group-hover:border-slate-450'
+                      : 'border-slate-300 bg-white text-slate-600 group-hover:border-slate-400'
                   }`}>
                     {stage.number}
                   </div>
@@ -321,7 +321,7 @@ function DiscoverVisual() {
       {/* Technology Cards */}
       <div className="absolute left-[30px] top-[45px] z-10">
         <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-slate-200 rounded-lg shadow-2xs">
-          <Layers size={11} className="text-slate-450" />
+          <Layers size={11} className="text-slate-500" />
           <span className="text-xs font-bold text-slate-700">ERP</span>
         </div>
       </div>
@@ -335,7 +335,7 @@ function DiscoverVisual() {
 
       <div className="absolute left-[30px] top-[175px] z-10">
         <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-slate-200 rounded-lg shadow-2xs">
-          <Database size={11} className="text-slate-450" />
+          <Database size={11} className="text-slate-500" />
           <span className="text-xs font-bold text-slate-700">Data</span>
         </div>
       </div>

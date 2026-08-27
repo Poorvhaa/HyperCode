@@ -92,6 +92,12 @@
     "contractStaffingDesc": "Recursos contractuales flexibles para necesidades basadas en proyectos.",
     "directPlacementDesc": "Soluciones de contratación permanente para funciones técnicas clave.",
     "viewAllSolutions": "Ver Todos los Servicios",
+    "navLabel": "Navegación principal",
+    "selectLanguage": "Seleccionar idioma",
+    "language": "Idioma",
+    "close": "Cerrar",
+    "serviceCategories": "Categorías de servicios",
+    "showServiceCategories": "Mostrar categorías de servicios",
     "talkToAI": "Hablar con Consultor de IA",
     "viewAll": "Ver Todo",
     "cyberSecurity": "Ciberseguridad",
@@ -373,12 +379,10 @@
     "industriesSubtitle": "Entregamos flujos de trabajo digitales especializados y arquitectura de sistemas en sectores globales.",
     "techEcosystemTitle": "Ecosistema Tecnológico",
     "techEcosystemSubtitle": "Diseñamos soluciones utilizando las mejores tecnologías, frameworks y plataformas de datos empresariales.",
-    "caseStudyLabel": "Caso de Éxito",
     "viewCaseStudy": "Leer Caso de Estudio Completo",
     "benefitsLabel": "Valor Estratégico y Beneficios",
     "ctaSectionTitle": "¿Listo para Transformar su Negocio?",
     "ctaSectionSubtitle": "Programe una sesión técnica con nuestros directores de soluciones o interactúe con el consultor de IA.",
-    "drawerTitle": "Capacidades y Alcance del Servicio",
     "relatedServicesLabel": "Capacidades Relacionadas",
     "industriesList": {
       "healthcare": {
@@ -1070,7 +1074,7 @@
     "sections": {
       "introduction": {
         "title": "1. Introducción",
-        "content": "Bienvenido a HyperCode. Esta Política de Privacidad describe cómo HyperCode LLC (\"nosotros\", \"nos\" o \"nuestro\") recopila, utiliza, comparte y protege sus datos personales cuando visita nuestro sitio web (https://www.hypercodeit.com), utiliza nuestro chatbot Consultor de IA, envía solicitudes de contacto o consulta, o solicita puestos de trabajo vacantes. Al acceder a nuestros servicios, usted acepta las prácticas descritas en esta política."
+        "content": "Bienvenido a HyperCode. Esta Política de Privacidad describe cómo HyperCode LLC (\"nosotros\", \"nos\" o \"nuestro\") recopila, utiliza, comparte y protege sus datos personales cuando visita nuestro sitio web (https://hypercodeit.com), utiliza nuestro chatbot Consultor de IA, envía solicitudes de contacto o consulta, o solicita puestos de trabajo vacantes. Al acceder a nuestros servicios, usted acepta las prácticas descritas en esta política."
       },
       "collect": {
         "title": "2. Información que Recopilamos",
@@ -1116,7 +1120,7 @@
     "sections": {
       "agreement": {
         "title": "1. Acuerdo de los Términos",
-        "content": "Al acceder o utilizar el sitio web de HyperCode (https://www.hypercodeit.com) y nuestros servicios profesionales, usted acepta quedar vinculado por estos Términos y Condiciones. Si no está de acuerdo con todos estos términos, se le prohíbe expresamente utilizar nuestro sitio y servicios, y debe interrumpir su uso de inmediato."
+        "content": "Al acceder o utilizar el sitio web de HyperCode (https://hypercodeit.com) y nuestros servicios profesionales, usted acepta quedar vinculado por estos Términos y Condiciones. Si no está de acuerdo con todos estos términos, se le prohíbe expresamente utilizar nuestro sitio y servicios, y debe interrumpir su uso de inmediato."
       },
       "intellectual": {
         "title": "2. Derechos de Propiedad Intelectual",
@@ -1268,15 +1272,12 @@
       "p2": "Combinamos una gestión de proyectos rigurosa con total transparencia para entregas de proyectos predecibles y a tiempo."
     },
     "learnMoreBtn": "Saber Más",
-    "drawerTitle": "Detalles del Servicio",
     "businessValue": "Valor de Negocio",
     "expectedOutcomes": "Resultados Esperados",
-    "caseStudyLabel": "Resultado del Caso de Estudio",
     "categoryLabel": "Transformación Digital de Extremo a Extremo",
     "consultingPracticesTitle": "Nuestras Prácticas de Consultoría",
     "enterpriseCapabilitiesTitle": "Soluciones Tecnológicas de Grado Empresarial",
     "enterpriseCapabilitiesDesc": "Consulte nuestras prácticas de tecnología a nivel empresarial. Desde consultoría estratégica de IA hasta el aumento de personal.",
-    "viewServiceDetails": "Ver Detalles del Servicio",
     "faqQ1": "¿Cómo determinan el tamaño del equipo y la estimación de plazos?",
     "faqA1": "Nuestros directores de práctica analizan su pila tecnológica actual, objetivos de negocio y limitaciones presupuestarias para generar un plan técnico detallado que define el perfil ideal de los desarrolladores y la duración de los sprints.",
     "faqQ2": "¿Cuáles son los modelos de compromiso para las soluciones de talento?",
@@ -1312,7 +1313,7 @@
     "button": "Ir al Inicio"
   },
   "cta": {
-    "badge": "PÓNGASE EN CONTACTO",
+    "badge": "INICIE UNA CONVERSACIÓN",
     "heading": "¿Listo para crear su próxima solución digital?",
     "description": "Asóciese con nuestros equipos de ingeniería de élite y consultores tecnológicos para crear sistemas seguros, escalables y orientados a la IA.",
     "primaryButton": "Programar Consulta",
@@ -1407,18 +1408,39 @@
   },
   "HomepageRedesign": {
     "Hero": {
-      "badge": "Socio Tecnológico en EE. UU.",
-      "headlinePart1": "Creamos",
-      "headlineGradient": "tecnología inteligente",
-      "headlinePart2": "que impulsa el crecimiento empresarial.",
-      "supporting": "Diseñamos y desarrollamos mundos digitales unificados, conectando IA, plataformas multi-nube y APIs inteligentes en motores de negocio de alto rendimiento que escalan continuamente.",
+      "badge": "Consultoría e Ingeniería Tecnológica en EE. UU.",
+      "headlineLine1": "Ingeniería de Sistemas Digitales Que Impulsan el",
+      "headlineLine2": "",
+      "headlineGradient": "Avance Empresarial",
+      "supporting": "HyperCode desarrolla software a medida, automatización con IA, nube, datos y plataformas empresariales alineadas con las operaciones reales del negocio.",
       "ctaPrimary": "Agendar Consulta Gratuita",
-      "ctaSecondary": "Explorar Soluciones",
-      "trust": {
-        "ai": "Impulsado por IA",
-        "enterprise": "Listo para la Empresa",
-        "cloud": "Nativo de la Nube",
-        "delivery": "Entrega Rápida"
+      "ctaSecondary": "Ver Nuestro Trabajo",
+      "servicePanelTitle": "Socio Tecnológico Integral",
+      "services": {
+        "0": "Consultoría Tecnológica",
+        "1": "Desarrollo de Software a Medida",
+        "2": "IA y Automatización",
+        "3": "Nube y DevOps",
+        "4": "Datos y Analítica",
+        "5": "Integración de Sistemas Empresariales"
+      },
+      "trustItems": {
+        "0": {
+          "title": "Socio Tecnológico en EE. UU.",
+          "description": "Liderazgo en consultoría e ingeniería"
+        },
+        "1": {
+          "title": "Ingeniería de Software a Medida",
+          "description": "Plataformas para operaciones reales"
+        },
+        "2": {
+          "title": "IA y Automatización",
+          "description": "Sistemas de flujo de trabajo inteligentes"
+        },
+        "3": {
+          "title": "Nube y Datos",
+          "description": "Integración de sistemas empresariales"
+        }
       }
     },
     "TransformationEngine": {
@@ -1487,11 +1509,12 @@
       }
     },
     "ServiceEcosystem": {
-      "badge": "ECOSISTEMA DE SERVICIOS",
-      "title": "Capacidades Digitales Inteligentes",
+      "badge": "QUÉ HACEMOS",
+      "title": "Capacidades Tecnológicas Centradas en las Necesidades del Negocio",
       "subtitle": "Diseñamos, construimos y apoyamos los pilares tecnológicos clave de las empresas modernas.",
-      "centralDefaultTitle": "Motor HyperCode",
-      "centralDefaultDesc": "Pase el cursor o enfoque cualquier nodo tecnológico alrededor del núcleo para inspeccionar nuestras capacidades, servicios y resultados.",
+      "viewService": "Explorar capacidad",
+      "centralDefaultTitle": "Entrega tecnológica integral",
+      "centralDefaultDesc": "Seleccione una capacidad para explorar cómo HyperCode ayuda a las organizaciones a diseñar, construir y escalar tecnología moderna.",
       "centralDefaultOutcome": "Acelerar el valor empresarial",
       "outcomes": {
         "aiOutcome": "Reducir tareas manuales operativas en un 45%",
@@ -1507,12 +1530,21 @@
       }
     },
     "IndustrySolutions": {
-      "badge": "SECTORS QUE SERVIMOS",
-      "title": "Soluciones Industriales",
-      "subtitle": "Ingeniería y arquitectura a medida adaptadas a su sector específico."
+      "badge": "INDUSTRIAS",
+      "title": "Tecnología Diseñada para Su Industria",
+      "subtitle": "Ingeniería y arquitectura a medida adaptadas a su sector específico.",
+      "viewSolutions": "Explorar Soluciones Sectoriales"
+    },
+    "OurWork": {
+      "badge": "NUESTRO TRABAJO",
+      "title": "Tecnología Construida para Negocios Reales",
+      "subtitle": "Sistemas empresariales, plataformas e integraciones entregadas en salud, finanzas, retail y logística.",
+      "featuredBadge": "TRABAJO DESTACADO",
+      "viewProject": "Ver Proyecto",
+      "viewCaseStudy": "Ver Caso de Estudio"
     },
     "DeliveryProcess": {
-      "badge": "NUESTRO PROCESO",
+      "badge": "CÓMO TRABAJAMOS",
       "title": "Metodología de Entrega Acelerada",
       "subtitle": "Cómo pasamos del alcance al despliegue en producción en la mitad de tiempo que los integradores tradicionales.",
       "step1Title": "1. Alcance y Hoja de Ruta",
@@ -1523,6 +1555,44 @@
       "step3Desc": "Desarrollo rápido, integración continua y validación.",
       "step4Title": "4. Lanzamiento y Escalado",
       "step4Desc": "Despliegue sin fricciones en la nube, transferencias y optimización."
+    },
+    "TechPartners": {
+      "eyebrow": "Experiencia Tecnológica de Confianza",
+      "microsoftType": "Socio Gold",
+      "azureType": "Plataforma en la Nube",
+      "awsType": "Red de Socios",
+      "snowflakeType": "Socio Select",
+      "databricksType": "Socio de Consultoría",
+      "tableauType": "Socio"
+    },
+    "Insights": {
+      "eyebrow": "INSIGHTS",
+      "title": "Pensamiento de Liderazgo",
+      "subtitle": "Explore perspectivas clave, patrones de diseño y estrategias de personal seleccionadas por consultores de HyperCode.",
+      "viewAll": "Ver Todos los Insights"
+    },
+    "TrustSection": {
+      "eyebrow": "Por Qué HyperCode",
+      "title": "Por Qué los Líderes Empresariales Confían en HyperCode",
+      "subtitle": "Combinamos excelencia en ingeniería de software, arquitectura de datos y redes globales de talento para ofrecer resultados empresariales tangibles.",
+      "pillars": {
+        "nationwide": {
+          "title": "Entrega a Nivel Nacional",
+          "description": "Apoyamos a organizaciones en los 50 estados con una fuerza laboral de consultores altamente movilizada."
+        },
+        "government": {
+          "title": "Experiencia en el Sector Público",
+          "description": "Proveedor aprobado que ofrece soluciones seguras y conformes de datos y personal para agencias públicas."
+        },
+        "enterprise": {
+          "title": "Soluciones Empresariales",
+          "description": "Arquitectura de lagos de datos en la nube, plataformas de BI y sistemas de ingeniería de alto rendimiento."
+        },
+        "certified": {
+          "title": "Consultores Certificados",
+          "description": "Expertos acreditados en Microsoft, Snowflake, AWS, Databricks y herramientas modernas de BI."
+        }
+      }
     }
   }
 }

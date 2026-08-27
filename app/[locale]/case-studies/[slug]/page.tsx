@@ -8,6 +8,7 @@ import { Link, routing } from '@/i18n/routing';
 import { notFound } from 'next/navigation';
 import { Calendar, Tag, ShieldAlert, Cpu, CheckCircle2, ArrowLeft, ArrowRight } from 'lucide-react';
 import { ConsultationForm } from '@/components/consultation-form';
+import { localeUrl, localeAlternates, absoluteUrl } from '@/lib/site-url';
 
 interface Props {
   params: Promise<{ locale: string; slug: string }>;
@@ -40,17 +41,13 @@ export async function generateMetadata({ params }: Props) {
     title: study.seo.title,
     description: study.seo.description,
     alternates: {
-      canonical: `https://www.hypercodeit.com/${locale}/case-studies/${slug}`,
-      languages: {
-        'en-US': `https://www.hypercodeit.com/en/case-studies/${slug}`,
-        'es-US': `https://www.hypercodeit.com/es/case-studies/${slug}`,
-        'x-default': `https://www.hypercodeit.com/en/case-studies/${slug}`,
-      }
+      canonical: localeUrl(locale, `case-studies/${slug}`),
+      languages: localeAlternates(`case-studies/${slug}`),
     },
     openGraph: {
       title: study.seo.ogTitle,
       description: study.seo.ogDescription,
-      url: `https://www.hypercodeit.com/${locale}/case-studies/${slug}`,
+      url: localeUrl(locale, `case-studies/${slug}`),
       siteName: 'HyperCode',
       locale: locale === 'en' ? 'en_US' : 'es_ES',
       type: 'article',
@@ -98,19 +95,19 @@ export default async function CaseStudyDetailPage({ params }: Props) {
         '@type': 'ListItem',
         'position': 1,
         'name': isEs ? 'Inicio' : 'Home',
-        'item': `https://www.hypercodeit.com/${locale}`
+        'item': localeUrl(locale)
       },
       {
         '@type': 'ListItem',
         'position': 2,
         'name': isEs ? 'Casos de Estudio' : 'Case Studies',
-        'item': `https://www.hypercodeit.com/${locale}/case-studies`
+        'item': localeUrl(locale, 'case-studies')
       },
       {
         '@type': 'ListItem',
         'position': 3,
         'name': study.title,
-        'item': `https://www.hypercodeit.com/${locale}/case-studies/${slug}`
+        'item': localeUrl(locale, `case-studies/${slug}`)
       }
     ]
   };

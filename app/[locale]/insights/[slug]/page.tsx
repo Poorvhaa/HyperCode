@@ -8,6 +8,7 @@ import { routing } from '@/i18n/routing';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Metadata } from 'next';
 import { db } from '@/lib/db';
+import { localeUrl } from '@/lib/site-url';
 
 async function fetchArticle(slug: string, locale: string) {
   try {
@@ -119,7 +120,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: `HyperCode | ${article.title} | Insights`,
     description: article.excerpt,
     alternates: {
-      canonical: `https://www.hypercodeit.com/${locale}/insights/${article.slug}`,
+      canonical: localeUrl(locale, `insights/${article.slug}`),
     },
   };
 }
@@ -210,7 +211,7 @@ export default async function ArticlePage({ params }: PageProps) {
     relatedArticles.push(...extra);
   }
 
-  const shareUrl = `https://www.hypercodeit.com/${locale}/insights/${article.slug}`;
+  const shareUrl = localeUrl(locale, `insights/${article.slug}`);
   const shareText = encodeURIComponent(article.title);
 
   return (

@@ -21,6 +21,7 @@ import {
 import { Link } from '@/i18n/routing';
 import Image from 'next/image';
 import { HeroBanner } from '@/components/hero-banner';
+import { localeUrl } from '@/lib/site-url';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -35,7 +36,7 @@ export async function generateMetadata({ params }: Props) {
     title: `HyperCode | ${tc('careers')}`,
     description: t('subtitle'),
     alternates: {
-      canonical: `https://www.hypercodeit.com/${locale}/careers`,
+      canonical: localeUrl(locale, 'careers'),
     },
   };
 }

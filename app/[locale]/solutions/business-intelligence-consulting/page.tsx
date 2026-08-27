@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { SolutionDetailPage } from '@/components/solution-detail-page';
+import { localeUrl } from '@/lib/site-url';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -12,7 +13,7 @@ export async function generateMetadata({ params }: Props) {
     title: `HyperCode | Business Intelligence Consulting | ${tc('solutions')}`,
     description: "Enterprise Business Intelligence consulting, Power BI/Tableau dashboard creation, self-service BI setups, and data visualization. Headquartered in Schaumburg, IL.",
     alternates: {
-      canonical: `https://www.hypercodeit.com/${locale}/solutions/business-intelligence-consulting`,
+      canonical: localeUrl(locale, 'solutions/business-intelligence-consulting'),
     },
   };
 }

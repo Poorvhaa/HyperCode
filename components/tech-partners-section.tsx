@@ -1,42 +1,46 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
+
+const PARTNERS = [
+  { name: 'Microsoft', typeKey: 'microsoftType' },
+  { name: 'Azure', typeKey: 'azureType' },
+  { name: 'AWS', typeKey: 'awsType' },
+  { name: 'Snowflake', typeKey: 'snowflakeType' },
+  { name: 'Databricks', typeKey: 'databricksType' },
+  { name: 'Tableau', typeKey: 'tableauType' },
+] as const;
+
 export function TechPartnersSection() {
-  const partners = [
-    { name: 'Microsoft', type: 'Gold Partner' },
-    { name: 'Azure', type: 'Cloud Platform' },
-    { name: 'AWS', type: 'Partner Network' },
-    { name: 'Snowflake', type: 'Select Partner' },
-    { name: 'Databricks', type: 'Consulting Partner' },
-    { name: 'Tableau', type: 'Partner' },
-  ];
+  const t = useTranslations('HomepageRedesign.TechPartners');
 
   return (
-    <section className="bg-[#F8FAFC] border-b border-slate-200 py-8 select-none">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          <h2 className="text-eyebrow text-slate-500">
-            Trusted Technology Expertise
-          </h2>
-          
-          <div
-            className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5"
-            role="list"
-            aria-label="Technology partner accreditations"
-          >
-            {partners.map((partner, index) => (
-              <span
-                key={index}
-                role="listitem"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-body-sm shadow-sm whitespace-nowrap"
-              >
-                <span className="font-bold tracking-tight text-slate-800">{partner.name}</span>
-                <span className="text-slate-300 select-none" aria-hidden="true">/</span>
-                <span className="text-caption font-semibold text-slate-500">{partner.type}</span>
+    <div className="bg-white border-b border-slate-200/70">
+      <div className="max-w-[90rem] min-w-0 mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 pt-10 sm:pt-12 lg:pt-14 pb-8 sm:pb-10">
+        <p className="text-[0.6875rem] sm:text-xs font-medium tracking-[0.16em] uppercase text-slate-400">
+          {t('eyebrow')}
+        </p>
+        <ul
+          className="mt-4 sm:mt-5 flex flex-wrap items-baseline gap-x-1 gap-y-2 sm:gap-x-2"
+          aria-label={t('eyebrow')}
+        >
+          {PARTNERS.map((partner, index) => (
+            <li key={partner.name} className="inline-flex items-baseline gap-1.5 sm:gap-2 min-w-0">
+              {index > 0 ? (
+                <span className="text-slate-300 select-none pr-1 sm:pr-2" aria-hidden="true">
+                  /
+                </span>
+              ) : null}
+              <span className="text-[0.8125rem] sm:text-sm font-semibold tracking-tight text-slate-800 whitespace-normal">
+                {partner.name}
               </span>
-            ))}
-          </div>
-        </div>
+              <span className="text-[0.6875rem] sm:text-xs font-medium text-slate-400 whitespace-normal">
+                {t(partner.typeKey)}
+              </span>
+            </li>
+          ))}
+        </ul>
       </div>
-    </section>
+    </div>
   );
 }

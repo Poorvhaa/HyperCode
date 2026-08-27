@@ -41,7 +41,7 @@ export default function AIConsultant() {
           title={t('tooltip')}
           aria-label="Open AI Consultant"
           aria-haspopup="dialog"
-          className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-gradient-to-tr from-[#145BFF] to-[#00C9A7] text-white flex items-center justify-center shadow-xl shadow-blue-500/25 pointer-events-auto cursor-pointer hover:shadow-blue-500/35 transition duration-200 shrink-0 hover:scale-105 active:scale-95 outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#145BFF] border-none group"
+          className="fixed bottom-20 right-4 sm:bottom-6 sm:right-6 w-14 h-14 rounded-full bg-gradient-to-tr from-[#145BFF] to-[#00C9A7] text-white flex items-center justify-center shadow-xl shadow-blue-500/25 pointer-events-auto cursor-pointer hover:shadow-blue-500/35 transition duration-200 shrink-0 hover:scale-105 active:scale-95 outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#145BFF] border-none group"
         >
           <MessageSquare className="w-6 h-6 group-hover:scale-105 transition duration-200" />
           

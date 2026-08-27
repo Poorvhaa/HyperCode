@@ -86,6 +86,13 @@ export const solutionMenu: MenuCategory[] = [
   }
 ];
 
+/** Three-column mega menu layout — balanced for laptop viewports */
+export const solutionMenuColumns: MenuCategory[][] = [
+  solutionMenu.slice(0, 3),
+  solutionMenu.slice(3, 6),
+  solutionMenu.slice(6),
+];
+
 export type FooterServiceLink = {
   labelKey: string;
   href: string;
@@ -97,4 +104,5 @@ export const footerServicesList: FooterServiceLink[] = [
   { labelKey: 'cloudDevOps', href: '/solutions#cloud-devops' },
   { labelKey: 'dataAnalytics', href: '/solutions#data-analytics' },
   { labelKey: 'itStaffingConsulting', href: '/solutions#talent-solutions' },
+  { labelKey: 'cybersecurity', href: '/solutions#cybersecurity' },
 ];

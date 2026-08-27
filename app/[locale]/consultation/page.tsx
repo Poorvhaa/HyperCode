@@ -3,6 +3,7 @@ import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
 import { ConsultationForm } from '@/components/consultation-form';
 import { ShieldCheck, BarChart4, Users2, FileCode2 } from 'lucide-react';
+import { localeUrl } from '@/lib/site-url';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -15,7 +16,7 @@ export async function generateMetadata({ params }: Props) {
     title: `HyperCode | Schedule Consultation | Enterprise Solutions`,
     description: "Request a project consultation or staffing review with our practice directors and solutions architects. Headquartered in Schaumburg, IL.",
     alternates: {
-      canonical: `https://www.hypercodeit.com/${locale}/consultation`,
+      canonical: localeUrl(locale, 'consultation'),
     },
   };
 }
