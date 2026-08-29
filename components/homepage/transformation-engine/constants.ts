@@ -28,11 +28,12 @@ export function getCapabilityPosition(index: number, radius = 2.15): [number, nu
 
 /** Normalized 2D positions for SVG fallback (0–1 space) */
 export function getCapabilityPosition2D(index: number): { x: number; y: number } {
+  const roundCoord = (n: number) => Math.round(n * 100) / 100;
   const angle = (index / CAPABILITY_COUNT) * Math.PI * 2 - Math.PI / 2;
   const r = 0.36;
   return {
-    x: 0.5 + Math.cos(angle) * r,
-    y: 0.5 + Math.sin(angle) * r,
+    x: roundCoord(0.5 + Math.cos(angle) * r),
+    y: roundCoord(0.5 + Math.sin(angle) * r),
   };
 }
 

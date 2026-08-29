@@ -10,6 +10,8 @@ type CapabilitiesVisualProps = {
   compact?: boolean;
 };
 
+const roundCoord = (n: number) => Math.round(n * 100) / 100;
+
 function ThemeSvg({ theme, compact }: { theme: CapabilityVisualTheme; compact?: boolean }) {
   const stroke = 'rgba(37,181,255,0.45)';
   const strokeMuted = 'rgba(255,255,255,0.12)';
@@ -21,8 +23,8 @@ function ThemeSvg({ theme, compact }: { theme: CapabilityVisualTheme; compact?: 
         <circle cx="200" cy="180" r="36" fill={fill} stroke={stroke} strokeWidth="1" />
         {[0, 72, 144, 216, 288].map((deg, i) => {
           const rad = (deg * Math.PI) / 180;
-          const x = 200 + Math.cos(rad) * 110;
-          const y = 180 + Math.sin(rad) * 110;
+          const x = roundCoord(200 + Math.cos(rad) * 110);
+          const y = roundCoord(180 + Math.sin(rad) * 110);
           return (
             <g key={deg}>
               <line x1="200" y1="180" x2={x} y2={y} stroke={strokeMuted} strokeWidth="0.75" />

@@ -34,6 +34,7 @@ import {
   parallaxRange,
 } from '@/lib/motion-tokens';
 import { useLandingMotion } from '@/hooks/use-landing-motion';
+import { useCountUp } from '@/hooks/use-count-up';
 
 const INDUSTRIES_SERVED = [
   { id: 'manufacturing', icon: Cpu, tags: ['IIoT', 'ERP', 'Supply Chain'] },

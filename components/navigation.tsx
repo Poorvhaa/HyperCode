@@ -269,33 +269,24 @@ export function Navigation() {
 
         <div className="relative mx-auto h-full w-full max-w-[90rem] px-5 sm:px-8 lg:px-12 xl:px-16">
           <div className="grid h-full grid-cols-[auto_1fr_auto] items-center gap-4 lg:gap-8">
-            {/* Logo — white backdrop on dark nav for contrast */}
-            <Link href="/" className="flex h-full max-h-full shrink-0 items-center">
-              {isDarkTheme ? (
-                <span className="inline-flex max-h-full items-center rounded-md bg-white/[0.97] px-2.5 py-1.5">
-                  <Image
-                    src="/images/hypercode-logo-header.webp"
-                    alt="HyperCode"
-                    width={417}
-                    height={368}
-                    priority
-                    quality={100}
-                    sizes="(max-width: 639px) 116px, (max-width: 767px) 130px, (max-width: 1023px) 140px, (max-width: 1279px) 150px, 170px"
-                    className="h-auto w-[7.25rem] max-h-[3.25rem] object-contain object-left sm:w-[8.125rem] sm:max-h-[3.5rem] md:w-[8.75rem] md:max-h-[3.75rem] lg:w-[9.375rem] lg:max-h-[4rem] xl:w-[10.625rem] xl:max-h-[5.25rem]"
-                  />
-                </span>
-              ) : (
-                <Image
-                  src="/images/hypercode-logo-header.webp"
-                  alt="HyperCode"
-                  width={417}
-                  height={368}
-                  priority
-                  quality={100}
-                  sizes="(max-width: 639px) 116px, (max-width: 767px) 130px, (max-width: 1023px) 140px, (max-width: 1279px) 150px, 170px"
-                  className="h-auto w-[7.25rem] max-h-[3.25rem] object-contain object-left sm:w-[8.125rem] sm:max-h-[3.5rem] md:w-[8.75rem] md:max-h-[3.75rem] lg:w-[9.375rem] lg:max-h-[4rem] xl:w-[10.625rem] xl:max-h-[5.25rem]"
+            {/* Logo — transparent asset, no card; subtle backdrop on dark hero only */}
+            <Link href="/" className="relative flex shrink-0 items-center self-center">
+              {isDarkTheme && (
+                <span
+                  className="pointer-events-none absolute -inset-x-2 -inset-y-1.5 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(3,10,20,0.45)_0%,transparent_70%)]"
+                  aria-hidden="true"
                 />
               )}
+              <Image
+                src="/images/hypercode-logo-header.webp"
+                alt="HyperCode"
+                width={417}
+                height={368}
+                priority
+                quality={100}
+                sizes="(max-width: 639px) 110px, (max-width: 767px) 125px, (max-width: 1023px) 135px, (max-width: 1279px) 145px, 155px"
+                className="relative z-[1] h-auto w-[6.875rem] max-h-[3.25rem] object-contain object-left sm:w-[7.8125rem] sm:max-h-[3.5rem] md:w-[8.4375rem] md:max-h-[3.625rem] lg:w-[9.0625rem] lg:max-h-[4rem] xl:w-[9.6875rem] xl:max-h-[5rem]"
+              />
             </Link>
 
             {/* Center — desktop navigation */}

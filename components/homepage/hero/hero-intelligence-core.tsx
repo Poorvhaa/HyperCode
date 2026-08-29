@@ -16,11 +16,13 @@ const NODES: { angle: number; color: string; ring: number }[] = [
   { angle: 162, color: '#25B5FF', ring: 1 },
 ];
 
+const roundCoord = (n: number) => Math.round(n * 100) / 100;
+
 function polarToCartesian(angleDeg: number, radius: number) {
   const rad = (angleDeg * Math.PI) / 180;
   return {
-    x: 240 + Math.cos(rad) * radius,
-    y: 240 + Math.sin(rad) * radius,
+    x: roundCoord(240 + Math.cos(rad) * radius),
+    y: roundCoord(240 + Math.sin(rad) * radius),
   };
 }
 

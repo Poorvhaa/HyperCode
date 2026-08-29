@@ -6,6 +6,8 @@ import {
   getCapabilityPosition2D,
 } from './constants';
 
+const roundCoord = (n: number) => Math.round(n * 100) / 100;
+
 type EngineStaticVisualProps = {
   scrollProgress: number;
   activeIndex?: number;
@@ -55,11 +57,11 @@ export function EngineStaticVisual({
 
         {Array.from({ length: CAPABILITY_COUNT }).map((_, i) => {
           const pos = getCapabilityPosition2D(i);
-          const x2 = pos.x * 400;
-          const y2 = pos.y * 400;
+          const x2 = roundCoord(pos.x * 400);
+          const y2 = roundCoord(pos.y * 400);
           const progress = nodeProgress[i];
-          const lineLen = Math.hypot(x2 - 200, y2 - 200);
-          const dashOffset = lineLen * (1 - progress);
+          const lineLen = roundCoord(Math.hypot(x2 - 200, y2 - 200));
+          const dashOffset = roundCoord(lineLen * (1 - progress));
           const active = i === activeIndex;
 
           return (
@@ -94,7 +96,7 @@ export function EngineStaticVisual({
                   {progress > 0.6 && labels[i] && (
                     <text
                       x={x2}
-                      y={y2 + (y2 < 200 ? -16 : 22)}
+                      y={roundCoord(y2 + (y2 < 200 ? -16 : 22))}
                       textAnchor="middle"
                       className="fill-[#5C6470] text-[11px] font-semibold"
                       opacity={Math.min(1, (progress - 0.6) * 2.5)}
