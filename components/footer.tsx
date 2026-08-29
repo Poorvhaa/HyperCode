@@ -232,7 +232,7 @@ export function Footer() {
       <div className="relative z-10 mx-auto w-full min-w-0 max-w-[90rem] px-5 py-8 sm:px-8 sm:py-9 lg:px-12 lg:py-10 xl:px-16">
         <div className="grid grid-cols-1 items-start gap-x-8 gap-y-7 md:grid-cols-2 md:gap-x-10 md:gap-y-8 lg:grid-cols-[1.5fr_1fr_0.9fr_1fr] lg:gap-x-10 lg:gap-y-0">
           {/* Column 1 — Brand + Contact */}
-          <div className="flex min-w-0 flex-col gap-2.5 md:col-start-1 md:row-start-1 lg:gap-3">
+          <div className="flex min-w-0 flex-col gap-2.5 lg:gap-3">
             <Link href="/" className="inline-flex w-fit rounded-md bg-white/[0.97] px-2.5 py-1.5" aria-label="HyperCode Home">
               <Image
                 src="/hypercodeit.logo.webp"
@@ -280,7 +280,7 @@ export function Footer() {
           </div>
 
           {/* Column 2 — What We Do */}
-          <nav className="min-w-0 md:col-start-2 md:row-start-1" aria-label={tNav('solutions')}>
+          <nav className="min-w-0" aria-label={tNav('solutions')}>
             <FooterHeading>{tNav('solutions')}</FooterHeading>
             <ul className="flex flex-col">
               {servicesList.map((s) => (
@@ -303,7 +303,7 @@ export function Footer() {
           </nav>
 
           {/* Column 3 — Company */}
-          <nav className="min-w-0 md:col-start-1 md:row-start-2" aria-label={tc('company')}>
+          <nav className="min-w-0" aria-label={tc('company')}>
             <FooterHeading>{tc('company')}</FooterHeading>
             <ul className="flex flex-col">
               {companyLinks.map((link) => (
@@ -317,7 +317,7 @@ export function Footer() {
           </nav>
 
           {/* Column 4 — Social + Newsletter */}
-          <div className="flex min-w-0 flex-col gap-5 md:col-start-2 md:row-start-2 lg:gap-6">
+          <div className="flex min-w-0 flex-col gap-5 lg:gap-6">
             <div>
               <FooterHeading>{tf('connect')}</FooterHeading>
               <SocialLinks />

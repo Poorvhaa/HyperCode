@@ -6,8 +6,53 @@ import { usePathname, useRouter, Link } from '@/i18n/routing';
 import { useLocale, useTranslations } from 'next-intl';
 import { SERVICE_REGISTRY, ALIAS_MAP } from '@/lib/services-details';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronDown, ArrowRight } from 'lucide-react';
+import {
+  Menu,
+  X,
+  ChevronDown,
+  ArrowRight,
+  Bot,
+  MonitorSmartphone,
+  Code2,
+  CloudCog,
+  BarChart3,
+  Shield,
+  Users,
+  Palette,
+  type LucideIcon,
+} from 'lucide-react';
 import { solutionMenu, solutionMenuColumns, type MenuService } from '@/lib/navigation-links';
+
+/** Sidebar highlights + in-list tags — slugs from solutionMenuColumns only */
+const MEGA_MENU_FEATURED_SLUGS = ['ai-consulting', 'custom-software-development', 'cloud-migration'] as const;
+const MEGA_MENU_POPULAR_SLUGS = new Set<string>(['ai-consulting', 'custom-software-development']);
+
+const CATEGORY_ICONS: Record<string, LucideIcon> = {
+  'AI & Automation': Bot,
+  'Web & Mobile': MonitorSmartphone,
+  'Software Development': Code2,
+  'Cloud & DevOps': CloudCog,
+  'Data & Analytics': BarChart3,
+  Cybersecurity: Shield,
+  'Talent & Staffing': Users,
+  'Digital & Experience': Palette,
+};
+
+function getMegaMenuFeaturedServices(): MenuService[] {
+  const bySlug = new Map<string, MenuService>();
+  for (const column of solutionMenuColumns) {
+    for (const category of column) {
+      for (const service of category.services) {
+        bySlug.set(service.slug, service);
+      }
+    }
+  }
+  return MEGA_MENU_FEATURED_SLUGS.map((slug) => bySlug.get(slug)).filter(
+    (service): service is MenuService => service != null
+  );
+}
+
+const megaMenuFeaturedServices = getMegaMenuFeaturedServices();
 
 const languages = [
   { code: 'en', name: 'English' },
@@ -224,18 +269,33 @@ export function Navigation() {
 
         <div className="relative mx-auto h-full w-full max-w-[90rem] px-5 sm:px-8 lg:px-12 xl:px-16">
           <div className="grid h-full grid-cols-[auto_1fr_auto] items-center gap-4 lg:gap-8">
-            {/* Logo — trimmed asset, no backdrop box */}
-            <Link href="/" className="flex shrink-0 items-center">
-              <Image
-                src="/images/hypercode-logo-header.webp"
-                alt="HyperCode"
-                width={417}
-                height={368}
-                priority
-                quality={100}
-                sizes="(max-width: 639px) 116px, (max-width: 767px) 130px, (max-width: 1023px) 140px, (max-width: 1279px) 150px, 170px"
-                className="h-auto w-[7.25rem] max-h-[3.25rem] object-contain object-left sm:w-[8.125rem] sm:max-h-[3.5rem] md:w-[8.75rem] md:max-h-[3.75rem] lg:w-[9.375rem] lg:max-h-[4rem] xl:w-[10.625rem] xl:max-h-[5.25rem]"
-              />
+            {/* Logo — white backdrop on dark nav for contrast */}
+            <Link href="/" className="flex h-full max-h-full shrink-0 items-center">
+              {isDarkTheme ? (
+                <span className="inline-flex max-h-full items-center rounded-md bg-white/[0.97] px-2.5 py-1.5">
+                  <Image
+                    src="/images/hypercode-logo-header.webp"
+                    alt="HyperCode"
+                    width={417}
+                    height={368}
+                    priority
+                    quality={100}
+                    sizes="(max-width: 639px) 116px, (max-width: 767px) 130px, (max-width: 1023px) 140px, (max-width: 1279px) 150px, 170px"
+                    className="h-auto w-[7.25rem] max-h-[3.25rem] object-contain object-left sm:w-[8.125rem] sm:max-h-[3.5rem] md:w-[8.75rem] md:max-h-[3.75rem] lg:w-[9.375rem] lg:max-h-[4rem] xl:w-[10.625rem] xl:max-h-[5.25rem]"
+                  />
+                </span>
+              ) : (
+                <Image
+                  src="/images/hypercode-logo-header.webp"
+                  alt="HyperCode"
+                  width={417}
+                  height={368}
+                  priority
+                  quality={100}
+                  sizes="(max-width: 639px) 116px, (max-width: 767px) 130px, (max-width: 1023px) 140px, (max-width: 1279px) 150px, 170px"
+                  className="h-auto w-[7.25rem] max-h-[3.25rem] object-contain object-left sm:w-[8.125rem] sm:max-h-[3.5rem] md:w-[8.75rem] md:max-h-[3.75rem] lg:w-[9.375rem] lg:max-h-[4rem] xl:w-[10.625rem] xl:max-h-[5.25rem]"
+                />
+              )}
             </Link>
 
             {/* Center — desktop navigation */}
@@ -386,53 +446,98 @@ export function Navigation() {
                     <div className="min-h-0 min-w-0 flex-1 overflow-y-auto custom-menu-scrollbar">
                       <div className="grid grid-cols-3 gap-x-6 px-5 py-3.5">
                         {solutionMenuColumns.map((column, columnIndex) => (
-                          <div key={columnIndex} className="space-y-3.5">
-                            {column.map((category) => (
-                              <div key={category.label.en}>
-                                <p className="mb-1 border-b border-slate-100 pb-1 text-[0.6875rem] font-semibold uppercase tracking-[0.1em] text-slate-500">
-                                  {category.label[locale === 'es' ? 'es' : 'en']}
-                                </p>
-                                <ul className="space-y-0" role="none">
-                                  {category.services.map((service) => {
-                                    const href = service.href || `/solutions/${service.slug}`;
-                                    const active = isServiceLinkActive(pathname, service);
-                                    return (
-                                      <li key={service.slug} role="none">
-                                        <Link
-                                          role="menuitem"
-                                          href={href}
-                                          onClick={() => setIsSolutionsOpen(false)}
-                                          aria-current={active ? 'page' : undefined}
-                                          className={`group flex items-center gap-1 py-[0.3125rem] text-[0.875rem] font-medium leading-snug transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue focus-visible:ring-offset-1 ${
-                                            active
-                                              ? 'font-semibold text-royal-blue'
-                                              : 'text-slate-700 hover:text-royal-blue'
-                                          }`}
-                                        >
-                                          <span className="min-w-0 flex-1">{getServiceLabel(service, locale)}</span>
-                                          <ArrowRight
-                                            size={12}
-                                            aria-hidden="true"
-                                            className={`shrink-0 opacity-0 transition-all duration-150 group-hover:translate-x-0.5 group-hover:opacity-100 group-focus-visible:translate-x-0.5 group-focus-visible:opacity-100 ${
-                                              active ? 'opacity-70' : 'text-royal-blue'
+                          <div key={columnIndex} className="flex flex-col gap-3">
+                            {column.map((category) => {
+                              const CategoryIcon = CATEGORY_ICONS[category.label.en] ?? Code2;
+                              return (
+                                <div key={category.label.en}>
+                                  <p className="mb-1 flex items-center gap-1.5 border-b border-slate-100 pb-1 text-[0.6875rem] font-semibold uppercase tracking-[0.1em] text-slate-500">
+                                    <CategoryIcon
+                                      size={13}
+                                      strokeWidth={2}
+                                      aria-hidden="true"
+                                      className="shrink-0 text-royal-blue/75"
+                                    />
+                                    {category.label[locale === 'es' ? 'es' : 'en']}
+                                  </p>
+                                  <ul className="space-y-0" role="none">
+                                    {category.services.map((service) => {
+                                      const href = service.href || `/solutions/${service.slug}`;
+                                      const active = isServiceLinkActive(pathname, service);
+                                      const isPopular = MEGA_MENU_POPULAR_SLUGS.has(service.slug);
+                                      return (
+                                        <li key={service.slug} role="none">
+                                          <Link
+                                            role="menuitem"
+                                            href={href}
+                                            onClick={() => setIsSolutionsOpen(false)}
+                                            aria-current={active ? 'page' : undefined}
+                                            className={`group -mx-1.5 flex items-center gap-1.5 rounded-md px-1.5 py-[0.3125rem] text-[0.875rem] font-medium leading-snug transition-[color,background-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue focus-visible:ring-offset-1 ${
+                                              active
+                                                ? 'bg-royal-blue/[0.06] font-semibold text-royal-blue'
+                                                : 'text-slate-700 hover:bg-slate-50 hover:text-royal-blue'
                                             }`}
-                                          />
-                                        </Link>
-                                      </li>
-                                    );
-                                  })}
-                                </ul>
-                              </div>
-                            ))}
+                                          >
+                                            <span className="min-w-0 flex-1">{getServiceLabel(service, locale)}</span>
+                                            {isPopular && (
+                                              <span className="shrink-0 rounded bg-royal-blue/10 px-1 py-px text-[0.5625rem] font-semibold uppercase tracking-[0.06em] text-royal-blue">
+                                                {locale === 'es' ? 'Top' : 'Popular'}
+                                              </span>
+                                            )}
+                                            <ArrowRight
+                                              size={12}
+                                              aria-hidden="true"
+                                              className={`shrink-0 opacity-0 transition-all duration-150 group-hover:translate-x-0.5 group-hover:opacity-100 group-focus-visible:translate-x-0.5 group-focus-visible:opacity-100 ${
+                                                active ? 'opacity-70' : 'text-royal-blue'
+                                              }`}
+                                            />
+                                          </Link>
+                                        </li>
+                                      );
+                                    })}
+                                  </ul>
+                                </div>
+                              );
+                            })}
                           </div>
                         ))}
                       </div>
                     </div>
 
-                    <aside className="flex w-[11.5rem] shrink-0 flex-col justify-between border-l border-slate-100 px-4 py-3.5 xl:w-[12.5rem]">
+                    <aside className="flex w-[11.5rem] shrink-0 flex-col border-l border-slate-100 px-4 py-3.5 xl:w-[12.5rem]">
                       <p className="text-[0.8125rem] leading-snug text-slate-500">
                         {tSolutions('sidebarSubtitle')}
                       </p>
+
+                      <div className="mt-3 rounded-md border border-slate-100/80 bg-slate-50/90 p-2.5">
+                        <p className="mb-1.5 text-[0.625rem] font-semibold uppercase tracking-[0.08em] text-slate-400">
+                          {locale === 'es' ? 'Destacados' : 'Featured'}
+                        </p>
+                        <ul className="space-y-0.5" role="none">
+                          {megaMenuFeaturedServices.map((service) => {
+                            const href = service.href || `/solutions/${service.slug}`;
+                            const active = isServiceLinkActive(pathname, service);
+                            return (
+                              <li key={service.slug} role="none">
+                                <Link
+                                  role="menuitem"
+                                  href={href}
+                                  onClick={() => setIsSolutionsOpen(false)}
+                                  aria-current={active ? 'page' : undefined}
+                                  className={`block rounded px-1.5 py-1 text-[0.8125rem] font-medium leading-snug transition-[color,background-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue focus-visible:ring-offset-1 ${
+                                    active
+                                      ? 'bg-white font-semibold text-royal-blue shadow-sm'
+                                      : 'text-slate-700 hover:bg-white/80 hover:text-royal-blue'
+                                  }`}
+                                >
+                                  {getServiceLabel(service, locale)}
+                                </Link>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </div>
+
                       <Link
                         href="/solutions"
                         onClick={() => setIsSolutionsOpen(false)}
