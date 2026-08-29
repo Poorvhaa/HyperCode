@@ -1,6 +1,14 @@
+export interface MetricComparison {
+  /** Documented pre-engagement value (must appear in challenge, impact, or implementation copy). */
+  beforeValue: string;
+  /** Set when beforeValue is inferred from narrative but not explicitly paired with the after metric. */
+  needsConfirmation?: boolean;
+}
+
 export interface Metric {
   value: string;
   label: string;
+  comparison?: MetricComparison;
 }
 
 export interface RelatedService {
@@ -112,7 +120,11 @@ export const CASE_STUDIES: Record<string, { en: CaseStudyItem; es: CaseStudyItem
       services: ['Business Intelligence', 'Data Engineering'],
       featuredImage: 'https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?q=80&w=800',
       metrics: [
-        { value: '42%', label: 'Reporting Time Saved' },
+        {
+          value: '42%',
+          label: 'Reporting Time Saved',
+          comparison: { beforeValue: '24h', needsConfirmation: true },
+        },
         { value: '$1.8M', label: 'Inventory Cost Saved' },
         { value: '-74%', label: 'Stockout Occurrences' }
       ],
@@ -143,7 +155,11 @@ export const CASE_STUDIES: Record<string, { en: CaseStudyItem; es: CaseStudyItem
       services: ['Inteligencia de Negocios', 'Ingeniería de Datos'],
       featuredImage: 'https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?q=80&w=800',
       metrics: [
-        { value: '42%', label: 'Tiempo de Informes Ahorrado' },
+        {
+          value: '42%',
+          label: 'Tiempo de Informes Ahorrado',
+          comparison: { beforeValue: '24h', needsConfirmation: true },
+        },
         { value: '$1.8M', label: 'Ahorro en Costes de Inventario' },
         { value: '-74%', label: 'Roturas de Stock' }
       ],
@@ -176,7 +192,11 @@ export const CASE_STUDIES: Record<string, { en: CaseStudyItem; es: CaseStudyItem
       services: ['Data Engineering', 'Business Intelligence', 'AI Strategy'],
       featuredImage: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?q=80&w=800',
       metrics: [
-        { value: '65%', label: 'Pipeline Speedup' },
+        {
+          value: '65%',
+          label: 'Pipeline Speedup',
+          comparison: { beforeValue: '48h', needsConfirmation: true },
+        },
         { value: '3x', label: 'Faster Analytics' },
         { value: '15m', label: 'Dashboard Refresh Rate' }
       ],
@@ -207,7 +227,11 @@ export const CASE_STUDIES: Record<string, { en: CaseStudyItem; es: CaseStudyItem
       services: ['Ingeniería de Datos', 'Inteligencia de Negocios', 'Estrategia de IA'],
       featuredImage: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?q=80&w=800',
       metrics: [
-        { value: '65%', label: 'Procesamiento Rápido' },
+        {
+          value: '65%',
+          label: 'Procesamiento Rápido',
+          comparison: { beforeValue: '48h', needsConfirmation: true },
+        },
         { value: '3x', label: 'Analítica más Rápida' },
         { value: '15m', label: 'Actualización de Panel' }
       ],
@@ -240,7 +264,11 @@ export const CASE_STUDIES: Record<string, { en: CaseStudyItem; es: CaseStudyItem
       services: ['Software Engineering', 'Digital Transformation', 'DevOps'],
       featuredImage: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=800',
       metrics: [
-        { value: '40%', label: 'Operational Efficiency' },
+        {
+          value: '40%',
+          label: 'Operational Efficiency',
+          comparison: { beforeValue: '45s', needsConfirmation: true },
+        },
         { value: '95%', label: 'On-Time Dispatch Rate' },
         { value: 'Sub-1s', label: 'Route Computation' }
       ],
@@ -271,7 +299,11 @@ export const CASE_STUDIES: Record<string, { en: CaseStudyItem; es: CaseStudyItem
       services: ['Software y Sistemas', 'Transformación Digital', 'DevOps'],
       featuredImage: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=800',
       metrics: [
-        { value: '40%', label: 'Eficiencia Operativa' },
+        {
+          value: '40%',
+          label: 'Eficiencia Operativa',
+          comparison: { beforeValue: '45s', needsConfirmation: true },
+        },
         { value: '95%', label: 'Despacho a Tiempo' },
         { value: 'Sub-1s', label: 'Cálculo de Rutas' }
       ],
@@ -496,7 +528,11 @@ export const CASE_STUDIES: Record<string, { en: CaseStudyItem; es: CaseStudyItem
       services: ['Digital Transformation', 'Cloud Migration', 'Software Engineering'],
       featuredImage: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=800',
       metrics: [
-        { value: '<24h', label: 'Claims Processing Time' },
+        {
+          value: '<24h',
+          label: 'Claims Processing Time',
+          comparison: { beforeValue: '21 Days' },
+        },
         { value: '-45%', label: 'Administrative Savings' },
         { value: '+65%', label: 'Customer Satisfaction' }
       ],
@@ -527,7 +563,11 @@ export const CASE_STUDIES: Record<string, { en: CaseStudyItem; es: CaseStudyItem
       services: ['Transformación Digital', 'Migración de Nube', 'Desarrollo de Software a Medida'],
       featuredImage: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=800',
       metrics: [
-        { value: '<24h', label: 'Procesamiento de Siniestros' },
+        {
+          value: '<24h',
+          label: 'Procesamiento de Siniestros',
+          comparison: { beforeValue: '21 Days' },
+        },
         { value: '-45%', label: 'Ahorro Administrativo' },
         { value: '+65%', label: 'Satisfacción del Cliente' }
       ],

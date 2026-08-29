@@ -2,7 +2,6 @@
 
 import { useMemo } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
-import { motion, useReducedMotion } from 'framer-motion';
 import { Link } from '@/i18n/routing';
 import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
@@ -12,7 +11,7 @@ import {
   HOMEPAGE_INSIGHT_SLUGS,
 } from '@/lib/insights';
 import { getLocalizedArticles } from '@/lib/insights-localizer';
-import { standardReveal } from '@/lib/motion-tokens';
+import { LandingReveal } from '@/components/motion/landing-reveal';
 
 function FeaturedArticle({
   slug,
@@ -21,7 +20,6 @@ function FeaturedArticle({
   excerpt,
   date,
   readLabel,
-  isReduced,
 }: {
   slug: string;
   category: string;
@@ -29,7 +27,6 @@ function FeaturedArticle({
   excerpt: string;
   date: string;
   readLabel: string;
-  isReduced: boolean;
 }) {
   const imageSrc = ARTICLE_FEATURED_IMAGES[slug];
 
@@ -40,12 +37,7 @@ function FeaturedArticle({
         className="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#145BFF] focus-visible:ring-offset-2"
       >
         {imageSrc && (
-          <motion.div
-            initial={standardReveal.hidden}
-            whileInView={standardReveal.visible({ isReduced })}
-            viewport={{ once: true, margin: '-60px' }}
-            className="relative aspect-[16/10] w-full overflow-hidden bg-slate-200"
-          >
+          <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#DDE3EC] rounded-xl shadow-[var(--landing-depth-sm)]">
             <Image
               src={imageSrc}
               alt={title}
@@ -53,15 +45,10 @@ function FeaturedArticle({
               sizes="(max-width: 768px) 100vw, (max-width: 1280px) 58vw, 720px"
               className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02] motion-reduce:group-hover:scale-100"
             />
-          </motion.div>
+          </div>
         )}
 
-        <motion.div
-          initial={standardReveal.hidden}
-          whileInView={standardReveal.visible({ isReduced, delay: 0.06 })}
-          viewport={{ once: true, margin: '-60px' }}
-          className="mt-6 sm:mt-7 lg:mt-8"
-        >
+        <div className="mt-6 sm:mt-7 lg:mt-8">
           <p className="text-[0.6875rem] font-medium uppercase tracking-[0.16em] text-[#145BFF] sm:text-xs">
             {category}
           </p>
@@ -91,7 +78,7 @@ function FeaturedArticle({
               />
             </span>
           </div>
-        </motion.div>
+        </div>
       </Link>
     </article>
   );
@@ -103,24 +90,15 @@ function SecondaryArticleRow({
   title,
   excerpt,
   readLabel,
-  isReduced,
-  index,
 }: {
   slug: string;
   category: string;
   title: string;
   excerpt: string;
   readLabel: string;
-  isReduced: boolean;
-  index: number;
 }) {
   return (
-    <motion.li
-      initial={standardReveal.hidden}
-      whileInView={standardReveal.visible({ isReduced, delay: index * 0.05 })}
-      viewport={{ once: true, margin: '-40px' }}
-      className="border-t border-slate-200/90 first:border-t-0"
-    >
+    <li className="border-t border-[rgba(8,22,45,0.08)] first:border-t-0">
       <Link
         href={`/insights/${slug}`}
         className="group block py-7 sm:py-8 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#145BFF] focus-visible:ring-offset-2"
@@ -146,7 +124,7 @@ function SecondaryArticleRow({
           />
         </span>
       </Link>
-    </motion.li>
+    </li>
   );
 }
 
@@ -154,8 +132,6 @@ export function InsightsSection() {
   const t = useTranslations('HomepageRedesign.Insights');
   const tInsights = useTranslations('Insights');
   const locale = useLocale();
-  const prefersReducedMotion = useReducedMotion();
-  const isReduced = !!prefersReducedMotion;
 
   const { featured, secondary } = useMemo(() => {
     const localized = getLocalizedArticles(locale);
@@ -178,41 +154,30 @@ export function InsightsSection() {
   return (
     <section
       data-section-theme="neutral"
-      className="relative overflow-hidden border-b border-slate-200/90 bg-[#F5F6F8] text-left"
+      className="relative overflow-hidden border-b landing-divider-light bg-[var(--landing-neutral)] text-left"
       aria-labelledby="insights-section-heading"
     >
-      <div className="mx-auto min-w-0 max-w-[90rem] px-5 py-14 sm:px-8 sm:py-16 md:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-[7rem]">
-        {/* Section intro */}
+      <div className="mx-auto min-w-0 max-w-[90rem] px-5 py-16 sm:px-8 sm:py-20 md:py-24 lg:px-12 lg:py-28 xl:px-16 xl:py-32">
         <div className="mb-12 flex min-w-0 flex-col gap-8 md:mb-14 md:flex-row md:items-end md:justify-between lg:mb-16 xl:mb-20">
-          <motion.div
-            initial={standardReveal.hidden}
-            whileInView={standardReveal.visible({ isReduced })}
-            viewport={{ once: true, margin: '-80px' }}
-            className="min-w-0 max-w-2xl"
-          >
-            <p className="text-[0.6875rem] font-medium uppercase tracking-[0.16em] text-[#145BFF] sm:text-xs">
-              <span className="mr-1.5 text-slate-400">//</span>
+          <LandingReveal className="min-w-0 max-w-2xl">
+            <p className="landing-eyebrow landing-eyebrow-light">
+              <span className="mr-2 text-[#B0BAC8]">//</span>
               {t('eyebrow')}
             </p>
 
             <h2
               id="insights-section-heading"
-              className="mt-4 font-[family-name:var(--font-display)] text-[clamp(1.875rem,1.2vw+1.25rem,3.75rem)] font-bold leading-[1.12] tracking-[-0.025em] text-[#08162D] sm:mt-5"
+              className="mt-5 sm:mt-6 landing-headline text-[#08162D]"
             >
               {t('title')}
             </h2>
 
-            <p className="mt-5 max-w-[32rem] text-[clamp(1rem,0.25vw+0.94rem,1.1875rem)] leading-[1.7] text-slate-600 sm:mt-6">
+            <p className="mt-6 sm:mt-7 landing-lead text-[#5A6578] max-w-[32rem]">
               {t('subtitle')}
             </p>
-          </motion.div>
+          </LandingReveal>
 
-          <motion.div
-            initial={standardReveal.hidden}
-            whileInView={standardReveal.visible({ isReduced, delay: 0.08 })}
-            viewport={{ once: true, margin: '-80px' }}
-            className="shrink-0"
-          >
+          <LandingReveal delay={0.06} className="shrink-0">
             <Link
               href="/insights"
               className="group inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-slate-500 transition-colors hover:text-[#145BFF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#145BFF] focus-visible:ring-offset-2"
@@ -224,40 +189,38 @@ export function InsightsSection() {
                 aria-hidden="true"
               />
             </Link>
-          </motion.div>
+          </LandingReveal>
         </div>
 
-        {/* Editorial layout */}
-        <div className="grid min-w-0 grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-12 xl:gap-16">
-          <div className="min-w-0 lg:col-span-7">
-            <FeaturedArticle
-              slug={featured.slug}
-              category={featured.category}
-              title={featured.title}
-              excerpt={featured.excerpt}
-              date={featured.date}
-              readLabel={readLabel}
-              isReduced={isReduced}
-            />
-          </div>
+        <LandingReveal delay={0.08}>
+          <div className="grid min-w-0 grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-12 xl:gap-16">
+            <div className="min-w-0 lg:col-span-7">
+              <FeaturedArticle
+                slug={featured.slug}
+                category={featured.category}
+                title={featured.title}
+                excerpt={featured.excerpt}
+                date={featured.date}
+                readLabel={readLabel}
+              />
+            </div>
 
-          <div className="min-w-0 lg:col-span-5 lg:pt-2">
-            <ul className="m-0 list-none p-0">
-              {secondary.map((article, index) => (
-                <SecondaryArticleRow
-                  key={article.slug}
-                  slug={article.slug}
-                  category={article.category}
-                  title={article.title}
-                  excerpt={article.excerpt}
-                  readLabel={readLabel}
-                  isReduced={isReduced}
-                  index={index}
-                />
-              ))}
-            </ul>
+            <div className="min-w-0 lg:col-span-5 lg:pt-2">
+              <ul className="m-0 list-none p-0">
+                {secondary.map((article) => (
+                  <SecondaryArticleRow
+                    key={article.slug}
+                    slug={article.slug}
+                    category={article.category}
+                    title={article.title}
+                    excerpt={article.excerpt}
+                    readLabel={readLabel}
+                  />
+                ))}
+              </ul>
+            </div>
           </div>
-        </div>
+        </LandingReveal>
       </div>
     </section>
   );

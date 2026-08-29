@@ -1,8 +1,7 @@
 import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
 import { PremiumHero } from '@/components/homepage/premium-hero';
-import { TrustSection } from '@/components/trust-section';
-import { TechPartnersSection } from '@/components/tech-partners-section';
+import { TrustCredibilitySection } from '@/components/homepage/trust-credibility-section';
 import { setRequestLocale } from 'next-intl/server';
 import dynamic from 'next/dynamic';
 
@@ -24,7 +23,7 @@ export default async function Page({ params }: Props) {
   setRequestLocale(locale);
 
   return (
-    <main className="relative w-full max-w-full min-w-0 bg-white">
+    <main className="relative w-full max-w-full min-w-0 bg-[var(--landing-light)]">
       {/* Client theme observer to monitor scrolling states */}
       <ThemeObserver />
       
@@ -33,11 +32,8 @@ export default async function Page({ params }: Props) {
       {/* 1. Premium animated hero */}
       <PremiumHero />
       
-      {/* 2. Trust and measurable impact */}
-      <div data-section-theme="light">
-        <TechPartnersSection />
-        <TrustSection />
-      </div>
+      {/* 2. Trust and credibility */}
+      <TrustCredibilitySection />
       
       {/* 3. HyperCode Transformation Engine */}
       <TransformationEngine />

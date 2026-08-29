@@ -1418,6 +1418,12 @@
       "trustStripUsa": "Con sede en EE. UU.",
       "trustStripConsulting": "Consultoría Tecnológica Empresarial",
       "trustStripCapabilities": "IA · Software · Nube · Datos",
+      "proofChips": {
+        "0": "150+ Proyectos Empresariales Entregados",
+        "1": "98% Satisfacción del Cliente",
+        "2": "Seguridad SOC 2 e HIPAA",
+        "3": "Equipo con sede en EE. UU."
+      },
       "servicePanelTitle": "Socio Tecnológico Integral",
       "services": {
         "0": "Consultoría Tecnológica",
@@ -1509,6 +1515,33 @@
           "Monitoreo de Rendimiento",
           "Mejora Continua"
         ]
+      },
+      "coreLabel": "HyperCode",
+      "capabilities": {
+        "ai": {
+          "label": "IA",
+          "outcome": "Automatice decisiones y reduzca la carga manual en operaciones clave."
+        },
+        "cloud": {
+          "label": "Nube",
+          "outcome": "Implemente infraestructura resiliente con disponibilidad y seguridad empresarial."
+        },
+        "data": {
+          "label": "Datos",
+          "outcome": "Unifique fuentes aisladas en información en tiempo real para decidir más rápido."
+        },
+        "software": {
+          "label": "Software",
+          "outcome": "Construya plataformas modulares diseñadas para escalar con el negocio."
+        },
+        "automation": {
+          "label": "Automatización",
+          "outcome": "Optimice flujos de trabajo y elimine cuellos de botella operativos repetitivos."
+        },
+        "talent": {
+          "label": "Talento",
+          "outcome": "Refuerce equipos con expertos certificados alineados a su hoja de ruta tecnológica."
+        }
       }
     },
     "ServiceEcosystem": {
@@ -1544,7 +1577,11 @@
       "subtitle": "Sistemas empresariales, plataformas e integraciones entregadas en salud, finanzas, retail y logística.",
       "featuredBadge": "TRABAJO DESTACADO",
       "viewProject": "Ver Proyecto",
-      "viewCaseStudy": "Ver Caso de Estudio"
+      "viewCaseStudy": "Ver Caso de Estudio",
+      "businessChallenge": "Desafío de negocio",
+      "solution": "Solución",
+      "metricWithout": "Sin HyperCode",
+      "metricWith": "Con HyperCode"
     },
     "DeliveryProcess": {
       "badge": "CÓMO TRABAJAMOS",
@@ -1595,7 +1632,19 @@
           "title": "Consultores Certificados",
           "description": "Expertos acreditados en Microsoft, Snowflake, AWS, Databricks y herramientas modernas de BI."
         }
-      }
+      },
+      "stats": {
+        "projects": {
+          "label": "Proyectos Corporativos Entregados"
+        },
+        "retention": {
+          "label": "Tasa de Retención de Clientes"
+        },
+        "experience": {
+          "label": "Años de Experiencia Combinada"
+        }
+      },
+      "logoMarqueeAriaLabel": "Logotipos de clientes y socios"
     }
   }
 }

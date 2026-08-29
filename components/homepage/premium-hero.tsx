@@ -1,116 +1,204 @@
 'use client';
 
+import { useRef } from 'react';
 import { useTranslations } from 'next-intl';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from '@/i18n/routing';
 import { ArrowRight } from 'lucide-react';
-import { standardReveal } from '@/lib/motion-tokens';
-import { HeroGlobe } from '@/components/homepage/hero-globe';
+import { HeroHeadlineMask, HeroTextReveal } from '@/components/homepage/hero/hero-text-reveal';
+import { HeroBackground } from '@/components/homepage/hero/hero-background';
+import { HeroTrustBridge, HeroScrollCue } from '@/components/homepage/hero/hero-transition';
+import { HeroArchitectureVisual } from '@/components/homepage/hero/hero-architecture-visual';
+import { buildHeroHeadlineLines } from '@/components/homepage/hero/hero-headline-lines';
+import { useLandingMotion } from '@/hooks/use-landing-motion';
+import { staggerContainer, staggerItem } from '@/lib/motion-tokens';
+
+const PROOF_CHIP_KEYS = ['0', '1', '2', '3'] as const;
+
+const proofChipClassName =
+  'inline-flex items-center rounded-full border border-white/[0.1] bg-white/[0.04] px-3 py-1.5 text-[0.6875rem] font-medium tracking-[0.03em] text-[#9BB0C8] leading-none backdrop-blur-sm';
 
 export function PremiumHero() {
   const t = useTranslations('HomepageRedesign.Hero');
-  const prefersReducedMotion = useReducedMotion();
-  const isReduced = !!prefersReducedMotion;
+  const { enableMotion, isReduced } = useLandingMotion();
+  const sectionRef = useRef<HTMLElement>(null);
 
-  const headlineLine2 = t('headlineLine2');
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start start', 'end start'],
+  });
+
+  const contentY = useTransform(
+    scrollYProgress,
+    [0, 0.35, 0.82, 1],
+    [0, isReduced ? 0 : -20, isReduced ? 0 : -28, isReduced ? 0 : -44],
+  );
+  const contentOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.78, 0.92, 1],
+    [1, 1, isReduced ? 1 : 0.88, isReduced ? 1 : 0.72],
+  );
+  const visualY = useTransform(
+    scrollYProgress,
+    [0, 0.35, 0.82, 1],
+    [0, isReduced ? 0 : 10, isReduced ? 0 : 18, isReduced ? 0 : 32],
+  );
+  const visualScale = useTransform(scrollYProgress, [0, 0.82, 1], [1, isReduced ? 1 : 0.97, isReduced ? 1 : 0.94]);
+  const visualOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.82, 1],
+    [1, isReduced ? 1 : 0.92, isReduced ? 1 : 0.78],
+  );
+
+  const headlineLines = buildHeroHeadlineLines(t('headlineLine1'), t('headlineGradient'));
+  const proofChips = PROOF_CHIP_KEYS.map((key) => t(`proofChips.${key}`));
 
   return (
     <section
+      ref={sectionRef}
       data-section-theme="hero"
-      className="relative w-full max-w-full min-w-0 text-white pt-[5.75rem] sm:pt-24 lg:pt-[7rem] pb-12 sm:pb-16 lg:pb-20 min-h-0"
+      className="relative w-full max-w-full min-w-0 overflow-x-clip bg-[#030A14] text-white"
     >
-      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <div className="absolute inset-0 bg-[#020B18]" />
-        <div
-          className="absolute inset-y-0 right-0 w-[48%] opacity-70"
+      <HeroBackground scrollProgress={scrollYProgress} />
+
+      <div className="relative flex min-h-[calc(100svh-1.5rem)] w-full flex-col justify-center pt-[4.75rem] sm:pt-[5rem] lg:pt-[5.25rem] pb-16 sm:pb-[4.25rem]">
+        <motion.div
+          className="relative mx-auto w-full min-w-0 max-w-[90rem] px-5 sm:px-8 lg:px-12 xl:px-16"
           style={{
-            background:
-              'radial-gradient(ellipse 80% 60% at 100% 40%, rgba(20,91,255,0.09) 0%, transparent 70%)',
+            y: enableMotion && !isReduced ? contentY : 0,
+            opacity: enableMotion && !isReduced ? contentOpacity : 1,
           }}
-        />
-      </div>
+        >
+          <div className="relative lg:grid lg:grid-cols-[55fr_45fr] lg:items-center lg:gap-x-0">
+            {/* Readability scrim where visual bleeds inward */}
+            <div
+              className="pointer-events-none absolute inset-y-[-10%] left-0 z-10 hidden w-[62%] lg:block"
+              aria-hidden="true"
+              style={{
+                background:
+                  'linear-gradient(to right, rgba(3,10,20,0.55) 0%, rgba(3,10,20,0.28) 45%, transparent 100%)',
+              }}
+            />
 
-      <div className="relative max-w-[90rem] min-w-0 mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 w-full">
-        <div className="flex flex-col lg:grid lg:grid-cols-[minmax(0,58fr)_minmax(0,42fr)] lg:gap-x-10 xl:gap-x-16 lg:items-center">
-          {/* Content — mobile order 1 */}
-          <motion.div
-            initial={standardReveal.hidden}
-            animate={standardReveal.visible({ isReduced })}
-            className="relative z-10 min-w-0 w-full order-1 lg:max-w-[42rem] xl:max-w-[44rem]"
-          >
-            <p className="text-[0.6875rem] sm:text-[0.75rem] font-medium tracking-[0.16em] uppercase text-[#5BA8FF] leading-relaxed">
-              {t('badge')}
-            </p>
+            {/* Editorial content — 55% */}
+            <div className="relative z-20 order-1 w-full min-w-0 max-w-[36rem] lg:max-w-none lg:pr-8 xl:pr-12">
+              <HeroTextReveal delay={0.04} as="p" className="landing-eyebrow landing-eyebrow-dark">
+                {t('badge')}
+              </HeroTextReveal>
 
-            <h1 className="mt-4 sm:mt-5 font-[family-name:var(--font-display)] font-extrabold text-[clamp(2rem,1.5vw+1.2rem,4.5rem)] leading-[1.06] tracking-[-0.03em] text-white w-full min-w-0 text-balance">
-              {t('headlineLine1')}
-              {headlineLine2 ? (
-                <>
-                  {' '}
-                  {headlineLine2}
-                </>
-              ) : null}{' '}
-              <span className="whitespace-nowrap text-transparent bg-clip-text bg-gradient-to-r from-[#25B5FF] to-[#48B900] [box-decoration-break:clone] [-webkit-box-decoration-break:clone]">
-                {t('headlineGradient')}
-              </span>
-            </h1>
+              <HeroHeadlineMask
+                className="mt-5 sm:mt-6 font-[family-name:var(--font-display)] font-bold text-[clamp(2.125rem,2.4vw+0.85rem,3.625rem)] leading-[1.06] tracking-[-0.038em] text-[#F4F7FB] w-full min-w-0"
+                lines={headlineLines}
+                lineBaseDelay={0.14}
+              />
 
-            <p className="mt-4 sm:mt-5 lg:mt-6 text-[clamp(0.9375rem,0.2vw+0.9rem,1.125rem)] text-[#B8C8DC] w-full min-w-0 max-w-[34rem] leading-[1.65]">
-              {t('supporting')}
-            </p>
-
-            <div className="mt-6 sm:mt-7 lg:mt-8 flex w-full min-w-0 flex-col sm:flex-row flex-wrap gap-3 sm:gap-3.5">
-              <Link
-                href="/consultation"
-                className="inline-flex w-full sm:w-auto min-w-0 min-h-[44px] items-center justify-center gap-2 rounded-sm px-6 sm:px-7 text-[0.9375rem] sm:text-base font-semibold leading-snug text-white !whitespace-normal bg-gradient-to-r from-[#145BFF] to-[#48B900] transition-[opacity,transform,box-shadow] duration-200 hover:opacity-[0.94] hover:-translate-y-px hover:shadow-[0_4px_18px_rgba(20,91,255,0.22)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25B5FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#020B18] active:translate-y-0 group"
+              <HeroTextReveal
+                delay={0.46}
+                as="p"
+                className="mt-5 sm:mt-6 text-[clamp(0.9375rem,0.15vw+0.88rem,1.0625rem)] text-[#8FA3BA] leading-[1.72] w-full min-w-0"
               >
-                <span>{t('ctaPrimary')}</span>
-                <ArrowRight
-                  size={16}
-                  className="shrink-0 transition-transform duration-200 group-hover:translate-x-0.5"
-                  aria-hidden="true"
-                />
-              </Link>
-              <Link
-                href="/case-studies"
-                className="inline-flex w-full sm:w-auto min-w-0 min-h-[44px] items-center justify-center gap-2 rounded-sm px-6 sm:px-7 text-[0.9375rem] sm:text-base font-semibold leading-snug text-white !whitespace-normal border border-[rgba(255,255,255,0.22)] bg-transparent transition-[background-color,border-color,transform] duration-200 hover:bg-[rgba(255,255,255,0.06)] hover:border-[rgba(255,255,255,0.34)] hover:-translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25B5FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#020B18] active:translate-y-0 group"
+                <span className="block max-w-[36rem]">{t('supporting')}</span>
+              </HeroTextReveal>
+
+              <HeroTextReveal delay={0.58} as="div" className="mt-7 sm:mt-8 flex w-full min-w-0 flex-col sm:flex-row sm:flex-wrap items-start gap-3 sm:gap-x-5 sm:gap-y-3">
+                <Link
+                  href="/consultation"
+                  className="hero-cta-primary group inline-flex w-full sm:w-auto min-w-0 min-h-[46px] items-center justify-center gap-2 rounded-lg px-6 sm:px-7 text-[0.9375rem] font-semibold leading-snug text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25B5FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030A14]"
+                >
+                  <span>{t('ctaPrimary')}</span>
+                  <ArrowRight
+                    size={15}
+                    className="shrink-0 transition-transform duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5 motion-reduce:group-hover:translate-x-0"
+                    aria-hidden="true"
+                  />
+                </Link>
+                <Link
+                  href="/case-studies"
+                  className="hero-cta-ghost group inline-flex w-full sm:w-auto min-w-0 min-h-[46px] items-center justify-center gap-1.5 px-1 text-[0.9375rem] font-medium text-[#C5D3E3] transition-colors duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25B5FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030A14] rounded-sm"
+                >
+                  <span>{t('ctaSecondary')}</span>
+                  <ArrowRight
+                    size={15}
+                    className="shrink-0 opacity-60 transition-[transform,opacity] duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5 group-hover:opacity-100 motion-reduce:group-hover:translate-x-0"
+                    aria-hidden="true"
+                  />
+                </Link>
+              </HeroTextReveal>
+
+              {enableMotion ? (
+                <motion.div
+                  variants={staggerContainer}
+                  initial="hidden"
+                  animate="visible"
+                  custom={{ reduced: isReduced }}
+                  className="mt-5 sm:mt-6 flex flex-wrap items-center gap-2"
+                  aria-label={proofChips.join(', ')}
+                >
+                  {proofChips.map((chip) => (
+                    <motion.span
+                      key={chip}
+                      variants={staggerItem}
+                      custom={{ reduced: isReduced }}
+                      className={proofChipClassName}
+                    >
+                      {chip}
+                    </motion.span>
+                  ))}
+                </motion.div>
+              ) : (
+                <div
+                  className="mt-5 sm:mt-6 flex flex-wrap items-center gap-2"
+                  aria-label={proofChips.join(', ')}
+                >
+                  {proofChips.map((chip) => (
+                    <span key={chip} className={proofChipClassName}>
+                      {chip}
+                    </span>
+                  ))}
+                </div>
+              )}
+
+              <HeroTextReveal
+                delay={0.68}
+                as="p"
+                className="mt-6 sm:mt-7 hidden sm:flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.6875rem] font-medium tracking-[0.05em] text-[#5C7088] leading-relaxed"
+                aria-label={`${t('trustStripUsa')}, ${t('trustStripConsulting')}, ${t('trustStripCapabilities')}`}
               >
-                <span>{t('ctaSecondary')}</span>
-                <ArrowRight
-                  size={16}
-                  className="shrink-0 transition-transform duration-200 group-hover:translate-x-0.5"
-                  aria-hidden="true"
-                />
-              </Link>
+                <span>{t('trustStripUsa')}</span>
+                <span className="text-[#3A4F66] select-none" aria-hidden="true">
+                  ·
+                </span>
+                <span>{t('trustStripConsulting')}</span>
+                <span className="text-[#3A4F66] select-none" aria-hidden="true">
+                  ·
+                </span>
+                <span>{t('trustStripCapabilities')}</span>
+              </HeroTextReveal>
             </div>
 
-            {/* Trust strip — typography only, verified facts */}
-            <p
-              className="mt-5 sm:mt-6 lg:mt-7 flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.6875rem] sm:text-[0.75rem] font-medium tracking-[0.04em] text-[#7A8FA8] leading-relaxed"
-              aria-label={`${t('trustStripUsa')}, ${t('trustStripConsulting')}, ${t('trustStripCapabilities')}`}
+            {/* Architecture visual — 45%, bleeds center */}
+            <motion.div
+              className="relative order-2 mt-10 w-full min-w-0 sm:mt-12 lg:absolute lg:inset-y-0 lg:right-[-8%] lg:mt-0 lg:w-[58%] xl:right-[-10%] xl:w-[62%]"
+              style={{
+                y: enableMotion && !isReduced ? visualY : 0,
+                scale: enableMotion && !isReduced ? visualScale : 1,
+                opacity: enableMotion && !isReduced ? visualOpacity : 1,
+              }}
             >
-              <span>{t('trustStripUsa')}</span>
-              <span className="text-[#4A5E78] select-none" aria-hidden="true">
-                |
-              </span>
-              <span>{t('trustStripConsulting')}</span>
-              <span className="text-[#4A5E78] select-none" aria-hidden="true">
-                |
-              </span>
-              <span className="text-[#8A9BB2]">{t('trustStripCapabilities')}</span>
-            </p>
-          </motion.div>
-
-          {/* Visual — mobile order 2, after content + trust strip */}
-          <motion.div
-            initial={standardReveal.hidden}
-            animate={standardReveal.visible({ isReduced, delay: isReduced ? 0 : 0.1 })}
-            className="relative z-[1] min-w-0 w-full order-2 mt-8 sm:mt-10 lg:mt-0 lg:flex lg:items-center lg:justify-end"
-          >
-            <HeroGlobe className="max-w-[min(100%,22rem)] sm:max-w-[min(100%,26rem)] lg:max-w-[min(100%,28rem)] xl:max-w-[min(100%,34rem)] lg:ml-auto opacity-[0.92] lg:opacity-100" />
-          </motion.div>
-        </div>
+              <div className="relative h-[min(52vw,420px)] sm:h-[min(48vw,460px)] lg:h-[min(72vh,620px)] lg:min-h-[480px] w-full">
+                <HeroArchitectureVisual
+                  scrollProgress={scrollYProgress}
+                  entranceDelay={0.48}
+                  className="absolute inset-0 lg:-ml-[12%]"
+                />
+              </div>
+            </motion.div>
+          </div>
+        </motion.div>
       </div>
+
+      <HeroScrollCue />
+      <HeroTrustBridge scrollProgress={scrollYProgress} />
     </section>
   );
 }

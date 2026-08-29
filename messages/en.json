@@ -1417,6 +1417,12 @@
       "trustStripUsa": "USA-Based",
       "trustStripConsulting": "Enterprise Technology Consulting",
       "trustStripCapabilities": "AI · Software · Cloud · Data",
+      "proofChips": {
+        "0": "150+ Enterprise Projects Delivered",
+        "1": "98% Client Satisfaction",
+        "2": "SOC 2 & HIPAA Security",
+        "3": "USA-Based Team"
+      },
       "servicePanelTitle": "End-to-End Technology Partner",
       "services": {
         "0": "Technology Consulting",
@@ -1508,6 +1514,33 @@
           "Performance Monitoring",
           "Continuous Improvement"
         ]
+      },
+      "coreLabel": "HyperCode",
+      "capabilities": {
+        "ai": {
+          "label": "AI",
+          "outcome": "Automate decisions and reduce manual workload across core operations."
+        },
+        "cloud": {
+          "label": "Cloud",
+          "outcome": "Deploy resilient infrastructure with enterprise uptime and security."
+        },
+        "data": {
+          "label": "Data",
+          "outcome": "Unify siloed sources into real-time insight for faster decisions."
+        },
+        "software": {
+          "label": "Software",
+          "outcome": "Build modular platforms engineered to scale with business growth."
+        },
+        "automation": {
+          "label": "Automation",
+          "outcome": "Streamline workflows and eliminate repetitive operational bottlenecks."
+        },
+        "talent": {
+          "label": "Talent",
+          "outcome": "Augment teams with certified experts aligned to your technology roadmap."
+        }
       }
     },
     "ServiceEcosystem": {
@@ -1543,7 +1576,11 @@
       "subtitle": "Enterprise systems, platforms, and integrations delivered across healthcare, finance, retail, and logistics.",
       "featuredBadge": "FEATURED WORK",
       "viewProject": "View Project",
-      "viewCaseStudy": "View Case Study"
+      "viewCaseStudy": "View Case Study",
+      "businessChallenge": "Business challenge",
+      "solution": "Solution",
+      "metricWithout": "Without HyperCode",
+      "metricWith": "With HyperCode"
     },
     "DeliveryProcess": {
       "badge": "HOW WE WORK",
@@ -1594,7 +1631,19 @@
           "title": "Certified Consultants",
           "description": "Accredited experts across Microsoft, Snowflake, AWS, Databricks, and modern BI tools."
         }
-      }
+      },
+      "stats": {
+        "projects": {
+          "label": "Enterprise Projects Delivered"
+        },
+        "retention": {
+          "label": "Client Retention Rate"
+        },
+        "experience": {
+          "label": "Years Combined Expertise"
+        }
+      },
+      "logoMarqueeAriaLabel": "Client and partner logos"
     }
   }
 }

@@ -14,10 +14,10 @@ const languages = [
   { code: 'es', name: 'Español' }
 ];
 
-const NAV_HEIGHT_MOBILE_PX = 100;
-const NAV_HEIGHT_TABLET_PX = 106;
-const NAV_HEIGHT_DESKTOP_PX = 112;
-const NAV_HEIGHT = 'h-[100px] sm:h-[106px] lg:h-[112px]';
+const NAV_HEIGHT_MOBILE_PX = 80;
+const NAV_HEIGHT_TABLET_PX = 84;
+const NAV_HEIGHT_DESKTOP_PX = 88;
+const NAV_HEIGHT = 'h-[80px] sm:h-[84px] lg:h-[88px]';
 
 function getServiceLabel(service: MenuService, locale: string) {
   if (service.label) return service.label[locale === 'es' ? 'es' : 'en'];
@@ -68,11 +68,11 @@ export function Navigation() {
 
   const getLinkClass = (href: string) => {
     const base =
-      'relative flex h-full items-center bg-transparent border-none outline-none cursor-pointer py-2 text-[0.8125rem] lg:text-[0.875rem] font-medium tracking-[-0.01em] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue focus-visible:ring-offset-2';
+      'relative flex h-full items-center bg-transparent border-none outline-none cursor-pointer py-2 text-[0.8125rem] lg:text-[0.875rem] font-medium tracking-[-0.015em] transition-colors duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue focus-visible:ring-offset-2';
     if (isDarkTheme) {
-      return `${base} ${isActive(href) ? 'text-white' : 'text-[#A9B8D1] hover:text-white'}`;
+      return `${base} ${isActive(href) ? 'text-white' : 'text-[#9AADCC] hover:text-white'}`;
     }
-    return `${base} ${isActive(href) ? 'text-royal-blue' : 'text-slate-700 hover:text-royal-blue'}`;
+    return `${base} ${isActive(href) ? 'text-royal-blue' : 'text-slate-600 hover:text-royal-blue'}`;
   };
 
   useEffect(() => {
@@ -182,25 +182,25 @@ export function Navigation() {
       return `${NAV_HEIGHT} bg-transparent text-white border-b border-transparent`;
     }
     if (isDarkTheme) {
-      return `${NAV_HEIGHT} bg-[#020B18]/92 backdrop-blur-[6px] text-white border-b border-white/[0.08]`;
+      return `${NAV_HEIGHT} bg-[#030A14]/78 backdrop-blur-[10px] text-white border-b border-white/[0.06]`;
     }
-    return `${NAV_HEIGHT} bg-white/[0.97] backdrop-blur-[6px] text-slate-700 border-b border-slate-200/70`;
+    return `${NAV_HEIGHT} bg-white/[0.96] backdrop-blur-[10px] text-slate-700 border-b border-slate-200/60`;
   };
 
   const underlineClass = (href: string) =>
-    `absolute -bottom-0.5 left-0 h-px w-full origin-left bg-gradient-to-r from-royal-blue to-green transition-transform duration-200 ${
-      isActive(href) ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100 group-focus-visible:scale-x-100'
+    `absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-gradient-to-r from-royal-blue via-[#25B5FF] to-green transition-transform duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-x-100 group-focus-visible:scale-x-100 ${
+      isActive(href) ? '!scale-x-100' : ''
     }`;
 
   const langToggleClass = (code: string) => {
     const active = locale === code;
     if (isDarkTheme) {
-      return `min-h-[36px] min-w-[36px] rounded-md px-2.5 text-[0.75rem] font-semibold uppercase tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue ${
-        active ? 'bg-white/12 text-white' : 'text-[#A9B8D1] hover:text-white hover:bg-white/5'
+      return `min-h-[32px] min-w-[32px] rounded px-2 text-[0.6875rem] font-medium uppercase tracking-[0.08em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue ${
+        active ? 'text-white' : 'text-[#8A9BB8] hover:text-white'
       }`;
     }
-    return `min-h-[36px] min-w-[36px] rounded-md px-2.5 text-[0.75rem] font-semibold uppercase tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue ${
-      active ? 'bg-royal-blue/10 text-royal-blue' : 'text-slate-600 hover:text-royal-blue hover:bg-slate-50'
+    return `min-h-[32px] min-w-[32px] rounded px-2 text-[0.6875rem] font-medium uppercase tracking-[0.08em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue ${
+      active ? 'text-royal-blue' : 'text-slate-500 hover:text-royal-blue'
     }`;
   };
 
@@ -208,10 +208,10 @@ export function Navigation() {
     <>
       <motion.nav
         aria-label={t('navLabel')}
-        className={`fixed top-0 left-0 right-0 z-50 w-full transition-[background-color,border-color,backdrop-filter] duration-300 ease-out ${getNavClasses()}`}
+        className={`fixed top-0 left-0 right-0 z-50 w-full transition-[background-color,border-color,backdrop-filter,box-shadow] duration-[450ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${getNavClasses()}`}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
       >
         {navTheme === 'transformation' && (
           <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-px bg-slate-800">
@@ -223,23 +223,23 @@ export function Navigation() {
         )}
 
         <div className="relative mx-auto h-full w-full max-w-[90rem] px-5 sm:px-8 lg:px-12 xl:px-16">
-          <div className="grid h-full grid-cols-[auto_1fr_auto] items-center gap-3 lg:gap-6">
-            {/* Logo */}
+          <div className="grid h-full grid-cols-[auto_1fr_auto] items-center gap-4 lg:gap-8">
+            {/* Logo — trimmed asset, no backdrop box */}
             <Link href="/" className="flex shrink-0 items-center">
               <Image
-                src="/hypercodeit.logo.webp"
+                src="/images/hypercode-logo-header.webp"
                 alt="HyperCode"
-                width={115}
-                height={80}
+                width={417}
+                height={368}
                 priority
                 quality={100}
-                style={{ height: 'auto' }}
-                className="h-auto w-[92px] object-contain sm:w-[98px] lg:w-[104px]"
+                sizes="(max-width: 639px) 116px, (max-width: 767px) 130px, (max-width: 1023px) 140px, (max-width: 1279px) 150px, 170px"
+                className="h-auto w-[7.25rem] max-h-[3.25rem] object-contain object-left sm:w-[8.125rem] sm:max-h-[3.5rem] md:w-[8.75rem] md:max-h-[3.75rem] lg:w-[9.375rem] lg:max-h-[4rem] xl:w-[10.625rem] xl:max-h-[5.25rem]"
               />
             </Link>
 
             {/* Center — desktop navigation */}
-            <div className="hidden min-w-0 items-center justify-center gap-3 lg:flex lg:gap-4 xl:gap-6">
+            <div className="hidden min-w-0 items-center justify-center gap-2 lg:flex lg:gap-3 xl:gap-5 self-center">
               {/* What We Do mega menu */}
               <div
                 ref={solutionsRef}
@@ -300,11 +300,9 @@ export function Navigation() {
             </div>
 
             {/* Right — desktop actions */}
-            <div className="hidden shrink-0 items-center gap-2.5 lg:flex lg:gap-3 xl:gap-4">
+            <div className="hidden shrink-0 items-center gap-3 self-center lg:flex lg:gap-4">
               <div
-                className={`flex items-center rounded-lg p-0.5 ${
-                  isDarkTheme ? 'border border-white/10' : 'border border-slate-200/80 bg-slate-50/50'
-                }`}
+                className="flex items-center gap-0.5"
                 role="group"
                 aria-label={t('selectLanguage')}
               >
@@ -324,9 +322,14 @@ export function Navigation() {
 
               <Link
                 href="/consultation"
-                className="PrimaryBrandButton !h-11 !px-5 !text-[0.8125rem] lg:!text-sm !shadow-none hover:!shadow-[0_4px_14px_0_rgba(20,91,255,0.2)] hover:!translate-y-[-1px]"
+                className="nav-cta-solid group inline-flex h-10 items-center gap-1.5 rounded-lg bg-[#145BFF] px-4 text-[0.8125rem] font-semibold text-white transition-[background-color,transform] duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-[#1a65ff] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue focus-visible:ring-offset-2"
               >
                 {t('schedule')}
+                <ArrowRight
+                  size={14}
+                  className="transition-transform duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5 motion-reduce:group-hover:translate-x-0"
+                  aria-hidden="true"
+                />
               </Link>
             </div>
 
@@ -379,7 +382,7 @@ export function Navigation() {
                   transition={{ duration: 0.14 }}
                   className="overflow-hidden rounded-lg border border-slate-200/90 bg-white shadow-[0_4px_24px_-8px_rgba(8,22,45,0.14)]"
                 >
-                  <div className="flex max-h-[calc(100vh-100px-20px)] sm:max-h-[calc(100vh-106px-20px)] lg:max-h-[calc(100vh-112px-20px)]">
+                  <div className="flex max-h-[calc(100vh-80px-20px)] sm:max-h-[calc(100vh-84px-20px)] lg:max-h-[calc(100vh-88px-20px)]">
                     <div className="min-h-0 min-w-0 flex-1 overflow-y-auto custom-menu-scrollbar">
                       <div className="grid grid-cols-3 gap-x-6 px-5 py-3.5">
                         {solutionMenuColumns.map((column, columnIndex) => (

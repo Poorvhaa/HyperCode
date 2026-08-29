@@ -1,84 +1,175 @@
 /**
- * Shared Motion Tokens for the HyperCode Homepage
- * Standardized easing, springs, durations, and variants
+ * HyperCode Landing Page Motion System
+ * Tween-based transitions for consistent, low-jank motion across the homepage.
  */
 
+export const landingEase = [0.23, 1, 0.32, 1] as const;
+
+/** Premium editorial entrance — hero headlines & nav */
+export const heroEase = [0.22, 1, 0.36, 1] as const;
+
+export const landingDurations = {
+  instant: 0.15,
+  fast: 0.4,
+  reveal: 0.65,
+  mask: 0.75,
+  slow: 0.85,
+} as const;
+
+export const landingViewport = {
+  once: true as const,
+  margin: '-60px' as const,
+};
+
+export type LandingMotionCustom = {
+  delay?: number;
+  reduced?: boolean;
+};
+
+function revealTransition(custom: LandingMotionCustom = {}, duration: number) {
+  return {
+    duration: custom.reduced ? landingDurations.instant : duration,
+    delay: custom.delay ?? 0,
+    ease: landingEase,
+  };
+}
+
+/** Soft scroll reveal — default for section blocks (minimal 8px lift). */
+export const softReveal = {
+  hidden: { opacity: 0, y: 8 },
+  visible: (custom: LandingMotionCustom = {}) => ({
+    opacity: 1,
+    y: 0,
+    transition: revealTransition(custom, landingDurations.reveal),
+  }),
+};
+
+/** Masked clip reveal — headlines, labels, editorial copy. */
+export const maskReveal = {
+  hidden: { y: 80, opacity: 0 },
+  visible: (custom: LandingMotionCustom = {}) => ({
+    y: 0,
+    opacity: 1,
+    transition: revealTransition(custom, landingDurations.mask),
+  }),
+};
+
+/** Hero editorial headline — rising from clipped container */
+export const heroMaskReveal = {
+  hidden: { y: 80, opacity: 0 },
+  visible: (custom: LandingMotionCustom = {}) => ({
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: custom.reduced ? landingDurations.instant : landingDurations.slow,
+      delay: custom.delay ?? 0,
+      ease: heroEase,
+    },
+  }),
+};
+
+/** Opacity-only — tab/panel switches without vertical bounce. */
+export const crossfade = {
+  hidden: { opacity: 0 },
+  visible: (custom: LandingMotionCustom = {}) => ({
+    opacity: 1,
+    transition: revealTransition(custom, landingDurations.fast),
+  }),
+  exit: (custom: LandingMotionCustom = {}) => ({
+    opacity: 0,
+    transition: revealTransition(custom, landingDurations.instant),
+  }),
+};
+
+/** Parent variant — stagger chips, tags, or cards in sequence. */
+export const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: (custom: LandingMotionCustom = {}) => ({
+    opacity: 1,
+    transition: {
+      staggerChildren: custom.reduced ? 0 : 0.08,
+      delayChildren: custom.reduced ? 0 : 0.1,
+    },
+  }),
+};
+
+/** Child variant — pair with staggerContainer for list item reveals. */
+export const staggerItem = {
+  hidden: { opacity: 0, y: 12 },
+  visible: (custom: LandingMotionCustom = {}) => ({
+    opacity: 1,
+    y: 0,
+    transition: custom.reduced
+      ? revealTransition(custom, landingDurations.instant)
+      : {
+          type: 'spring' as const,
+          stiffness: 100,
+          damping: 15,
+        },
+  }),
+};
+
+/** Count-up animation defaults — pair with useCountUp hook. */
+export const countUp = {
+  defaultDuration: 1200,
+} as const;
+
+export type StaggerVariants = typeof staggerContainer | typeof staggerItem;
+export type CountUpConfig = typeof countUp;
+
+/** @deprecated Use softReveal */
+export const standardReveal = softReveal;
+
+export const parallaxRange = {
+  subtle: ['-4%', '4%'] as [string, string],
+  medium: ['-5%', '5%'] as [string, string],
+};
+
+export function staggerDelay(index: number, step = 0.04, cap = 0.2): number {
+  return Math.min(index * step, cap);
+}
+
+export function crossfadeTransition(reduced?: boolean) {
+  return revealTransition({ reduced }, landingDurations.fast);
+}
+
+// Legacy exports — map to landing tokens
 export const easings = {
-  // Cubic Beziers
-  easeOutQuint: [0.23, 1, 0.32, 1] as const,
+  easeOutQuint: landingEase,
   easeInOutQuart: [0.76, 0, 0.24, 1] as const,
   easeOutQuad: [0.25, 0.46, 0.45, 0.94] as const,
   easeOutBack: [0.34, 1.56, 0.64, 1] as const,
 };
 
-export const springs = {
-  stiff: {
-    type: 'spring' as const,
-    stiffness: 110,
-    damping: 14,
-    mass: 0.8
-  },
-  smooth: {
-    type: 'spring' as const,
-    stiffness: 80,
-    damping: 22,
-    mass: 0.95
-  },
-  slow: {
-    type: 'spring' as const,
-    stiffness: 45,
-    damping: 20,
-    mass: 1.0
-  }
-};
-
 export const durations = {
-  fast: 0.2,
-  normal: 0.4,
-  slow: 0.8,
-  cinematic: 1.5
+  fast: landingDurations.instant,
+  normal: landingDurations.fast,
+  slow: landingDurations.reveal,
+  cinematic: landingDurations.slow,
 };
 
-// Transition configurations combining variables
 export const transitionPresets = {
   hoverFast: {
     type: 'tween' as const,
-    ease: easings.easeOutQuint,
-    duration: durations.fast
+    ease: landingEase,
+    duration: landingDurations.instant,
   },
   hoverNormal: {
     type: 'tween' as const,
-    ease: easings.easeOutQuint,
-    duration: durations.normal
+    ease: landingEase,
+    duration: landingDurations.fast,
   },
-  springSmooth: springs.smooth,
-  springStiff: springs.stiff,
-  springSlow: springs.slow
-};
-
-// Standardized animation variants for components (supports reduced-motion overrides)
-export const standardReveal = {
-  hidden: { opacity: 0, y: 15 },
-  visible: (custom: { delay?: number; isReduced?: boolean } = {}) => ({
-    opacity: 1,
-    y: 0,
-    transition: custom.isReduced 
-      ? { duration: 0.3, delay: custom.delay || 0 }
-      : { type: 'spring', stiffness: 90, damping: 18, delay: custom.delay || 0 }
-  })
 };
 
 export const cardHoverVariants = {
   rest: {
     y: 0,
-    scale: 1,
     boxShadow: '0 1px 3px rgba(15, 23, 42, 0.03)',
-    transition: transitionPresets.hoverNormal
+    transition: transitionPresets.hoverNormal,
   },
   hover: (isReduced?: boolean) => ({
-    y: isReduced ? 0 : -6,
-    scale: isReduced ? 1 : 1.02,
-    boxShadow: '0 10px 25px rgba(15, 23, 42, 0.06)',
-    transition: transitionPresets.hoverNormal
-  })
+    y: isReduced ? 0 : -3,
+    boxShadow: '0 8px 20px rgba(15, 23, 42, 0.05)',
+    transition: transitionPresets.hoverNormal,
+  }),
 };

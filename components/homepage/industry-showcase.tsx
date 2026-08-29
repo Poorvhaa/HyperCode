@@ -2,11 +2,13 @@
 
 import { useState, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from '@/i18n/routing';
 import { ArrowRight, ChevronDown } from 'lucide-react';
 import Image from 'next/image';
-import { standardReveal } from '@/lib/motion-tokens';
+import { LandingReveal } from '@/components/motion/landing-reveal';
+import { crossfade, crossfadeTransition } from '@/lib/motion-tokens';
+import { useLandingMotion } from '@/hooks/use-landing-motion';
 
 const industries = [
   { id: 'healthcare' },
@@ -59,8 +61,7 @@ const INDUSTRY_GRADIENTS: Record<IndustryId, string> = {
 export function IndustryShowcase() {
   const t = useTranslations('HomepageRedesign.IndustrySolutions');
   const tList = useTranslations('SolutionsPage.industriesList');
-  const prefersReducedMotion = useReducedMotion();
-  const isReduced = !!prefersReducedMotion;
+  const { isReduced } = useLandingMotion();
 
   const [activeIdx, setActiveIdx] = useState(0);
   const [mobileOpenIdx, setMobileOpenIdx] = useState<number | null>(0);
@@ -79,52 +80,41 @@ export function IndustryShowcase() {
   return (
     <section
       id="industries"
-      className="relative w-full bg-[#08162D] text-white overflow-hidden scroll-mt-24 border-b border-white/[0.06]"
+      data-section-theme="dark"
+      className="relative w-full bg-[var(--landing-dark)] text-white overflow-hidden scroll-mt-24 border-b landing-divider-dark"
       aria-label={t('title')}
     >
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.35]"
+        className="pointer-events-none absolute inset-0 landing-grid-dark opacity-[0.4]"
         aria-hidden="true"
         style={{
-          backgroundImage:
-            'linear-gradient(to right, rgba(20, 91, 255, 0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(20, 91, 255, 0.04) 1px, transparent 1px)',
-          backgroundSize: '48px 48px',
           maskImage: 'linear-gradient(to bottom, black 40%, transparent 100%)',
           WebkitMaskImage: 'linear-gradient(to bottom, black 40%, transparent 100%)',
         }}
       />
 
-      <div className="relative z-10 max-w-[90rem] min-w-0 mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 py-14 sm:py-16 md:py-20 lg:py-24 xl:py-[7rem]">
+      <div className="relative z-10 max-w-[90rem] min-w-0 mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 py-16 sm:py-20 md:py-24 lg:py-28 xl:py-32">
         {/* Section header */}
-        <motion.div
-          initial={standardReveal.hidden}
-          whileInView={standardReveal.visible({ isReduced })}
-          viewport={{ once: true, margin: '-80px' }}
-          className="max-w-3xl min-w-0 mb-12 sm:mb-14 lg:mb-16 xl:mb-20"
-        >
-          <p className="text-[0.6875rem] sm:text-xs font-medium tracking-[0.16em] uppercase text-[#48B900]">
+        <LandingReveal className="max-w-3xl min-w-0 mb-12 sm:mb-14 lg:mb-16 xl:mb-20">
+          <p className="landing-eyebrow landing-eyebrow-accent">
             {t('badge')}
           </p>
-          <h2 className="mt-4 sm:mt-5 font-[family-name:var(--font-display)] font-bold text-[clamp(1.875rem,1.2vw+1.25rem,3.75rem)] leading-[1.1] tracking-[-0.025em] text-white min-w-0">
+          <h2 className="mt-5 sm:mt-6 landing-headline text-white min-w-0">
             {t('title')}
           </h2>
-          <p className="mt-5 sm:mt-6 text-[clamp(1rem,0.25vw+0.94rem,1.1875rem)] text-slate-400 leading-[1.7] max-w-[32rem] min-w-0">
+          <p className="mt-6 sm:mt-7 landing-lead text-[#94A3B8] max-w-[32rem] min-w-0">
             {t('subtitle')}
           </p>
-        </motion.div>
+        </LandingReveal>
 
         {/* Desktop — split layout: list left, visual right */}
         <div className="hidden lg:grid lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] gap-12 xl:gap-20 items-start min-w-0">
-          {/* Left — editorial industry list */}
-          <motion.div
-            initial={standardReveal.hidden}
-            whileInView={standardReveal.visible({ isReduced, delay: isReduced ? 0 : 0.04 })}
-            viewport={{ once: true, margin: '-80px' }}
+          <div
             className="min-w-0"
             role="tablist"
             aria-label={t('title')}
           >
-            <ul className="divide-y divide-white/[0.08] border-t border-white/[0.08] min-w-0">
+            <ul className="divide-y divide-white/[0.07] border-t border-white/[0.07] min-w-0">
               {industries.map((ind, index) => {
                 const isActive = activeIdx === index;
                 const number = String(index + 1).padStart(2, '0');
@@ -142,8 +132,8 @@ export function IndustryShowcase() {
                       onClick={() => selectIndustry(index)}
                       onMouseEnter={() => selectIndustry(index)}
                       onFocus={() => selectIndustry(index)}
-                      className={`group flex w-full items-start gap-4 sm:gap-5 min-h-[44px] py-6 xl:py-7 text-left transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#145BFF]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#08162D] rounded-sm min-w-0 ${
-                        isActive ? 'text-[#145BFF]' : 'text-white/90 hover:text-white'
+                      className={`group flex w-full items-start gap-4 sm:gap-5 min-h-[44px] py-6 xl:py-7 text-left transition-all duration-[450ms] ease-[cubic-bezier(0.23,1,0.32,1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#145BFF]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--landing-dark)] rounded-lg -mx-2 px-2 min-w-0 ${
+                        isActive ? 'text-[#145BFF] bg-white/[0.04]' : 'text-white/90 hover:text-white hover:bg-white/[0.02]'
                       }`}
                     >
                       <span
@@ -190,15 +180,9 @@ export function IndustryShowcase() {
                 );
               })}
             </ul>
-          </motion.div>
+          </div>
 
-          {/* Right — active industry visual panel */}
-          <motion.div
-            initial={standardReveal.hidden}
-            whileInView={standardReveal.visible({ isReduced, delay: isReduced ? 0 : 0.08 })}
-            viewport={{ once: true, margin: '-80px' }}
-            className="min-w-0 lg:sticky lg:top-28"
-          >
+          <div className="min-w-0 lg:sticky lg:top-28">
             <div
               role="tabpanel"
               id={panelId}
@@ -208,15 +192,16 @@ export function IndustryShowcase() {
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeItem.id}
-                  initial={{ opacity: 0, y: isReduced ? 0 : 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: isReduced ? 0 : -8 }}
-                  transition={{ duration: isReduced ? 0.2 : 0.32, ease: [0.23, 1, 0.32, 1] }}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  variants={crossfade}
+                  custom={{ reduced: isReduced }}
                   className="min-w-0"
                 >
                   {/* Visual */}
                   <div
-                    className={`relative aspect-[4/3] xl:aspect-[16/11] w-full overflow-hidden bg-gradient-to-br ${gradient}`}
+                    className={`relative aspect-[4/3] xl:aspect-[16/11] w-full overflow-hidden bg-gradient-to-br ${gradient} landing-depth-dark rounded-xl`}
                   >
                     {imageSrc ? (
                       <Image
@@ -269,7 +254,7 @@ export function IndustryShowcase() {
                 </motion.div>
               </AnimatePresence>
             </div>
-          </motion.div>
+          </div>
         </div>
 
         {/* Mobile & tablet — accordion */}
@@ -331,10 +316,7 @@ export function IndustryShowcase() {
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        transition={{
-                          duration: isReduced ? 0.15 : 0.25,
-                          ease: [0.23, 1, 0.32, 1],
-                        }}
+                        transition={crossfadeTransition(isReduced)}
                         className="overflow-hidden"
                       >
                         <div className="pb-6 sm:pb-8 pl-9 sm:pl-10 min-w-0">
