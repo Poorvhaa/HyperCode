@@ -338,12 +338,13 @@ export function Navigation() {
 
               </div>
 
-              {(['/about', '/case-studies', '/insights', '/careers'] as const).map((href) => {
+              {(['/about', '/case-studies', '/insights', '/articles', '/careers'] as const).map((href) => {
                 const labelKey = href === '/about' ? 'about' : href === '/case-studies' ? 'ourWork' : href === '/insights' ? 'insights' : 'careers';
+                const label = href === '/articles' ? (locale === 'es' ? 'Artículos' : 'Articles') : t(labelKey);
                 return (
                   <Link key={href} href={href} className={`${getLinkClass(href)} group`} aria-current={isActive(href) ? 'page' : undefined}>
                     <span className="relative py-1">
-                      {t(labelKey)}
+                      {label}
                       <span className={underlineClass(href)} aria-hidden="true" />
                     </span>
                   </Link>
@@ -677,8 +678,9 @@ export function Navigation() {
                   </AnimatePresence>
                 </div>
 
-                {(['/about', '/case-studies', '/insights', '/careers'] as const).map((href) => {
+                {(['/about', '/case-studies', '/insights', '/articles', '/careers'] as const).map((href) => {
                   const labelKey = href === '/about' ? 'about' : href === '/case-studies' ? 'ourWork' : href === '/insights' ? 'insights' : 'careers';
+                  const label = href === '/articles' ? (locale === 'es' ? 'Artículos' : 'Articles') : t(labelKey);
                   return (
                     <Link
                       key={href}
@@ -689,7 +691,7 @@ export function Navigation() {
                       }`}
                       aria-current={isActive(href) ? 'page' : undefined}
                     >
-                      {t(labelKey)}
+                      {label}
                     </Link>
                   );
                 })}
