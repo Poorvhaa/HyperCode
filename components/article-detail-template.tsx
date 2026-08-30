@@ -5,7 +5,7 @@ import { Footer } from '@/components/footer';
 import { Navigation } from '@/components/navigation';
 import { Link } from '@/i18n/routing';
 import { prepareArticleContent } from '@/lib/article-content';
-import { absoluteUrl } from '@/lib/seo/company';
+import { absoluteUrl } from '@/lib/site-url';
 import { ARTICLE_LABELS, type ArticleLocale, type LocalizedArticle } from '@/lib/articles-catalog';
 
 interface ArticleDetailTemplateProps {
