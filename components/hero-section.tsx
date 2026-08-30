@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { BrandButton } from '@/components/brand-button';
 import { Link } from '@/i18n/routing';
 import { useTranslations, useLocale } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -235,13 +236,10 @@ export function HeroSection() {
               transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
               className="flex flex-col sm:flex-row gap-4"
             >
-              <Link
-                href="/consultation"
-                className="PrimaryBrandButton"
-              >
+              <BrandButton href="/consultation" variant="primary">
                 <span>{t('talkToConsultant')}</span>
                 <ArrowRight size={16} className="ml-2" />
-              </Link>
+              </BrandButton>
               
               <a
                 href="#services"

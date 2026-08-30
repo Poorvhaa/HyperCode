@@ -1,3 +1,4 @@
+import { BrandButton } from '@/components/brand-button';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
@@ -400,12 +401,9 @@ export default async function StaffingPage({ params }: Props) {
             {activeTrans.ctaSubtitle}
           </p>
           <div>
-            <Link
-              href="/consultation"
-              className="PrimaryBrandButton"
-            >
+            <BrandButton href="/consultation" variant="primary">
               {activeTrans.ctaBtn}
-            </Link>
+            </BrandButton>
           </div>
         </div>
       </section>

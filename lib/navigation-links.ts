@@ -88,9 +88,9 @@ export const solutionMenu: MenuCategory[] = [
 
 /** Three-column mega menu layout — balanced for laptop viewports */
 export const solutionMenuColumns: MenuCategory[][] = [
-  [solutionMenu[0], solutionMenu[2]],
-  [solutionMenu[1], solutionMenu[3]],
-  [solutionMenu[4], solutionMenu[5], solutionMenu[6], solutionMenu[7]],
+  [solutionMenu[0], solutionMenu[2], solutionMenu[6]],
+  [solutionMenu[1], solutionMenu[3], solutionMenu[7]],
+  [solutionMenu[4], solutionMenu[5]],
 ];
 
 export type FooterServiceLink = {

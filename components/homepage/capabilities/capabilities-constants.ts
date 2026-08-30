@@ -15,25 +15,12 @@ export const CAPABILITY_ORDER = [
   'staffing',
 ] as const;
 
-export type CapabilityVisualTheme =
-  | 'automation'
-  | 'analytics'
-  | 'software'
-  | 'cloud'
-  | 'staffing';
+export type CapabilityServiceId = (typeof CAPABILITY_ORDER)[number];
 
-export const VISUAL_THEME_BY_ID: Record<string, CapabilityVisualTheme> = {
-  ai: 'automation',
-  bi: 'analytics',
-  data: 'analytics',
-  platforms: 'analytics',
-  software: 'software',
-  web: 'software',
-  mobile: 'software',
-  cloud: 'cloud',
-  digital: 'cloud',
-  staffing: 'staffing',
-};
+export const CAPABILITY_COUNT = CAPABILITY_ORDER.length;
+
+/** @deprecated Use serviceId directly — each capability has a unique visual */
+export type CapabilityVisualTheme = CapabilityServiceId;
 
 export const CAPABILITY_SERVICES: ServiceNode[] = CAPABILITY_ORDER.map((id) => {
   const node = serviceNodes.find((n) => n.id === id);
@@ -41,6 +28,15 @@ export const CAPABILITY_SERVICES: ServiceNode[] = CAPABILITY_ORDER.map((id) => {
   return node;
 });
 
-export function getVisualTheme(serviceId: string): CapabilityVisualTheme {
-  return VISUAL_THEME_BY_ID[serviceId] ?? 'software';
+export function isCapabilityServiceId(id: string): id is CapabilityServiceId {
+  return (CAPABILITY_ORDER as readonly string[]).includes(id);
 }
+
+export function getVisualTheme(serviceId: string): CapabilityServiceId {
+  return isCapabilityServiceId(serviceId) ? serviceId : 'software';
+}
+
+/** @deprecated Use getVisualTheme */
+export const VISUAL_THEME_BY_ID: Record<string, CapabilityServiceId> = Object.fromEntries(
+  CAPABILITY_ORDER.map((id) => [id, id]),
+) as Record<string, CapabilityServiceId>;

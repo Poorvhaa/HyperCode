@@ -1,3 +1,6 @@
+import { enterpriseGenerativeAiContentEn } from './articles/enterprise-generative-ai-content';
+import { aiInHealthcareContentEn } from './articles/ai-in-healthcare-content';
+
 export interface Author {
   name: string;
   role: string;
@@ -567,6 +570,38 @@ export const articles: Article[] = [
       <h2>3. Cloud and Server Host Scaling</h2>
       <p>We deploy custom applications using Docker containers on AWS ECS or Azure Container Apps, ensuring deployments are isolated, secure, and automatically scale dynamically to meet user traffic patterns.</p>
     `
+  },
+  {
+    slug: 'enterprise-generative-ai-strategic-innovation',
+    title: 'How Enterprise Generative AI Drives Strategic Innovation',
+    excerpt: 'How organizations can use generative AI to improve operations, strengthen decision-making, accelerate innovation, and build secure, scalable AI capabilities.',
+    date: 'August 28, 2026',
+    category: 'AI',
+    readTime: '8 min read',
+    author: {
+      name: 'Robert Vance',
+      role: 'Practice Director, AI',
+      avatar: '/placeholder-user.jpg',
+      bio: 'Robert directs our AI practice, engineering secure custom large language model integrations and agent networks for enterprises.'
+    },
+    related: ['ai-in-healthcare', 'ai-and-automation-in-enterprise-operations', 'the-future-of-business-intelligence-in-2025'],
+    content: enterpriseGenerativeAiContentEn
+  },
+  {
+    slug: 'ai-in-healthcare',
+    title: 'AI in Healthcare: How Intelligent Automation Is Transforming Enterprise Healthcare Operations',
+    excerpt: 'A practical enterprise guide to healthcare AI automation, secure architecture, governance, clinical support, predictive analytics, and responsible implementation.',
+    date: 'August 28, 2026',
+    category: 'AI',
+    readTime: '18 min read',
+    author: {
+      name: 'Robert Vance',
+      role: 'Practice Director, AI',
+      avatar: '/placeholder-user.jpg',
+      bio: 'Robert directs our AI practice, engineering secure custom large language model integrations and agent networks for enterprises.'
+    },
+    related: ['enterprise-generative-ai-strategic-innovation', 'ai-and-automation-in-enterprise-operations', 'data-warehousing-modernization'],
+    content: aiInHealthcareContentEn
   }
 ];
 

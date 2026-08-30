@@ -82,12 +82,8 @@ export function PremiumHero() {
 
             {/* Editorial content — 55% */}
             <div className="relative z-20 order-1 w-full min-w-0 max-w-[36rem] lg:max-w-none lg:pr-8 xl:pr-12">
-              <HeroTextReveal delay={0.04} as="p" className="landing-eyebrow landing-eyebrow-dark">
-                {t('badge')}
-              </HeroTextReveal>
-
               <HeroHeadlineMask
-                className="mt-5 sm:mt-6 font-[family-name:var(--font-display)] font-bold text-[clamp(2.125rem,2.4vw+0.85rem,3.625rem)] leading-[1.06] tracking-[-0.038em] text-[#F4F7FB] w-full min-w-0"
+                className="font-[family-name:var(--font-display)] font-bold text-[clamp(2.125rem,2.4vw+0.85rem,3.625rem)] leading-[1.06] tracking-[-0.038em] text-[#F4F7FB] w-full min-w-0"
                 lines={headlineLines}
                 lineBaseDelay={0.14}
               />
@@ -108,18 +104,18 @@ export function PremiumHero() {
                   <span>{t('ctaPrimary')}</span>
                   <ArrowRight
                     size={15}
-                    className="shrink-0 transition-transform duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5 motion-reduce:group-hover:translate-x-0"
+                    className="brand-button-icon-motion shrink-0 group-hover:translate-x-0.5 motion-reduce:group-hover:translate-x-0"
                     aria-hidden="true"
                   />
                 </Link>
                 <Link
                   href="/case-studies"
-                  className="hero-cta-ghost group inline-flex w-full sm:w-auto min-w-0 min-h-[46px] items-center justify-center gap-1.5 px-1 text-[0.9375rem] font-medium text-[#C5D3E3] transition-colors duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25B5FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030A14] rounded-sm"
+                  className="hero-cta-ghost group inline-flex w-full sm:w-auto min-w-0 min-h-[46px] items-center justify-center gap-1.5 px-1 text-[0.9375rem] font-medium text-[#C5D3E3] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25B5FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030A14] rounded-sm"
                 >
                   <span>{t('ctaSecondary')}</span>
                   <ArrowRight
                     size={15}
-                    className="shrink-0 opacity-60 transition-[transform,opacity] duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5 group-hover:opacity-100 motion-reduce:group-hover:translate-x-0"
+                    className="brand-button-icon-motion shrink-0 opacity-60 group-hover:translate-x-0.5 group-hover:opacity-100 motion-reduce:group-hover:translate-x-0"
                     aria-hidden="true"
                   />
                 </Link>

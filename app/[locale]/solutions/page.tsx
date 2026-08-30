@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo, Suspense, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { BrandButton } from '@/components/brand-button';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import Image from 'next/image';
@@ -853,12 +854,9 @@ function SolutionsPageContent() {
             {t('ctaSectionSubtitle')}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
-            <Link
-              href="/consultation"
-              className="PrimaryBrandButton w-full sm:w-auto"
-            >
+            <BrandButton href="/consultation" variant="primary" className="w-full sm:w-auto">
               {t('ctaBtn')}
-            </Link>
+            </BrandButton>
             <button
               onClick={triggerOpenChat}
               className="inline-flex items-center justify-center h-12 px-8 bg-slate-900 hover:bg-slate-800 text-white text-button rounded-xl transition-all shadow-md hover:shadow-lg cursor-pointer w-full sm:w-auto border-none"
@@ -898,12 +896,9 @@ function SolutionsPageContent() {
             className="lg:hidden fixed bottom-6 left-0 right-0 z-40 px-4 pointer-events-none"
           >
             <div className="max-w-md mx-auto pointer-events-auto shadow-2xl rounded-xl">
-              <Link
-                href="/consultation"
-                className="PrimaryBrandButton w-full"
-              >
+              <BrandButton href="/consultation" variant="primary" className="w-full">
                 {tNav('schedule')}
-              </Link>
+              </BrandButton>
             </div>
           </motion.div>
         )}

@@ -1,24 +1,26 @@
 import { articles, Article, Author } from './insights';
+import { enterpriseGenerativeAiContentEs } from './articles/enterprise-generative-ai-content-es';
+import { aiInHealthcareContentEs } from './articles/ai-in-healthcare-content-es';
 
 // Localized Categories
 export const getLocalizedCategories = (locale: string): string[] => {
   const categoriesMap: Record<string, string[]> = {
-    en: ['All', 'Business Intelligence', 'Data Analytics', 'Data Warehousing', 'Cloud Solutions', 'IT & Non-IT Staffing', 'Data Engineering', 'Web Development', 'Strategy'],
-    es: ['Todos', 'Inteligencia de Negocios', 'Análisis de Datos', 'Almacenamiento de Datos', 'Soluciones en la Nube', 'Contratación de Personal de TI y No TI', 'Ingeniería de Datos', 'Desarrollo Web', 'Estrategia']
+    en: ['All', 'AI', 'Business Intelligence', 'Data Analytics', 'Data Warehousing', 'Cloud Solutions', 'IT & Non-IT Staffing', 'Data Engineering', 'Web Development', 'Strategy'],
+    es: ['Todos', 'IA', 'Inteligencia de Negocios', 'Análisis de Datos', 'Almacenamiento de Datos', 'Soluciones en la Nube', 'Contratación de Personal de TI y No TI', 'Ingeniería de Datos', 'Desarrollo Web', 'Estrategia']
   };
   return categoriesMap[locale] || categoriesMap.en;
 };
 
 // Translate individual Category Name
 export const getLocalizedCategoryName = (category: string, locale: string): string => {
-  const englishCats = ['All', 'Business Intelligence', 'Data Analytics', 'Data Warehousing', 'Cloud Solutions', 'IT & Non-IT Staffing', 'Data Engineering', 'Web Development', 'Strategy'];
+  const englishCats = ['All', 'AI', 'Business Intelligence', 'Data Analytics', 'Data Warehousing', 'Cloud Solutions', 'IT & Non-IT Staffing', 'Data Engineering', 'Web Development', 'Strategy'];
   const localized = getLocalizedCategories(locale);
   const index = englishCats.indexOf(category);
   return index !== -1 ? localized[index] : category;
 };
 
 // Translations dictionary for all 20 article Titles and Excerpts
-const articleTranslations: Record<string, Record<string, { title: string; excerpt: string }>> = {
+const articleTranslations: Record<string, Record<string, { title: string; excerpt: string; content?: string; readTime?: string; date?: string }>> = {
   'the-future-of-business-intelligence-in-2025': {
     es: {
       title: "El Futuro de la Inteligencia de Negocios en 2025: Análisis Autónomo y Lenguaje Natural",
@@ -35,6 +37,24 @@ const articleTranslations: Record<string, Record<string, { title: string; excerp
     es: {
       title: "Tendencias de Contratación de Personal de TI y No TI en 2025: Navegando el Panorama Tecnológico Híbrido",
       excerpt: "Información sobre el cambiante panorama de la contratación de personal de TI y no TI y estrategias para contratar a los mejores talentos."
+    }
+  },
+  'enterprise-generative-ai-strategic-innovation': {
+    es: {
+      title: 'Cómo la IA generativa empresarial impulsa la innovación estratégica',
+      excerpt: 'Cómo las organizaciones pueden utilizar la IA generativa para mejorar las operaciones, fortalecer la toma de decisiones, acelerar la innovación y construir capacidades de IA seguras y escalables.',
+      content: enterpriseGenerativeAiContentEs,
+      readTime: '8 min de lectura',
+      date: '28 de agosto de 2026'
+    }
+  },
+  'ai-in-healthcare': {
+    es: {
+      title: 'IA en la atención médica: cómo la automatización inteligente está transformando las operaciones empresariales de salud',
+      excerpt: 'Una guía empresarial práctica sobre automatización de IA en salud, arquitectura segura, gobernanza, soporte clínico, análisis predictivo e implementación responsable.',
+      content: aiInHealthcareContentEs,
+      readTime: '18 min de lectura',
+      date: '28 de agosto de 2026'
     }
   }
 };
@@ -138,6 +158,9 @@ const getLocalizedAuthor = (author: Author, locale: string): Author => {
     },
     'Practice Director': {
       es: 'Director de Práctica'
+    },
+    'Practice Director, AI': {
+      es: 'Director de Práctica, IA'
     }
   };
 
@@ -160,6 +183,24 @@ export const getLocalizedArticles = (locale: string): Article[] => {
     const translation = articleTranslations[article.slug]?.[locale] || getFallbackTitleAndExcerpt(article.slug, locale);
     const translatedCategory = getLocalizedCategoryName(article.category, locale);
     const localizedAuthor = getLocalizedAuthor(article.author, locale);
+
+    // Use full translated content when available
+    if (translation.content) {
+      const matchNum = article.readTime.match(/\d+/);
+      const num = matchNum ? matchNum[0] : '5';
+      const translatedReadTime = translation.readTime || `${num} ${templates[locale]?.readTime || templates.en.readTime}`;
+
+      return {
+        ...article,
+        title: translation.title,
+        excerpt: translation.excerpt,
+        category: translatedCategory,
+        readTime: translatedReadTime,
+        author: localizedAuthor,
+        content: translation.content,
+        date: translation.date || (locale === 'es' ? 'Junio 2026' : 'June 2026')
+      };
+    }
 
     // Render localized HTML content dynamically
     const t = templates[locale] || templates.en;

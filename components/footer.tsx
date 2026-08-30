@@ -2,13 +2,14 @@
 
 import { Link } from '@/i18n/routing';
 import Image from 'next/image';
-import { Mail, Phone, MapPin, ArrowRight, ShieldCheck, Check, AlertCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, ArrowRight, ShieldCheck } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 import { useState, type FormEvent, type ReactNode } from 'react';
 import { EMAIL_REGEX } from '@/lib/validation';
 import { useFormValidation } from '@/hooks/use-form-validation';
 import { footerServicesList } from '@/lib/navigation-links';
 import { googleMapsSearchUrl } from '@/lib/utils';
+import { NewsletterMorphInput } from '@/components/ui/newsletter-morph-input';
 
 function FooterHeading({ children }: { children: ReactNode }) {
   return (
@@ -166,58 +167,25 @@ export function Footer() {
           <span>{tf('newsletterSuccess')}</span>
         </div>
       ) : (
-        <form ref={formRef} onSubmit={handleSubscribe} className="w-full min-w-0">
-          <div className="flex w-full min-w-0 gap-2">
-            <div className="relative min-w-0 flex-1">
-              <input
-                type="email"
-                name="email"
-                required
-                placeholder={tf('newsletterPlaceholder')}
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                  if (error) setError('');
-                  if (e.target.value.length > 5) setTouched(true);
-                }}
-                onBlur={() => setTouched(true)}
-                autoComplete="email"
-                inputMode="email"
-                aria-invalid={hasEmailError}
-                aria-describedby={hasEmailError ? 'footer-email-error' : undefined}
-                className={`w-full min-w-0 rounded-md border bg-white/[0.06] py-2 pl-3 pr-9 text-body-sm text-white placeholder-white/35 transition-all focus:outline-none focus:ring-2 focus:ring-[#145BFF]/30 ${
-                  hasEmailError
-                    ? 'border-red-400/60 focus:border-red-400'
-                    : touched && isValidEmail
-                    ? 'border-[#2DBD3E]/50'
-                    : 'border-white/12 focus:border-[#5B9AFF]/50'
-                }`}
-                disabled={submitting}
-              />
-              {touched && isValidEmail && !error && (
-                <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#2DBD3E]" aria-hidden="true">
-                  <Check size={14} className="stroke-[3px]" />
-                </span>
-              )}
-            </div>
-            <button
-              type="submit"
-              disabled={submitting}
-              aria-label="Submit newsletter subscription"
-              className={`flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-md border-none bg-[#145BFF] text-white transition hover:bg-[#0A1F6B] ${
-                submitting ? 'cursor-not-allowed bg-white/20 opacity-50' : ''
-              }`}
-            >
-              <ArrowRight size={16} aria-hidden="true" />
-            </button>
-          </div>
-          {error && (
-            <p id="footer-email-error" className="mt-1.5 flex items-center gap-1 text-caption font-medium text-red-400" role="alert">
-              <AlertCircle size={12} className="shrink-0" aria-hidden="true" />
-              <span>{error}</span>
-            </p>
-          )}
-        </form>
+        <NewsletterMorphInput
+          formRef={formRef}
+          email={email}
+          onEmailChange={(value) => {
+            setEmail(value);
+            if (error) setError('');
+            if (value.length > 5) setTouched(true);
+          }}
+          onSubmit={handleSubscribe}
+          onBlur={() => setTouched(true)}
+          placeholder={tf('newsletterPlaceholder')}
+          subscribeLabel={locale === 'es' ? 'Suscribirse' : 'Subscribe'}
+          submitting={submitting}
+          hasEmailError={hasEmailError}
+          touched={touched}
+          isValidEmail={isValidEmail}
+          error={error}
+          errorId="footer-email-error"
+        />
       )}
     </div>
   );

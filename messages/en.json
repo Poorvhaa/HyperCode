@@ -40,7 +40,7 @@
     "careers": "Careers",
     "contact": "Contact",
     "directPlacement": "Direct Placement",
-    "schedule": "Schedule Consultation →",
+    "schedule": "Schedule Consultation",
     "support": "Support Portal",
     "aiConsultant": "AI Consultant",
     "aiAutomation": "AI & Automation",
@@ -1407,7 +1407,6 @@
   },
   "HomepageRedesign": {
     "Hero": {
-      "badge": "USA-Based Technology Consulting & Engineering",
       "headlineLine1": "Engineering Digital Systems That Move",
       "headlineLine2": "",
       "headlineGradient": "Businesses Forward",

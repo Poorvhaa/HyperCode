@@ -1,7 +1,7 @@
 'use client';
 
+import { BrandButton } from '@/components/brand-button';
 import { BarChart3, Clock, Zap, Users2, Database, ArrowRight } from 'lucide-react';
-import { Link } from '@/i18n/routing';
 
 export function BusinessOutcomesSection() {
   const outcomes = [
@@ -89,13 +89,10 @@ export function BusinessOutcomesSection() {
             </p>
           </div>
           <div className="flex gap-4 flex-shrink-0">
-            <Link
-              href="/consultation"
-              className="PrimaryBrandButton"
-            >
+            <BrandButton href="/consultation" variant="primary">
               <span>Schedule Consultation</span>
               <ArrowRight size={16} className="ml-2" />
-            </Link>
+            </BrandButton>
           </div>
         </div>
       </div>

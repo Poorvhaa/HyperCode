@@ -1,6 +1,7 @@
 import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
 import { ArrowLeft, Calendar, Clock, User, Share2, Mail } from 'lucide-react';
+import { BrandButton } from '@/components/brand-button';
 import { Link } from '@/i18n/routing';
 import { notFound } from 'next/navigation';
 import { getLocalizedArticle } from '@/lib/insights-localizer';
@@ -8,7 +9,7 @@ import { routing } from '@/i18n/routing';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Metadata } from 'next';
 import { db } from '@/lib/db';
-import { localeUrl } from '@/lib/site-url';
+import { localeUrl, localeAlternates } from '@/lib/site-url';
 
 async function fetchArticle(slug: string, locale: string) {
   try {
@@ -121,6 +122,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     description: article.excerpt,
     alternates: {
       canonical: localeUrl(locale, `insights/${article.slug}`),
+      languages: localeAlternates(`insights/${article.slug}`),
+    },
+    openGraph: {
+      title: `HyperCode | ${article.title}`,
+      description: article.excerpt,
+      url: localeUrl(locale, `insights/${article.slug}`),
+      siteName: 'HyperCode',
+      locale: locale === 'en' ? 'en_US' : 'es_ES',
+      type: 'article',
     },
   };
 }
@@ -335,7 +345,7 @@ export default async function ArticlePage({ params }: PageProps) {
             {/* Center/Right: Article Content & Author Bio */}
             <div className="lg:col-span-3 space-y-12">
               <div 
-                className="space-y-6 text-slate-700 text-sm sm:text-base leading-relaxed font-medium [&>p]:leading-relaxed [&>p]:mb-6 [&>h2]:text-xl [&>h2]:font-extrabold [&>h2]:text-slate-900 [&>h2]:mt-8 [&>h2]:mb-4 [&>blockquote]:pl-4 [&>blockquote]:border-l-4 [&>blockquote]:border-royal-blue [&>blockquote]:italic [&>blockquote]:text-slate-850 [&>blockquote]:my-6 [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:space-y-2 [&>ol]:list-decimal [&>ol]:pl-6 [&>ol]:space-y-2 [&>li]:pl-1 [&>em]:text-slate-800 [&>p>strong]:text-slate-800"
+                className="space-y-6 text-slate-700 text-sm sm:text-base leading-relaxed font-medium [&>p]:leading-relaxed [&>p]:mb-6 [&>h2]:text-xl [&>h2]:font-extrabold [&>h2]:text-slate-900 [&>h2]:mt-8 [&>h2]:mb-4 [&>h3]:text-lg [&>h3]:font-bold [&>h3]:text-slate-900 [&>h3]:mt-6 [&>h3]:mb-3 [&>blockquote]:pl-4 [&>blockquote]:border-l-4 [&>blockquote]:border-royal-blue [&>blockquote]:italic [&>blockquote]:text-slate-850 [&>blockquote]:my-6 [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:space-y-2 [&>ol]:list-decimal [&>ol]:pl-6 [&>ol]:space-y-2 [&>li]:pl-1 [&>em]:text-slate-800 [&>p>strong]:text-slate-800 [&>figure]:my-8 [&>table]:w-full"
                 dangerouslySetInnerHTML={{ __html: article.content }}
               />
 
@@ -374,12 +384,9 @@ export default async function ArticlePage({ params }: PageProps) {
                      'Schedule a consultation with our technology practice directors to scope your specific data warehousing, business intelligence, or staff augmentation requirements.'}
                   </p>
                   <div className="pt-2">
-                    <Link
-                      href="/consultation"
-                      className="PrimaryBrandButton"
-                    >
+                    <BrandButton href="/consultation" variant="primary">
                       {activeTrans.bookConsultation}
-                    </Link>
+                    </BrandButton>
                   </div>
                 </div>
               </div>

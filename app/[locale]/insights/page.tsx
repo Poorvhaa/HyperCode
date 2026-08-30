@@ -1,7 +1,7 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
-import { getLocalizedCategories } from '@/lib/insights-localizer';
+import { getLocalizedCategories, getLocalizedArticles } from '@/lib/insights-localizer';
 import { InsightsList } from '@/components/insights-list';
 import { NewsletterForm } from '@/components/newsletter-form';
 import { db } from '@/lib/db';
@@ -84,8 +84,30 @@ export default async function InsightsPage({ params }: Props) {
     console.error('Failed to load DB case studies for index page:', err);
   }
 
-  // 100% database-driven content: merge articles and case studies
-  const mergedArticles = [...dbArticlesFormatted, ...dbCaseStudiesFormatted];
+  // Merge static articles not already in database
+  let staticArticlesFormatted: any[] = [];
+  try {
+    const staticArticles = getLocalizedArticles(locale);
+    const dbSlugs = new Set(dbArticlesFormatted.map((a) => a.slug));
+    staticArticlesFormatted = staticArticles
+      .filter((a) => !dbSlugs.has(a.slug))
+      .map((a) => ({
+        slug: a.slug,
+        title: a.title,
+        excerpt: a.excerpt,
+        content: a.content,
+        date: a.date,
+        category: a.category,
+        readTime: a.readTime,
+        author: a.author,
+        related: a.related,
+      }));
+  } catch (err) {
+    console.error('Failed to load static articles for index page:', err);
+  }
+
+  // Merge database articles, static articles, and case studies
+  const mergedArticles = [...dbArticlesFormatted, ...staticArticlesFormatted, ...dbCaseStudiesFormatted];
 
   const rawCategories = getLocalizedCategories(locale);
   const localizedCategories = [...rawCategories];

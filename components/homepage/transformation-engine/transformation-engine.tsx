@@ -2,10 +2,9 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { useTranslations, useLocale } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link } from '@/i18n/routing';
-import { ArrowRight } from 'lucide-react';
+import { Check } from 'lucide-react';
 import { LandingReveal } from '@/components/motion/landing-reveal';
 import { crossfade } from '@/lib/motion-tokens';
 import { useLandingMotion } from '@/hooks/use-landing-motion';
@@ -29,7 +28,6 @@ type TransformationStage = {
 
 export function TransformationEngine() {
   const t = useTranslations('HomepageRedesign.TransformationEngine');
-  const locale = useLocale();
   const { isReduced, enableMotion } = useLandingMotion();
 
   const sectionRef = useRef<HTMLElement>(null);
@@ -95,7 +93,7 @@ export function TransformationEngine() {
     <section
       ref={sectionRef}
       data-section-theme="light"
-      className="relative bg-[#ECEAE4] text-left overflow-hidden border-b border-[#1A2332]/[0.06]"
+      className="relative bg-[#ECEAE4] text-left overflow-hidden"
       aria-labelledby="transformation-engine-heading"
     >
       <div className="relative max-w-[90rem] min-w-0 mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 pt-16 sm:pt-20 lg:pt-24 pb-10 sm:pb-12">
@@ -130,9 +128,7 @@ export function TransformationEngine() {
                 <ol className="space-y-1 sm:space-y-1.5 m-0 p-0 list-none" role="tablist" aria-label={t('headline')}>
                   {stages.map((stage, i) => {
                     const isActive = i === activeIndex;
-                    const revealed = useScrollPin
-                      ? scrollProgress * STAGE_COUNT > i
-                      : i <= selectedIndex;
+                    const isCompleted = i < activeIndex;
 
                     return (
                       <li key={stage.key} role="presentation">
@@ -142,7 +138,11 @@ export function TransformationEngine() {
                           aria-selected={isActive}
                           onClick={() => setSelectedIndex(i)}
                           className={`flex w-full items-center gap-3 sm:gap-4 min-h-[44px] py-2.5 text-left transition-colors duration-300 rounded-lg -mx-2 px-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#145BFF]/30 ${
-                            isActive ? 'text-[#145BFF]' : revealed ? 'text-[#1A2332]' : 'text-[#B8B2A6]'
+                            isActive
+                              ? 'text-[#145BFF]'
+                              : isCompleted
+                                ? 'text-[#1A2332]'
+                                : 'text-[#B8B2A6]'
                           }`}
                         >
                           <span
@@ -151,17 +151,32 @@ export function TransformationEngine() {
                           >
                             {String(stage.number).padStart(2, '0')}
                           </span>
+                          {isActive ? (
+                            <span
+                              className="relative flex h-2.5 w-2.5 shrink-0 items-center justify-center"
+                              aria-hidden="true"
+                            >
+                              <span className="absolute inset-0 rounded-full bg-[#145BFF]/25 scale-[2.25]" />
+                              <span className="relative h-2 w-2 rounded-full bg-[#145BFF]" />
+                            </span>
+                          ) : isCompleted ? (
+                            <span
+                              className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-[#145BFF]/35 bg-[#145BFF]/[0.07]"
+                              aria-hidden="true"
+                            >
+                              <Check className="h-2.5 w-2.5 text-[#145BFF]/70" strokeWidth={2.5} />
+                            </span>
+                          ) : (
+                            <span
+                              className="h-1.5 w-1.5 rounded-full shrink-0 border border-[#D4CFC4] bg-transparent"
+                              aria-hidden="true"
+                            />
+                          )}
                           <span
-                            className={`h-1.5 w-1.5 rounded-full shrink-0 transition-all duration-300 ${
-                              isActive
-                                ? 'bg-[#145BFF] scale-125'
-                                : revealed
-                                  ? 'bg-[#48B900]'
-                                  : 'bg-[#D4CFC4]'
+                            className={`font-[family-name:var(--font-display)] text-[0.9375rem] sm:text-base tracking-[-0.01em] ${
+                              isActive ? 'font-bold' : isCompleted ? 'font-semibold' : 'font-medium'
                             }`}
-                            aria-hidden="true"
-                          />
-                          <span className="font-[family-name:var(--font-display)] text-[0.9375rem] sm:text-base font-semibold tracking-[-0.01em]">
+                          >
                             {stage.name}
                           </span>
                         </button>
@@ -169,21 +184,6 @@ export function TransformationEngine() {
                     );
                   })}
                 </ol>
-
-                <div className="mt-8 sm:mt-10 hidden lg:block">
-                  <Link
-                    href="/consultation"
-                    className="PrimaryBrandButton inline-flex items-center justify-center gap-2 group"
-                    aria-label={locale === 'es' ? 'Programar Consulta' : 'Schedule Consultation'}
-                  >
-                    <span>{locale === 'es' ? 'Programar Consulta' : 'Schedule Consultation'}</span>
-                    <ArrowRight
-                      size={14}
-                      className="group-hover:translate-x-1 transition-transform duration-300 motion-reduce:group-hover:translate-x-0"
-                      aria-hidden="true"
-                    />
-                  </Link>
-                </div>
               </div>
 
               <div className="order-1 lg:order-2 min-w-0">
@@ -223,32 +223,28 @@ export function TransformationEngine() {
                 </div>
 
                 <div className="mt-8 sm:mt-10 min-w-0 flex justify-center lg:justify-end">
-                  {mounted && !useStaticVisual ? (
-                    <EngineVisual3D scrollProgress={scrollProgress} className="lg:max-w-[min(100%,480px)]" />
-                  ) : (
-                    <EngineStaticVisual
-                      scrollProgress={
-                        useScrollPin ? scrollProgress : selectedIndex / Math.max(STAGE_COUNT - 1, 1)
-                      }
-                      activeIndex={activeIndex}
-                      labels={visualLabels}
-                      coreLabel={t('coreLabel')}
-                      className="lg:max-w-[min(100%,480px)]"
-                    />
-                  )}
+                  <div className="relative w-full max-w-[min(100%,420px)] aspect-square overflow-hidden">
+                    <div className="absolute inset-[10%] sm:inset-[9%]">
+                      {mounted && !useStaticVisual ? (
+                        <EngineVisual3D
+                          scrollProgress={scrollProgress}
+                          className="h-full w-full max-h-none max-w-none"
+                        />
+                      ) : (
+                        <EngineStaticVisual
+                          scrollProgress={
+                            useScrollPin ? scrollProgress : selectedIndex / Math.max(STAGE_COUNT - 1, 1)
+                          }
+                          activeIndex={activeIndex}
+                          labels={visualLabels}
+                          coreLabel={t('coreLabel')}
+                          className="h-full w-full max-h-none max-w-none"
+                        />
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-
-            <div className="mt-10 flex justify-center lg:hidden">
-              <Link
-                href="/consultation"
-                className="PrimaryBrandButton inline-flex items-center justify-center gap-2 group w-full sm:w-auto"
-                aria-label={locale === 'es' ? 'Programar Consulta' : 'Schedule Consultation'}
-              >
-                <span>{locale === 'es' ? 'Programar Consulta' : 'Schedule Consultation'}</span>
-                <ArrowRight size={14} className="shrink-0" aria-hidden="true" />
-              </Link>
             </div>
           </div>
         </div>

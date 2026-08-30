@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { BrandButton } from '@/components/brand-button';
 import { Link } from '@/i18n/routing';
 import { 
   Target, Eye, ShieldCheck, Award, Lightbulb, Users, Cpu, Zap, BookOpen, 
@@ -149,12 +150,12 @@ export function AboutClient({ locale, tAbout, tCommon }: AboutClientProps) {
               </p>
 
               <div className="flex flex-wrap gap-4 pt-3">
-                <Link href="/consultation" className="PrimaryBrandButton">
+                <BrandButton href="/consultation" variant="primary">
                   {locale === 'es' ? 'Iniciar Consulta Técnica' : 'Initiate Scoping Intake'}
-                </Link>
-                <Link href="/solutions" className="SecondaryBrandButton">
+                </BrandButton>
+                <BrandButton href="/solutions" variant="secondary">
                   {locale === 'es' ? 'Ver Especialidades' : 'Explore Capabilities'}
-                </Link>
+                </BrandButton>
               </div>
             </div>
 
@@ -603,12 +604,12 @@ export function AboutClient({ locale, tAbout, tCommon }: AboutClientProps) {
           </p>
           
           <div className="pt-4 flex flex-wrap justify-center gap-4">
-            <Link href="/consultation" className="PrimaryBrandButton">
+            <BrandButton href="/consultation" variant="primary">
               {tCommon.consultation || 'Schedule Intake'}
-            </Link>
-            <Link href="/contact" className="SecondaryBrandButton">
+            </BrandButton>
+            <BrandButton href="/contact" variant="secondary">
               {locale === 'es' ? 'Contáctenos' : 'Contact Sales'}
-            </Link>
+            </BrandButton>
           </div>
         </div>
       </section>

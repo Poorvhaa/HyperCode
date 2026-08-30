@@ -114,6 +114,45 @@ export const countUp = {
   defaultDuration: 1200,
 } as const;
 
+/** Standard spring for interactive buttons — hover, press, layout (MorphingButton parity). */
+export const buttonSpring = {
+  type: 'spring' as const,
+  stiffness: 240,
+  damping: 18,
+  mass: 1.1,
+} as const;
+
+/** CSS fallback matching buttonSpring settle for non-motion buttons. */
+export const buttonSpringCss = {
+  duration: '380ms',
+  ease: 'cubic-bezier(0.22, 1, 0.36, 1)',
+} as const;
+
+export function buttonSpringTransition(reduced?: boolean) {
+  if (reduced) {
+    return {
+      type: 'tween' as const,
+      duration: landingDurations.instant,
+      ease: landingEase,
+    };
+  }
+  return buttonSpring;
+}
+
+/** Transform + shadow states for PrimaryBrandButton / SecondaryBrandButton motion wrappers. */
+export const brandButtonMotion = {
+  primary: {
+    rest: { y: 0, boxShadow: '0 4px 14px 0 rgba(20, 91, 255, 0.25)' },
+    hover: { y: -2, boxShadow: '0 8px 24px 0 rgba(20, 91, 255, 0.45)' },
+    tap: { y: 0, boxShadow: '0 4px 10px 0 rgba(20, 91, 255, 0.25)' },
+  },
+  secondary: {
+    rest: { y: 0, boxShadow: '0 0 0 rgba(0,0,0,0)' },
+    hover: { y: -2, boxShadow: '0 4px 14px 0 rgba(20, 91, 255, 0.2)' },
+    tap: { y: 0, boxShadow: '0 0 0 rgba(0,0,0,0)' },
+  },
+} as const;
+
 export type StaggerVariants = typeof staggerContainer | typeof staggerItem;
 export type CountUpConfig = typeof countUp;
 

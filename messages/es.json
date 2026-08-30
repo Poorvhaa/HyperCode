@@ -40,7 +40,7 @@
     "careers": "Carreras",
     "contact": "Contacto",
     "directPlacement": "Colocación Directa",
-    "schedule": "Programar Consulta →",
+    "schedule": "Programar Consulta",
     "support": "Portal de Soporte",
     "aiConsultant": "Consultor de IA",
     "aiAutomation": "IA y Automatización",
@@ -1408,7 +1408,6 @@
   },
   "HomepageRedesign": {
     "Hero": {
-      "badge": "Consultoría e Ingeniería Tecnológica en EE. UU.",
       "headlineLine1": "Ingeniería de Sistemas Digitales Que Impulsan el",
       "headlineLine2": "",
       "headlineGradient": "Avance Empresarial",

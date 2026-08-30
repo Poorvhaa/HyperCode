@@ -5,6 +5,7 @@ import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
 import { getServiceDetails } from '@/lib/services-details';
 import { HeroBanner } from '@/components/hero-banner';
+import { BrandButton } from '@/components/brand-button';
 import { Link } from '@/i18n/routing';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -510,26 +511,28 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
             {activeTrans.ctaDesc}
           </p>
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-4">
-            <Link
+            <BrandButton
               href={
                 pageKey === 'api-development'
                   ? '/consultation?service=Software%20Development'
                   : '/consultation'
               }
-              className="PrimaryBrandButton w-full sm:w-auto"
+              variant="primary"
+              className="w-full sm:w-auto"
             >
               {isEs ? 'Programar Consulta' : 'Schedule Consultation'}
-            </Link>
-            <Link
+            </BrandButton>
+            <BrandButton
               href={
                 pageKey === 'api-development'
                   ? '/contact?service=API%20Development%20%26%20Integration'
                   : '/contact'
               }
-              className="SecondaryBrandButton w-full sm:w-auto"
+              variant="secondary"
+              className="w-full sm:w-auto"
             >
               {isEs ? 'Contactar Soporte' : 'Contact Us'}
-            </Link>
+            </BrandButton>
           </div>
         </div>
       </section>

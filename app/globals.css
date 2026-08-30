@@ -546,6 +546,28 @@
   --footer-bg: #071A3A;
   --footer-text: #D7E3F4;
   --footer-muted: #AFC0D7;
+  /* Keep in sync with motion-tokens buttonSpringCss */
+  --button-spring-duration: 380ms;
+  --button-spring-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --button-spring-transition:
+    transform var(--button-spring-duration) var(--button-spring-ease),
+    box-shadow var(--button-spring-duration) var(--button-spring-ease),
+    background var(--button-spring-duration) var(--button-spring-ease),
+    background-color var(--button-spring-duration) var(--button-spring-ease),
+    border-color var(--button-spring-duration) var(--button-spring-ease),
+    color var(--button-spring-duration) var(--button-spring-ease),
+    opacity var(--button-spring-duration) var(--button-spring-ease);
+  --button-spring-icon-transition:
+    transform var(--button-spring-duration) var(--button-spring-ease),
+    opacity var(--button-spring-duration) var(--button-spring-ease);
+}
+
+.brand-button-icon-motion {
+  transition: var(--button-spring-icon-transition);
+}
+
+.brand-button-motion {
+  transition: var(--button-spring-transition);
 }
 
 .PrimaryBrandButton {
@@ -561,8 +583,6 @@
   border-radius: 9999px;
   background: linear-gradient(90deg, #1769F5 0%, #08A8D8 48%, #2DBD3E 100%);
   color: #FFFFFF !important;
-  box-shadow: 0 4px 14px 0 rgba(20, 91, 255, 0.25);
-  transition: all 250ms cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   border: none;
   text-decoration: none;
@@ -571,13 +591,6 @@
 
 .PrimaryBrandButton:hover {
   background: linear-gradient(90deg, #2b7cff 0%, #1bc0f0 48%, #3cd64e 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px 0 rgba(20, 91, 255, 0.45);
-}
-
-.PrimaryBrandButton:active {
-  transform: translateY(0);
-  box-shadow: 0 4px 10px 0 rgba(20, 91, 255, 0.25);
 }
 
 .PrimaryBrandButton:focus-visible {
@@ -606,7 +619,6 @@
   background: #FFFFFF;
   border: 1.5px solid #145BFF;
   color: #145BFF !important;
-  transition: all 250ms cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   text-decoration: none;
   white-space: nowrap;
@@ -616,12 +628,6 @@
   background: linear-gradient(135deg, #145BFF 0%, #00C8FF 100%);
   border-color: transparent;
   color: #FFFFFF !important;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 14px 0 rgba(20, 91, 255, 0.2);
-}
-
-.SecondaryBrandButton:active {
-  transform: translateY(0);
 }
 
 .SecondaryBrandButton:focus-visible {
@@ -639,7 +645,7 @@
   font-weight: 600;
   line-height: 1.4;
   border: none;
-  transition: all 250ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: var(--button-spring-transition);
   cursor: pointer;
   text-decoration: none;
   white-space: nowrap;
@@ -961,9 +967,7 @@
 .hero-cta-primary {
   background: #145BFF;
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1) inset;
-  transition:
-    transform 400ms cubic-bezier(0.22, 1, 0.36, 1),
-    background-color 400ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: var(--button-spring-transition);
 }
 
 .hero-cta-primary:hover {
@@ -978,6 +982,7 @@
 .hero-cta-ghost {
   background: transparent;
   border: none;
+  transition: var(--button-spring-transition);
 }
 
 .hero-cta-ghost:hover {
@@ -1019,17 +1024,32 @@
   animation: logo-marquee-scroll var(--marquee-duration, 36s) linear infinite;
 }
 
+.nav-cta-solid {
+  transition: var(--button-spring-transition);
+}
+
+.nav-cta-solid:hover {
+  transform: translateY(-1px);
+}
+
 .nav-cta-solid:active {
   transform: translateY(0);
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .PrimaryBrandButton,
+  .SecondaryBrandButton,
+  .GhostBrandButton,
   .hero-cta-primary,
   .hero-cta-ghost,
-  .nav-cta-solid {
+  .nav-cta-solid,
+  .brand-button-icon-motion,
+  .brand-button-motion {
     transition: none;
   }
 
+  .PrimaryBrandButton:hover,
+  .SecondaryBrandButton:hover,
   .hero-cta-primary:hover,
   .nav-cta-solid:hover {
     transform: none;

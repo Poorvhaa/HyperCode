@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState, useEffect, useRef } from 'react';
 import { usePathname, useRouter, Link } from '@/i18n/routing';
+import { BrandButton } from '@/components/brand-button';
 import { useLocale, useTranslations } from 'next-intl';
 import { SERVICE_REGISTRY, ALIAS_MAP } from '@/lib/services-details';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -373,12 +374,12 @@ export function Navigation() {
 
               <Link
                 href="/consultation"
-                className="nav-cta-solid group inline-flex h-10 items-center gap-1.5 rounded-lg bg-[#145BFF] px-4 text-[0.8125rem] font-semibold text-white transition-[background-color,transform] duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-[#1a65ff] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue focus-visible:ring-offset-2"
+                className="nav-cta-solid group inline-flex h-10 items-center gap-1.5 rounded-lg bg-[#145BFF] px-4 text-[0.8125rem] font-semibold text-white hover:bg-[#1a65ff] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue focus-visible:ring-offset-2"
               >
                 {t('schedule')}
                 <ArrowRight
                   size={14}
-                  className="transition-transform duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5 motion-reduce:group-hover:translate-x-0"
+                  className="brand-button-icon-motion group-hover:translate-x-0.5 motion-reduce:group-hover:translate-x-0"
                   aria-hidden="true"
                 />
               </Link>
@@ -435,9 +436,9 @@ export function Navigation() {
                 >
                   <div className="flex max-h-[calc(100vh-80px-20px)] sm:max-h-[calc(100vh-84px-20px)] lg:max-h-[calc(100vh-88px-20px)]">
                     <div className="min-h-0 min-w-0 flex-1 overflow-y-auto custom-menu-scrollbar">
-                      <div className="grid grid-cols-3 gap-x-6 px-5 py-3.5">
+                      <div className="grid grid-cols-3 items-start gap-x-6 px-5 py-3.5">
                         {solutionMenuColumns.map((column, columnIndex) => (
-                          <div key={columnIndex} className="flex flex-col gap-3">
+                          <div key={columnIndex} className="flex flex-col gap-2.5">
                             {column.map((category) => {
                               const CategoryIcon = CATEGORY_ICONS[category.label.en] ?? Code2;
                               return (
@@ -668,7 +669,7 @@ export function Navigation() {
                             onClick={() => setIsOpen(false)}
                             className="mt-1 block min-h-[44px] px-3 py-2.5 text-[0.875rem] font-semibold text-royal-blue"
                           >
-                            {t('viewAllSolutions')} →
+                            {t('viewAllSolutions')}
                           </Link>
                         </div>
                       </motion.div>
@@ -718,13 +719,14 @@ export function Navigation() {
                 </div>
 
                 <div className="pt-5">
-                  <Link
+                  <BrandButton
                     href="/consultation"
+                    variant="primary"
+                    className="flex w-full items-center justify-center gap-2"
                     onClick={() => setIsOpen(false)}
-                    className="PrimaryBrandButton flex w-full items-center justify-center gap-2"
                   >
                     {t('schedule')}
-                  </Link>
+                  </BrandButton>
                 </div>
               </div>
             </motion.div>

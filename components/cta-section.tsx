@@ -1,6 +1,6 @@
 'use client';
 
-import { Link } from '@/i18n/routing';
+import { BrandButton } from '@/components/brand-button';
 import { useTranslations } from 'next-intl';
 
 export function CTASection() {
@@ -30,18 +30,12 @@ export function CTASection() {
         </p>
         
         <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-4">
-          <Link
-            href="/consultation"
-            className="PrimaryBrandButton w-full sm:w-auto"
-          >
+          <BrandButton href="/consultation" variant="primary" className="w-full sm:w-auto">
             {t('cta.primaryButton')}
-          </Link>
-          <Link
-            href="/contact"
-            className="SecondaryBrandButton w-full sm:w-auto"
-          >
+          </BrandButton>
+          <BrandButton href="/contact" variant="secondary" className="w-full sm:w-auto">
             {t('cta.secondaryButton')}
-          </Link>
+          </BrandButton>
         </div>
       </div>
     </section>
