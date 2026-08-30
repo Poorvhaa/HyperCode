@@ -1,21 +1,13 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
-import dynamic from 'next/dynamic';
+import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { LandingReveal } from '@/components/motion/landing-reveal';
-import { crossfade } from '@/lib/motion-tokens';
 import { useLandingMotion } from '@/hooks/use-landing-motion';
-import { STAGE_COUNT, STAGE_NUMBERS, type StageNumber } from './constants';
-import { EngineStaticVisual } from './engine-static-visual';
-import { useTransformationScrollPin } from './use-transformation-scroll-pin';
-
-const EngineVisual3D = dynamic(
-  () => import('./engine-visual-3d').then((m) => m.EngineVisual3D),
-  { ssr: false },
-);
+import { STAGE_NUMBERS, STAGE_COUNT, type StageNumber } from './constants';
+import { TransformationRoadmapVisual } from './transformation-roadmap-visual';
 
 type TransformationStage = {
   number: StageNumber;
@@ -26,46 +18,178 @@ type TransformationStage = {
   benefits: string[];
 };
 
+const stageTransition = {
+  initial: { opacity: 0, y: 8 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -4 },
+};
+
+function StageBenefits({ benefits }: { benefits: string[] }) {
+  if (!benefits.length) return null;
+
+  return (
+    <ul className="mt-6 space-y-2.5 sm:mt-7">
+      {benefits.map((benefit) => (
+        <li key={benefit}>
+          <span className="inline-flex min-w-0 items-center gap-2 text-[0.8125rem] font-medium tracking-[0.01em] text-[#5C6470] sm:text-sm">
+            <span>{benefit}</span>
+            <ArrowUpRight size={14} className="shrink-0 text-[#145BFF]/70" aria-hidden="true" />
+          </span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function StageEditorial({
+  stage,
+  isReduced,
+}: {
+  stage: TransformationStage;
+  isReduced: boolean;
+}) {
+  const duration = isReduced ? 0.15 : 0.32;
+
+  return (
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={stage.key}
+        initial={isReduced ? false : stageTransition.initial}
+        animate={stageTransition.animate}
+        exit={isReduced ? undefined : stageTransition.exit}
+        transition={{ duration, ease: [0.22, 1, 0.36, 1] }}
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        <p className="text-[0.8125rem] font-semibold tabular-nums tracking-[0.12em] text-[#145BFF] sm:text-sm">
+          {String(stage.number).padStart(2, '0')}
+          <span className="mx-2 text-[#B8B2A6]">/</span>
+          <span className="uppercase">{stage.name}</span>
+        </p>
+        <h3 className="mt-3 font-[family-name:var(--font-display)] text-[clamp(1.75rem,2.4vw,3rem)] font-bold leading-[1.12] tracking-[-0.025em] text-[#1A2332]">
+          {stage.title}
+        </h3>
+        <p className="mt-4 max-w-lg text-[clamp(1rem,0.2vw+0.94rem,1.125rem)] leading-[1.72] text-[#5C6470] sm:mt-5">
+          {stage.description}
+        </p>
+        <StageBenefits benefits={stage.benefits} />
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
+function RoadmapNav({
+  stages,
+  activeIndex,
+  onSelect,
+  compact = false,
+}: {
+  stages: TransformationStage[];
+  activeIndex: number;
+  onSelect: (index: number) => void;
+  compact?: boolean;
+}) {
+  const progressPct = STAGE_COUNT > 1 ? (activeIndex / (STAGE_COUNT - 1)) * 100 : 0;
+
+  return (
+    <div
+      className={`relative min-w-0 ${compact ? 'overflow-x-auto pb-1' : ''}`}
+      role="tablist"
+      aria-label="Transformation roadmap"
+    >
+      <div
+        className={`grid min-w-0 ${compact ? 'min-w-[640px] grid-cols-6 gap-1' : 'grid-cols-3 gap-x-2 gap-y-6 sm:grid-cols-6 sm:gap-x-1'}`}
+      >
+        {stages.map((stage, i) => {
+          const isActive = i === activeIndex;
+          const isCompleted = i < activeIndex;
+
+          return (
+            <button
+              key={stage.key}
+              type="button"
+              role="tab"
+              aria-selected={isActive}
+              onClick={() => onSelect(i)}
+              className={`group relative min-h-[44px] min-w-0 px-1 pb-4 text-left transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#145BFF]/35 focus-visible:ring-offset-2 focus-visible:ring-offset-white ${
+                isActive ? 'text-[#145BFF]' : isCompleted ? 'text-[#1A2332]' : 'text-[#B8B2A6]'
+              }`}
+            >
+              <span
+                className={`block font-[family-name:var(--font-display)] text-[0.8125rem] font-semibold tabular-nums tracking-[0.08em] sm:text-sm ${
+                  isActive ? 'text-[#145BFF]' : isCompleted ? 'text-[#145BFF]/70' : 'text-[#B8B2A6]'
+                }`}
+              >
+                {String(stage.number).padStart(2, '0')}
+              </span>
+              <span
+                className={`mt-1 block font-[family-name:var(--font-display)] text-[0.625rem] font-semibold uppercase tracking-[0.1em] leading-tight sm:text-[0.6875rem] ${
+                  isActive ? 'text-[#1A2332]' : isCompleted ? 'text-[#1A2332]/80' : 'text-[#B8B2A6]'
+                }`}
+              >
+                {stage.name}
+              </span>
+              {isActive && (
+                <span
+                  className="absolute bottom-0 left-0 h-0.5 w-full bg-[#145BFF]"
+                  aria-hidden="true"
+                />
+              )}
+              {isCompleted && !isActive && (
+                <span
+                  className="absolute bottom-0 left-0 h-0.5 w-full bg-[#48B900]/40"
+                  aria-hidden="true"
+                />
+              )}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Continuous progress line */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-[#1A2332]/[0.1]" aria-hidden="true">
+        <div
+          className="h-full bg-[#145BFF]/50 transition-[width] duration-300 ease-out"
+          style={{ width: `${progressPct}%` }}
+        />
+      </div>
+    </div>
+  );
+}
+
+function MobileStageBlock({ stage, isReduced }: { stage: TransformationStage; isReduced: boolean }) {
+  return (
+    <article className="border-t border-[#1A2332]/[0.08] py-8 first:border-t-0 first:pt-0 sm:py-10">
+      <StageEditorial stage={stage} isReduced={isReduced} />
+      <div className="mt-6 sm:mt-8">
+        <TransformationRoadmapVisual stageIndex={stage.number - 1} compact />
+      </div>
+    </article>
+  );
+}
+
 export function TransformationEngine() {
   const t = useTranslations('HomepageRedesign.TransformationEngine');
-  const { isReduced, enableMotion } = useLandingMotion();
-
-  const sectionRef = useRef<HTMLElement>(null);
-  const scrollTrackRef = useRef<HTMLDivElement>(null);
-  const pinRef = useRef<HTMLDivElement>(null);
-
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [activeStageIndex, setActiveStageIndex] = useState(0);
+  const { isReduced } = useLandingMotion();
+  const [activeIndex, setActiveIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  const useScrollPin = mounted && enableMotion && !isReduced && !isMobile;
+  const [isTablet, setIsTablet] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-    const mq = window.matchMedia('(max-width: 768px)');
-    const update = () => setIsMobile(mq.matches);
+    const mobileMq = window.matchMedia('(max-width: 767px)');
+    const tabletMq = window.matchMedia('(min-width: 768px) and (max-width: 1023px)');
+    const update = () => {
+      setIsMobile(mobileMq.matches);
+      setIsTablet(tabletMq.matches);
+    };
     update();
-    mq.addEventListener('change', update);
-    return () => mq.removeEventListener('change', update);
+    mobileMq.addEventListener('change', update);
+    tabletMq.addEventListener('change', update);
+    return () => {
+      mobileMq.removeEventListener('change', update);
+      tabletMq.removeEventListener('change', update);
+    };
   }, []);
-
-  const handleScrollProgress = useCallback((progress: number) => {
-    setScrollProgress(progress);
-  }, []);
-
-  const handleStageChange = useCallback((index: number) => {
-    setActiveStageIndex(index);
-  }, []);
-
-  useTransformationScrollPin({
-    enabled: useScrollPin,
-    scrollTrackRef,
-    pinRef,
-    onProgress: handleScrollProgress,
-    onStageChange: handleStageChange,
-  });
 
   const stages: TransformationStage[] = STAGE_NUMBERS.map((number) => {
     const key = `stage${number}` as const;
@@ -81,173 +205,71 @@ export function TransformationEngine() {
     };
   });
 
-  const activeIndex = useScrollPin ? activeStageIndex : selectedIndex;
-
   const activeStage = stages[activeIndex];
-  const visualLabels = stages.map((stage) => stage.name);
-  const useStaticVisual = isReduced || isMobile || !useScrollPin;
-
-  const scrollHeight = useScrollPin ? `${STAGE_COUNT * 100}vh` : 'auto';
 
   return (
     <section
-      ref={sectionRef}
       data-section-theme="light"
-      className="relative bg-[#ECEAE4] text-left overflow-hidden"
+      className="relative overflow-hidden landing-surface-transformation text-left"
       aria-labelledby="transformation-engine-heading"
     >
-      <div className="relative max-w-[90rem] min-w-0 mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 pt-16 sm:pt-20 lg:pt-24 pb-10 sm:pb-12">
-        <LandingReveal className="max-w-2xl">
-          <p className="text-[0.6875rem] sm:text-xs font-semibold tracking-[0.14em] uppercase text-[#8A8478]">
+      <div
+        className="pointer-events-none absolute inset-0 landing-brand-glow-blue"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute inset-0 landing-brand-glow-green"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute inset-0 landing-grid-light opacity-[0.18]"
+        aria-hidden="true"
+      />
+
+      <div className="relative mx-auto max-w-[90rem] min-w-0 px-5 sm:px-8 lg:px-12 xl:px-16 landing-section-py">
+        {/* Compact header */}
+        <LandingReveal className="max-w-3xl">
+          <p className="text-[0.8125rem] font-semibold tracking-[0.14em] uppercase text-[#8A8478] sm:text-sm">
             {t('badge')}
           </p>
           <h2
             id="transformation-engine-heading"
-            className="mt-4 sm:mt-5 font-[family-name:var(--font-display)] font-bold text-[clamp(1.875rem,1.1vw+1.2rem,2.75rem)] leading-[1.14] tracking-[-0.025em] text-[#1A2332]"
+            className="mt-3 font-[family-name:var(--font-display)] font-bold text-[clamp(2.5rem,4vw,4rem)] leading-[1.08] tracking-[-0.03em] text-[#1A2332] sm:mt-4"
           >
             {t('headline')}
           </h2>
-          <p className="mt-4 sm:mt-5 text-[clamp(1rem,0.2vw+0.94rem,1.0625rem)] leading-[1.7] text-[#5C6470] max-w-xl">
+          <p className="mt-4 max-w-2xl text-[clamp(1rem,0.2vw+0.94rem,1.125rem)] leading-[1.72] text-[#5C6470] sm:mt-5">
             {t('supporting')}
           </p>
         </LandingReveal>
-      </div>
 
-      <div ref={scrollTrackRef} className="relative" style={{ height: scrollHeight }}>
-        <div
-          ref={pinRef}
-          className={`${useScrollPin ? '' : 'relative'} min-h-[100svh] flex items-center py-10 sm:py-12 lg:py-16`}
-        >
-          <div className="w-full max-w-[90rem] min-w-0 mx-auto px-5 sm:px-8 lg:px-12 xl:px-16">
-            <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] gap-10 lg:gap-14 xl:gap-20 items-start lg:items-center">
-              <div className="order-2 lg:order-1 min-w-0 lg:self-start">
-                <p className="text-[0.6875rem] sm:text-xs font-semibold tracking-[0.14em] uppercase text-[#8A8478] mb-6 sm:mb-8">
-                  {t('coreLabel')}
-                </p>
+        {isMobile ? (
+          /* Mobile — vertical progression, all stages */
+          <div className="landing-section-intro-gap min-w-0">
+            {stages.map((stage) => (
+              <MobileStageBlock key={stage.key} stage={stage} isReduced={isReduced} />
+            ))}
+          </div>
+        ) : (
+          /* Desktop / tablet — interactive roadmap */
+          <div className="landing-section-intro-gap min-w-0">
+            <RoadmapNav
+              stages={stages}
+              activeIndex={activeIndex}
+              onSelect={setActiveIndex}
+              compact={isTablet}
+            />
 
-                <ol className="space-y-1 sm:space-y-1.5 m-0 p-0 list-none" role="tablist" aria-label={t('headline')}>
-                  {stages.map((stage, i) => {
-                    const isActive = i === activeIndex;
-                    const isCompleted = i < activeIndex;
-
-                    return (
-                      <li key={stage.key} role="presentation">
-                        <button
-                          type="button"
-                          role="tab"
-                          aria-selected={isActive}
-                          onClick={() => setSelectedIndex(i)}
-                          className={`flex w-full items-center gap-3 sm:gap-4 min-h-[44px] py-2.5 text-left transition-colors duration-300 rounded-lg -mx-2 px-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#145BFF]/30 ${
-                            isActive
-                              ? 'text-[#145BFF]'
-                              : isCompleted
-                                ? 'text-[#1A2332]'
-                                : 'text-[#B8B2A6]'
-                          }`}
-                        >
-                          <span
-                            className="font-[family-name:var(--font-display)] text-[0.6875rem] sm:text-xs font-semibold tabular-nums tracking-[0.08em] text-[#B8B2A6] w-6 shrink-0"
-                            aria-hidden="true"
-                          >
-                            {String(stage.number).padStart(2, '0')}
-                          </span>
-                          {isActive ? (
-                            <span
-                              className="relative flex h-2.5 w-2.5 shrink-0 items-center justify-center"
-                              aria-hidden="true"
-                            >
-                              <span className="absolute inset-0 rounded-full bg-[#145BFF]/25 scale-[2.25]" />
-                              <span className="relative h-2 w-2 rounded-full bg-[#145BFF]" />
-                            </span>
-                          ) : isCompleted ? (
-                            <span
-                              className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-[#145BFF]/35 bg-[#145BFF]/[0.07]"
-                              aria-hidden="true"
-                            >
-                              <Check className="h-2.5 w-2.5 text-[#145BFF]/70" strokeWidth={2.5} />
-                            </span>
-                          ) : (
-                            <span
-                              className="h-1.5 w-1.5 rounded-full shrink-0 border border-[#D4CFC4] bg-transparent"
-                              aria-hidden="true"
-                            />
-                          )}
-                          <span
-                            className={`font-[family-name:var(--font-display)] text-[0.9375rem] sm:text-base tracking-[-0.01em] ${
-                              isActive ? 'font-bold' : isCompleted ? 'font-semibold' : 'font-medium'
-                            }`}
-                          >
-                            {stage.name}
-                          </span>
-                        </button>
-                      </li>
-                    );
-                  })}
-                </ol>
+            <div className="landing-section-block-gap grid min-w-0 grid-cols-1 items-start gap-6 lg:grid-cols-[2fr_3fr] lg:gap-8 xl:gap-10">
+              <div className="min-w-0 lg:max-w-[28rem]">
+                <StageEditorial stage={activeStage} isReduced={isReduced} />
               </div>
-
-              <div className="order-1 lg:order-2 min-w-0">
-                <div className="min-h-[12rem] sm:min-h-[14rem]" aria-live="polite" aria-atomic="true">
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={activeStage.key}
-                      initial="hidden"
-                      animate="visible"
-                      exit="exit"
-                      variants={crossfade}
-                      custom={{ reduced: isReduced }}
-                    >
-                      <p className="text-[0.6875rem] sm:text-xs font-semibold tracking-[0.12em] uppercase text-[#145BFF] mb-2">
-                        {activeStage.name}
-                      </p>
-                      <h3 className="font-[family-name:var(--font-display)] text-[clamp(1.375rem,1vw+1rem,2rem)] font-semibold leading-snug tracking-[-0.02em] text-[#1A2332] max-w-xl">
-                        {activeStage.title}
-                      </h3>
-                      <p className="mt-4 text-[clamp(0.9375rem,0.15vw+0.9rem,1.0625rem)] leading-[1.72] text-[#5C6470] max-w-xl">
-                        {activeStage.description}
-                      </p>
-                      {activeStage.benefits.length > 0 && (
-                        <ul className="mt-5 sm:mt-6 flex flex-wrap gap-2">
-                          {activeStage.benefits.map((benefit) => (
-                            <li
-                              key={benefit}
-                              className="inline-flex items-center rounded-full border border-[#1A2332]/[0.08] bg-white/50 px-3 py-1.5 text-[0.6875rem] sm:text-xs font-medium tracking-[0.02em] text-[#5C6470]"
-                            >
-                              {benefit}
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </motion.div>
-                  </AnimatePresence>
-                </div>
-
-                <div className="mt-8 sm:mt-10 min-w-0 flex justify-center lg:justify-end">
-                  <div className="relative w-full max-w-[min(100%,420px)] aspect-square overflow-hidden">
-                    <div className="absolute inset-[10%] sm:inset-[9%]">
-                      {mounted && !useStaticVisual ? (
-                        <EngineVisual3D
-                          scrollProgress={scrollProgress}
-                          className="h-full w-full max-h-none max-w-none"
-                        />
-                      ) : (
-                        <EngineStaticVisual
-                          scrollProgress={
-                            useScrollPin ? scrollProgress : selectedIndex / Math.max(STAGE_COUNT - 1, 1)
-                          }
-                          activeIndex={activeIndex}
-                          labels={visualLabels}
-                          coreLabel={t('coreLabel')}
-                          className="h-full w-full max-h-none max-w-none"
-                        />
-                      )}
-                    </div>
-                  </div>
-                </div>
+              <div className="min-w-0">
+                <TransformationRoadmapVisual stageIndex={activeIndex} />
               </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </section>
   );

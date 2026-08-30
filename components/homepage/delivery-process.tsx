@@ -36,15 +36,15 @@ export function DeliveryProcess() {
   return (
     <section
       data-section-theme="light"
-      className="relative bg-[var(--landing-surface)] text-left overflow-hidden border-b landing-divider-light"
+      className="relative bg-[var(--landing-surface-pure)] text-left overflow-hidden border-b landing-divider-light"
       aria-label={t('title')}
     >
       <div
         className="pointer-events-none absolute inset-0 landing-grid-light opacity-20"
         aria-hidden="true"
       />
-      <div className="relative max-w-[90rem] min-w-0 mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 py-16 sm:py-20 md:py-24 lg:py-28 xl:py-32">
-        <LandingReveal className="max-w-3xl min-w-0 mb-12 sm:mb-14 md:mb-16 lg:mb-20">
+      <div className="relative max-w-[90rem] min-w-0 mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 landing-section-py">
+        <LandingReveal className="max-w-3xl min-w-0 landing-section-header-gap">
           <p className="landing-eyebrow landing-eyebrow-light">
             <span className="text-[#B0BAC8] mr-2">//</span>
             {t('badge')}

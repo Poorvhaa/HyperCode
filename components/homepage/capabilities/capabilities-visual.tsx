@@ -1,8 +1,8 @@
 'use client';
 
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useLandingMotion } from '@/hooks/use-landing-motion';
-import type { CapabilityServiceId } from './capabilities-constants';
+import { getVisualTheme, type CapabilityServiceId } from './capabilities-constants';
 
 type CapabilitiesVisualProps = {
   serviceId: CapabilityServiceId;
@@ -251,6 +251,7 @@ export function CapabilitiesVisual({
   activeLabel,
 }: CapabilitiesVisualProps) {
   const { enableMotion, isReduced } = useLandingMotion();
+  const themeId = getVisualTheme(serviceId);
 
   return (
     <div
@@ -269,33 +270,21 @@ export function CapabilitiesVisual({
             'radial-gradient(ellipse 70% 60% at 50% 45%, rgba(20,91,255,0.12) 0%, transparent 70%)',
         }}
       />
-      {!enableMotion || isReduced ? (
-        <ThemeSvg serviceId={serviceId} />
-      ) : (
-        <AnimatePresence mode="wait">
+      <div className="absolute inset-0">
+        {enableMotion && !isReduced ? (
           <motion.div
-            key={serviceId}
-            className="absolute inset-0"
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            variants={{
-              hidden: { opacity: 0 },
-              visible: { opacity: 1, transition: crossfadeTransition(isReduced) },
-              exit: { opacity: 0, transition: crossfadeTransition(isReduced) },
-            }}
+            key={themeId}
+            className="h-full w-full"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
           >
-            <ThemeSvg serviceId={serviceId} />
+            <ThemeSvg serviceId={themeId} />
           </motion.div>
-        </AnimatePresence>
-      )}
+        ) : (
+          <ThemeSvg key={themeId} serviceId={themeId} />
+        )}
+      </div>
     </div>
   );
-}
-
-function crossfadeTransition(reduced?: boolean) {
-  return {
-    duration: reduced ? 0.15 : 0.55,
-    ease: [0.22, 1, 0.36, 1] as const,
-  };
 }

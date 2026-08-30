@@ -31,6 +31,7 @@ import {
   countUp as countUpConfig,
   landingDurations,
   landingEase,
+  landingViewport,
   parallaxRange,
 } from '@/lib/motion-tokens';
 import { useLandingMotion } from '@/hooks/use-landing-motion';
@@ -93,7 +94,7 @@ function AnimatedMetric({
   className?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const isInView = useInView(ref, landingViewport);
   const parsed = useMemo(() => parseMetricValue(metric.value), [metric.value]);
 
   const prefix = parsed?.prefix ?? '';
@@ -158,7 +159,7 @@ function BeforeAfterMetric({
   if (!comparison) return null;
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(containerRef, { once: true, margin: '-80px' });
+  const isInView = useInView(containerRef, landingViewport);
   const afterParsed = useMemo(() => parseMetricValue(metric.value), [metric.value]);
   const beforeParsed = useMemo(
     () => parseMetricValue(comparison.beforeValue),
@@ -329,7 +330,7 @@ function EditorialCaseStudy({
   return (
     <article
       className={cn(
-        'border-b border-white/[0.07] py-16 sm:py-20 md:py-24 lg:py-28 xl:py-32 last:border-b-0',
+        'border-b border-white/[0.07] pt-10 sm:pt-14 md:pt-16 lg:pt-20 pb-10 sm:pb-14 md:pb-16 lg:pb-12 last:border-b-0 last:pb-0',
         index === 0 && 'pt-0',
       )}
     >
@@ -461,8 +462,8 @@ export function CaseStudiesSection() {
           }}
         />
 
-        <div className="relative z-10 mx-auto min-w-0 max-w-[90rem] px-5 sm:px-8 lg:px-12 xl:px-16 py-16 sm:py-20 md:py-24 lg:py-28 xl:py-32">
-          <header className="mb-14 sm:mb-16 md:mb-20 lg:mb-24 xl:mb-28 max-w-3xl">
+        <div className="relative z-10 mx-auto min-w-0 max-w-[90rem] px-5 sm:px-8 lg:px-12 xl:px-16 pt-10 sm:pt-14 md:pt-16 lg:pt-20 xl:pt-24 pb-8 sm:pb-10 md:pb-12 lg:pb-14 xl:pb-16">
+          <header className="landing-section-header-gap max-w-3xl">
             <MaskedReveal enableMotion={enableMotion} isReduced={isReduced}>
               <p className="text-[0.6875rem] sm:text-xs font-semibold tracking-[0.14em] uppercase text-[#5B9AFF]">
                 <span className="mr-2 text-white/35">//</span>
@@ -494,7 +495,7 @@ export function CaseStudiesSection() {
             ))}
           </div>
 
-          <MaskedReveal enableMotion={enableMotion} isReduced={isReduced} className="mt-14 sm:mt-16 lg:mt-20">
+          <MaskedReveal enableMotion={enableMotion} isReduced={isReduced} className="mt-8 sm:mt-10 lg:mt-12">
             <Link
               href="/case-studies"
               className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/18 px-6 py-2.5 text-sm font-semibold text-white transition-all duration-[450ms] ease-[cubic-bezier(0.23,1,0.32,1)] hover:border-white/30 hover:bg-white/[0.06] hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#145BFF] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--landing-dark-elevated)] motion-reduce:hover:translate-y-0"
@@ -508,15 +509,15 @@ export function CaseStudiesSection() {
 
       {/* Industries We Serve — preserved subsection */}
       <section
-        className="relative w-full overflow-hidden scroll-mt-24 border-b landing-divider-light bg-[var(--landing-light)]"
+        className="relative w-full overflow-hidden scroll-mt-24 border-b landing-divider-light bg-[var(--landing-surface-blue)]"
         aria-labelledby="industries-served-heading"
       >
         <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
           <div className="absolute inset-0 landing-grid-light opacity-30" aria-hidden="true" />
         </div>
 
-        <div className="relative z-10 mx-auto min-w-0 max-w-[90rem] px-5 sm:px-8 lg:px-12 xl:px-16 py-16 sm:py-20 md:py-24 lg:py-28 xl:py-32">
-          <div className="mb-12 min-w-0 max-w-3xl sm:mb-14 lg:mb-16">
+        <div className="relative z-10 mx-auto min-w-0 max-w-[90rem] px-5 sm:px-8 lg:px-12 xl:px-16 landing-section-py-join pb-10 sm:pb-14 md:pb-16 lg:pb-20 xl:pb-24">
+          <div className="landing-section-header-gap min-w-0 max-w-3xl">
             <p className="landing-eyebrow landing-eyebrow-light">
               {tSolutions('industries')}
             </p>

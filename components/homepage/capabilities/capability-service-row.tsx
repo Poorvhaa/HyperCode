@@ -9,7 +9,7 @@ import { heroEase } from '@/lib/motion-tokens';
 import { useLandingMotion } from '@/hooks/use-landing-motion';
 import type { ServiceNode } from '@/data/service-ecosystem';
 import { CapabilitiesVisual } from './capabilities-visual';
-import type { CapabilityServiceId } from './capabilities-constants';
+import { getVisualTheme } from './capabilities-constants';
 
 type CapabilityServiceRowProps = {
   node: ServiceNode;
@@ -33,7 +33,7 @@ export function CapabilityServiceRow({
   const { enableMotion, isReduced } = useLandingMotion();
 
   const number = String(index + 1).padStart(2, '0');
-  const visualServiceId = node.id as CapabilityServiceId;
+  const visualServiceId = getVisualTheme(node.id);
 
   return (
     <article

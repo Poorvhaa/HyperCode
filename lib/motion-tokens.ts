@@ -18,7 +18,7 @@ export const landingDurations = {
 
 export const landingViewport = {
   once: true as const,
-  margin: '-60px' as const,
+  margin: '-20px' as const,
 };
 
 export type LandingMotionCustom = {

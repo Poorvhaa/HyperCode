@@ -836,10 +836,17 @@
   --landing-dark: #050F1E;
   --landing-dark-elevated: #08162D;
   --landing-dark-surface: #0C1A32;
-  --landing-light: #F0F2F6;
-  --landing-light-warm: #ECEFF4;
-  --landing-neutral: #E4E9F0;
-  --landing-surface: #F8F9FB;
+  --landing-light: #F8FAFC;
+  --landing-light-warm: #F8F7F4;
+  --landing-neutral: #F3F7FF;
+  --landing-surface: #FFFFFF;
+  --landing-surface-pure: #FFFFFF;
+  --landing-surface-neutral: #F8FAFC;
+  --landing-surface-blue: #F4F8FF;
+  --landing-surface-blue-green: #F3FAF8;
+  --landing-surface-warm: #F8F7F4;
+  --landing-border-blue-gray: rgba(8, 22, 45, 0.09);
+  --landing-shadow-enterprise: 0 2px 8px rgba(8, 22, 45, 0.04), 0 16px 40px rgba(8, 22, 45, 0.06);
   --landing-border-light: rgba(8, 22, 45, 0.08);
   --landing-border-dark: rgba(255, 255, 255, 0.07);
   --landing-depth-sm: 0 1px 2px rgba(8, 22, 45, 0.04), 0 4px 16px rgba(8, 22, 45, 0.04);
@@ -848,6 +855,75 @@
   --landing-depth-dark: 0 4px 24px rgba(0, 0, 0, 0.35), 0 1px 0 rgba(255, 255, 255, 0.04) inset;
   --landing-ease: cubic-bezier(0.23, 1, 0.32, 1);
   --landing-ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Unified vertical rhythm — homepage major sections (40–96px) */
+.landing-section-py {
+  @apply py-10 sm:py-14 md:py-16 lg:py-20 xl:py-24;
+}
+
+/* First light section after hero */
+.landing-section-py-after-hero {
+  @apply pt-10 sm:pt-12 md:pt-14 lg:pt-16 xl:pt-20 pb-8 sm:pb-10 md:pb-12 lg:pb-12 xl:pb-14;
+}
+
+/* Joined subsection top (e.g. Why HyperCode after metrics strip) */
+.landing-section-py-join {
+  @apply pt-12 sm:pt-14 lg:pt-16 xl:pt-20;
+}
+
+/* Standard gap: section heading → first content block */
+.landing-section-header-gap {
+  @apply mb-8 sm:mb-10 lg:mb-12;
+}
+
+/* Standard gap: intro block → interactive content */
+.landing-section-intro-gap {
+  @apply mt-8 sm:mt-10 lg:mt-12;
+}
+
+/* Tighter gap: tabs/nav → panel content */
+.landing-section-block-gap {
+  @apply mt-6 sm:mt-8 lg:mt-10;
+}
+
+.landing-surface-transformation {
+  background: linear-gradient(135deg, #F4F8FF 0%, #FFFFFF 48%, #F3FAF8 100%);
+}
+
+.landing-surface-trust-pillars {
+  background: linear-gradient(135deg, #F5F8FF 0%, #FFFFFF 55%, #F4FAF7 100%);
+}
+
+.landing-surface-trust-strip {
+  background-color: var(--landing-surface-neutral);
+  border-top: 1px solid var(--landing-border-light);
+  border-bottom: 1px solid var(--landing-border-light);
+}
+
+.landing-surface-metrics {
+  background-color: var(--landing-surface-warm);
+}
+
+.landing-card-enterprise {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--landing-border-blue-gray);
+  border-radius: 1.625rem;
+  box-shadow: var(--landing-shadow-enterprise);
+}
+
+.landing-panel-glass {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid var(--landing-border-blue-gray);
+  box-shadow: var(--landing-depth-md);
+}
+
+.landing-brand-glow-blue {
+  background: radial-gradient(ellipse 70% 55% at 8% 0%, rgba(37, 99, 235, 0.05) 0%, transparent 58%);
+}
+
+.landing-brand-glow-green {
+  background: radial-gradient(ellipse 65% 50% at 92% 100%, rgba(34, 197, 94, 0.04) 0%, transparent 55%);
 }
 
 .landing-section-dark {
@@ -885,8 +961,8 @@
 }
 
 .landing-depth-panel {
-  background: #ffffff;
-  border: 1px solid var(--landing-border-light);
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--landing-border-blue-gray);
   box-shadow: var(--landing-depth-md);
   transition: box-shadow 0.45s var(--landing-ease), transform 0.45s var(--landing-ease);
 }

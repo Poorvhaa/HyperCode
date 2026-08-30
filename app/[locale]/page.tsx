@@ -1,7 +1,7 @@
 import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
 import { PremiumHero } from '@/components/homepage/premium-hero';
-import { TrustCredibilitySection } from '@/components/homepage/trust-credibility-section';
+import { TrustSection } from '@/components/trust-section';
 import { setRequestLocale } from 'next-intl/server';
 import dynamic from 'next/dynamic';
 
@@ -33,7 +33,7 @@ export default async function Page({ params }: Props) {
       <PremiumHero />
       
       {/* 2. Trust and credibility */}
-      <TrustCredibilitySection />
+      <TrustSection />
       
       {/* 3. HyperCode Transformation Engine */}
       <TransformationEngine />

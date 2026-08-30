@@ -7,7 +7,7 @@ import { Link } from '@/i18n/routing';
 import { ArrowRight } from 'lucide-react';
 import { HeroHeadlineMask, HeroTextReveal } from '@/components/homepage/hero/hero-text-reveal';
 import { HeroBackground } from '@/components/homepage/hero/hero-background';
-import { HeroTrustBridge, HeroScrollCue } from '@/components/homepage/hero/hero-transition';
+import { HeroScrollCue } from '@/components/homepage/hero/hero-transition';
 import { HeroArchitectureVisual } from '@/components/homepage/hero/hero-architecture-visual';
 import { buildHeroHeadlineLines } from '@/components/homepage/hero/hero-headline-lines';
 import { useLandingMotion } from '@/hooks/use-landing-motion';
@@ -61,9 +61,9 @@ export function PremiumHero() {
     >
       <HeroBackground scrollProgress={scrollYProgress} />
 
-      <div className="relative flex min-h-[calc(100svh-1.5rem)] w-full flex-col justify-center pt-[4.75rem] sm:pt-[5rem] lg:pt-[5.25rem] pb-16 sm:pb-[4.25rem]">
+      <div className="relative w-full pt-[4.75rem] pb-12 sm:pt-[5rem] sm:pb-14 lg:pt-[5.25rem] lg:pb-16">
         <motion.div
-          className="relative mx-auto w-full min-w-0 max-w-[90rem] px-5 sm:px-8 lg:px-12 xl:px-16"
+          className="relative mx-auto w-full min-w-0 max-w-[90rem] px-5 sm:px-8 lg:px-12 xl:px-16 pt-3 sm:pt-4 lg:pt-5 xl:pt-6"
           style={{
             y: enableMotion && !isReduced ? contentY : 0,
             opacity: enableMotion && !isReduced ? contentOpacity : 1,
@@ -96,7 +96,7 @@ export function PremiumHero() {
                 <span className="block max-w-[36rem]">{t('supporting')}</span>
               </HeroTextReveal>
 
-              <HeroTextReveal delay={0.58} as="div" className="mt-7 sm:mt-8 flex w-full min-w-0 flex-col sm:flex-row sm:flex-wrap items-start gap-3 sm:gap-x-5 sm:gap-y-3">
+              <HeroTextReveal delay={0.58} as="div" className="mt-7 sm:mt-8 flex w-full min-w-0 flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 lg:gap-8">
                 <Link
                   href="/consultation"
                   className="hero-cta-primary group inline-flex w-full sm:w-auto min-w-0 min-h-[46px] items-center justify-center gap-2 rounded-lg px-6 sm:px-7 text-[0.9375rem] font-semibold leading-snug text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25B5FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030A14]"
@@ -110,7 +110,7 @@ export function PremiumHero() {
                 </Link>
                 <Link
                   href="/case-studies"
-                  className="hero-cta-ghost group inline-flex w-full sm:w-auto min-w-0 min-h-[46px] items-center justify-center gap-1.5 px-1 text-[0.9375rem] font-medium text-[#C5D3E3] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25B5FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030A14] rounded-sm"
+                  className="hero-cta-ghost group inline-flex w-full sm:w-auto min-w-0 min-h-[46px] items-center justify-center gap-2 px-1 text-[0.9375rem] font-medium text-[#C5D3E3] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25B5FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030A14] rounded-sm"
                 >
                   <span>{t('ctaSecondary')}</span>
                   <ArrowRight
@@ -181,7 +181,7 @@ export function PremiumHero() {
                 opacity: enableMotion && !isReduced ? visualOpacity : 1,
               }}
             >
-              <div className="relative h-[min(52vw,420px)] sm:h-[min(48vw,460px)] lg:h-[min(72vh,620px)] lg:min-h-[480px] w-full">
+              <div className="relative h-[min(52vw,360px)] sm:h-[min(44vw,400px)] lg:h-[min(58vh,500px)] lg:max-h-[520px] w-full">
                 <HeroArchitectureVisual
                   scrollProgress={scrollYProgress}
                   entranceDelay={0.48}
@@ -194,7 +194,6 @@ export function PremiumHero() {
       </div>
 
       <HeroScrollCue />
-      <HeroTrustBridge scrollProgress={scrollYProgress} />
     </section>
   );
 }

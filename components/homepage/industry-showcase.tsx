@@ -93,9 +93,9 @@ export function IndustryShowcase() {
         }}
       />
 
-      <div className="relative z-10 max-w-[90rem] min-w-0 mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 py-16 sm:py-20 md:py-24 lg:py-28 xl:py-32">
+      <div className="relative z-10 max-w-[90rem] min-w-0 mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 landing-section-py">
         {/* Section header */}
-        <LandingReveal className="max-w-3xl min-w-0 mb-12 sm:mb-14 lg:mb-16 xl:mb-20">
+        <LandingReveal className="max-w-3xl min-w-0 landing-section-header-gap">
           <p className="landing-eyebrow landing-eyebrow-accent">
             {t('badge')}
           </p>
@@ -182,7 +182,7 @@ export function IndustryShowcase() {
             </ul>
           </div>
 
-          <div className="min-w-0 lg:sticky lg:top-28">
+          <div className="min-w-0 lg:self-start">
             <div
               role="tabpanel"
               id={panelId}

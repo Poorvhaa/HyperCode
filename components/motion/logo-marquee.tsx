@@ -29,11 +29,11 @@ export function LogoMarquee({
       style={{ ['--marquee-duration' as string]: `${durationSeconds}s` }}
     >
       <div
-        className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 sm:w-16 bg-gradient-to-r from-[#F5F2EB] to-transparent"
+        className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 sm:w-16 bg-gradient-to-r from-[#F6F5F1] to-transparent"
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 sm:w-16 bg-gradient-to-l from-[#F5F2EB] to-transparent"
+        className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 sm:w-16 bg-gradient-to-l from-[#F6F5F1] to-transparent"
         aria-hidden="true"
       />
 

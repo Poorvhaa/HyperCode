@@ -1,33 +1,22 @@
 'use client';
 
-import { MotionValue, useTransform, motion } from 'framer-motion';
+import { motion, type MotionValue } from 'framer-motion';
 import { useLandingMotion } from '@/hooks/use-landing-motion';
 
 type HeroTrustBridgeProps = {
   scrollProgress: MotionValue<number>;
 };
 
-/** Rising light surface + architectural curve — ~80–120px transition zone */
-export function HeroTrustBridge({ scrollProgress }: HeroTrustBridgeProps) {
-  const { enableMotion, isReduced } = useLandingMotion();
-
-  const lightY = useTransform(scrollProgress, [0.84, 1], [72, 0]);
-  const curveY = useTransform(scrollProgress, [0.84, 1], [24, 0]);
-
+/** Light surface + curve flush with hero bottom — overlaps into trust section */
+export function HeroTrustBridge(_props: HeroTrustBridgeProps) {
   return (
-    <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[9] h-28 sm:h-32" aria-hidden="true">
-      <motion.div
-        className="absolute inset-x-0 bottom-0 h-full bg-[#F6F5F1]"
-        style={{ y: enableMotion && !isReduced ? lightY : 0 }}
-      />
-      <motion.div
-        className="absolute inset-x-0 bottom-0 leading-[0]"
-        style={{ y: enableMotion && !isReduced ? curveY : 0 }}
-      >
+    <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[9] h-16 sm:h-20" aria-hidden="true">
+      <div className="absolute inset-x-0 bottom-0 h-full bg-[#F6F5F1]" />
+      <div className="absolute inset-x-0 bottom-0 leading-[0]">
         <svg
           viewBox="0 0 1440 48"
           preserveAspectRatio="none"
-          className="block h-8 w-full sm:h-9 lg:h-10"
+          className="block h-7 w-full sm:h-8"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
@@ -35,7 +24,7 @@ export function HeroTrustBridge({ scrollProgress }: HeroTrustBridgeProps) {
             fill="#F6F5F1"
           />
         </svg>
-      </motion.div>
+      </div>
     </div>
   );
 }
@@ -45,7 +34,7 @@ export function HeroScrollCue() {
 
   return (
     <div
-      className="pointer-events-none absolute bottom-[3.25rem] left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-2 sm:bottom-[3.5rem]"
+      className="pointer-events-none absolute bottom-5 left-1/2 z-20 hidden -translate-x-1/2 flex-col items-center gap-1.5 sm:bottom-6 sm:flex lg:bottom-7"
       aria-hidden="true"
     >
       <span className="text-[0.625rem] font-semibold uppercase tracking-[0.18em] text-[#5C7088]">

@@ -59,7 +59,7 @@ function MetricItem({
   hasMounted: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-40px 0px' });
+  const isInView = useInView(ref, landingViewport);
   const [display, setDisplay] = useState(value);
   const parsed = parseMetricValue(value);
 
@@ -141,7 +141,7 @@ export function TrustCredibilitySection() {
       className="relative -mt-px w-full max-w-full min-w-0 overflow-x-clip bg-[#F6F5F1] text-[#1A2332]"
       aria-labelledby="trust-credibility-heading"
     >
-      <div className="mx-auto max-w-[90rem] min-w-0 px-5 sm:px-8 lg:px-12 xl:px-16 pt-12 sm:pt-14 lg:pt-16 pb-20 sm:pb-24 lg:pb-[6.25rem] pr-16 sm:pr-20 lg:pr-24">
+      <div className="landing-section-py-after-hero mx-auto max-w-[90rem] min-w-0 px-5 sm:px-8 lg:px-12 xl:px-16 pr-16 sm:pr-20 lg:pr-24">
         {/* Eyebrow */}
         <MaskedReveal className="max-w-[38rem]">
           <p className="text-[0.6875rem] sm:text-xs font-semibold uppercase tracking-[0.16em] text-[#8A8478]">

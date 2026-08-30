@@ -61,10 +61,14 @@ export function useCountUp({
 
     const tick = (now: number) => {
       const progress = Math.min((now - startTime) / duration, 1);
+      if (progress >= 1) {
+        setValue(end);
+        return;
+      }
       const eased = 1 - Math.pow(1 - progress, 3);
-      const current = direction === 'down' ? start + (end - start) * eased : start + (end - start) * eased;
+      const current = start + (end - start) * eased;
       setValue(current);
-      if (progress < 1) frame = requestAnimationFrame(tick);
+      frame = requestAnimationFrame(tick);
     };
 
     setValue(start);

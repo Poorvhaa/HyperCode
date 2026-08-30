@@ -86,7 +86,7 @@ export function FinalCTA() {
         }}
       />
 
-      <div className="relative z-10 mx-auto min-w-0 max-w-[90rem] px-5 py-24 sm:px-8 sm:py-32 md:py-40 lg:px-12 lg:py-48 xl:px-16 xl:py-56">
+      <div className="relative z-10 mx-auto min-w-0 max-w-[90rem] px-5 sm:px-8 lg:px-12 xl:px-16 landing-section-py">
         <LandingReveal
           enableMotion={enableMotion}
           isReduced={isReduced}

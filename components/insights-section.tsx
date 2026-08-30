@@ -157,8 +157,8 @@ export function InsightsSection() {
       className="relative overflow-hidden border-b landing-divider-light bg-[var(--landing-neutral)] text-left"
       aria-labelledby="insights-section-heading"
     >
-      <div className="mx-auto min-w-0 max-w-[90rem] px-5 py-16 sm:px-8 sm:py-20 md:py-24 lg:px-12 lg:py-28 xl:px-16 xl:py-32">
-        <div className="mb-12 flex min-w-0 flex-col gap-8 md:mb-14 md:flex-row md:items-end md:justify-between lg:mb-16 xl:mb-20">
+      <div className="mx-auto min-w-0 max-w-[90rem] px-5 sm:px-8 lg:px-12 xl:px-16 landing-section-py">
+        <div className="landing-section-header-gap flex min-w-0 flex-col gap-6 md:flex-row md:items-end md:justify-between lg:gap-8">
           <LandingReveal className="min-w-0 max-w-2xl">
             <p className="landing-eyebrow landing-eyebrow-light">
               <span className="mr-2 text-[#B0BAC8]">//</span>
