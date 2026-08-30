@@ -65,6 +65,13 @@ const NAV_HEIGHT_TABLET_PX = 84;
 const NAV_HEIGHT_DESKTOP_PX = 88;
 const NAV_HEIGHT = 'h-[80px] sm:h-[84px] lg:h-[88px]';
 
+const MAIN_NAV_LINKS = [
+  { href: '/about', labelKey: 'about' },
+  { href: '/insights', labelKey: 'insights' },
+  { href: '/careers', labelKey: 'careers' },
+  { href: '/contact', labelKey: 'contactUs' },
+] as const;
+
 function getServiceLabel(service: MenuService, locale: string) {
   if (service.label) return service.label[locale === 'es' ? 'es' : 'en'];
   const registrySlug = ALIAS_MAP[service.slug] || service.slug;
@@ -338,17 +345,14 @@ export function Navigation() {
 
               </div>
 
-              {(['/about', '/case-studies', '/insights', '/careers'] as const).map((href) => {
-                const labelKey = href === '/about' ? 'about' : href === '/case-studies' ? 'ourWork' : href === '/insights' ? 'insights' : 'careers';
-                return (
-                  <Link key={href} href={href} className={`${getLinkClass(href)} group`} aria-current={isActive(href) ? 'page' : undefined}>
-                    <span className="relative py-1">
-                      {t(labelKey)}
-                      <span className={underlineClass(href)} aria-hidden="true" />
-                    </span>
-                  </Link>
-                );
-              })}
+              {MAIN_NAV_LINKS.map(({ href, labelKey }) => (
+                <Link key={href} href={href} className={`${getLinkClass(href)} group`} aria-current={isActive(href) ? 'page' : undefined}>
+                  <span className="relative py-1">
+                    {t(labelKey)}
+                    <span className={underlineClass(href)} aria-hidden="true" />
+                  </span>
+                </Link>
+              ))}
             </div>
 
             {/* Right — desktop actions */}
@@ -677,22 +681,19 @@ export function Navigation() {
                   </AnimatePresence>
                 </div>
 
-                {(['/about', '/case-studies', '/insights', '/careers'] as const).map((href) => {
-                  const labelKey = href === '/about' ? 'about' : href === '/case-studies' ? 'ourWork' : href === '/insights' ? 'insights' : 'careers';
-                  return (
-                    <Link
-                      key={href}
-                      href={href}
-                      onClick={() => setIsOpen(false)}
-                      className={`block min-h-[44px] border-b border-slate-100 py-3.5 text-[0.9375rem] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-royal-blue ${
-                        isActive(href) ? 'text-royal-blue' : 'text-slate-900 hover:text-royal-blue'
-                      }`}
-                      aria-current={isActive(href) ? 'page' : undefined}
-                    >
-                      {t(labelKey)}
-                    </Link>
-                  );
-                })}
+                {MAIN_NAV_LINKS.map(({ href, labelKey }) => (
+                  <Link
+                    key={href}
+                    href={href}
+                    onClick={() => setIsOpen(false)}
+                    className={`block min-h-[44px] border-b border-slate-100 py-3.5 text-[0.9375rem] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-royal-blue ${
+                      isActive(href) ? 'text-royal-blue' : 'text-slate-900 hover:text-royal-blue'
+                    }`}
+                    aria-current={isActive(href) ? 'page' : undefined}
+                  >
+                    {t(labelKey)}
+                  </Link>
+                ))}
 
                 {/* Language */}
                 <div className="border-b border-slate-100 py-4">
