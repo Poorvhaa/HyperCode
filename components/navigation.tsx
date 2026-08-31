@@ -281,17 +281,17 @@ export function Navigation() {
             <Link
               href="/"
               aria-label="HyperCode Home"
-              className="group relative flex shrink-0 items-center self-center rounded-[14px] outline-none transition-[transform,box-shadow] duration-200 ease-out focus-visible:ring-2 focus-visible:ring-royal-blue focus-visible:ring-offset-2"
+              className="group relative flex shrink-0 items-center self-center rounded-[11px] outline-none transition-[transform,box-shadow] duration-200 ease-out focus-visible:ring-2 focus-visible:ring-royal-blue focus-visible:ring-offset-2"
             >
-              <span className="flex h-[62px] w-[88px] items-center justify-center rounded-[14px] border border-slate-200/55 bg-[#F8FAFC] p-2 shadow-[0_1px_3px_rgba(15,23,42,0.08)] transition-[transform,box-shadow] duration-200 ease-out group-hover:-translate-y-px group-hover:shadow-[0_4px_12px_rgba(15,23,42,0.12)] sm:h-[70px] sm:w-[100px] sm:p-2.5 lg:h-[78px] lg:w-[112px] lg:p-3 xl:h-[80px] xl:w-[118px]">
+              <span className="flex h-[54px] w-[96px] items-center justify-center rounded-[11px] border border-slate-200/55 bg-[#F8FAFC] p-0.5 shadow-[0_1px_3px_rgba(15,23,42,0.08)] transition-[transform,box-shadow] duration-200 ease-out group-hover:-translate-y-px group-hover:shadow-[0_4px_12px_rgba(15,23,42,0.12)] sm:h-[60px] sm:w-[106px] sm:p-1 lg:h-[82px] lg:w-[132px] lg:p-1 xl:h-[84px] xl:w-[136px]">
                 <Image
-                  src="/hypercodeit.logo.png"
+                  src="/hypercodeit.logo-nav.png"
                   alt="HyperCode"
                   width={417}
                   height={368}
                   priority
                   quality={100}
-                  sizes="(max-width: 639px) 72px, (max-width: 1023px) 84px, 112px"
+                  sizes="(max-width: 639px) 88px, (max-width: 1023px) 98px, 132px"
                   className="h-full w-full object-contain"
                 />
               </span>
