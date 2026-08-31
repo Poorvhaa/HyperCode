@@ -13,7 +13,6 @@
     "success": "Éxito",
     "error": "Error",
     "all": "Todos",
-    "viewCaseStudies": "Ver Casos de Éxito",
     "loading": "Cargando...",
     "cancel": "Cancelar",
     "learnMore": "Saber Más",
@@ -35,8 +34,7 @@
     "home": "Inicio",
     "solutions": "Qué Hacemos",
     "about": "Quiénes Somos",
-    "ourWork": "Nuestro Trabajo",
-    "insights": "Perspectivas",
+    "insights": "Artículos",
     "careers": "Carreras",
     "contact": "Contacto",
     "contactUs": "Contacto",
@@ -125,7 +123,7 @@
     "phone": "Teléfono",
     "email": "Correo Electrónico",
     "legal": "Legal",
-    "newsletterTitle": "Suscríbase a Insights",
+    "newsletterTitle": "Suscríbase a Artículos",
     "newsletterDesc": "Reciba boletines tecnológicos mensuales redactados por nuestros directores de soluciones.",
     "newsletterPlaceholder": "Correo Corporativo",
     "newsletterSuccess": "¡Gracias por suscribirse!",
@@ -380,7 +378,6 @@
     "industriesSubtitle": "Entregamos flujos de trabajo digitales especializados y arquitectura de sistemas en sectores globales.",
     "techEcosystemTitle": "Ecosistema Tecnológico",
     "techEcosystemSubtitle": "Diseñamos soluciones utilizando las mejores tecnologías, frameworks y plataformas de datos empresariales.",
-    "viewCaseStudy": "Leer Caso de Estudio Completo",
     "benefitsLabel": "Valor Estratégico y Beneficios",
     "ctaSectionTitle": "¿Listo para Transformar su Negocio?",
     "ctaSectionSubtitle": "Programe una sesión técnica con nuestros directores de soluciones o interactúe con el consultor de IA.",
@@ -985,11 +982,16 @@
   },
   "Insights": {
     "title": "Pensamiento de Liderazgo",
+    "categoryLabel": "ARTÍCULOS Y ANÁLISIS",
+    "breadcrumbLabel": "Artículos",
+    "backToArticles": "Volver a Artículos",
+    "metadataSection": "Artículos",
     "subtitle": "Explore perspectivas de expertos, guías prácticas, conocimientos de ingeniería y estrategias tecnológicas que abarcan IA, desarrollo de software, nube, datos, ciberseguridad, transformación digital y tecnologías empresariales emergentes.",
     "allCategories": "Todas las Categorías",
     "readArticle": "Leer Artículo",
     "noArticles": "No se encontraron artículos en esta categoría.",
     "relatedArticles": "Artículos Relacionados",
+    "searchPlaceholder": "Buscar artículos...",
     "share": "Compartir Artículo",
     "newsletterTitle": "Manténgase Actualizado",
     "newsletterSubtitle": "Suscríbase a nuestro boletín para recibir las últimas ideas y actualizaciones directamente en su bandeja de entrada.",
@@ -1002,10 +1004,15 @@
   "About": {
     "title": "Construyendo asociaciones a largo plazo a través de la",
     "titleHighlight": "experiencia, la innovación y la confianza",
-    "subtitle": "HyperCode es una firma de consultoría y tecnología dedicada a ayudar a las organizaciones a resolver desafíos comerciales complejos a través de soluciones basadas en datos, tecnología moderna y talento especializado.",
+    "subtitle": "HyperCode es una empresa de consultoría y tecnología con sede en Schaumburg, Illinois, fundada en 2014, que ayuda a las organizaciones a resolver desafíos complejos mediante soluciones basadas en datos, tecnología moderna y talento especializado.",
+    "historyEyebrow": "NUESTRA HISTORIA",
+    "historyFoundedYear": "2014",
+    "historyFoundedTitle": "Fundación de HyperCode",
+    "historyTodayLabel": "HOY",
+    "historyTodayTitle": "Más de 12 Años de Consultoría Tecnológica",
     "storyTitle": "Nuestra Historia",
-    "storyP1": "HyperCode es una empresa de confianza especializada en consultoría tecnológica y soluciones de talento, que ayuda a las organizaciones a impulsar su crecimiento mediante inteligencia artificial, inteligencia empresarial (BI), análisis de datos, transformación digital y servicios tecnológicos corporativos. Colaboramos con entidades comerciales y gubernamentales para ofrecer soluciones innovadoras, escalables y orientadas a resultados, adaptadas a sus necesidades empresariales específicas.",
-    "storyP2": "Más allá de la consultoría tecnológica, HyperCode ofrece soluciones integrales de dotación de personal —tanto para áreas tecnológicas como no tecnológicas— que abarcan la contratación de personal permanente, temporal y de nivel ejecutivo. Impulsados ​​por la innovación, la colaboración y la integridad, construimos relaciones duraderas mediante la prestación de un servicio excepcional, la incorporación de talento de primer nivel y la obtención de resultados empresariales medibles.",
+    "storyP1": "HyperCode se estableció en Schaumburg, Illinois, en 2014 como una firma de consultoría tecnológica estratégica con experiencia en Inteligencia de Negocios, Análisis de Datos, implementación de tecnología empresarial, soporte técnico y dotación de personal de TI.",
+    "storyP2": "Hoy, HyperCode combina esa base de consultoría empresarial con ingeniería de software moderna, IA, nube, datos, ciberseguridad y capacidades de talento tecnológico para apoyar a organizaciones comerciales y gubernamentales en todo Estados Unidos.",
     "mission": "Nuestra Misión",
     "missionDesc": "Empoderar a las organizaciones para resolver desafíos complejos mediante la entrega de arquitecturas de datos sólidas, software moderno y talento técnico de alto rendimiento que impulsen el crecimiento sostenible.",
     "vision": "Nuestra Visión",
@@ -1014,8 +1021,8 @@
     "valuesTitle": "Nuestros Valores Fundamentales",
     "approachTitle": "Nuestro Enfoque",
     "approachDesc": "Operamos con un enfoque de consultoría transparente basado en sprints. Cada compromiso comienza con una auditoría estricta de datos y termina con bucles de tutoría para garantizar que su equipo interno controle por completo los sistemas modernos en la nube que implementamos.",
-    "presenceTitle": "Presencia Nacional",
-    "presenceDesc": "HyperCode respalda a clientes corporativos y del sector público en todo Estados Unidos. Con recursos de consultoría distribuidos en los 50 estados, movilizamos rápidamente equipos Scrum, desarrolladores y analistas para adaptarnos a sus plazos exactos.",
+    "presenceTitle": "Alcance Nacional",
+    "presenceDesc": "Con sede en Schaumburg, Illinois, HyperCode atiende a organizaciones comerciales y gubernamentales en todo Estados Unidos. Nuestra diversa fuerza laboral de consultoría y talento permite una entrega a nivel nacional, sin que los clientes deban coordinar múltiples proveedores regionales.",
     "whyChooseTitle": "Por Qué los Clientes Eligen HyperCode",
     "whyChooseSubtitle": "Ofrecemos precisión de ingeniería, cumplimiento empresarial y despliegue rápido de talento diseñado para la confiabilidad a largo plazo.",
     "whyChoose": {
@@ -1044,24 +1051,24 @@
       "consultants": "1.200+",
       "consultantsLabel": "Consultores Colocados",
       "experience": "12+",
-      "experienceLabel": "Años de Experiencia Combinada"
+      "experienceLabel": "Años de Experiencia en Consultoría Tecnológica"
     },
     "values": {
       "integrity": {
-        "title": "Integridad",
-        "desc": "Honestidad, cumplimiento y transparencia absoluta en todos los sistemas que diseñamos y equipos que implementamos."
+        "title": "Confianza y Responsabilidad",
+        "desc": "Confianza mutua, responsabilidad y transparencia en cada compromiso de consultoría y colocación de personal."
       },
       "innovation": {
-        "title": "Innovación",
-        "desc": "Investigar continuamente bases de datos en la nube modernas y herramientas analíticas para mantener a los clientes a la vanguardia."
+        "title": "Innovación y Creatividad",
+        "desc": "Pensamiento emprendedor y resolución creativa de problemas aplicados a la tecnología empresarial, los datos y el software."
       },
       "partnership": {
-        "title": "Asociación",
-        "desc": "Tratar a los equipos de los clientes como si fueran nuestros, ofreciendo bucles de tutoría directa y revisiones posteriores a la implementación."
+        "title": "Éxito del Cliente y del Equipo",
+        "desc": "Enfoque en la satisfacción del cliente, el crecimiento profesional individual y asociaciones productivas a largo plazo."
       },
       "excellence": {
-        "title": "Excelencia",
-        "desc": "Entregar sistemas de alto rendimiento, seguros y verificados para el cumplimiento que superen auditorías estrictas."
+        "title": "Responsabilidad Comunitaria",
+        "desc": "Productividad e innovación equilibradas con responsabilidad hacia clientes, equipos y las comunidades a las que servimos."
       }
     }
   },
@@ -1165,42 +1172,6 @@
       "projects": "Proyectos Completados",
       "satisfaction": "Satisfacción del Cliente",
       "consultants": "Consultores Colocados"
-    }
-  },
-  "CaseStudies": {
-    "badge": "CASO DE ESTUDIO",
-    "title": "Historia de Éxito Destacada",
-    "subtitle": "Conozca cómo ayudamos a las organizaciones empresariales a resolver bloqueos de datos y configurar arquitecturas escalables.",
-    "featuredLabel": "HISTORIA DE ÉXITO DESTACADA",
-    "challenge": "Desafío de Negocio",
-    "solution": "Solución HyperCode",
-    "outcome": "Resultado",
-    "viewDetails": "Ver Detalles",
-    "readStory": "Leer Historia",
-    "exploreSolution": "Explorar Solución",
-    "viewAll": "Ver Todos los Casos",
-    "clientType": "Tipo de Cliente",
-    "industry": "Industria",
-    "impact": "Impacto de Negocio",
-    "duration": "Duración del Proyecto",
-    "technologies": "Pila de Tecnologías",
-    "services": "Servicios Prestados",
-    "relatedServices": "Servicios Relacionados",
-    "relatedCaseStudies": "Casos de Estudio Relacionados",
-    "backToCaseStudies": "Volver a Casos de Estudio",
-    "overview": "Resumen",
-    "implementation": "Implementación y Estrategia de Consultoría",
-    "businessResults": "Resultados Comerciales",
-    "keyMetrics": "Métricas de Rendimiento Clave",
-    "contactUs": "Programar una Consulta",
-    "contactUsDesc": "¿Enfrenta un cuello de botella operativo similar? Programe una sesión informativa directa con nuestro arquitecto de soluciones para mapear sus requerimientos.",
-    "story": {
-      "category": "HISTORIA DE ÉXITO DESTACADA",
-      "title": "Modernización del Almacén de Datos",
-      "subtitle": "Consolidación de Nube HIPAA",
-      "challengeText": "Los registros de pacientes en 15 ubicaciones separadas estaban fragmentados en bases de datos heredadas, creando demoras en los análisis e inquietudes sobre auditorías HIPAA.",
-      "solutionText": "Consolidó todas las bases de datos en un almacén de datos Snowflake seguro y conforme a HIPAA utilizando canalizaciones de integración de datos de Azure.",
-      "outcomeText": "Redujo los tiempos de ingesta de datos en un 200%, ahorró $3.2 millones en gastos generales anuales de bases de datos y obtuvo calificaciones de auditoría de cumplimiento del 100%."
     }
   },
   "CTA": {
@@ -1584,18 +1555,6 @@
       "subtitle": "Ingeniería y arquitectura a medida adaptadas a su sector específico.",
       "viewSolutions": "Explorar Soluciones Sectoriales"
     },
-    "OurWork": {
-      "badge": "NUESTRO TRABAJO",
-      "title": "Tecnología Construida para Negocios Reales",
-      "subtitle": "Sistemas empresariales, plataformas e integraciones entregadas en salud, finanzas, retail y logística.",
-      "featuredBadge": "TRABAJO DESTACADO",
-      "viewProject": "Ver Proyecto",
-      "viewCaseStudy": "Ver Caso de Estudio",
-      "businessChallenge": "Desafío de negocio",
-      "solution": "Solución",
-      "metricWithout": "Sin HyperCode",
-      "metricWith": "Con HyperCode"
-    },
     "DeliveryProcess": {
       "badge": "CÓMO TRABAJAMOS",
       "title": "Metodología de Entrega Acelerada",
@@ -1619,31 +1578,31 @@
       "tableauType": "Socio"
     },
     "Insights": {
-      "eyebrow": "INSIGHTS",
+      "eyebrow": "ARTÍCULOS",
       "title": "Pensamiento de Liderazgo",
       "subtitle": "Explore perspectivas clave, patrones de diseño y estrategias de personal seleccionadas por consultores de HyperCode.",
-      "viewAll": "Ver Todos los Insights"
+      "viewAll": "Ver Todos los Artículos"
     },
     "TrustSection": {
       "eyebrow": "Por Qué HyperCode",
       "title": "Por Qué los Líderes Empresariales Confían en HyperCode",
-      "subtitle": "Combinamos excelencia en ingeniería de software, arquitectura de datos y redes globales de talento para ofrecer resultados empresariales tangibles.",
+      "subtitle": "Fundada en 2014 y con sede en Schaumburg, Illinois, HyperCode aporta más de 12 años de experiencia en consultoría tecnológica a organizaciones en todo Estados Unidos, combinando experiencia empresarial en datos, analítica, software y dotación de personal.",
       "pillars": {
         "nationwide": {
           "title": "Entrega a Nivel Nacional",
-          "description": "Apoyamos a organizaciones en los 50 estados con una fuerza laboral de consultores altamente movilizada."
+          "description": "Atendiendo a organizaciones en todo Estados Unidos a través de una fuerza laboral diversa y movilizada de consultoría y talento."
         },
         "government": {
-          "title": "Experiencia en el Sector Público",
-          "description": "Proveedor aprobado que ofrece soluciones seguras y conformes de datos y personal para agencias públicas."
+          "title": "Experiencia Comercial y Gubernamental",
+          "description": "Experiencia apoyando a organizaciones comerciales y gubernamentales con soluciones seguras y conformes de datos y personal."
         },
         "enterprise": {
           "title": "Soluciones Empresariales",
-          "description": "Arquitectura de lagos de datos en la nube, plataformas de BI y sistemas de ingeniería de alto rendimiento."
+          "description": "Arquitectura de plataformas de datos en la nube, sistemas de BI y soluciones de ingeniería de alto rendimiento, construidas sobre una base de consultoría establecida en 2014."
         },
         "certified": {
-          "title": "Consultores Certificados",
-          "description": "Expertos acreditados en Microsoft, Snowflake, AWS, Databricks y herramientas modernas de BI."
+          "title": "Experiencia Especializada",
+          "description": "Consultores con profunda experiencia en Inteligencia de Negocios, almacenamiento de datos, ingeniería en la nube y entrega de software moderno."
         }
       },
       "stats": {
@@ -1654,7 +1613,7 @@
           "label": "Tasa de Retención de Clientes"
         },
         "experience": {
-          "label": "Años de Experiencia Combinada"
+          "label": "Años de Experiencia en Consultoría Tecnológica"
         }
       },
       "logoMarqueeAriaLabel": "Logotipos de clientes y socios"

@@ -8,7 +8,6 @@ import dynamic from 'next/dynamic';
 const TransformationEngine = dynamic(() => import('@/components/homepage/transformation-engine/transformation-engine').then(m => m.TransformationEngine));
 const ServiceEcosystem = dynamic(() => import('@/components/homepage/service-ecosystem').then(m => m.ServiceEcosystem));
 const IndustryShowcase = dynamic(() => import('@/components/homepage/industry-showcase').then(m => m.IndustryShowcase));
-const CaseStudiesSection = dynamic(() => import('@/components/case-studies-section').then(m => m.CaseStudiesSection));
 const DeliveryProcess = dynamic(() => import('@/components/homepage/delivery-process').then(m => m.DeliveryProcess));
 const InsightsSection = dynamic(() => import('@/components/insights-section').then(m => m.InsightsSection));
 const FinalCTA = dynamic(() => import('@/components/homepage/final-cta').then(m => m.FinalCTA));
@@ -44,10 +43,7 @@ export default async function Page({ params }: Props) {
       {/* 5. Industry solutions */}
       <IndustryShowcase />
       
-      {/* 6. Selected case studies */}
-      <CaseStudiesSection />
-      
-      {/* 7. Delivery process */}
+      {/* 6. Delivery process */}
       <DeliveryProcess />
       
       {/* 8. Insights / thought leadership */}

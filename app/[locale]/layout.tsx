@@ -164,8 +164,8 @@ export default async function RootLayout({ children, params }: LayoutProps) {
 
   // Localized JSON-LD description matching the locale
   const descriptionMap: Record<string, string> = {
-    en: 'Enterprise Web Development, Business Intelligence, Data Analytics, and IT & Non-IT Staffing consulting firm.',
-    es: 'Firma de consultoría de desarrollo web empresarial, inteligencia de negocios, análisis de datos y contratación de personal de TI y no TI.'
+    en: 'HyperCode LLC is a Schaumburg, Illinois-based technology consulting firm founded in 2014, delivering Business Intelligence, Data Analytics, enterprise solutions, software engineering, and IT staffing across the United States.',
+    es: 'HyperCode LLC es una firma de consultoría tecnológica con sede en Schaumburg, Illinois, fundada en 2014, que ofrece Inteligencia de Negocios, Análisis de Datos, soluciones empresariales, ingeniería de software y dotación de personal de TI en todo Estados Unidos.'
   };
 
   const jsonLdDescription = descriptionMap[locale] || descriptionMap.en;
@@ -173,7 +173,9 @@ export default async function RootLayout({ children, params }: LayoutProps) {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Corporation',
-    'name': 'HyperCode',
+    'name': 'HyperCode LLC',
+    'legalName': 'HyperCode LLC',
+    'foundingDate': '2014',
     'url': localeUrl(locale),
     'logo': absoluteUrl('/hypercodeit.logo.png'),
     'description': jsonLdDescription,

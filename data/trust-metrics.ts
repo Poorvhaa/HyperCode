@@ -1,6 +1,7 @@
 /**
  * Verified HyperCode metrics used for trust-section count-up stats.
  * Values align with SolutionsPage.stats and About.stats in messages/*.json.
+ * Experience metric reflects company founding in 2014 (12+ years as of 2026).
  */
 export type TrustMetricSuffix = '+' | '%';
 

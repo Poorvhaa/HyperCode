@@ -9,8 +9,6 @@ import { BrandButton } from '@/components/brand-button';
 import { Link } from '@/i18n/routing';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { getCaseStudiesByCategory } from '@/lib/case-studies-data';
-import { CaseStudies } from '@/components/case-studies';
 import {
   CheckCircle,
   ChevronDown,
@@ -98,7 +96,6 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
   }
 
   const isEs = locale === 'es';
-  const relatedCaseStudies = getCaseStudiesByCategory(activeTrans.categoryId, locale);
 
   // Toggle FAQ Accordion
   const toggleFaq = (index: number) => {
@@ -479,23 +476,6 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
           </div>
         </div>
       </section>
-
-      {/* Related Case Studies Section */}
-      {activeTrans.slug !== 'local-seo' && relatedCaseStudies.length > 0 && (
-        <section className="section-padding bg-white border-b border-slate-200">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-3xl mb-12 space-y-2 text-left">
-              <span className="text-eyebrow text-royal-blue block">
-                {isEs ? 'Casos de Éxito Relacionados' : 'Related Case Studies'}
-              </span>
-              <h4 className="text-h3 text-slate-900">
-                {isEs ? 'Resultados de Clientes Probados' : 'Proven Customer Outcomes'}
-              </h4>
-            </div>
-            <CaseStudies studies={relatedCaseStudies} />
-          </div>
-        </section>
-      )}
 
       {/* 10. CTA Section */}
       <section className="section-padding bg-royal-blue relative overflow-hidden text-center text-white">

@@ -277,24 +277,24 @@ export function Navigation() {
 
         <div className="relative mx-auto h-full w-full max-w-[90rem] px-5 sm:px-8 lg:px-12 xl:px-16">
           <div className="grid h-full grid-cols-[auto_1fr_auto] items-center gap-4 lg:gap-8">
-            {/* Logo — transparent asset, no card; subtle backdrop on dark hero only */}
-            <Link href="/" className="relative flex shrink-0 items-center self-center">
-              {isDarkTheme && (
-                <span
-                  className="pointer-events-none absolute -inset-x-2 -inset-y-1.5 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(3,10,20,0.45)_0%,transparent_70%)]"
-                  aria-hidden="true"
+            {/* Logo — full-color asset on light tile (matches footer treatment) */}
+            <Link
+              href="/"
+              aria-label="HyperCode Home"
+              className="group relative flex shrink-0 items-center self-center rounded-[14px] outline-none transition-[transform,box-shadow] duration-200 ease-out focus-visible:ring-2 focus-visible:ring-royal-blue focus-visible:ring-offset-2"
+            >
+              <span className="flex h-[62px] w-[88px] items-center justify-center rounded-[14px] border border-slate-200/55 bg-[#F8FAFC] p-2 shadow-[0_1px_3px_rgba(15,23,42,0.08)] transition-[transform,box-shadow] duration-200 ease-out group-hover:-translate-y-px group-hover:shadow-[0_4px_12px_rgba(15,23,42,0.12)] sm:h-[70px] sm:w-[100px] sm:p-2.5 lg:h-[78px] lg:w-[112px] lg:p-3 xl:h-[80px] xl:w-[118px]">
+                <Image
+                  src="/hypercodeit.logo.png"
+                  alt="HyperCode"
+                  width={417}
+                  height={368}
+                  priority
+                  quality={100}
+                  sizes="(max-width: 639px) 72px, (max-width: 1023px) 84px, 112px"
+                  className="h-full w-full object-contain"
                 />
-              )}
-              <Image
-                src="/images/hypercode-logo-header.webp"
-                alt="HyperCode"
-                width={417}
-                height={368}
-                priority
-                quality={100}
-                sizes="(max-width: 639px) 110px, (max-width: 767px) 125px, (max-width: 1023px) 135px, (max-width: 1279px) 145px, 155px"
-                className="relative z-[1] h-auto w-[6.875rem] max-h-[3.25rem] object-contain object-left sm:w-[7.8125rem] sm:max-h-[3.5rem] md:w-[8.4375rem] md:max-h-[3.625rem] lg:w-[9.0625rem] lg:max-h-[4rem] xl:w-[9.6875rem] xl:max-h-[5rem]"
-              />
+              </span>
             </Link>
 
             {/* Center — desktop navigation */}

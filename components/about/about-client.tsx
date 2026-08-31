@@ -269,14 +269,23 @@ export function AboutClient({ locale, tAbout, tCommon }: AboutClientProps) {
             {/* Story copy (Left) */}
             <div className="lg:col-span-7 space-y-6 text-left">
               <span className="text-eyebrow text-royal-blue block">
-                {locale === 'es' ? 'NUESTRA HISTORIA' : 'OUR HISTORY'}
+                {tAbout.historyEyebrow}
               </span>
               <h2 className="text-h2 text-slate-900">
                 {tAbout.storyTitle}
               </h2>
               <div className="space-y-6 text-slate-500 text-body">
-                <p>{tAbout.storyP1}</p>
-                <p>{tAbout.storyP2}</p>
+                <div className="space-y-3">
+                  <p className="text-eyebrow text-slate-400">
+                    {tAbout.historyFoundedYear} · {tAbout.historyFoundedTitle}
+                  </p>
+                  <p>{tAbout.storyP1}</p>
+                </div>
+                <div className="space-y-3">
+                  <p className="text-eyebrow text-royal-blue">{tAbout.historyTodayLabel}</p>
+                  <p className="text-h4 text-slate-800">{tAbout.historyTodayTitle}</p>
+                  <p>{tAbout.storyP2}</p>
+                </div>
               </div>
             </div>
 

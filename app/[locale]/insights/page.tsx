@@ -30,6 +30,7 @@ export default async function InsightsPage({ params }: Props) {
   setRequestLocale(locale);
 
   const t = await getTranslations('Insights');
+  const tc = await getTranslations('Common');
 
   // Fetch published articles from Supabase
   let dbArticlesFormatted: any[] = [];
@@ -59,31 +60,6 @@ export default async function InsightsPage({ params }: Props) {
     console.error('Failed to load DB articles for index page:', err);
   }
 
-  // Fetch published case studies from Supabase
-  let dbCaseStudiesFormatted: any[] = [];
-  try {
-    const dbCaseStudies = await db.getAllCaseStudies();
-    const publishedDbCaseStudies = dbCaseStudies.filter(c => c.is_published && c.language === locale);
-    dbCaseStudiesFormatted = publishedDbCaseStudies.map(c => ({
-      slug: c.slug,
-      title: c.title,
-      excerpt: c.challenge,
-      content: `<h2>Challenge</h2><p>${c.challenge}</p><h2>Solution</h2><p>${c.solution}</p><h2>Results</h2><p>${c.results}</p>`,
-      date: new Date(c.created_at).toLocaleDateString(locale === 'es' ? 'es-ES' : 'en-US', { day: 'numeric', month: 'long', year: 'numeric' }),
-      category: locale === 'es' ? 'Casos de Éxito' : 'Case Studies',
-      readTime: locale === 'es' ? 'Lectura de 5 min' : '5 min read',
-      author: {
-        name: 'HyperCode Solutions',
-        role: c.client_type || 'Case Study',
-        avatar: '/placeholder-user.jpg'
-      },
-      isCaseStudy: true,
-      related: []
-    }));
-  } catch (err) {
-    console.error('Failed to load DB case studies for index page:', err);
-  }
-
   // Merge static articles not already in database
   let staticArticlesFormatted: any[] = [];
   try {
@@ -106,13 +82,9 @@ export default async function InsightsPage({ params }: Props) {
     console.error('Failed to load static articles for index page:', err);
   }
 
-  // Merge database articles, static articles, and case studies
-  const mergedArticles = [...dbArticlesFormatted, ...staticArticlesFormatted, ...dbCaseStudiesFormatted];
+  const mergedArticles = [...dbArticlesFormatted, ...staticArticlesFormatted];
 
-  const rawCategories = getLocalizedCategories(locale);
-  const localizedCategories = [...rawCategories];
-  const caseStudiesCat = locale === 'es' ? 'Casos de Éxito' : 'Case Studies';
-  localizedCategories.splice(1, 0, caseStudiesCat);
+  const localizedCategories = getLocalizedCategories(locale);
 
   return (
     <main className="relative w-full bg-white text-left min-h-screen bg-dot-pattern">
@@ -121,13 +93,13 @@ export default async function InsightsPage({ params }: Props) {
       {/* Hero Section */}
       <HeroBanner
         bgImage="https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1600"
-        categoryLabel={locale === 'es' ? 'INSIGHTS Y ANÁLISIS' : 'INSIGHTS & ANALYSIS'}
-        title={locale === 'es' ? 'Liderazgo de Pensamiento' : 'Thought Leadership'}
+        categoryLabel={t('categoryLabel')}
+        title={t('title')}
         titleHighlight=""
         subtitle={t('subtitle')}
         breadcrumbs={[
-          { label: locale === 'es' ? 'Inicio' : 'Home', href: '/' },
-          { label: locale === 'es' ? 'Insights' : 'Insights' }
+          { label: tc('home'), href: '/' },
+          { label: t('breadcrumbLabel'), href: '/insights' }
         ]}
       />
 

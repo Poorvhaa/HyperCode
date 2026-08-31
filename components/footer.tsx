@@ -8,8 +8,10 @@ import { useState, type FormEvent, type ReactNode } from 'react';
 import { EMAIL_REGEX } from '@/lib/validation';
 import { useFormValidation } from '@/hooks/use-form-validation';
 import { footerServicesList } from '@/lib/navigation-links';
-import { googleMapsSearchUrl } from '@/lib/utils';
 import { NewsletterMorphInput } from '@/components/ui/newsletter-morph-input';
+
+const HYPERCODE_GOOGLE_URL =
+  'https://www.google.com/search?q=hypercode+llc&oq=hypercode+llc&gs_lcrp=EgZjaHJvbWUqBggAEEUYOzIGCAAQRRg7MgYIARBFGEHSAQgzNjMxajBqN6gCCLACAfEFYVG7B_yGZiY&sourceid=chrome&source=chrome.ob&ie=UTF-8';
 
 function FooterHeading({ children }: { children: ReactNode }) {
   return (
@@ -138,7 +140,6 @@ export function Footer() {
 
   const companyLinks = [
     { href: '/about', label: tNav('about') },
-    { href: '/case-studies', label: tNav('ourWork') },
     { href: '/insights', label: tNav('insights') },
     { href: '/careers', label: tNav('careers') },
     { href: '/contact', label: tNav('contact') },
@@ -151,7 +152,6 @@ export function Footer() {
 
   const currentYear = new Date().getFullYear();
   const copyrightText = tf('copyright').replace('2026', currentYear.toString());
-  const mapsQuery = `2095 Hammond Dr Suite C Schaumburg, IL 60173 ${tf('unitedStates')}`;
 
   const newsletterBlock = (
     <div className="min-w-0">
@@ -217,14 +217,17 @@ export function Footer() {
 
             <div className="flex flex-col gap-1.5 text-body-sm text-[#AFC0D7]">
               <a
-                href={googleMapsSearchUrl(mapsQuery)}
+                href={HYPERCODE_GOOGLE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={locale === 'es' ? 'Abrir la ubicación de HyperCode en Google Maps' : 'Open HyperCode location in Google Maps'}
-                className="inline-flex min-h-[40px] items-start gap-2 rounded-md transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5B9AFF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#071A3A] sm:min-h-0"
+                aria-label="View HyperCode LLC on Google"
+                className="group inline-flex min-h-[40px] cursor-pointer items-start gap-2 rounded-md transition-colors duration-200 hover:text-[#5B9AFF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5B9AFF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#071A3A] sm:min-h-0"
               >
-                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#5B9AFF]" aria-hidden="true" />
-                <address className="not-italic leading-snug">
+                <MapPin
+                  className="mt-0.5 h-4 w-4 shrink-0 text-[#5B9AFF] transition-colors duration-200 group-hover:text-[#7CB4FF]"
+                  aria-hidden="true"
+                />
+                <address className="not-italic leading-snug group-hover:underline underline-offset-2">
                   <span className="block">2095 Hammond Dr, Suite C</span>
                   <span className="block">Schaumburg, IL 60173</span>
                   <span className="block">{tf('unitedStates')}</span>

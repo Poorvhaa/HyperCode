@@ -73,7 +73,7 @@ export function InsightsList({ initialArticles, translatedCategories }: Insights
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder={locale === 'es' ? 'Buscar artículos o casos de éxito...' : 'Search articles or case studies...'}
+          placeholder={t('searchPlaceholder')}
           className="bg-transparent border-none text-slate-800 text-xs placeholder:text-slate-400 w-full focus:outline-none font-semibold"
         />
       </div>

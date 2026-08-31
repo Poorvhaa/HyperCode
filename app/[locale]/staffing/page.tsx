@@ -95,7 +95,7 @@ export default async function StaffingPage({ params }: Props) {
     en: {
       title: "IT & Non-IT",
       titleHighlight: "Staffing Solutions",
-      subtitle: "Access pre-screened, specialized technology and business professionals for contract, contract-to-hire, direct placement, and team augmentation.",
+      subtitle: "Since 2014, HyperCode has placed specialized technology and business professionals across contract, direct hire, and augmentation models. Access pre-screened talent in Business Intelligence, data warehousing, development, analysis, and project delivery.",
       capabilitiesTitle: "OUR SERVICES",
       capabilitiesSubtitle: "Comprehensive Staffing Capabilities",
       capabilities: [
@@ -143,14 +143,14 @@ export default async function StaffingPage({ params }: Props) {
       expertiseTitle: "EXPERTISE DEPLOYMENT",
       expertiseSubtitle: "Specialized Talent Areas",
       talentAreas: [
-        'Data Engineers',
-        'BI Developers',
-        'Data Analysts',
-        'Business Analysts',
-        'Project Managers',
-        'Scrum Masters',
-        'Full Stack Developers',
-        'Database Administrators',
+        'Business Intelligence',
+        'Data Warehousing',
+        'Big Data',
+        'Data Analysis & Development',
+        'Web Development',
+        'Business Analysis',
+        'Database Design & Administration',
+        'Agile Project Management',
       ],
       whyTitle: "Why HyperCode",
       whyItems: [
@@ -174,7 +174,7 @@ export default async function StaffingPage({ params }: Props) {
     es: {
       title: "Contratación de",
       titleHighlight: "Personal de TI y No TI",
-      subtitle: "Acceda a profesionales tecnológicos y de negocios especializados y preseleccionados para contratos temporales, contratos de prueba, contratación directa y aumento de personal.",
+      subtitle: "Desde 2014, HyperCode ha colocado profesionales tecnológicos y de negocios especializados en modelos de contrato, contratación directa y aumento de personal. Acceda a talento preseleccionado en Inteligencia de Negocios, almacenamiento de datos, desarrollo, análisis y entrega de proyectos.",
       capabilitiesTitle: "NUESTROS SERVICIOS",
       capabilitiesSubtitle: "Capacidades Integrales de Personal",
       capabilities: [
@@ -222,14 +222,14 @@ export default async function StaffingPage({ params }: Props) {
       expertiseTitle: "DESPLIEGUE DE EXPERIENCIA",
       expertiseSubtitle: "Áreas de Talento Especializado",
       talentAreas: [
-        'Ingenieros de Datos',
-        'Desarrolladores de BI',
-        'Analistas de Datos',
-        'Analistas de Negocio',
-        'Gerentes de Proyecto',
-        'Scrum Masters',
-        'Desarrolladores Full Stack',
-        'Administradores de Bases de Datos',
+        'Inteligencia de Negocios',
+        'Almacenamiento de Datos',
+        'Big Data',
+        'Análisis y Desarrollo de Datos',
+        'Desarrollo Web',
+        'Análisis de Negocios',
+        'Diseño y Administración de Bases de Datos',
+        'Gestión de Proyectos Ágil',
       ],
       whyTitle: "¿Por qué HyperCode?",
       whyItems: [

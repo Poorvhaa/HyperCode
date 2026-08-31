@@ -108,17 +108,6 @@ export function PremiumHero() {
                     aria-hidden="true"
                   />
                 </Link>
-                <Link
-                  href="/case-studies"
-                  className="hero-cta-ghost group inline-flex w-full sm:w-auto min-w-0 min-h-[46px] items-center justify-center gap-2 px-1 text-[0.9375rem] font-medium text-[#C5D3E3] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25B5FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030A14] rounded-sm"
-                >
-                  <span>{t('ctaSecondary')}</span>
-                  <ArrowRight
-                    size={15}
-                    className="brand-button-icon-motion shrink-0 opacity-60 group-hover:translate-x-0.5 group-hover:opacity-100 motion-reduce:group-hover:translate-x-0"
-                    aria-hidden="true"
-                  />
-                </Link>
               </HeroTextReveal>
 
               {enableMotion ? (

@@ -42,57 +42,6 @@ async function fetchArticle(slug: string, locale: string) {
     console.error('Failed to load DB article by slug:', err);
   }
 
-  try {
-    // 2. Look for Case Study in DB
-    const dbCS = await db.getCaseStudyBySlug(slug);
-    if (dbCS && dbCS.is_published && dbCS.language === locale) {
-      const isSpanish = locale === 'es';
-      const challengeTitle = isSpanish ? 'El Desafío' : 'The Challenge';
-      const solutionTitle = isSpanish ? 'La Solución Arquitectada' : 'The Solution Architected';
-      const resultsTitle = isSpanish ? 'Resultados y Entregables' : 'Results & Deliverables';
-      const techTitle = isSpanish ? 'Tecnologías Utilizadas' : 'Technologies Deployed';
-
-      const techHtml = dbCS.technologies 
-        ? `<h2 class="mt-8">${techTitle}</h2><p>${dbCS.technologies.split(',').map(t => `<span style="background-color: #f1f5f9; color: #145BFF; font-weight: bold; font-size: 11px; padding: 4px 8px; margin-right: 6px; border-radius: 6px; display: inline-block;">${t.trim()}</span>`).join('')}</p>`
-        : '';
-
-      const contentHtml = `
-        <p class="lead" style="font-size: 1.15em; line-height: 1.6; color: #1e293b; font-weight: 550; margin-bottom: 24px;">
-          ${dbCS.challenge.split('.')[0]}.
-        </p>
-        <h2>1. ${challengeTitle}</h2>
-        <p>${dbCS.challenge}</p>
-        
-        <h2>2. ${solutionTitle}</h2>
-        <p>${dbCS.solution}</p>
-        
-        <h2>3. ${resultsTitle}</h2>
-        <p>${dbCS.results}</p>
-        
-        ${techHtml}
-      `;
-
-      return {
-        slug: dbCS.slug,
-        title: dbCS.title,
-        excerpt: dbCS.challenge,
-        content: contentHtml,
-        date: new Date(dbCS.created_at).toLocaleDateString(locale === 'es' ? 'es-ES' : 'en-US', { day: 'numeric', month: 'long', year: 'numeric' }),
-        category: isSpanish ? 'Casos de Éxito' : 'Case Studies',
-        readTime: isSpanish ? 'Lectura de 5 min' : '5 min read',
-        author: {
-          name: 'HyperCode Solutions',
-          role: dbCS.client_type || 'Case Study',
-          avatar: '/placeholder-user.jpg',
-          bio: ''
-        },
-        related: []
-      };
-    }
-  } catch (err) {
-    console.error('Failed to load DB case study by slug:', err);
-  }
-
   return getLocalizedArticle(slug, locale);
 }
 
@@ -117,8 +66,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
+  const t = await getTranslations({ locale, namespace: 'Insights' });
+
   return {
-    title: `HyperCode | ${article.title} | Insights`,
+    title: `HyperCode | ${article.title} | ${t('metadataSection')}`,
     description: article.excerpt,
     alternates: {
       canonical: localeUrl(locale, `insights/${article.slug}`),
@@ -151,7 +102,6 @@ export default async function ArticlePage({ params }: PageProps) {
 
   // Localized UI text maps
   const localTrans: Record<string, {
-    backToInsights: string;
     aboutAuthor: string;
     defaultBio: string;
     readyToExecute: string;
@@ -160,7 +110,6 @@ export default async function ArticlePage({ params }: PageProps) {
     readBrief: string;
   }> = {
     en: {
-      backToInsights: "Back to Insights",
       aboutAuthor: "About the Author",
       defaultBio: "Consultant at HyperCode specializing in cloud solutions, advanced database systems, and strategic enterprise architectures.",
       readyToExecute: "READY TO EXECUTE?",
@@ -169,7 +118,6 @@ export default async function ArticlePage({ params }: PageProps) {
       readBrief: "Read Brief",
     },
     es: {
-      backToInsights: "Volver a Insights",
       aboutAuthor: "Sobre el Autor",
       defaultBio: "Consultor en HyperCode especializado en soluciones en la nube, sistemas de bases de datos avanzados y arquitecturas empresariales estratégicas.",
       readyToExecute: "¿LISTO PARA EJECUTAR?",
@@ -185,25 +133,14 @@ export default async function ArticlePage({ params }: PageProps) {
   let allArticles: any[] = [];
   try {
     const dbArticles = await db.getAllArticles();
-    const dbCaseStudies = await db.getAllCaseStudies();
     
-    const formattedArts = dbArticles.filter(a => a.is_published && a.language === locale).map(a => ({
+    allArticles = dbArticles.filter(a => a.is_published && a.language === locale).map(a => ({
       slug: a.slug,
       title: a.title,
       excerpt: a.excerpt,
       category: a.category,
       date: new Date(a.created_at).toLocaleDateString(locale === 'es' ? 'es-ES' : 'en-US', { day: 'numeric', month: 'long', year: 'numeric' })
     }));
-    
-    const formattedCS = dbCaseStudies.filter(c => c.is_published && c.language === locale).map(c => ({
-      slug: c.slug,
-      title: c.title,
-      excerpt: c.challenge,
-      category: locale === 'es' ? 'Casos de Éxito' : 'Case Studies',
-      date: new Date(c.created_at).toLocaleDateString(locale === 'es' ? 'es-ES' : 'en-US', { day: 'numeric', month: 'long', year: 'numeric' })
-    }));
-    
-    allArticles = [...formattedArts, ...formattedCS];
   } catch (err) {
     console.error('Failed to load related articles:', err);
   }
@@ -235,7 +172,7 @@ export default async function ArticlePage({ params }: PageProps) {
           <nav className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-wider">
             <Link href="/" className="hover:text-royal-blue transition-colors">{tc('home')}</Link>
             <span>/</span>
-            <Link href="/insights" className="hover:text-royal-blue transition-colors">{tInsights('title')}</Link>
+            <Link href="/insights" className="hover:text-royal-blue transition-colors">{tInsights('breadcrumbLabel')}</Link>
             <span>/</span>
             <span className="text-slate-500 truncate max-w-[200px] sm:max-w-xs">{article.category}</span>
           </nav>
@@ -285,7 +222,7 @@ export default async function ArticlePage({ params }: PageProps) {
                 className="inline-flex items-center gap-2 text-button text-royal-blue hover:text-[#0c3c66] transition-colors uppercase tracking-wider"
               >
                 <ArrowLeft size={14} />
-                <span>{activeTrans.backToInsights}</span>
+                <span>{tInsights('backToArticles')}</span>
               </Link>
 
               <div className="pt-6 border-t border-slate-100 space-y-4">
