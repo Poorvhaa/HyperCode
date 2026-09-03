@@ -91,8 +91,6 @@ export function CookieProvider({ children }: CookieProviderProps) {
   };
 
   // IDs configuration via Env or Defaults
-  const gaId = process.env.NEXT_PUBLIC_GA_ID || 'G-XXXXXXXXXX';
-  const gtmId = process.env.NEXT_PUBLIC_GTM_ID || 'GTM-XXXXXX';
   const clarityId = process.env.NEXT_PUBLIC_CLARITY_ID || 'clarity-mock-id';
   const linkedinPartnerId = process.env.NEXT_PUBLIC_LINKEDIN_PARTNER_ID || 'linkedin-mock-id';
   const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID || 'meta-pixel-mock-id';
@@ -115,35 +113,6 @@ export function CookieProvider({ children }: CookieProviderProps) {
       {/* Conditionally Load Tracking Scripts based on Consent */}
       {hasMounted && consent?.analytics && (
         <>
-          <Script
-            src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
-            strategy="afterInteractive"
-            onLoad={() => console.log('[Scripts] Loaded Google Analytics library')}
-          />
-          <Script id="google-analytics-init" strategy="afterInteractive">
-            {`
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){window.dataLayer.push(arguments);}
-              window.gtag = gtag;
-              gtag('js', new Date());
-              gtag('config', '${gaId}', {
-                page_path: window.location.pathname,
-              });
-              console.log('[Scripts] Initialized Google Analytics (gtag)');
-            `}
-          </Script>
-
-          <Script id="google-tag-manager-init" strategy="afterInteractive">
-            {`
-              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-              })(window,document,'script','dataLayer','${gtmId}');
-              console.log('[Scripts] Initialized Google Tag Manager (${gtmId})');
-            `}
-          </Script>
-
           <Script id="microsoft-clarity-init" strategy="afterInteractive">
             {`
               (function(c,l,a,r,i,t,y){
