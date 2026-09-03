@@ -1,5 +1,6 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
+import Script from 'next/script'
 import '../globals.css'
 import { routing } from '@/i18n/routing'
 import { notFound } from 'next/navigation'
@@ -212,6 +213,18 @@ export default async function RootLayout({ children, params }: LayoutProps) {
     <html lang={locale} dir="ltr" className={`${geistSans.variable} ${geistMono.variable} bg-background`}>
       <head />
       <body className="font-sans antialiased bg-background">
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-343HPGGDKS"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-343HPGGDKS');
+          `}
+        </Script>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
