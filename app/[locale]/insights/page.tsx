@@ -2,12 +2,13 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
 import { getLocalizedCategories, getLocalizedArticles } from '@/lib/insights-localizer';
+import { ARTICLE_IMAGES, ARTICLE_ALT_TEXTS } from '@/lib/insights';
 import { InsightsList } from '@/components/insights-list';
 import { NewsletterForm } from '@/components/newsletter-form';
 import { db } from '@/lib/db';
 import { Suspense } from 'react';
 import { HeroBanner } from '@/components/hero-banner';
-import { localeUrl } from '@/lib/site-url';
+import { buildAlternates, localeUrl } from '@/lib/site-url';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -16,11 +17,21 @@ interface Props {
 export async function generateMetadata({ params }: Props) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'Insights' });
+  const title = `HyperCode | ${t('title')}`;
+  const description = t('subtitle');
+  const path = 'insights';
+
   return {
-    title: `HyperCode | ${t('title')}`,
-    description: t('subtitle'),
-    alternates: {
-      canonical: localeUrl(locale, 'insights'),
+    title,
+    description,
+    alternates: buildAlternates(locale, path),
+    openGraph: {
+      title,
+      description,
+      url: localeUrl(locale, path),
+      siteName: 'HyperCode',
+      locale: locale === 'es' ? 'es_US' : 'en_US',
+      type: 'website',
     },
   };
 }
@@ -32,11 +43,19 @@ export default async function InsightsPage({ params }: Props) {
   const t = await getTranslations('Insights');
   const tc = await getTranslations('Common');
 
+  // Allowed article slugs (only the 2 uploaded articles)
+  const ALLOWED_ARTICLE_SLUGS = new Set([
+    'enterprise-generative-ai-strategic-innovation',
+    'ai-in-healthcare'
+  ]);
+
   // Fetch published articles from Supabase
   let dbArticlesFormatted: any[] = [];
   try {
     const dbArticles = await db.getAllArticles();
-    const publishedDbArticles = dbArticles.filter(a => a.is_published && a.language === locale);
+    const publishedDbArticles = dbArticles.filter(
+      a => a.is_published && a.language === locale && ALLOWED_ARTICLE_SLUGS.has(a.slug)
+    );
     dbArticlesFormatted = publishedDbArticles.map(a => ({
       slug: a.slug,
       title: a.title,
@@ -54,6 +73,8 @@ export default async function InsightsPage({ params }: Props) {
         role: 'Technical Advisor',
         avatar: '/placeholder-user.jpg'
       },
+      image: ARTICLE_IMAGES[a.slug],
+      imageAlt: ARTICLE_ALT_TEXTS[a.slug]?.[locale] || ARTICLE_ALT_TEXTS[a.slug]?.en,
       related: []
     }));
   } catch (err) {
@@ -76,6 +97,8 @@ export default async function InsightsPage({ params }: Props) {
         category: a.category,
         readTime: a.readTime,
         author: a.author,
+        image: a.image,
+        imageAlt: a.imageAlt,
         related: a.related,
       }));
   } catch (err) {

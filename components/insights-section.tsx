@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
 import {
   ARTICLE_FEATURED_IMAGES,
+  ARTICLE_ALT_TEXTS,
   HOMEPAGE_FEATURED_SLUG,
   HOMEPAGE_INSIGHT_SLUGS,
 } from '@/lib/insights';
@@ -20,6 +21,7 @@ function FeaturedArticle({
   excerpt,
   date,
   readLabel,
+  locale,
 }: {
   slug: string;
   category: string;
@@ -27,8 +29,10 @@ function FeaturedArticle({
   excerpt: string;
   date: string;
   readLabel: string;
+  locale: string;
 }) {
   const imageSrc = ARTICLE_FEATURED_IMAGES[slug];
+  const altText = ARTICLE_ALT_TEXTS[slug]?.[locale] || ARTICLE_ALT_TEXTS[slug]?.en || title;
 
   return (
     <article className="min-w-0">
@@ -40,7 +44,7 @@ function FeaturedArticle({
           <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#DDE3EC] rounded-xl shadow-[var(--landing-depth-sm)]">
             <Image
               src={imageSrc}
-              alt={title}
+              alt={altText}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1280px) 58vw, 720px"
               className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02] motion-reduce:group-hover:scale-100"
@@ -202,6 +206,7 @@ export function InsightsSection() {
                 excerpt={featured.excerpt}
                 date={featured.date}
                 readLabel={readLabel}
+                locale={locale}
               />
             </div>
 

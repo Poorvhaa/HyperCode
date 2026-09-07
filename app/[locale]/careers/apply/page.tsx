@@ -4,7 +4,7 @@ import { Footer } from '@/components/footer';
 import { CareersForm } from '@/components/careers-form';
 import { ChevronLeft } from 'lucide-react';
 import { Link } from '@/i18n/routing';
-import { localeUrl } from '@/lib/site-url';
+import { buildAlternates, localeUrl } from '@/lib/site-url';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -14,11 +14,21 @@ interface Props {
 export async function generateMetadata({ params }: Props) {
   const { locale } = await params;
   const tc = await getTranslations({ locale, namespace: 'Common' });
+  const title = `HyperCode | ${tc('careers')} | Apply`;
+  const description = "Submit your technical credentials and resume to join HyperCode's elite engineering and data squads.";
+  const path = 'careers/apply';
+
   return {
-    title: `HyperCode | ${tc('careers')} | Apply`,
-    description: "Submit your technical credentials and resume to join HyperCode's elite engineering and data squads.",
-    alternates: {
-      canonical: localeUrl(locale, 'careers/apply'),
+    title,
+    description,
+    alternates: buildAlternates(locale, path),
+    openGraph: {
+      title,
+      description,
+      url: localeUrl(locale, path),
+      siteName: 'HyperCode',
+      locale: locale === 'es' ? 'es_US' : 'en_US',
+      type: 'website',
     },
   };
 }

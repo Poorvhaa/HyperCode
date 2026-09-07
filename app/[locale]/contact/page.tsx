@@ -7,7 +7,7 @@ import { Link } from '@/i18n/routing';
 import Image from 'next/image';
 import { HeroBanner } from '@/components/hero-banner';
 import { googleMapsSearchUrl } from '@/lib/utils';
-import { localeUrl } from '@/lib/site-url';
+import { buildAlternates, localeUrl } from '@/lib/site-url';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -16,11 +16,20 @@ interface Props {
 export async function generateMetadata({ params }: Props) {
   const { locale } = await params;
   const tc = await getTranslations({ locale, namespace: 'Common' });
+  const pageTitle = `HyperCode | Contact | General Inquiries & Partnerships`;
+  const pageDescription = "HyperCode can be contacted for general business inquiries, career questions, partnership proposals, and media requests. Headquartered in Schaumburg, IL.";
+
   return {
-    title: `HyperCode | Contact | General Inquiries & Partnerships`,
-    description: "HyperCode can be contacted for general business inquiries, career questions, partnership proposals, and media requests. Headquartered in Schaumburg, IL.",
-    alternates: {
-      canonical: localeUrl(locale, 'contact'),
+    title: pageTitle,
+    description: pageDescription,
+    alternates: buildAlternates(locale, 'contact'),
+    openGraph: {
+      title: pageTitle,
+      description: pageDescription,
+      url: localeUrl(locale, 'contact'),
+      siteName: 'HyperCode',
+      locale: locale === 'en' ? 'en_US' : 'es_ES',
+      type: 'website',
     },
   };
 }

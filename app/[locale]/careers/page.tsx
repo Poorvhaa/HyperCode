@@ -21,7 +21,7 @@ import {
 import { Link } from '@/i18n/routing';
 import Image from 'next/image';
 import { HeroBanner } from '@/components/hero-banner';
-import { localeUrl } from '@/lib/site-url';
+import { buildAlternates, localeUrl } from '@/lib/site-url';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -31,12 +31,21 @@ export async function generateMetadata({ params }: Props) {
   const { locale } = await params;
   const tc = await getTranslations({ locale, namespace: 'Common' });
   const t = await getTranslations({ locale, namespace: 'Careers' });
+  const title = `HyperCode | ${tc('careers')}`;
+  const description = t('subtitle');
+  const path = 'careers';
 
   return {
-    title: `HyperCode | ${tc('careers')}`,
-    description: t('subtitle'),
-    alternates: {
-      canonical: localeUrl(locale, 'careers'),
+    title,
+    description,
+    alternates: buildAlternates(locale, path),
+    openGraph: {
+      title,
+      description,
+      url: localeUrl(locale, path),
+      siteName: 'HyperCode',
+      locale: locale === 'es' ? 'es_US' : 'en_US',
+      type: 'website',
     },
   };
 }

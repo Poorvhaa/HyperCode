@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next';
 import { routing } from '@/i18n/routing';
 import { SERVICE_REGISTRY, ALIAS_MAP } from '@/lib/services-details';
 import { articles } from '@/lib/insights';
-import { SITE_URL } from '@/lib/site-url';
+import { localeUrl } from '@/lib/site-url';
 
 const STATIC_PATHS = [
   '',
@@ -20,8 +20,7 @@ const STATIC_PATHS = [
 ];
 
 function buildUrl(locale: string, path: string): string {
-  if (!path) return `${SITE_URL}/${locale}`;
-  return `${SITE_URL}/${locale}/${path}`;
+  return localeUrl(locale, path);
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {

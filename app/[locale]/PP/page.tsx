@@ -3,7 +3,7 @@ import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
 import { FileDown, Calendar, ChevronRight, Shield } from 'lucide-react';
 import { HeroBanner } from '@/components/hero-banner';
-import { localeUrl } from '@/lib/site-url';
+import { buildAlternates, localeUrl } from '@/lib/site-url';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -12,12 +12,21 @@ interface Props {
 export async function generateMetadata({ params }: Props) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'PrivacyPolicy' });
-  
+  const title = `HyperCode | ${t('title')}`;
+  const description = t('subtitle');
+  const path = 'PP';
+
   return {
-    title: `HyperCode | ${t('title')}`,
-    description: t('subtitle'),
-    alternates: {
-      canonical: localeUrl(locale, 'PP'),
+    title,
+    description,
+    alternates: buildAlternates(locale, path),
+    openGraph: {
+      title,
+      description,
+      url: localeUrl(locale, path),
+      siteName: 'HyperCode',
+      locale: locale === 'es' ? 'es_US' : 'en_US',
+      type: 'website',
     },
   };
 }

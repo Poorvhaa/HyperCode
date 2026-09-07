@@ -1,6 +1,6 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { SolutionDetailPage } from '@/components/solution-detail-page';
-import { localeUrl } from '@/lib/site-url';
+import { buildAlternates, localeUrl } from '@/lib/site-url';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -22,12 +22,19 @@ export async function generateMetadata({ params }: Props) {
   };
 
   const currentSeo = metadataMap[locale as 'en' | 'es'] || metadataMap.en;
+  const path = 'solutions/managed-it-services';
 
   return {
     title: currentSeo.title,
     description: currentSeo.description,
-    alternates: {
-      canonical: localeUrl(locale, 'solutions/managed-it-services'),
+    alternates: buildAlternates(locale, path),
+    openGraph: {
+      title: currentSeo.title,
+      description: currentSeo.description,
+      url: localeUrl(locale, path),
+      siteName: 'HyperCode',
+      locale: locale === 'es' ? 'es_US' : 'en_US',
+      type: 'website',
     },
   };
 }

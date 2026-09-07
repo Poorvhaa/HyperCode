@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { ArrowRight, Calendar, BookOpen, User, Search } from 'lucide-react';
 import { Link, useRouter } from '@/i18n/routing';
 import { useSearchParams, useParams } from 'next/navigation';
@@ -102,7 +103,7 @@ export function InsightsList({ initialArticles, translatedCategories }: Insights
       </div>
 
       {/* Articles Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
         {filteredArticles.length === 0 ? (
           <div className="col-span-full py-16 text-center text-slate-500 italic">
             {t('noArticles')}
@@ -111,34 +112,52 @@ export function InsightsList({ initialArticles, translatedCategories }: Insights
           filteredArticles.map((article) => (
             <article
               key={article.slug}
-              className="flex flex-col p-6 rounded-3xl border border-slate-200 bg-white shadow-sm hover:shadow-md transition-all duration-300 justify-between group"
+              className="flex flex-col rounded-3xl border border-slate-200 bg-white shadow-sm hover:shadow-md transition-all duration-300 justify-between group overflow-hidden"
             >
               <div>
-                {/* Category Badge */}
-                <div className="flex justify-between items-center mb-4">
-                  <span className="inline-block w-fit px-3 py-1 rounded-lg bg-slate-50 border border-slate-200 text-slate-500 text-caption font-semibold uppercase tracking-wider">
-                    {article.category}
-                  </span>
-                  <span className="text-caption font-semibold text-slate-400 flex items-center gap-1">
-                    <BookOpen size={10} />
-                    {article.readTime}
-                  </span>
-                </div>
-
-                {/* Title */}
-                <h3 className="text-card-title text-slate-900 mb-2 group-hover:text-royal-blue transition-colors">
-                  <Link href={`/insights/${article.slug}`}>
-                    {article.title}
+                {/* Article Card Image */}
+                {article.image && (
+                  <Link
+                    href={`/insights/${article.slug}`}
+                    className="block relative aspect-[16/9] w-full overflow-hidden bg-slate-100"
+                  >
+                    <Image
+                      src={article.image}
+                      alt={article.imageAlt || article.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
+                      className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                    />
                   </Link>
-                </h3>
+                )}
 
-                {/* Excerpt */}
-                <p className="text-body text-slate-600 font-medium mb-6 line-clamp-3">
-                  {article.excerpt}
-                </p>
+                <div className="p-6">
+                  {/* Category Badge */}
+                  <div className="flex justify-between items-center mb-4">
+                    <span className="inline-block w-fit px-3 py-1 rounded-lg bg-slate-50 border border-slate-200 text-slate-500 text-caption font-semibold uppercase tracking-wider">
+                      {article.category}
+                    </span>
+                    <span className="text-caption font-semibold text-slate-400 flex items-center gap-1">
+                      <BookOpen size={10} />
+                      {article.readTime}
+                    </span>
+                  </div>
+
+                  {/* Title */}
+                  <h3 className="text-card-title text-slate-900 mb-2 group-hover:text-royal-blue transition-colors">
+                    <Link href={`/insights/${article.slug}`}>
+                      {article.title}
+                    </Link>
+                  </h3>
+
+                  {/* Excerpt */}
+                  <p className="text-body text-slate-600 font-medium mb-2 line-clamp-3">
+                    {article.excerpt}
+                  </p>
+                </div>
               </div>
 
-              <div>
+              <div className="px-6 pb-6">
                 {/* Author Information */}
                 <div className="flex items-center gap-2.5 pb-4 border-b border-slate-100 mb-4">
                   <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 border border-slate-200 flex-shrink-0">

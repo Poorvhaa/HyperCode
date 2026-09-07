@@ -290,15 +290,35 @@
       "timelineError": "Seleccione un plazo estimado",
       "messageError": "Describa brevemente su proyecto (mín. 10 caracteres)"
     },
-
     "timelines": {
-      "t1": { "value": "Immediately / ASAP", "label": "ASAP" },
-      "t2": { "value": "Within 1 Month", "label": "< 1 Mes" },
-      "t3": { "value": "1–3 Months", "label": "1–3 Meses" },
-      "t4": { "value": "3–6 Months", "label": "3–6 Meses" },
-      "t5": { "value": "6–12 Months", "label": "6–12 Meses" },
-      "t6": { "value": "More Than 12 Months", "label": "12+ Meses" },
-      "t7": { "value": "Flexible / Not Sure", "label": "Flexible" }
+      "t1": {
+        "value": "Immediately / ASAP",
+        "label": "ASAP"
+      },
+      "t2": {
+        "value": "Within 1 Month",
+        "label": "< 1 Mes"
+      },
+      "t3": {
+        "value": "1–3 Months",
+        "label": "1–3 Meses"
+      },
+      "t4": {
+        "value": "3–6 Months",
+        "label": "3–6 Meses"
+      },
+      "t5": {
+        "value": "6–12 Months",
+        "label": "6–12 Meses"
+      },
+      "t6": {
+        "value": "More Than 12 Months",
+        "label": "12+ Meses"
+      },
+      "t7": {
+        "value": "Flexible / Not Sure",
+        "label": "Flexible"
+      }
     },
     "formTitle": "Solicitar Sesión de Admisión del Proyecto",
     "formSubtitle": "Comparta los requisitos de su proyecto y lo asignaremos con el arquitecto de soluciones adecuado."
@@ -999,7 +1019,11 @@
     "newsletterButton": "Suscribirse",
     "newsletterSuccess": "Gracias por suscribirse a las ideas de HyperCode.",
     "newsletterAlreadySubscribed": "Ya se encuentra suscrito.",
-    "newsletterError": "No es posible suscribirse en este momento. Por favor, inténtelo de nuevo más tarde."
+    "newsletterError": "No es posible suscribirse en este momento. Por favor, inténtelo de nuevo más tarde.",
+    "articleAlt": {
+      "enterprise-generative-ai-strategic-innovation": "Mesa de sala de juntas ejecutiva moderna con una tableta que muestra un gráfico de red de datos, con estrategas tecnológicos conversando ante ventanas con vista a la ciudad",
+      "ai-in-healthcare": "Médica con bata blanca revisando imágenes de diagnóstico y datos clínicos en una estación de trabajo de dos monitores en un centro hospitalario"
+    }
   },
   "About": {
     "title": "Construyendo asociaciones a largo plazo a través de la",
@@ -1522,16 +1546,66 @@
       "viewService": "Explorar capacidad",
       "navLabel": "Navegación de capacidades",
       "flows": {
-        "ai": ["Entrada de Negocio", "Capa IA / Modelo", "Lógica de Flujo", "Salida de Negocio"],
-        "bi": ["Fuentes de Datos", "Capa Analítica", "Paneles", "Decisiones Ejecutivas"],
-        "data": ["Fuentes", "Plataforma de Datos", "Analítica", "Decisiones"],
-        "platforms": ["Sistemas Heredados", "Data Lake", "Pipelines ETL", "Almacenamiento Unificado"],
-        "software": ["Requisitos", "Capa de Aplicación", "Integración", "Entrega"],
-        "web": ["Diseño", "Frontend", "Capa API", "Usuarios"],
-        "mobile": ["Experiencia", "Apps Nativas", "Servicios Backend", "Usuarios"],
-        "cloud": ["Aplicaciones", "Plataforma Cloud", "Automatización", "Operaciones"],
-        "digital": ["Estado Actual", "Modernización", "Integración", "Estado Futuro"],
-        "staffing": ["Necesidad de Talento", "Evaluación", "Colocación", "Integración al Equipo"]
+        "ai": [
+          "Entrada de Negocio",
+          "Capa IA / Modelo",
+          "Lógica de Flujo",
+          "Salida de Negocio"
+        ],
+        "bi": [
+          "Fuentes de Datos",
+          "Capa Analítica",
+          "Paneles",
+          "Decisiones Ejecutivas"
+        ],
+        "data": [
+          "Fuentes",
+          "Plataforma de Datos",
+          "Analítica",
+          "Decisiones"
+        ],
+        "platforms": [
+          "Sistemas Heredados",
+          "Data Lake",
+          "Pipelines ETL",
+          "Almacenamiento Unificado"
+        ],
+        "software": [
+          "Requisitos",
+          "Capa de Aplicación",
+          "Integración",
+          "Entrega"
+        ],
+        "web": [
+          "Diseño",
+          "Frontend",
+          "Capa API",
+          "Usuarios"
+        ],
+        "mobile": [
+          "Experiencia",
+          "Apps Nativas",
+          "Servicios Backend",
+          "Usuarios"
+        ],
+        "cloud": [
+          "Aplicaciones",
+          "Plataforma Cloud",
+          "Automatización",
+          "Operaciones"
+        ],
+        "digital": [
+          "Estado Actual",
+          "Modernización",
+          "Integración",
+          "Estado Futuro"
+        ],
+        "staffing": [
+          "Necesidad de Talento",
+          "Evaluación",
+          "Colocación",
+          "Integración al Equipo"
+        ]
       },
       "centralDefaultTitle": "Entrega tecnológica integral",
       "centralDefaultDesc": "Seleccione una capacidad para explorar cómo HyperCode ayuda a las organizaciones a diseñar, construir y escalar tecnología moderna.",

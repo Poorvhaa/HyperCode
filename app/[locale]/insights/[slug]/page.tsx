@@ -1,17 +1,27 @@
 import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
+import Image from 'next/image';
 import { ArrowLeft, Calendar, Clock, User, Share2, Mail } from 'lucide-react';
 import { BrandButton } from '@/components/brand-button';
 import { Link } from '@/i18n/routing';
 import { notFound } from 'next/navigation';
-import { getLocalizedArticle } from '@/lib/insights-localizer';
+import { getLocalizedArticle, getLocalizedArticles } from '@/lib/insights-localizer';
+import { ARTICLE_IMAGES, ARTICLE_ALT_TEXTS } from '@/lib/insights';
 import { routing } from '@/i18n/routing';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Metadata } from 'next';
 import { db } from '@/lib/db';
 import { localeUrl, localeAlternates } from '@/lib/site-url';
 
+const ALLOWED_ARTICLE_SLUGS = new Set([
+  'enterprise-generative-ai-strategic-innovation',
+  'ai-in-healthcare'
+]);
+
 async function fetchArticle(slug: string, locale: string) {
+  if (!ALLOWED_ARTICLE_SLUGS.has(slug)) {
+    return null;
+  }
   try {
     // 1. Look for Article in DB
     const dbArt = await db.getArticleBySlug(slug);
@@ -35,6 +45,8 @@ async function fetchArticle(slug: string, locale: string) {
           avatar: '/placeholder-user.jpg',
           bio: ''
         },
+        image: ARTICLE_IMAGES[dbArt.slug],
+        imageAlt: ARTICLE_ALT_TEXTS[dbArt.slug]?.[locale] || ARTICLE_ALT_TEXTS[dbArt.slug]?.en,
         related: []
       };
     }
@@ -82,6 +94,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       siteName: 'HyperCode',
       locale: locale === 'en' ? 'en_US' : 'es_ES',
       type: 'article',
+      images: article.image ? [{ url: article.image, alt: article.imageAlt }] : undefined,
     },
   };
 }
@@ -129,34 +142,27 @@ export default async function ArticlePage({ params }: PageProps) {
 
   const activeTrans = localTrans[locale] || localTrans.en;
 
-  // Fetch related database items
+  // Fetch related articles (only the 2 retained articles)
   let allArticles: any[] = [];
   try {
-    const dbArticles = await db.getAllArticles();
-    
-    allArticles = dbArticles.filter(a => a.is_published && a.language === locale).map(a => ({
-      slug: a.slug,
-      title: a.title,
-      excerpt: a.excerpt,
-      category: a.category,
-      date: new Date(a.created_at).toLocaleDateString(locale === 'es' ? 'es-ES' : 'en-US', { day: 'numeric', month: 'long', year: 'numeric' })
-    }));
+    const staticArticles = getLocalizedArticles(locale);
+    allArticles = staticArticles
+      .filter((a) => ALLOWED_ARTICLE_SLUGS.has(a.slug))
+      .map((a) => ({
+        slug: a.slug,
+        title: a.title,
+        excerpt: a.excerpt,
+        category: a.category,
+        date: a.date,
+        image: a.image,
+        imageAlt: a.imageAlt
+      }));
   } catch (err) {
     console.error('Failed to load related articles:', err);
   }
 
-  // Find related articles objects
-  const relatedArticles = allArticles
-    .filter((art) => art.slug !== article.slug && art.category === article.category)
-    .slice(0, 3);
-
-  // Fill in related list if needed
-  if (relatedArticles.length < 3) {
-    const extra = allArticles
-      .filter((art) => art.slug !== article.slug && !relatedArticles.some(r => r.slug === art.slug))
-      .slice(0, 3 - relatedArticles.length);
-    relatedArticles.push(...extra);
-  }
+  // Find valid related articles other than current
+  const relatedArticles = allArticles.filter((art) => art.slug !== article.slug);
 
   const shareUrl = localeUrl(locale, `insights/${article.slug}`);
   const shareText = encodeURIComponent(article.title);
@@ -207,6 +213,20 @@ export default async function ArticlePage({ params }: PageProps) {
               <span>{article.readTime}</span>
             </div>
           </div>
+
+          {/* Hero Image */}
+          {article.image && (
+            <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-200 shadow-sm mt-8 bg-slate-100">
+              <Image
+                src={article.image}
+                alt={article.imageAlt || article.title}
+                fill
+                priority
+                sizes="(max-width: 896px) 100vw, 896px"
+                className="object-cover"
+              />
+            </div>
+          )}
         </div>
       </section>
 
@@ -335,39 +355,54 @@ export default async function ArticlePage({ params }: PageProps) {
       </section>
 
       {/* Related Articles Section */}
-      <section className="py-20 bg-slate-50 border-t border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-12 text-left">
-            <h4 className="text-xs font-bold text-royal-blue tracking-widest uppercase mb-3">{tc('readMore') || 'READ MORE'}</h4>
-            <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">{tInsights('relatedArticles')}</h3>
-          </div>
+      {relatedArticles.length >= 1 && (
+        <section className="py-20 bg-slate-50 border-t border-slate-200">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="mb-12 text-left">
+              <h4 className="text-xs font-bold text-royal-blue tracking-widest uppercase mb-3">{tc('readMore') || 'READ MORE'}</h4>
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">{tInsights('relatedArticles')}</h3>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {relatedArticles.map((art) => (
-              <article
-                key={art.slug}
-                className="flex flex-col p-6 rounded-2xl border border-slate-200 bg-white shadow-sm hover:shadow hover:border-slate-300 transition-all justify-between text-left group"
-              >
-                <div>
-                  <span className="inline-block w-fit px-2.5 py-0.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-500 text-caption font-semibold uppercase tracking-wider mb-3">
-                    {art.category}
-                  </span>
-                  <h4 className="text-sm font-bold text-slate-900 mb-2 leading-snug group-hover:text-royal-blue transition-colors line-clamp-2">
-                    <Link href={`/insights/${art.slug}`}>{art.title}</Link>
-                  </h4>
-                  <p className="text-xs text-slate-500 leading-relaxed font-medium line-clamp-3 mb-4">{art.excerpt}</p>
-                </div>
-                <div className="flex items-center justify-between text-caption text-slate-400 font-semibold uppercase tracking-wider pt-3 border-t border-slate-100">
-                  <span>{art.date}</span>
-                  <Link href={`/insights/${art.slug}`} className="text-royal-blue">
-                    {activeTrans.readBrief}
-                  </Link>
-                </div>
-              </article>
-            ))}
+            <div className="grid grid-cols-1 md:grid-cols-2 max-w-4xl gap-8">
+              {relatedArticles.map((art) => (
+                <article
+                  key={art.slug}
+                  className="flex flex-col rounded-2xl border border-slate-200 bg-white shadow-sm hover:shadow hover:border-slate-300 transition-all justify-between text-left group overflow-hidden"
+                >
+                  {art.image && (
+                    <Link href={`/insights/${art.slug}`} className="block relative aspect-[16/9] w-full overflow-hidden bg-slate-100">
+                      <Image
+                        src={art.image}
+                        alt={art.imageAlt || art.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 400px"
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </Link>
+                  )}
+                  <div className="p-6 flex flex-col justify-between flex-grow">
+                    <div>
+                      <span className="inline-block w-fit px-2.5 py-0.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-500 text-caption font-semibold uppercase tracking-wider mb-3">
+                        {art.category}
+                      </span>
+                      <h4 className="text-sm font-bold text-slate-900 mb-2 leading-snug group-hover:text-royal-blue transition-colors line-clamp-2">
+                        <Link href={`/insights/${art.slug}`}>{art.title}</Link>
+                      </h4>
+                      <p className="text-xs text-slate-500 leading-relaxed font-medium line-clamp-3 mb-4">{art.excerpt}</p>
+                    </div>
+                    <div className="flex items-center justify-between text-caption text-slate-400 font-semibold uppercase tracking-wider pt-3 border-t border-slate-100">
+                      <span>{art.date}</span>
+                      <Link href={`/insights/${art.slug}`} className="text-royal-blue">
+                        {activeTrans.readBrief}
+                      </Link>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <Footer />
     </main>

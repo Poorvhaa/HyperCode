@@ -2,7 +2,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
 import { AboutClient } from '@/components/about/about-client';
-import { localeUrl } from '@/lib/site-url';
+import { buildAlternates, localeUrl } from '@/lib/site-url';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -12,12 +12,20 @@ export async function generateMetadata({ params }: Props) {
   const { locale } = await params;
   const tc = await getTranslations({ locale, namespace: 'Common' });
   const t = await getTranslations({ locale, namespace: 'About' });
+  const pageTitle = `HyperCode | ${tc('about')}`;
+  const pageDescription = t('subtitle');
   
   return {
-    title: `HyperCode | ${tc('about')}`,
-    description: t('subtitle'),
-    alternates: {
-      canonical: localeUrl(locale, 'about'),
+    title: pageTitle,
+    description: pageDescription,
+    alternates: buildAlternates(locale, 'about'),
+    openGraph: {
+      title: pageTitle,
+      description: pageDescription,
+      url: localeUrl(locale, 'about'),
+      siteName: 'HyperCode',
+      locale: locale === 'en' ? 'en_US' : 'es_ES',
+      type: 'website',
     },
   };
 }

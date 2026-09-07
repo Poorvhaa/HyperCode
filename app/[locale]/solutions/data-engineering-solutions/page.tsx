@@ -1,6 +1,6 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { SolutionDetailPage } from '@/components/solution-detail-page';
-import { localeUrl } from '@/lib/site-url';
+import { buildAlternates, localeUrl } from '@/lib/site-url';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -9,11 +9,21 @@ interface Props {
 export async function generateMetadata({ params }: Props) {
   const { locale } = await params;
   const tc = await getTranslations({ locale, namespace: 'Common' });
+  const title = `HyperCode | Data Engineering Solutions | ${tc('solutions')}`;
+  const description = "Enterprise Data Engineering solutions, ETL/ELT data pipelines, database integration, Fivetran/dbt modeling, and stream processing. Headquartered in Schaumburg, IL.";
+  const path = 'solutions/data-engineering-solutions';
+
   return {
-    title: `HyperCode | Data Engineering Solutions | ${tc('solutions')}`,
-    description: "Enterprise Data Engineering solutions, ETL/ELT data pipelines, database integration, Fivetran/dbt modeling, and stream processing. Headquartered in Schaumburg, IL.",
-    alternates: {
-      canonical: localeUrl(locale, 'solutions/data-engineering-solutions'),
+    title,
+    description,
+    alternates: buildAlternates(locale, path),
+    openGraph: {
+      title,
+      description,
+      url: localeUrl(locale, path),
+      siteName: 'HyperCode',
+      locale: locale === 'es' ? 'es_US' : 'en_US',
+      type: 'website',
     },
   };
 }

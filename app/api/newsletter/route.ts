@@ -104,10 +104,10 @@ export async function POST(req: Request) {
     const confirmEmailHtml = isSpanish
       ? `<p>Gracias por suscribirse a HyperCode Insights.</p>
          <p>Recibirá información sobre tecnología, actualizaciones de IA, estrategias de transformación digital y novedades de HyperCode.</p>
-         <p>— Equipo HyperCode<br/><a href="https://www.hypercodeit.com">hypercodeit.com</a></p>`
+         <p>— Equipo HyperCode<br/><a href="https://hypercodeit.com">hypercodeit.com</a></p>`
       : `<p>Thank you for subscribing to HyperCode Insights.</p>
          <p>You'll receive technology insights, AI updates, digital transformation strategies, and company updates from HyperCode.</p>
-         <p>— HyperCode Team<br/><a href="https://www.hypercodeit.com">hypercodeit.com</a></p>`;
+         <p>— HyperCode Team<br/><a href="https://hypercodeit.com">hypercodeit.com</a></p>`;
 
     try {
       const { data: customerEmailData, error: customerEmailError } = await resend.emails.send({

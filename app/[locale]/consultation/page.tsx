@@ -3,7 +3,7 @@ import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
 import { ConsultationForm } from '@/components/consultation-form';
 import { ShieldCheck, BarChart4, Users2, FileCode2 } from 'lucide-react';
-import { localeUrl } from '@/lib/site-url';
+import { buildAlternates, localeUrl } from '@/lib/site-url';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -12,11 +12,21 @@ interface Props {
 export async function generateMetadata({ params }: Props) {
   const { locale } = await params;
   const tc = await getTranslations({ locale, namespace: 'Common' });
+  const title = `HyperCode | Schedule Consultation | Enterprise Solutions`;
+  const description = "Request a project consultation or staffing review with our practice directors and solutions architects. Headquartered in Schaumburg, IL.";
+  const path = 'consultation';
+
   return {
-    title: `HyperCode | Schedule Consultation | Enterprise Solutions`,
-    description: "Request a project consultation or staffing review with our practice directors and solutions architects. Headquartered in Schaumburg, IL.",
-    alternates: {
-      canonical: localeUrl(locale, 'consultation'),
+    title,
+    description,
+    alternates: buildAlternates(locale, path),
+    openGraph: {
+      title,
+      description,
+      url: localeUrl(locale, path),
+      siteName: 'HyperCode',
+      locale: locale === 'es' ? 'es_US' : 'en_US',
+      type: 'website',
     },
   };
 }

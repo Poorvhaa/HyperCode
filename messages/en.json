@@ -291,13 +291,34 @@
       "messageError": "Please describe your project (min 10 characters)"
     },
     "timelines": {
-      "t1": { "value": "Immediately / ASAP", "label": "ASAP" },
-      "t2": { "value": "Within 1 Month", "label": "< 1 Month" },
-      "t3": { "value": "1–3 Months", "label": "1–3 Months" },
-      "t4": { "value": "3–6 Months", "label": "3–6 Months" },
-      "t5": { "value": "6–12 Months", "label": "6–12 Months" },
-      "t6": { "value": "More Than 12 Months", "label": "12+ Months" },
-      "t7": { "value": "Flexible / Not Sure", "label": "Flexible" }
+      "t1": {
+        "value": "Immediately / ASAP",
+        "label": "ASAP"
+      },
+      "t2": {
+        "value": "Within 1 Month",
+        "label": "< 1 Month"
+      },
+      "t3": {
+        "value": "1–3 Months",
+        "label": "1–3 Months"
+      },
+      "t4": {
+        "value": "3–6 Months",
+        "label": "3–6 Months"
+      },
+      "t5": {
+        "value": "6–12 Months",
+        "label": "6–12 Months"
+      },
+      "t6": {
+        "value": "More Than 12 Months",
+        "label": "12+ Months"
+      },
+      "t7": {
+        "value": "Flexible / Not Sure",
+        "label": "Flexible"
+      }
     },
     "formTitle": "Request Project Intake Session",
     "formSubtitle": "Share your project requirements, and we will match you with the appropriate solutions architect."
@@ -998,7 +1019,11 @@
     "newsletterButton": "Subscribe",
     "newsletterSuccess": "Thank you for subscribing to HyperCode insights.",
     "newsletterAlreadySubscribed": "You are already subscribed.",
-    "newsletterError": "Unable to subscribe right now. Please try again later."
+    "newsletterError": "Unable to subscribe right now. Please try again later.",
+    "articleAlt": {
+      "enterprise-generative-ai-strategic-innovation": "Modern enterprise executive boardroom table with a tablet displaying a network data graph, with technology strategists conversing before city skyline windows",
+      "ai-in-healthcare": "Healthcare physician in a white coat reviewing diagnostic imaging and clinical data on a dual-monitor workstation in a hospital clinical center"
+    }
   },
   "About": {
     "title": "Building Long-Term Partnerships Through",
@@ -1328,7 +1353,6 @@
     "title": "Cookie Policy",
     "subtitle": "This policy explains how we use cookies and tracking technologies to optimize your experience.",
     "lastUpdated": "Last Updated: July 9, 2026",
-    
     "toc": "Table of Contents",
     "tableHeaderCookie": "Cookie",
     "tableHeaderPurpose": "Purpose",
@@ -1521,16 +1545,66 @@
       "viewService": "Explore capability",
       "navLabel": "Capability navigation",
       "flows": {
-        "ai": ["Business Input", "AI / Model Layer", "Workflow Logic", "Business Output"],
-        "bi": ["Data Sources", "Analytics Layer", "Dashboards", "Executive Decisions"],
-        "data": ["Sources", "Data Platform", "Analytics", "Decisions"],
-        "platforms": ["Legacy Systems", "Data Lake", "ETL Pipelines", "Unified Storage"],
-        "software": ["Requirements", "Application Layer", "Integration", "Delivery"],
-        "web": ["Design", "Frontend", "API Layer", "Users"],
-        "mobile": ["Experience", "Native Apps", "Backend Services", "Users"],
-        "cloud": ["Applications", "Cloud Platform", "Automation", "Operations"],
-        "digital": ["Current State", "Modernization", "Integration", "Future State"],
-        "staffing": ["Talent Need", "Vetting", "Placement", "Team Integration"]
+        "ai": [
+          "Business Input",
+          "AI / Model Layer",
+          "Workflow Logic",
+          "Business Output"
+        ],
+        "bi": [
+          "Data Sources",
+          "Analytics Layer",
+          "Dashboards",
+          "Executive Decisions"
+        ],
+        "data": [
+          "Sources",
+          "Data Platform",
+          "Analytics",
+          "Decisions"
+        ],
+        "platforms": [
+          "Legacy Systems",
+          "Data Lake",
+          "ETL Pipelines",
+          "Unified Storage"
+        ],
+        "software": [
+          "Requirements",
+          "Application Layer",
+          "Integration",
+          "Delivery"
+        ],
+        "web": [
+          "Design",
+          "Frontend",
+          "API Layer",
+          "Users"
+        ],
+        "mobile": [
+          "Experience",
+          "Native Apps",
+          "Backend Services",
+          "Users"
+        ],
+        "cloud": [
+          "Applications",
+          "Cloud Platform",
+          "Automation",
+          "Operations"
+        ],
+        "digital": [
+          "Current State",
+          "Modernization",
+          "Integration",
+          "Future State"
+        ],
+        "staffing": [
+          "Talent Need",
+          "Vetting",
+          "Placement",
+          "Team Integration"
+        ]
       },
       "centralDefaultTitle": "End-to-end technology delivery",
       "centralDefaultDesc": "Select a capability to explore how HyperCode helps organizations design, build, and scale modern technology.",

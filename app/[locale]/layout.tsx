@@ -10,7 +10,7 @@ import AIConsultant from '@/components/ai-consultant'
 import { CookieProvider } from '@/components/CookieProvider'
 import { CookieBanner } from '@/components/CookieBanner'
 import { CookiePreferencesModal } from '@/components/CookiePreferencesModal'
-import { SITE_URL, localeUrl, localeAlternates, absoluteUrl } from '@/lib/site-url'
+import { SITE_URL, localeUrl, localeAlternates, buildAlternates, absoluteUrl } from '@/lib/site-url'
 
 import { Geist, Geist_Mono } from 'next/font/google';
 
@@ -108,10 +108,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     },
     description: currentSeo.desc,
     generator: 'v0.app',
-    alternates: {
-      canonical: localeUrl(locale),
-      languages: localeAlternates(),
-    },
+    alternates: buildAlternates(locale),
     openGraph: {
       title: currentSeo.title,
       description: currentSeo.desc,
@@ -195,7 +192,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
       'availableLanguage': ['en', 'es']
     },
     'sameAs': [
-      'https://www.linkedin.com/company/hypercode'
+      'https://www.linkedin.com/company/hypercode-llc/'
     ],
     'knowsAbout': [
       'AI Solutions',

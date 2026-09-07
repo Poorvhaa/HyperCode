@@ -16,7 +16,7 @@ import {
   Cpu 
 } from 'lucide-react';
 import { Link } from '@/i18n/routing';
-import { localeUrl } from '@/lib/site-url';
+import { buildAlternates, localeUrl } from '@/lib/site-url';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -38,12 +38,19 @@ export async function generateMetadata({ params }: Props) {
   };
 
   const currentSeo = seo[locale as 'en' | 'es'] || seo.en;
+  const path = 'staffing';
 
   return {
     title: currentSeo.title,
     description: currentSeo.description,
-    alternates: {
-      canonical: localeUrl(locale, 'staffing'),
+    alternates: buildAlternates(locale, path),
+    openGraph: {
+      title: currentSeo.title,
+      description: currentSeo.description,
+      url: localeUrl(locale, path),
+      siteName: 'HyperCode',
+      locale: locale === 'es' ? 'es_US' : 'en_US',
+      type: 'website',
     },
   };
 }
