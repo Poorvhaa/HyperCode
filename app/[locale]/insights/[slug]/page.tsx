@@ -11,11 +11,12 @@ import { routing } from '@/i18n/routing';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Metadata } from 'next';
 import { db } from '@/lib/db';
-import { localeUrl, localeAlternates } from '@/lib/site-url';
+import { localeUrl, localeAlternates, absoluteUrl } from '@/lib/site-url';
 
 const ALLOWED_ARTICLE_SLUGS = new Set([
   'enterprise-generative-ai-strategic-innovation',
-  'ai-in-healthcare'
+  'ai-in-healthcare',
+  'scaling-success-custom-enterprise-software'
 ]);
 
 async function fetchArticle(slug: string, locale: string) {
@@ -79,23 +80,35 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const t = await getTranslations({ locale, namespace: 'Insights' });
+  const seoTitle = 'seoTitle' in article ? article.seoTitle : undefined;
+  const description = ('seoDescription' in article && article.seoDescription) ? article.seoDescription : article.excerpt;
+  const canonical = localeUrl(locale, `insights/${article.slug}`);
 
   return {
-    title: `HyperCode | ${article.title} | ${t('metadataSection')}`,
-    description: article.excerpt,
+    title: seoTitle ? { absolute: seoTitle } : `HyperCode | ${article.title} | ${t('metadataSection')}`,
+    description,
     alternates: {
-      canonical: localeUrl(locale, `insights/${article.slug}`),
+      canonical,
       languages: localeAlternates(`insights/${article.slug}`),
     },
     openGraph: {
-      title: `HyperCode | ${article.title}`,
-      description: article.excerpt,
-      url: localeUrl(locale, `insights/${article.slug}`),
+      title: seoTitle || `HyperCode | ${article.title}`,
+      description,
+      url: canonical,
       siteName: 'HyperCode',
       locale: locale === 'en' ? 'en_US' : 'es_ES',
       type: 'article',
       images: article.image ? [{ url: article.image, alt: article.imageAlt }] : undefined,
     },
+    ...(seoTitle
+      ? {
+          twitter: {
+            card: 'summary_large_image' as const,
+            title: seoTitle,
+            description,
+          },
+        }
+      : {}),
   };
 }
 
@@ -166,9 +179,45 @@ export default async function ArticlePage({ params }: PageProps) {
 
   const shareUrl = localeUrl(locale, `insights/${article.slug}`);
   const shareText = encodeURIComponent(article.title);
+  const ctaHeading = 'ctaHeading' in article ? article.ctaHeading : undefined;
+  const ctaBody = 'ctaBody' in article ? article.ctaBody : undefined;
+  const publishedIso = 'publishedIso' in article ? article.publishedIso : undefined;
+  const seoDescription = 'seoDescription' in article ? article.seoDescription : undefined;
+
+  const articleJsonLd = publishedIso
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        headline: article.title,
+        description: seoDescription || article.excerpt,
+        datePublished: publishedIso,
+        dateModified: publishedIso,
+        author: {
+          '@type': 'Organization',
+          name: article.author.name,
+          url: localeUrl(locale),
+        },
+        publisher: {
+          '@type': 'Organization',
+          name: 'HyperCode LLC',
+          logo: {
+            '@type': 'ImageObject',
+            url: absoluteUrl('/hypercodeit.logo.png'),
+          },
+        },
+        mainEntityOfPage: shareUrl,
+        ...(article.image ? { image: absoluteUrl(article.image) } : {}),
+      }
+    : null;
 
   return (
     <main className="relative w-full bg-white text-left">
+      {articleJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+        />
+      )}
       <Navigation />
 
       {/* Hero Header Section */}
@@ -302,7 +351,7 @@ export default async function ArticlePage({ params }: PageProps) {
             {/* Center/Right: Article Content & Author Bio */}
             <div className="lg:col-span-3 space-y-12">
               <div 
-                className="space-y-6 text-slate-700 text-sm sm:text-base leading-relaxed font-medium [&>p]:leading-relaxed [&>p]:mb-6 [&>h2]:text-xl [&>h2]:font-extrabold [&>h2]:text-slate-900 [&>h2]:mt-8 [&>h2]:mb-4 [&>h3]:text-lg [&>h3]:font-bold [&>h3]:text-slate-900 [&>h3]:mt-6 [&>h3]:mb-3 [&>blockquote]:pl-4 [&>blockquote]:border-l-4 [&>blockquote]:border-royal-blue [&>blockquote]:italic [&>blockquote]:text-slate-850 [&>blockquote]:my-6 [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:space-y-2 [&>ol]:list-decimal [&>ol]:pl-6 [&>ol]:space-y-2 [&>li]:pl-1 [&>em]:text-slate-800 [&>p>strong]:text-slate-800 [&>figure]:my-8 [&>table]:w-full"
+                className="space-y-6 text-slate-700 text-sm sm:text-base leading-relaxed font-medium [&>p]:leading-relaxed [&>p]:mb-6 [&>h2]:text-xl [&>h2]:font-extrabold [&>h2]:text-slate-900 [&>h2]:mt-8 [&>h2]:mb-4 [&>h3]:text-lg [&>h3]:font-bold [&>h3]:text-slate-900 [&>h3]:mt-6 [&>h3]:mb-3 [&>blockquote]:pl-4 [&>blockquote]:border-l-4 [&>blockquote]:border-royal-blue [&>blockquote]:italic [&>blockquote]:text-slate-850 [&>blockquote]:my-6 [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:space-y-2 [&>ol]:list-decimal [&>ol]:pl-6 [&>ol]:space-y-2 [&>li]:pl-1 [&>em]:text-slate-800 [&>p>strong]:text-slate-800 [&>figure]:my-8 [&>table]:w-full [&_a]:text-royal-blue [&_a]:font-semibold [&_a]:underline [&_a]:underline-offset-2"
                 dangerouslySetInnerHTML={{ __html: article.content }}
               />
 
@@ -325,10 +374,13 @@ export default async function ArticlePage({ params }: PageProps) {
               <div className="p-8 rounded-3xl bg-slate-900 text-white space-y-6 border border-white/5 relative overflow-hidden">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(15,76,129,0.2)_0%,transparent_100%)] pointer-events-none" />
                 <div className="relative z-10 space-y-4">
-                  <h4 className="text-xs font-bold text-cyan-400 tracking-wider uppercase">{activeTrans.readyToExecute}</h4>
-                  <h3 className="text-2xl font-extrabold tracking-tight">{activeTrans.implementStrategies}</h3>
+                  {ctaHeading ? null : (
+                    <h4 className="text-xs font-bold text-cyan-400 tracking-wider uppercase">{activeTrans.readyToExecute}</h4>
+                  )}
+                  <h3 className="text-2xl font-extrabold tracking-tight">{ctaHeading || activeTrans.implementStrategies}</h3>
                   <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-medium max-w-xl">
-                    {locale === 'es' ? 'Programe una consulta con nuestros directores de práctica tecnológica para evaluar sus requisitos específicos de almacenamiento de datos, inteligencia comercial o aumento de personal.' :
+                    {ctaBody ? ctaBody :
+                     locale === 'es' ? 'Programe una consulta con nuestros directores de práctica tecnológica para evaluar sus requisitos específicos de almacenamiento de datos, inteligencia comercial o aumento de personal.' :
                      locale === 'fr' ? 'Planifiez une consultation avec nos directeurs de pratique technologique pour évaluer vos besoins spécifiques en entreposage de données, business intelligence ou renforcement de personnel.' :
                      locale === 'de' ? 'Vereinbaren Sie ein Gespräch mit unseren Technologie-Praxisdirektoren, um Ihre spezifischen Anforderungen in den Bereichen Data Warehousing, Business Intelligence oder Teamverstärkung abzustimmen.' :
                      locale === 'it' ? 'Pianifica una consulenza con i nostri direttori della pratica tecnologica per valutare i tuoi requisiti specifici di data warehousing, business intelligence o aumento del personale.' :

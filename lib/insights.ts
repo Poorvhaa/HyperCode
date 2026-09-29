@@ -1,5 +1,6 @@
 import { enterpriseGenerativeAiContentEn } from './articles/enterprise-generative-ai-content';
 import { aiInHealthcareContentEn } from './articles/ai-in-healthcare-content';
+import { scalingSuccessCustomEnterpriseSoftwareContentEn } from './articles/scaling-success-custom-enterprise-software-content';
 
 export interface Author {
   name: string;
@@ -20,6 +21,11 @@ export interface Article {
   related: string[]; // Slugs of related articles
   image?: string;
   imageAlt?: string;
+  seoTitle?: string;
+  seoDescription?: string;
+  ctaHeading?: string;
+  ctaBody?: string;
+  publishedIso?: string;
 }
 
 export const ARTICLE_IMAGES: Record<string, string> = {
@@ -41,6 +47,27 @@ export const ARTICLE_ALT_TEXTS: Record<string, Record<string, string>> = {
 };
 
 export const articles: Article[] = [
+  {
+    slug: 'scaling-success-custom-enterprise-software',
+    title: 'Scaling Success with Custom Enterprise Software',
+    excerpt: 'How purpose-built enterprise software helps organizations connect systems, automate workflows, modernize operations and create a scalable foundation for growth.',
+    date: 'September 29, 2026',
+    category: 'Software Development',
+    readTime: '9 min read',
+    author: {
+      name: 'HyperCode',
+      role: 'Technology Consulting',
+      avatar: '/placeholder-user.jpg',
+      bio: 'HyperCode is a Schaumburg, Illinois-based technology consulting and engineering company founded in 2014.'
+    },
+    related: ['enterprise-generative-ai-strategic-innovation', 'ai-in-healthcare'],
+    content: scalingSuccessCustomEnterpriseSoftwareContentEn,
+    seoTitle: 'Scaling Success with Custom Enterprise Software | HyperCode',
+    seoDescription: 'Learn how custom enterprise software development helps organizations connect systems, automate workflows, modernize operations, and build scalable digital platforms.',
+    ctaHeading: 'Ready to Build a Scalable Enterprise Platform?',
+    ctaBody: 'HyperCode helps organizations move from business challenge to production-ready digital systems through custom software, AI, cloud, data and enterprise integration.',
+    publishedIso: '2026-09-29',
+  },
   {
     slug: 'enterprise-generative-ai-strategic-innovation',
     title: 'How Enterprise Generative AI Drives Strategic Innovation',

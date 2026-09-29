@@ -5,15 +5,15 @@ import { aiInHealthcareContentEs } from './articles/ai-in-healthcare-content-es'
 // Localized Categories
 export const getLocalizedCategories = (locale: string): string[] => {
   const categoriesMap: Record<string, string[]> = {
-    en: ['All', 'AI'],
-    es: ['Todos', 'IA']
+    en: ['All', 'AI', 'Software Development'],
+    es: ['Todos', 'IA', 'Desarrollo de Software']
   };
   return categoriesMap[locale] || categoriesMap.en;
 };
 
 // Translate individual Category Name
 export const getLocalizedCategoryName = (category: string, locale: string): string => {
-  const englishCats = ['All', 'AI'];
+  const englishCats = ['All', 'AI', 'Software Development'];
   const localized = getLocalizedCategories(locale);
   const index = englishCats.indexOf(category);
   return index !== -1 ? localized[index] : category;

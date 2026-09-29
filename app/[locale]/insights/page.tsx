@@ -46,7 +46,8 @@ export default async function InsightsPage({ params }: Props) {
   // Allowed article slugs (only the 2 uploaded articles)
   const ALLOWED_ARTICLE_SLUGS = new Set([
     'enterprise-generative-ai-strategic-innovation',
-    'ai-in-healthcare'
+    'ai-in-healthcare',
+    'scaling-success-custom-enterprise-software'
   ]);
 
   // Fetch published articles from Supabase
