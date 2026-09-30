@@ -26,11 +26,12 @@ export interface Article {
   ctaHeading?: string;
   ctaBody?: string;
   publishedIso?: string;
+  modifiedIso?: string;
 }
 
 export const ARTICLE_IMAGES: Record<string, string> = {
   'enterprise-generative-ai-strategic-innovation':
-    '/images/articles/enterprise-generative-ai-strategic-innovation.webp',
+    '/images/articles/enterprise-generative-ai-strategic-innovation-hero.webp',
   'ai-in-healthcare':
     '/images/articles/ai-in-healthcare-intelligent-operations.webp',
   'scaling-success-custom-enterprise-software':
@@ -39,8 +40,8 @@ export const ARTICLE_IMAGES: Record<string, string> = {
 
 export const ARTICLE_ALT_TEXTS: Record<string, Record<string, string>> = {
   'enterprise-generative-ai-strategic-innovation': {
-    en: 'Modern enterprise executive boardroom table with a tablet displaying a network data graph, with technology strategists conversing before city skyline windows',
-    es: 'Mesa de sala de juntas ejecutiva moderna con una tableta que muestra un gráfico de red de datos, con estrategas tecnológicos conversando ante ventanas con vista a la ciudad',
+    en: 'Enterprise generative AI core connected to automation, data insights, innovation and business growth panels on a deep navy background, with the HyperCode logo',
+    es: 'Núcleo de IA generativa empresarial conectado a paneles de automatización, análisis de datos, innovación y crecimiento empresarial sobre fondo azul marino, con el logotipo de HyperCode',
   },
   'ai-in-healthcare': {
     en: 'Healthcare physician in a white coat reviewing diagnostic imaging and clinical data on a dual-monitor workstation in a hospital clinical center',
@@ -92,6 +93,9 @@ export const articles: Article[] = [
     content: enterpriseGenerativeAiContentEn,
     image: ARTICLE_IMAGES['enterprise-generative-ai-strategic-innovation'],
     imageAlt: ARTICLE_ALT_TEXTS['enterprise-generative-ai-strategic-innovation'].en,
+    seoTitle: 'How Enterprise Generative AI Drives Strategic Innovation | HyperCode',
+    publishedIso: '2026-08-28',
+    modifiedIso: '2026-09-30',
   },
   {
     slug: 'ai-in-healthcare',

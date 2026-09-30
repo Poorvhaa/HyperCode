@@ -100,11 +100,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       type: 'article',
       images: article.image ? [{ url: absoluteUrl(article.image), alt: article.imageAlt }] : undefined,
     },
-    ...(seoTitle
+    ...(seoTitle || article.image
       ? {
           twitter: {
             card: 'summary_large_image' as const,
-            title: seoTitle,
+            title: seoTitle || `HyperCode | ${article.title}`,
             description,
             ...(article.image ? { images: [absoluteUrl(article.image)] } : {}),
           },
@@ -184,6 +184,10 @@ export default async function ArticlePage({ params }: PageProps) {
   const ctaBody = 'ctaBody' in article ? article.ctaBody : undefined;
   const publishedIso = 'publishedIso' in article ? article.publishedIso : undefined;
   const seoDescription = 'seoDescription' in article ? article.seoDescription : undefined;
+  const modifiedIso = 'modifiedIso' in article ? article.modifiedIso : undefined;
+  const updatedLabel = modifiedIso && modifiedIso !== publishedIso
+    ? new Date(`${modifiedIso}T12:00:00Z`).toLocaleDateString(locale === 'es' ? 'es-ES' : 'en-US', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
+    : undefined;
 
   const articleJsonLd = publishedIso
     ? {
@@ -192,11 +196,11 @@ export default async function ArticlePage({ params }: PageProps) {
         headline: article.title,
         description: seoDescription || article.excerpt,
         datePublished: publishedIso,
-        dateModified: publishedIso,
+        dateModified: modifiedIso || publishedIso,
         author: {
-          '@type': 'Organization',
+          '@type': article.author.name.startsWith('HyperCode') ? 'Organization' : 'Person',
           name: article.author.name,
-          url: localeUrl(locale),
+          ...(article.author.name.startsWith('HyperCode') ? { url: localeUrl(locale) } : {}),
         },
         publisher: {
           '@type': 'Organization',
@@ -256,6 +260,12 @@ export default async function ArticlePage({ params }: PageProps) {
               <Calendar size={14} className="text-slate-400" />
               <span>{article.date}</span>
             </div>
+
+            {updatedLabel && (
+              <div className="flex items-center gap-2">
+                <span>{locale === 'es' ? 'Actualizado' : 'Updated'} {updatedLabel}</span>
+              </div>
+            )}
 
             {/* Reading Time */}
             <div className="flex items-center gap-2">

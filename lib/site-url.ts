@@ -1,4 +1,4 @@
-export const SITE_URL = 'https://hypercodeit.com';
+export const SITE_URL = 'https://www.hypercodeit.com';
 
 /**
  * Normalizes a route path for SEO/canonical URL generation:
@@ -26,7 +26,7 @@ export function localePath(locale: string, path = ''): string {
 }
 
 /**
- * Generates absolute canonical URL, e.g. "https://hypercodeit.com/en/contact"
+ * Generates absolute canonical URL, e.g. "https://www.hypercodeit.com/en/contact"
  */
 export function localeUrl(locale: string, path = ''): string {
   return `${SITE_URL}${localePath(locale, path)}`;

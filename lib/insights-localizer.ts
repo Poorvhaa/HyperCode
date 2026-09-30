@@ -28,7 +28,7 @@ const articleTranslations: Record<string, Record<string, { title: string; excerp
       content: enterpriseGenerativeAiContentEs,
       readTime: '8 min de lectura',
       date: '28 de agosto de 2026',
-      imageAlt: 'Mesa de sala de juntas ejecutiva moderna con una tableta que muestra un gráfico de red de datos, con estrategas tecnológicos conversando ante ventanas con vista a la ciudad'
+      imageAlt: 'Núcleo de IA generativa empresarial conectado a paneles de automatización, análisis de datos, innovación y crecimiento empresarial sobre fondo azul marino, con el logotipo de HyperCode'
     }
   },
   'ai-in-healthcare': {
@@ -81,6 +81,8 @@ export const getLocalizedArticles = (locale: string): Article[] => {
         author: localizedAuthor,
         content: translation.content,
         date: translation.date || '28 de agosto de 2026',
+        seoTitle: undefined,
+        seoDescription: undefined,
         image: article.image,
         imageAlt: translation.imageAlt || article.imageAlt
       };
