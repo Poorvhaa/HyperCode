@@ -1,86 +1,18 @@
 export const scalingSuccessCustomEnterpriseSoftwareContentEn = `
 <style>
   .hc-ent-figure { margin: 2rem 0; max-width: 100%; }
-  .hc-ent-card, .hc-ent-step, .hc-ent-layer, .hc-ent-benefit { min-width: 0; overflow-wrap: anywhere; }
-  .hc-ent-kicker {
-    margin: 0 0 0.85rem;
-    font-size: 0.75rem;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #145BFF;
-  }
-  .hc-ent-steps, .hc-ent-cards, .hc-ent-layers { display: grid; gap: 0.75rem; }
-  .hc-ent-steps { grid-template-columns: 1fr; list-style: none; margin: 0; padding: 0; }
-  .hc-ent-cards { grid-template-columns: 1fr; }
-  .hc-ent-card, .hc-ent-step, .hc-ent-layer {
-    border: 1px solid #e2e8f0;
-    border-radius: 1rem;
-    background: #f8fafc;
-    padding: 0.9rem 1rem;
-  }
-  .hc-ent-step { border-top: 3px solid #145BFF; }
-  .hc-ent-step-index {
-    display: block;
-    margin-bottom: 0.35rem;
-    font-size: 0.75rem;
-    font-weight: 800;
-    letter-spacing: 0.06em;
-    color: #145BFF;
-  }
-  .hc-ent-step h3, .hc-ent-card h3, .hc-ent-layer h3 {
-    margin: 0 0 0.35rem;
-    font-size: 0.95rem;
-    line-height: 1.3;
-    font-weight: 800;
-    color: #0A1F6B;
-  }
-  .hc-ent-step p, .hc-ent-card li, .hc-ent-layer p, .hc-ent-note, .hc-ent-benefit p {
+  .hc-ent-figure a { display: block; border: 1px solid #e2e8f0; border-radius: 1rem; overflow: hidden; background: #ffffff; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06); text-decoration: none; }
+  .hc-ent-figure img { display: block; width: 100%; height: auto; }
+  .hc-ent-figure figcaption { margin-top: 0.6rem; font-size: 0.8rem; line-height: 1.45; font-weight: 600; color: #64748b; }
+  .hc-ent-benefit { min-width: 0; overflow-wrap: anywhere; }
+  .hc-ent-benefit p {
     margin: 0;
     font-size: 0.875rem;
     line-height: 1.45;
     font-weight: 600;
     color: #334155;
   }
-  .hc-ent-card ul, .hc-ent-benefits { margin: 0; padding: 0; list-style: none; }
-  .hc-ent-card li { position: relative; padding-left: 0.9rem; margin: 0.35rem 0 0; }
-  .hc-ent-card li::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0.45rem;
-    width: 0.4rem;
-    height: 0.4rem;
-    border-radius: 999px;
-    background: #25B5FF;
-  }
-  .hc-ent-card-standard { border-top: 3px solid #64748b; }
-  .hc-ent-card-custom { border-top: 3px solid #145BFF; background: #f5f8ff; }
-  .hc-ent-card-hybrid { border-top: 3px solid #48B900; }
-  .hc-ent-note {
-    margin-top: 0.85rem;
-    padding: 0.85rem 1rem;
-    border-radius: 0.85rem;
-    background: #0A1F6B;
-    color: #ffffff;
-  }
-  .hc-ent-layer { border-left: 4px solid #145BFF; }
-  .hc-ent-layer-experience { border-left-color: #145BFF; }
-  .hc-ent-layer-application { border-left-color: #25B5FF; }
-  .hc-ent-layer-data { border-left-color: #0A1F6B; }
-  .hc-ent-layer-integration { border-left-color: #48B900; }
-  .hc-ent-layer-platform { border-left-color: #0c3c66; }
-  .hc-ent-span {
-    margin-top: 0.25rem;
-    padding: 0.85rem 1rem;
-    border-radius: 0.85rem;
-    background: #0A1F6B;
-    color: #ffffff;
-    font-size: 0.875rem;
-    line-height: 1.45;
-    font-weight: 650;
-  }
-  .hc-ent-benefits { display: grid; gap: 0.75rem; }
+  .hc-ent-benefits { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.75rem; }
   .hc-ent-benefit {
     display: grid;
     gap: 0.25rem;
@@ -91,12 +23,7 @@ export const scalingSuccessCustomEnterpriseSoftwareContentEn = `
   }
   .hc-ent-benefit strong { color: #0A1F6B; font-size: 0.95rem; }
   @media (min-width: 700px) {
-    .hc-ent-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .hc-ent-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .hc-ent-benefit { grid-template-columns: minmax(9.5rem, 13rem) minmax(0, 1fr); gap: 0.75rem 1rem; align-items: start; }
-  }
-  @media (min-width: 1024px) {
-    .hc-ent-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   }
 </style>
 
@@ -131,37 +58,10 @@ export const scalingSuccessCustomEnterpriseSoftwareContentEn = `
 <p>Commercial software is often the right choice when business requirements are common and the product already solves the problem well. Custom development becomes more valuable when the organization's workflow, integrations or competitive requirements cannot be handled cleanly through configuration alone.</p>
 
 <figure class="hc-ent-figure">
-  <p class="hc-ent-kicker">When custom software makes business sense</p>
-  <div class="hc-ent-cards">
-    <section class="hc-ent-card hc-ent-card-standard">
-      <h3>Standard software may fit</h3>
-      <ul>
-        <li>Common process</li>
-        <li>Fast setup</li>
-        <li>Limited differentiation</li>
-        <li>Minimal integration needs</li>
-      </ul>
-    </section>
-    <section class="hc-ent-card hc-ent-card-custom">
-      <h3>Custom software may fit</h3>
-      <ul>
-        <li>Unique workflows</li>
-        <li>Complex integrations</li>
-        <li>Competitive differentiation</li>
-        <li>Long-term scale needs</li>
-      </ul>
-    </section>
-    <section class="hc-ent-card hc-ent-card-hybrid">
-      <h3>Hybrid approach</h3>
-      <ul>
-        <li>Keep proven SaaS</li>
-        <li>Build missing capabilities</li>
-        <li>Connect through APIs</li>
-        <li>Modernize in phases</li>
-      </ul>
-    </section>
-  </div>
-  <p class="hc-ent-note">Choose the model that creates the strongest business outcome, not the most custom code.</p>
+  <a href="/images/articles/scaling-success-custom-enterprise-software-custom-vs-standard.webp" target="_blank" rel="noopener" aria-label="Open the full-size When Custom Software Makes Business Sense diagram">
+    <img src="/images/articles/scaling-success-custom-enterprise-software-custom-vs-standard.webp" width="1500" height="760" loading="lazy" decoding="async" alt="When Custom Software Makes Business Sense. Standard software may fit: common process, fast setup, limited differentiation, minimal integration needs. Custom software may fit: unique workflows, complex integrations, competitive differentiation, long-term scale needs. Hybrid approach: keep proven SaaS, build missing capabilities, connect through APIs, modernize in phases. Best decision: choose the model that creates the strongest business outcome, not the most custom code." />
+  </a>
+  <figcaption>Choose the model that creates the strongest business outcome, not the most custom code.</figcaption>
 </figure>
 
 <h3>Unique Business Workflows</h3>
@@ -186,31 +86,11 @@ export const scalingSuccessCustomEnterpriseSoftwareContentEn = `
 
 <p>Strong enterprise applications are rarely a single monolithic screen connected directly to a database. Modern systems separate user experience, business logic, data, integrations and infrastructure so each area can evolve without destabilizing the entire platform.</p>
 
-<figure class="hc-ent-figure" aria-label="Enterprise software reference architecture with experience, application, data and AI, integration, and platform layers. Security, identity, observability and governance span every layer.">
-  <p class="hc-ent-kicker">Enterprise software reference architecture</p>
-  <div class="hc-ent-layers">
-    <section class="hc-ent-layer hc-ent-layer-experience">
-      <h3>Experience</h3>
-      <p>Web portals, mobile apps, dashboards and employee tools.</p>
-    </section>
-    <section class="hc-ent-layer hc-ent-layer-application">
-      <h3>Application</h3>
-      <p>Business logic, workflows, APIs and automation.</p>
-    </section>
-    <section class="hc-ent-layer hc-ent-layer-data">
-      <h3>Data and AI</h3>
-      <p>Operational data, analytics, AI services and search.</p>
-    </section>
-    <section class="hc-ent-layer hc-ent-layer-integration">
-      <h3>Integration</h3>
-      <p>ERP, CRM, payments, SaaS and legacy systems.</p>
-    </section>
-    <section class="hc-ent-layer hc-ent-layer-platform">
-      <h3>Platform</h3>
-      <p>Cloud, DevOps, security, monitoring and backup.</p>
-    </section>
-  </div>
-  <p class="hc-ent-span">Security, identity, observability and governance should span every layer.</p>
+<figure class="hc-ent-figure">
+  <a href="/images/articles/scaling-success-custom-enterprise-software-reference-architecture.webp" target="_blank" rel="noopener" aria-label="Open the full-size Enterprise Software Reference Architecture diagram">
+    <img src="/images/articles/scaling-success-custom-enterprise-software-reference-architecture.webp" width="1500" height="820" loading="lazy" decoding="async" alt="Enterprise Software Reference Architecture with five layers. Experience: web portals, mobile apps, dashboards, employee tools. Application: business logic, workflows, APIs, automation. Data and AI: operational data, analytics, AI services, search. Integration: ERP, CRM, payments, SaaS, legacy systems. Platform: cloud, DevOps, security, monitoring, backup. Security, identity, observability and governance should span every layer." />
+  </a>
+  <figcaption>Security, identity, observability and governance should span every layer.</figcaption>
 </figure>
 
 <h3>Experience Layer</h3>
@@ -265,40 +145,11 @@ export const scalingSuccessCustomEnterpriseSoftwareContentEn = `
 
 <h2>A Practical Custom Software Development Roadmap</h2>
 
-<figure class="hc-ent-figure" aria-label="Six-step path from business challenge to scalable software: Discover, Architect, Engineer, Connect, Automate and Scale.">
-  <p class="hc-ent-kicker">From business challenge to scalable software</p>
-  <ol class="hc-ent-steps">
-    <li class="hc-ent-step">
-      <span class="hc-ent-step-index">01</span>
-      <h3>Discover</h3>
-      <p>Goals, users and workflows.</p>
-    </li>
-    <li class="hc-ent-step">
-      <span class="hc-ent-step-index">02</span>
-      <h3>Architect</h3>
-      <p>Data, APIs and security.</p>
-    </li>
-    <li class="hc-ent-step">
-      <span class="hc-ent-step-index">03</span>
-      <h3>Engineer</h3>
-      <p>Web, mobile and backend.</p>
-    </li>
-    <li class="hc-ent-step">
-      <span class="hc-ent-step-index">04</span>
-      <h3>Connect</h3>
-      <p>ERP, CRM, cloud and data.</p>
-    </li>
-    <li class="hc-ent-step">
-      <span class="hc-ent-step-index">05</span>
-      <h3>Automate</h3>
-      <p>AI, rules and workflows.</p>
-    </li>
-    <li class="hc-ent-step">
-      <span class="hc-ent-step-index">06</span>
-      <h3>Scale</h3>
-      <p>Monitor, optimize and evolve.</p>
-    </li>
-  </ol>
+<figure class="hc-ent-figure">
+  <a href="/images/articles/scaling-success-custom-enterprise-software-roadmap.webp" target="_blank" rel="noopener" aria-label="Open the full-size From Business Challenge to Scalable Software diagram">
+    <img src="/images/articles/scaling-success-custom-enterprise-software-roadmap.webp" width="1500" height="760" loading="lazy" decoding="async" alt="From Business Challenge to Scalable Software, six steps: 1 Discover, goals, users and workflows; 2 Architect, data, APIs and security; 3 Engineer, web, mobile and backend; 4 Connect, ERP, CRM, cloud and data; 5 Automate, AI, rules and workflows; 6 Scale, monitor, optimize and evolve. Custom software equals business fit plus connected systems plus secure delivery plus long-term flexibility." />
+  </a>
+  <figcaption>Discover → Architect → Engineer → Connect → Automate → Scale.</figcaption>
 </figure>
 
 <h3>Phase 1 — Discover</h3>

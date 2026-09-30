@@ -98,7 +98,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       siteName: 'HyperCode',
       locale: locale === 'en' ? 'en_US' : 'es_ES',
       type: 'article',
-      images: article.image ? [{ url: article.image, alt: article.imageAlt }] : undefined,
+      images: article.image ? [{ url: absoluteUrl(article.image), alt: article.imageAlt }] : undefined,
     },
     ...(seoTitle
       ? {
@@ -106,6 +106,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             card: 'summary_large_image' as const,
             title: seoTitle,
             description,
+            ...(article.image ? { images: [absoluteUrl(article.image)] } : {}),
           },
         }
       : {}),

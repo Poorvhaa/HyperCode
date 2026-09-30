@@ -33,6 +33,8 @@ export const ARTICLE_IMAGES: Record<string, string> = {
     '/images/articles/enterprise-generative-ai-strategic-innovation.webp',
   'ai-in-healthcare':
     '/images/articles/ai-in-healthcare-intelligent-operations.webp',
+  'scaling-success-custom-enterprise-software':
+    '/images/articles/scaling-success-custom-enterprise-software.webp',
 };
 
 export const ARTICLE_ALT_TEXTS: Record<string, Record<string, string>> = {
@@ -43,6 +45,9 @@ export const ARTICLE_ALT_TEXTS: Record<string, Record<string, string>> = {
   'ai-in-healthcare': {
     en: 'Healthcare physician in a white coat reviewing diagnostic imaging and clinical data on a dual-monitor workstation in a hospital clinical center',
     es: 'Médica con bata blanca revisando imágenes de diagnóstico y datos clínicos en una estación de trabajo de dos monitores en un centro hospitalario',
+  },
+  'scaling-success-custom-enterprise-software': {
+    en: 'Layered enterprise software platform with dashboards, workflow automation, data and cloud tiers connected by integration lines to ERP, CRM, payment and cloud systems, in HyperCode blue, cyan and green',
   },
 };
 
@@ -62,6 +67,8 @@ export const articles: Article[] = [
     },
     related: ['enterprise-generative-ai-strategic-innovation', 'ai-in-healthcare'],
     content: scalingSuccessCustomEnterpriseSoftwareContentEn,
+    image: ARTICLE_IMAGES['scaling-success-custom-enterprise-software'],
+    imageAlt: ARTICLE_ALT_TEXTS['scaling-success-custom-enterprise-software'].en,
     seoTitle: 'Scaling Success with Custom Enterprise Software | HyperCode',
     seoDescription: 'Learn how custom enterprise software development helps organizations connect systems, automate workflows, modernize operations, and build scalable digital platforms.',
     ctaHeading: 'Ready to Build a Scalable Enterprise Platform?',
