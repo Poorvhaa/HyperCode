@@ -7,7 +7,7 @@ import { InsightsList } from '@/components/insights-list';
 import { NewsletterForm } from '@/components/newsletter-form';
 import { db } from '@/lib/db';
 import { Suspense } from 'react';
-import { HeroBanner } from '@/components/hero-banner';
+import { Link } from '@/i18n/routing';
 import { buildAlternates, localeUrl } from '@/lib/site-url';
 
 interface Props {
@@ -17,12 +17,12 @@ interface Props {
 export async function generateMetadata({ params }: Props) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'Insights' });
-  const title = `HyperCode | ${t('title')}`;
+  const title = `${t('listingTitle')} | HyperCode`;
   const description = t('subtitle');
   const path = 'insights';
 
   return {
-    title,
+    title: { absolute: title },
     description,
     alternates: buildAlternates(locale, path),
     openGraph: {
@@ -102,6 +102,7 @@ export default async function InsightsPage({ params }: Props) {
         image: a.image,
         imageAlt: a.imageAlt,
         related: a.related,
+        publishedIso: a.publishedIso,
       }));
   } catch (err) {
     console.error('Failed to load static articles for index page:', err);
@@ -115,22 +116,28 @@ export default async function InsightsPage({ params }: Props) {
     <main className="relative w-full bg-white text-left min-h-screen bg-dot-pattern">
       <Navigation />
 
-      {/* Hero Section */}
-      <HeroBanner
-        bgImage="https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1600"
-        categoryLabel={t('categoryLabel')}
-        title={t('title')}
-        titleHighlight=""
-        subtitle={t('subtitle')}
-        breadcrumbs={[
-          { label: tc('home'), href: '/' },
-          { label: t('breadcrumbLabel'), href: '/insights' }
-        ]}
-      />
+      <section className="bg-white border-b border-slate-200 pt-[104px] pb-14 sm:pt-[116px] sm:pb-16 lg:pt-[124px] lg:pb-20">
+        <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+          <header className="mb-6 sm:mb-8">
+            <nav aria-label="Breadcrumb">
+              <ol className="flex items-center gap-1.5 text-[0.6875rem] sm:text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+                <li>
+                  <Link href="/" className="rounded hover:text-royal-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue transition-colors">
+                    {tc('home')}
+                  </Link>
+                </li>
+                <li aria-hidden="true" className="text-slate-300">/</li>
+                <li aria-current="page" className="text-slate-700">{t('breadcrumbLabel')}</li>
+              </ol>
+            </nav>
+            <h1 className="mt-2.5 text-[1.75rem] sm:text-[2.125rem] lg:text-[2.5rem] font-extrabold leading-tight tracking-tight text-[#0A1F6B]">
+              {t('listingTitle')}
+            </h1>
+            <p className="mt-2 max-w-2xl text-[0.9375rem] sm:text-base leading-relaxed font-medium text-slate-600">
+              {t('listingSubtitle')}
+            </p>
+          </header>
 
-      {/* Main Insights Panel */}
-      <section className="section-padding bg-white border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Suspense fallback={<div className="text-center py-12 text-slate-500">Loading articles...</div>}>
             <InsightsList initialArticles={mergedArticles} translatedCategories={localizedCategories} />
           </Suspense>
