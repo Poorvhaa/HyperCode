@@ -17,7 +17,8 @@ const ALLOWED_ARTICLE_SLUGS = new Set([
   'enterprise-generative-ai-strategic-innovation',
   'ai-in-healthcare',
   'scaling-success-custom-enterprise-software',
-  'choosing-right-enterprise-ai-platform-for-scale'
+  'choosing-right-enterprise-ai-platform-for-scale',
+  'how-to-build-an-enterprise-ai-strategy'
 ]);
 
 async function fetchArticle(slug: string, locale: string) {

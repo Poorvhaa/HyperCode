@@ -48,7 +48,8 @@ export default async function InsightsPage({ params }: Props) {
     'enterprise-generative-ai-strategic-innovation',
     'ai-in-healthcare',
     'scaling-success-custom-enterprise-software',
-    'choosing-right-enterprise-ai-platform-for-scale'
+    'choosing-right-enterprise-ai-platform-for-scale',
+    'how-to-build-an-enterprise-ai-strategy'
   ]);
 
   // Fetch published articles from Supabase

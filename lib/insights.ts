@@ -2,6 +2,7 @@ import { enterpriseGenerativeAiContentEn } from './articles/enterprise-generativ
 import { aiInHealthcareContentEn } from './articles/ai-in-healthcare-content';
 import { scalingSuccessCustomEnterpriseSoftwareContentEn } from './articles/scaling-success-custom-enterprise-software-content';
 import { choosingEnterpriseAiPlatformContentEn, choosingEnterpriseAiPlatformFaqs } from './articles/choosing-right-enterprise-ai-platform-content';
+import { enterpriseAiStrategyContentEn } from './articles/how-to-build-an-enterprise-ai-strategy-content';
 
 export interface ArticleFaq {
   question: string;
@@ -48,6 +49,8 @@ export const ARTICLE_IMAGES: Record<string, string> = {
     '/images/articles/scaling-success-custom-enterprise-software.webp',
   'choosing-right-enterprise-ai-platform-for-scale':
     '/images/articles/choosing-right-enterprise-ai-platform-for-scale.webp',
+  'how-to-build-an-enterprise-ai-strategy':
+    '/images/articles/how-to-build-an-enterprise-ai-strategy.webp',
 };
 
 export const ARTICLE_ALT_TEXTS: Record<string, Record<string, string>> = {
@@ -65,9 +68,38 @@ export const ARTICLE_ALT_TEXTS: Record<string, Record<string, string>> = {
   'choosing-right-enterprise-ai-platform-for-scale': {
     en: 'Layered enterprise AI platform with data and cloud infrastructure, an AI orchestration tier and business application dashboards, connected to security, governance, API, analytics, automation and cloud icons, with the HyperCode logo',
   },
+  'how-to-build-an-enterprise-ai-strategy': {
+    en: 'Central enterprise intelligence core connected to business goals, people, data, AI, cloud technology, governance and growth tiles on a deep navy background, with the HyperCode logo',
+  },
 };
 
 export const articles: Article[] = [
+  {
+    slug: 'how-to-build-an-enterprise-ai-strategy',
+    title: 'How to Build an Enterprise AI Strategy: A Practical Roadmap for 2026',
+    excerpt: 'A business-led guide to moving from AI opportunity to practical, secure and scalable enterprise execution.',
+    date: 'October 1, 2026',
+    category: 'AI',
+    readTime: '8 min read',
+    author: {
+      name: 'HyperCode',
+      role: 'Technology Consulting',
+      avatar: '/placeholder-user.jpg',
+      bio: 'HyperCode is a Schaumburg, Illinois-based technology consulting and engineering company founded in 2014.'
+    },
+    related: ['choosing-right-enterprise-ai-platform-for-scale', 'enterprise-generative-ai-strategic-innovation'],
+    content: enterpriseAiStrategyContentEn,
+    image: ARTICLE_IMAGES['how-to-build-an-enterprise-ai-strategy'],
+    imageAlt: ARTICLE_ALT_TEXTS['how-to-build-an-enterprise-ai-strategy'].en,
+    heroImage: '/images/articles/how-to-build-an-enterprise-ai-strategy-hero.webp',
+    heroImageAlt: 'People, business goals, data, intelligence, cloud technology and governance flowing together into rising steps and a growth chart representing measurable enterprise impact, in HyperCode blue and green',
+    seoTitle: 'How to Build an Enterprise AI Strategy in 2026 | HyperCode',
+    seoDescription: 'Learn how to build an enterprise AI strategy for 2026 with a practical roadmap covering business value, data, architecture, governance, adoption, automation, and scale.',
+    ctaHeading: 'Ready to Build an Enterprise AI Strategy That Can Scale?',
+    ctaBody: 'HyperCode helps organizations connect business strategy, data, AI, software engineering, cloud and automation to build practical technology solutions around real business requirements.',
+    publishedIso: '2026-10-01',
+    modifiedIso: '2026-10-01',
+  },
   {
     slug: 'choosing-right-enterprise-ai-platform-for-scale',
     title: 'Choosing the Right Enterprise AI Platform for Scale',
