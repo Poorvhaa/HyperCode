@@ -16,7 +16,8 @@ import { localeUrl, localeAlternates, absoluteUrl } from '@/lib/site-url';
 const ALLOWED_ARTICLE_SLUGS = new Set([
   'enterprise-generative-ai-strategic-innovation',
   'ai-in-healthcare',
-  'scaling-success-custom-enterprise-software'
+  'scaling-success-custom-enterprise-software',
+  'choosing-right-enterprise-ai-platform-for-scale'
 ]);
 
 async function fetchArticle(slug: string, locale: string) {
@@ -215,12 +216,34 @@ export default async function ArticlePage({ params }: PageProps) {
       }
     : null;
 
+  const faqs = 'faqs' in article ? article.faqs : undefined;
+  const faqJsonLd = faqs && faqs.length > 0
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqs.map((faq) => ({
+          '@type': 'Question',
+          name: faq.question,
+          acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+        })),
+      }
+    : null;
+
+  const heroImage = ('heroImage' in article && article.heroImage) || article.image;
+  const heroImageAlt = ('heroImage' in article && article.heroImage && article.heroImageAlt) || article.imageAlt || article.title;
+
   return (
     <main className="relative w-full bg-white text-left">
       {articleJsonLd && (
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+        />
+      )}
+      {faqJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
         />
       )}
       <Navigation />
@@ -275,11 +298,11 @@ export default async function ArticlePage({ params }: PageProps) {
           </div>
 
           {/* Hero Image */}
-          {article.image && (
+          {heroImage && (
             <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-200 shadow-sm mt-8 bg-slate-100">
               <Image
-                src={article.image}
-                alt={article.imageAlt || article.title}
+                src={heroImage}
+                alt={heroImageAlt}
                 fill
                 priority
                 sizes="(max-width: 896px) 100vw, 896px"

@@ -47,7 +47,8 @@ export default async function InsightsPage({ params }: Props) {
   const ALLOWED_ARTICLE_SLUGS = new Set([
     'enterprise-generative-ai-strategic-innovation',
     'ai-in-healthcare',
-    'scaling-success-custom-enterprise-software'
+    'scaling-success-custom-enterprise-software',
+    'choosing-right-enterprise-ai-platform-for-scale'
   ]);
 
   // Fetch published articles from Supabase

@@ -1,6 +1,12 @@
 import { enterpriseGenerativeAiContentEn } from './articles/enterprise-generative-ai-content';
 import { aiInHealthcareContentEn } from './articles/ai-in-healthcare-content';
 import { scalingSuccessCustomEnterpriseSoftwareContentEn } from './articles/scaling-success-custom-enterprise-software-content';
+import { choosingEnterpriseAiPlatformContentEn, choosingEnterpriseAiPlatformFaqs } from './articles/choosing-right-enterprise-ai-platform-content';
+
+export interface ArticleFaq {
+  question: string;
+  answer: string;
+}
 
 export interface Author {
   name: string;
@@ -21,6 +27,10 @@ export interface Article {
   related: string[]; // Slugs of related articles
   image?: string;
   imageAlt?: string;
+  /** Detail-page hero when it should differ from the card / social image. */
+  heroImage?: string;
+  heroImageAlt?: string;
+  faqs?: ArticleFaq[];
   seoTitle?: string;
   seoDescription?: string;
   ctaHeading?: string;
@@ -36,6 +46,8 @@ export const ARTICLE_IMAGES: Record<string, string> = {
     '/images/articles/ai-in-healthcare-intelligent-operations.webp',
   'scaling-success-custom-enterprise-software':
     '/images/articles/scaling-success-custom-enterprise-software.webp',
+  'choosing-right-enterprise-ai-platform-for-scale':
+    '/images/articles/choosing-right-enterprise-ai-platform-for-scale.webp',
 };
 
 export const ARTICLE_ALT_TEXTS: Record<string, Record<string, string>> = {
@@ -50,9 +62,38 @@ export const ARTICLE_ALT_TEXTS: Record<string, Record<string, string>> = {
   'scaling-success-custom-enterprise-software': {
     en: 'Layered enterprise software platform with dashboards, workflow automation, data and cloud tiers connected by integration lines to ERP, CRM, payment and cloud systems, in HyperCode blue, cyan and green',
   },
+  'choosing-right-enterprise-ai-platform-for-scale': {
+    en: 'Layered enterprise AI platform with data and cloud infrastructure, an AI orchestration tier and business application dashboards, connected to security, governance, API, analytics, automation and cloud icons, with the HyperCode logo',
+  },
 };
 
 export const articles: Article[] = [
+  {
+    slug: 'choosing-right-enterprise-ai-platform-for-scale',
+    title: 'Choosing the Right Enterprise AI Platform for Scale',
+    excerpt: 'A practical guide to choosing an enterprise AI platform that can scale with your business across data, security, integration, governance, flexibility, performance, and cost.',
+    date: 'September 30, 2026',
+    category: 'AI',
+    readTime: '9 min read',
+    author: {
+      name: 'HyperCode',
+      role: 'Technology Consulting',
+      avatar: '/placeholder-user.jpg',
+      bio: 'HyperCode is a Schaumburg, Illinois-based technology consulting and engineering company founded in 2014.'
+    },
+    related: ['enterprise-generative-ai-strategic-innovation', 'scaling-success-custom-enterprise-software'],
+    content: choosingEnterpriseAiPlatformContentEn,
+    image: ARTICLE_IMAGES['choosing-right-enterprise-ai-platform-for-scale'],
+    imageAlt: ARTICLE_ALT_TEXTS['choosing-right-enterprise-ai-platform-for-scale'].en,
+    heroImage: '/images/articles/choosing-right-enterprise-ai-platform-for-scale-hero.webp',
+    heroImageAlt: 'Enterprise AI journey from data sources to AI models, applications, automated workflows, security, governance and business outcomes, shown as connected platforms in HyperCode blue, cyan and green',
+    faqs: choosingEnterpriseAiPlatformFaqs,
+    seoTitle: 'Choosing the Right Enterprise AI Platform for Scale | HyperCode',
+    seoDescription: 'Learn how to choose an enterprise AI platform for scale by evaluating security, data integration, governance, flexibility, performance, cost, and long-term business value.',
+    ctaHeading: 'Ready to Explore Enterprise AI for Your Business?',
+    ctaBody: 'HyperCode helps organizations evaluate AI opportunities and design solutions around their existing technology, data, workflows, and business objectives. WE SOLVE. WE BUILD. YOU GROW.',
+    publishedIso: '2026-09-30',
+  },
   {
     slug: 'scaling-success-custom-enterprise-software',
     title: 'Scaling Success with Custom Enterprise Software',
