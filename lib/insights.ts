@@ -3,6 +3,7 @@ import { aiInHealthcareContentEn } from './articles/ai-in-healthcare-content';
 import { scalingSuccessCustomEnterpriseSoftwareContentEn } from './articles/scaling-success-custom-enterprise-software-content';
 import { choosingEnterpriseAiPlatformContentEn, choosingEnterpriseAiPlatformFaqs } from './articles/choosing-right-enterprise-ai-platform-content';
 import { enterpriseAiStrategyContentEn } from './articles/how-to-build-an-enterprise-ai-strategy-content';
+import { topAiUseCasesContentEn } from './articles/top-5-ai-enterprise-software-use-cases-content';
 
 export interface ArticleFaq {
   question: string;
@@ -51,6 +52,8 @@ export const ARTICLE_IMAGES: Record<string, string> = {
     '/images/articles/choosing-right-enterprise-ai-platform-for-scale.webp',
   'how-to-build-an-enterprise-ai-strategy':
     '/images/articles/how-to-build-an-enterprise-ai-strategy.webp',
+  'top-5-ai-enterprise-software-use-cases-2026':
+    '/images/articles/top-5-ai-enterprise-software-use-cases-2026.webp',
 };
 
 export const ARTICLE_ALT_TEXTS: Record<string, Record<string, string>> = {
@@ -71,9 +74,38 @@ export const ARTICLE_ALT_TEXTS: Record<string, Record<string, string>> = {
   'how-to-build-an-enterprise-ai-strategy': {
     en: 'Central enterprise intelligence core connected to business goals, people, data, AI, cloud technology, governance and growth tiles on a deep navy background, with the HyperCode logo',
   },
+  'top-5-ai-enterprise-software-use-cases-2026': {
+    en: 'Enterprise AI core connected to five use-case tiles for customer service, document workflow automation, enterprise knowledge search, AI-assisted software development and analytics, with the HyperCode logo',
+  },
 };
 
 export const articles: Article[] = [
+  {
+    slug: 'top-5-ai-enterprise-software-use-cases-2026',
+    title: 'Top 5 AI Enterprise Software Use Cases for 2026',
+    excerpt: 'A practical guide to where enterprise AI software creates measurable business value.',
+    date: 'October 1, 2026',
+    category: 'AI',
+    readTime: '12 min read',
+    author: {
+      name: 'HyperCode',
+      role: 'Technology Consulting',
+      avatar: '/placeholder-user.jpg',
+      bio: 'HyperCode is a Schaumburg, Illinois-based technology consulting and engineering company founded in 2014.'
+    },
+    related: ['how-to-build-an-enterprise-ai-strategy', 'choosing-right-enterprise-ai-platform-for-scale'],
+    content: topAiUseCasesContentEn,
+    image: ARTICLE_IMAGES['top-5-ai-enterprise-software-use-cases-2026'],
+    imageAlt: ARTICLE_ALT_TEXTS['top-5-ai-enterprise-software-use-cases-2026'].en,
+    heroImage: '/images/articles/top-5-ai-enterprise-software-use-cases-2026-hero.webp',
+    heroImageAlt: 'Central enterprise AI hub connected to five use cases: a customer service headset, a document workflow, a knowledge search book, a laptop with code and a rising analytics chart',
+    seoTitle: 'Top 5 AI Enterprise Software Use Cases for 2026 | HyperCode',
+    seoDescription: 'Explore 5 practical AI enterprise software use cases for 2026, from customer service and workflow automation to knowledge, AI-assisted IT and analytics.',
+    ctaHeading: 'Ready to Put AI to Work in Your Enterprise?',
+    ctaBody: 'HyperCode connects AI and automation with custom applications, data, cloud and existing business systems, so intelligence becomes part of the work.',
+    publishedIso: '2026-10-01',
+    modifiedIso: '2026-10-01',
+  },
   {
     slug: 'how-to-build-an-enterprise-ai-strategy',
     title: 'How to Build an Enterprise AI Strategy: A Practical Roadmap for 2026',

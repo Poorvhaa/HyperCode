@@ -18,7 +18,8 @@ const ALLOWED_ARTICLE_SLUGS = new Set([
   'ai-in-healthcare',
   'scaling-success-custom-enterprise-software',
   'choosing-right-enterprise-ai-platform-for-scale',
-  'how-to-build-an-enterprise-ai-strategy'
+  'how-to-build-an-enterprise-ai-strategy',
+  'top-5-ai-enterprise-software-use-cases-2026'
 ]);
 
 async function fetchArticle(slug: string, locale: string) {
