@@ -19,7 +19,8 @@ const ALLOWED_ARTICLE_SLUGS = new Set([
   'scaling-success-custom-enterprise-software',
   'choosing-right-enterprise-ai-platform-for-scale',
   'how-to-build-an-enterprise-ai-strategy',
-  'top-5-ai-enterprise-software-use-cases-2026'
+  'top-5-ai-enterprise-software-use-cases-2026',
+  'maximizing-roi-with-enterprise-automation-tools'
 ]);
 
 async function fetchArticle(slug: string, locale: string) {

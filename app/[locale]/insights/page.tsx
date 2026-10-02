@@ -50,7 +50,8 @@ export default async function InsightsPage({ params }: Props) {
     'scaling-success-custom-enterprise-software',
     'choosing-right-enterprise-ai-platform-for-scale',
     'how-to-build-an-enterprise-ai-strategy',
-    'top-5-ai-enterprise-software-use-cases-2026'
+    'top-5-ai-enterprise-software-use-cases-2026',
+    'maximizing-roi-with-enterprise-automation-tools'
   ]);
 
   // Fetch published articles from Supabase

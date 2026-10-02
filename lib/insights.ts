@@ -4,6 +4,7 @@ import { scalingSuccessCustomEnterpriseSoftwareContentEn } from './articles/scal
 import { choosingEnterpriseAiPlatformContentEn, choosingEnterpriseAiPlatformFaqs } from './articles/choosing-right-enterprise-ai-platform-content';
 import { enterpriseAiStrategyContentEn } from './articles/how-to-build-an-enterprise-ai-strategy-content';
 import { topAiUseCasesContentEn } from './articles/top-5-ai-enterprise-software-use-cases-content';
+import { enterpriseAutomationRoiContentEn } from './articles/maximizing-roi-with-enterprise-automation-tools-content';
 
 export interface ArticleFaq {
   question: string;
@@ -54,6 +55,8 @@ export const ARTICLE_IMAGES: Record<string, string> = {
     '/images/articles/how-to-build-an-enterprise-ai-strategy.webp',
   'top-5-ai-enterprise-software-use-cases-2026':
     '/images/articles/top-5-ai-enterprise-software-use-cases-2026.webp',
+  'maximizing-roi-with-enterprise-automation-tools':
+    '/images/articles/maximizing-roi-with-enterprise-automation-tools.webp',
 };
 
 export const ARTICLE_ALT_TEXTS: Record<string, Record<string, string>> = {
@@ -77,9 +80,38 @@ export const ARTICLE_ALT_TEXTS: Record<string, Record<string, string>> = {
   'top-5-ai-enterprise-software-use-cases-2026': {
     en: 'Enterprise AI core connected to five use-case tiles for customer service, document workflow automation, enterprise knowledge search, AI-assisted software development and analytics, with the HyperCode logo',
   },
+  'maximizing-roi-with-enterprise-automation-tools': {
+    en: 'Automation engine connected to workflow, database, cloud, document approval and AI tiles beneath a dashboard with a rising green trend line, on a deep navy background with the HyperCode logo',
+  },
 };
 
 export const articles: Article[] = [
+  {
+    slug: 'maximizing-roi-with-enterprise-automation-tools',
+    title: 'Maximizing ROI with Enterprise Automation Tools',
+    excerpt: 'A practical framework for turning automation investment into measurable business value.',
+    date: 'October 2, 2026',
+    category: 'AI',
+    readTime: '8 min read',
+    author: {
+      name: 'HyperCode',
+      role: 'Technology Consulting',
+      avatar: '/placeholder-user.jpg',
+      bio: 'HyperCode is a Schaumburg, Illinois-based technology consulting and engineering company founded in 2014.'
+    },
+    related: ['top-5-ai-enterprise-software-use-cases-2026', 'how-to-build-an-enterprise-ai-strategy'],
+    content: enterpriseAutomationRoiContentEn,
+    image: ARTICLE_IMAGES['maximizing-roi-with-enterprise-automation-tools'],
+    imageAlt: ARTICLE_ALT_TEXTS['maximizing-roi-with-enterprise-automation-tools'].en,
+    heroImage: '/images/articles/maximizing-roi-with-enterprise-automation-tools-hero.webp',
+    heroImageAlt: 'A connected journey of six platforms from a workflow map and automation gear through integration, a metrics dashboard and optimization to stacked blocks with a rising green arrow',
+    seoTitle: 'Maximizing ROI with Enterprise Automation Tools | HyperCode',
+    seoDescription: 'Learn how enterprise automation tools can improve efficiency, reduce friction, connect workflows, and create measurable business value with a practical ROI framework.',
+    ctaHeading: 'Ready to Turn Automation Into Measurable Business Value?',
+    ctaBody: 'HyperCode helps organizations connect workflows, applications, data, AI and cloud technologies to build practical automation solutions around real business operations.',
+    publishedIso: '2026-10-02',
+    modifiedIso: '2026-10-02',
+  },
   {
     slug: 'top-5-ai-enterprise-software-use-cases-2026',
     title: 'Top 5 AI Enterprise Software Use Cases for 2026',
