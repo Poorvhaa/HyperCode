@@ -216,10 +216,30 @@ export const enterpriseAiStrategyContentEn = `
       8% { box-shadow: 0 0 0 6px rgba(37, 181, 255, 0.25); transform: scale(1.06); }
     }
     @keyframes hc-strat-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+
+    .hc-strat-road .hc-strat-step { animation: hc-strat-road-lit 9s ease-in-out infinite; }
+    .hc-strat-road .hc-strat-step .hc-strat-icon { animation: hc-strat-road-icon 9s ease-in-out infinite; }
+    .hc-strat-road .hc-strat-step::before { background: linear-gradient(180deg, #145BFF 0%, #25B5FF 40%, #d6f1ff 50%, #25B5FF 60%, #145BFF 100%); background-size: 100% 300%; animation: hc-strat-road-flow-v 3s linear infinite; }
+    .hc-strat-road .hc-strat-step:nth-child(2), .hc-strat-road .hc-strat-step:nth-child(2) .hc-strat-icon { animation-delay: 1.5s; }
+    .hc-strat-road .hc-strat-step:nth-child(3), .hc-strat-road .hc-strat-step:nth-child(3) .hc-strat-icon { animation-delay: 3s; }
+    .hc-strat-road .hc-strat-step:nth-child(4), .hc-strat-road .hc-strat-step:nth-child(4) .hc-strat-icon { animation-delay: 4.5s; }
+    .hc-strat-road .hc-strat-step:nth-child(5), .hc-strat-road .hc-strat-step:nth-child(5) .hc-strat-icon { animation-delay: 6s; }
+    .hc-strat-road .hc-strat-step:nth-child(6), .hc-strat-road .hc-strat-step:nth-child(6) .hc-strat-icon { animation-delay: 7.5s; }
+    @keyframes hc-strat-road-lit {
+      0%, 20%, 100% { border-color: #e2e8f0; box-shadow: 0 0 0 0 rgba(20, 91, 255, 0); }
+      5%, 14% { border-color: #145BFF; box-shadow: 0 8px 22px rgba(20, 91, 255, 0.18); }
+    }
+    @keyframes hc-strat-road-icon {
+      0%, 20%, 100% { transform: scale(1); }
+      8% { transform: scale(1.1); }
+    }
+    @keyframes hc-strat-road-flow-v { from { background-position: 0 100%; } to { background-position: 0 0; } }
+    @keyframes hc-strat-road-flow-h { from { background-position: 100% 0; } to { background-position: 0 0; } }
   }
 
   @media (min-width: 640px) and (prefers-reduced-motion: no-preference) {
     .hc-strat-flow li::after { animation-name: hc-strat-flow-h; }
+    .hc-strat-road .hc-strat-step::before { background: linear-gradient(90deg, #145BFF 0%, #25B5FF 40%, #d6f1ff 50%, #25B5FF 60%, #145BFF 100%); background-size: 300% 100%; animation-name: hc-strat-road-flow-h; }
   }
 </style>
 

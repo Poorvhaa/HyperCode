@@ -52,9 +52,9 @@ export const ARTICLE_IMAGES: Record<string, string> = {
   'choosing-right-enterprise-ai-platform-for-scale':
     '/images/articles/choosing-right-enterprise-ai-platform-for-scale.webp',
   'how-to-build-an-enterprise-ai-strategy':
-    '/images/articles/how-to-build-an-enterprise-ai-strategy.webp',
+    '/images/articles/how-to-build-an-enterprise-ai-strategy-workshop.webp',
   'top-5-ai-enterprise-software-use-cases-2026':
-    '/images/articles/top-5-ai-enterprise-software-use-cases-2026.webp',
+    '/images/articles/top-5-ai-enterprise-software-use-cases-2026-workshop.webp',
   'maximizing-roi-with-enterprise-automation-tools':
     '/images/articles/maximizing-roi-with-enterprise-automation-tools.webp',
 };
@@ -75,10 +75,10 @@ export const ARTICLE_ALT_TEXTS: Record<string, Record<string, string>> = {
     en: 'Layered enterprise AI platform with data and cloud infrastructure, an AI orchestration tier and business application dashboards, connected to security, governance, API, analytics, automation and cloud icons, with the HyperCode logo',
   },
   'how-to-build-an-enterprise-ai-strategy': {
-    en: 'Central enterprise intelligence core connected to business goals, people, data, AI, cloud technology, governance and growth tiles on a deep navy background, with the HyperCode logo',
+    en: 'HyperCode enterprise AI strategy workshop: a consultant presents the Discover to Scale roadmap and its foundations of goals, data, people, technology and governance to business leaders',
   },
   'top-5-ai-enterprise-software-use-cases-2026': {
-    en: 'Enterprise AI core connected to five use-case tiles for customer service, document workflow automation, enterprise knowledge search, AI-assisted software development and analytics, with the HyperCode logo',
+    en: 'HyperCode consultant presenting five enterprise AI use cases, customer service, development, analytics, knowledge and automation, to a business technology team',
   },
   'maximizing-roi-with-enterprise-automation-tools': {
     en: 'Automation engine connected to workflow, database, cloud, document approval and AI tiles beneath a dashboard with a rising green trend line, on a deep navy background with the HyperCode logo',
@@ -129,8 +129,8 @@ export const articles: Article[] = [
     content: topAiUseCasesContentEn,
     image: ARTICLE_IMAGES['top-5-ai-enterprise-software-use-cases-2026'],
     imageAlt: ARTICLE_ALT_TEXTS['top-5-ai-enterprise-software-use-cases-2026'].en,
-    heroImage: '/images/articles/top-5-ai-enterprise-software-use-cases-2026-hero.webp',
-    heroImageAlt: 'Central enterprise AI hub connected to five use cases: a customer service headset, a document workflow, a knowledge search book, a laptop with code and a rising analytics chart',
+    heroImage: '/images/articles/top-5-ai-enterprise-software-use-cases-2026-workshop-hero.webp',
+    heroImageAlt: 'Five enterprise teams, a customer service agent, a software developer, a data analyst, a knowledge worker and an operations manager, connected to a shared enterprise AI platform',
     seoTitle: 'Top 5 AI Enterprise Software Use Cases for 2026 | HyperCode',
     seoDescription: 'Explore 5 practical AI enterprise software use cases for 2026, from customer service and workflow automation to knowledge, AI-assisted IT and analytics.',
     ctaHeading: 'Ready to Put AI to Work in Your Enterprise?',
@@ -155,8 +155,8 @@ export const articles: Article[] = [
     content: enterpriseAiStrategyContentEn,
     image: ARTICLE_IMAGES['how-to-build-an-enterprise-ai-strategy'],
     imageAlt: ARTICLE_ALT_TEXTS['how-to-build-an-enterprise-ai-strategy'].en,
-    heroImage: '/images/articles/how-to-build-an-enterprise-ai-strategy-hero.webp',
-    heroImageAlt: 'People, business goals, data, intelligence, cloud technology and governance flowing together into rising steps and a growth chart representing measurable enterprise impact, in HyperCode blue and green',
+    heroImage: '/images/articles/how-to-build-an-enterprise-ai-strategy-workshop-hero.webp',
+    heroImageAlt: 'Business and technology leaders around a planning table tracing an illuminated AI roadmap from a business goal through six milestones to a green growth chart',
     seoTitle: 'How to Build an Enterprise AI Strategy: 2026 Roadmap | HyperCode',
     seoDescription: 'Learn how to build an enterprise AI strategy for 2026 with a practical roadmap covering business goals, data, architecture, governance, automation, adoption and scale.',
     ctaHeading: 'Ready to Build an Enterprise AI Strategy That Can Scale?',
