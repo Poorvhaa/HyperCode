@@ -52,7 +52,8 @@ export default async function InsightsPage({ params }: Props) {
     'how-to-build-an-enterprise-ai-strategy',
     'top-5-ai-enterprise-software-use-cases-2026',
     'maximizing-roi-with-enterprise-automation-tools',
-    'building-intelligent-systems-enterprise-ai-companies-2026'
+    'building-intelligent-systems-enterprise-ai-companies-2026',
+    'lifecycle-of-custom-software-design-and-development'
   ]);
 
   // Fetch published articles from Supabase

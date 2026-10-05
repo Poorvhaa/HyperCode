@@ -6,6 +6,7 @@ import { enterpriseAiStrategyContentEn } from './articles/how-to-build-an-enterp
 import { topAiUseCasesContentEn } from './articles/top-5-ai-enterprise-software-use-cases-content';
 import { enterpriseAutomationRoiContentEn } from './articles/maximizing-roi-with-enterprise-automation-tools-content';
 import { intelligentSystemsContentEn } from './articles/building-intelligent-systems-enterprise-ai-companies-2026-content';
+import { customSoftwareLifecycleContentEn } from './articles/lifecycle-of-custom-software-design-and-development-content';
 
 export interface ArticleFaq {
   question: string;
@@ -60,6 +61,8 @@ export const ARTICLE_IMAGES: Record<string, string> = {
     '/images/articles/maximizing-roi-with-enterprise-automation-tools.webp',
   'building-intelligent-systems-enterprise-ai-companies-2026':
     '/images/articles/building-intelligent-systems-enterprise-ai-companies-2026.webp',
+  'lifecycle-of-custom-software-design-and-development':
+    '/images/articles/lifecycle-of-custom-software-design-and-development.webp',
 };
 
 export const ARTICLE_ALT_TEXTS: Record<string, Record<string, string>> = {
@@ -89,9 +92,36 @@ export const ARTICLE_ALT_TEXTS: Record<string, Record<string, string>> = {
   'building-intelligent-systems-enterprise-ai-companies-2026': {
     en: 'Enterprise AI leaders collaborating at a wall display showing a layered intelligent system of data, workflow, governance and business value, with the HyperCode logo',
   },
+  'lifecycle-of-custom-software-design-and-development': {
+    en: 'HyperCode software team collaborating across discovery, design, development, testing, deployment, and continuous improvement.',
+  },
 };
 
 export const articles: Article[] = [
+  {
+    slug: 'lifecycle-of-custom-software-design-and-development',
+    title: 'The Lifecycle of Custom Software Design and Development',
+    excerpt: 'Learn how custom software moves from business idea to dependable digital product through planning, design, engineering, testing, deployment, and continuous improvement.',
+    date: 'October 5, 2026',
+    category: 'Software Development',
+    readTime: '7 min read',
+    author: {
+      name: 'HyperCode',
+      role: 'Technology Consulting',
+      avatar: '/placeholder-user.jpg',
+      bio: 'HyperCode is a Schaumburg, Illinois-based technology consulting and engineering company founded in 2014.'
+    },
+    related: ['scaling-success-custom-enterprise-software', 'building-intelligent-systems-enterprise-ai-companies-2026'],
+    content: customSoftwareLifecycleContentEn,
+    image: ARTICLE_IMAGES['lifecycle-of-custom-software-design-and-development'],
+    imageAlt: ARTICLE_ALT_TEXTS['lifecycle-of-custom-software-design-and-development'].en,
+    seoTitle: 'Custom Software Design and Development Lifecycle | HyperCode',
+    seoDescription: 'Explore the lifecycle of custom software design and development, from discovery and architecture through engineering, testing, deployment, security, and continuous improvement.',
+    ctaHeading: 'Ready to Turn Your Software Idea Into a Scalable Product?',
+    ctaBody: 'HyperCode helps organizations move from business requirements to dependable digital products through strategy, design, software engineering, integration, cloud, testing, deployment, and ongoing improvement.',
+    publishedIso: '2026-10-05',
+    modifiedIso: '2026-10-05',
+  },
   {
     slug: 'building-intelligent-systems-enterprise-ai-companies-2026',
     title: 'Building Intelligent Systems: Enterprise AI Companies in 2026',
