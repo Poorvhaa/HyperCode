@@ -7,6 +7,7 @@ import { topAiUseCasesContentEn } from './articles/top-5-ai-enterprise-software-
 import { enterpriseAutomationRoiContentEn } from './articles/maximizing-roi-with-enterprise-automation-tools-content';
 import { intelligentSystemsContentEn } from './articles/building-intelligent-systems-enterprise-ai-companies-2026-content';
 import { customSoftwareLifecycleContentEn } from './articles/lifecycle-of-custom-software-design-and-development-content';
+import { enterpriseModernizationContentEn } from './articles/enterprise-software-development-modernizing-core-systems-content';
 
 export interface ArticleFaq {
   question: string;
@@ -63,6 +64,8 @@ export const ARTICLE_IMAGES: Record<string, string> = {
     '/images/articles/building-intelligent-systems-enterprise-ai-companies-2026.webp',
   'lifecycle-of-custom-software-design-and-development':
     '/images/articles/lifecycle-of-custom-software-design-and-development.webp',
+  'enterprise-software-development-modernizing-core-systems':
+    '/images/articles/enterprise-software-development-modernizing-core-systems.webp',
 };
 
 export const ARTICLE_ALT_TEXTS: Record<string, Record<string, string>> = {
@@ -95,9 +98,36 @@ export const ARTICLE_ALT_TEXTS: Record<string, Record<string, string>> = {
   'lifecycle-of-custom-software-design-and-development': {
     en: 'HyperCode software team collaborating across discovery, design, development, testing, deployment, and continuous improvement.',
   },
+  'enterprise-software-development-modernizing-core-systems': {
+    en: 'HyperCode technology team planning the modernization of legacy enterprise systems into a connected cloud, data, API, and application platform.',
+  },
 };
 
 export const articles: Article[] = [
+  {
+    slug: 'enterprise-software-development-modernizing-core-systems',
+    title: 'Enterprise Software Development: Modernizing Core Systems',
+    excerpt: 'Learn how organizations can modernize core enterprise systems while preserving valuable business logic, data, integrations, and operational knowledge.',
+    date: 'October 6, 2026',
+    category: 'Software Development',
+    readTime: '8 min read',
+    author: {
+      name: 'HyperCode',
+      role: 'Technology Consulting',
+      avatar: '/placeholder-user.jpg',
+      bio: 'HyperCode is a Schaumburg, Illinois-based technology consulting and engineering company founded in 2014.'
+    },
+    related: ['lifecycle-of-custom-software-design-and-development', 'scaling-success-custom-enterprise-software'],
+    content: enterpriseModernizationContentEn,
+    image: ARTICLE_IMAGES['enterprise-software-development-modernizing-core-systems'],
+    imageAlt: ARTICLE_ALT_TEXTS['enterprise-software-development-modernizing-core-systems'].en,
+    seoTitle: 'Enterprise Software Development: Modernizing Core Systems | HyperCode',
+    seoDescription: 'Learn how enterprise software development can modernize legacy core systems while preserving critical business logic, data, integrations, and operational knowledge.',
+    ctaHeading: 'Ready to Modernize Your Core Systems?',
+    ctaBody: 'HyperCode helps organizations assess legacy systems, preserve valuable business capabilities, modernize architecture, connect data and applications, and build scalable platforms for what comes next.',
+    publishedIso: '2026-10-06',
+    modifiedIso: '2026-10-06',
+  },
   {
     slug: 'lifecycle-of-custom-software-design-and-development',
     title: 'The Lifecycle of Custom Software Design and Development',

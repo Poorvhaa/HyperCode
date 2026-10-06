@@ -53,7 +53,8 @@ export default async function InsightsPage({ params }: Props) {
     'top-5-ai-enterprise-software-use-cases-2026',
     'maximizing-roi-with-enterprise-automation-tools',
     'building-intelligent-systems-enterprise-ai-companies-2026',
-    'lifecycle-of-custom-software-design-and-development'
+    'lifecycle-of-custom-software-design-and-development',
+    'enterprise-software-development-modernizing-core-systems'
   ]);
 
   // Fetch published articles from Supabase
