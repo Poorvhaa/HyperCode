@@ -23,7 +23,8 @@ const ALLOWED_ARTICLE_SLUGS = new Set([
   'maximizing-roi-with-enterprise-automation-tools',
   'building-intelligent-systems-enterprise-ai-companies-2026',
   'lifecycle-of-custom-software-design-and-development',
-  'enterprise-software-development-modernizing-core-systems'
+  'enterprise-software-development-modernizing-core-systems',
+  'why-enterprises-need-custom-software-development-solutions'
 ]);
 
 async function fetchArticle(slug: string, locale: string) {
