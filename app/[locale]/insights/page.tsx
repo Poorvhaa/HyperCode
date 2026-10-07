@@ -55,7 +55,8 @@ export default async function InsightsPage({ params }: Props) {
     'building-intelligent-systems-enterprise-ai-companies-2026',
     'lifecycle-of-custom-software-design-and-development',
     'enterprise-software-development-modernizing-core-systems',
-    'why-enterprises-need-custom-software-development-solutions'
+    'why-enterprises-need-custom-software-development-solutions',
+    'the-roi-of-custom-business-software-development'
   ]);
 
   // Fetch published articles from Supabase

@@ -24,7 +24,8 @@ const ALLOWED_ARTICLE_SLUGS = new Set([
   'building-intelligent-systems-enterprise-ai-companies-2026',
   'lifecycle-of-custom-software-design-and-development',
   'enterprise-software-development-modernizing-core-systems',
-  'why-enterprises-need-custom-software-development-solutions'
+  'why-enterprises-need-custom-software-development-solutions',
+  'the-roi-of-custom-business-software-development'
 ]);
 
 async function fetchArticle(slug: string, locale: string) {
