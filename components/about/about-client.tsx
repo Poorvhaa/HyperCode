@@ -37,14 +37,14 @@ export function AboutClient({ locale, tAbout, tCommon }: AboutClientProps) {
 
   // Capability array maps to solutions slugs
   const capabilities = [
-    { name: locale === 'es' ? 'Automatización de IA' : 'AI & Automation', slug: 'ai-automation', desc: locale === 'es' ? 'Agentes de voz, LLMs y RAG.' : 'AI voice agents, LLMs, and RAG.' },
+    { name: locale === 'es' ? 'Automatización de IA' : 'AI & Automation', slug: 'ai-workflow-automation', desc: locale === 'es' ? 'Agentes de voz, LLMs y RAG.' : 'AI voice agents, LLMs, and RAG.' },
     { name: locale === 'es' ? 'Inteligencia de Negocio' : 'Business Intelligence', slug: 'business-intelligence', desc: locale === 'es' ? 'Dashboards corporativos y analítica.' : 'Corporate dashboards and analytics.' },
-    { name: locale === 'es' ? 'Análisis de Datos' : 'Data Analytics', slug: 'data-analytics-services', desc: locale === 'es' ? 'Modelado predictivo y ETLs.' : 'Predictive modeling and ETLs.' },
-    { name: locale === 'es' ? 'Desarrollo de Software' : 'Software Engineering', slug: 'software-dev', desc: locale === 'es' ? 'Aplicaciones escalables de nivel empresarial.' : 'Scalable enterprise-grade applications.' },
-    { name: locale === 'es' ? 'Aplicaciones Web' : 'Web Applications', slug: 'web-dev', desc: locale === 'es' ? 'Sistemas modernos en la nube y portales.' : 'Modern cloud systems and web portals.' },
-    { name: locale === 'es' ? 'Aplicaciones Móviles' : 'Mobile Apps', slug: 'mobile-dev', desc: locale === 'es' ? 'Aplicaciones iOS y Android nativas.' : 'Native iOS and Android mobile solutions.' },
-    { name: locale === 'es' ? 'Nube y DevOps' : 'Cloud & DevOps', slug: 'cloud-infrastructure', desc: locale === 'es' ? 'Infraestructura Terraform, CI/CD y AWS.' : 'Terraform infrastructure, CI/CD, and AWS.' },
-    { name: locale === 'es' ? 'Transformación Digital' : 'Digital Transformation', slug: 'digital-transformation', desc: locale === 'es' ? 'Reingeniería de sistemas y migración legacy.' : 'System re-engineering and legacy migration.' }
+    { name: locale === 'es' ? 'Análisis de Datos' : 'Data Analytics', slug: 'predictive-analytics', desc: locale === 'es' ? 'Modelado predictivo y ETLs.' : 'Predictive modeling and ETLs.' },
+    { name: locale === 'es' ? 'Desarrollo de Software' : 'Software Engineering', slug: 'custom-software-development', desc: locale === 'es' ? 'Aplicaciones escalables de nivel empresarial.' : 'Scalable enterprise-grade applications.' },
+    { name: locale === 'es' ? 'Aplicaciones Web' : 'Web Applications', slug: 'customer-portals', desc: locale === 'es' ? 'Sistemas modernos en la nube y portales.' : 'Modern cloud systems and web portals.' },
+    { name: locale === 'es' ? 'Aplicaciones Móviles' : 'Mobile Apps', slug: 'enterprise-mobile-apps', desc: locale === 'es' ? 'Aplicaciones iOS y Android nativas.' : 'Native iOS and Android mobile solutions.' },
+    { name: locale === 'es' ? 'Nube y DevOps' : 'Cloud & DevOps', slug: 'infrastructure-automation', desc: locale === 'es' ? 'Infraestructura Terraform, CI/CD y AWS.' : 'Terraform infrastructure, CI/CD, and AWS.' },
+    { name: locale === 'es' ? 'Transformación Digital' : 'Digital Transformation', slug: 'digital-transformation-consulting', desc: locale === 'es' ? 'Reingeniería de sistemas y migración legacy.' : 'System re-engineering and legacy migration.' }
   ];
 
   // Business journey steps (What HyperCode Solves)

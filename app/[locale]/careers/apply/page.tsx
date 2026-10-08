@@ -22,6 +22,10 @@ export async function generateMetadata({ params }: Props) {
     title,
     description,
     alternates: buildAlternates(locale, path),
+    robots: {
+      index: false,
+      follow: true,
+    },
     openGraph: {
       title,
       description,

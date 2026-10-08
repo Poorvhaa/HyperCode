@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { SolutionDetailPage } from '@/components/solution-detail-page';
 import { buildAlternates, localeUrl } from '@/lib/site-url';
+import { canonicalServiceSlug } from '@/lib/services-details';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -11,7 +12,7 @@ export async function generateMetadata({ params }: Props) {
   const tc = await getTranslations({ locale, namespace: 'Common' });
   const title = `HyperCode | Enterprise Web Development Services | ${tc('solutions')}`;
   const description = "Designing and developing modern, scalable, secure, and high-performance web applications using React, Next.js, and Node.js. Headquartered in Schaumburg, IL.";
-  const path = 'solutions/web-development-services';
+  const path = `solutions/${canonicalServiceSlug('web-development-services')}`;
 
   return {
     title,

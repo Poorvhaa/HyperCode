@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { SolutionDetailPage } from '@/components/solution-detail-page';
 import { buildAlternates, localeUrl } from '@/lib/site-url';
+import { canonicalServiceSlug } from '@/lib/services-details';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -11,7 +12,7 @@ export async function generateMetadata({ params }: Props) {
   const tc = await getTranslations({ locale, namespace: 'Common' });
   const title = `HyperCode | Business Intelligence Consulting | ${tc('solutions')}`;
   const description = "Enterprise Business Intelligence consulting, Power BI/Tableau dashboard creation, self-service BI setups, and data visualization. Headquartered in Schaumburg, IL.";
-  const path = 'solutions/business-intelligence-consulting';
+  const path = `solutions/${canonicalServiceSlug('business-intelligence-consulting')}`;
 
   return {
     title,

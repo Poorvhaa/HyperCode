@@ -37,15 +37,23 @@ export function localeUrl(locale: string, path = ''): string {
  * Includes standard language codes ('en', 'es'), region codes ('en-US', 'es-US'),
  * and default fallback ('x-default').
  */
-export function localeAlternates(path = ''): Record<string, string> {
+export function localeAlternates(path = '', locales: string[] = ['en', 'es']): Record<string, string> {
   const clean = normalizePath(path);
-  return {
-    en: localeUrl('en', clean),
-    es: localeUrl('es', clean),
-    'en-US': localeUrl('en', clean),
-    'es-US': localeUrl('es', clean),
-    'x-default': localeUrl('en', clean),
-  };
+  const languages: Record<string, string> = {};
+  if (locales.includes('en')) {
+    languages.en = localeUrl('en', clean);
+  }
+  if (locales.includes('es')) {
+    languages.es = localeUrl('es', clean);
+  }
+  if (locales.includes('en')) {
+    languages['en-US'] = localeUrl('en', clean);
+  }
+  if (locales.includes('es')) {
+    languages['es-US'] = localeUrl('es', clean);
+  }
+  languages['x-default'] = localeUrl('en', clean);
+  return languages;
 }
 
 /**

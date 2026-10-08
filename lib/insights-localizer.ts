@@ -43,6 +43,14 @@ const articleTranslations: Record<string, Record<string, { title: string; excerp
   }
 };
 
+// Locales with a full-body version of the article; untranslated locales fall back to English content.
+export const getArticleLocales = (slug: string): string[] => {
+  const translated = Object.keys(articleTranslations[slug] || {}).filter(
+    (locale) => articleTranslations[slug][locale].content
+  );
+  return ['en', ...translated];
+};
+
 // Translate Author details dynamically
 const getLocalizedAuthor = (author: Author, locale: string): Author => {
   const rolesMap: Record<string, Record<string, string>> = {

@@ -1,6 +1,6 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { SolutionDetailPage } from '@/components/solution-detail-page';
-import { getServiceDetails, SERVICE_REGISTRY } from '@/lib/services-details';
+import { getServiceDetails, SERVICE_REGISTRY, canonicalServiceSlug } from '@/lib/services-details';
 import { routing } from '@/i18n/routing';
 import { notFound } from 'next/navigation';
 import { localeUrl, localeAlternates, absoluteUrl } from '@/lib/site-url';
@@ -37,17 +37,18 @@ export async function generateMetadata({ params }: Props) {
     ? (locale === 'es' ? 'Servicios de SEO, AEO y GEO | HyperCode' : 'SEO, AEO & GEO Services | HyperCode')
     : `HyperCode | ${details.title}`;
   const pageDescription = details.metaDescription || details.description;
+  const canonicalPath = `solutions/${canonicalServiceSlug(slug)}`;
   return {
     title: pageTitle,
     description: pageDescription,
     alternates: {
-      canonical: localeUrl(locale, `solutions/${slug}`),
-      languages: localeAlternates(`solutions/${slug}`),
+      canonical: localeUrl(locale, canonicalPath),
+      languages: localeAlternates(canonicalPath),
     },
     openGraph: {
       title: pageTitle,
       description: pageDescription,
-      url: localeUrl(locale, `solutions/${slug}`),
+      url: localeUrl(locale, canonicalPath),
       siteName: 'HyperCode',
       locale: locale === 'en' ? 'en_US' : 'es_ES',
       type: 'website',
@@ -100,7 +101,7 @@ export default async function DynamicServicePage({ params }: Props) {
         '@type': 'ListItem',
         'position': 3,
         'name': details.title,
-        'item': localeUrl(locale, `solutions/${slug}`)
+        'item': localeUrl(locale, `solutions/${canonicalServiceSlug(slug)}`)
       }
     ]
   };

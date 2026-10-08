@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { SolutionDetailPage } from '@/components/solution-detail-page';
 import { buildAlternates, localeUrl } from '@/lib/site-url';
+import { canonicalServiceSlug } from '@/lib/services-details';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -11,7 +12,7 @@ export async function generateMetadata({ params }: Props) {
   const tc = await getTranslations({ locale, namespace: 'Common' });
   const title = `HyperCode | Data Warehousing Services | ${tc('solutions')}`;
   const description = "Enterprise Cloud Data Warehousing services, database migration, Snowflake/BigQuery architectures, and data lakehouse deployment. Headquartered in Schaumburg, IL.";
-  const path = 'solutions/data-warehousing-services';
+  const path = `solutions/${canonicalServiceSlug('data-warehousing-services')}`;
 
   return {
     title,

@@ -5,7 +5,7 @@ import { ArrowLeft, Calendar, Clock, User, Share2, Mail } from 'lucide-react';
 import { BrandButton } from '@/components/brand-button';
 import { Link } from '@/i18n/routing';
 import { notFound } from 'next/navigation';
-import { getLocalizedArticle, getLocalizedArticles } from '@/lib/insights-localizer';
+import { getArticleLocales, getLocalizedArticle, getLocalizedArticles } from '@/lib/insights-localizer';
 import { ARTICLE_IMAGES, ARTICLE_ALT_TEXTS } from '@/lib/insights';
 import { routing } from '@/i18n/routing';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
@@ -91,14 +91,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const t = await getTranslations({ locale, namespace: 'Insights' });
   const seoTitle = 'seoTitle' in article ? article.seoTitle : undefined;
   const description = ('seoDescription' in article && article.seoDescription) ? article.seoDescription : article.excerpt;
-  const canonical = localeUrl(locale, `insights/${article.slug}`);
+  const articleLocales = getArticleLocales(article.slug);
+  const canonical = localeUrl(articleLocales.includes(locale) ? locale : 'en', `insights/${article.slug}`);
 
   return {
-    title: seoTitle ? { absolute: seoTitle } : `HyperCode | ${article.title} | ${t('metadataSection')}`,
+    title: seoTitle ? { absolute: seoTitle } : `${article.title} | ${t('metadataSection')} | HyperCode`,
     description,
     alternates: {
       canonical,
-      languages: localeAlternates(`insights/${article.slug}`),
+      languages: localeAlternates(`insights/${article.slug}`, articleLocales),
     },
     openGraph: {
       title: seoTitle || `HyperCode | ${article.title}`,
@@ -188,6 +189,7 @@ export default async function ArticlePage({ params }: PageProps) {
   const relatedArticles = allArticles.filter((art) => art.slug !== article.slug);
 
   const shareUrl = localeUrl(locale, `insights/${article.slug}`);
+  const canonicalUrl = localeUrl(getArticleLocales(article.slug).includes(locale) ? locale : 'en', `insights/${article.slug}`);
   const shareText = encodeURIComponent(article.title);
   const ctaHeading = 'ctaHeading' in article ? article.ctaHeading : undefined;
   const ctaBody = 'ctaBody' in article ? article.ctaBody : undefined;
@@ -219,7 +221,7 @@ export default async function ArticlePage({ params }: PageProps) {
             url: absoluteUrl('/hypercodeit.logo.png'),
           },
         },
-        mainEntityOfPage: shareUrl,
+        mainEntityOfPage: canonicalUrl,
         ...(article.image ? { image: absoluteUrl(article.image) } : {}),
       }
     : null;

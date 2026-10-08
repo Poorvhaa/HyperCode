@@ -1,14 +1,14 @@
 import type { MetadataRoute } from 'next';
 import { routing } from '@/i18n/routing';
-import { SERVICE_REGISTRY, ALIAS_MAP } from '@/lib/services-details';
+import { SERVICE_REGISTRY, ALIAS_MAP, canonicalServiceSlug } from '@/lib/services-details';
 import { articles } from '@/lib/insights';
+import { getArticleLocales } from '@/lib/insights-localizer';
 import { localeUrl } from '@/lib/site-url';
 
 const STATIC_PATHS = [
   '',
   'about',
   'careers',
-  'careers/apply',
   'contact',
   'consultation',
   'insights',
@@ -38,10 +38,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }
   }
 
-  const solutionSlugs = new Set([
-    ...Object.keys(SERVICE_REGISTRY),
-    ...Object.keys(ALIAS_MAP),
-  ]);
+  const solutionSlugs = new Set(
+    [...Object.keys(SERVICE_REGISTRY), ...Object.keys(ALIAS_MAP)].filter(
+      (slug) => canonicalServiceSlug(slug) === slug
+    )
+  );
 
   for (const locale of routing.locales) {
     for (const slug of solutionSlugs) {
@@ -56,9 +57,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   for (const locale of routing.locales) {
     for (const article of articles) {
+      if (!getArticleLocales(article.slug).includes(locale)) continue;
+      const articleDate = article.modifiedIso || article.publishedIso;
       entries.push({
         url: buildUrl(locale, `insights/${article.slug}`),
-        lastModified: now,
+        lastModified: articleDate ? new Date(`${articleDate}T12:00:00Z`) : now,
         changeFrequency: 'monthly',
         priority: 0.7,
       });

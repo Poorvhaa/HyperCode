@@ -104,7 +104,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     metadataBase: new URL(SITE_URL),
     title: {
       default: currentSeo.title,
-      template: `HyperCode | %s`,
+      template: '%s',
     },
     description: currentSeo.desc,
     generator: 'v0.app',

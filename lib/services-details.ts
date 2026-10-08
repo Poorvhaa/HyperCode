@@ -846,6 +846,17 @@ export const ALIAS_MAP: Record<string, string> = {
   'web-development-services': 'corporate-websites'
 };
 
+// Slugs that render the same service as another registry entry; they stay reachable
+// but canonicalize to the primary slug and are excluded from the sitemap.
+const DUPLICATE_SERVICE_SLUGS: Record<string, string> = {
+  'legacy-modernization-dt': 'legacy-modernization',
+  'marketplace-development-ecommerce': 'marketplace-development'
+};
+
+export function canonicalServiceSlug(slug: string): string {
+  return ALIAS_MAP[slug] || DUPLICATE_SERVICE_SLUGS[slug] || slug;
+}
+
 // Localized images mapping
 export const CATEGORY_HERO_IMAGES: Record<string, string> = {
   'ai-automation': 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1600',
@@ -1189,7 +1200,7 @@ export function getServiceDetails(slug: string, locale: string): any {
     const relService = SERVICE_REGISTRY[relSlug];
     return {
       name: relService ? (isEs ? relService.esName : relService.enName) : relSlug,
-      slug: relSlug
+      slug: canonicalServiceSlug(relSlug)
     };
   });
 

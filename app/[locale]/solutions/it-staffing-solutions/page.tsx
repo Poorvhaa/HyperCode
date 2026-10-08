@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { SolutionDetailPage } from '@/components/solution-detail-page';
 import { buildAlternates, localeUrl } from '@/lib/site-url';
+import { canonicalServiceSlug } from '@/lib/services-details';
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -22,7 +23,7 @@ export async function generateMetadata({ params }: Props) {
   };
 
   const currentSeo = metadataMap[locale as 'en' | 'es'] || metadataMap.en;
-  const path = 'solutions/it-staffing-solutions';
+  const path = `solutions/${canonicalServiceSlug('it-staffing-solutions')}`;
 
   return {
     title: currentSeo.title,
