@@ -69,9 +69,9 @@ export const ARTICLE_IMAGES: Record<string, string> = {
   'enterprise-software-development-modernizing-core-systems':
     '/images/articles/enterprise-software-development-modernizing-core-systems.webp',
   'why-enterprises-need-custom-software-development-solutions':
-    '/images/articles/why-enterprises-need-custom-software-development-solutions.webp',
+    '/images/articles/why-enterprises-need-custom-software-development-solutions-studio.webp',
   'the-roi-of-custom-business-software-development':
-    '/images/articles/the-roi-of-custom-business-software-development.webp',
+    '/images/articles/the-roi-of-custom-business-software-development-executive.webp',
 };
 
 export const ARTICLE_ALT_TEXTS: Record<string, Record<string, string>> = {
@@ -108,10 +108,10 @@ export const ARTICLE_ALT_TEXTS: Record<string, Record<string, string>> = {
     en: 'HyperCode technology team planning the modernization of legacy enterprise systems into a connected cloud, data, API, and application platform.',
   },
   'why-enterprises-need-custom-software-development-solutions': {
-    en: 'HyperCode software team designing a custom enterprise application around business workflows, integrations, data, and user needs.',
+    en: 'Software product team designing a custom enterprise application with workflows, integrations, data, and user experience.',
   },
   'the-roi-of-custom-business-software-development': {
-    en: 'HyperCode team reviewing the ROI of custom business software, with a display showing manual work flowing through a custom application, integrations and data into rising business value.',
+    en: 'Business technology leader reviewing ROI, efficiency, growth, and performance metrics from custom business software.',
   },
 };
 
