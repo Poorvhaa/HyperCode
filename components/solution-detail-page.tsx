@@ -159,115 +159,15 @@ export function SolutionDetailPage({ locale, pageKey }: SolutionDetailPageProps)
               </div>
             </div>
             {/* Context mock/image on right */}
-            <div className="lg:col-span-5 relative w-full h-[380px] rounded-[24px] overflow-hidden border border-slate-200 shadow-2xl group">
+            <div className="lg:col-span-5 relative w-full aspect-[4/3] rounded-[24px] overflow-hidden border border-slate-200 shadow-2xl group">
               <Image
-                src={
-                  activeTrans.slug === 'ecommerce-websites'
-                    ? '/images/ecommerce.png'
-                    : activeTrans.slug === 'data-warehousing'
-                    ? '/images/case-study-dashboard.png'
-                    : activeTrans.slug === 'dedicated-teams'
-                    ? '/images/staffing-team.png'
-                    : activeTrans.slug === 'design-systems'
-                    ? '/images/ui-ux-design.png'
-                    : activeTrans.slug === 'digital-strategy'
-                    ? '/images/digital-transformation.png'
-                    : activeTrans.slug === 'docker-containerization'
-                    ? '/images/cloud-infrastructure.png'
-                    : activeTrans.slug === 'email-marketing'
-                    ? '/images/digital-marketing.png'
-                    : activeTrans.slug === 'enterprise-software'
-                    ? '/images/software-development.png'
-                    : activeTrans.slug === 'executive-search'
-                    ? '/images/staffing-team.png'
-                    : activeTrans.slug === 'permanent-staffing'
-                    ? '/images/staffing-team.png'
-                    : activeTrans.slug === 'flutter-development'
-                    ? '/images/mobile-development.png'
-                    : activeTrans.slug === 'identity-access-management'
-                    ? '/images/cybersecurity.png'
-                    : activeTrans.slug === 'generative-ai-solutions'
-                    ? '/images/ai-automation.png'
-                    : activeTrans.slug === 'inventory-systems'
-                    ? 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1600'
-                    : activeTrans.slug === 'ios-apps'
-                    ? 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=1600'
-                    : activeTrans.slug === 'monitoring-observability'
-                    ? '/images/cloud-infrastructure.png'
-                    : activeTrans.heroImage
-                }
-                alt={
-                  activeTrans.slug === 'ecommerce-websites'
-                    ? (isEs
-                      ? 'Escaparate de comercio electrónico moderno que muestra un catálogo de productos de compra en línea, flujo de pago y sistema de gestión de pedidos'
-                      : 'Modern e-commerce storefront showcasing an online shopping product catalog, payment checkout flow, and order management system')
-                    : activeTrans.slug === 'data-warehousing'
-                    ? (isEs
-                      ? 'Tablero analítico de almacenamiento de datos empresariales que muestra gráficos de inteligencia de negocios'
-                      : 'Enterprise data warehousing analytics dashboard displaying business intelligence charts')
-                    : activeTrans.slug === 'dedicated-teams'
-                    ? (isEs
-                      ? 'Equipo de desarrollo de software dedicado colaborando en un espacio de trabajo moderno'
-                      : 'Dedicated software development team collaborating in a modern workspace')
-                    : activeTrans.slug === 'design-systems'
-                    ? (isEs
-                      ? 'Interfaz del Sistema de Diseño Nova en un monitor que muestra tipografía, tokens de color y componentes de interfaz de usuario reutilizables'
-                      : 'Nova Design System interface on a monitor displaying typography, color tokens, and reusable UI components')
-                    : activeTrans.slug === 'digital-strategy'
-                    ? (isEs
-                      ? 'Personas colaborando en una estrategia de transformación digital y hoja de ruta tecnológica en una oficina moderna'
-                      : 'People collaborating on a digital transformation strategy and technology roadmap in a modern office')
-                    : activeTrans.slug === 'docker-containerization'
-                    ? (isEs
-                      ? 'Visualización de infraestructura de nube DevOps que muestra microservicios contenedorizados y orquestación de red virtual'
-                      : 'DevOps cloud infrastructure visualization showing containerized microservices and virtual network orchestration')
-                    : activeTrans.slug === 'email-marketing'
-                    ? (isEs
-                      ? 'Tablero de marketing digital que muestra analíticas de campañas de correo electrónico, métricas de rendimiento de boletines y crecimiento de suscriptores'
-                      : 'Digital marketing dashboard showcasing email campaign analytics, newsletter performance metrics, and subscriber growth')
-                    : activeTrans.slug === 'enterprise-software'
-                    ? (isEs
-                      ? 'Diagrama de arquitectura de software empresarial en un monitor que muestra la integración de sistemas y procesos de negocio'
-                      : 'Enterprise software architecture diagram on a monitor showcasing system integration and business processes')
-                    : activeTrans.slug === 'executive-search'
-                    ? (isEs
-                      ? 'Equipo de reclutamiento profesional llevando a cabo la búsqueda de ejecutivos y contratación de liderazgo en una oficina moderna'
-                      : 'Professional recruitment team conducting executive search and leadership hiring in a modern office')
-                    : activeTrans.slug === 'permanent-staffing'
-                    ? (isEs
-                      ? 'Equipo de reclutamiento de TI preseleccionando profesionales de tecnología y talento de software'
-                      : 'IT recruitment team screening technology professionals and software talent')
-                    : activeTrans.slug === 'flutter-development'
-                    ? (isEs
-                      ? 'Interfaz de aplicación móvil de Flutter en un teléfono inteligente que muestra el desarrollo multiplataforma para Android e iOS'
-                      : 'Flutter mobile application interface on a smartphone showcasing cross-platform Android and iOS development')
-                    : activeTrans.slug === 'identity-access-management'
-                    ? (isEs
-                      ? 'Interfaz de gestión de accesos y seguridad cibernética con autenticación multifactor y controles de identidad'
-                      : 'Cybersecurity and access management interface showcasing multi-factor authentication and identity controls')
-                    : activeTrans.slug === 'generative-ai-solutions'
-                    ? (isEs
-                      ? 'Interfaz futurista de automatización de IA que muestra flujos de trabajo inteligentes con agentes avanzados y redes neuronales'
-                      : 'Futuristic AI automation interface showcasing intelligent workflows with advanced agents and neural networks')
-                    : activeTrans.slug === 'inventory-systems'
-                    ? (isEs
-                      ? 'Estanterías industriales de almacén organizadas para la gestión de inventario y operaciones logísticas'
-                      : 'Organized industrial warehouse shelving for inventory management and logistics operations')
-                    : activeTrans.slug === 'ios-apps'
-                    ? (isEs
-                      ? 'Un iPhone que muestra un diseño limpio de interfaz de usuario de aplicación móvil, que representa el desarrollo nativo de aplicaciones iOS'
-                      : 'An iPhone displaying a clean mobile application user interface layout, representing native iOS app development')
-                    : activeTrans.slug === 'monitoring-observability'
-                    ? (isEs
-                      ? 'Tablero de gestión de infraestructura de TI y monitoreo del sistema que muestra operaciones de red en la nube y soporte técnico'
-                      : 'IT infrastructure management and system monitoring dashboard showing cloud network operations and technical support')
-                    : (activeTrans.heroImageAlt || activeTrans.overviewTitle)
-                }
+                src={activeTrans.heroImage}
+                alt={activeTrans.heroImageAlt || activeTrans.overviewTitle}
                 fill
                 priority
+                sizes="(min-width: 1280px) 520px, (min-width: 1024px) 40vw, 100vw"
                 className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-slate-900/10" />
             </div>
           </div>
         </div>

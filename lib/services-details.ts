@@ -1,3 +1,5 @@
+import { getServiceImage } from './service-images';
+
 // Registry of all 108 services across 13 categories with custom localized data generators.
 export interface ServiceDetail {
   slug: string;
@@ -1211,20 +1213,9 @@ export function getServiceDetails(slug: string, locale: string): any {
   let capabilitiesDesc: string | undefined;
   let techDesc: string | undefined;
 
-  let heroImage = CATEGORY_HERO_IMAGES[categoryId] || 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1600';
-  let heroImageAlt: string | undefined = undefined;
-
-  if (targetSlug === 'etl-pipelines') {
-    heroImage = 'https://images.unsplash.com/photo-1544383835-bda2bc66a55d?q=80&w=1600';
-    heroImageAlt = isEs
-      ? 'Tuberías de datos complejas e infraestructura de bases de datos que muestran cables de red amarillos y azules en un servidor'
-      : 'Complex data pipelines and database infrastructure showing yellow and blue network cables in a server rack';
-  } else if (targetSlug === 'data-visualization') {
-    heroImage = 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?q=80&w=1600';
-    heroImageAlt = isEs
-      ? 'Tablero interactivo de inteligencia de negocios con gráficos y análisis de datos'
-      : 'Interactive business intelligence dashboard displaying charts and data analytics';
-  }
+  const serviceImage = getServiceImage(canonicalServiceSlug(targetSlug), isEs);
+  const heroImage = serviceImage?.src || CATEGORY_HERO_IMAGES[categoryId] || 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1600';
+  const heroImageAlt: string | undefined = serviceImage?.alt;
 
   if (targetSlug === 'predictive-analytics') {
     if (isEs) {
