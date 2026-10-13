@@ -25,7 +25,8 @@ const ALLOWED_ARTICLE_SLUGS = new Set([
   'lifecycle-of-custom-software-design-and-development',
   'enterprise-software-development-modernizing-core-systems',
   'why-enterprises-need-custom-software-development-solutions',
-  'the-roi-of-custom-business-software-development'
+  'the-roi-of-custom-business-software-development',
+  'selecting-a-custom-software-development-firm'
 ]);
 
 async function fetchArticle(slug: string, locale: string) {

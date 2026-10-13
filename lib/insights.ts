@@ -10,6 +10,7 @@ import { customSoftwareLifecycleContentEn } from './articles/lifecycle-of-custom
 import { enterpriseModernizationContentEn } from './articles/enterprise-software-development-modernizing-core-systems-content';
 import { customSoftwareSolutionsContentEn } from './articles/why-enterprises-need-custom-software-development-solutions-content';
 import { roiCustomBusinessSoftwareContentEn } from './articles/the-roi-of-custom-business-software-development-content';
+import { selectingCustomSoftwareFirmContentEn } from './articles/selecting-a-custom-software-development-firm-content';
 
 export interface ArticleFaq {
   question: string;
@@ -72,6 +73,8 @@ export const ARTICLE_IMAGES: Record<string, string> = {
     '/images/articles/why-enterprises-need-custom-software-development-solutions-studio.webp',
   'the-roi-of-custom-business-software-development':
     '/images/articles/the-roi-of-custom-business-software-development-executive.webp',
+  'selecting-a-custom-software-development-firm':
+    '/images/articles/selecting-a-custom-software-development-firm.webp',
 };
 
 export const ARTICLE_ALT_TEXTS: Record<string, Record<string, string>> = {
@@ -113,9 +116,36 @@ export const ARTICLE_ALT_TEXTS: Record<string, Record<string, string>> = {
   'the-roi-of-custom-business-software-development': {
     en: 'Business technology leader reviewing ROI, efficiency, growth, and performance metrics from custom business software.',
   },
+  'selecting-a-custom-software-development-firm': {
+    en: 'Business and technology leaders evaluating custom software development partners using criteria for architecture, engineering, integration, security, delivery, and support.',
+  },
 };
 
 export const articles: Article[] = [
+  {
+    slug: 'selecting-a-custom-software-development-firm',
+    title: 'Selecting a Custom Software Development Firm',
+    excerpt: 'Learn how to evaluate a custom software development firm based on business fit, architecture, engineering depth, delivery discipline, security, integration, and long-term partnership.',
+    date: 'October 13, 2026',
+    category: 'Software Development',
+    readTime: '8 min read',
+    author: {
+      name: 'HyperCode',
+      role: 'Technology Consulting',
+      avatar: '/placeholder-user.jpg',
+      bio: 'HyperCode is a Schaumburg, Illinois-based technology consulting and engineering company founded in 2014.'
+    },
+    related: ['the-roi-of-custom-business-software-development', 'why-enterprises-need-custom-software-development-solutions'],
+    content: selectingCustomSoftwareFirmContentEn,
+    image: ARTICLE_IMAGES['selecting-a-custom-software-development-firm'],
+    imageAlt: ARTICLE_ALT_TEXTS['selecting-a-custom-software-development-firm'].en,
+    seoTitle: 'Selecting a Custom Software Development Firm | HyperCode',
+    seoDescription: 'Learn how to select a custom software development firm by evaluating business fit, architecture, engineering, integration, security, delivery discipline, and long-term support.',
+    ctaHeading: 'Looking for the Right Custom Software Development Partner?',
+    ctaBody: 'HyperCode helps organizations move from business complexity to dependable digital capability through discovery, architecture, engineering, integration, automation, and long-term technology support.',
+    publishedIso: '2026-10-13',
+    modifiedIso: '2026-10-13',
+  },
   {
     slug: 'the-roi-of-custom-business-software-development',
     title: 'The ROI of Custom Business Software Development',

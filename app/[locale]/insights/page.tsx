@@ -56,7 +56,8 @@ export default async function InsightsPage({ params }: Props) {
     'lifecycle-of-custom-software-design-and-development',
     'enterprise-software-development-modernizing-core-systems',
     'why-enterprises-need-custom-software-development-solutions',
-    'the-roi-of-custom-business-software-development'
+    'the-roi-of-custom-business-software-development',
+    'selecting-a-custom-software-development-firm'
   ]);
 
   // Fetch published articles from Supabase
