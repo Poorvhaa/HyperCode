@@ -26,7 +26,8 @@ const ALLOWED_ARTICLE_SLUGS = new Set([
   'enterprise-software-development-modernizing-core-systems',
   'why-enterprises-need-custom-software-development-solutions',
   'the-roi-of-custom-business-software-development',
-  'selecting-a-custom-software-development-firm'
+  'selecting-a-custom-software-development-firm',
+  'strategic-it-staff-augmentation-for-engineering-teams'
 ]);
 
 async function fetchArticle(slug: string, locale: string) {

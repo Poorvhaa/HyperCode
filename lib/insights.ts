@@ -11,6 +11,7 @@ import { enterpriseModernizationContentEn } from './articles/enterprise-software
 import { customSoftwareSolutionsContentEn } from './articles/why-enterprises-need-custom-software-development-solutions-content';
 import { roiCustomBusinessSoftwareContentEn } from './articles/the-roi-of-custom-business-software-development-content';
 import { selectingCustomSoftwareFirmContentEn } from './articles/selecting-a-custom-software-development-firm-content';
+import { strategicItStaffAugmentationContentEn } from './articles/strategic-it-staff-augmentation-for-engineering-teams-content';
 
 export interface ArticleFaq {
   question: string;
@@ -75,6 +76,8 @@ export const ARTICLE_IMAGES: Record<string, string> = {
     '/images/articles/the-roi-of-custom-business-software-development-executive.webp',
   'selecting-a-custom-software-development-firm':
     '/images/articles/selecting-a-custom-software-development-firm.webp',
+  'strategic-it-staff-augmentation-for-engineering-teams':
+    '/images/articles/strategic-it-staff-augmentation-for-engineering-teams.webp',
 };
 
 export const ARTICLE_ALT_TEXTS: Record<string, Record<string, string>> = {
@@ -119,9 +122,36 @@ export const ARTICLE_ALT_TEXTS: Record<string, Record<string, string>> = {
   'selecting-a-custom-software-development-firm': {
     en: 'Business and technology leaders evaluating custom software development partners using criteria for architecture, engineering, integration, security, delivery, and support.',
   },
+  'strategic-it-staff-augmentation-for-engineering-teams': {
+    en: 'HyperCode engineering team working with an added cloud or DevOps specialist on software delivery, CI/CD, architecture, and product roadmap execution.',
+  },
 };
 
 export const articles: Article[] = [
+  {
+    slug: 'strategic-it-staff-augmentation-for-engineering-teams',
+    title: 'Strategic IT Staff Augmentation for Engineering Teams',
+    excerpt: 'Learn how strategic IT staff augmentation helps engineering teams add specialized capability, accelerate delivery, integrate expertise, and strengthen long-term technical capacity.',
+    date: 'October 13, 2026',
+    category: 'Software Development',
+    readTime: '8 min read',
+    author: {
+      name: 'HyperCode',
+      role: 'Technology Consulting',
+      avatar: '/placeholder-user.jpg',
+      bio: 'HyperCode is a Schaumburg, Illinois-based technology consulting and engineering company founded in 2014.'
+    },
+    related: ['selecting-a-custom-software-development-firm', 'the-roi-of-custom-business-software-development'],
+    content: strategicItStaffAugmentationContentEn,
+    image: ARTICLE_IMAGES['strategic-it-staff-augmentation-for-engineering-teams'],
+    imageAlt: ARTICLE_ALT_TEXTS['strategic-it-staff-augmentation-for-engineering-teams'].en,
+    seoTitle: 'Strategic IT Staff Augmentation for Engineering Teams | HyperCode',
+    seoDescription: 'Learn how IT staff augmentation services help engineering teams add specialized expertise, accelerate delivery, integrate talent, and build durable technical capability.',
+    ctaHeading: 'Need the Right Engineering Capability for Your Next Delivery Stage?',
+    ctaBody: 'HyperCode helps organizations align specialized technology talent with the engineering work, platforms, delivery practices and business outcomes that matter.',
+    publishedIso: '2026-10-13',
+    modifiedIso: '2026-10-13',
+  },
   {
     slug: 'selecting-a-custom-software-development-firm',
     title: 'Selecting a Custom Software Development Firm',

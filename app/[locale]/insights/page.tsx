@@ -57,7 +57,8 @@ export default async function InsightsPage({ params }: Props) {
     'enterprise-software-development-modernizing-core-systems',
     'why-enterprises-need-custom-software-development-solutions',
     'the-roi-of-custom-business-software-development',
-    'selecting-a-custom-software-development-firm'
+    'selecting-a-custom-software-development-firm',
+    'strategic-it-staff-augmentation-for-engineering-teams'
   ]);
 
   // Fetch published articles from Supabase
