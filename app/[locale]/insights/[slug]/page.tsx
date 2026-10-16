@@ -12,6 +12,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Metadata } from 'next';
 import { db } from '@/lib/db';
 import { localeUrl, localeAlternates, absoluteUrl } from '@/lib/site-url';
+import { ArticleBrandLogo } from '@/components/article-brand-logo';
 
 const ALLOWED_ARTICLE_SLUGS = new Set([
   'enterprise-generative-ai-strategic-innovation',
@@ -321,6 +322,7 @@ export default async function ArticlePage({ params }: PageProps) {
                 sizes="(max-width: 896px) 100vw, 896px"
                 className="object-cover"
               />
+              <ArticleBrandLogo size="hero" />
             </div>
           )}
         </div>
@@ -477,6 +479,7 @@ export default async function ArticlePage({ params }: PageProps) {
                         sizes="(max-width: 768px) 100vw, 400px"
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
                       />
+                      <ArticleBrandLogo />
                     </Link>
                   )}
                   <div className="p-6 flex flex-col justify-between flex-grow">

@@ -13,6 +13,7 @@ import {
 } from '@/lib/insights';
 import { getLocalizedArticles } from '@/lib/insights-localizer';
 import { LandingReveal } from '@/components/motion/landing-reveal';
+import { ArticleBrandLogo } from '@/components/article-brand-logo';
 
 function FeaturedArticle({
   slug,
@@ -49,6 +50,7 @@ function FeaturedArticle({
               sizes="(max-width: 768px) 100vw, (max-width: 1280px) 58vw, 720px"
               className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02] motion-reduce:group-hover:scale-100"
             />
+            <ArticleBrandLogo />
           </div>
         )}
 

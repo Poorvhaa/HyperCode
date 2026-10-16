@@ -7,6 +7,7 @@ import { Link, useRouter } from '@/i18n/routing';
 import { useSearchParams } from 'next/navigation';
 import { Article } from '@/lib/insights';
 import { useTranslations } from 'next-intl';
+import { ArticleBrandLogo } from '@/components/article-brand-logo';
 
 interface InsightsListProps {
   initialArticles: Article[];
@@ -126,6 +127,7 @@ export function InsightsList({ initialArticles, translatedCategories }: Insights
                     sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 600px"
                     className="object-cover transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.03]"
                   />
+                  <ArticleBrandLogo />
                 </div>
               )}
 
