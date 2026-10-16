@@ -159,7 +159,7 @@ function RoadmapNav({
 
 function MobileStageBlock({ stage, isReduced }: { stage: TransformationStage; isReduced: boolean }) {
   return (
-    <article className="border-t border-[#1A2332]/[0.08] py-8 first:border-t-0 first:pt-0 sm:py-10">
+    <article className="border-t border-[#1A2332]/[0.08] py-8 first:border-t-0 first:pt-0 last:pb-0 sm:py-10 sm:last:pb-0">
       <StageEditorial stage={stage} isReduced={isReduced} />
       <div className="mt-6 sm:mt-8">
         <TransformationRoadmapVisual stageIndex={stage.number - 1} compact />
