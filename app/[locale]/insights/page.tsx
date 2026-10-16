@@ -58,7 +58,8 @@ export default async function InsightsPage({ params }: Props) {
     'why-enterprises-need-custom-software-development-solutions',
     'the-roi-of-custom-business-software-development',
     'selecting-a-custom-software-development-firm',
-    'strategic-it-staff-augmentation-for-engineering-teams'
+    'strategic-it-staff-augmentation-for-engineering-teams',
+    'how-to-evaluate-staff-augmentation-consulting-services'
   ]);
 
   // Fetch published articles from Supabase

@@ -27,7 +27,8 @@ const ALLOWED_ARTICLE_SLUGS = new Set([
   'why-enterprises-need-custom-software-development-solutions',
   'the-roi-of-custom-business-software-development',
   'selecting-a-custom-software-development-firm',
-  'strategic-it-staff-augmentation-for-engineering-teams'
+  'strategic-it-staff-augmentation-for-engineering-teams',
+  'how-to-evaluate-staff-augmentation-consulting-services'
 ]);
 
 async function fetchArticle(slug: string, locale: string) {

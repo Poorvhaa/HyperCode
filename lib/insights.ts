@@ -12,6 +12,7 @@ import { customSoftwareSolutionsContentEn } from './articles/why-enterprises-nee
 import { roiCustomBusinessSoftwareContentEn } from './articles/the-roi-of-custom-business-software-development-content';
 import { selectingCustomSoftwareFirmContentEn } from './articles/selecting-a-custom-software-development-firm-content';
 import { strategicItStaffAugmentationContentEn } from './articles/strategic-it-staff-augmentation-for-engineering-teams-content';
+import { howToEvaluateStaffAugmentationContentEn, howToEvaluateStaffAugmentationFaqs } from './articles/how-to-evaluate-staff-augmentation-consulting-services-content';
 
 export interface ArticleFaq {
   question: string;
@@ -78,6 +79,8 @@ export const ARTICLE_IMAGES: Record<string, string> = {
     '/images/articles/selecting-a-custom-software-development-firm.webp',
   'strategic-it-staff-augmentation-for-engineering-teams':
     '/images/articles/strategic-it-staff-augmentation-for-engineering-teams.webp',
+  'how-to-evaluate-staff-augmentation-consulting-services':
+    '/images/articles/how-to-evaluate-staff-augmentation-consulting-services.webp',
 };
 
 export const ARTICLE_ALT_TEXTS: Record<string, Record<string, string>> = {
@@ -125,9 +128,37 @@ export const ARTICLE_ALT_TEXTS: Record<string, Record<string, string>> = {
   'strategic-it-staff-augmentation-for-engineering-teams': {
     en: 'HyperCode engineering team working with an added cloud or DevOps specialist on software delivery, CI/CD, architecture, and product roadmap execution.',
   },
+  'how-to-evaluate-staff-augmentation-consulting-services': {
+    en: 'Technology leadership team in an executive conference room evaluating staff augmentation consulting services, partner scorecards, and candidate profiles, with the HyperCode logo',
+  },
 };
 
 export const articles: Article[] = [
+  {
+    slug: 'how-to-evaluate-staff-augmentation-consulting-services',
+    title: 'How to Evaluate Staff Augmentation Consulting Services',
+    excerpt: 'A practical guide to choosing the right technology talent partner for speed, capability and long-term business value.',
+    date: 'October 15, 2026',
+    category: 'Software Development',
+    readTime: '8 min read',
+    author: {
+      name: 'HyperCode',
+      role: 'Technology Consulting',
+      avatar: '/placeholder-user.jpg',
+      bio: 'HyperCode is a Schaumburg, Illinois-based technology consulting and engineering company founded in 2014.'
+    },
+    related: ['strategic-it-staff-augmentation-for-engineering-teams', 'selecting-a-custom-software-development-firm'],
+    content: howToEvaluateStaffAugmentationContentEn,
+    image: ARTICLE_IMAGES['how-to-evaluate-staff-augmentation-consulting-services'],
+    imageAlt: ARTICLE_ALT_TEXTS['how-to-evaluate-staff-augmentation-consulting-services'].en,
+    faqs: howToEvaluateStaffAugmentationFaqs,
+    seoTitle: 'How to Evaluate Staff Augmentation Consulting Services | HyperCode',
+    seoDescription: 'A practical guide to evaluating staff augmentation consulting services: technical screening, domain fit, continuity planning, engagement governance, and long-term business value.',
+    ctaHeading: 'Evaluating Staff Augmentation Consulting Partners for Your Next Milestone?',
+    ctaBody: 'HyperCode provides strategic technology consulting, custom software engineering, and dedicated talent solutions aligned directly with your architecture and delivery goals.',
+    publishedIso: '2026-10-15',
+    modifiedIso: '2026-10-15',
+  },
   {
     slug: 'strategic-it-staff-augmentation-for-engineering-teams',
     title: 'Strategic IT Staff Augmentation for Engineering Teams',
