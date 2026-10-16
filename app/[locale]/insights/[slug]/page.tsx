@@ -29,7 +29,8 @@ const ALLOWED_ARTICLE_SLUGS = new Set([
   'the-roi-of-custom-business-software-development',
   'selecting-a-custom-software-development-firm',
   'strategic-it-staff-augmentation-for-engineering-teams',
-  'how-to-evaluate-staff-augmentation-consulting-services'
+  'how-to-evaluate-staff-augmentation-consulting-services',
+  'scaling-fast-with-it-staff-augmentation-agencies'
 ]);
 
 async function fetchArticle(slug: string, locale: string) {

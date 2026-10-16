@@ -13,6 +13,7 @@ import { roiCustomBusinessSoftwareContentEn } from './articles/the-roi-of-custom
 import { selectingCustomSoftwareFirmContentEn } from './articles/selecting-a-custom-software-development-firm-content';
 import { strategicItStaffAugmentationContentEn } from './articles/strategic-it-staff-augmentation-for-engineering-teams-content';
 import { howToEvaluateStaffAugmentationContentEn, howToEvaluateStaffAugmentationFaqs } from './articles/how-to-evaluate-staff-augmentation-consulting-services-content';
+import { scalingFastAugmentationContentEn, scalingFastAugmentationFaqs } from './articles/scaling-fast-with-it-staff-augmentation-agencies-content';
 
 export interface ArticleFaq {
   question: string;
@@ -81,6 +82,8 @@ export const ARTICLE_IMAGES: Record<string, string> = {
     '/images/articles/strategic-it-staff-augmentation-for-engineering-teams.webp',
   'how-to-evaluate-staff-augmentation-consulting-services':
     '/images/articles/how-to-evaluate-staff-augmentation-consulting-services.webp',
+  'scaling-fast-with-it-staff-augmentation-agencies':
+    '/images/articles/scaling-fast-with-it-staff-augmentation-agencies.webp',
 };
 
 export const ARTICLE_ALT_TEXTS: Record<string, Record<string, string>> = {
@@ -131,9 +134,37 @@ export const ARTICLE_ALT_TEXTS: Record<string, Record<string, string>> = {
   'how-to-evaluate-staff-augmentation-consulting-services': {
     en: 'Technology leadership team in an executive conference room evaluating staff augmentation consulting services, partner scorecards, and candidate profiles, with the HyperCode logo',
   },
+  'scaling-fast-with-it-staff-augmentation-agencies': {
+    en: 'HyperCode engineering team working with added specialist developers across shared repositories, CI/CD, cloud infrastructure, and product delivery workflows.',
+  },
 };
 
 export const articles: Article[] = [
+  {
+    slug: 'scaling-fast-with-it-staff-augmentation-agencies',
+    title: 'Scaling Fast with IT Staff Augmentation Agencies: The Modern Engineering Leader’s Playbook',
+    excerpt: 'Learn how IT staff augmentation agencies help engineering leaders add specialized capability, scale delivery, retain code ownership, integrate talent, and protect security and architectural control.',
+    date: 'October 16, 2026',
+    category: 'Software Development',
+    readTime: '9 min read',
+    author: {
+      name: 'HyperCode',
+      role: 'Technology Consulting',
+      avatar: '/placeholder-user.jpg',
+      bio: 'HyperCode is a Schaumburg, Illinois-based technology consulting and engineering company founded in 2014.'
+    },
+    related: ['how-to-evaluate-staff-augmentation-consulting-services', 'strategic-it-staff-augmentation-for-engineering-teams'],
+    content: scalingFastAugmentationContentEn,
+    image: ARTICLE_IMAGES['scaling-fast-with-it-staff-augmentation-agencies'],
+    imageAlt: ARTICLE_ALT_TEXTS['scaling-fast-with-it-staff-augmentation-agencies'].en,
+    faqs: scalingFastAugmentationFaqs,
+    seoTitle: 'IT Staff Augmentation Agencies: Engineering Leader’s Playbook | HyperCode',
+    seoDescription: 'Learn how IT staff augmentation agencies help engineering teams scale delivery, add specialized skills, retain code ownership, strengthen security, and stay flexible.',
+    ctaHeading: 'Need Specialized Engineering Capacity Without Losing Delivery Control?',
+    ctaBody: 'HyperCode helps organizations align specialized technology talent with their architecture, repositories, delivery practices, security requirements, and product roadmap.',
+    publishedIso: '2026-10-16',
+    modifiedIso: '2026-10-16',
+  },
   {
     slug: 'how-to-evaluate-staff-augmentation-consulting-services',
     title: 'How to Evaluate Staff Augmentation Consulting Services',
@@ -147,7 +178,7 @@ export const articles: Article[] = [
       avatar: '/placeholder-user.jpg',
       bio: 'HyperCode is a Schaumburg, Illinois-based technology consulting and engineering company founded in 2014.'
     },
-    related: ['strategic-it-staff-augmentation-for-engineering-teams', 'selecting-a-custom-software-development-firm'],
+    related: ['scaling-fast-with-it-staff-augmentation-agencies', 'strategic-it-staff-augmentation-for-engineering-teams'],
     content: howToEvaluateStaffAugmentationContentEn,
     image: ARTICLE_IMAGES['how-to-evaluate-staff-augmentation-consulting-services'],
     imageAlt: ARTICLE_ALT_TEXTS['how-to-evaluate-staff-augmentation-consulting-services'].en,
