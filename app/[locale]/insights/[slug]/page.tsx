@@ -30,7 +30,8 @@ const ALLOWED_ARTICLE_SLUGS = new Set([
   'selecting-a-custom-software-development-firm',
   'strategic-it-staff-augmentation-for-engineering-teams',
   'how-to-evaluate-staff-augmentation-consulting-services',
-  'scaling-fast-with-it-staff-augmentation-agencies'
+  'scaling-fast-with-it-staff-augmentation-agencies',
+  'competitive-edge-of-it-staff-augmentation-firms'
 ]);
 
 async function fetchArticle(slug: string, locale: string) {
