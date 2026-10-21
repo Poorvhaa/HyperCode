@@ -15,6 +15,7 @@ import { strategicItStaffAugmentationContentEn } from './articles/strategic-it-s
 import { howToEvaluateStaffAugmentationContentEn, howToEvaluateStaffAugmentationFaqs } from './articles/how-to-evaluate-staff-augmentation-consulting-services-content';
 import { scalingFastAugmentationContentEn, scalingFastAugmentationFaqs } from './articles/scaling-fast-with-it-staff-augmentation-agencies-content';
 import { competitiveEdgeAugmentationContentEn, competitiveEdgeAugmentationFaqs } from './articles/competitive-edge-of-it-staff-augmentation-firms-content';
+import { enterpriseDigitalTransformationContentEn, enterpriseDigitalTransformationFaqs } from './articles/enterprise-digital-transformation-strategy-content';
 
 export interface ArticleFaq {
   question: string;
@@ -87,6 +88,8 @@ export const ARTICLE_IMAGES: Record<string, string> = {
     '/images/articles/scaling-fast-with-it-staff-augmentation-agencies.webp',
   'competitive-edge-of-it-staff-augmentation-firms':
     '/images/articles/competitive-edge-of-it-staff-augmentation-firms.webp',
+  'enterprise-digital-transformation-strategy':
+    '/images/articles/enterprise-digital-transformation-strategy.webp',
 };
 
 export const ARTICLE_ALT_TEXTS: Record<string, Record<string, string>> = {
@@ -143,9 +146,37 @@ export const ARTICLE_ALT_TEXTS: Record<string, Record<string, string>> = {
   'competitive-edge-of-it-staff-augmentation-firms': {
     en: 'HyperCode engineering team integrating a specialist developer into an active software delivery workflow with shared code, architecture, and product milestones.',
   },
+  'enterprise-digital-transformation-strategy': {
+    en: 'Executive digital transformation leadership and enterprise architecture team collaborating around a multi-pillar digital roadmap display, cloud architecture pipelines, and performance scorecards',
+  },
 };
 
 export const articles: Article[] = [
+  {
+    slug: 'enterprise-digital-transformation-strategy',
+    title: 'The Enterprise Guide to Digital Transformation Strategy',
+    excerpt: 'A practical roadmap to build a smarter, faster, and more resilient business through strategic enterprise architecture, disciplined delivery, and measurable outcomes.',
+    date: 'October 21, 2026',
+    category: 'Software Development',
+    readTime: '10 min read',
+    author: {
+      name: 'HyperCode',
+      role: 'Technology Consulting',
+      avatar: '/placeholder-user.jpg',
+      bio: 'HyperCode is a Schaumburg, Illinois-based technology consulting and engineering company founded in 2014.'
+    },
+    related: ['competitive-edge-of-it-staff-augmentation-firms', 'scaling-fast-with-it-staff-augmentation-agencies', 'selecting-a-custom-software-development-firm'],
+    content: enterpriseDigitalTransformationContentEn,
+    image: ARTICLE_IMAGES['enterprise-digital-transformation-strategy'],
+    imageAlt: ARTICLE_ALT_TEXTS['enterprise-digital-transformation-strategy'].en,
+    faqs: enterpriseDigitalTransformationFaqs,
+    seoTitle: 'The Enterprise Guide to Digital Transformation Strategy | HyperCode',
+    seoDescription: 'A practical enterprise roadmap to digital transformation strategy: cloud modernization, unified data, process automation, security resilience, and measurable ROI.',
+    ctaHeading: 'Ready to Accelerate Your Enterprise Digital Transformation?',
+    ctaBody: 'HyperCode partners with technology leaders to design scalable target architectures, de-risk legacy modernization, and deploy elite engineering pods that deliver measurable business outcomes.',
+    publishedIso: '2026-10-21',
+    modifiedIso: '2026-10-21',
+  },
   {
     slug: 'competitive-edge-of-it-staff-augmentation-firms',
     title: 'The Competitive Edge of IT Staff Augmentation Firms',

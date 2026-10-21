@@ -31,7 +31,8 @@ const ALLOWED_ARTICLE_SLUGS = new Set([
   'strategic-it-staff-augmentation-for-engineering-teams',
   'how-to-evaluate-staff-augmentation-consulting-services',
   'scaling-fast-with-it-staff-augmentation-agencies',
-  'competitive-edge-of-it-staff-augmentation-firms'
+  'competitive-edge-of-it-staff-augmentation-firms',
+  'enterprise-digital-transformation-strategy'
 ]);
 
 async function fetchArticle(slug: string, locale: string) {

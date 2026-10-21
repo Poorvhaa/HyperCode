@@ -61,7 +61,8 @@ export default async function InsightsPage({ params }: Props) {
     'strategic-it-staff-augmentation-for-engineering-teams',
     'how-to-evaluate-staff-augmentation-consulting-services',
     'scaling-fast-with-it-staff-augmentation-agencies',
-    'competitive-edge-of-it-staff-augmentation-firms'
+    'competitive-edge-of-it-staff-augmentation-firms',
+    'enterprise-digital-transformation-strategy'
   ]);
 
   // Fetch published articles from Supabase
