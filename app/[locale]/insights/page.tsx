@@ -62,7 +62,8 @@ export default async function InsightsPage({ params }: Props) {
     'how-to-evaluate-staff-augmentation-consulting-services',
     'scaling-fast-with-it-staff-augmentation-agencies',
     'competitive-edge-of-it-staff-augmentation-firms',
-    'enterprise-digital-transformation-strategy'
+    'enterprise-digital-transformation-strategy',
+  'erp-software-development-services-benefits'
   ]);
 
   // Fetch published articles from Supabase
