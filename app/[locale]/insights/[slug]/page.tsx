@@ -268,7 +268,7 @@ export default async function ArticlePage({ params }: PageProps) {
 
       {/* Hero Header Section */}
       <section className="bg-slate-50 pt-36 pb-16 border-b border-slate-100">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full space-y-6">
+        <div className="w-full max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
           {/* Breadcrumbs */}
           <nav className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-wider">
             <Link href="/" className="hover:text-royal-blue transition-colors">{tc('home')}</Link>
@@ -279,7 +279,7 @@ export default async function ArticlePage({ params }: PageProps) {
           </nav>
 
           {/* Title */}
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight max-w-5xl">
             {article.title}
           </h1>
 
@@ -323,7 +323,7 @@ export default async function ArticlePage({ params }: PageProps) {
                 alt={heroImageAlt}
                 fill
                 priority
-                sizes="(max-width: 896px) 100vw, 896px"
+                sizes="(max-width: 1240px) 100vw, 1240px"
                 className="object-cover"
               />
               <ArticleBrandLogo size="hero" />
@@ -334,11 +334,11 @@ export default async function ArticlePage({ params }: PageProps) {
 
       {/* Main Body Section */}
       <section className="py-16 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
+        <div className="w-full max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 xl:gap-16">
             
             {/* Left/Sidebar: Share Bar */}
-            <div className="lg:col-span-1 space-y-6 lg:sticky lg:top-28">
+            <div className="w-full lg:w-44 xl:w-48 flex-shrink-0 space-y-6 lg:sticky lg:top-28 self-start">
               <Link
                 href="/insights"
                 className="inline-flex items-center gap-2 text-button text-royal-blue hover:text-[#0c3c66] transition-colors uppercase tracking-wider"
@@ -402,14 +402,14 @@ export default async function ArticlePage({ params }: PageProps) {
             </div>
 
             {/* Center/Right: Article Content & Author Bio */}
-            <div className="lg:col-span-3 space-y-12">
+            <div className="flex-1 min-w-0 space-y-12">
               <div 
-                className="space-y-6 text-slate-700 text-sm sm:text-base leading-relaxed font-medium [&>p]:leading-relaxed [&>p]:mb-6 [&>h2]:text-xl [&>h2]:font-extrabold [&>h2]:text-slate-900 [&>h2]:mt-8 [&>h2]:mb-4 [&>h3]:text-lg [&>h3]:font-bold [&>h3]:text-slate-900 [&>h3]:mt-6 [&>h3]:mb-3 [&>blockquote]:pl-4 [&>blockquote]:border-l-4 [&>blockquote]:border-royal-blue [&>blockquote]:italic [&>blockquote]:text-slate-850 [&>blockquote]:my-6 [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:space-y-2 [&>ol]:list-decimal [&>ol]:pl-6 [&>ol]:space-y-2 [&>li]:pl-1 [&>em]:text-slate-800 [&>p>strong]:text-slate-800 [&>figure]:my-8 [&>table]:w-full [&_a]:text-royal-blue [&_a]:font-semibold [&_a]:underline [&_a]:underline-offset-2"
+                className="space-y-6 text-slate-700 text-sm sm:text-base leading-relaxed font-medium [&>p]:leading-relaxed [&>p]:mb-6 [&>p]:max-w-[880px] [&>ul]:max-w-[880px] [&>ol]:max-w-[880px] [&>blockquote]:max-w-[880px] [&>h2]:text-xl [&>h2]:font-extrabold [&>h2]:text-slate-900 [&>h2]:mt-8 [&>h2]:mb-4 [&>h2]:max-w-[920px] [&>h3]:text-lg [&>h3]:font-bold [&>h3]:text-slate-900 [&>h3]:mt-6 [&>h3]:mb-3 [&>h3]:max-w-[920px] [&>blockquote]:pl-4 [&>blockquote]:border-l-4 [&>blockquote]:border-royal-blue [&>blockquote]:italic [&>blockquote]:text-slate-850 [&>blockquote]:my-6 [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:space-y-2 [&>ol]:list-decimal [&>ol]:pl-6 [&>ol]:space-y-2 [&>li]:pl-1 [&>em]:text-slate-800 [&>p>strong]:text-slate-800 [&>figure]:my-8 [&>table]:w-full [&_a]:text-royal-blue [&_a]:font-semibold [&_a]:underline [&_a]:underline-offset-2"
                 dangerouslySetInnerHTML={{ __html: article.content }}
               />
 
               {/* Author Bio Card */}
-              <div className="p-6 sm:p-8 rounded-2xl border border-slate-200 bg-slate-50 flex flex-col sm:flex-row gap-6 items-start">
+              <div className="max-w-[960px] p-6 sm:p-8 rounded-2xl border border-slate-200 bg-slate-50 flex flex-col sm:flex-row gap-6 items-start">
                 <div className="w-12 h-12 rounded-full bg-slate-200 border border-slate-300 flex items-center justify-center text-slate-500 flex-shrink-0">
                   <User size={20} />
                 </div>
@@ -424,7 +424,7 @@ export default async function ArticlePage({ params }: PageProps) {
               </div>
 
               {/* Strong CTA Banner */}
-              <div className="p-8 rounded-3xl bg-slate-900 text-white space-y-6 border border-white/5 relative overflow-hidden">
+              <div className="max-w-[960px] p-8 rounded-3xl bg-slate-900 text-white space-y-6 border border-white/5 relative overflow-hidden">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(15,76,129,0.2)_0%,transparent_100%)] pointer-events-none" />
                 <div className="relative z-10 space-y-4">
                   {ctaHeading ? null : (
@@ -462,13 +462,13 @@ export default async function ArticlePage({ params }: PageProps) {
       {/* Related Articles Section */}
       {relatedArticles.length >= 1 && (
         <section className="py-20 bg-slate-50 border-t border-slate-200">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="w-full max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-12 text-left">
               <h4 className="text-xs font-bold text-royal-blue tracking-widest uppercase mb-3">{tc('readMore') || 'READ MORE'}</h4>
               <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">{tInsights('relatedArticles')}</h3>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 max-w-4xl gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {relatedArticles.map((art) => (
                 <article
                   key={art.slug}
@@ -480,7 +480,7 @@ export default async function ArticlePage({ params }: PageProps) {
                         src={art.image}
                         alt={art.imageAlt || art.title}
                         fill
-                        sizes="(max-width: 768px) 100vw, 400px"
+                        sizes="(max-width: 768px) 100vw, 580px"
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                       <ArticleBrandLogo />
