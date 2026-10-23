@@ -63,7 +63,8 @@ export default async function InsightsPage({ params }: Props) {
     'scaling-fast-with-it-staff-augmentation-agencies',
     'competitive-edge-of-it-staff-augmentation-firms',
     'enterprise-digital-transformation-strategy',
-  'erp-software-development-services-benefits'
+  'erp-software-development-services-benefits',
+    'it-staff-augmentation-company-benefits'
   ]);
 
   // Fetch published articles from Supabase

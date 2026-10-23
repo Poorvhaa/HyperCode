@@ -33,7 +33,8 @@ const ALLOWED_ARTICLE_SLUGS = new Set([
   'scaling-fast-with-it-staff-augmentation-agencies',
   'competitive-edge-of-it-staff-augmentation-firms',
   'enterprise-digital-transformation-strategy',
-  'erp-software-development-services-benefits'
+  'erp-software-development-services-benefits',
+  'it-staff-augmentation-company-benefits'
 ]);
 
 async function fetchArticle(slug: string, locale: string) {
